@@ -42,7 +42,7 @@
         >
           <BFormInput
             id="popover-input-1"
-            ref="input1"
+            ref="input1Ref"
             v-model="input1"
             :state="input1State"
             size="sm"
@@ -125,8 +125,8 @@ const input2State = ref<boolean | null>(null)
 const input1Return = ref('')
 const input2Return = ref('')
 
-const input1Element = ref<HTMLInputElement>()
-const targetButton = ref<InstanceType<typeof BButton>>()
+const input1Ref = ref<HTMLInputElement>()
+const targetButton = ref<InstanceType<BButton>>()
 
 const options: SelectOption[] = [
   {text: '- Choose 1 -', value: ''},
@@ -163,7 +163,7 @@ const onShow = () => {
 const onShown = () => {
   // Focus the first input
   nextTick(() => {
-    input1Element.value?.focus()
+    input1Ref.value?.focus()
   })
 }
 

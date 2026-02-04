@@ -4,8 +4,11 @@ interface BModalSlotsData {
   id: string
   visible: boolean
   active: boolean // Same as visible
-  show: () => void
-  hide: (noTriggerEmit?: boolean) => void
-  toggle: () => void
+  cancel: () => void
+  close: () => void
+  ok: () => void
+  show: (trigger?: string, noTriggerEmit?: boolean) => void
+  hide: (trigger?: string, noTriggerEmit?: boolean) => void
+  toggle: (trigger?: string, noTriggerEmit?: boolean) => void
 }
 // #endregion snippet

@@ -1469,8 +1469,7 @@ Please see [useToast](/docs/composables/useToast) for the modern method of progr
 
 **Event naming changes:**
 
-```- No `$root` event system - toasts are managed through composables or direct component references
-
+- No `$root` event system - toasts are managed through composables or direct component references
 - All events now use the standardized show/hide event lifecycle
 
 **New events:** BootstrapVueNext adds several events:
