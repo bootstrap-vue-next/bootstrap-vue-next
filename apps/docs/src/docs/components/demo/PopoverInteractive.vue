@@ -110,7 +110,7 @@
 
 <script setup lang="ts">
 import {nextTick, ref} from 'vue'
-import type {BButton} from 'bootstrap-vue-next/components/BButton'
+import {BButton} from 'bootstrap-vue-next/components/BButton'
 
 interface SelectOption {
   text: string
