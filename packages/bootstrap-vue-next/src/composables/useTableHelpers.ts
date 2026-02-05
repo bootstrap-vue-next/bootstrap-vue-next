@@ -396,7 +396,7 @@ export const useTableSelectedItems = <Item>({
         }
         // This is where range is different, due to the difference in shift
       } else if (shiftClicked) {
-        const lastSelectedItem = selectedItems.value.at(-1)
+        const lastSelectedItem = selectedItems.value[selectedItems.value.length - 1]
         const lastSelectedIndex = allItemsResolved.value.findIndex(
           (i) => utils.get(i) === lastSelectedItem
         )
