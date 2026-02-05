@@ -309,6 +309,8 @@ export const useTableMapper = <Item>({
         events.onFiltered([...newItems])
       }
     },
+    // Shallow watch is sufficient - we only need to detect when the items array reference changes,
+    // not mutations within individual items
     {deep: false}
   )
 

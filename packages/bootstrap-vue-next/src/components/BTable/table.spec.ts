@@ -1554,8 +1554,11 @@ describe('event emissions', () => {
   it('emits filtered event when reactive dependencies in custom filter function change', async () => {
     const tag = ref('young')
     let filterCallCount = 0
-    
-    const customFilterFunction = (item: (typeof items)[0], filter: string | undefined) => {
+
+    // Note: Using non-empty filter string as workaround for issue #2993 where empty filter doesn't trigger filtering
+    const FILTER_WORKAROUND = ' '
+
+    const customFilterFunction = (item: (typeof items)[0]) => {
       filterCallCount++
       // Filter based on the reactive tag value
       if (tag.value === 'young') {
@@ -1570,7 +1573,7 @@ describe('event emissions', () => {
       props: {
         items,
         fields,
-        filter: ' ', // Non-empty to enable filtering (workaround for issue #2993)
+        filter: FILTER_WORKAROUND,
         filterFunction: customFilterFunction,
       },
     })
