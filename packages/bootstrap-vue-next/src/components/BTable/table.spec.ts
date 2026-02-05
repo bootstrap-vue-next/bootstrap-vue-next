@@ -1922,11 +1922,12 @@ describe('BTable busyLoadingText', () => {
         props: {
           items: itemsWithTags,
           fields: fieldsWithTags,
-          filter: '',
           filterFunction,
         },
       })
 
+      // Set filter to empty string to trigger filtering
+      await wrapper.setProps({filter: ''})
       await nextTick()
 
       // The filtered event should be emitted with the filtered items
