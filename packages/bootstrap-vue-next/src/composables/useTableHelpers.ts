@@ -77,6 +77,7 @@ export const useTableMapper = <Item>({
   }
   events: {
     onChange: (items: readonly Item[]) => void
+    onFiltered: (items: readonly Item[]) => void
   }
 }) => {
   const sortByModelResolved = readonly(toRef(pagination.sort.by))
@@ -85,6 +86,9 @@ export const useTableMapper = <Item>({
   const usesProviderResolved = readonly(toRef(provider.usesProvider))
 
   const isFilterableTable = computed(() => !!filterResolved.value)
+
+  // Track the previous filter string to detect when changes are due to reactive deps in filter function
+  let previousFilterString = filterResolved.value
 
   const computedFields = computed<TableField<Item>[]>(() =>
     toValue(fields).map((el) => {
@@ -285,6 +289,28 @@ export const useTableMapper = <Item>({
   watch(computedDisplayItems, (v) => {
     events.onChange([...v])
   })
+
+  // Watch computedItems to emit filtered event when filtered items change
+  // This handles cases where the filter function's reactive dependencies change
+  // Only emit when filtering locally (not via provider) and filter string hasn't changed
+  watch(
+    computedItems,
+    (newItems, oldItems) => {
+      const filterStringChanged = filterResolved.value !== previousFilterString
+      previousFilterString = filterResolved.value
+
+      const shouldEmitFiltered =
+        isFilterableTable.value &&
+        newItems !== oldItems &&
+        !filterStringChanged && // Don't emit if filter string changed (providerController handles that)
+        (!usesProviderResolved.value || toValue(provider.noProviderFiltering))
+
+      if (shouldEmitFiltered) {
+        events.onFiltered([...newItems])
+      }
+    },
+    {deep: false}
+  )
 
   return {
     items: computedItems,

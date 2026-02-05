@@ -308,6 +308,9 @@ const {
     onChange: (v) => {
       emit('change', v)
     },
+    onFiltered: (v) => {
+      emit('filtered', v)
+    },
   },
   items: () => props.items,
   pagination: {

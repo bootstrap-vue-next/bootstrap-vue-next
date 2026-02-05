@@ -2,7 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import BTable from './BTable.vue'
 import type {BTableProviderContext, BTableSortBy, TableField, TableItem} from '../../types'
-import {nextTick} from 'vue'
+import {nextTick, ref} from 'vue'
 
 interface SimplePerson {
   first_name: string
@@ -1549,6 +1549,47 @@ describe('event emissions', () => {
     const filteredItems = wrapper.emitted('filtered')?.[0]?.[0] as typeof items
     expect(filteredItems).toHaveLength(1)
     expect(filteredItems[0].first_name).toBe('John')
+  })
+
+  it('emits filtered event when reactive dependencies in custom filter function change', async () => {
+    const tag = ref('young')
+    
+    const customFilterFunction = (item: (typeof items)[0], filter: string | undefined) => {
+      // Filter based on the reactive tag value and the filter string
+      if (tag.value === 'young' && item.age < 30) {
+        return item.first_name.toLowerCase().includes((filter || '').toLowerCase())
+      } else if (tag.value === 'old' && item.age >= 30) {
+        return item.first_name.toLowerCase().includes((filter || '').toLowerCase())
+      }
+      return false
+    }
+
+    const wrapper = mount(BTable, {
+      props: {
+        items,
+        fields,
+        filter: ' ', // Non-empty to enable filtering (workaround for issue #2993)
+        filterFunction: customFilterFunction,
+      },
+    })
+
+    await nextTick()
+
+    // Initial state: tag is 'young', should show Jane (age 25)
+    expect(wrapper.emitted('filtered')).toBeTruthy()
+    let filteredItems = wrapper.emitted('filtered')?.at(-1)?.[0] as typeof items
+    expect(filteredItems).toHaveLength(1)
+    expect(filteredItems[0].first_name).toBe('Jane')
+
+    // Change reactive dependency - should emit filtered event
+    tag.value = 'old'
+    await nextTick()
+
+    // Should emit filtered event again
+    expect(wrapper.emitted('filtered')?.length).toBeGreaterThan(1)
+    filteredItems = wrapper.emitted('filtered')?.at(-1)?.[0] as typeof items
+    expect(filteredItems).toHaveLength(2) // John (30) and Bob (35)
+    expect(filteredItems.map((i) => i.first_name)).toEqual(['John', 'Bob'])
   })
 
   it('emits row-selected event when row is selected', async () => {
