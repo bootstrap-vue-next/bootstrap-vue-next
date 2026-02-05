@@ -1778,4 +1778,162 @@ describe('BTable busyLoadingText', () => {
     })
     expect(wrapper.text()).not.toContain('Should not appear')
   })
+
+  describe('custom filter function', () => {
+    interface ItemWithTag {
+      name: string
+      age: number
+      tag: number
+    }
+
+    const itemsWithTags: TableItem<ItemWithTag>[] = [
+      {name: 'Alice', age: 25, tag: 1},
+      {name: 'Bob', age: 30, tag: 2},
+      {name: 'Charlie', age: 35, tag: 1},
+      {name: 'Eric', age: 40, tag: 1},
+    ]
+
+    const fieldsWithTags: TableField<ItemWithTag>[] = [
+      {key: 'name', label: 'Name'},
+      {key: 'age', label: 'Age'},
+      {key: 'tag', label: 'Tag'},
+    ]
+
+    it('applies custom filter function when filter string is empty', async () => {
+      const filterFunction = vi.fn((item: ItemWithTag, filter: string | undefined) => {
+        // Filter out items with tag === 1 when filter is empty
+        if (!filter) {
+          return item.tag !== 1
+        }
+        // Otherwise use the filter string to match name
+        return item.name.toLowerCase().includes(filter.toLowerCase())
+      })
+
+      const wrapper = mount(BTable, {
+        props: {
+          items: itemsWithTags,
+          fields: fieldsWithTags,
+          filter: '',
+          filterFunction,
+        },
+      })
+
+      await nextTick()
+
+      const rows = wrapper.findAll('tbody tr')
+      // Should only show Bob (tag: 2), filtering out Alice, Charlie, and Eric (tag: 1)
+      expect(rows).toHaveLength(1)
+      expect(rows[0].text()).toContain('Bob')
+
+      // Verify the filter function was called
+      expect(filterFunction).toHaveBeenCalled()
+    })
+
+    it('applies custom filter function with non-empty filter string', async () => {
+      const filterFunction = vi.fn((item: ItemWithTag, filter: string | undefined) => {
+        // When filter string exists, use it to match name AND check tag
+        if (filter) {
+          return (
+            item.name.toLowerCase().includes(filter.toLowerCase()) &&
+            item.tag === 2 // Only show items with tag 2
+          )
+        }
+        return true
+      })
+
+      const wrapper = mount(BTable, {
+        props: {
+          items: itemsWithTags,
+          fields: fieldsWithTags,
+          filter: 'b',
+          filterFunction,
+        },
+      })
+
+      await nextTick()
+
+      const rows = wrapper.findAll('tbody tr')
+      // Should only show Bob (name contains 'b' and tag is 2)
+      expect(rows).toHaveLength(1)
+      expect(rows[0].text()).toContain('Bob')
+
+      // Verify the filter function was called
+      expect(filterFunction).toHaveBeenCalled()
+    })
+
+    it('shows empty-filtered slot when custom filter returns no results with empty filter string', async () => {
+      const filterFunction = vi.fn(() => false) // Filter out all items
+
+      const wrapper = mount(BTable, {
+        props: {
+          items: itemsWithTags,
+          fields: fieldsWithTags,
+          filter: '',
+          filterFunction,
+          showEmpty: true,
+          emptyFilteredText: 'No matching records',
+        },
+      })
+
+      await nextTick()
+
+      const rows = wrapper.findAll('tbody tr')
+      expect(rows).toHaveLength(1) // Only the empty row
+      expect(wrapper.text()).toContain('No matching records')
+    })
+
+    it('updates filtered results when filter string changes with custom filter function', async () => {
+      const filterFunction = vi.fn((item: ItemWithTag, filter: string | undefined) => {
+        if (!filter) {
+          return item.tag !== 1 // Show only tag !== 1
+        }
+        return item.name.toLowerCase().includes(filter.toLowerCase())
+      })
+
+      const wrapper = mount(BTable, {
+        props: {
+          items: itemsWithTags,
+          fields: fieldsWithTags,
+          filter: '',
+          filterFunction,
+        },
+      })
+
+      await nextTick()
+
+      let rows = wrapper.findAll('tbody tr')
+      expect(rows).toHaveLength(1) // Only Bob with tag 2
+
+      // Change filter to show items with 'a' in name
+      await wrapper.setProps({filter: 'a'})
+      await nextTick()
+
+      rows = wrapper.findAll('tbody tr')
+      // Should show Alice, Charlie (both have 'a' in name)
+      expect(rows).toHaveLength(2)
+      expect(rows[0].text()).toContain('Alice')
+      expect(rows[1].text()).toContain('Charlie')
+    })
+
+    it('emits filtered event when custom filter function filters with empty string', async () => {
+      const filterFunction = vi.fn((item: ItemWithTag) => item.tag !== 1)
+
+      const wrapper = mount(BTable, {
+        props: {
+          items: itemsWithTags,
+          fields: fieldsWithTags,
+          filter: '',
+          filterFunction,
+        },
+      })
+
+      await nextTick()
+
+      // The filtered event should be emitted with the filtered items
+      expect(wrapper.emitted('filtered')).toBeTruthy()
+      const filteredItems = wrapper.emitted('filtered')?.[0]?.[0] as typeof itemsWithTags
+      expect(filteredItems).toHaveLength(1)
+      expect(filteredItems[0].name).toBe('Bob')
+    })
+  })
 })

@@ -82,9 +82,12 @@ export const useTableMapper = <Item>({
   const sortByModelResolved = readonly(toRef(pagination.sort.by))
   const isSortableResolved = readonly(toRef(pagination.sort.isSortable))
   const filterResolved = readonly(toRef(pagination.filter.filter))
+  const filterFunctionResolved = readonly(toRef(pagination.filter.filterFunction))
   const usesProviderResolved = readonly(toRef(provider.usesProvider))
 
-  const isFilterableTable = computed(() => !!filterResolved.value)
+  const isFilterableTable = computed(
+    () => !!filterResolved.value || !!filterFunctionResolved.value
+  )
 
   const computedFields = computed<TableField<Item>[]>(() =>
     toValue(fields).map((el) => {
