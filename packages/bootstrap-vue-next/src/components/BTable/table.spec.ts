@@ -1834,8 +1834,7 @@ describe('BTable busyLoadingText', () => {
         // When filter string exists, use it to match name AND check tag
         if (filter) {
           return (
-            item.name.toLowerCase().includes(filter.toLowerCase()) &&
-            item.tag === 2 // Only show items with tag 2
+            item.name.toLowerCase().includes(filter.toLowerCase()) && item.tag === 2 // Only show items with tag 2
           )
         }
         return true
