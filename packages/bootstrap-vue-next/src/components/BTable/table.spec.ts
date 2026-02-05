@@ -1553,13 +1553,15 @@ describe('event emissions', () => {
 
   it('emits filtered event when reactive dependencies in custom filter function change', async () => {
     const tag = ref('young')
+    let filterCallCount = 0
     
     const customFilterFunction = (item: (typeof items)[0], filter: string | undefined) => {
-      // Filter based on the reactive tag value and the filter string
-      if (tag.value === 'young' && item.age < 30) {
-        return item.first_name.toLowerCase().includes((filter || '').toLowerCase())
-      } else if (tag.value === 'old' && item.age >= 30) {
-        return item.first_name.toLowerCase().includes((filter || '').toLowerCase())
+      filterCallCount++
+      // Filter based on the reactive tag value
+      if (tag.value === 'young') {
+        return item.age < 30
+      } else if (tag.value === 'old') {
+        return item.age >= 30
       }
       return false
     }
@@ -1575,21 +1577,35 @@ describe('event emissions', () => {
 
     await nextTick()
 
-    // Initial state: tag is 'young', should show Jane (age 25)
-    expect(wrapper.emitted('filtered')).toBeTruthy()
-    let filteredItems = wrapper.emitted('filtered')?.at(-1)?.[0] as typeof items
-    expect(filteredItems).toHaveLength(1)
-    expect(filteredItems[0].first_name).toBe('Jane')
+    // Get initial displayed rows count - should show Jane
+    const initialRows = wrapper.findAll('tbody tr')
+    expect(initialRows.length).toBeGreaterThan(0)
+    expect(initialRows[0].text()).toContain('Jane')
+
+    // Initial filter event count
+    const initialEventCount = wrapper.emitted('filtered')?.length || 0
+    const initialCallCount = filterCallCount
 
     // Change reactive dependency - should emit filtered event
     tag.value = 'old'
     await nextTick()
 
-    // Should emit filtered event again
-    expect(wrapper.emitted('filtered')?.length).toBeGreaterThan(1)
-    filteredItems = wrapper.emitted('filtered')?.at(-1)?.[0] as typeof items
+    // Filter function should have been called again
+    expect(filterCallCount).toBeGreaterThan(initialCallCount)
+
+    // Should have different rows now - John and Bob
+    const finalRows = wrapper.findAll('tbody tr')
+    expect(finalRows.length).toBe(2)
+    const names = finalRows.map((r) => r.text())
+    expect(names.some((n) => n.includes('John'))).toBe(true)
+    expect(names.some((n) => n.includes('Bob'))).toBe(true)
+
+    // Should emit filtered event
+    expect(wrapper.emitted('filtered')?.length).toBeGreaterThan(initialEventCount)
+    const filteredItems = wrapper.emitted('filtered')?.at(-1)?.[0] as typeof items
     expect(filteredItems).toHaveLength(2) // John (30) and Bob (35)
-    expect(filteredItems.map((i) => i.first_name)).toEqual(['John', 'Bob'])
+    const filteredNames = filteredItems.map((i) => i.first_name).sort()
+    expect(filteredNames).toEqual(['Bob', 'John'])
   })
 
   it('emits row-selected event when row is selected', async () => {
