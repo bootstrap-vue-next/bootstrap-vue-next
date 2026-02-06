@@ -1778,4 +1778,29 @@ describe('BTable busyLoadingText', () => {
     })
     expect(wrapper.text()).not.toContain('Should not appear')
   })
+
+  it('filters correctly with filterFunction when filter prop is empty string', async () => {
+    const tag = 1
+    const wrapper = mount(BTable, {
+      props: {
+        filter: 'e',
+        items: [
+          {name: 'fred', tag: 1},
+          {name: 'joe', tag: 1},
+          {name: 'eric', tag: 2},
+        ],
+        filterFunction: (item, str) => item.tag === tag && item.name.includes(str),
+      },
+    })
+    const tbody = wrapper.find('tbody')
+    expect(tbody.text()).toBe('fred1joe1')
+    await wrapper.setProps({
+      filter: 'ee',
+    })
+    expect(tbody.text()).toBe('')
+    await wrapper.setProps({
+      filter: '',
+    })
+    expect(tbody.text()).toBe('fred1joe1')
+  })
 })
