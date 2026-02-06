@@ -22,7 +22,11 @@
           <BFormSelect
             id="per-page-select"
             v-model="perPage"
-            :options="[5, 10, 15]"
+            :options="[
+              {value: 5, text: '5'},
+              {value: 10, text: '10'},
+              {value: 15, text: '15'},
+            ]"
           />
         </BFormGroup>
       </BCol>
