@@ -56,17 +56,17 @@ const _props = withDefaults(
     autofocus: false,
     button: false,
     buttonGroup: false,
-    buttonVariant: null,
+    buttonVariant: undefined,
     disabled: false,
     form: undefined,
     id: undefined,
     inline: false,
     name: undefined,
     plain: false,
-    required: undefined,
+    required: false,
     reverse: false,
     size: undefined,
-    state: null,
+    state: undefined,
     switch: false,
     uncheckedValue: false,
     value: true,
@@ -134,10 +134,9 @@ const classesObject = computed(() => ({
   inline: props.inline || (parentData?.inline.value ?? false),
   reverse: props.reverse || (parentData?.reverse.value ?? false),
   switch: props.switch || (parentData?.switch.value ?? false),
-  state:
-    props.state === true || props.state === false ? props.state : (parentData?.state.value ?? null),
-  size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
-  buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
+  state: props.state ?? parentData?.state.value ?? null,
+  size: props.size ?? parentData?.size.value ?? 'md',
+  buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary',
   hasDefaultSlot: hasDefaultSlot.value,
 }))
 const wrapperClasses = getClasses(classesObject)
