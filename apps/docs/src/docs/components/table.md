@@ -916,21 +916,9 @@ be called when the `filter` prop is a falsey value.
 
 The display of the `empty-filter-text` relies on the truthiness of the `filter` prop.
 
-### Filter events
+## Pagination and Filtering
 
-When local filtering is applied, and the resultant number of items change, `<BTable>` will emit the
-`filtered` event with a single argument of type `Item[]`: which is the complete list of
-items passing the filter routine. **Treat this argument as read-only.**
-
-::: warning Custom Filter Function Limitation
-When using a custom filter function (via `filter-function` prop), the `@filtered` event is only emitted when the `filter` prop value changes. It will **not** emit when reactive values referenced inside your custom filter function change, as Vue cannot detect these internal dependencies.
-
-If you need to track filtered items reactively with custom filter functions, use a template ref to access the table's `displayItems` property instead. See [Pagination with Filtering](#pagination-with-filtering) for an example.
-:::
-
-Setting the prop `filter` to null or an empty string will clear local items filtering.
-
-## Pagination
+### Pagination
 
 `<BTable>` supports built in pagination of item data. You can control how many rows are displayed
 at a time by setting the `per-page` prop to the maximum number of rows you would like displayed, and
@@ -940,12 +928,20 @@ use the `current-page` prop to specify which page to display (starting from page
 You can use the [`<BPagination>`](/docs/components/pagination) component in conjunction with
 `<BTable>` for providing control over pagination.
 
-### Pagination with Filtering
+### Filter events
+
+When local filtering is applied, and the resultant number of items change, `<BTable>` will emit the
+`filtered` event with a single argument of type `Item[]`: which is the complete list of
+items passing the filter routine. **Treat this argument as read-only.**
+
+Setting the prop `filter` to null or an empty string will clear local items filtering.
+
+### Tracking Filtered Items with Template Refs
 
 When using pagination with filtering, you need to track the number of filtered items to correctly calculate the total number of pages for `<BPagination>`. The recommended approach is to use a template ref to access the table's `displayItems` property, which is automatically reactive and includes all filtering, sorting, and other transformations.
 
-::: tip Reactive Filtering with Custom Filter Functions
-When using custom filter functions (via the `filter-function` prop), the `@filtered` event may not emit when reactive values inside your filter function change. This is because Vue cannot detect changes within function closures.
+::: warning Custom Filter Function Limitation
+When using a custom filter function (via `filter-function` prop), the `@filtered` event is only emitted when the `filter` prop value changes. It will **not** emit when reactive values referenced inside your custom filter function change, as Vue cannot detect these internal dependencies.
 
 Instead of relying on the `@filtered` event, use template refs to access `displayItems` directly:
 

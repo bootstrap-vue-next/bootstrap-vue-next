@@ -44,9 +44,7 @@
       align="center"
     />
 
-    <p class="mt-3">
-      Showing {{ displayedCount }} of {{ totalRows }} filtered items
-    </p>
+    <p class="mt-3">Showing {{ displayedCount }} of {{ totalRows }} filtered items</p>
   </div>
 </template>
 
