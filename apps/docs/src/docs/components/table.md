@@ -916,15 +916,9 @@ be called when the `filter` prop is a falsey value.
 
 The display of the `empty-filter-text` relies on the truthiness of the `filter` prop.
 
-### Filter events
+## Pagination and Filtering
 
-When local filtering is applied, and the resultant number of items change, `<BTable>` will emit the
-`filtered` event with a single argument of type `Item[]`: which is the complete list of
-items passing the filter routine. **Treat this argument as read-only.**
-
-Setting the prop `filter` to null or an empty string will clear local items filtering.
-
-## Pagination
+### Pagination
 
 `<BTable>` supports built in pagination of item data. You can control how many rows are displayed
 at a time by setting the `per-page` prop to the maximum number of rows you would like displayed, and
@@ -933,6 +927,16 @@ use the `current-page` prop to specify which page to display (starting from page
 
 You can use the [`<BPagination>`](/docs/components/pagination) component in conjunction with
 `<BTable>` for providing control over pagination.
+
+<<< DEMO ./demo/TablePaginationFiltering.vue
+
+### Filter events
+
+When local filtering is applied, and the resultant number of items change, `<BTable>` will emit the
+`filtered` event with a single argument of type `Item[]`: which is the complete list of
+items passing the filter routine. **Treat this argument as read-only.**
+
+Setting the prop `filter` to null or an empty string will clear local items filtering.
 
 ## Using items provider functions
 
