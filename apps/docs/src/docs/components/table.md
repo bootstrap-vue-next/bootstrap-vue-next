@@ -928,6 +928,8 @@ use the `current-page` prop to specify which page to display (starting from page
 You can use the [`<BPagination>`](/docs/components/pagination) component in conjunction with
 `<BTable>` for providing control over pagination.
 
+<<< DEMO ./demo/TablePaginationFiltering.vue
+
 ### Filter events
 
 When local filtering is applied, and the resultant number of items change, `<BTable>` will emit the
@@ -935,27 +937,6 @@ When local filtering is applied, and the resultant number of items change, `<BTa
 items passing the filter routine. **Treat this argument as read-only.**
 
 Setting the prop `filter` to null or an empty string will clear local items filtering.
-
-### Tracking Filtered Items with Template Refs
-
-When using pagination with filtering, you need to track the number of filtered items to correctly calculate the total number of pages for `<BPagination>`. The recommended approach is to use a template ref to access the table's `displayItems` property, which is automatically reactive and includes all filtering, sorting, and other transformations.
-
-::: warning Custom Filter Function Limitation
-When using a custom filter function (via `filter-function` prop), the `@filtered` event is only emitted when the `filter` prop value changes. It will **not** emit when reactive values referenced inside your custom filter function change, as Vue cannot detect these internal dependencies.
-
-Instead of relying on the `@filtered` event, use template refs to access `displayItems` directly:
-
-```vue
-<BTable ref="tableRef" :items="items" :filter="filter" />
-
-const tableRef = useTemplateRef('tableRef')
-const totalRows = computed(() => tableRef.value?.displayItems.length ?? 0)
-```
-
-The `displayItems` property is reactive and will automatically update when filtering changes, making it ideal for pagination calculations.
-:::
-
-<<< DEMO ./demo/TablePaginationFiltering.vue
 
 ## Using items provider functions
 

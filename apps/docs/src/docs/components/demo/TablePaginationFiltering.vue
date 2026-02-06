@@ -44,7 +44,7 @@
       align="center"
     />
 
-    <p class="mt-3">Showing {{ displayedCount }} of {{ totalRows }} filtered items</p>
+    <p class="mt-3">Total filtered items: {{ totalRows }}</p>
   </div>
 </template>
 
@@ -88,12 +88,4 @@ const tableRef = useTemplateRef<ComponentExposed<typeof BTable<Person>>>('tableR
 
 // Compute total rows from displayItems (accounts for filtering)
 const totalRows = computed(() => tableRef.value?.displayItems.length ?? items.length)
-
-// Compute how many items are currently displayed on the page
-const displayedCount = computed(() => {
-  const total = totalRows.value
-  const start = (currentPage.value - 1) * perPage.value
-  const end = Math.min(start + perPage.value, total)
-  return Math.max(0, end - start)
-})
 </script>
