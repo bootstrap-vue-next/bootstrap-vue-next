@@ -31,7 +31,7 @@ import type {RadioOption} from '../../types/RadioTypes'
  * Type-safe wrapper component for BFormRadioGroup.
  * Provides generic type safety for options and field names.
  * Normalizes typed options and forwards to BFormRadioGroupBase for rendering.
- * Supports both complex objects and simple scalar types (string, number).
+ * Supports both complex objects and simple scalar types (string, number, boolean).
  */
 const props = withDefaults(
   defineProps<Omit<BFormRadioGroupProps<Item, ValueKey>, 'modelValue'>>(),
