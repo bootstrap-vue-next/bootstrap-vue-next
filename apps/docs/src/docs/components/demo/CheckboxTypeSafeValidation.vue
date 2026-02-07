@@ -6,10 +6,8 @@
     <BFormCheckboxGroup
       id="checkbox-type-safe-validation"
       v-model="selectedIds"
-      :options="users"
+      :options="userOptions"
       :state="validationState"
-      value-field="id"
-      text-field="name"
       stacked
     />
     <BFormInvalidFeedback :state="validationState">
@@ -31,6 +29,14 @@ const users: User[] = [
   {id: 2, name: 'Bob'},
   {id: 3, name: 'Charlie'},
 ]
+
+// Map to standard format for full type safety
+const userOptions = computed(() =>
+  users.map((user) => ({
+    value: user.id,
+    text: user.name,
+  }))
+)
 
 const selectedIds = ref<number[]>([])
 

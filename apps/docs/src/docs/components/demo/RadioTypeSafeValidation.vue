@@ -3,10 +3,7 @@
     <h5>Valid field names (autocompleted by IDE):</h5>
     <BFormRadioGroup
       v-model="selectedUserId"
-      :options="users"
-      value-field="id"
-      text-field="name"
-      disabled-field="inactive"
+      :options="userOptions"
     />
     <p class="mt-2">Selected: {{ selectedUserId }}</p>
 
@@ -29,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 
 interface User {
   id: number
@@ -43,6 +40,15 @@ const users: User[] = [
   {id: 2, name: 'Bob', email: 'bob@example.com', inactive: false},
   {id: 3, name: 'Charlie', email: 'charlie@example.com', inactive: true},
 ]
+
+// Map to standard format for full type safety
+const userOptions = computed(() =>
+  users.map((user) => ({
+    value: user.id,
+    text: user.name,
+    disabled: user.inactive,
+  }))
+)
 
 const selectedUserId = ref<number>(1)
 </script>

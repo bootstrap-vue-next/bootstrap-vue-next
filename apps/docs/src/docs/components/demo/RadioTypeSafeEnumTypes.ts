@@ -6,7 +6,7 @@ export enum Priority {
 }
 
 export interface PriorityOption {
-  label: string
+  text: string
   value: Priority
   color: string
 }

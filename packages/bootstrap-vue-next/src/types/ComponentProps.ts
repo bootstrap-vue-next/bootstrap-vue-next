@@ -317,24 +317,26 @@ export interface BFormCheckboxGroupBaseProps {
 }
 
 // Wrapper props (generic)
+// Item can be: primitives (string|number|boolean) OR objects with {value, text, disabled} structure
+// If Item is a complex object without a 'value' field, use computed mapping to standard format
 export interface BFormCheckboxGroupProps<
-  Item = Record<string, unknown>,
-  ValueKey extends Item extends Record<string, unknown> ? keyof Item : never = Item extends Record<
-    string,
-    unknown
-  >
-    ? keyof Item
-    : never,
+  Item extends Record<string, unknown> | string | number | boolean =
+    | Record<string, unknown>
+    | string
+    | number
+    | boolean,
 > {
-  // Generic-specific props
-  options?: readonly (Item | string | number)[]
-  valueField?: ValueKey & string
-  textField?: keyof Item & string
-  disabledField?: keyof Item & string
+  // Accept both Item type and any object shape for flexible inference and custom field names
+  options?: readonly (Item | Record<string, unknown>)[]
+  valueField?: string
+  textField?: string
+  disabledField?: string
 
   // All base props (inherited)
   id?: string
-  modelValue?: (Item extends Record<string, unknown> ? Item[ValueKey] : Item)[] | undefined
+  // Broadly typed to avoid v-model inference narrowing issues
+  // Users should type their own refs for compile-time safety
+  modelValue?: unknown[] | undefined
   name?: string
   size?: Size
   state?: ValidationState
@@ -364,8 +366,8 @@ export interface BFormDatalistBaseProps {
 
 // BFormDatalist wrapper props (generic, type-safe options)
 export interface BFormDatalistProps<
-  Item = Record<string, unknown>,
-  ValueKey extends Item extends Record<string, unknown> ? keyof Item : never = Item extends Record<
+  Item = Record<string, unknown> | string | number | boolean,
+  ValueKey extends Item extends Record<string, unknown> ? keyof Item : string = Item extends Record<
     string,
     unknown
   >
@@ -377,7 +379,7 @@ export interface BFormDatalistProps<
   id?: string
   options?: readonly (Item | string | number)[]
   textField?: keyof Item & string
-  valueField?: ValueKey & string
+  valueField?: ValueKey
 }
 
 export interface BFormFileProps {
@@ -464,37 +466,41 @@ export interface BFormRadioGroupBaseProps {
 
 /**
  * Props for BFormRadioGroup - type-safe generic wrapper component.
- * Provides compile-time type safety for options array and field names.
+ * Provides compile-time type safety for options array.
+ *
+ * Item can be: primitives (string|number|boolean) OR objects with {value, text, disabled} structure
+ * If Item is a complex object without a 'value' field, use computed mapping to standard format
  */
 export interface BFormRadioGroupProps<
-  Item = Record<string, unknown>,
-  ValueKey extends Item extends Record<string, unknown> ? keyof Item : never = Item extends Record<
-    string,
-    unknown
-  >
-    ? keyof Item
-    : never,
+  Item extends Record<string, unknown> | string | number | boolean =
+    | Record<string, unknown>
+    | string
+    | number
+    | boolean,
 > {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
   disabled?: boolean
-  disabledField?: keyof Item & string
+  disabledField?: string
   form?: string
   id?: string
-  modelValue?: Item extends Record<string, unknown> ? Item[ValueKey] : Item
+  // Broadly typed to avoid v-model inference narrowing issues
+  // Users should type their own refs for compile-time safety
+  modelValue?: unknown | undefined
   name?: string
-  options?: readonly (Item | string | number)[]
+  // Accept both Item type and any object shape for flexible inference and custom field names
+  options?: readonly (Item | Record<string, unknown>)[]
   plain?: boolean
   required?: boolean
   reverse?: boolean
   size?: Size
   stacked?: boolean
   state?: ValidationState
-  textField?: keyof Item & string
+  textField?: string
   validated?: boolean
-  valueField?: ValueKey & string
+  valueField?: string
 }
 export interface BFormRatingProps {
   color?: string
@@ -551,34 +557,37 @@ export interface BFormSelectBaseProps {
 }
 
 // BFormSelect wrapper props (generic, type-safe options)
+// Item can be: primitives (string|number|boolean) OR objects with {value, text, disabled} structure
+// If Item is a complex object without a 'value' field, use computed mapping to standard format
 export interface BFormSelectProps<
-  Item = Record<string, unknown>,
-  ValueKey extends Item extends Record<string, unknown> ? keyof Item : never = Item extends Record<
-    string,
-    unknown
-  >
-    ? keyof Item
-    : never,
+  Item extends Record<string, unknown> | string | number | boolean =
+    | Record<string, unknown>
+    | string
+    | number
+    | boolean,
 > {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   disabled?: boolean
-  disabledField?: keyof Item & string
+  disabledField?: string
   form?: string
   id?: string
-  labelField?: keyof Item & string
-  modelValue?: Item extends Record<string, unknown> ? Item[ValueKey] : Item
+  labelField?: string
+  // Broadly typed to avoid v-model inference narrowing issues
+  // Users should type their own refs for compile-time safety
+  modelValue?: unknown | unknown[] | null
   multiple?: boolean
   name?: string
-  options?: readonly (Item | string | number)[]
-  optionsField?: keyof Item & string
+  // Accept both Item type and any object shape for flexible inference and custom field names
+  options?: readonly (Item | Record<string, unknown>)[]
+  optionsField?: string
   plain?: boolean
   required?: boolean
   selectSize?: Numberish
   size?: Size
   state?: ValidationState
-  textField?: keyof Item & string
-  valueField?: ValueKey & string
+  textField?: string
+  valueField?: string
 }
 
 export interface BFormSelectOptionProps<T> {

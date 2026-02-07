@@ -2,8 +2,6 @@
   <BFormRadioGroup
     v-model="selectedPriority"
     :options="priorityOptions"
-    value-field="value"
-    text-field="label"
   />
   <p class="mt-2">
     Selected Priority: <strong>{{ selectedPriority }}</strong>
@@ -13,13 +11,14 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {Priority, type PriorityOption} from './RadioTypeSafeEnumTypes'
+import {Priority} from './RadioTypeSafeEnumTypes'
 
-const priorityOptions: PriorityOption[] = [
-  {label: 'Low Priority', value: Priority.Low, color: 'success'},
-  {label: 'Medium Priority', value: Priority.Medium, color: 'info'},
-  {label: 'High Priority', value: Priority.High, color: 'warning'},
-  {label: 'Critical Priority', value: Priority.Critical, color: 'danger'},
+// Use explicit {value, text} structure with additional properties for type inference
+const priorityOptions: {text: string; value: Priority; color: string}[] = [
+  {text: 'Low Priority', value: Priority.Low, color: 'success'},
+  {text: 'Medium Priority', value: Priority.Medium, color: 'info'},
+  {text: 'High Priority', value: Priority.High, color: 'warning'},
+  {text: 'Critical Priority', value: Priority.Critical, color: 'danger'},
 ]
 
 // TypeScript ensures selectedPriority can only be a Priority enum value

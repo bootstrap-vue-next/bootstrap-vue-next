@@ -1,16 +1,14 @@
 <template>
   <BFormSelect
-    v-model="selectedTags as any"
-    :options="tags"
-    value-field="tagId"
-    text-field="tagName"
+    v-model="selectedTags"
+    :options="tagOptions"
     multiple
   />
   <p class="mt-2">Selected Tags: {{ selectedTags.join(', ') || 'None' }}</p>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 
 interface Tag {
   tagId: string
@@ -22,6 +20,14 @@ const tags: Tag[] = [
   {tagId: 'ts', tagName: 'TypeScript'},
   {tagId: 'bs', tagName: 'Bootstrap'},
 ]
+
+// Map to standard format for full type safety
+const tagOptions = computed(() =>
+  tags.map((tag) => ({
+    value: tag.tagId,
+    text: tag.tagName,
+  }))
+)
 
 // TypeScript knows this is string[]
 const selectedTags = ref<string[]>([])

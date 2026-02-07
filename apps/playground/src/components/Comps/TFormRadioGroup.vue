@@ -16,7 +16,7 @@
 
         <BFormRadioGroup
           id="radio-group-2"
-          v-model="radios.ex1.selected"
+          v-model="radios.ex1.selected as any"
           name="radio-sub-component"
         >
           <BFormRadio value="first">Toggle this custom radio</BFormRadio>
@@ -179,8 +179,9 @@
     </BRow>
     <BRow>
       <BCol>
-        <!-- With explicit typing on the ref, the component accepts the union -->
-        <BFormRadioGroup v-model="mixedUnionRadio">
+        <!-- Mixed object/primitive types require 'as any' on v-model -->
+        <!-- This is a TypeScript limitation with conditional generic constraints -->
+        <BFormRadioGroup v-model="mixedUnionRadio as any">
           <BFormRadio value="first">First (string)</BFormRadio>
           <BFormRadio value="second">Second (string)</BFormRadio>
           <BFormRadio :value="{fourth: 4}">Fourth (object)</BFormRadio>
@@ -198,6 +199,8 @@
 import {reactive, ref} from 'vue'
 
 // Mixed type for ex1 radio values (strings and objects)
+// When using mixed object/primitive types, TypeScript needs help with inference
+// The workaround is to use explicit types and 'as any' on v-model for child radios
 type Ex1RadioValue = string | {fourth: number} | {fifth: number}
 
 const radios = reactive({
@@ -240,8 +243,9 @@ const simpleStringRadio = ref('red')
 const simpleNumberRadio = ref(1)
 const simpleBooleanRadio = ref(true)
 
-// Mixed type example using union - user defines the exact union type
-// The type annotation allows both strings and objects
+// Mixed type example using union - demonstrates runtime support for mixed types
+// When using object types mixed with primitives, use 'as any' on v-model
+// The type on the ref is preserved for your code, just TypeScript inference needs help
 type MixedRadioValue = string | {fourth: number} | {fifth: number}
 const mixedUnionRadio = ref<MixedRadioValue>('first')
 </script>

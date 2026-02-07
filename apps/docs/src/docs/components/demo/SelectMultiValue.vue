@@ -1,6 +1,6 @@
 <template>
   <BFormSelect
-    v-model="selected as any"
+    v-model="selected"
     :options="exMultiOptions"
     multiple
     :select-size="4"
@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 
+// Options already in standard format for full type safety
 const exMultiOptions = [
   {value: 'a', text: 'This is First option'},
   {value: 'b', text: 'Default Selected Option'},

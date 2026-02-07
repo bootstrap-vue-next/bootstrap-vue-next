@@ -8,7 +8,14 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {Status, statusOptions} from './SelectTypeSafeEnumTypes'
+import {Status} from './SelectTypeSafeEnumTypes'
+
+// Use explicit {value, text} structure for type inference
+const statusOptions: {value: Status; text: string}[] = [
+  {value: Status.Active, text: 'Active'},
+  {value: Status.Inactive, text: 'Inactive'},
+  {value: Status.Pending, text: 'Pending'},
+]
 
 // TypeScript knows this is of type Status
 const currentStatus = ref<Status>(statusOptions[0].value)

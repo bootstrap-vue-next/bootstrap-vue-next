@@ -3,9 +3,7 @@
   <BFormSelect
     id="select-type-safe-validation"
     v-model="selectedProduct"
-    :options="products"
-    value-field="productId"
-    text-field="productName"
+    :options="productOptions"
   />
 
   <!-- ❌ This would cause TypeScript errors (uncomment to test):
@@ -22,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 
 interface Product {
   productId: number
@@ -34,6 +32,14 @@ const products: Product[] = [
   {productId: 1, productName: 'Widget', price: 19.99},
   {productId: 2, productName: 'Gadget', price: 29.99},
 ]
+
+// Map to standard format for full type safety
+const productOptions = computed(() =>
+  products.map((product) => ({
+    value: product.productId,
+    text: product.productName,
+  }))
+)
 
 const selectedProduct = ref<number>()
 </script>

@@ -17,9 +17,11 @@
   setup
   lang="ts"
   generic="
-    Item = Record<string, unknown> | string | number | boolean,
-    ValueKey extends Item extends Record<string, unknown> ? keyof Item : never =
-      Item extends Record<string, unknown> ? keyof Item : never
+    Item extends Record<string, unknown> | string | number | boolean =
+      | Record<string, unknown>
+      | string
+      | number
+      | boolean
   "
 >
 import type {BFormRadioGroupProps} from '../../types/ComponentProps'
@@ -33,35 +35,30 @@ import type {RadioOption} from '../../types/RadioTypes'
  * Normalizes typed options and forwards to BFormRadioGroupBase for rendering.
  * Supports both complex objects and simple scalar types (string, number, boolean).
  */
-const props = withDefaults(
-  defineProps<Omit<BFormRadioGroupProps<Item, ValueKey>, 'modelValue'>>(),
-  {
-    ariaInvalid: undefined,
-    autofocus: false,
-    buttonVariant: 'secondary',
-    buttons: false,
-    disabled: false,
-    disabledField: 'disabled' as keyof Item & string,
-    form: undefined,
-    id: undefined,
-    name: undefined,
-    options: () => [],
-    plain: false,
-    required: false,
-    reverse: false,
-    size: 'md',
-    stacked: false,
-    state: null,
-    textField: 'text' as keyof Item & string,
-    validated: false,
-    valueField: 'value' as ValueKey & string,
-  }
-)
+const props = withDefaults(defineProps<Omit<BFormRadioGroupProps<Item>, 'modelValue'>>(), {
+  ariaInvalid: undefined,
+  autofocus: false,
+  buttonVariant: 'secondary',
+  buttons: false,
+  disabled: false,
+  disabledField: 'disabled',
+  form: undefined,
+  id: undefined,
+  name: undefined,
+  options: () => [],
+  plain: false,
+  required: false,
+  reverse: false,
+  size: 'md',
+  stacked: false,
+  state: null,
+  textField: 'text',
+  validated: false,
+  valueField: 'value',
+})
 
 // Type-safe model value
-const modelValue = defineModel<
-  (Item extends Record<string, unknown> ? Item[ValueKey & keyof Item] : Item) | undefined
->({
+const modelValue = defineModel<unknown | undefined>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: null as any,
 })
@@ -79,12 +76,16 @@ const normalizedOptions = computed(
             text: el.toString(),
           }
         : {
-            value: el[props.valueField as ValueKey],
+            value: (el as Record<string, unknown>)[props.valueField as string],
             disabled:
-              (el[props.disabledField as keyof Item] as boolean | undefined) ??
+              ((el as Record<string, unknown>)[props.disabledField as string] as
+                | boolean
+                | undefined) ??
               props.disabled ??
               false,
-            text: (el[props.textField as keyof Item] as string | undefined) ?? '',
+            text:
+              ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ??
+              '',
           }
     ) as RadioOption[]
 )

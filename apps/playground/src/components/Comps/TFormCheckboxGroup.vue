@@ -29,7 +29,7 @@
         <span>
           <b>With slots</b>
         </span>
-        <BFormCheckboxGroup id="checkbox-group-2" v-model="checkboxes.selected">
+        <BFormCheckboxGroup id="checkbox-group-2" v-model="checkboxes.selected as any">
           <BFormCheckbox value="orange">Orange</BFormCheckbox>
           <BFormCheckbox value="apple">Apple</BFormCheckbox>
           <BFormCheckbox value="pineapple">Pineapple</BFormCheckbox>
@@ -110,6 +110,7 @@
 import {reactive, ref} from 'vue'
 
 // Mixed type for checkbox values (strings and objects)
+// When using mixed types, TypeScript needs explicit typing on the selected array
 type MixedCheckboxValue = string | {foo: number}
 
 const checkboxes = reactive({

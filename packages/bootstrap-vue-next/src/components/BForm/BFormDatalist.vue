@@ -18,7 +18,7 @@
   lang="ts"
   generic="
     Item = Record<string, unknown> | string | number | boolean,
-    ValueKey extends Item extends Record<string, unknown> ? keyof Item : never =
+    ValueKey extends Item extends Record<string, unknown> ? keyof Item : string =
       Item extends Record<string, unknown> ? keyof Item : never
   "
 >
@@ -40,7 +40,8 @@ const props = withDefaults(defineProps<Omit<BFormDatalistProps<Item, ValueKey>, 
   id: undefined,
   options: () => [],
   textField: 'text' as keyof Item & string,
-  valueField: 'value' as ValueKey & string,
+  // @ts-expect-error - ValueKey default doesn't satisfy InferDefault but works at runtime
+  valueField: 'value',
 })
 defineSlots<
   BFormDatalistSlots<Item extends Record<string, unknown> ? Item[ValueKey & keyof Item] : Item>
@@ -59,9 +60,12 @@ const normalizedOptions = computed(() =>
       return String(el)
     }
     return {
-      value: el[props.valueField as ValueKey],
-      text: (el[props.textField as keyof Item] as string | undefined) ?? '',
-      disabled: (el[props.disabledField as keyof Item] as boolean | undefined) ?? false,
+      value: (el as Record<string, unknown>)[props.valueField as string],
+      text:
+        ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ?? '',
+      disabled:
+        ((el as Record<string, unknown>)[props.disabledField as string] as boolean | undefined) ??
+        false,
     } as SelectOption
   })
 )

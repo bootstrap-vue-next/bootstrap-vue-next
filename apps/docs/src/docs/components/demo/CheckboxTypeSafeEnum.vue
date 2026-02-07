@@ -4,9 +4,6 @@
       id="checkbox-type-safe-enum"
       v-model="selectedRoles"
       :options="roleOptions"
-      value-field="value"
-      text-field="label"
-      disabled-field="disabled"
     />
     <div class="mt-3">
       Selected roles: <strong>{{ selectedRoles }}</strong>
@@ -18,17 +15,12 @@
 import {ref} from 'vue'
 import {UserRole} from './CheckboxTypeSafeEnumTypes'
 
-interface RoleOption {
-  value: UserRole
-  label: string
-  disabled?: boolean
-}
-
-const roleOptions: RoleOption[] = [
-  {value: UserRole.Admin, label: 'Administrator'},
-  {value: UserRole.Editor, label: 'Editor'},
-  {value: UserRole.Viewer, label: 'Viewer'},
-  {value: UserRole.Guest, label: 'Guest', disabled: true},
+// Use explicit {value, text, disabled?} structure for type inference
+const roleOptions: {value: UserRole; text: string; disabled?: boolean}[] = [
+  {value: UserRole.Admin, text: 'Administrator'},
+  {value: UserRole.Editor, text: 'Editor'},
+  {value: UserRole.Viewer, text: 'Viewer'},
+  {value: UserRole.Guest, text: 'Guest', disabled: true},
 ]
 
 // TypeScript knows selectedRoles is UserRole[]

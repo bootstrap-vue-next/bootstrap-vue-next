@@ -21,9 +21,11 @@
   setup
   lang="ts"
   generic="
-    Item = Record<string, unknown> | string | number | boolean,
-    ValueKey extends Item extends Record<string, unknown> ? keyof Item : never =
-      Item extends Record<string, unknown> ? keyof Item : never
+    Item extends Record<string, unknown> | string | number | boolean =
+      | Record<string, unknown>
+      | string
+      | number
+      | boolean
   "
 >
 import type {BFormCheckboxGroupProps, BFormCheckboxGroupSlots} from '../../types'
@@ -32,37 +34,32 @@ import BFormCheckboxGroupBase from './BFormCheckboxGroupBase.vue'
 import type {CheckboxValue} from '../../types/CheckboxTypes'
 
 // Generic props - type safety happens here
-const props = withDefaults(
-  defineProps<Omit<BFormCheckboxGroupProps<Item, ValueKey>, 'modelValue'>>(),
-  {
-    ariaInvalid: undefined,
-    autofocus: false,
-    buttonVariant: 'secondary',
-    buttons: false,
-    disabled: false,
-    disabledField: 'disabled' as keyof Item & string,
-    form: undefined,
-    id: undefined,
-    name: undefined,
-    options: () => [],
-    plain: false,
-    required: false,
-    reverse: false,
-    size: 'md',
-    stacked: false,
-    state: null,
-    switches: false,
-    textField: 'text' as keyof Item & string,
-    validated: false,
-    valueField: 'value' as ValueKey & string,
-  }
-)
+const props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps<Item>, 'modelValue'>>(), {
+  ariaInvalid: undefined,
+  autofocus: false,
+  buttonVariant: 'secondary',
+  buttons: false,
+  disabled: false,
+  disabledField: 'disabled',
+  form: undefined,
+  id: undefined,
+  name: undefined,
+  options: () => [],
+  plain: false,
+  required: false,
+  reverse: false,
+  size: 'md',
+  stacked: false,
+  state: null,
+  switches: false,
+  textField: 'text',
+  validated: false,
+  valueField: 'value',
+})
 defineSlots<BFormCheckboxGroupSlots>()
 
 // Type-safe model value
-const modelValue = defineModel<
-  (Item extends Record<string, unknown> ? Item[ValueKey & keyof Item] : Item)[] | undefined
->({
+const modelValue = defineModel<unknown[] | undefined>({
   default: () => [],
 })
 
@@ -77,13 +74,16 @@ const normalizedOptions = computed(() =>
             text: el.toString(),
           }
         : {
-            value: el[props.valueField as ValueKey],
+            value: (el as Record<string, unknown>)[props.valueField as string],
             disabled:
               props.disabled ||
-              ((el[props.disabledField as keyof Item] as boolean | undefined) ?? false),
+              (((el as Record<string, unknown>)[props.disabledField as string] as
+                | boolean
+                | undefined) ??
+                false),
             text:
-              (el[props.textField as keyof Item] as string | undefined) ??
-              String(el[props.valueField as ValueKey]),
+              ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ??
+              String((el as Record<string, unknown>)[props.valueField as string]),
           }) as {text: string; value: CheckboxValue; disabled: boolean}
   )
 )

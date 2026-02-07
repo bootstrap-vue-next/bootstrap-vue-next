@@ -4,10 +4,7 @@
     <BFormRadioGroup
       id="radio-type-safe-users"
       v-model="selectedUser"
-      :options="users"
-      value-field="userId"
-      text-field="displayName"
-      disabled-field="isInactive"
+      :options="userOptions"
       name="user-radios"
       class="mb-3"
     />
@@ -26,10 +23,7 @@
     <BFormRadioGroup
       id="radio-type-safe-products"
       v-model="selectedProduct"
-      :options="products"
-      value-field="metadata"
-      text-field="productName"
-      disabled-field="outOfStock"
+      :options="productOptions"
       name="product-radios"
       class="mb-3"
     />
@@ -44,10 +38,7 @@
     <BFormRadioGroup
       id="radio-type-safe-statuses"
       v-model="selectedStatus"
-      :options="statuses"
-      value-field="statusCode"
-      text-field="statusLabel"
-      disabled-field="disabled"
+      :options="statusOptions"
       name="status-radios"
     />
     <div class="mt-2">
@@ -75,6 +66,15 @@ const users: User[] = [
   {userId: 103, displayName: 'Charlie Brown', email: 'charlie@example.com', isInactive: true},
   {userId: 104, displayName: 'Diana Prince', email: 'diana@example.com', isInactive: false},
 ]
+
+// Map to standard format for full type safety
+const userOptions = computed(() =>
+  users.map((user) => ({
+    value: user.userId,
+    text: user.displayName,
+    disabled: user.isInactive,
+  }))
+)
 
 const selectedUser = ref<number>(101)
 
@@ -110,6 +110,15 @@ const products: Product[] = [
   },
 ]
 
+// Map to standard format for full type safety
+const productOptions = computed(() =>
+  products.map((product) => ({
+    value: product.metadata,
+    text: product.productName,
+    disabled: product.outOfStock,
+  }))
+)
+
 const selectedProduct = ref<Product['metadata']>(products[0].metadata)
 
 // Define a Status interface with numeric status codes
@@ -125,6 +134,15 @@ const statuses: Status[] = [
   {statusCode: 300, statusLabel: 'Completed', disabled: false},
   {statusCode: 400, statusLabel: 'Archived', disabled: true},
 ]
+
+// Map to standard format for full type safety
+const statusOptions = computed(() =>
+  statuses.map((status) => ({
+    value: status.statusCode,
+    text: status.statusLabel,
+    disabled: status.disabled,
+  }))
+)
 
 const selectedStatus = ref<number>(100)
 
