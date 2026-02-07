@@ -703,6 +703,25 @@ describe('form-radio', () => {
       expect($input.classes()).toContain('btn-check')
     })
 
+    it('child can explicitly set button=false to override parent button=true', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          buttons: true,
+        },
+        slots: {
+          default: '<BFormRadio value="1" :button="false">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      const $input = $radio.get('input')
+      expect($input.classes()).not.toContain('btn-check')
+      expect($input.classes()).toContain('form-check-input')
+    })
+
     it('inherits plain prop from parent when not explicitly set', () => {
       const wrapper = mount(BFormRadioGroup, {
         props: {
@@ -718,6 +737,23 @@ describe('form-radio', () => {
       })
       const $radio = wrapper.findComponent(BFormRadio)
       expect($radio.classes()).not.toContain('form-check')
+    })
+
+    it('child can explicitly set plain=false to override parent plain=true', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          plain: true,
+        },
+        slots: {
+          default: '<BFormRadio value="1" :plain="false">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      expect($radio.classes()).toContain('form-check')
     })
 
     it('inherits inline prop from parent when not explicitly set', () => {

@@ -73,6 +73,7 @@ const normalizedOptions = computed(() => {
     (el) =>
       typeof el !== 'string' &&
       typeof el !== 'number' &&
+      typeof el !== 'boolean' &&
       el[props.optionsField as keyof Item] !== undefined
   )
 
@@ -82,6 +83,9 @@ const normalizedOptions = computed(() => {
         return el
       }
       if (typeof el === 'number') {
+        return String(el)
+      }
+      if (typeof el === 'boolean') {
         return String(el)
       }
 
@@ -114,6 +118,9 @@ const normalizedOptions = computed(() => {
       return el
     }
     if (typeof el === 'number') {
+      return String(el)
+    }
+    if (typeof el === 'boolean') {
       return String(el)
     }
     // Spread all properties from the original object to preserve class, data-*, etc.

@@ -803,6 +803,25 @@ describe('form-checkbox', () => {
       expect($input.classes()).toContain('btn-check')
     })
 
+    it('child can explicitly set button=false to override parent button=true', () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          buttons: true,
+        },
+        slots: {
+          default: '<BFormCheckbox value="1" :button="false">Checkbox 1</BFormCheckbox>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormCheckbox},
+        },
+      })
+      const $checkbox = wrapper.findComponent(BFormCheckbox)
+      const $input = $checkbox.get('input')
+      expect($input.classes()).not.toContain('btn-check')
+      expect($input.classes()).toContain('form-check-input')
+    })
+
     it('inherits plain prop from parent when not explicitly set', () => {
       const wrapper = mount(BFormCheckboxGroup, {
         props: {
@@ -818,6 +837,23 @@ describe('form-checkbox', () => {
       })
       const $checkbox = wrapper.findComponent(BFormCheckbox)
       expect($checkbox.classes()).not.toContain('form-check')
+    })
+
+    it('child can explicitly set plain=false to override parent plain=true', () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          plain: true,
+        },
+        slots: {
+          default: '<BFormCheckbox value="1" :plain="false">Checkbox 1</BFormCheckbox>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormCheckbox},
+        },
+      })
+      const $checkbox = wrapper.findComponent(BFormCheckbox)
+      expect($checkbox.classes()).toContain('form-check')
     })
 
     it('inherits inline prop from parent when not explicitly set', () => {

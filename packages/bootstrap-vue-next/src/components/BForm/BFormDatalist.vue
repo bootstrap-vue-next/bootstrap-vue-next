@@ -55,6 +55,9 @@ const normalizedOptions = computed(() =>
     if (typeof el === 'number') {
       return String(el)
     }
+    if (typeof el === 'boolean') {
+      return String(el)
+    }
     return {
       value: el[props.valueField as ValueKey],
       text: (el[props.textField as keyof Item] as string | undefined) ?? '',

@@ -120,7 +120,7 @@ const checkboxes = reactive({
     {text: 'Orange', value: 'orange'},
     {text: 'Apple', value: 'apple'},
     {text: 'Pineapple', value: 'pineapple'},
-    {text: 'Object', value: {foo: 1}},
+    {text: 'Object', value: {foo: 1} as MixedCheckboxValue},
   ],
 })
 

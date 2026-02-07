@@ -70,7 +70,7 @@ const modelValue = defineModel<
 const normalizedOptions = computed(() =>
   props.options.map(
     (el) =>
-      (typeof el === 'string' || typeof el === 'number'
+      (typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean'
         ? {
             value: el,
             disabled: props.disabled,
