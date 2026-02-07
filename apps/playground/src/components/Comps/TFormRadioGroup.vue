@@ -180,7 +180,7 @@
     <BRow>
       <BCol>
         <!-- With explicit typing on the ref, the component accepts the union -->
-        <BFormRadioGroup v-model="mixedUnionRadio as any">
+        <BFormRadioGroup v-model="mixedUnionRadio">
           <BFormRadio value="first">First (string)</BFormRadio>
           <BFormRadio value="second">Second (string)</BFormRadio>
           <BFormRadio :value="{fourth: 4}">Fourth (object)</BFormRadio>
@@ -197,15 +197,18 @@
 <script setup lang="ts">
 import {reactive, ref} from 'vue'
 
+// Mixed type for ex1 radio values (strings and objects)
+type Ex1RadioValue = string | {fourth: number} | {fifth: number}
+
 const radios = reactive({
   ex1: {
-    selected: 'first',
+    selected: 'first' as Ex1RadioValue,
     options: [
       {text: 'Toggle this custom radio', value: 'first'},
       {text: 'Or toggle this other custom radio', value: 'second'},
       {text: 'This one is Disabled', value: 'third', disabled: true},
-      {text: 'This is the 4th radio', value: 'fourth'},
-      {text: 'This is the 5th radio', value: 'fifth'},
+      {text: 'This is the 4th radio', value: {fourth: 4}},
+      {text: 'This is the 5th radio', value: {fifth: 5}},
     ],
   },
   ex2: {

@@ -109,14 +109,18 @@
 <script setup lang="ts">
 import {reactive, ref} from 'vue'
 
+// Mixed type for checkbox values (strings and objects)
+type MixedCheckboxValue = string | {foo: number}
+
 const checkboxes = reactive({
   status: true,
   statusArray: ['accepted'],
-  selected: ['pineapple'],
+  selected: ['pineapple', {foo: 1}] as MixedCheckboxValue[],
   options: [
     {text: 'Orange', value: 'orange'},
     {text: 'Apple', value: 'apple'},
     {text: 'Pineapple', value: 'pineapple'},
+    {text: 'Object', value: {foo: 1}},
   ],
 })
 
