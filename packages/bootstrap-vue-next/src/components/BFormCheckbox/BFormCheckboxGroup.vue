@@ -20,7 +20,11 @@
 <script
   setup
   lang="ts"
-  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
+  generic="
+    Item = Record<string, unknown> | string | number | boolean,
+    ValueKey extends Item extends Record<string, unknown> ? keyof Item : never =
+      Item extends Record<string, unknown> ? keyof Item : never
+  "
 >
 import type {BFormCheckboxGroupProps, BFormCheckboxGroupSlots} from '../../types'
 import {computed} from 'vue'
@@ -56,7 +60,9 @@ const props = withDefaults(
 defineSlots<BFormCheckboxGroupSlots>()
 
 // Type-safe model value
-const modelValue = defineModel<Item[ValueKey][] | undefined>({
+const modelValue = defineModel<
+  (Item extends Record<string, unknown> ? Item[ValueKey & keyof Item] : Item)[] | undefined
+>({
   default: () => [],
 })
 

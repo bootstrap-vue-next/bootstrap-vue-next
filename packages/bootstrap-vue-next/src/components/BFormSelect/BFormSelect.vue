@@ -16,7 +16,11 @@
 <script
   setup
   lang="ts"
-  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
+  generic="
+    Item = Record<string, unknown> | string | number | boolean,
+    ValueKey extends Item extends Record<string, unknown> ? keyof Item : never =
+      Item extends Record<string, unknown> ? keyof Item : never
+  "
 >
 import type {BFormSelectProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
@@ -28,6 +32,7 @@ import type {BFormSelectSlots} from '../../types'
  * Type-safe wrapper component for BFormSelect.
  * Provides generic type safety for options and field names.
  * Normalizes typed options and forwards to BFormSelectBase for rendering.
+ * Supports both complex objects and simple scalar types (string, number).
  */
 const props = withDefaults(defineProps<Omit<BFormSelectProps<Item, ValueKey>, 'modelValue'>>(), {
   ariaInvalid: undefined,
@@ -49,9 +54,15 @@ const props = withDefaults(defineProps<Omit<BFormSelectProps<Item, ValueKey>, 'm
   textField: 'text' as keyof Item & string,
   valueField: 'value' as ValueKey & string,
 })
-defineSlots<BFormSelectSlots<Item[ValueKey]>>()
+defineSlots<
+  BFormSelectSlots<Item extends Record<string, unknown> ? Item[ValueKey & keyof Item] : Item>
+>()
 
-const modelValue = defineModel<Item[ValueKey] | Item[ValueKey][] | null>({
+const modelValue = defineModel<
+  | (Item extends Record<string, unknown> ? Item[ValueKey & keyof Item] : Item)
+  | (Item extends Record<string, unknown> ? Item[ValueKey & keyof Item] : Item)[]
+  | null
+>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: '' as any,
 })

@@ -121,21 +121,91 @@
         <strong>{{ radios.radioPrimitives }}</strong>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-3">Simple types: String values</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadioGroup v-model="simpleStringRadio">
+          <BFormRadio value="red">Red</BFormRadio>
+          <BFormRadio value="green">Green</BFormRadio>
+          <BFormRadio value="blue">Blue</BFormRadio>
+        </BFormRadioGroup>
+      </BCol>
+      <BCol>
+        <strong>{{ simpleStringRadio }}</strong>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-3">Simple types: Number values</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadioGroup v-model="simpleNumberRadio">
+          <BFormRadio :value="1">One</BFormRadio>
+          <BFormRadio :value="2">Two</BFormRadio>
+          <BFormRadio :value="3">Three</BFormRadio>
+        </BFormRadioGroup>
+      </BCol>
+      <BCol>
+        <strong>{{ simpleNumberRadio }}</strong>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-3">Simple types: Boolean values</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormRadioGroup v-model="simpleBooleanRadio">
+          <BFormRadio :value="true">Enabled</BFormRadio>
+          <BFormRadio :value="false">Disabled</BFormRadio>
+        </BFormRadioGroup>
+      </BCol>
+      <BCol>
+        <strong>{{ simpleBooleanRadio }}</strong>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-3">Mixed types: Strings and Objects (using union type)</h4>
+        <small>User explicitly types the state as a union of string and object types</small>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <!-- With explicit typing on the ref, the component accepts the union -->
+        <BFormRadioGroup v-model="mixedUnionRadio as any">
+          <BFormRadio value="first">First (string)</BFormRadio>
+          <BFormRadio value="second">Second (string)</BFormRadio>
+          <BFormRadio :value="{fourth: 4}">Fourth (object)</BFormRadio>
+          <BFormRadio :value="{fifth: 5}">Fifth (object)</BFormRadio>
+        </BFormRadioGroup>
+      </BCol>
+      <BCol>
+        <strong>{{ mixedUnionRadio }}</strong>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import {reactive} from 'vue'
+import {reactive, ref} from 'vue'
 
 const radios = reactive({
   ex1: {
-    selected: {fifth: 5},
+    selected: 'first',
     options: [
       {text: 'Toggle this custom radio', value: 'first'},
       {text: 'Or toggle this other custom radio', value: 'second'},
       {text: 'This one is Disabled', value: 'third', disabled: true},
-      {text: 'This is the 4th radio', value: {fourth: 4}},
-      {text: 'This is the 5th radio', value: {fifth: 5}},
+      {text: 'This is the 4th radio', value: 'fourth'},
+      {text: 'This is the 5th radio', value: 'fifth'},
     ],
   },
   ex2: {
@@ -161,4 +231,14 @@ const radios = reactive({
   },
   radioPrimitives: false,
 })
+
+// Simple type examples
+const simpleStringRadio = ref('red')
+const simpleNumberRadio = ref(1)
+const simpleBooleanRadio = ref(true)
+
+// Mixed type example using union - user defines the exact union type
+// The type annotation allows both strings and objects
+type MixedRadioValue = string | {fourth: number} | {fifth: number}
+const mixedUnionRadio = ref<MixedRadioValue>('first')
 </script>

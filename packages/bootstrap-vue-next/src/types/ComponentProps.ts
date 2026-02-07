@@ -319,7 +319,12 @@ export interface BFormCheckboxGroupBaseProps {
 // Wrapper props (generic)
 export interface BFormCheckboxGroupProps<
   Item = Record<string, unknown>,
-  ValueKey extends keyof Item = keyof Item,
+  ValueKey extends Item extends Record<string, unknown> ? keyof Item : never = Item extends Record<
+    string,
+    unknown
+  >
+    ? keyof Item
+    : never,
 > {
   // Generic-specific props
   options?: readonly (Item | string | number)[]
@@ -329,7 +334,7 @@ export interface BFormCheckboxGroupProps<
 
   // All base props (inherited)
   id?: string
-  modelValue?: Item[ValueKey][]
+  modelValue?: (Item extends Record<string, unknown> ? Item[ValueKey] : Item)[] | undefined
   name?: string
   size?: Size
   state?: ValidationState
@@ -360,7 +365,12 @@ export interface BFormDatalistBaseProps {
 // BFormDatalist wrapper props (generic, type-safe options)
 export interface BFormDatalistProps<
   Item = Record<string, unknown>,
-  ValueKey extends keyof Item = keyof Item,
+  ValueKey extends Item extends Record<string, unknown> ? keyof Item : never = Item extends Record<
+    string,
+    unknown
+  >
+    ? keyof Item
+    : never,
 > {
   disabled?: boolean
   disabledField?: keyof Item & string
@@ -458,7 +468,12 @@ export interface BFormRadioGroupBaseProps {
  */
 export interface BFormRadioGroupProps<
   Item = Record<string, unknown>,
-  ValueKey extends keyof Item = keyof Item,
+  ValueKey extends Item extends Record<string, unknown> ? keyof Item : never = Item extends Record<
+    string,
+    unknown
+  >
+    ? keyof Item
+    : never,
 > {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
@@ -468,7 +483,7 @@ export interface BFormRadioGroupProps<
   disabledField?: keyof Item & string
   form?: string
   id?: string
-  modelValue?: Item[ValueKey]
+  modelValue?: Item extends Record<string, unknown> ? Item[ValueKey] : Item
   name?: string
   options?: readonly (Item | string | number)[]
   plain?: boolean
@@ -538,7 +553,12 @@ export interface BFormSelectBaseProps {
 // BFormSelect wrapper props (generic, type-safe options)
 export interface BFormSelectProps<
   Item = Record<string, unknown>,
-  ValueKey extends keyof Item = keyof Item,
+  ValueKey extends Item extends Record<string, unknown> ? keyof Item : never = Item extends Record<
+    string,
+    unknown
+  >
+    ? keyof Item
+    : never,
 > {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
@@ -547,7 +567,7 @@ export interface BFormSelectProps<
   form?: string
   id?: string
   labelField?: keyof Item & string
-  modelValue?: Item[ValueKey]
+  modelValue?: Item extends Record<string, unknown> ? Item[ValueKey] : Item
   multiple?: boolean
   name?: string
   options?: readonly (Item | string | number)[]

@@ -16,7 +16,11 @@
 <script
   setup
   lang="ts"
-  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
+  generic="
+    Item = Record<string, unknown> | string | number | boolean,
+    ValueKey extends Item extends Record<string, unknown> ? keyof Item : never =
+      Item extends Record<string, unknown> ? keyof Item : never
+  "
 >
 import type {BFormRadioGroupProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
@@ -27,6 +31,7 @@ import type {RadioOption} from '../../types/RadioTypes'
  * Type-safe wrapper component for BFormRadioGroup.
  * Provides generic type safety for options and field names.
  * Normalizes typed options and forwards to BFormRadioGroupBase for rendering.
+ * Supports both complex objects and simple scalar types (string, number).
  */
 const props = withDefaults(
   defineProps<Omit<BFormRadioGroupProps<Item, ValueKey>, 'modelValue'>>(),
@@ -54,7 +59,9 @@ const props = withDefaults(
 )
 
 // Type-safe model value
-const modelValue = defineModel<Item[ValueKey] | undefined>({
+const modelValue = defineModel<
+  (Item extends Record<string, unknown> ? Item[ValueKey & keyof Item] : Item) | undefined
+>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: null as any,
 })
