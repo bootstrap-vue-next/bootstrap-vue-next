@@ -316,26 +316,32 @@ export interface BFormCheckboxGroupBaseProps {
   options: CheckboxOptionRaw[] // Already normalized
 }
 
-// Wrapper props (generic)
-// Item can be: primitives (string|number|boolean) OR objects with {value, text, disabled} structure
-// If Item is a complex object without a 'value' field, use computed mapping to standard format
+// Wrapper props (generic, type-safe options and modelValue)
+// Uses Options array generic to extract union of values for strong typing
+//
+// Options can be:
+// - Primitives: ['red', 'green', 'blue'] → modelValue: ('red'|'green'|'blue')[]
+// - Objects: [{value: 1, text: 'One'}, ...] → modelValue: (1|2|...)[]
+// - Use 'as const' for literal type inference
+//
+// If Options is a complex object without a 'value' field, use computed mapping to standard format
 export interface BFormCheckboxGroupProps<
-  Item extends Record<string, unknown> | string | number | boolean =
+  Options extends readonly (Record<string, unknown> | string | number | boolean)[] = readonly (
     | Record<string, unknown>
     | string
     | number
-    | boolean,
+    | boolean
+  )[],
 > {
-  // Accept both Item type and any object shape for flexible inference and custom field names
-  options?: readonly (Item | Record<string, unknown>)[]
+  // Options array - generic parameter captures the specific array type
+  options?: Options
   valueField?: string
   textField?: string
   disabledField?: string
 
   // All base props (inherited)
   id?: string
-  // Broadly typed to avoid v-model inference narrowing issues
-  // Users should type their own refs for compile-time safety
+  // Strongly typed based on Options array - extraction happens in component
   modelValue?: unknown[] | undefined
   name?: string
   size?: Size
@@ -466,17 +472,23 @@ export interface BFormRadioGroupBaseProps {
 
 /**
  * Props for BFormRadioGroup - type-safe generic wrapper component.
- * Provides compile-time type safety for options array.
+ * Provides compile-time type safety for options array and modelValue.
  *
- * Item can be: primitives (string|number|boolean) OR objects with {value, text, disabled} structure
- * If Item is a complex object without a 'value' field, use computed mapping to standard format
+ * Uses Options array generic to provide strong typing for modelValue in core cases:
+ * - Primitive arrays: modelValue is union of those primitives
+ * - Object arrays with {value} field: modelValue is union of value types
+ * - Use 'as const' on options array for literal type inference
+ *
+ * For custom field names (valueField/textField), modelValue extraction still works
+ * as long as the value field exists on the objects.
  */
 export interface BFormRadioGroupProps<
-  Item extends Record<string, unknown> | string | number | boolean =
+  Options extends readonly (Record<string, unknown> | string | number | boolean)[] = readonly (
     | Record<string, unknown>
     | string
     | number
-    | boolean,
+    | boolean
+  )[],
 > {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
@@ -486,12 +498,11 @@ export interface BFormRadioGroupProps<
   disabledField?: string
   form?: string
   id?: string
-  // Broadly typed to avoid v-model inference narrowing issues
-  // Users should type their own refs for compile-time safety
+  // Strongly typed based on Options array - extraction happens in component
   modelValue?: unknown | undefined
   name?: string
-  // Accept both Item type and any object shape for flexible inference and custom field names
-  options?: readonly (Item | Record<string, unknown>)[]
+  // Options array - generic parameter captures the specific array type
+  options?: Options
   plain?: boolean
   required?: boolean
   reverse?: boolean
@@ -556,15 +567,22 @@ export interface BFormSelectBaseProps {
   valueField?: string
 }
 
-// BFormSelect wrapper props (generic, type-safe options)
-// Item can be: primitives (string|number|boolean) OR objects with {value, text, disabled} structure
-// If Item is a complex object without a 'value' field, use computed mapping to standard format
+// BFormSelect wrapper props (generic, type-safe options and modelValue)
+// Uses Options array generic to extract union of values for strong typing
+//
+// Options can be:
+// - Primitives: ['red', 'green', 'blue'] → modelValue: 'red'|'green'|'blue' (or array if multiple)
+// - Objects: [{value: 1, text: 'One'}, ...] → modelValue: 1|2|... (or array if multiple)
+// - Use 'as const' for literal type inference
+//
+// If Options is a complex object without a 'value' field, use computed mapping to standard format
 export interface BFormSelectProps<
-  Item extends Record<string, unknown> | string | number | boolean =
+  Options extends readonly (Record<string, unknown> | string | number | boolean)[] = readonly (
     | Record<string, unknown>
     | string
     | number
-    | boolean,
+    | boolean
+  )[],
 > {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
@@ -573,13 +591,12 @@ export interface BFormSelectProps<
   form?: string
   id?: string
   labelField?: string
-  // Broadly typed to avoid v-model inference narrowing issues
-  // Users should type their own refs for compile-time safety
+  // Strongly typed based on Options array - extraction happens in component
   modelValue?: unknown | unknown[] | null
   multiple?: boolean
   name?: string
-  // Accept both Item type and any object shape for flexible inference and custom field names
-  options?: readonly (Item | Record<string, unknown>)[]
+  // Options array - generic parameter captures the specific array type
+  options?: Options
   optionsField?: string
   plain?: boolean
   required?: boolean

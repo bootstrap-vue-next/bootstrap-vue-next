@@ -17,11 +17,12 @@
   setup
   lang="ts"
   generic="
-    Item extends Record<string, unknown> | string | number | boolean =
+    Options extends readonly (Record<string, unknown> | string | number | boolean)[] = readonly (
       | Record<string, unknown>
       | string
       | number
       | boolean
+    )[]
   "
 >
 import type {BFormSelectProps} from '../../types/ComponentProps'
@@ -32,11 +33,17 @@ import type {BFormSelectSlots} from '../../types'
 
 /**
  * Type-safe wrapper component for BFormSelect.
- * Provides generic type safety for options and field names.
+ * Provides generic type safety for options array and strongly-typed modelValue.
+ * Uses Options array generic to extract union of all possible values.
  * Normalizes typed options and forwards to BFormSelectBase for rendering.
  * Supports both complex objects and simple scalar types (string, number).
+ *
+ * For strongly-typed modelValue:
+ * - Primitive arrays: modelValue is union of those values (or array if multiple)
+ * - Object arrays with 'value' field: modelValue is union of value field types
+ * - Use 'as const' on options for literal type inference
  */
-const props = withDefaults(defineProps<Omit<BFormSelectProps<Item>, 'modelValue'>>(), {
+const props = withDefaults(defineProps<Omit<BFormSelectProps<Options>, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,
@@ -46,7 +53,7 @@ const props = withDefaults(defineProps<Omit<BFormSelectProps<Item>, 'modelValue'
   labelField: 'label',
   multiple: false,
   name: undefined,
-  options: () => [],
+  options: () => [] as unknown as Options,
   optionsField: 'options',
   plain: false,
   required: false,
@@ -58,14 +65,27 @@ const props = withDefaults(defineProps<Omit<BFormSelectProps<Item>, 'modelValue'
 })
 defineSlots<BFormSelectSlots<unknown>>()
 
-const modelValue = defineModel<unknown | unknown[] | null>({
+// Extract value types from options array
+type ExtractItemValue<T> = T extends string | number | boolean
+  ? T
+  : T extends {value: infer V}
+    ? V
+    : unknown
+
+type OptionsValues<T extends readonly unknown[]> = T extends readonly (infer Item)[]
+  ? ExtractItemValue<Item>
+  : unknown
+
+// Type-safe model value - single value or array depending on multiple prop
+const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: '' as any,
 })
 
 // Type-safe normalization of options (supports both simple and complex/grouped)
 const normalizedOptions = computed(() => {
-  const hasComplexOptions = props.options.some(
+  const optionsArray = props.options ?? []
+  const hasComplexOptions = optionsArray.some(
     (el) =>
       typeof el !== 'string' &&
       typeof el !== 'number' &&
@@ -74,7 +94,7 @@ const normalizedOptions = computed(() => {
   )
 
   if (hasComplexOptions) {
-    return props.options.map((el) => {
+    return optionsArray.map((el) => {
       if (typeof el === 'string') {
         return el
       }
@@ -112,7 +132,7 @@ const normalizedOptions = computed(() => {
     })
   }
 
-  return props.options.map((el) => {
+  return optionsArray.map((el) => {
     if (typeof el === 'string') {
       return el
     }

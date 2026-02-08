@@ -17,11 +17,12 @@
   setup
   lang="ts"
   generic="
-    Item extends Record<string, unknown> | string | number | boolean =
+    Options extends readonly (Record<string, unknown> | string | number | boolean)[] = readonly (
       | Record<string, unknown>
       | string
       | number
       | boolean
+    )[]
   "
 >
 import type {BFormRadioGroupProps} from '../../types/ComponentProps'
@@ -31,11 +32,17 @@ import type {RadioOption} from '../../types/RadioTypes'
 
 /**
  * Type-safe wrapper component for BFormRadioGroup.
- * Provides generic type safety for options and field names.
+ * Provides generic type safety for options array and strongly-typed modelValue.
+ * Uses Options array generic to extract union of all possible values.
  * Normalizes typed options and forwards to BFormRadioGroupBase for rendering.
  * Supports both complex objects and simple scalar types (string, number, boolean).
+ *
+ * For strongly-typed modelValue:
+ * - Primitive arrays: modelValue is union of those values
+ * - Object arrays with 'value' field: modelValue is union of value field types
+ * - Use 'as const' on options for literal type inference
  */
-const props = withDefaults(defineProps<Omit<BFormRadioGroupProps<Item>, 'modelValue'>>(), {
+const props = withDefaults(defineProps<Omit<BFormRadioGroupProps<Options>, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   buttonVariant: 'secondary',
@@ -45,7 +52,7 @@ const props = withDefaults(defineProps<Omit<BFormRadioGroupProps<Item>, 'modelVa
   form: undefined,
   id: undefined,
   name: undefined,
-  options: () => [],
+  options: () => [] as unknown as Options,
   plain: false,
   required: false,
   reverse: false,
@@ -57,18 +64,27 @@ const props = withDefaults(defineProps<Omit<BFormRadioGroupProps<Item>, 'modelVa
   valueField: 'value',
 })
 
-// Type-safe model value
-const modelValue = defineModel<unknown | undefined>({
+// Extract value types from options array
+type ExtractItemValue<T> = T extends string | number | boolean
+  ? T
+  : T extends {value: infer V}
+    ? V
+    : unknown
+
+type OptionsValues<T extends readonly unknown[]> = T extends readonly (infer Item)[]
+  ? ExtractItemValue<Item>
+  : unknown
+
+// Type-safe model value - extracts union from options
+const modelValue = defineModel<OptionsValues<Options> | undefined>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default: null as any,
+  default: undefined as any,
 })
 
 // Type-safe normalization of options
-// Note: We need to cast to RadioOption[] because TypeScript can't prove that Item[ValueKey]
-// is assignable to RadioValue. This is safe because the values are runtime compatible.
 const normalizedOptions = computed(
   () =>
-    props.options.map((el) =>
+    (props.options ?? []).map((el) =>
       typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean'
         ? {
             value: el,

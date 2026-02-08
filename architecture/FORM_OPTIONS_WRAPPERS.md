@@ -2,20 +2,21 @@
 
 ## Overview
 
-This document covers the architecture, implementation decisions, TypeScript limitations, and user-facing patterns for the form option components: `BFormSelect`, `BFormRadioGroup`, and `BFormCheckboxGroup`.
+This document covers the architecture, implementation decisions, TypeScript patterns, and user-facing patterns for the form option components: `BFormSelect`, `BFormRadioGroup`, and `BFormCheckboxGroup`.
 
-These components accept an `options` prop of generic type `Item[]` and provide type-safe value extraction. They follow a **base/wrapper architecture** where the wrapper provides generic type safety and option normalization, while the base handles rendering and `useDefaults` support.
+These components accept an `options` prop and provide **strong type safety for modelValue in core cases** using an Options array generic approach. They follow a **base/wrapper architecture** where the wrapper provides generic type safety and option normalization, while the base handles rendering and `useDefaults` support.
 
 ---
 
-## Current Architecture (PR #3011)
+## Current Architecture
 
 ### Base/Wrapper Pattern
 
 ```text
 ┌─────────────────────────────────┐
 │   BFormRadioGroup (Generic)     │  ← User-facing, type-safe
-│   - Single generic: <Item>      │
+│   - Generic: Options array      │
+│   - Extracts value union        │
 │   - Normalizes options          │
 │   - Forwards to base            │
 └──────────────┬──────────────────┘
@@ -35,143 +36,150 @@ Applies identically to `BFormSelect`/`BFormSelectBase` and `BFormCheckboxGroup`/
 
 - Generic components can't use `useDefaults` (runtime Proxy breaks compile-time inference)
 - Base components get `useDefaults` for free — all props support global defaults
-- Wrapper components handle type-safe option normalization only
+- Wrapper components handle type-safe option normalization and value extraction
 - Base components are not exported from the public API
 
-### Generic Signature (Single Parameter)
+### Generic Signature (Options Array)
 
-All three wrapper components use a single generic parameter:
+All three wrapper components use an Options array generic parameter:
 
 ```typescript
 generic="
-  Item extends Record<string, unknown> | string | number | boolean =
-    | Record<string, unknown>
-    | string
-    | number
-    | boolean
+  Options extends readonly (Record<string, unknown> | string | number | boolean)[] =
+    readonly (Record<string, unknown> | string | number | boolean)[]
 "
 ```
 
-- `Item` can be a primitive (`string`, `number`, `boolean`) or an object (`Record<string, unknown>`)
-- No `ValueKey` parameter — field props (`valueField`, `textField`, etc.) are typed as plain `string`
+- `Options` captures the entire options array type
+- Allows TypeScript to infer literal types from `as const` arrays
+- Components extract value union from the options type
 
-### modelValue Typing
+### modelValue Typing - ENHANCED
 
-The `modelValue` on all three components is deliberately typed broadly:
+The `modelValue` on all three components now uses **inline type extraction** to provide strong typing for core cases:
 
-| Component              | modelValue Type               |
-| ---------------------- | ----------------------------- |
-| `BFormSelect`          | `unknown \| unknown[] \| null` |
-| `BFormRadioGroup`      | `unknown \| undefined`         |
-| `BFormCheckboxGroup`   | `unknown[] \| undefined`       |
+```typescript
+// Extract value from single item
+type ExtractItemValue<T> =
+  T extends string | number | boolean ? T :
+  T extends {value: infer V} ? V :
+  unknown
 
-**Why broad types:** Conditional types on `modelValue` (e.g., `Item extends {value: infer V} ? V : Item`) cause Vue's bidirectional v-model inference to **narrow the type to only the first option's value**, producing errors like `Type '"light"' is not assignable to type '"dark"'`. Broad types eliminate this class of errors entirely.
+// Extract union from options array
+type OptionsValues<T extends readonly unknown[]> =
+  T extends readonly (infer Item)[] ? ExtractItemValue<Item> : unknown
 
-**Trade-off:** Users don't get compile-time v-model type checking from the component itself. They should type their own `ref<T>()` for safety.
+// Apply to modelValue
+const modelValue = defineModel<OptionsValues<Options> | ...>()
+```
+
+| Component            | modelValue Type                                              | Strong Typing |
+| -------------------- | ------------------------------------------------------------ | ------------- |
+| `BFormSelect`        | `OptionsValues<Options> \| OptionsValues<Options>[] \| null` | ✅ Core cases |
+| `BFormRadioGroup`    | `OptionsValues<Options> \| undefined`                        | ✅ Core cases |
+| `BFormCheckboxGroup` | `OptionsValues<Options>[] \| undefined`                      | ✅ Core cases |
+
+**Core cases with strong typing:**
+
+- ✅ Primitive arrays: `['red', 'green', 'blue']` → modelValue is `'red' | 'green' | 'blue'`
+- ✅ Standard object arrays: `[{value: 1, text: 'One'}, ...]` → modelValue is `1 | 2 | ...`
+- ✅ Requires `as const` for literal type inference
+
+**Edge cases (fallback typing):**
+
+- ⚠️ Custom field names (valueField/textField): Falls back to `unknown`
+- ⚠️ Non-const arrays: Infers base type (e.g., `string`, `number`)
+- ⚠️ Mixed arrays: Union of extracted types
 
 ### options Prop Typing
 
 ```typescript
-options?: readonly (Item | Record<string, unknown>)[]
+options?: Options  // Captures the specific array type
 ```
 
-The `Record<string, unknown>` union member allows passing objects with any shape without requiring `Item` to match exactly. This is necessary because TypeScript `interface` declarations don't satisfy `Record<string, unknown>` (they lack implicit index signatures).
+The Options generic parameter captures the exact array type passed by the user, including readonly modifiers and const assertions.
 
 ---
 
-## TypeScript Limitations
+## TypeScript Solution - Options Array Generic
 
-### The v-model Narrowing Problem
+### The v-model Narrowing Problem (Solved)
 
-When `modelValue` uses a conditional type derived from `Item`, Vue's template type inference creates a feedback loop:
+**Previous issue:** When `modelValue` used a conditional type derived from `Item`, Vue's template type inference created a feedback loop that narrowed to only the first matching literal.
 
-1. TypeScript infers `Item` from the `:options` binding
-2. It simultaneously infers `Item` from `v-model` (bidirectional)
-3. The conditional type on `modelValue` causes TS to pick the **first matching literal** rather than the full union
+**Solution:** Use the Options array as the generic parameter and extract values in the component implementation:
 
-**Example of the failure:**
+1. Generic captures the entire options array type
+2. Type helpers extract the union of all values
+3. No conditional types in the props interface itself
+4. `defineModel` uses the extracted type
 
-```typescript
-// options has type: {value: 'dark', text: 'Dark'} | {value: 'light', text: 'Light'} | ...
-// TS infers Item from the first element, then:
-//   modelValue: Item extends {value: infer V} ? V : ... → resolves to "dark"
-// ERROR: Type '"light"' is not assignable to type '"dark"'
-```
-
-This affected every component using `as const` arrays, enum options, or string literal unions in docs demos.
-
-**Resolution:** Replace all conditional `modelValue` types with broad types (`unknown`, `unknown[]`).
-
-### Named Interfaces vs Record<string, unknown>
-
-TypeScript interfaces don't have implicit index signatures, so this fails:
+**Example:**
 
 ```typescript
-interface ApiUser {
-  userId: string
-  username: string
-}
+// User code
+const options = ['red', 'green', 'blue'] as const
+<BFormSelect :options="options" v-model="color" />
 
-// ❌ Type 'ApiUser' is not assignable to type 'Record<string, unknown>'
-const options: ApiUser[] = [...]
-<BFormSelect :options="options" />
+// TypeScript infers:
+// Options = readonly ['red', 'green', 'blue']
+// OptionsValues<Options> = 'red' | 'green' | 'blue'
+// modelValue type = 'red' | 'green' | 'blue' | ('red' | 'green' | 'blue')[] | null
 ```
 
-**Workaround:** Use `type` instead of `interface`:
+### Implementation Pattern
+
+Each component includes inline type extraction:
 
 ```typescript
-type ApiUser = {
-  userId: string
-  username: string
-}
-// ✅ Works — type aliases have implicit index signatures
+type ExtractItemValue<T> =
+  T extends string | number | boolean ? T :
+  T extends {value: infer V} ? V :
+  unknown
+
+type OptionsValues<T extends readonly unknown[]> =
+  T extends readonly (infer Item)[] ? ExtractItemValue<Item> : unknown
+
+const modelValue = defineModel<OptionsValues<Options> | ...>()
 ```
 
-Or use computed mapping to standard format (see User Patterns below).
+This approach:
 
-### The Two-Generic-Parameter Approach (Abandoned)
-
-An earlier iteration used `<Item, ValueKey>` to provide type-safe `modelValue`:
-
-```typescript
-generic="
-  Item = Record<string, unknown>,
-  ValueKey extends keyof Item = 'value' extends keyof Item ? 'value' : keyof Item
-"
-```
-
-This was abandoned because:
-
-1. **ValueKey widening**: With named interfaces, TS widens `ValueKey` from literal `'value'` to the full `keyof Item` union, breaking `modelValue` type specificity
-2. **InferDefault incompatibility**: Vue's `withDefaults()` can't prove `'value'` satisfies all branches of the conditional default, requiring `@ts-expect-error` suppressions
-3. **v-model narrowing**: Even when ValueKey resolved correctly, the conditional `modelValue` type still caused the narrowing problem described above
-4. **Complexity**: Two generic parameters doubled the surface area for inference failures
-
-The single-parameter approach with broad `modelValue` is simpler and avoids all these issues.
+- ✅ Provides strong typing for primitive and standard object arrays
+- ✅ Works with `as const` for literal types
+- ✅ Avoids v-model narrowing completely
+- ⚠️ Falls back to `unknown` for custom field names (acceptable trade-off)
 
 ---
 
 ## What Works for Users
 
-### ✅ Primitives (Always Works)
+## What Works for Users
+
+### ✅ Primitives with `as const` (Strongly Typed)
 
 ```typescript
-const options = ['red', 'green', 'blue']
-const selected = ref<string>('red')
+const options = ['red', 'green', 'blue'] as const
+const selected = ref<typeof options[number]>('red')
+// Type: 'red' | 'green' | 'blue'
 
 <BFormSelect v-model="selected" :options="options" />
+// modelValue is strongly typed as 'red' | 'green' | 'blue' | ('red' | 'green' | 'blue')[] | null
 ```
 
-### ✅ Objects with Standard Format
+### ✅ Objects with Standard Format (Strongly Typed)
 
 ```typescript
 const options = [
   {value: 1, text: 'One'},
   {value: 2, text: 'Two'},
-]
-const selected = ref<number>(1)
+] as const
+type OptionValue = typeof options[number]['value']
+const selected = ref<OptionValue>(1)
+// Type: 1 | 2
 
 <BFormSelect v-model="selected" :options="options" />
+// modelValue is strongly typed as 1 | 2 | (1 | 2)[] | null
 ```
 
 ### ✅ Computed Mapping (Recommended for Custom Objects)
@@ -191,15 +199,16 @@ const options = computed(() =>
 )
 
 <BFormSelect v-model="selected" :options="options" />
+// modelValue is typed as number | number[] | null
 ```
 
-### ✅ Explicit Field Props
+### ⚠️ Explicit Field Props (Fallback to unknown)
 
 ```typescript
 const users = [
   {userId: 1, displayName: 'Alice'},
   {userId: 2, displayName: 'Bob'},
-]
+] as const
 const selected = ref<number>(1)
 
 <BFormSelect
@@ -208,14 +217,14 @@ const selected = ref<number>(1)
   value-field="userId"
   text-field="displayName"
 />
+// Works at runtime
+// modelValue is typed as unknown - user should type their ref
 ```
-
-Works at runtime. Note: since `modelValue` is `unknown`, there's no compile-time check that `selected` matches `userId`'s type.
 
 ### ✅ Boolean Primitives
 
 ```typescript
-const options = [true, false]
+const options = [true, false] as const
 const selected = ref<boolean>(true)
 
 <BFormCheckboxGroup v-model="selected" :options="options" />
@@ -229,24 +238,22 @@ Booleans display as `"true"` / `"false"` strings.
 const options: {value: string; text: string}[] = [
   {value: 'admin', text: 'Administrator'},
   {value: 'user', text: 'User'},
-]
+] as const
 
 <BFormSelect v-model="selected" :options="options" />
-```
-
-### ⚠️ Named Interfaces (Requires `type` Instead of `interface`)
-
-```typescript
-// ❌ interface — no implicit index signature
-interface Role { value: string; text: string }
-
-// ✅ type alias — works
-type Role = { value: string; text: string }
+// modelValue typed as string | string[] | null
 ```
 
 ### ⚠️ Mixed Object/Primitive Arrays
 
-Mixing objects and primitives in the same `options` array is uncommon. It works at runtime but may need `as any` on v-model depending on the types involved.
+Mixing objects and primitives in the same `options` array is uncommon:
+
+```typescript
+const options = ['string', {value: 1, text: 'Number'}] as const
+// modelValue will be: string | number | (string | number)[] | null
+```
+
+Works at runtime, type extraction produces union of all value types.
 
 ---
 
@@ -256,21 +263,25 @@ Mixing objects and primitives in the same `options` array is uncommon. It works 
 What kind of options do you have?
 │
 ├── Primitives (['a', 'b', 'c'] or [1, 2, 3])
-│   └── Just pass them directly → ✅ Works
+│   ├── Use 'as const' for literals → ✅ Strongly typed
+│   └── Without 'as const' → ✅ Base type (string | number)
 │
 ├── Objects with {value, text} fields
-│   └── Pass directly → ✅ Works
+│   ├── Use 'as const' → ✅ Strongly typed value union
+│   └── Without 'as const' → ✅ Typed as value field type
 │
 ├── Objects with custom field names (e.g., {userId, displayName})
 │   ├── Can you map to {value, text}?
-│   │   └── YES → computed(() => items.map(...)) → ✅ Recommended
+│   │   └── YES → computed(() => items.map(...)) → ✅ Recommended, strongly typed
 │   │
 │   └── Prefer field props?
-│       └── Use value-field="userId" text-field="displayName" → ✅ Works at runtime
+│       └── Use value-field="userId" text-field="displayName" → ⚠️ Works at runtime, weakly typed
 │
-└── Named TypeScript interface?
-    └── Use `type` instead of `interface` → ✅ Works
+└── Non-const runtime arrays?
+    └── Type extraction works with base types → ✅ Typed as string, number, etc.
 ```
+
+Key principle: **Use `as const` for literal type inference. Type your `ref<T>()` explicitly for compile-time safety.**
 
 ---
 
@@ -278,19 +289,19 @@ What kind of options do you have?
 
 All three components share these props:
 
-| Prop             | Type                 | Default      | Description                          |
-| ---------------- | -------------------- | ------------ | ------------------------------------ |
-| `options`        | `(Item \| Record<string, unknown>)[]` | `[]`  | Available options |
-| `value-field`    | `string`             | `'value'`    | Object field containing the value    |
-| `text-field`     | `string`             | `'text'`     | Object field containing display text |
-| `disabled-field` | `string`             | `'disabled'` | Object field indicating disabled state |
+| Prop             | Type                                  | Default      | Description                            |
+| ---------------- | ------------------------------------- | ------------ | -------------------------------------- |
+| `options`        | `(Item \| Record<string, unknown>)[]` | `[]`         | Available options                      |
+| `value-field`    | `string`                              | `'value'`    | Object field containing the value      |
+| `text-field`     | `string`                              | `'text'`     | Object field containing display text   |
+| `disabled-field` | `string`                              | `'disabled'` | Object field indicating disabled state |
 
 `BFormSelect` additionally has:
 
-| Prop             | Type     | Default      | Description                             |
-| ---------------- | -------- | ------------ | ----------------------------------------------- |
-| `label-field`    | `string` | `'label'`    | Label for option groups                          |
-| `options-field`  | `string` | `'options'`  | Field containing nested options (for groups)     |
+| Prop            | Type     | Default     | Description                                  |
+| --------------- | -------- | ----------- | -------------------------------------------- |
+| `label-field`   | `string` | `'label'`   | Label for option groups                      |
+| `options-field` | `string` | `'options'` | Field containing nested options (for groups) |
 
 ---
 
@@ -309,7 +320,7 @@ The runtime code uses `typeof` guards before accessing object properties, then c
 
 ```typescript
 if (typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean') {
-  return { value: el, text: String(el) }
+  return {value: el, text: String(el)}
 }
 // Safe to index — runtime guard ensures el is an object
 const value = (el as Record<string, unknown>)[props.valueField as string]
@@ -321,13 +332,13 @@ Each wrapper uses `defineModel` with the broad type:
 
 ```typescript
 // BFormSelect
-const modelValue = defineModel<unknown | unknown[] | null>({ default: '' as any })
+const modelValue = defineModel<unknown | unknown[] | null>({default: '' as any})
 
 // BFormRadioGroup
-const modelValue = defineModel<unknown | undefined>({ default: undefined as any })
+const modelValue = defineModel<unknown | undefined>({default: undefined as any})
 
 // BFormCheckboxGroup
-const modelValue = defineModel<unknown[] | undefined>({ default: () => [] })
+const modelValue = defineModel<unknown[] | undefined>({default: () => []})
 ```
 
 ### Generated .d.ts Files
@@ -350,12 +361,12 @@ modelValue?: unknown[] | undefined        // BFormCheckboxGroup
 
 The base/wrapper split was primarily motivated by `useDefaults` incompatibility with generics:
 
-| Aspect            | Base Component           | Wrapper Component          |
-| ----------------- | ------------------------ | -------------------------- |
-| **Generics**      | ❌ No                    | ✅ Yes                     |
-| **useDefaults**   | ✅ Works                 | N/A (delegates)            |
-| **Rendering**     | ✅ Handles all           | ❌ No (delegates)          |
-| **Normalization** | ❌ Receives normalized   | ✅ Performs normalization  |
+| Aspect            | Base Component         | Wrapper Component         |
+| ----------------- | ---------------------- | ------------------------- |
+| **Generics**      | ❌ No                  | ✅ Yes                    |
+| **useDefaults**   | ✅ Works               | N/A (delegates)           |
+| **Rendering**     | ✅ Handles all         | ❌ No (delegates)         |
+| **Normalization** | ❌ Receives normalized | ✅ Performs normalization |
 
 This means ALL props on the base component get global defaults support via `createBootstrap()`, without manual computed chains.
 
@@ -374,15 +385,15 @@ The wrapper pattern has negligible overhead. At typical scales (1-100 form group
 
 ## Summary
 
-| Scenario                        | Works? | Type-Safe? | Notes                              |
-| ------------------------------- | ------ | ---------- | ---------------------------------- |
-| Primitives                      | ✅     | ✅ (ref)   | Simplest case                      |
-| Standard `{value, text}` objects | ✅    | ✅ (ref)   | Recommended format                 |
-| Computed mapping to standard    | ✅     | ✅ (ref)   | Best for custom objects            |
-| Explicit field props            | ✅     | ⚠️ runtime | No compile-time v-model check      |
-| Inline type aliases             | ✅     | ✅ (ref)   | Use `type`, not `interface`        |
-| Named `interface` in options    | ⚠️     | ⚠️         | Use `type` alias instead           |
-| Boolean primitives              | ✅     | ✅ (ref)   | Displays as "true"/"false"         |
-| Mixed object + primitive array  | ⚠️     | ❌         | May need `as any` on v-model       |
+| Scenario                         | Works? | Type-Safe? | Notes                         |
+| -------------------------------- | ------ | ---------- | ----------------------------- |
+| Primitives                       | ✅     | ✅ (ref)   | Simplest case                 |
+| Standard `{value, text}` objects | ✅     | ✅ (ref)   | Recommended format            |
+| Computed mapping to standard     | ✅     | ✅ (ref)   | Best for custom objects       |
+| Explicit field props             | ✅     | ⚠️ runtime | No compile-time v-model check |
+| Inline type aliases              | ✅     | ✅ (ref)   | Use `type`, not `interface`   |
+| Named `interface` in options     | ⚠️     | ⚠️         | Use `type` alias instead      |
+| Boolean primitives               | ✅     | ✅ (ref)   | Displays as "true"/"false"    |
+| Mixed object + primitive array   | ⚠️     | ❌         | May need `as any` on v-model  |
 
 **Key principle:** Type your `ref<T>()` for compile-time safety. The component's `modelValue` is `unknown` to avoid inference narrowing, so the type safety lives in your own code.
