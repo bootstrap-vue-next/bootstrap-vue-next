@@ -36,20 +36,7 @@ or when they are simple primitives.
 
 When options are primitives, the `v-model` type is inferred as the union of those primitives:
 
-```vue
-<template>
-  <BFormRadioGroup v-model="color" :options="colors" />
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const colors = ['Red', 'Green', 'Blue'] as const
-
-// TypeScript infers: Ref<'Red' | 'Green' | 'Blue'>
-const color = ref<'Red' | 'Green' | 'Blue'>('Red')
-</script>
-```
+<<< DEMO ./demo/TypeSafePrimitive.vue{vue}
 
 Without `as const`, the array type is `string[]` and the `v-model` type will be `string` —
 still type-safe, just less specific.
@@ -58,61 +45,21 @@ still type-safe, just less specific.
 
 When options use `{value, text}` format, the `v-model` type is inferred from the `value` fields:
 
-```vue
-<template>
-  <BFormSelect v-model="userId" :options="userOptions" />
-</template>
+<<< DEMO ./demo/TypeSafeObject.vue{vue}
 
-<script setup lang="ts">
-import {ref} from 'vue'
+## Mixed primitive and object options
 
-const userOptions = [
-  {value: 1, text: 'Alice'},
-  {value: 2, text: 'Bob'},
-  {value: 3, text: 'Charlie'},
-] as const
+Options arrays can contain a mix of primitives (used directly as both value and text) and objects
+(using `{value, text}` format). The `v-model` type is inferred as the union of all possible values:
 
-// TypeScript infers: Ref<1 | 2 | 3>
-const userId = ref<number>(1)
-</script>
-```
+<<< DEMO ./demo/TypeSafeMixed.vue{vue}
 
 ## Mapping domain objects
 
 When your data doesn't use `{value, text}` format, use `computed` to map it. This is the
 recommended pattern for working with API responses, database records, or any typed interfaces:
 
-```vue
-<template>
-  <BFormCheckboxGroup v-model="selectedIds" :options="userOptions" />
-</template>
-
-<script setup lang="ts">
-import {computed, ref} from 'vue'
-
-interface User {
-  user_id: number
-  display_name: string
-  is_active: boolean
-}
-
-const users: User[] = [
-  {user_id: 1, display_name: 'Alice', is_active: true},
-  {user_id: 2, display_name: 'Bob', is_active: true},
-  {user_id: 3, display_name: 'Charlie', is_active: false},
-]
-
-const userOptions = computed(() =>
-  users.map((u) => ({
-    value: u.user_id,
-    text: u.display_name,
-    disabled: !u.is_active,
-  }))
-)
-
-const selectedIds = ref<number[]>([])
-</script>
-```
+<<< DEMO ./demo/TypeSafeMapped.vue{vue}
 
 The `computed` mapping approach gives you:
 
@@ -125,19 +72,9 @@ The `computed` mapping approach gives you:
 Adding `as const` to your options array enables TypeScript to infer **literal types** rather than
 widened types. This is the key to getting the most precise `v-model` typing:
 
-```typescript
-// Without as const: type is { value: string; text: string }[]
-const options = [
-  {value: 'sm', text: 'Small'},
-  {value: 'md', text: 'Medium'},
-]
+<<< FRAGMENT ./demo/TypeSafeAsConst.ts#without-const{typescript}
 
-// With as const: type is readonly [{ readonly value: 'sm'; ... }, ...]
-const options = [
-  {value: 'sm', text: 'Small'},
-  {value: 'md', text: 'Medium'},
-] as const
-```
+<<< FRAGMENT ./demo/TypeSafeAsConst.ts#with-const{typescript}
 
 With `as const`, the inferred `v-model` type is `'sm' | 'md'` rather than just `string`.
 
@@ -145,29 +82,7 @@ With `as const`, the inferred `v-model` type is `'sm' | 'md'` rather than just `
 
 TypeScript enums work naturally as option values:
 
-```vue
-<template>
-  <BFormRadioGroup v-model="priority" :options="priorityOptions" />
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-enum Priority {
-  Low = 'low',
-  Medium = 'medium',
-  High = 'high',
-}
-
-const priorityOptions = [
-  {value: Priority.Low, text: 'Low'},
-  {value: Priority.Medium, text: 'Medium'},
-  {value: Priority.High, text: 'High'},
-]
-
-const priority = ref<Priority>(Priority.Medium)
-</script>
-```
+<<< DEMO ./demo/TypeSafeEnum.vue{vue}
 
 ## Custom field names
 
@@ -176,15 +91,7 @@ and `disabled-field` props to tell the component which properties of your object
 value, text, and disabled state. These are convenience props for simple cases where your objects
 already have descriptive field names:
 
-```vue
-<BFormRadioGroup
-  v-model="selected"
-  :options="items"
-  value-field="id"
-  text-field="name"
-  disabled-field="inactive"
-/>
-```
+<<< FRAGMENT ./demo/TypeSafeCustomFields.vue#template{vue-html}
 
 ::: info NOTE
 When using custom field names, the `v-model` type inference is based on the `value` field of
@@ -202,15 +109,7 @@ For the strongest typing, map your data to `{value, text}` format using `compute
 validation of field names. When you pass typed options, TypeScript will ensure that `value-field`,
 `text-field`, and `disabled-field` are valid keys of your option type:
 
-```vue
-<BFormDatalist
-  id="user-list"
-  :options="users"
-  value-field="id"
-  text-field="name"
-  disabled-field="inactive"
-/>
-```
+<<< FRAGMENT ./demo/TypeSafeDatalist.vue#template{vue-html}
 
 TypeScript will report an error if `value-field` references a property that doesn't exist on
 the option type. Since `BFormDatalist` doesn't have a `v-model` (it's a
@@ -221,10 +120,7 @@ backing an `<input>`), the type safety focus is on field name validation rather 
 
 Type safety is fully opt-in. Existing code without explicit types continues to work:
 
-```vue
-<!-- No types needed — works exactly as before -->
-<BFormSelect v-model="selected" :options="items" />
-```
+<<< FRAGMENT ./demo/TypeSafeBackwardCompat.vue#template{vue-html}
 
 The generic defaults to a broad union type, so untyped usage has no restrictions. To enable
 stronger typing, provide explicit types for your data or use `as const`.
@@ -233,29 +129,6 @@ stronger typing, provide explicit types for your data or use `as const`.
 
 For `BFormSelect` with `multiple`, the `v-model` is an array of the inferred value type:
 
-```vue
-<template>
-  <BFormSelect v-model="selectedTags" :options="tagOptions" multiple />
-</template>
-
-<script setup lang="ts">
-import {computed, ref} from 'vue'
-
-interface Tag {
-  tagId: string
-  tagName: string
-}
-
-const tags: Tag[] = [
-  {tagId: 'vue', tagName: 'Vue.js'},
-  {tagId: 'ts', tagName: 'TypeScript'},
-  {tagId: 'bs', tagName: 'Bootstrap'},
-]
-
-const tagOptions = computed(() => tags.map((tag) => ({value: tag.tagId, text: tag.tagName})))
-
-const selectedTags = ref<string[]>([])
-</script>
-```
+<<< DEMO ./demo/TypeSafeMultiple.vue{vue}
 
 For `BFormCheckboxGroup`, the `v-model` is always an array of the inferred value type.
