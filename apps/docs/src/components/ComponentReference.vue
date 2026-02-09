@@ -239,7 +239,7 @@
               </BContainer>
             </BCol>
           </BRow>
-          <BRow v-if="component.exposed.length" class="my-3">
+          <BRow v-if="component.exposed?.length" class="my-3">
             <BCol>
               <BContainer fluid>
                 <BRow>
@@ -411,7 +411,7 @@ const sortData = computed(() => {
             ...value,
             name,
           })),
-        exposed: Object.entries(exposed || [])
+        exposed: Object.entries(exposed || {})
           .sort(([a], [b]) => a.localeCompare(b))
           .map(([name, value]) => ({
             ...value,
