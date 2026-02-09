@@ -4,7 +4,13 @@ import type {
   BFormRadioProps,
   BFormRadioSlots,
 } from 'bootstrap-vue-next'
-import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
+import {
+  type ComponentReference,
+  type ExposedRecord,
+  type PropRecord,
+  type SlotRecord,
+  StyleKind,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -81,6 +87,20 @@ export default {
           description: 'Content to place in the label of the radio button',
         },
       } satisfies SlotRecord<keyof BFormRadioSlots>,
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the radio button',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the radio button',
+        },
+        element: {
+          type: 'HTMLInputElement',
+          description: 'Reference to the underlying input element',
+        },
+      } satisfies ExposedRecord,
     },
     BFormRadioGroup: {
       styleSpec: {kind: StyleKind.Tag, value: 'div[role="radiogroup"]'},
@@ -173,6 +193,16 @@ export default {
           },
         },
       } satisfies SlotRecord<keyof BFormRadioGroupSlots>,
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the radio group',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the first radio button in the group',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

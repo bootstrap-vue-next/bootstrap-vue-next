@@ -6,7 +6,13 @@ import type {
   BFormSelectProps,
   BFormSelectSlots,
 } from 'bootstrap-vue-next'
-import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
+import {
+  type ComponentReference,
+  type ExposedRecord,
+  type PropRecord,
+  type SlotRecord,
+  StyleKind,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -110,6 +116,20 @@ export default {
           description: undefined,
         },
       } satisfies SlotRecord<keyof BFormSelectSlots<unknown>>,
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the select element',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the select element',
+        },
+        element: {
+          type: 'HTMLSelectElement',
+          description: 'Reference to the underlying select element',
+        },
+      } satisfies ExposedRecord,
     },
     BFormSelectOption: {
       styleSpec: {kind: StyleKind.Tag, value: 'option'},

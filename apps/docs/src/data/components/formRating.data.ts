@@ -1,5 +1,5 @@
 import type {BFormRatingProps, BFormRatingSlots} from 'bootstrap-vue-next'
-import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
+import type {ComponentReference, ExposedRecord, PropRecord, SlotRecord} from '../../types'
 import {buildCommonProps} from '../../utils/commonProps'
 import {pick} from '../../utils/objectUtils'
 
@@ -121,6 +121,12 @@ export default {
           description: 'Content for the optional clear button',
         },
       } satisfies SlotRecord<keyof BFormRatingSlots>,
+      exposed: {
+        hoverValue: {
+          type: 'Ref<number | null>',
+          description: 'Reactive reference to the currently hovered rating value',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }
