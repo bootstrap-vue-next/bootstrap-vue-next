@@ -64,7 +64,7 @@ const props = withDefaults(defineProps<Omit<BFormSelectProps<Options>, 'modelVal
   textField: 'text',
   valueField: 'value',
 })
-defineSlots<BFormSelectSlots<unknown>>()
+defineSlots<BFormSelectSlots<OptionsValues<Options>>>()
 
 // Type-safe model value - single value or array depending on multiple prop
 const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>({
