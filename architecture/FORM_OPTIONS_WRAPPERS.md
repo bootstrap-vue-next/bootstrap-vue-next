@@ -287,12 +287,12 @@ Key principle: **Use `as const` for literal type inference. Type your `ref<T>()`
 
 All three components share these props:
 
-| Prop             | Type                                  | Default      | Description                            |
-| ---------------- | ------------------------------------- | ------------ | -------------------------------------- |
-| `options`        | `(Item \| Record<string, unknown>)[]` | `[]`         | Available options                      |
-| `value-field`    | `string`                              | `'value'`    | Object field containing the value      |
-| `text-field`     | `string`                              | `'text'`     | Object field containing display text   |
-| `disabled-field` | `string`                              | `'disabled'` | Object field indicating disabled state |
+| Prop             | Type                                     | Default      | Description                            |
+| ---------------- | ---------------------------------------- | ------------ | -------------------------------------- |
+| `options`        | `(Options \| Record<string, unknown>)[]` | `[]`         | Available options                      |
+| `value-field`    | `string`                                 | `'value'`    | Object field containing the value      |
+| `text-field`     | `string`                                 | `'text'`     | Object field containing display text   |
+| `disabled-field` | `string`                                 | `'disabled'` | Object field indicating disabled state |
 
 `BFormSelect` additionally has:
 
@@ -307,7 +307,7 @@ All three components share these props:
 
 ### Option Normalization (Wrapper Components)
 
-Each wrapper normalizes generic `Item[]` into the base component's expected format:
+Each wrapper normalizes the generic `Options` array into the base component's expected format:
 
 ```typescript
 // Primitives → {value: el, text: String(el)}
@@ -349,7 +349,7 @@ modelValue?: unknown | undefined          // BFormRadioGroup
 modelValue?: unknown[] | undefined        // BFormCheckboxGroup
 ```
 
-**Important:** If you see conditional types (`Item extends {value: infer V} ? V : ...`) in the `.d.ts` output, the build used stale cache. Delete `dist/` and rebuild.
+**Important:** If you see conditional types (e.g. `T extends {value: infer V} ? V : ...`) in the `.d.ts` output, the build used stale cache. Delete `dist/` and rebuild.
 
 ---
 
