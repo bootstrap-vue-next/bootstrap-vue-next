@@ -247,12 +247,12 @@ const selected = ref<number>(1)
 
 ```typescript
 const options = [true, false] as const
-const selected = ref<boolean>(true)
+const selected = ref<boolean[]>([true])
 
 <BFormCheckboxGroup v-model="selected" :options="options" />
 ```
 
-Booleans display as `"true"` / `"false"` strings.
+Booleans display as `"true"` / `"false"` strings. Note that `BFormCheckboxGroup` expects an array `modelValue` (`OptionsValues<Options>[] | undefined`), so the ref must be an array.
 
 ### ✅ Inline Object Types
 
@@ -311,12 +311,12 @@ Key principle: **Use `as const` for literal type inference. Type your `ref<T>()`
 
 All three components share these props:
 
-| Prop             | Type                                     | Default      | Description                            |
-| ---------------- | ---------------------------------------- | ------------ | -------------------------------------- |
-| `options`        | `(Options \| Record<string, unknown>)[]` | `[]`         | Available options                      |
-| `value-field`    | `string`                                 | `'value'`    | Object field containing the value      |
-| `text-field`     | `string`                                 | `'text'`     | Object field containing display text   |
-| `disabled-field` | `string`                                 | `'disabled'` | Object field indicating disabled state |
+| Prop             | Type      | Default      | Description                            |
+| ---------------- | --------- | ------------ | -------------------------------------- |
+| `options`        | `Options` | `[]`         | Available options                      |
+| `value-field`    | `string`  | `'value'`    | Object field containing the value      |
+| `text-field`     | `string`  | `'text'`     | Object field containing display text   |
+| `disabled-field` | `string`  | `'disabled'` | Object field indicating disabled state |
 
 `BFormSelect` additionally has:
 
