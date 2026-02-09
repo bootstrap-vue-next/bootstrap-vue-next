@@ -29,6 +29,7 @@ import type {BFormRadioGroupProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 import BFormRadioGroupBase from './BFormRadioGroupBase.vue'
 import type {RadioOption} from '../../types/RadioTypes'
+import type {OptionsValues} from '../../types/OptionsTypes'
 
 /**
  * Type-safe wrapper component for BFormRadioGroup.
@@ -63,17 +64,6 @@ const props = withDefaults(defineProps<Omit<BFormRadioGroupProps<Options>, 'mode
   validated: false,
   valueField: 'value',
 })
-
-// Extract value types from options array
-type ExtractItemValue<T> = T extends string | number | boolean
-  ? T
-  : T extends {value: infer V}
-    ? V
-    : unknown
-
-type OptionsValues<T extends readonly unknown[]> = T extends readonly (infer Item)[]
-  ? ExtractItemValue<Item>
-  : unknown
 
 // Type-safe model value - extracts union from options
 const modelValue = defineModel<OptionsValues<Options> | undefined>({

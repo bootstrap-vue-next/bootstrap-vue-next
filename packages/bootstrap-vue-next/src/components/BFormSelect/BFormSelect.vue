@@ -30,6 +30,7 @@ import {computed} from 'vue'
 import BFormSelectBase from './BFormSelectBase.vue'
 import type {ComplexSelectOptionRaw, SelectOption} from '../../types/SelectTypes'
 import type {BFormSelectSlots} from '../../types'
+import type {OptionsValues} from '../../types/OptionsTypes'
 
 /**
  * Type-safe wrapper component for BFormSelect.
@@ -64,17 +65,6 @@ const props = withDefaults(defineProps<Omit<BFormSelectProps<Options>, 'modelVal
   valueField: 'value',
 })
 defineSlots<BFormSelectSlots<unknown>>()
-
-// Extract value types from options array
-type ExtractItemValue<T> = T extends string | number | boolean
-  ? T
-  : T extends {value: infer V}
-    ? V
-    : unknown
-
-type OptionsValues<T extends readonly unknown[]> = T extends readonly (infer Item)[]
-  ? ExtractItemValue<Item>
-  : unknown
 
 // Type-safe model value - single value or array depending on multiple prop
 const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>({

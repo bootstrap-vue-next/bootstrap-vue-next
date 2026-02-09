@@ -33,6 +33,7 @@ import type {BFormCheckboxGroupProps, BFormCheckboxGroupSlots} from '../../types
 import {computed} from 'vue'
 import BFormCheckboxGroupBase from './BFormCheckboxGroupBase.vue'
 import type {CheckboxValue} from '../../types/CheckboxTypes'
+import type {OptionsValues} from '../../types/OptionsTypes'
 
 /**
  * Type-safe wrapper component for BFormCheckboxGroup.
@@ -70,17 +71,6 @@ const props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps<Options>, 'm
   valueField: 'value',
 })
 defineSlots<BFormCheckboxGroupSlots>()
-
-// Extract value types from options array
-type ExtractItemValue<T> = T extends string | number | boolean
-  ? T
-  : T extends {value: infer V}
-    ? V
-    : unknown
-
-type OptionsValues<T extends readonly unknown[]> = T extends readonly (infer Item)[]
-  ? ExtractItemValue<Item>
-  : unknown
 
 // Type-safe model value - extracts union from options, wraps in array
 const modelValue = defineModel<OptionsValues<Options>[] | undefined>({
