@@ -44,7 +44,9 @@ There are several methods that you can employ to toggle the visibility of `<BMod
 
 <<< DEMO ./demo/ModalDirective.vue
 
-### Using the `show()`, `hide()` and `toggle()` methods
+### Using exposed methods
+
+You can control the modal programmatically using template ref methods. See the [Component Reference Exposed section](#comp-reference-bmodal-exposed) for available methods.
 
 <<< DEMO ./demo/ModalExposed.vue
 

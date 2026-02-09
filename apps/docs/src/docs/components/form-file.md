@@ -134,8 +134,4 @@ With inputs that are of type `file`, the value is strictly `uni-directional`. Me
 
 ## Exposed functions
 
-The BFormFile exposes functions to control the component: `focus()`, `blur()`, `reset()`. These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs).
-
-1. `focus()`: Focuses the file input (or browse button in custom mode)
-2. `blur()`: Blurs the file input focus
-3. `reset()`: Resets the file selection so that no file is selected
+`BFormFile` exposes functions through template refs. See the [Component Reference Exposed section](#comp-reference-bformfile-exposed) for details.

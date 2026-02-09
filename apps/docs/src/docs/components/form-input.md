@@ -239,11 +239,9 @@ See the [migration guide](/docs/migration-guide#bform-components) for changes ha
 
 ## Exposed input element
 
-`BFormInput` exposes the native input element
-(of type [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement))
-on the component as a reference with name `element`. You can use that reference to access the native properties and methods.
+`BFormInput` exposes the native input element and methods through template refs. See the [Component Reference Exposed section](#comp-reference-bforminput-exposed) for details.
 
-e.g. `<BFormInput ref="foo" ... />`, `const foo = ref<InstanceType<typeof BFormInput> | null>(null)`, and then
+You can access the native input element properties and methods, e.g. `<BFormInput ref="foo" ... />`, `const foo = ref<InstanceType<typeof BFormInput> | null>(null)`, and then
 `foo?.value?.element?.methodName` or `foo?.value?.element?.propertyName`
 
 ### Input properties
