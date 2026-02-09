@@ -56,21 +56,31 @@ generic="
 
 ### modelValue Typing - ENHANCED
 
-The `modelValue` on all three components now uses **inline type extraction** to provide strong typing for core cases:
+All three wrapper components use `defineModel` typed with `OptionsValues<Options>`, which provides strong compile-time typing when the `Options` generic can be inferred (e.g., via `as const`).
+
+#### Type-Extraction Utilities
+
+`ExtractItemValue` and `OptionsValues` are internal type helpers (defined in `types/OptionsTypes.ts`) that extract value unions from an options array type:
 
 ```typescript
-// Extract value from single item
+// Extract value from a single option item
 type ExtractItemValue<T> =
   T extends string | number | boolean ? T :
   T extends {value: infer V} ? V :
   unknown
 
-// Extract union from options array
+// Extract value union from an options array
 type OptionsValues<T extends readonly unknown[]> =
   T extends readonly (infer Item)[] ? ExtractItemValue<Item> : unknown
+```
 
-// Apply to modelValue
-const modelValue = defineModel<OptionsValues<Options> | ...>()
+These utilities power `defineModel` directly — they are not merely conceptual:
+
+```typescript
+// Actual defineModel signatures in each wrapper component
+const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>()  // BFormSelect
+const modelValue = defineModel<OptionsValues<Options> | undefined>()                        // BFormRadioGroup
+const modelValue = defineModel<OptionsValues<Options>[] | undefined>()                      // BFormCheckboxGroup
 ```
 
 | Component            | modelValue Type                                              | Strong Typing |
@@ -79,17 +89,34 @@ const modelValue = defineModel<OptionsValues<Options> | ...>()
 | `BFormRadioGroup`    | `OptionsValues<Options> \| undefined`                        | ✅ Core cases |
 | `BFormCheckboxGroup` | `OptionsValues<Options>[] \| undefined`                      | ✅ Core cases |
 
+#### When type resolution falls back to `unknown`
+
+When `Options` cannot be narrowed beyond the default constraint (e.g., no `as const`, no explicit generic), `OptionsValues` resolves to `unknown`. This happens because:
+
+- `OptionsValues<readonly (Record<string, unknown> | string | number | boolean)[]>` → `ExtractItemValue<Record<string, unknown> | string | number | boolean>` → includes `unknown` from the `Record` branch, which absorbs the union → `unknown`
+
 **Core cases with strong typing:**
 
-- ✅ Primitive arrays: `['red', 'green', 'blue']` → modelValue is `'red' | 'green' | 'blue'`
-- ✅ Standard object arrays: `[{value: 1, text: 'One'}, ...]` → modelValue is `1 | 2 | ...`
-- ✅ Requires `as const` for literal type inference
+- ✅ Primitive arrays: `['red', 'green', 'blue'] as const` → modelValue is `'red' | 'green' | 'blue'`
+- ✅ Standard object arrays: `[{value: 1, text: 'One'}, ...] as const` → modelValue is `1 | 2 | ...`
+- ✅ Non-const typed arrays: `string[]` → modelValue is `string` (base type, not `unknown`)
 
-**Edge cases (fallback typing):**
+**Edge cases (fallback to `unknown`):**
 
-- ⚠️ Custom field names (valueField/textField): Falls back to `unknown`
-- ⚠️ Non-const arrays: Infers base type (e.g., `string`, `number`)
-- ⚠️ Mixed arrays: Union of extracted types
+- ⚠️ Custom field names (valueField/textField): Falls back to `unknown` (no generic tracks the field name)
+- ⚠️ Untyped arrays without `as const`: Default generic resolves to `unknown`
+- ⚠️ Mixed arrays: Union of extracted types (may include `unknown` from object branches)
+
+#### User-facing type safety
+
+For the strongest guarantees, users should type their `ref<T>()` explicitly rather than relying solely on component inference:
+
+```typescript
+const options = ['red', 'green', 'blue'] as const
+const selected = ref<'red' | 'green' | 'blue'>('red')  // ← explicit typing on the ref
+```
+
+This ensures the variable is correctly typed regardless of how well the component's generic inference works. Component inference provides an additional safety net but is not a substitute for explicit typing on the consuming side.
 
 ### options Prop Typing
 
@@ -129,17 +156,12 @@ const options = ['red', 'green', 'blue'] as const
 
 ### Implementation Pattern
 
-Each component includes inline type extraction:
+Each component imports type utilities from `types/OptionsTypes.ts` and applies them to `defineModel`:
 
 ```typescript
-type ExtractItemValue<T> =
-  T extends string | number | boolean ? T :
-  T extends {value: infer V} ? V :
-  unknown
+import {type OptionsValues} from '../../types/OptionsTypes'
 
-type OptionsValues<T extends readonly unknown[]> =
-  T extends readonly (infer Item)[] ? ExtractItemValue<Item> : unknown
-
+// OptionsValues extracts the value union from the Options array generic
 const modelValue = defineModel<OptionsValues<Options> | ...>()
 ```
 
@@ -326,30 +348,34 @@ const value = (el as Record<string, unknown>)[props.valueField as string]
 
 ### defineModel Typing
 
-Each wrapper uses `defineModel` with the broad type:
+Each wrapper uses `defineModel` with `OptionsValues<Options>` to carry the generic through:
 
 ```typescript
 // BFormSelect
-const modelValue = defineModel<unknown | unknown[] | null>({default: '' as any})
+const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>({default: '' as any})
 
 // BFormRadioGroup
-const modelValue = defineModel<unknown | undefined>({default: undefined as any})
+const modelValue = defineModel<OptionsValues<Options> | undefined>({default: undefined as any})
 
 // BFormCheckboxGroup
-const modelValue = defineModel<unknown[] | undefined>({default: () => []})
+const modelValue = defineModel<OptionsValues<Options>[] | undefined>({default: () => []})
 ```
+
+When `Options` uses its default constraint, `OptionsValues` resolves to `unknown`, so the effective type for unparameterized usage is still broad (e.g., `unknown | unknown[] | null`).
 
 ### Generated .d.ts Files
 
-The `.d.ts` output reflects the broad `modelValue` types. After a **clean build** (delete `dist/` first), the generated types should show:
+The `.d.ts` output preserves the `OptionsValues<Options>` types. After a **clean build** (delete `dist/` first), the generated types should show:
 
 ```typescript
-modelValue?: unknown | unknown[] | null   // BFormSelect
-modelValue?: unknown | undefined          // BFormRadioGroup
-modelValue?: unknown[] | undefined        // BFormCheckboxGroup
+modelValue?: OptionsValues<Options> | OptionsValues<Options>[] | null  // BFormSelect
+modelValue?: OptionsValues<Options> | undefined                       // BFormRadioGroup
+modelValue?: OptionsValues<Options>[] | undefined                     // BFormCheckboxGroup
 ```
 
-**Important:** If you see conditional types (e.g. `T extends {value: infer V} ? V : ...`) in the `.d.ts` output, the build used stale cache. Delete `dist/` and rebuild.
+When `Options` is not narrowed (default generic), these resolve to `unknown`-based unions at the call site.
+
+**Important:** If you see raw conditional types (e.g. `T extends {value: infer V} ? V : ...`) inlined in the `.d.ts` output, the build used stale cache. Delete `dist/` and rebuild.
 
 ---
 
