@@ -34,7 +34,7 @@ import type {BFormDatalistSlots} from '../../types'
  * Normalizes typed options and forwards to BFormDatalistBase for rendering.
  * Supports both complex objects and simple scalar types (string, number).
  */
-const props = withDefaults(defineProps<Omit<BFormDatalistProps<Item, ValueKey>, 'modelValue'>>(), {
+const props = withDefaults(defineProps<BFormDatalistProps<Item, ValueKey>>(), {
   disabled: false,
   disabledField: 'disabled' as keyof Item & string,
   id: undefined,
