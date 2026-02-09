@@ -16,7 +16,7 @@
       :value="props.value"
       :aria-required="computedRequired || undefined"
     />
-    <label v-if="hasDefaultSlot || !props.plain" :for="computedId" :class="labelClasses">
+    <label v-if="hasDefaultSlot || !resolvedPlain" :for="computedId" :class="labelClasses">
       <slot />
     </label>
   </ConditionalWrapper>
@@ -77,6 +77,9 @@ const {focused} = useFocus(input, {
 
 const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
+// Resolve plain from props or parent group — used for both label visibility and CSS classes
+const resolvedPlain = computed(() => props.plain ?? parentData?.plain.value ?? false)
+
 const localValue = computed({
   get: () => (parentData ? parentData.modelValue.value : modelValue.value),
   set: (newValue) => {
@@ -96,7 +99,7 @@ const computedRequired = computed(
 const isButtonGroup = computed(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
 const classesObject = computed(() => ({
-  plain: props.plain ?? parentData?.plain.value ?? false,
+  plain: resolvedPlain.value,
   button: props.button ?? parentData?.buttons.value ?? false,
   inline: props.inline ?? parentData?.inline.value ?? false,
   state: props.state ?? parentData?.state.value ?? null,

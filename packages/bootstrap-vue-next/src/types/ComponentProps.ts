@@ -479,8 +479,9 @@ export interface BFormRadioGroupBaseProps {
  * - Object arrays with {value} field: modelValue is union of value types
  * - Use 'as const' on options array for literal type inference
  *
- * For custom field names (valueField/textField), modelValue extraction still works
- * as long as the value field exists on the objects.
+ * For custom field names (valueField/textField), type extraction falls back to `unknown`
+ * since the generic only inspects the literal `value` key. Use computed mapping to
+ * standard `{value, text}` format for full type safety with custom-shaped objects.
  */
 export interface BFormRadioGroupProps<
   Options extends readonly (Record<string, unknown> | string | number | boolean)[] = readonly (

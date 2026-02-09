@@ -95,14 +95,8 @@ const normalizedOptions = computed(() => {
 
   if (hasComplexOptions) {
     return optionsArray.map((el) => {
-      if (typeof el === 'string') {
-        return el
-      }
-      if (typeof el === 'number') {
-        return String(el)
-      }
-      if (typeof el === 'boolean') {
-        return String(el)
+      if (typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean') {
+        return {value: el, text: String(el), disabled: false} as SelectOption
       }
 
       // Check if this is a complex (grouped) option
@@ -133,14 +127,8 @@ const normalizedOptions = computed(() => {
   }
 
   return optionsArray.map((el) => {
-    if (typeof el === 'string') {
-      return el
-    }
-    if (typeof el === 'number') {
-      return String(el)
-    }
-    if (typeof el === 'boolean') {
-      return String(el)
+    if (typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean') {
+      return {value: el, text: String(el), disabled: false} as SelectOption
     }
     // Spread all properties from the original object to preserve class, data-*, etc.
     return {

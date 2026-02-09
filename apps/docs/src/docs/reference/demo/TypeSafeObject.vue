@@ -15,6 +15,6 @@ const userOptions = [
   {value: 3, text: 'Charlie'},
 ] as const
 
-// TypeScript infers: Ref<1 | 2 | 3>
+// Explicit type annotation matches the inferred value union from `as const`
 const userId = ref<1 | 2 | 3>(1)
 </script>

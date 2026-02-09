@@ -154,8 +154,6 @@ This approach:
 
 ## What Works for Users
 
-## What Works for Users
-
 ### ✅ Primitives with `as const` (Strongly Typed)
 
 ```typescript
