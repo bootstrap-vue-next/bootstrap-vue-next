@@ -163,29 +163,13 @@ See also:
 
 #### TypeScript Type Safety
 
-`BFormDatalist` <!--@include: ./_type-safety-intro.md-->
-
-**Basic type-safe usage:**
+`BFormDatalist` uses generic type parameters to validate that `value-field`, `text-field`, and
+`disabled-field` reference actual keys of your option type. Since `BFormDatalist` is a native
+`<datalist>` element (no `v-model`), the type safety focus is on field name validation.
 
 <<< DEMO ./demo/DatalistTypeSafeBasic.vue{vue}
 
-**Type-safe API responses:**
-
-<<< DEMO ./demo/DatalistTypeSafeAPI.vue{vue}
-
-**Type-safe enums:**
-
-<<< DEMO ./demo/DatalistTypeSafeEnum.vue{vue}
-
-**Benefits:**
-
-<!--@include: ./_type-safety-benefits.md-->
-
-**Backward compatibility:**
-
-<!--@include: ./_type-safety-backward-compat.md-->
-
-See the [BFormSelect TypeScript documentation](/docs/components/form-select#typescript-type-safety) for comprehensive type safety guidance that also applies to datalists.
+See the [Type-Safe Options](/docs/reference/type-safe-options#bformdatalist) reference for more details.
 
 ## Validation
 
