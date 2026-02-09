@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.43.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.0...bootstrapvuenext-v0.43.1) (2026-02-09)
+
+
+### Bug Fixes
+
+* **BFormRadio:** inherit classes from parent causing props to not work fixes [#3007](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3007) ([#3015](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3015)) ([c614fc3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c614fc3fe1f0cba708d20b71731f8eb3c487cd20))
+* **BTable:** filterFunction not working when filter prop is empty string fixes [#2993](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2993) ([#3008](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3008)) ([7b719b1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7b719b13fef448708835fb89ae063d3082d87ad3))
+
 ## [0.43.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.42.0...bootstrapvuenext-v0.43.0) (2026-02-03)
 
 

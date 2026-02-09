@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.43.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.43.0...nuxt-v0.43.1) (2026-02-09)
+
+
+### Miscellaneous Chores
+
+* **nuxt:** Synchronize main group versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.43.1
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.43.1
+
 ## [0.43.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.42.0...nuxt-v0.43.0) (2026-02-03)
 
 
