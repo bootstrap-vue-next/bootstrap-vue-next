@@ -239,6 +239,44 @@
               </BContainer>
             </BCol>
           </BRow>
+          <BRow v-if="component.exposed.length" class="my-3">
+            <BCol>
+              <BContainer fluid>
+                <BRow>
+                  <BCol>
+                    <h5>
+                      <BLink
+                        :id="buildCompReferenceLink(`${component.component}-Exposed`).slice(1)"
+                        variant="info"
+                        :to="buildCompReferenceLink(`${component.component}-Exposed`)"
+                      >
+                        Exposed
+                      </BLink>
+                    </h5>
+                  </BCol>
+                </BRow>
+                <BRow>
+                  <BCol>
+                    <BTable
+                      :items="component.exposed"
+                      :fields="tableFieldDefinitions.exposed"
+                      hover
+                      small
+                      responsive
+                      bordered
+                      striped
+                    >
+                      <template #cell(type)="d">
+                        <code>
+                          {{ d.item.type }}
+                        </code>
+                      </template>
+                    </BTable>
+                  </BCol>
+                </BRow>
+              </BContainer>
+            </BCol>
+          </BRow>
         </BContainer>
       </BCol>
     </BRow>
@@ -253,6 +291,7 @@ import {
   type ComponentReference,
   type ComponentSection,
   defaultPropSectionSymbol,
+  type ExposedRecord,
   type PropRecord,
   type PropRecordWithMultipleSections,
   type PropRecordWithOptions,
@@ -299,7 +338,7 @@ const sortData = computed(() => {
   const baseDirectory = deriveBaseDirectory()
 
   return Object.entries(props.data).map(
-    ([component, {props: localProps, sourcePath, emits, slots, styleSpec}]) => {
+    ([component, {props: localProps, sourcePath, emits, slots, exposed, styleSpec}]) => {
       const mapProps = () => {
         const isMultiplePropRecord = (
           val: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections
@@ -372,6 +411,12 @@ const sortData = computed(() => {
             ...value,
             name,
           })),
+        exposed: Object.entries(exposed || [])
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([name, value]) => ({
+            ...value,
+            name,
+          })),
         sections: [] as ComponentSection[],
       }
 
@@ -381,6 +426,9 @@ const sortData = computed(() => {
       }
       if (data.slots?.length) {
         data.sections.push('Slots')
+      }
+      if (data.exposed?.length) {
+        data.sections.push('Exposed')
       }
 
       return data
@@ -396,6 +444,7 @@ const tableFieldDefinitions = {
   props: ['prop', 'type', 'default', 'description'],
   emits: ['event', 'args', 'description'],
   slots: ['name', 'scope', 'description'],
+  exposed: ['name', 'type', 'description'],
 } as const satisfies {[P in ComponentItemFree]: TableFieldRaw[]}
 
 const normalizeDefault = (val: unknown) =>

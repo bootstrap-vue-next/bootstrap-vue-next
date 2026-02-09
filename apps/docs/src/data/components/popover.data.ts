@@ -2,6 +2,7 @@ import type {BPopoverEmits, BPopoverProps, BPopoverSlots} from 'bootstrap-vue-ne
 import {
   type ComponentReference,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   StyleKind,
@@ -31,6 +32,20 @@ export default {
           scope: showHideSlotsData,
         },
       } satisfies SlotRecord<keyof BPopoverSlots>,
+      exposed: {
+        show: {
+          type: '() => void',
+          description: 'Shows the popover',
+        },
+        hide: {
+          type: '() => void',
+          description: 'Hides the popover',
+        },
+        toggle: {
+          type: '() => void',
+          description: 'Toggles the visibility of the popover',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }
