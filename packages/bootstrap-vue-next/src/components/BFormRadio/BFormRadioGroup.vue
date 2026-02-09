@@ -86,11 +86,11 @@ const normalizedOptions = computed(
         : {
             value: (el as Record<string, unknown>)[props.valueField as string],
             disabled:
-              ((el as Record<string, unknown>)[props.disabledField as string] as
+              props.disabled ||
+              (((el as Record<string, unknown>)[props.disabledField as string] as
                 | boolean
                 | undefined) ??
-              props.disabled ??
-              false,
+                false),
             text:
               ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ??
               '',
