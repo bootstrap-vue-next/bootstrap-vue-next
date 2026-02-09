@@ -72,7 +72,9 @@ const props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps<Options>, 'm
 })
 defineSlots<BFormCheckboxGroupSlots>()
 
-// Type-safe model value - extracts union from options, wraps in array
+// Type-safe model value - extracts union from options, wraps in array.
+// NOTE: OptionsValues assumes a static "value" key; custom valueField is not
+// reflected in the type — modelValue falls back to unknown in that case.
 const modelValue = defineModel<OptionsValues<Options>[] | undefined>({
   default: () => [],
 })

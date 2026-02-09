@@ -64,23 +64,25 @@ All three wrapper components use `defineModel` typed with `OptionsValues<Options
 
 ```typescript
 // Extract value from a single option item
-type ExtractItemValue<T> =
-  T extends string | number | boolean ? T :
-  T extends {value: infer V} ? V :
-  unknown
+type ExtractItemValue<T> = T extends string | number | boolean
+  ? T
+  : T extends {value: infer V}
+    ? V
+    : unknown
 
 // Extract value union from an options array
-type OptionsValues<T extends readonly unknown[]> =
-  T extends readonly (infer Item)[] ? ExtractItemValue<Item> : unknown
+type OptionsValues<T extends readonly unknown[]> = T extends readonly (infer Item)[]
+  ? ExtractItemValue<Item>
+  : unknown
 ```
 
 These utilities power `defineModel` directly — they are not merely conceptual:
 
 ```typescript
 // Actual defineModel signatures in each wrapper component
-const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>()  // BFormSelect
-const modelValue = defineModel<OptionsValues<Options> | undefined>()                        // BFormRadioGroup
-const modelValue = defineModel<OptionsValues<Options>[] | undefined>()                      // BFormCheckboxGroup
+const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>() // BFormSelect
+const modelValue = defineModel<OptionsValues<Options> | undefined>() // BFormRadioGroup
+const modelValue = defineModel<OptionsValues<Options>[] | undefined>() // BFormCheckboxGroup
 ```
 
 | Component            | modelValue Type                                              | Strong Typing |
@@ -113,7 +115,7 @@ For the strongest guarantees, users should type their `ref<T>()` explicitly rath
 
 ```typescript
 const options = ['red', 'green', 'blue'] as const
-const selected = ref<'red' | 'green' | 'blue'>('red')  // ← explicit typing on the ref
+const selected = ref<'red' | 'green' | 'blue'>('red') // ← explicit typing on the ref
 ```
 
 This ensures the variable is correctly typed regardless of how well the component's generic inference works. Component inference provides an additional safety net but is not a substitute for explicit typing on the consuming side.
@@ -352,7 +354,9 @@ Each wrapper uses `defineModel` with `OptionsValues<Options>` to carry the gener
 
 ```typescript
 // BFormSelect
-const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>({default: '' as any})
+const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>({
+  default: '' as any,
+})
 
 // BFormRadioGroup
 const modelValue = defineModel<OptionsValues<Options> | undefined>({default: undefined as any})

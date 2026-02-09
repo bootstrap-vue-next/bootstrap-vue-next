@@ -65,7 +65,9 @@ const props = withDefaults(defineProps<Omit<BFormRadioGroupProps<Options>, 'mode
   valueField: 'value',
 })
 
-// Type-safe model value - extracts union from options
+// Type-safe model value - extracts union from options.
+// NOTE: OptionsValues assumes a static "value" key; custom valueField is not
+// reflected in the type — modelValue falls back to unknown in that case.
 const modelValue = defineModel<OptionsValues<Options> | undefined>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: undefined as any,

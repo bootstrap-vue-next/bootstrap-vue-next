@@ -66,7 +66,9 @@ const props = withDefaults(defineProps<Omit<BFormSelectProps<Options>, 'modelVal
 })
 defineSlots<BFormSelectSlots<OptionsValues<Options>>>()
 
-// Type-safe model value - single value or array depending on multiple prop
+// Type-safe model value - single value or array depending on multiple prop.
+// NOTE: OptionsValues assumes a static "value" key; custom valueField is not
+// reflected in the type — modelValue falls back to unknown in that case.
 const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: '' as any,
