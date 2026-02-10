@@ -59,12 +59,7 @@ Note that `bootstrap-vue-next` uses Vue's transitions for this animation rather 
 
 ## Exposed functions
 
-The BAlert exposes four functions to manipulate the state of an active timer: `pause(), resume(), restart() & stop()`. These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs).
-
-1. Pause: pauses the active timer at the time that it is currently at
-2. Resume: resumes the active timer at the place saved by `pause()`
-3. Restart: restarts the timer back to its v-model saved spot. Ex: v-model="5400" and restarted at 3200ms will restart back to 5400ms
-4. Stop: stops the timer. Unlike pause, it sets the value to 0ms and cannot be `resumed`, only `restarted`
+`BAlert` exposes functions to manipulate the timer state through template refs. See the [Component Reference Exposed section](#comp-reference-balert-exposed) for details.
 
 <<< DEMO ./demo/AlertFunctions.vue
 

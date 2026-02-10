@@ -1,5 +1,5 @@
 import {pick} from '../../utils/objectUtils'
-import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
+import type {ComponentReference, ExposedRecord, PropRecord, SlotRecord} from '../../types'
 import type {
   BFormCheckboxGroupProps,
   BFormCheckboxGroupSlots,
@@ -114,6 +114,20 @@ export default {
           description: 'Content to place in the label of the form checkbox',
         },
       } satisfies SlotRecord<keyof BFormCheckboxSlots>,
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the checkbox',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the checkbox',
+        },
+        element: {
+          type: 'HTMLInputElement',
+          description: 'Reference to the underlying input element',
+        },
+      } satisfies ExposedRecord,
     },
     BFormCheckboxGroup: {
       props: {
@@ -213,6 +227,16 @@ export default {
           },
         },
       } satisfies SlotRecord<keyof BFormCheckboxGroupSlots>,
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the checkbox group',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the first checkbox in the group',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

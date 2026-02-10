@@ -14,7 +14,13 @@ import type {
   BFormValidFeedbackProps,
   BFormValidFeedbackSlots,
 } from 'bootstrap-vue-next'
-import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
+import {
+  type ComponentReference,
+  type ExposedRecord,
+  type PropRecord,
+  type SlotRecord,
+  StyleKind,
+} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -34,6 +40,12 @@ export default {
           description: 'Content to place in the form',
         },
       } satisfies SlotRecord<keyof BFormSlots>,
+      exposed: {
+        element: {
+          type: 'HTMLFormElement',
+          description: 'Reference to the underlying form element',
+        },
+      } satisfies ExposedRecord,
     },
     BFormDatalist: {
       styleSpec: {kind: StyleKind.Tag, value: 'datalist'},

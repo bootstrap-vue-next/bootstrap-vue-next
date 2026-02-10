@@ -3,6 +3,7 @@ import {
   type ComponentReference,
   defaultPropSectionSymbol,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
 } from '../../types'
@@ -90,6 +91,36 @@ export default {
           },
         },
       } satisfies EmitRecord<keyof BAlertEmits | 'update:model-value'>,
+      exposed: {
+        show: {
+          type: '() => void',
+          description: 'Shows the alert',
+        },
+        hide: {
+          type: '() => void',
+          description: 'Hides the alert',
+        },
+        toggle: {
+          type: '() => void',
+          description: 'Toggles the visibility of the alert',
+        },
+        pause: {
+          type: '() => void',
+          description: 'Pauses the countdown timer',
+        },
+        resume: {
+          type: '() => void',
+          description: 'Resumes the countdown timer',
+        },
+        restart: {
+          type: '() => void',
+          description: 'Restarts the countdown timer',
+        },
+        stop: {
+          type: '() => void',
+          description: 'Stops the countdown timer',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

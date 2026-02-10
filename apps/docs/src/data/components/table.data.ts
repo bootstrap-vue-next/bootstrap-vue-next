@@ -25,6 +25,7 @@ import {
   defaultPropSectionSymbol,
   type EmitArgReference,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   type SlotScopeReference,
@@ -825,6 +826,32 @@ export default {
         },
         emits: BTable.emits,
         slots: BTable.slots,
+        exposed: {
+          expansion: {
+            type: 'object',
+            description: 'Object containing expansion state methods (expand, collapse, expandAll, collapseAll) and expandedItems ref',
+          },
+          selection: {
+            type: 'object',
+            description: 'Object containing selection state methods (select, unselect, selectAll, unselectAll) and selectedItems ref',
+          },
+          items: {
+            type: 'ComputedRef<unknown[]>',
+            description: 'Computed ref of the table items',
+          },
+          displayItems: {
+            type: 'ComputedRef<unknown[]>',
+            description: 'Computed ref of the currently displayed table items after filtering and pagination',
+          },
+          getStringValue: {
+            type: '(key: string, item: unknown) => string',
+            description: 'Function to get the string value of an item field',
+          },
+          refresh: {
+            type: '() => Promise<void>',
+            description: 'Function to refresh the table data (calls the items provider if present)',
+          },
+        } satisfies ExposedRecord,
       },
       BTableLite: {
         props: {
@@ -833,6 +860,12 @@ export default {
         },
         emits: BTableLite.emits,
         slots: BTableLite.slots,
+        exposed: {
+          expansion: {
+            type: 'object',
+            description: 'Object containing expansion state methods (expand, collapse, expandAll, collapseAll) and expandedItems ref',
+          },
+        } satisfies ExposedRecord,
       },
       BTableSimple: {
         props: BTableSimple.props,

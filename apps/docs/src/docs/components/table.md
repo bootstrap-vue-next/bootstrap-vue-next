@@ -732,17 +732,7 @@ selected, such as a virtual column as shown in the example below.
 
 ### Exposed API
 
-- `<BTable>` exposes the following top-level members via a template ref. See [Row select support](#row-select-support) for the `selection` API and [Row expansion support](#row-expansion-support) for the `expansion` API.
-
-| Member                                          | Description                                                                                                         |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `items: readonly Item[]`                        | The complete set of items used to build the table.                                                                  |
-| `displayItems: readonly Item[]`                 | The set of items currently displayed in the table. See [Complete Example](#complete-example) for usage              |
-| `getStringValue(ob: Item, key: string): string` | Returns the formatted string value for `key` on `ob`. See [Custom Sort Comparers](#custom-sort-comparers) for usage |
-| `refresh()`                                     | Calls the async provider to refresh table items.                                                                    |
-
-- `<BTable>` and `<BTableLite>` also expose an `expansion` controller with methods like `toggle(item)`, `add(item)`, `remove(item)`, `set(items)`, `setAll()`, `clear()`, `has(item)`, and the `expandedItems` array. See [Row expansion support](#row-expansion-support).
-- `<BTable>` additionally exposes a `selection` controller. See [Row select support](#row-select-support).
+`<BTable>` and `<BTableLite>` expose methods and properties through template refs. See the Component Reference Exposed sections for [BTable](#comp-reference-btable-exposed) and [BTableLite](#comp-reference-btablelite-exposed) for complete details on all exposed members including the `selection` and `expansion` controllers.
 
 ## Sorting
 

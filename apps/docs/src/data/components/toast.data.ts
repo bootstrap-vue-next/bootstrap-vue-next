@@ -3,6 +3,7 @@ import {
   type ComponentReference,
   defaultPropSectionSymbol,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
 } from '../../types'
 import {omit, pick} from '../../utils/objectUtils'
@@ -169,6 +170,36 @@ export default {
           },
         },
       },
+      exposed: {
+        show: {
+          type: '() => void',
+          description: 'Shows the toast',
+        },
+        hide: {
+          type: '() => void',
+          description: 'Hides the toast',
+        },
+        toggle: {
+          type: '() => void',
+          description: 'Toggles the visibility of the toast',
+        },
+        pause: {
+          type: '() => void',
+          description: 'Pauses the countdown timer',
+        },
+        resume: {
+          type: '() => void',
+          description: 'Resumes the countdown timer',
+        },
+        restart: {
+          type: '() => void',
+          description: 'Restarts the countdown timer',
+        },
+        stop: {
+          type: '() => void',
+          description: 'Stops the countdown timer',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

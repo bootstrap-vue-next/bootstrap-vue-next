@@ -146,8 +146,7 @@ props can be used to control what's considered clipping.
 
 ## Exposed functions
 
-`BTooltip` exposes several functions to allow manipulation of the state of the component.
-These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs)
+`BTooltip` exposes functions through template refs. See the [Component Reference Exposed section](#comp-reference-btooltip-exposed) for details.
 
 <<< DEMO ./demo/TooltipExposed.vue
 
