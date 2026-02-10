@@ -1,6 +1,3 @@
-## Type Safety
-
-provides full TypeScript type safety through generic type parameters. When you provide typed options, TypeScript will:
-
-1. **Validate field names** - Ensure `value-field`, `text-field`, and `disabled-field` props reference actual keys of your option type
-2. **Infer v-model type** - Automatically determine the correct type for `v-model` based on your `value-field`
+provides TypeScript type safety for the `options` prop. When you pass typed options, the component
+infers the `v-model` type from the option values. See the
+[Type-Safe Options](/docs/reference/type-safe-options) reference for full details and patterns.

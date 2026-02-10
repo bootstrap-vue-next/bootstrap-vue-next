@@ -4,7 +4,7 @@
     :options="tagOptions"
     multiple
   />
-  <p class="mt-2">Selected Tags: {{ selectedTags.join(', ') || 'None' }}</p>
+  <p class="mt-2">Selected: {{ selectedTags }}</p>
 </template>
 
 <script setup lang="ts">
@@ -21,14 +21,7 @@ const tags: Tag[] = [
   {tagId: 'bs', tagName: 'Bootstrap'},
 ]
 
-// Map to standard format for full type safety
-const tagOptions = computed(() =>
-  tags.map((tag) => ({
-    value: tag.tagId,
-    text: tag.tagName,
-  }))
-)
+const tagOptions = computed(() => tags.map((tag) => ({value: tag.tagId, text: tag.tagName})))
 
-// TypeScript knows this is string[]
 const selectedTags = ref<string[]>([])
 </script>

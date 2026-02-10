@@ -16,7 +16,11 @@
 <script
   setup
   lang="ts"
-  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
+  generic="
+    Item = Record<string, unknown> | string | number | boolean,
+    ValueKey extends Item extends Record<string, unknown> ? keyof Item : string =
+      Item extends Record<string, unknown> ? keyof Item : never
+  "
 >
 import type {BFormDatalistProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
@@ -28,16 +32,20 @@ import type {BFormDatalistSlots} from '../../types'
  * Type-safe wrapper component for BFormDatalist.
  * Provides generic type safety for options and field names.
  * Normalizes typed options and forwards to BFormDatalistBase for rendering.
+ * Supports both complex objects and simple scalar types (string, number).
  */
-const props = withDefaults(defineProps<Omit<BFormDatalistProps<Item, ValueKey>, 'modelValue'>>(), {
+const props = withDefaults(defineProps<BFormDatalistProps<Item, ValueKey>>(), {
   disabled: false,
   disabledField: 'disabled' as keyof Item & string,
   id: undefined,
   options: () => [],
   textField: 'text' as keyof Item & string,
-  valueField: 'value' as ValueKey & string,
+  // @ts-expect-error - ValueKey default doesn't satisfy InferDefault but works at runtime
+  valueField: 'value',
 })
-defineSlots<BFormDatalistSlots<Item[ValueKey]>>()
+defineSlots<
+  BFormDatalistSlots<Item extends Record<string, unknown> ? Item[ValueKey & keyof Item] : Item>
+>()
 
 // Type-safe normalization of options
 const normalizedOptions = computed(() =>
@@ -48,10 +56,16 @@ const normalizedOptions = computed(() =>
     if (typeof el === 'number') {
       return String(el)
     }
+    if (typeof el === 'boolean') {
+      return String(el)
+    }
     return {
-      value: el[props.valueField as ValueKey],
-      text: (el[props.textField as keyof Item] as string | undefined) ?? '',
-      disabled: (el[props.disabledField as keyof Item] as boolean | undefined) ?? false,
+      value: (el as Record<string, unknown>)[props.valueField as string],
+      text:
+        ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ?? '',
+      disabled:
+        ((el as Record<string, unknown>)[props.disabledField as string] as boolean | undefined) ??
+        false,
     } as SelectOption
   })
 )

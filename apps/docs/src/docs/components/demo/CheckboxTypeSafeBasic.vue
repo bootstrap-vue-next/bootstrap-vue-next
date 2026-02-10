@@ -3,10 +3,7 @@
     <BFormCheckboxGroup
       id="checkbox-type-safe-basic"
       v-model="selectedUsers"
-      :options="users"
-      value-field="id"
-      text-field="name"
-      disabled-field="inactive"
+      :options="userOptions"
     />
     <div class="mt-3">
       Selected user IDs: <strong>{{ selectedUsers }}</strong>
@@ -15,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 
 interface User {
   id: number
@@ -29,6 +26,15 @@ const users: User[] = [
   {id: 3, name: 'Charlie', inactive: true},
   {id: 4, name: 'David'},
 ]
+
+// Map to standard format for full type safety
+const userOptions = computed(() =>
+  users.map((user) => ({
+    value: user.id,
+    text: user.name,
+    disabled: user.inactive,
+  }))
+)
 
 // TypeScript knows selectedUsers is number[]
 const selectedUsers = ref<number[]>([1, 4])

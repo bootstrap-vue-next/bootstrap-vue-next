@@ -1,6 +1,4 @@
-## Benefits
-
-- **IDE autocomplete** - Your editor suggests valid field names as you type
-- **Compile-time validation** - Typos and invalid field names are caught before runtime
-- **Type inference** - The `v-model` type is automatically inferred from your value field
-- **Refactoring safety** - Renaming fields in your interface updates all usages
+- **IDE autocomplete** - Your editor suggests valid properties as you type
+- **Compile-time validation** - Type errors in option mappings are caught before runtime
+- **v-model inference** - The `v-model` type is automatically inferred from your option values
+- **Refactoring safety** - Renaming fields in your interfaces highlights all usage locations

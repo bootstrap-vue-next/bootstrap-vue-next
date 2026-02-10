@@ -23,7 +23,7 @@
       :indeterminate="indeterminate || undefined"
       v-bind="processedAttrs.inputAttrs"
     />
-    <label v-if="hasDefaultSlot || props.plain === false" :for="computedId" :class="labelClasses">
+    <label v-if="hasDefaultSlot || !resolvedPlain" :for="computedId" :class="labelClasses">
       <slot />
     </label>
   </ConditionalWrapper>
@@ -54,20 +54,20 @@ const _props = withDefaults(
     ariaLabel: undefined,
     ariaLabelledby: undefined,
     autofocus: false,
-    button: false,
+    button: undefined,
     buttonGroup: false,
-    buttonVariant: null,
+    buttonVariant: undefined,
     disabled: false,
     form: undefined,
     id: undefined,
-    inline: false,
+    inline: undefined,
     name: undefined,
-    plain: false,
-    required: undefined,
-    reverse: false,
+    plain: undefined,
+    required: false,
+    reverse: undefined,
     size: undefined,
-    state: null,
-    switch: false,
+    state: undefined,
+    switch: undefined,
     uncheckedValue: false,
     value: true,
   }
@@ -103,6 +103,9 @@ const {focused} = useFocus(input, {
 
 const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
+// Resolve plain from props or parent group — used for both label visibility and CSS classes
+const resolvedPlain = computed(() => props.plain ?? parentData?.plain.value ?? false)
+
 const localValue = computed({
   get: () => (parentData ? parentData.modelValue.value : modelValue.value),
   set: (newVal) => {
@@ -129,15 +132,14 @@ const computedRequired = computed(
 const isButtonGroup = computed(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
 const classesObject = computed(() => ({
-  plain: props.plain || (parentData?.plain.value ?? false),
-  button: props.button || (parentData?.buttons.value ?? false),
-  inline: props.inline || (parentData?.inline.value ?? false),
-  reverse: props.reverse || (parentData?.reverse.value ?? false),
-  switch: props.switch || (parentData?.switch.value ?? false),
-  state:
-    props.state === true || props.state === false ? props.state : (parentData?.state.value ?? null),
-  size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
-  buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
+  plain: resolvedPlain.value,
+  button: props.button ?? parentData?.buttons.value ?? false,
+  inline: props.inline ?? parentData?.inline.value ?? false,
+  reverse: props.reverse ?? parentData?.reverse.value ?? false,
+  switch: props.switch ?? parentData?.switch.value ?? false,
+  state: props.state ?? parentData?.state.value ?? null,
+  size: props.size ?? parentData?.size.value ?? 'md',
+  buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary',
   hasDefaultSlot: hasDefaultSlot.value,
 }))
 const wrapperClasses = getClasses(classesObject)

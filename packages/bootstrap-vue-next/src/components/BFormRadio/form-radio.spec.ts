@@ -1,6 +1,7 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormRadio from './BFormRadio.vue'
+import BFormRadioGroup from './BFormRadioGroup.vue'
 
 describe('form-radio', () => {
   enableAutoUnmount(afterEach)
@@ -569,5 +570,246 @@ describe('form-radio', () => {
     })
     const $label = wrapper.get('label')
     expect($label.text()).toBe('foobar')
+  })
+
+  describe('prop inheritance from parent group', () => {
+    it('inherits buttonVariant from parent when not explicitly set', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          buttonVariant: 'primary',
+          buttons: true,
+        },
+        slots: {
+          default: '<BFormRadio value="1">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      const $label = $radio.get('label')
+      expect($label.classes()).toContain('btn-primary')
+      expect($label.classes()).not.toContain('btn-secondary')
+    })
+
+    it('child buttonVariant overrides parent buttonVariant when explicitly set', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          buttonVariant: 'primary',
+          buttons: true,
+        },
+        slots: {
+          default: '<BFormRadio value="1" button-variant="danger">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      const $label = $radio.get('label')
+      expect($label.classes()).toContain('btn-danger')
+      expect($label.classes()).not.toContain('btn-primary')
+    })
+
+    it('inherits size from parent when not explicitly set', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          size: 'lg',
+        },
+        slots: {
+          default: '<BFormRadio value="1">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      expect($radio.classes()).toContain('form-control-lg')
+    })
+
+    it('child size overrides parent size when explicitly set', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          size: 'lg',
+        },
+        slots: {
+          default: '<BFormRadio value="1" size="sm">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      expect($radio.classes()).toContain('form-control-sm')
+      expect($radio.classes()).not.toContain('form-control-lg')
+    })
+
+    it('inherits state from parent when not explicitly set', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          state: false,
+        },
+        slots: {
+          default: '<BFormRadio value="1">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      const $input = $radio.get('input')
+      expect($input.classes()).toContain('is-invalid')
+    })
+
+    it('child state overrides parent state when explicitly set', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          state: false,
+        },
+        slots: {
+          default: '<BFormRadio value="1" :state="true">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      const $input = $radio.get('input')
+      expect($input.classes()).toContain('is-valid')
+      expect($input.classes()).not.toContain('is-invalid')
+    })
+
+    it('inherits button prop from parent when not explicitly set', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          buttons: true,
+        },
+        slots: {
+          default: '<BFormRadio value="1">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      const $input = $radio.get('input')
+      expect($input.classes()).toContain('btn-check')
+    })
+
+    it('child can explicitly set button=false to override parent button=true', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          buttons: true,
+        },
+        slots: {
+          default: '<BFormRadio value="1" :button="false">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      const $input = $radio.get('input')
+      expect($input.classes()).not.toContain('btn-check')
+      expect($input.classes()).toContain('form-check-input')
+    })
+
+    it('inherits plain prop from parent when not explicitly set', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          plain: true,
+        },
+        slots: {
+          default: '<BFormRadio value="1">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      expect($radio.classes()).not.toContain('form-check')
+    })
+
+    it('child can explicitly set plain=false to override parent plain=true', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          plain: true,
+        },
+        slots: {
+          default: '<BFormRadio value="1" :plain="false">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      expect($radio.classes()).toContain('form-check')
+    })
+
+    it('inherits inline prop from parent when not explicitly set', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          stacked: false,
+        },
+        slots: {
+          default: '<BFormRadio value="1">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      expect($radio.classes()).toContain('form-check-inline')
+    })
+
+    it('inherits reverse prop from parent when not explicitly set', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          reverse: true,
+        },
+        slots: {
+          default: '<BFormRadio value="1">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      expect($radio.classes()).toContain('form-check-reverse')
+    })
+
+    it('uses default values when neither parent nor child provide value', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          buttons: true,
+        },
+        slots: {
+          default: '<BFormRadio value="1">Radio 1</BFormRadio>',
+          option: () => {},
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const $radio = wrapper.findComponent(BFormRadio)
+      const $label = $radio.get('label')
+      // Default buttonVariant should be 'secondary'
+      expect($label.classes()).toContain('btn-secondary')
+      // Default size should be 'md' which doesn't add a class
+      expect($radio.classes()).not.toContain('form-control-sm')
+      expect($radio.classes()).not.toContain('form-control-lg')
+    })
   })
 })

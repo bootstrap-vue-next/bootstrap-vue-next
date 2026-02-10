@@ -294,6 +294,7 @@
   ],
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache --fix",
-    "*": "prettier --write --ignore-unknown"
+    "!(CHANGELOG)*.md": "prettier --write --ignore-unknown",
+    "!(*md)": "prettier --write --ignore-unknown"
   }
 }

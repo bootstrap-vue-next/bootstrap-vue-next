@@ -20,14 +20,10 @@ interface Name {
   last: string
 }
 
-interface NameOption {
-  value: Name
-  text?: string
-  disabled?: boolean
-}
-
 const model = ref<Name[]>([])
-const options: NameOption[] = [
+
+// Use standard {value, text, disabled?} format for full type safety
+const options: {value: Name; text?: string; disabled?: boolean}[] = [
   {value: {last: 'Brown', first: 'Christina'}},
   {value: {last: 'Smith', first: 'John'}},
   {value: {last: 'Doe', first: 'Jane'}},

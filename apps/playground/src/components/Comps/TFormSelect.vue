@@ -66,6 +66,54 @@
         <strong>{{ styledSelectSelected }}</strong>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-2">Simple types: String values</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormSelect v-model="simpleString" :options="['red', 'green', 'blue']" />
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        Selected:
+        <strong>{{ simpleString }}</strong>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-2">Simple types: Number values</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormSelect v-model="simpleNumber" :options="[1, 2, 3, 5, 10]" />
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        Selected:
+        <strong>{{ simpleNumber }}</strong>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-2">Simple types: Boolean values</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormSelect v-model="simpleBoolean" :options="[true, false]" />
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        Selected:
+        <strong>{{ simpleBoolean }}</strong>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
@@ -127,4 +175,9 @@ const styledSelectOptions = [
     'data-role': 'support',
   },
 ]
+
+// Simple type examples
+const simpleString = ref('red')
+const simpleNumber = ref(5)
+const simpleBoolean = ref(true)
 </script>
