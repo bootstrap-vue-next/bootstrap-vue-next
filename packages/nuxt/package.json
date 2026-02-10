@@ -1,7 +1,7 @@
 {
   "name": "@bootstrap-vue-next/nuxt",
   "description": "Nuxt Module for BootstrapVueNext",
-  "version": "0.42.0",
+  "version": "0.43.1",
   "license": "MIT",
   "author": {
     "name": "Issayah",
@@ -44,7 +44,7 @@
     "@nuxt/schema": "^4.2.2",
     "@nuxt/test-utils": "^3.23.0",
     "@rushstack/eslint-patch": "^1.15.0",
-    "@types/node": "^22.19.7",
+    "@types/node": "^24.0.0",
     "@vue/eslint-config-prettier": "^10.2.0",
     "bootstrap-vue-next": "workspace:^",
     "eslint": "^9.39.2",

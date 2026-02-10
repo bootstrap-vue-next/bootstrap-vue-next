@@ -45,7 +45,7 @@ export default {
               'Array of items to render in the component. Note that BFormDatalist only supports Options, not OptionsGroups',
           },
         }),
-        ['disabledField', 'id', 'options', 'textField', 'valueField']
+        ['disabled', 'disabledField', 'id', 'options', 'textField', 'valueField']
       ) satisfies PropRecord<keyof BFormDatalistProps>,
       emits: {},
       slots: {

@@ -1,5 +1,5 @@
-<!-- `#region` template -->
 <template>
+  <!-- #region template-->
   <div>
     <BButton
       id="table-busy-toggle"
@@ -25,8 +25,8 @@
       slot for more complex loading states.
     </p>
   </div>
+  <!-- #endregion template -->
 </template>
-<!-- `#endregion` template -->
 
 <script setup lang="ts">
 import {ref} from 'vue'

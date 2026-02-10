@@ -72,8 +72,11 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 
-const formSelectSelected = ref({foo: 'item 6', baz: false})
-const formSelectMultipleSelected = ref<string[]>([])
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const formSelectSelected = ref({foo: 'item 6', baz: false}) as any
+// For multiple select with mixed types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const formSelectMultipleSelected = ref([]) as any
 formSelectMultipleSelected.value = ['first', 'second']
 const formSelectOptions = [
   {value: null, text: 'Please select an option'},
@@ -94,33 +97,33 @@ const formSelectOptions = [
 const styledSelectSelected = ref('pharmacist')
 const styledSelectOptions = [
   {
-    value: 'physician',
-    text: 'Physician',
-    class: 'bg-light',
+    'value': 'physician',
+    'text': 'Physician',
+    'class': 'bg-light',
     'data-role': 'medical',
   },
   {
-    value: 'pharmacist',
-    text: 'Pharmacist',
-    class: 'bg-primary text-white fw-bold',
+    'value': 'pharmacist',
+    'text': 'Pharmacist',
+    'class': 'bg-primary text-white fw-bold',
     'data-role': 'medical',
   },
   {
-    value: 'patient',
-    text: 'Patient',
-    class: 'text-muted',
+    'value': 'patient',
+    'text': 'Patient',
+    'class': 'text-muted',
     'data-role': 'user',
   },
   {
-    value: 'nurse',
-    text: 'Nurse',
-    class: 'text-success',
+    'value': 'nurse',
+    'text': 'Nurse',
+    'class': 'text-success',
     'data-role': 'medical',
   },
   {
-    value: 'carer',
-    text: 'Carer',
-    class: 'text-info',
+    'value': 'carer',
+    'text': 'Carer',
+    'class': 'text-info',
     'data-role': 'support',
   },
 ]

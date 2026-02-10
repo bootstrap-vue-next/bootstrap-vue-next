@@ -9,7 +9,6 @@ import type {
 import type {AriaAttributes, ComponentPublicInstance, TeleportProps, TransitionProps} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
-import type {OptionsFieldMappingProps} from './OptionsTypes'
 import type {
   BgColorVariant,
   BorderColorVariant,
@@ -19,12 +18,13 @@ import type {
   TextColorVariant,
 } from './ColorTypes'
 import type {AttrsValue, ClassValue} from './AnyValuedAttributes'
-import type {CheckboxValue} from './CheckboxTypes'
+import type {CheckboxOptionRaw, CheckboxValue} from './CheckboxTypes'
 import type {Size} from './Size'
 import type {AriaInvalid} from './AriaInvalid'
-import type {Numberish, TeleporterProps, ValidationState} from './CommonTypes'
+import type {Numberish, TeleporterProps, ValidationState, ValueOrCallBack} from './CommonTypes'
 import type {CommonInputProps, FormDebounceOptions} from './FormCommonInputProps'
-import type {RadioValue} from './RadioTypes'
+import type {RadioOption, RadioValue} from './RadioTypes'
+import type {ComplexSelectOptionRaw, SelectOptionRaw, SelectValue} from './SelectTypes'
 import type {
   Breakpoint,
   ColBreakpointProps,
@@ -295,34 +295,79 @@ export interface BFormCheckboxProps {
   value?: string | boolean | CheckboxValue
 }
 
+// Base props (non-generic)
+export interface BFormCheckboxGroupBaseProps {
+  id?: string
+  name?: string
+  size?: Size
+  state?: ValidationState
+  buttonVariant?: ButtonVariant | null
+  buttons?: boolean
+  stacked?: boolean
+  disabled?: boolean
+  required?: boolean
+  validated?: boolean
+  autofocus?: boolean
+  form?: string
+  ariaInvalid?: AriaInvalid
+  plain?: boolean
+  reverse?: boolean
+  switches?: boolean
+  options: CheckboxOptionRaw[] // Already normalized
+}
+
+// Wrapper props (generic)
 export interface BFormCheckboxGroupProps<
   Item = Record<string, unknown>,
   ValueKey extends keyof Item = keyof Item,
-> extends OptionsFieldMappingProps<Item, ValueKey> {
-  ariaInvalid?: AriaInvalid
-  autofocus?: boolean
+> {
+  // Generic-specific props
+  options?: readonly (Item | string | number)[]
+  valueField?: ValueKey & string
+  textField?: keyof Item & string
+  disabledField?: keyof Item & string
+
+  // All base props (inherited)
+  id?: string
+  modelValue?: Item[ValueKey][]
+  name?: string
+  size?: Size
+  state?: ValidationState
   buttonVariant?: ButtonVariant | null
   buttons?: boolean
-  disabled?: boolean
-  form?: string
-  id?: string
-  modelValue?: readonly Item[ValueKey][]
-  name?: string
-  plain?: boolean
-  required?: boolean
-  reverse?: boolean
-  size?: Size
   stacked?: boolean
-  state?: ValidationState
-  switches?: boolean
+  disabled?: boolean
+  required?: boolean
   validated?: boolean
+  autofocus?: boolean
+  form?: string
+  ariaInvalid?: AriaInvalid
+  plain?: boolean
+  reverse?: boolean
+  switches?: boolean
 }
 
+// BFormDatalist base props (non-generic, uses raw options)
+export interface BFormDatalistBaseProps {
+  disabled?: boolean
+  disabledField?: string
+  id?: string
+  options?: readonly (string | number | Record<string, unknown>)[] | SelectOptionRaw[]
+  textField?: string
+  valueField?: string
+}
+
+// BFormDatalist wrapper props (generic, type-safe options)
 export interface BFormDatalistProps<
   Item = Record<string, unknown>,
   ValueKey extends keyof Item = keyof Item,
-> extends OptionsFieldMappingProps<Item, ValueKey> {
+> {
+  disabled?: boolean
+  disabledField?: keyof Item & string
   id?: string
+  options?: readonly (Item | string | number)[]
+  textField?: keyof Item & string
+  valueField?: ValueKey & string
 }
 
 export interface BFormFileProps {
@@ -381,10 +426,13 @@ export interface BFormRadioProps {
   value?: RadioValue
 }
 
-export interface BFormRadioGroupProps<
-  Item = Record<string, unknown>,
-  ValueKey extends keyof Item = keyof Item,
-> extends OptionsFieldMappingProps<Item, ValueKey> {
+/**
+ * Props for BFormRadioGroupBase - internal non-generic component.
+ * Accepts normalized RadioOption[] instead of generic options.
+ * Users should use BFormRadioGroup (the type-safe wrapper) instead.
+ * @internal
+ */
+export interface BFormRadioGroupBaseProps {
   ariaInvalid?: AriaInvalid
   autofocus?: boolean
   buttonVariant?: ButtonVariant | null
@@ -392,8 +440,9 @@ export interface BFormRadioGroupProps<
   disabled?: boolean
   form?: string
   id?: string
-  modelValue?: Item[ValueKey]
+  modelValue?: RadioValue
   name?: string
+  options?: readonly RadioOption[]
   plain?: boolean
   required?: boolean
   reverse?: boolean
@@ -401,6 +450,36 @@ export interface BFormRadioGroupProps<
   stacked?: boolean
   state?: ValidationState
   validated?: boolean
+}
+
+/**
+ * Props for BFormRadioGroup - type-safe generic wrapper component.
+ * Provides compile-time type safety for options array and field names.
+ */
+export interface BFormRadioGroupProps<
+  Item = Record<string, unknown>,
+  ValueKey extends keyof Item = keyof Item,
+> {
+  ariaInvalid?: AriaInvalid
+  autofocus?: boolean
+  buttonVariant?: ButtonVariant | null
+  buttons?: boolean
+  disabled?: boolean
+  disabledField?: keyof Item & string
+  form?: string
+  id?: string
+  modelValue?: Item[ValueKey]
+  name?: string
+  options?: readonly (Item | string | number)[]
+  plain?: boolean
+  required?: boolean
+  reverse?: boolean
+  size?: Size
+  stacked?: boolean
+  state?: ValidationState
+  textField?: keyof Item & string
+  validated?: boolean
+  valueField?: ValueKey & string
 }
 export interface BFormRatingProps {
   color?: string
@@ -430,6 +509,33 @@ export interface BFormRatingProps {
     | string
 }
 
+// BFormSelect base props (non-generic, uses raw options)
+export interface BFormSelectBaseProps {
+  ariaInvalid?: AriaInvalid
+  autofocus?: boolean
+  disabled?: boolean
+  disabledField?: string
+  form?: string
+  id?: string
+  labelField?: string
+  modelValue?: SelectValue
+  multiple?: boolean
+  name?: string
+  options?:
+    | readonly (string | number | Record<string, unknown>)[]
+    | readonly SelectOptionRaw[]
+    | readonly ComplexSelectOptionRaw[]
+  optionsField?: string
+  plain?: boolean
+  required?: boolean
+  selectSize?: Numberish
+  size?: Size
+  state?: ValidationState
+  textField?: string
+  valueField?: string
+}
+
+// BFormSelect wrapper props (generic, type-safe options)
 export interface BFormSelectProps<
   Item = Record<string, unknown>,
   ValueKey extends keyof Item = keyof Item,
@@ -441,10 +547,10 @@ export interface BFormSelectProps<
   form?: string
   id?: string
   labelField?: keyof Item & string
-  modelValue?: Item[ValueKey] | readonly Item[ValueKey][]
+  modelValue?: Item[ValueKey]
   multiple?: boolean
   name?: string
-  options?: readonly Item[]
+  options?: readonly (Item | string | number)[]
   optionsField?: keyof Item & string
   plain?: boolean
   required?: boolean
@@ -460,12 +566,12 @@ export interface BFormSelectOptionProps<T> {
   value?: T
 }
 
-export interface BFormSelectOptionGroupProps<Item = Record<string, unknown>> {
-  disabledField?: keyof Item & string
+export interface BFormSelectOptionGroupProps {
+  disabledField?: string
   label?: string
-  options?: readonly Item[]
-  textField?: keyof Item & string
-  valueField?: keyof Item & string
+  options?: readonly (unknown | Record<string, unknown>)[]
+  textField?: string
+  valueField?: string
 }
 
 export interface BFormSpinbuttonProps {
@@ -1370,9 +1476,13 @@ export interface BPopoverProps extends TeleporterProps, ShowHideProps {
   offset?: Numberish | null
   placement?: PopoverPlacement
   realtime?: boolean
-  reference?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
+  reference?: ValueOrCallBack<
+    string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
+  >
   strategy?: Strategy
-  target?: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
+  target?: ValueOrCallBack<
+    string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
+  >
   title?: string
   titleClass?: ClassValue
   tooltip?: boolean

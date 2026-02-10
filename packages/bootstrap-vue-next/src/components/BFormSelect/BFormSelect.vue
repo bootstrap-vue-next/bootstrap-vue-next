@@ -1,36 +1,16 @@
 <template>
-  <select
-    :id="computedId"
-    ref="_input"
-    v-model="modelValue"
-    :class="computedClasses"
-    :name="props.name"
-    :form="props.form || undefined"
-    :multiple="props.multiple || undefined"
-    :size="computedSelectSize"
-    :disabled="props.disabled"
-    :required="props.required || undefined"
-    :aria-required="props.required || undefined"
-    :aria-invalid="computedAriaInvalid"
-  >
-    <slot name="first" />
-    <template v-for="(option, index) in normalizedOptsWrapper" :key="index">
-      <BFormSelectOptionGroup
-        v-if="isComplex(option)"
-        :label="option.label"
-        :options="option.options"
-        :value-field="props.valueField as any"
-        :text-field="props.textField as any"
-        :disabled-field="props.disabledField as any"
-      />
-      <BFormSelectOption v-else v-bind="option">
-        <slot name="option" v-bind="option">
-          {{ option.text }}
-        </slot>
-      </BFormSelectOption>
+  <BFormSelectBase v-bind="forwardedProps" v-model="modelValue" :options="normalizedOptions as any">
+    <!-- Forward all slots -->
+    <template #first>
+      <slot name="first" />
     </template>
+
+    <template #option="slotProps">
+      <slot name="option" v-bind="slotProps as any" />
+    </template>
+
     <slot />
-  </select>
+  </BFormSelectBase>
 </template>
 
 <script
@@ -39,18 +19,16 @@
   generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
 >
 import type {BFormSelectProps} from '../../types/ComponentProps'
-import {computed, provide, readonly, useTemplateRef} from 'vue'
-import BFormSelectOption from './BFormSelectOption.vue'
-import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
-import {useAriaInvalid} from '../../composables/useAriaInvalid'
-import {useFocus, useToNumber} from '@vueuse/core'
-import {useId} from '../../composables/useId'
-import {useStateClass} from '../../composables/useStateClass'
-import {useFormSelect} from '../../composables/useFormSelect'
+import {computed} from 'vue'
+import BFormSelectBase from './BFormSelectBase.vue'
 import type {ComplexSelectOptionRaw, SelectOption} from '../../types/SelectTypes'
 import type {BFormSelectSlots} from '../../types'
-import {formSelectKey} from '../../utils/keys'
 
+/**
+ * Type-safe wrapper component for BFormSelect.
+ * Provides generic type safety for options and field names.
+ * Normalizes typed options and forwards to BFormSelectBase for rendering.
+ */
 const props = withDefaults(defineProps<Omit<BFormSelectProps<Item, ValueKey>, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
@@ -73,63 +51,84 @@ const props = withDefaults(defineProps<Omit<BFormSelectProps<Item, ValueKey>, 'm
 })
 defineSlots<BFormSelectSlots<Item[ValueKey]>>()
 
-const modelValue = defineModel<Item[ValueKey] | readonly Item[ValueKey][]>({
-  default: undefined,
+const modelValue = defineModel<Item[ValueKey] | Item[ValueKey][] | null>({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default: '' as any,
 })
 
-const computedId = useId(() => props.id, 'input')
+// Type-safe normalization of options (supports both simple and complex/grouped)
+const normalizedOptions = computed(() => {
+  const hasComplexOptions = props.options.some(
+    (el) =>
+      typeof el !== 'string' &&
+      typeof el !== 'number' &&
+      el[props.optionsField as keyof Item] !== undefined
+  )
 
-const selectSizeNumber = useToNumber(() => props.selectSize)
+  if (hasComplexOptions) {
+    return props.options.map((el) => {
+      if (typeof el === 'string') {
+        return el
+      }
+      if (typeof el === 'number') {
+        return String(el)
+      }
 
-const stateClass = useStateClass(() => props.state)
+      // Check if this is a complex (grouped) option
+      const optionsField = el[props.optionsField as keyof Item]
+      if (optionsField !== undefined && Array.isArray(optionsField)) {
+        // Complex option with nested options
+        const label =
+          (el[props.labelField as keyof Item] as string | undefined) ??
+          (el[props.textField as keyof Item] as string | undefined) ??
+          ''
+        return {
+          label,
+          options: optionsField,
+        } as ComplexSelectOptionRaw
+      }
 
-const input = useTemplateRef('_input')
+      // Simple option - spread all properties from the original object to preserve class, data-*, etc.
+      return {
+        ...el,
+        value: el[props.valueField as ValueKey],
+        text: (el[props.textField as keyof Item] as string | undefined) ?? '',
+        disabled: (el[props.disabledField as keyof Item] as boolean | undefined) ?? false,
+      } as SelectOption
+    })
+  }
 
-const {focused} = useFocus(input, {
-  initialValue: props.autofocus,
+  return props.options.map((el) => {
+    if (typeof el === 'string') {
+      return el
+    }
+    if (typeof el === 'number') {
+      return String(el)
+    }
+    // Spread all properties from the original object to preserve class, data-*, etc.
+    return {
+      ...el,
+      value: el[props.valueField as ValueKey],
+      text: (el[props.textField as keyof Item] as string | undefined) ?? '',
+      disabled: (el[props.disabledField as keyof Item] as boolean | undefined) ?? false,
+    } as SelectOption
+  })
 })
 
-const computedClasses = computed(() => [
-  stateClass.value,
-  {
-    'form-control': props.plain,
-    [`form-control-${props.size}`]: props.size !== 'md' && props.plain,
-    'form-select': !props.plain,
-    [`form-select-${props.size}`]: props.size !== 'md' && !props.plain,
-  },
-])
-
-const computedSelectSize = computed(() =>
-  selectSizeNumber.value || props.plain ? selectSizeNumber.value : undefined
-)
-
-const computedAriaInvalid = useAriaInvalid(
-  () => props.ariaInvalid,
-  () => props.state
-)
-
-const {normalizedOptions, isComplex} = useFormSelect(() => props.options, props)
-
-const normalizedOptsWrapper = computed(
-  () =>
-    normalizedOptions.value as readonly (
-      | ComplexSelectOptionRaw<Item[ValueKey]>
-      | SelectOption<Item[ValueKey]>
-    )[]
-)
-
-// Provide the current model value for child components to inject
-provide(formSelectKey, {
-  modelValue: readonly(modelValue),
-})
-
-defineExpose({
-  blur: () => {
-    focused.value = false
-  },
-  element: input,
-  focus: () => {
-    focused.value = true
-  },
-})
+// Forward all props except options (which we normalize), modelValue (handled separately),
+// and field mappings (already used for normalization)
+const forwardedProps = computed(() => ({
+  ariaInvalid: props.ariaInvalid,
+  autofocus: props.autofocus,
+  disabled: props.disabled,
+  form: props.form,
+  id: props.id,
+  multiple: props.multiple,
+  name: props.name,
+  plain: props.plain,
+  required: props.required,
+  selectSize: props.selectSize,
+  size: props.size,
+  state: props.state,
+}))
 </script>

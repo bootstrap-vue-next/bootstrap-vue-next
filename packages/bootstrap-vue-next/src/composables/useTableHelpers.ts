@@ -84,7 +84,7 @@ export const useTableMapper = <Item>({
   const filterResolved = readonly(toRef(pagination.filter.filter))
   const usesProviderResolved = readonly(toRef(provider.usesProvider))
 
-  const isFilterableTable = computed(() => !!filterResolved.value)
+  const isFilterableTable = computed(() => filterResolved.value !== undefined)
 
   const computedFields = computed<TableField<Item>[]>(() =>
     toValue(fields).map((el) => {
@@ -396,7 +396,7 @@ export const useTableSelectedItems = <Item>({
         }
         // This is where range is different, due to the difference in shift
       } else if (shiftClicked) {
-        const lastSelectedItem = selectedItems.value.at(-1)
+        const lastSelectedItem = selectedItems.value[selectedItems.value.length - 1]
         const lastSelectedIndex = allItemsResolved.value.findIndex(
           (i) => utils.get(i) === lastSelectedItem
         )

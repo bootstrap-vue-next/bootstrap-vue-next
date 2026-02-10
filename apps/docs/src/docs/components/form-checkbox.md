@@ -239,9 +239,3 @@ Type safety works with TypeScript enums for strongly-typed value constraints:
 ### Backward Compatibility
 
 <!--@include: ./_type-safety-backward-compat.md-->
-
-### Global Defaults Limitation
-
-<!--@include: ./_type-safety-global-defaults.md-->
-
-<<< FRAGMENT ./demo/CheckboxGroupGlobalDefaultsPlugin.ts#snippet{ts}

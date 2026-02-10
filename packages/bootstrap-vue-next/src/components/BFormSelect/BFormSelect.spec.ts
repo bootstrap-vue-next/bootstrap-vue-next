@@ -1,7 +1,7 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormSelect from './BFormSelect.vue'
-import {expectCorrectModelType} from '../../../tests/utils/type-assertions'
+import {ref} from 'vue'
 
 describe('BFormSelect', () => {
   enableAutoUnmount(afterEach)
@@ -123,12 +123,12 @@ describe('BFormSelect', () => {
   })
 
   it('updates modelValue when option is selected', async () => {
-    let modelValue = 'one'
+    const modelValue = ref('one')
     const wrapper = mount(BFormSelect, {
       props: {
-        modelValue,
+        'modelValue': modelValue.value,
         'onUpdate:modelValue': (value: string) => {
-          modelValue = value
+          modelValue.value = value
         },
         'options': ['one', 'two', 'three'],
       },
@@ -231,50 +231,5 @@ describe('BFormSelect', () => {
     expect(options[0].classes()).toContain('group-class')
     expect(options[0].attributes('data-group')).toBe('1')
     expect(options[1].classes()).toContain('group-class')
-  })
-
-  describe('type safety with generics', () => {
-    it('has correct v-model type inference', () => {
-      // This test validates that TypeScript correctly infers v-model types from the generic parameters.
-      // Type checking happens at compile time - if the types don't match, TypeScript will error.
-
-      // Test with numeric value field (single selection)
-      const numValue: number = 1
-      expectCorrectModelType<number>(numValue)
-
-      // Test with string value field
-      const strValue: string = 'a'
-      expectCorrectModelType<string>(strValue)
-
-      // Test with enum value field
-      enum Status {
-        Active = 'active',
-        Inactive = 'inactive',
-      }
-      const enumValue: Status = Status.Active
-      expectCorrectModelType<Status>(enumValue)
-
-      // Test with undefined (no selection)
-      const undefinedValue: number | undefined = undefined
-      expectCorrectModelType<number | undefined>(undefinedValue)
-
-      // Test with multiple selection (array type)
-      const arrayValue: readonly number[] = [1, 2, 3]
-      expectCorrectModelType<readonly number[]>(arrayValue)
-
-      // Test with mixed union types
-      const mixedValue: number | readonly number[] = 1
-      expectCorrectModelType<number | readonly number[]>(mixedValue)
-
-      /*
-       * Negative test cases: These would cause compile-time errors if uncommented,
-       * which proves that expectCorrectModelType correctly enforces type safety.
-       * If TypeScript allowed these, the type checking would be broken.
-       */
-      // expectCorrectModelType<string>(numValue) // Should fail: wrong type
-      // expectCorrectModelType<number>(strValue) // Should fail: wrong type
-
-      expect(true).toBe(true)
-    })
   })
 })

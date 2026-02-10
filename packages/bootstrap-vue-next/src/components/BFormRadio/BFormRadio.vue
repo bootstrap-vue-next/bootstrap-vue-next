@@ -95,24 +95,16 @@ const computedRequired = computed(
 
 const isButtonGroup = computed(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
-const classesObject = computed(() => {
-  // When in a group, prioritize parent-provided values for buttonVariant, size, and state
-  // to respect component-level defaults from BFormRadioGroup
-  const bv = parentData?.buttonVariant.value ?? props.buttonVariant ?? 'secondary'
-  const sz = parentData?.size.value ?? props.size ?? 'md'
-  const st = parentData?.state.value !== undefined ? parentData.state.value : props.state || null
-
-  return {
-    plain: props.plain || (parentData?.plain.value ?? false),
-    button: props.button || (parentData?.buttons.value ?? false),
-    inline: props.inline || (parentData?.inline.value ?? false),
-    state: st,
-    reverse: props.reverse || (parentData?.reverse.value ?? false),
-    size: sz,
-    buttonVariant: bv,
-    hasDefaultSlot: hasDefaultSlot.value,
-  }
-})
+const classesObject = computed(() => ({
+  plain: props.plain || (parentData?.plain.value ?? false),
+  button: props.button || (parentData?.buttons.value ?? false),
+  inline: props.inline || (parentData?.inline.value ?? false),
+  state: props.state || parentData?.state.value,
+  reverse: props.reverse || (parentData?.reverse.value ?? false),
+  size: props.size ?? parentData?.size.value ?? 'md', // This is where the true default is made
+  buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary', // This is where the true default is made
+  hasDefaultSlot: hasDefaultSlot.value,
+}))
 const computedClasses = getClasses(classesObject)
 const inputClasses = getInputClasses(classesObject)
 const labelClasses = getLabelClasses(classesObject)

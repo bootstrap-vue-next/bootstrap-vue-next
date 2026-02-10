@@ -1,5 +1,4 @@
 <template>
-  <!-- #region template -->
   <BFormGroup
     label="Select users"
     description="Select one or more users"
@@ -17,7 +16,6 @@
       Please select at least one user
     </BFormInvalidFeedback>
   </BFormGroup>
-  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">
@@ -34,7 +32,7 @@ const users: User[] = [
   {id: 3, name: 'Charlie'},
 ]
 
-const selectedIds = ref<readonly number[]>([])
+const selectedIds = ref<number[]>([])
 
 const validationState = computed(() => selectedIds.value.length > 0)
 </script>

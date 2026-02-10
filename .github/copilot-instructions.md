@@ -247,7 +247,7 @@ All demo files in `apps/docs/src/docs/*/demo/` must follow this structure:
 Use the `<<< DEMO` syntax to reference demo files:
 
 - **Show full file**: `<<< DEMO ./demo/MyComponent.vue{vue}`
-- **Show specific section**: Use `#region name` markers in the demo file and reference with `#name` in the markdown (e.g., `#region template` is referenced as `#template`)
+- **Show specific section**: Use `#region name` markers in the demo file and reference with `#name` in the markdown (e.g., `#region template` is referenced as `#template`) - do not include region markers if showing full file
 
 Use the `<<< FRAGMENT` syntax to reference reusable code fragments:
 

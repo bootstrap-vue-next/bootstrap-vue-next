@@ -4,8 +4,8 @@
       <BCol>
         <h4>Input Focus Test</h4>
         <p>
-          This test validates that input fields do not lose focus during typing, especially
-          during the first two keystrokes.
+          This test validates that input fields do not lose focus during typing, especially during
+          the first two keystrokes.
         </p>
 
         <h5>Test 1: Basic v-model</h5>
@@ -37,7 +37,7 @@
         <BFormTextarea v-model.trim="value6" placeholder="Textarea with trim modifier" rows="3" />
         <p>Value: "{{ value6 }}" (length: {{ value6.length }})</p>
 
-        <BButton @click="resetAll" variant="secondary" class="mt-3">Reset All Values</BButton>
+        <BButton variant="secondary" class="mt-3" @click="resetAll">Reset All Values</BButton>
       </BCol>
     </BRow>
   </BContainer>

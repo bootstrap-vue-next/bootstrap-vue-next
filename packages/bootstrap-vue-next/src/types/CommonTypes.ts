@@ -8,3 +8,5 @@ export type TeleporterProps = {
 }
 
 export type ValidationState = boolean | null
+
+export type ValueOrCallBack<T> = T | (() => T)
