@@ -42,7 +42,7 @@ const rowColsClasses = computed(() =>
       colsXl: props.colsXl,
       colsXxl: props.colsXxl,
     },
-    ['cols', 'colsLg', 'colsMd', 'colsSm', 'colsXl', 'colsXxl'],
+    ['cols', 'colsSm', 'colsMd', 'colsLg', 'colsXl', 'colsXxl'],
     'cols',
     'row-cols'
   )
