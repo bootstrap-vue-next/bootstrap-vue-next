@@ -1,4 +1,5 @@
 import {
+  type Component,
   computed,
   getCurrentInstance,
   type MaybeRefOrGetter,
@@ -61,7 +62,7 @@ export const useBLinkTagResolver = ({
   replace,
   routerComponentName,
 }: {
-  routerComponentName: MaybeRefOrGetter<string>
+  routerComponentName: MaybeRefOrGetter<string | Component>
   disabled: MaybeRefOrGetter<boolean>
   to: MaybeRefOrGetter<RouteLocationRaw | undefined>
   href: MaybeRefOrGetter<string | undefined>
@@ -71,43 +72,84 @@ export const useBLinkTagResolver = ({
   const instance = getCurrentInstance()
   const router = instance?.appContext?.app?.config?.globalProperties?.$router
   const route = instance?.appContext?.app?.config?.globalProperties?.$route
-  const RouterLinkComponent = resolveDynamicComponent('RouterLink') as typeof RouterLink | string
-  const useLink =
-    !!RouterLinkComponent &&
-    typeof RouterLinkComponent !== 'string' &&
-    'useLink' in RouterLinkComponent
-      ? RouterLinkComponent.useLink
-      : null
 
   // Resolving props
   const resolvedTo = computed(() => toValue(to) || '')
   const resolvedReplace = readonly(toRef(replace))
 
-  const routerName = computed(() => toPascalCase(toValue(routerComponentName)))
+  // Resolve the router component - can be a string name or a Component object
+  const resolvedRouterComponent = computed(() => {
+    const componentValue = toValue(routerComponentName)
+    return typeof componentValue === 'string' ? componentValue : componentValue
+  })
+
+  const routerName = computed(() => {
+    const componentValue = resolvedRouterComponent.value
+    return typeof componentValue === 'string' ? toPascalCase(componentValue) : componentValue
+  })
 
   const tag = computed(() => {
-    const hasRouter = instance?.appContext?.app?.component(routerName.value) !== undefined
+    const componentValue = resolvedRouterComponent.value
+    let hasRouter = false
+
+    if (typeof componentValue === 'string') {
+      const pascalName = toPascalCase(componentValue)
+      hasRouter = instance?.appContext?.app?.component(pascalName) !== undefined
+    } else {
+      // It's a Component object, so it exists
+      hasRouter = true
+    }
+
     if (!hasRouter || toValue(disabled) || !resolvedTo.value) {
       return 'a'
     }
-    return routerName.value
+
+    // Return the PascalCase name for string, or the Component object itself
+    return typeof componentValue === 'string' ? toPascalCase(componentValue) : componentValue
+  })
+
+  // Resolve the actual component for useLink
+  const ActualRouterComponent = computed(() => {
+    const tagValue = tag.value
+    if (typeof tagValue === 'string' && tagValue !== 'a') {
+      return resolveDynamicComponent(tagValue) as typeof RouterLink | string
+    }
+    return tagValue
+  })
+
+  const useLink = computed(() => {
+    const component = ActualRouterComponent.value
+    if (!!component && typeof component !== 'string' && 'useLink' in component) {
+      return component.useLink
+    }
+    return null
   })
 
   const isRouterLink = computed(() => tag.value === 'RouterLink')
-  const isNuxtLink = computed(
-    // @ts-expect-error we're doing an explicit check for Nuxt, so we can safely ignore this
-    () => isRouterLink.value && typeof instance?.appContext?.app?.$nuxt !== 'undefined'
-  )
+  const isNuxtLink = computed(() => {
+    // Check if tag is 'NuxtLink' (string) or a component with name 'NuxtLink'
+    if (typeof tag.value === 'string') {
+      return tag.value === 'NuxtLink'
+    }
+    // For component objects, check the component name
+    return (
+      typeof tag.value === 'object' &&
+      tag.value !== null &&
+      '__name' in tag.value &&
+      tag.value.__name === 'NuxtLink'
+    )
+  })
   const isNonStandardTag = computed(
     () => tag.value !== 'a' && !isRouterLink.value && !isNuxtLink.value
   )
   const isOfRouterType = computed(() => isRouterLink.value || isNuxtLink.value)
+
   const linkProps = computed(() => ({
     to: resolvedTo.value,
     replace: resolvedReplace.value,
   }))
 
-  const _link = useLink?.({
+  const _link = useLink.value?.({
     to: resolvedTo,
     replace: resolvedReplace,
   })

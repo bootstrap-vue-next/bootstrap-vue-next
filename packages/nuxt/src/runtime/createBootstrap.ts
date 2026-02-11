@@ -26,7 +26,7 @@ export default defineNuxtPlugin((nuxtApp) => {
           ...opts?.components?.BApp,
         },
         BLink: {
-          routerComponentName: 'RouterLink',
+          routerComponentName: 'NuxtLink',
           ...opts?.components?.BLink,
         },
       },
