@@ -6,7 +6,13 @@ import type {
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
-import type {AriaAttributes, ComponentPublicInstance, TeleportProps, TransitionProps} from 'vue'
+import type {
+  AriaAttributes,
+  Component,
+  ComponentPublicInstance,
+  TeleportProps,
+  TransitionProps,
+} from 'vue'
 import type {RouteLocationRaw} from 'vue-router'
 import type {LinkTarget} from './LinkTarget'
 import type {
@@ -137,7 +143,7 @@ export interface BLinkProps {
   prefetchedClass?: ClassValue
   rel?: string
   replace?: boolean
-  routerComponentName?: string
+  routerComponentName?: string | Component
   routerTag?: string
   stretched?: boolean
   target?: LinkTarget
@@ -1200,7 +1206,7 @@ export interface BImgProps extends RadiusElementExtendables {
   fluid?: boolean
   fluidGrow?: boolean
   height?: Numberish
-  tag?: string
+  tag?: string | Component
   lazy?: boolean
   sizes?: string | readonly string[]
   src?: string

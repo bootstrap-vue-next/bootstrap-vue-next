@@ -3,7 +3,7 @@
     :is="tag"
     :class="computedClasses"
     :target="props.target"
-    :href="computedHref"
+    :href="computedSpecificProps.to ? undefined : computedHref"
     :rel="computedRel"
     :tabindex="computedTabIndex"
     :aria-disabled="props.disabled ? true : null"
