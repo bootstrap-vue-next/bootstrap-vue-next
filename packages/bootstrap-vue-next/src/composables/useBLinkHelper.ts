@@ -41,6 +41,8 @@ export const useBLinkHelper = <
             'to',
             'variant',
             'opacity',
+            'prefetch',
+            'prefetchedClass',
             'opacityHover',
             'underlineVariant',
             'underlineOffset',
@@ -73,77 +75,64 @@ export const useBLinkTagResolver = ({
   const router = instance?.appContext?.app?.config?.globalProperties?.$router
   const route = instance?.appContext?.app?.config?.globalProperties?.$route
 
+  // resolvedynamiccomponent will return a string if the component is not found
+  const RouterLinkComponent = resolveDynamicComponent('RouterLink') as typeof RouterLink | string
+
   // Resolving props
   const resolvedTo = computed(() => toValue(to) || '')
   const resolvedReplace = readonly(toRef(replace))
 
-  // Resolve the router component - can be a string name or a Component object
-  const resolvedRouterComponent = computed(() => toValue(routerComponentName))
-
   const routerName = computed(() => {
-    const componentValue = resolvedRouterComponent.value
-    return typeof componentValue === 'string' ? toPascalCase(componentValue) : componentValue
+    const routerComponent = toValue(routerComponentName)
+    if (typeof routerComponent === 'string') {
+      return toPascalCase(routerComponent)
+    }
+    return routerComponent
   })
+  const useLink = (
+    typeof routerName.value !== 'string' && 'useLink' in routerName.value
+      ? routerName.value.useLink
+      : typeof RouterLinkComponent !== 'string' && 'useLink' in RouterLinkComponent
+        ? RouterLinkComponent.useLink
+        : null
+  ) as (typeof RouterLink)['useLink'] | null
+
+  const isNuxtLink = computed(
+    // @ts-expect-error we're doing an explicit check for Nuxt, so we can safely ignore this
+    () => typeof instance?.appContext?.app?.$nuxt !== 'undefined'
+  )
+  const isRouterLink = computed(() => routerName.value === 'RouterLink')
 
   const tag = computed(() => {
-    const componentValue = resolvedRouterComponent.value
-    let hasRouter = false
-
-    if (typeof componentValue === 'string') {
-      const pascalName = toPascalCase(componentValue)
-      hasRouter = instance?.appContext?.app?.component(pascalName) !== undefined
-    } else {
-      // It's a Component object, so it exists
-      hasRouter = true
-    }
-
-    if (!hasRouter || toValue(disabled) || !resolvedTo.value) {
+    // If is disabled or there is no `to` prop, render a simple `<a>` tag
+    if (toValue(disabled) || !resolvedTo.value) {
       return 'a'
     }
 
-    // Return the PascalCase name for string, or the Component object itself
-    return typeof componentValue === 'string' ? toPascalCase(componentValue) : componentValue
+    // Is it actually a component? Use that
+    if (typeof routerName.value !== 'string') {
+      return routerName.value
+    }
+    // Check if is router link second
+    if (isRouterLink.value && typeof RouterLinkComponent !== 'string') {
+      return RouterLinkComponent
+    }
+
+    // routerName is a string, but we need to check if it's a component first
+    // return the component from the app context if it exists, otherwise fallback to 'a'
+    return instance?.appContext?.app?.component(routerName.value) || 'a'
   })
 
-  // Resolve the actual component for useLink
-  const ActualRouterComponent = computed(() => {
-    const tagValue = tag.value
-    if (typeof tagValue === 'string' && tagValue !== 'a') {
-      return resolveDynamicComponent(tagValue) as typeof RouterLink | string
-    }
-    return tagValue
-  })
-
-  const useLink = computed(() => {
-    const component = ActualRouterComponent.value
-    if (component && typeof component !== 'string' && 'useLink' in component) {
-      return component.useLink
-    }
-    return null
-  })
-
-  const isRouterLink = computed(() => tag.value === 'RouterLink')
-  const isNuxtLink = computed(() => {
-    // Check if tag is 'NuxtLink' (string) or detect NuxtLink component
-    if (typeof tag.value === 'string') {
-      return tag.value === 'NuxtLink'
-    }
-    // For component objects, check if it's the same as a registered NuxtLink component
-    // This is more reliable than checking __name which can be stripped in production builds
-    const registeredNuxtLink = instance?.appContext?.app?.component('NuxtLink')
-    return registeredNuxtLink !== undefined && tag.value === registeredNuxtLink
-  })
   const isNonStandardTag = computed(
     () => tag.value !== 'a' && !isRouterLink.value && !isNuxtLink.value
   )
   const isOfRouterType = computed(() => isRouterLink.value || isNuxtLink.value)
-
   const linkProps = computed(() => ({
     to: resolvedTo.value,
     replace: resolvedReplace.value,
   }))
 
-  const _link = useLink.value?.({
+  const _link = useLink?.({
     to: resolvedTo,
     replace: resolvedReplace,
   })

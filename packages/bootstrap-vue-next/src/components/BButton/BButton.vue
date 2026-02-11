@@ -92,6 +92,8 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'replace',
   'routerComponentName',
   'routerTag',
+  'prefetch',
+  'prefetchedClass',
 ])
 
 const isToggle = computed(() => typeof pressedValue.value === 'boolean')

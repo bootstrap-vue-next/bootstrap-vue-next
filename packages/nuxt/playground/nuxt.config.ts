@@ -15,6 +15,9 @@ export default defineNuxtConfig({
         BAlert: {
           variant: 'danger',
         },
+        BLink: {
+          routerTag: 'NuxtLink',
+        },
       },
     },
   },
