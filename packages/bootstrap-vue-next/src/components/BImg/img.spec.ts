@@ -28,9 +28,9 @@ describe('img', () => {
       setup(props) {
         return () =>
           h('img', {
-            src: props.src,
-            width: props.width,
-            height: props.height,
+            'src': props.src,
+            'width': props.width,
+            'height': props.height,
             'data-custom-img': 'true',
           })
       },

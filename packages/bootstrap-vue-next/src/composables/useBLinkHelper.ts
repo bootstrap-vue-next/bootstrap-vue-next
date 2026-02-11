@@ -78,10 +78,7 @@ export const useBLinkTagResolver = ({
   const resolvedReplace = readonly(toRef(replace))
 
   // Resolve the router component - can be a string name or a Component object
-  const resolvedRouterComponent = computed(() => {
-    const componentValue = toValue(routerComponentName)
-    return typeof componentValue === 'string' ? componentValue : componentValue
-  })
+  const resolvedRouterComponent = computed(() => toValue(routerComponentName))
 
   const routerName = computed(() => {
     const componentValue = resolvedRouterComponent.value
@@ -119,7 +116,7 @@ export const useBLinkTagResolver = ({
 
   const useLink = computed(() => {
     const component = ActualRouterComponent.value
-    if (!!component && typeof component !== 'string' && 'useLink' in component) {
+    if (component && typeof component !== 'string' && 'useLink' in component) {
       return component.useLink
     }
     return null
@@ -127,17 +124,14 @@ export const useBLinkTagResolver = ({
 
   const isRouterLink = computed(() => tag.value === 'RouterLink')
   const isNuxtLink = computed(() => {
-    // Check if tag is 'NuxtLink' (string) or a component with name 'NuxtLink'
+    // Check if tag is 'NuxtLink' (string) or detect NuxtLink component
     if (typeof tag.value === 'string') {
       return tag.value === 'NuxtLink'
     }
-    // For component objects, check the component name
-    return (
-      typeof tag.value === 'object' &&
-      tag.value !== null &&
-      '__name' in tag.value &&
-      tag.value.__name === 'NuxtLink'
-    )
+    // For component objects, check if it's the same as a registered NuxtLink component
+    // This is more reliable than checking __name which can be stripped in production builds
+    const registeredNuxtLink = instance?.appContext?.app?.component('NuxtLink')
+    return registeredNuxtLink !== undefined && tag.value === registeredNuxtLink
   })
   const isNonStandardTag = computed(
     () => tag.value !== 'a' && !isRouterLink.value && !isNuxtLink.value

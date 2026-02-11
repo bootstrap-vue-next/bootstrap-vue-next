@@ -69,7 +69,7 @@ describe('link', () => {
         to: {type: [String, Object], required: true},
       },
       setup(props, {slots}) {
-        return () => h('a', {href: String(props.to), 'data-nuxt-link': 'true'}, slots.default?.())
+        return () => h('a', {'href': String(props.to), 'data-nuxt-link': 'true'}, slots.default?.())
       },
     }) as typeof RouterLink
 
