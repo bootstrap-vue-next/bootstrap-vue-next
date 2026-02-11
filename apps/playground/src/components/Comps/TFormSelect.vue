@@ -50,14 +50,33 @@
         <strong>{{ formSelectMultipleSelected }}</strong>
       </BCol>
     </BRow>
+    <BRow>
+      <BCol>
+        <h4 class="mt-2">styled options with class and attrs</h4>
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        <BFormSelect v-model="styledSelectSelected" :options="styledSelectOptions" />
+      </BCol>
+    </BRow>
+    <BRow>
+      <BCol>
+        Selected:
+        <strong>{{ styledSelectSelected }}</strong>
+      </BCol>
+    </BRow>
   </BContainer>
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
 
-const formSelectSelected = ref({foo: 'item 6', baz: false})
-const formSelectMultipleSelected = ref<string[]>([])
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const formSelectSelected = ref({foo: 'item 6', baz: false}) as any
+// For multiple select with mixed types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const formSelectMultipleSelected = ref([]) as any
 formSelectMultipleSelected.value = ['first', 'second']
 const formSelectOptions = [
   {value: null, text: 'Please select an option'},
@@ -72,6 +91,40 @@ const formSelectOptions = [
       {value: {C: '3PO'}, text: 'Option with object value'},
       {value: {R: '2D2'}, text: 'Another option with object value'},
     ],
+  },
+]
+
+const styledSelectSelected = ref('pharmacist')
+const styledSelectOptions = [
+  {
+    'value': 'physician',
+    'text': 'Physician',
+    'class': 'bg-light',
+    'data-role': 'medical',
+  },
+  {
+    'value': 'pharmacist',
+    'text': 'Pharmacist',
+    'class': 'bg-primary text-white fw-bold',
+    'data-role': 'medical',
+  },
+  {
+    'value': 'patient',
+    'text': 'Patient',
+    'class': 'text-muted',
+    'data-role': 'user',
+  },
+  {
+    'value': 'nurse',
+    'text': 'Nurse',
+    'class': 'text-success',
+    'data-role': 'medical',
+  },
+  {
+    'value': 'carer',
+    'text': 'Carer',
+    'class': 'text-info',
+    'data-role': 'support',
   },
 ]
 </script>

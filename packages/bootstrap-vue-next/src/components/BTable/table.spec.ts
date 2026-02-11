@@ -34,8 +34,7 @@ const formattedFields: Exclude<TableField<SimplePerson>, string>[] = [
     label: 'Adult?',
     sortable: true,
     sortByFormatted: true,
-    formatter: (_value: unknown, _key?: unknown, item?: SimplePerson) =>
-      item ? (item.age >= 18 ? 'Yes' : 'No') : 'Something went wrong',
+    formatter: ({item}) => (item ? (item.age >= 18 ? 'Yes' : 'No') : 'Something went wrong'),
   },
   {key: 'first_name', label: 'First Name', sortable: true},
   {key: 'age', label: 'Age', sortable: true},
@@ -313,7 +312,7 @@ describe('single-sort', () => {
         key: 'first_name',
         label: 'First Name',
         sortable: true,
-        sortByFormatted: (value: unknown) => (value as string).slice(1),
+        sortByFormatted: ({value}) => (value as string).slice(1),
       },
       {key: 'age', label: 'Age', sortable: true},
     ]
@@ -573,6 +572,10 @@ describe('object-persistence', () => {
         })
         const [first, second, third, fourth] = wrapper.findAll('tr')
         await fourth.trigger('click')
+        expect(first.classes()).not.toContain('selected')
+        expect(second.classes()).not.toContain('selected')
+        expect(third.classes()).not.toContain('selected')
+        expect(fourth.classes()).toContain('selected')
         const event = new MouseEvent('click', {shiftKey: true})
         third.element.dispatchEvent(event)
         await nextTick()
@@ -1609,7 +1612,13 @@ describe('event emissions', () => {
     await rows[0].trigger('click')
 
     expect(wrapper.emitted('row-clicked')).toBeTruthy()
-    expect(wrapper.emitted('row-clicked')?.[0]).toEqual([items[0], 0, expect.any(Object)])
+    expect(wrapper.emitted('row-clicked')?.[0]).toEqual([
+      {
+        item: items[0],
+        index: 0,
+        event: expect.any(Object),
+      },
+    ])
   })
 
   it('emits row-dblclicked event inherited from BTableLite', async () => {
@@ -1621,7 +1630,13 @@ describe('event emissions', () => {
     await rows[1].trigger('dblclick')
 
     expect(wrapper.emitted('row-dblclicked')).toBeTruthy()
-    expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([items[1], 1, expect.any(Object)])
+    expect(wrapper.emitted('row-dblclicked')?.[0]).toEqual([
+      {
+        item: items[1],
+        index: 1,
+        event: expect.any(Object),
+      },
+    ])
   })
 
   it('emits head-clicked event inherited from BTableLite', async () => {
@@ -1633,9 +1648,13 @@ describe('event emissions', () => {
     await headers[1].trigger('click')
 
     expect(wrapper.emitted('head-clicked')).toBeTruthy()
-    const emittedEvent = wrapper.emitted('head-clicked')?.[0]
-    expect(emittedEvent?.[0]).toBe('age')
-    expect(emittedEvent?.[1]).toMatchObject({key: 'age', label: 'Age', sortable: true})
+    const emittedEvent = wrapper.emitted('head-clicked')?.[0]?.[0]
+    expect(emittedEvent).toEqual({
+      key: 'age',
+      field: expect.objectContaining({key: 'age', label: 'Age', sortable: true}),
+      event: expect.any(Object),
+      isFooter: false,
+    })
   })
 
   it('emits multiple events in correct order when interacting', async () => {
@@ -1656,5 +1675,132 @@ describe('event emissions', () => {
     // Verify all events were emitted
     expect(wrapper.emitted('head-clicked')?.length).toBeGreaterThanOrEqual(1)
     expect(wrapper.emitted('sorted')?.length).toBeGreaterThanOrEqual(1)
+  })
+})
+
+describe('BTable styling props', () => {
+  it('applies fixed table layout when fixed prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        fixed: true,
+      },
+    })
+    expect(wrapper.find('table').classes()).toContain('b-table-fixed')
+  })
+
+  it('does not apply fixed class when fixed prop is false or undefined', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        fixed: false,
+      },
+    })
+    expect(wrapper.find('table').classes()).not.toContain('b-table-fixed')
+  })
+
+  it('disables border collapse when noBorderCollapse prop is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        noBorderCollapse: true,
+      },
+    })
+    expect(wrapper.find('table').classes()).toContain('b-table-no-border-collapse')
+  })
+
+  it('does not apply no-border-collapse class when prop is false or undefined', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        noBorderCollapse: false,
+      },
+    })
+    expect(wrapper.find('table').classes()).not.toContain('b-table-no-border-collapse')
+  })
+})
+
+describe('BTable busyLoadingText', () => {
+  it('displays busyLoadingText when busy and no slot provided', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+        busyLoadingText: 'Custom loading message...',
+      },
+    })
+    await nextTick()
+    expect(wrapper.text()).toContain('Custom loading message...')
+  })
+
+  it('uses default busyLoadingText when busy and none specified', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+      },
+    })
+    await nextTick()
+    expect(wrapper.text()).toContain('Loading...')
+  })
+
+  it('prefers table-busy slot over busyLoadingText when both provided', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+        busyLoadingText: 'This should not appear',
+      },
+      slots: {
+        'table-busy': '<div>Custom slot content</div>',
+      },
+    })
+    await nextTick()
+    expect(wrapper.text()).toContain('Custom slot content')
+    expect(wrapper.text()).not.toContain('This should not appear')
+  })
+
+  it('does not display busyLoadingText when not busy', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: false,
+        busyLoadingText: 'Should not appear',
+      },
+    })
+    expect(wrapper.text()).not.toContain('Should not appear')
+  })
+
+  it('filters correctly with filterFunction when filter prop is empty string', async () => {
+    const tag = 1
+    const wrapper = mount(BTable, {
+      props: {
+        filter: 'e',
+        items: [
+          {name: 'fred', tag: 1},
+          {name: 'joe', tag: 1},
+          {name: 'eric', tag: 2},
+        ],
+        filterFunction: (item, str) => item.tag === tag && item.name.includes(str),
+      },
+    })
+    const tbody = wrapper.find('tbody')
+    expect(tbody.text()).toBe('fred1joe1')
+    await wrapper.setProps({
+      filter: 'ee',
+    })
+    expect(tbody.text()).toBe('')
+    await wrapper.setProps({
+      filter: '',
+    })
+    expect(tbody.text()).toBe('fred1joe1')
   })
 })

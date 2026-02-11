@@ -25,7 +25,6 @@ import {computed, inject} from 'vue'
 import {useData} from 'vitepress'
 import {useEditThisPageOnGithub} from '../composables/useEditLink'
 import {useMarkdownRenderer} from '../composables/useMarkdownRenderer'
-import ViewSourceButton from './ViewSourceButton.vue'
 import {appInfoKey} from '../../.vitepress/theme/keys'
 import {kebabToTitleCase} from '../utils/dataLoaderUtils'
 

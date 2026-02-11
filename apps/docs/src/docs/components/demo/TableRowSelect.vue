@@ -97,17 +97,19 @@ const onSelectedItems = (selectedItems: readonly Person[]) => {
 }
 
 const selectAllRows = () => {
-  selectableTable?.value?.selectAllRows()
+  selectableTable?.value?.selection.setAll()
 }
 const clearSelected = () => {
-  selectableTable?.value?.clearSelected()
+  selectableTable?.value?.selection.clear()
 }
 const selectThirdRow = () => {
   // Rows are indexed from 0, so the third row is index 2
-  selectableTable?.value?.selectRow(2)
+  // Must be the item object, not the index
+  selectableTable?.value?.selection.add(items[2])
 }
 const unselectThirdRow = () => {
   // Rows are indexed from 0, so the third row is index 2
-  selectableTable?.value?.unselectRow(2)
+  // Must be the item object, not the index
+  selectableTable?.value?.selection.remove(items[2])
 }
 </script>

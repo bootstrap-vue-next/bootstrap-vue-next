@@ -2,7 +2,6 @@
   <textarea
     :id="computedId"
     ref="_input"
-    :key="forceUpdateKey"
     :class="computedClasses"
     :name="props.name || undefined"
     :form="props.form || undefined"
@@ -76,17 +75,8 @@ const [modelValue, modelModifiers] = defineModel<
 
 const input = useTemplateRef('_input')
 
-const {
-  computedId,
-  forceUpdateKey,
-  computedAriaInvalid,
-  onInput,
-  stateClass,
-  onChange,
-  onBlur,
-  focus,
-  blur,
-} = useFormInput(props, input, modelValue, modelModifiers)
+const {computedId, computedAriaInvalid, onInput, stateClass, onChange, onBlur, focus, blur} =
+  useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => [
   stateClass.value,

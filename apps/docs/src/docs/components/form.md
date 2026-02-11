@@ -85,7 +85,7 @@ See also:
 - [`BFormFile`](/docs/components/form-file) File Input
 - [`BFormSpinbutton`](/docs/components/form-spinbutton) Numerical range spinbutton input
 - [`BFormTags`](/docs/components/form-tags) Customizable tag input
-- `BFormRating` Star rating custom form input and display (<NotYetImplemented/>)
+- [`BFormRating`](/docs/components/form-rating) Star rating custom form input and display
 - [`BButton`](/docs/components/button) Buttons
 - [`BFormGroup`](/docs/components/form-group) Form Input wrapper to generate form-groups that
   support labels, help text and feedback
@@ -160,6 +160,32 @@ See also:
   on the formats and helper props associated with `options`. Note that `<BFormDatalist>` only support
   a flat list of `BFormSelectOptions`, unlike `<BFormSelect>` which support a heirarchy of
   `BFormSelectOption` and `BFormSelectOptionGroup`.
+
+#### TypeScript Type Safety
+
+`BFormDatalist` <!--@include: ./_type-safety-intro.md-->
+
+**Basic type-safe usage:**
+
+<<< DEMO ./demo/DatalistTypeSafeBasic.vue{vue}
+
+**Type-safe API responses:**
+
+<<< DEMO ./demo/DatalistTypeSafeAPI.vue{vue}
+
+**Type-safe enums:**
+
+<<< DEMO ./demo/DatalistTypeSafeEnum.vue{vue}
+
+**Benefits:**
+
+<!--@include: ./_type-safety-benefits.md-->
+
+**Backward compatibility:**
+
+<!--@include: ./_type-safety-backward-compat.md-->
+
+See the [BFormSelect TypeScript documentation](/docs/components/form-select#typescript-type-safety) for comprehensive type safety guidance that also applies to datalists.
 
 ## Validation
 

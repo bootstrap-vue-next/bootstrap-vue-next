@@ -12,6 +12,7 @@ jobs:
   publish-npm-main:
     permissions:
       id-token: write
+      contents: read
 
     runs-on: ubuntu-latest
 
@@ -24,7 +25,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x.x
+          node-version: 24.x.x
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install PNPM
@@ -53,6 +54,3 @@ jobs:
 
       - name: Publish Main
         run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-          NPM_CONFIG_PROVENANCE: true

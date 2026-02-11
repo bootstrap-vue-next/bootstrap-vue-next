@@ -39,7 +39,7 @@ The following are the form controls supported as the input-group's _main_ input 
 - [`BFormTextarea`](/docs/components/form-textarea)
 - [`BFormSelect`](/docs/components/form-select)
 - [`BFormFile`](/docs/components/form-file)
-- [`BFormRating`](/docs/components/form-rating) <NotYetImplemented />
+- [`BFormRating`](/docs/components/form-rating)
 - [`BFormTags`](/docs/components/form-tags)
 - [`BFormSpinbutton`](/docs/components/form-spinbutton)
 

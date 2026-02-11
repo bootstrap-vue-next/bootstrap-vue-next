@@ -19,6 +19,7 @@ import {
   type ComponentReference,
   defaultPropSectionSymbol,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
 } from '../../types'
@@ -33,6 +34,20 @@ export default {
       props: dropdownProps,
       emits: dropdownEmits,
       slots: dropdownSlots,
+      exposed: {
+        show: {
+          type: '() => void',
+          description: 'Shows the dropdown',
+        },
+        hide: {
+          type: '() => void',
+          description: 'Hides the dropdown',
+        },
+        toggle: {
+          type: '() => void',
+          description: 'Toggles the visibility of the dropdown',
+        },
+      } satisfies ExposedRecord,
     },
     BDropdownDivider: {
       props: {
@@ -53,19 +68,11 @@ export default {
     },
     BDropdownForm: {
       props: {
-        ...pick(buildCommonProps(), ['wrapperAttrs']),
+        ...pick(buildCommonProps(), ['novalidate', 'validated', 'wrapperAttrs']),
         formClass: {
           type: 'ClassValue',
           default: undefined,
           description: 'CSS class (or classes) to add to the form component',
-        },
-        novalidate: {
-          notYetImplemented: true,
-          // description: 'Disables HTML5 form validation' // TODO missing description
-        },
-        validated: {
-          notYetImplemented: true,
-          // description: 'Marks the form as validated' // TODO missing description
         },
       } satisfies PropRecord<keyof BDropdownFormProps>,
       slots: {

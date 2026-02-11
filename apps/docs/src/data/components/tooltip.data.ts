@@ -2,6 +2,7 @@ import type {BTooltipEmits, BTooltipProps, BTooltipSlots} from 'bootstrap-vue-ne
 import {
   type ComponentReference,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   StyleKind,
@@ -39,6 +40,20 @@ export default {
           scope: showHideSlotsData,
         },
       } satisfies SlotRecord<keyof BTooltipSlots>,
+      exposed: {
+        show: {
+          type: '() => void',
+          description: 'Shows the tooltip',
+        },
+        hide: {
+          type: '() => void',
+          description: 'Hides the tooltip',
+        },
+        toggle: {
+          type: '() => void',
+          description: 'Toggles the visibility of the tooltip',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

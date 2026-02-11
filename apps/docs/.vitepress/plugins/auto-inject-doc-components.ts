@@ -126,25 +126,44 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     // For components, inject ComponentReference footer if it doesn't already exist
     if (directory === 'components') {
       const componentReferencePattern = /<ComponentReference\s+:data=["']data["']\s*\/?>/
-      const scriptPattern =
-        /<script setup lang=["']ts["']>\s*import\s*\{\s*data\s*\}\s*from\s*["']\.\.\/\.\.\/data\/components\//
-      // Only inject if both ComponentReference and script are missing
-      if (
-        !componentReferencePattern.test(afterFrontmatter) &&
-        !scriptPattern.test(afterFrontmatter)
-      ) {
-        const dataFilename = filenameToCamelCase(filename)
-        const footer = `\n\n<ComponentReference :data="data" />\n\n<script setup lang="ts">\nimport {data} from '../../data/components/${dataFilename}.data'\n</script>`
+      const scriptSetupPattern = /<script setup lang=["']ts["']>/
+      const dataImportPattern =
+        /import\s*\{\s*data\s*\}\s*from\s*['"]\.\.\/\.\.\/data\/components\//
 
-        // Check if there's a <style> section anywhere in the content
+      // Check if ComponentReference is missing
+      const needsComponentReference = !componentReferencePattern.test(afterFrontmatter)
+
+      // Check if script setup exists and if data import is missing
+      const hasScriptSetup = scriptSetupPattern.test(afterFrontmatter)
+      const hasDataImport = dataImportPattern.test(afterFrontmatter)
+
+      if (needsComponentReference) {
+        const dataFilename = filenameToCamelCase(filename)
+
+        // Inject ComponentReference
+        const componentReferenceBlock = `\n\n<ComponentReference :data="data" />`
+
+        // Check if there's a <style> section to insert before
         const firstStyleOpen = afterFrontmatter.search(/<style[^>]*>/)
 
         if (firstStyleOpen !== -1) {
-          // Insert footer before the first <style> section
-          afterFrontmatter = `${afterFrontmatter.slice(0, firstStyleOpen)}${footer}\n${afterFrontmatter.slice(firstStyleOpen)}`
+          afterFrontmatter = `${afterFrontmatter.slice(0, firstStyleOpen)}${componentReferenceBlock}\n${afterFrontmatter.slice(firstStyleOpen)}`
         } else {
-          // No <style> section, append footer at the end
-          afterFrontmatter = afterFrontmatter + footer
+          afterFrontmatter = afterFrontmatter + componentReferenceBlock
+        }
+
+        // Handle script block
+        if (!hasScriptSetup) {
+          // No script setup exists, add full script block
+          const scriptBlock = `\n\n<script setup lang="ts">\nimport {data} from '../../data/components/${dataFilename}.data'\n</script>`
+          afterFrontmatter = afterFrontmatter + scriptBlock
+        } else if (!hasDataImport) {
+          // Script setup exists but data import is missing, inject the import
+          const dataImport = `import {data} from '../../data/components/${dataFilename}.data'\n`
+          afterFrontmatter = afterFrontmatter.replace(
+            scriptSetupPattern,
+            `<script setup lang="ts">\n${dataImport}`
+          )
         }
       }
     }

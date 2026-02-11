@@ -6,5 +6,4 @@ description: BootstrapVueNext exposes several custom composables that integrate 
 
 <script setup lang="ts">
 import {data} from '../data/composables.data'
-import TableOfContentsCard from '../components/TableOfContentsCard.vue'
 </script>

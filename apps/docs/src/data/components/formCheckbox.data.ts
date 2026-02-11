@@ -1,5 +1,5 @@
 import {pick} from '../../utils/objectUtils'
-import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
+import type {ComponentReference, ExposedRecord, PropRecord, SlotRecord} from '../../types'
 import type {
   BFormCheckboxGroupProps,
   BFormCheckboxGroupSlots,
@@ -63,7 +63,7 @@ export default {
           type: 'CheckboxValue | readonly CheckboxValue[]',
           default: undefined,
           description:
-            'The current value of the checkbox(es). Must be an array when there are multiple checkboxes bound to the same v-model. Looking for `value` - use `modelValue` instead.',
+            'The current value of the checkbox(es). Must be an array when there are multiple checkboxes bound to the same v-model.',
         },
         reverse: {
           type: 'boolean',
@@ -114,6 +114,20 @@ export default {
           description: 'Content to place in the label of the form checkbox',
         },
       } satisfies SlotRecord<keyof BFormCheckboxSlots>,
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the checkbox',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the checkbox',
+        },
+        element: {
+          type: 'HTMLInputElement',
+          description: 'Reference to the underlying input element',
+        },
+      } satisfies ExposedRecord,
     },
     BFormCheckboxGroup: {
       props: {
@@ -144,10 +158,9 @@ export default {
           description: 'When set, renders the checkboxes in this group with button styling',
         },
         modelValue: {
-          type: 'readonly CheckboxValue[]',
+          type: 'CheckboxValue[]',
           default: '() => []',
-          description:
-            'The current value of the checked checkboxes in the group. Must be an array when there are multiple checkboxes. Looking for `value` - use `modelValue` instead.',
+          description: 'The current value of the checkbox group. Must be an array.',
         },
         options: {
           type: 'readonly CheckboxOptionRaw[]',
@@ -214,6 +227,16 @@ export default {
           },
         },
       } satisfies SlotRecord<keyof BFormCheckboxGroupSlots>,
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the checkbox group',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the first checkbox in the group',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

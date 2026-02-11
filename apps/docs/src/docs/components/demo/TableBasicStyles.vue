@@ -171,5 +171,14 @@ const headVariant = ref<ColorVariant | null>(null)
 const footVariant = ref<ColorVariant | null>(null)
 const noCollapse = ref(false)
 
-const variants = ['primary', 'secondary', 'info', 'danger', 'warning', 'success', 'light', 'dark']
+const variants = [
+  {text: 'Primary', value: 'primary' as ColorVariant},
+  {text: 'Secondary', value: 'secondary' as ColorVariant},
+  {text: 'Info', value: 'info' as ColorVariant},
+  {text: 'Danger', value: 'danger' as ColorVariant},
+  {text: 'Warning', value: 'warning' as ColorVariant},
+  {text: 'Success', value: 'success' as ColorVariant},
+  {text: 'Light', value: 'light' as ColorVariant},
+  {text: 'Dark', value: 'dark' as ColorVariant},
+]
 </script>

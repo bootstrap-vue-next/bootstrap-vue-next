@@ -177,7 +177,6 @@ export default {
             expanded: {
               type: 'boolean',
               description: '`true` if the collapse is expanded, `false` otherwise',
-              notYetImplemented: true,
             },
           },
         },

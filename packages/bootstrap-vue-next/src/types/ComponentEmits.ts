@@ -1,5 +1,5 @@
 import {BvCarouselEvent, BvEvent, BvTriggerableEvent} from '../utils'
-import type {BTableSortBy, TableField, TableRowEvent} from './TableTypes'
+import type {BTableSortBy, TableHeadClickedEventObject, TableRowEvent} from './TableTypes'
 
 export interface showHideEmits {
   'hide': [value: BvTriggerableEvent]
@@ -44,22 +44,24 @@ export interface BToastEmits extends showHideEmits {
   'close-countdown': [value: number]
 }
 
-export interface BTableEmits<Items> extends BTableLiteEmits<Items> {
-  'filtered': [value: Items[]]
-  'row-selected': [value: Items]
-  'row-unselected': [value: Items]
+export interface BTableEmits<Item> extends BTableLiteEmits<Item> {
+  'filtered': [value: readonly Item[]]
+  'row-selected': [value: unknown]
+  'row-unselected': [value: unknown]
   'sorted': [value: BTableSortBy]
-  'change': [value: Items[]]
+  'change': [value: readonly Item[]]
 }
 
-export interface BTableLiteEmits<Items> {
-  'head-clicked': [key: string, field: TableField<Items>, event: MouseEvent, isFooter: boolean]
-  'row-clicked': TableRowEvent<Items>
-  'row-dblclicked': TableRowEvent<Items>
-  'row-contextmenu': TableRowEvent<Items>
-  'row-hovered': TableRowEvent<Items>
-  'row-unhovered': TableRowEvent<Items>
-  'row-middle-clicked': TableRowEvent<Items>
+export interface BTableLiteEmits<Item> {
+  'head-clicked': [
+    object: TableHeadClickedEventObject<Item, Readonly<MouseEvent> | Readonly<KeyboardEvent>>,
+  ]
+  'row-clicked': TableRowEvent<Item, Readonly<MouseEvent> | Readonly<KeyboardEvent>>
+  'row-dblclicked': TableRowEvent<Item>
+  'row-contextmenu': TableRowEvent<Item>
+  'row-hovered': TableRowEvent<Item>
+  'row-unhovered': TableRowEvent<Item>
+  'row-middle-clicked': TableRowEvent<Item>
 }
 
 export type BAlertEmits = BToastEmits
@@ -111,7 +113,7 @@ export type BFormTagsEmits = {
   'focus': [value: FocusEvent]
   'focusin': [value: FocusEvent]
   'focusout': [value: FocusEvent]
-  'tag-state': [...args: string[][]]
+  'tag-state': [...args: readonly string[][]]
 }
 
 export type BLinkEmits = {
@@ -142,11 +144,13 @@ export type BPaginationEmits = {
 
 export type BTabsEmits = {
   'activate-tab': [
-    newTabId: string,
-    preTabId: string,
-    newTabIndex: number,
-    prevTabIndex: number,
-    event: BvEvent,
+    obj: {
+      newTabId: string
+      prevTabId: string
+      newTabIndex: number
+      prevTabIndex: number
+      event: BvEvent
+    },
   ]
 }
 

@@ -6,5 +6,4 @@ description: BootstrapVueNext provides several configuration options that you ca
 
 <script setup lang="ts">
 import {data} from '../data/configurations.data'
-import TableOfContentsCard from '../components/TableOfContentsCard.vue'
 </script>

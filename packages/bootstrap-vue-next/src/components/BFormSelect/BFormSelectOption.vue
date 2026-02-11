@@ -1,5 +1,5 @@
 <template>
-  <option :value="props.value" :disabled="props.disabled" :selected="isSelected">
+  <option :value="props.value" :disabled="props.disabled" :selected="isSelected" v-bind="$attrs">
     <slot />
   </option>
 </template>

@@ -2,6 +2,7 @@ import type {BModalEmits, BModalProps, BModalSlots} from 'bootstrap-vue-next'
 import type {
   ComponentReference,
   EmitRecord,
+  ExposedRecord,
   PropRecord,
   SlotRecord,
   SlotScopeReference,
@@ -341,6 +342,21 @@ export default {
           scope: sharedSlots,
         },
       } satisfies SlotRecord<keyof BModalSlots>,
+      exposed: {
+        show: {
+          type: '() => void',
+          description: 'Shows the modal',
+        },
+        hide: {
+          type: '(trigger?: string) => void',
+          description:
+            'Hides the modal. Optionally accepts a trigger value to be included in the hide event',
+        },
+        toggle: {
+          type: '() => void',
+          description: 'Toggles the visibility of the modal',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

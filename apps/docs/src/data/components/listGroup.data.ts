@@ -7,7 +7,7 @@ import type {
 import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
-import type {linkProps} from 'src/utils/linkProps'
+import type {linkProps} from '../../utils/linkProps'
 
 export default {
   load: (): ComponentReference => ({

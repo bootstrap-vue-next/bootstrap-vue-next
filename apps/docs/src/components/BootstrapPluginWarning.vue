@@ -4,7 +4,3 @@
     installation method
   </NoteAlert>
 </template>
-
-<script setup lang="ts">
-import NoteAlert from './NoteAlert.vue'
-</script>

@@ -25,6 +25,7 @@ import {
   defaultPropSectionSymbol,
   type EmitArgReference,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   type SlotScopeReference,
@@ -37,17 +38,9 @@ export default {
   load: (): ComponentReference => {
     const tableRowEventArgs = <const T extends string>(action: T) =>
       ({
-        item: {
-          type: 'TableItem',
-          description: `Item data of the row ${action}`,
-        },
-        index: {
-          type: 'number',
-          description: `Index of the row ${action}`,
-        },
-        event: {
-          description: '',
-          type: 'MouseEvent|KeyboardEvent',
+        value: {
+          type: 'TableRowEventObject<Item>',
+          description: `Object payload with the row item, index, and event for the row ${action}`,
         },
       }) satisfies EmitArgReference
 
@@ -70,7 +63,7 @@ export default {
         description: 'The number of columns in the table',
       },
       fields: {
-        type: 'TableField<Items>[]',
+        type: 'TableField<Item>[]',
         description: 'The normalized fields definition array (in the array of objects format)',
       },
     } as const
@@ -230,7 +223,7 @@ export default {
             'Apply a Bootstrap theme color variant to the head. May take precedence over head-row-variant',
         },
         items: {
-          type: 'readonly Items[]',
+          type: 'readonly Item[]',
           default: '() => []',
         },
         labelStacked: {
@@ -243,18 +236,24 @@ export default {
           type: 'any',
           default: undefined,
         },
+        expandedItems: {
+          type: 'readonly unknown[]',
+          default: '() => []',
+          description:
+            'Array of items that are currently expanded (have their row-expansion slot visible). Use v-model:expanded-items to bind this. When a primary-key is provided, expansion state persists across item array updates',
+        },
         primaryKey: {
-          type: 'string',
+          type: 'string | ((item: Item) => string)',
           default: undefined,
           description:
-            'Name of a table field that contains a guaranteed unique value per row. Needed for tbody transition support, and also speeds up table rendering',
+            'Name of a table field that contains a guaranteed unique value per row. For row expansion and selection to persist across item updates. Also speeds up table rendering and enables proper item tracking.',
         },
         tbodyClass: {
           type: 'ClassValue',
           default: undefined,
         },
         tbodyTrAttrs: {
-          type: '((item: Items | null, type: TableRowType) => AttrsValue) | AttrsValue',
+          type: '((item: Item | null, type: TableRowType) => AttrsValue) | AttrsValue',
           default: undefined,
         },
         tbodyTrClass: {
@@ -288,12 +287,12 @@ export default {
             'Default scoped slot for custom data rendering of field data. See docs for scoped data',
           scope: {
             ...rowSelectionScope,
-            detailsShowing: {
+            expansionShowing: {
               type: 'boolean',
-              description: "Will be true if the row's row-details scoped slot is visible",
+              description: "Will be true if the row's row-expansion scoped slot is visible",
             },
             field: {
-              type: 'TableField<Items>',
+              type: 'TableField<Item>',
               description: "The field's normalized definition object (from the fields prop)",
             },
             index: {
@@ -301,13 +300,13 @@ export default {
               description: "The row's index (zero-based) with respect to the displayed rows",
             },
             item: {
-              type: 'readonly Items[]',
+              type: 'Item',
               description: "The row's item data object",
             },
-            toggleDetails: {
+            toggleExpansion: {
               type: '() => void',
               description:
-                'Can be called to toggle the visibility of the rows row-details scoped slot',
+                'Can be called to toggle the visibility of the rows row-expansion scoped slot',
             },
             unformatted: {
               type: 'unknown',
@@ -326,12 +325,12 @@ export default {
             'Custom footer content slot for user supplied B-TR, B-TH, B-TD. Optionally Scoped',
           scope: {
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
             items: {
-              type: 'readonly Items[]',
+              type: 'readonly Item[]',
               description: 'Array of items that are currently being displayed',
             },
             columns: {
@@ -349,11 +348,11 @@ export default {
               description: 'Unselect all rows (applicable if the table is in selectable mode)',
             },
             column: {
-              type: 'LiteralUnion<keyof Items>',
+              type: 'LiteralUnion<keyof Item>',
               description: "The field's key value",
             },
             field: {
-              type: 'TableField<Items>',
+              type: 'TableField<Item>',
               description: "The field's normalized definition object (from the fields prop)",
             },
             isFoot: {
@@ -379,11 +378,11 @@ export default {
               description: 'Unselect all rows (applicable if the table is in selectable mode)',
             },
             column: {
-              type: 'LiteralUnion<keyof Items>',
+              type: 'LiteralUnion<keyof Item>',
               description: "The field's key value",
             },
             field: {
-              type: 'TableField<Items>',
+              type: 'TableField<Item>',
               description: "The field's normalized definition object (from the fields prop)",
             },
             isFoot: {
@@ -400,13 +399,13 @@ export default {
             },
           },
         },
-        'row-details': {
+        'row-expansion': {
           description:
-            'Scoped slot for optional rendering additional record details. See docs for Row details support',
+            'Scoped slot for optional rendering additional record expansion. See docs for Row expansion support',
           scope: {
             ...rowSelectionScope,
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
@@ -415,12 +414,12 @@ export default {
               description: "The item's row index number (with respect to the displayed item rows)",
             },
             item: {
-              type: 'Items',
+              type: 'Item',
               description: "The entire row's record data object",
             },
-            toggleDetails: {
+            toggleExpansion: {
               type: '() => void',
-              description: "Function to toggle visibility of the row's details slot",
+              description: "Function to toggle visibility of the row's row-expansion slot",
             },
           },
         },
@@ -444,7 +443,7 @@ export default {
               description: "The field's label value",
             },
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
@@ -458,7 +457,7 @@ export default {
           description: 'Slot for user supplied `<colgroup>` element',
           scope: {
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
@@ -482,21 +481,10 @@ export default {
           description:
             "Emitted when a header or footer cell is clicked. Not applicable for 'custom-foot' slot",
           args: {
-            key: {
-              type: 'TableField<Record<string, unknown>>.key: LiteralUnion<string, string>',
-              description: 'Column key clicked (field name)',
-            },
-            field: {
-              type: 'TableField',
-              description: 'Field definition object',
-            },
-            event: {
-              description: 'Native event object',
-              type: 'MouseEvent|KeyboardEvent',
-            },
-            isFooter: {
-              description: '`true` if this event originated from clicking on the footer cell',
-              type: 'boolean',
+            value: {
+              type: 'TableHeadClickedEventObject<Item>',
+              description:
+                'Object payload containing the key, field definition, native event, and whether the click originated from the footer.',
             },
           },
         },
@@ -521,8 +509,8 @@ export default {
           args: tableRowEventArgs('being unhovered'),
         },
         'row-middle-clicked': {
-          args: undefined,
-          description: undefined,
+          description: 'Emitted when a row is middle clicked',
+          args: tableRowEventArgs('being middle clicked'),
         },
       } satisfies EmitRecord<keyof BTableLiteEmits<unknown>>,
     } as const
@@ -534,7 +522,7 @@ export default {
           description: 'Emitted when local filtering causes a change in the number of items',
           args: {
             value: {
-              type: 'Items[]',
+              type: 'Item[]',
               description: 'Array of items after filtering (before local pagination occurs)',
             },
           },
@@ -543,7 +531,7 @@ export default {
           description: 'Emitted when a row or rows have been selected',
           args: {
             value: {
-              type: 'Items[]',
+              type: 'Item[]',
               description: 'Array of the row items that are selected',
             },
           },
@@ -552,7 +540,7 @@ export default {
           description: 'Emitted when a row or rows have been unselected',
           args: {
             value: {
-              type: 'Items[]',
+              type: 'Item[]',
               description: 'Array of the row items that are unselected',
             },
           },
@@ -602,7 +590,7 @@ export default {
         busyLoadingText: {
           type: 'string',
           default: 'Loading...',
-          notYetImplemented: true,
+          description: 'Text to display when table is busy and no table-busy slot is provided',
         },
         currentPage: {
           type: 'Numberish',
@@ -626,10 +614,10 @@ export default {
           type: 'string',
           default: undefined,
           description:
-            'Criteria for filtering. Internal filtering supports only string or RegExpr criteria (RegExp is not yet implemented)',
+            'Criteria for filtering. Only string values are supported. Use filterFunction prop for complex filtering including RegExp.',
         },
         filterFunction: {
-          type: '(item: Readonly<Items>, filter: string | undefined) => boolean',
+          type: '(item: Readonly<Item>, filter: string | undefined) => boolean',
           default: undefined,
           description:
             'Function called during filtering of items, gets passed the current item being filtered. See docs for details.',
@@ -726,7 +714,10 @@ export default {
           description: 'When set, places the table body rows in selectable mode',
         },
         selectedItems: {
-          type: 'TableItem[]',
+          type: 'readonly unknown[]',
+          default: '() => []',
+          description:
+            'Array of currently selected items. Use v-model:selected-items to bind this. When a primary-key is provided, selection state persists across item array updates',
         },
         selectHead: {
           type: 'boolean | string',
@@ -769,7 +760,7 @@ export default {
         ...BTableLite.slots,
         // Overwriting the following from BTableLite slots. They have different scopes
         'thead-top': {},
-        'row-details': {},
+        'row-expansion': {},
         'head({key})': {},
         'foot({key})': {},
         'cell({key})': {},
@@ -787,12 +778,12 @@ export default {
               description: 'The value of the empty-text prop',
             },
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
             items: {
-              type: 'Items[] | null',
+              type: 'Item[] | null',
               description: 'The items array.',
             },
           },
@@ -810,12 +801,12 @@ export default {
               description: 'The value of the empty-text prop',
             },
             fields: {
-              type: 'TableField<Items>[]',
+              type: 'TableField<Item>[]',
               description:
                 'The normalized fields definition array (in the array of objects format)',
             },
             items: {
-              type: 'Items[]',
+              type: 'Item[]',
               description: 'The items array.',
             },
           },
@@ -835,6 +826,32 @@ export default {
         },
         emits: BTable.emits,
         slots: BTable.slots,
+        exposed: {
+          expansion: {
+            type: 'object',
+            description: 'Object containing expansion state methods (expand, collapse, expandAll, collapseAll) and expandedItems ref',
+          },
+          selection: {
+            type: 'object',
+            description: 'Object containing selection state methods (select, unselect, selectAll, unselectAll) and selectedItems ref',
+          },
+          items: {
+            type: 'ComputedRef<unknown[]>',
+            description: 'Computed ref of the table items',
+          },
+          displayItems: {
+            type: 'ComputedRef<unknown[]>',
+            description: 'Computed ref of the currently displayed table items after filtering and pagination',
+          },
+          getStringValue: {
+            type: '(key: string, item: unknown) => string',
+            description: 'Function to get the string value of an item field',
+          },
+          refresh: {
+            type: '() => Promise<void>',
+            description: 'Function to refresh the table data (calls the items provider if present)',
+          },
+        } satisfies ExposedRecord,
       },
       BTableLite: {
         props: {
@@ -843,6 +860,12 @@ export default {
         },
         emits: BTableLite.emits,
         slots: BTableLite.slots,
+        exposed: {
+          expansion: {
+            type: 'object',
+            description: 'Object containing expansion state methods (expand, collapse, expandAll, collapseAll) and expandedItems ref',
+          },
+        } satisfies ExposedRecord,
       },
       BTableSimple: {
         props: BTableSimple.props,

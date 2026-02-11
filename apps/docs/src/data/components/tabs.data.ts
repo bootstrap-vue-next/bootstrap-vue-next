@@ -2,6 +2,7 @@ import type {BTabProps, BTabsEmits, BTabsProps, BTabsSlots} from 'bootstrap-vue-
 import {
   type ComponentReference,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   StyleKind,
@@ -164,26 +165,10 @@ export default {
         'activate-tab': {
           description: 'Emitted before a tab is shown or activated. Cancelable.',
           args: {
-            newTabId: {
-              type: 'string',
-              description: 'ID of the tab being activated.',
-            },
-            prevTabId: {
-              type: 'string',
-              description: 'ID of the currently active tab.',
-            },
-            newTabIndex: {
-              type: 'number',
-              description: 'Zero-based index of the tab being activated.',
-            },
-            prevTabIndex: {
-              type: 'number',
+            value: {
+              type: '{newTabId: string; prevTabId: string; newTabIndex: number; prevTabIndex: number; event: BvEvent}',
               description:
-                'Zero-based index of the currently active tab, or -1 if no tab is active.',
-            },
-            event: {
-              type: 'BvEvent',
-              description: 'BvEvent object. Call `bvEvent.preventDefault()` to cancel activation.',
+                'Object payload with the activating tab id/index, previous tab id/index, and the cancelable BvEvent.',
             },
           },
         },
@@ -238,6 +223,16 @@ export default {
             "CSS class (or classes) to apply to the tab's control button inner link element",
         },
       } satisfies PropRecord<keyof BTabProps>,
+      exposed: {
+        activate: {
+          type: '() => void',
+          description: 'Activates the tab',
+        },
+        deactivate: {
+          type: '() => void',
+          description: 'Deactivates the tab',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

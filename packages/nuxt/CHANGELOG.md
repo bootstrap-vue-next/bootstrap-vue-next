@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.42.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.41.0...nuxt-v0.42.0) (2025-12-19)
+## [0.43.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.43.0...nuxt-v0.43.1) (2026-02-09)
 
 
 ### Miscellaneous Chores
@@ -12,25 +12,103 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * bootstrap-vue-next bumped to 0.42.0
+    * bootstrap-vue-next bumped to 0.43.1
   * peerDependencies
-    * bootstrap-vue-next bumped to 0.42.0
+    * bootstrap-vue-next bumped to 0.43.1
+
+## [0.43.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.42.0...nuxt-v0.43.0) (2026-02-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BTable:** change item details to expandedItems to make more linguistic sense. toggleDetails -> toggleExpansion, row-details slot to row-expansion. Linguistically, detailedItems as a modelValue didn't make sense as it implied content details information, rather than a rows expanded state. We renamed this for lingustical clarity, as well as symmetry with the similar selectedItems modelValue
+* **BTable:** selected items exposed utilities in the template ref are now under the selection key,
+* **BTable:** exposed selection utility functions names are more generic, to align with the newly exposed functions for expandedItems-- add, toggle, remove, clear, set, setAll, isActivated, get
+* **BTable:** itemDetails as a property on the items object is removed. Use the v-model instead. This allows you to programatically modify the v-model, rather than relying on mutating the source item object
+* **BTabs:** the activate-tab emit now emits a single argument, an object containing the data, rather than five separate arguments
+* **BTable:** emits now give out single argument objects, rather than four or so parameters
+* **BTable:** fix typo in btableLiteProps export to be bTableLiteProps
+* **BTable:** fix typo in btableProps export to be bTableProps
+* **BTable:** for field.key remove the ability to use nested string paths like name.firstName and instead require the use of a function via the accessor property. Root object paths for keys still work, optional accessor property takes precidence
+* **BTable:** field.key is not a simple string value
+* **BTable:** tableefieldformatter function now has a single parameter object instead of multiple parameters
+* **BTable:** TableField tdAttr now has a single parameter object instead of multiple parameters
+* **BTable:** TableField thAttr now has a single parameter object instead of multiple parameters
+
+### Features
+
+* **BTable:** change item details to expandedItems to make more linguistic sense. toggleDetails -&gt; toggleExpansion, row-details slot to row-expansion. Linguistically, detailedItems as a modelValue didn't make sense as it implied content details information, rather than a rows expanded state. We renamed this for lingustical clarity, as well as symmetry with the similar selectedItems modelValue ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** emits now give out single argument objects, rather than four or so parameters ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** Enhanced BTableEmits and BTableProps to use readonly array types for better immutability ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** export some more types that were not previously available ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** exposed selection utility functions names are more generic, to align with the newly exposed functions for expandedItems-- add, toggle, remove, clear, set, setAll, isActivated, get ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** field.key is not a simple string value ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** fix typo in btableLiteProps export to be bTableLiteProps ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** fix typo in btableProps export to be bTableProps ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** for field.key remove the ability to use nested string paths like name.firstName and instead require the use of a function via the accessor property. Root object paths for keys still work, optional accessor property takes precidence ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** for table fields, add an optional accessor property, this can be a string value that is a property key on the prop.item object for keys that are at the root of the object. For more complex, nested keys, use the function getter style ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** itemDetails as a property on the items object is removed. Use the v-model instead. This allows you to programatically modify the v-model, rather than relying on mutating the source item object ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** primary key we no longer use the less known dot syntax for getting the value from the item object. NOw, use functional syntax for the primary key prop ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** primary key will effect selectedItems and expandedItems. Modifying the primary key prop will clear these models ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** selected items exposed utilities in the template ref are now under the selection key, ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** tableefieldformatter function now has a single parameter object instead of multiple parameters ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** TableField tdAttr now has a single parameter object instead of multiple parameters ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** TableField thAttr now has a single parameter object instead of multiple parameters ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTabs:** the activate-tab emit now emits a single argument, an object containing the data, rather than five separate arguments ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+
+
+### Bug Fixes
+
+* **BTable:** b-table-sortable-column class not workign when is sortable ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTableLite:** for cell() slots, items in the vslot would not take into account global defaults value ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** syncronous errors in provider function handled correctly and will stop loading animation ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** type of row-clicked and head-clicked could possibly be a keyboardevent ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **BTable:** when cell tdAttr is a function do not overwrite the function when data label is active ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **nuxt:** remove bridge:false ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **types:** built types file not being exported, this really only effects utilities that could benefit from the list of all components names ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+* **useScrollLock:** file meant to be public not in the correct format leading to build errors ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+
+
+### Performance Improvements
+
+* **BFormSelect:** dont wrap a localValue proxy to modelValue to reduce extra computed ([2a39525](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2a39525036bb39c37eb3f809232705b183413b53))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.43.0
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.43.0
+
+## [0.42.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.41.0...nuxt-v0.42.0) (2025-12-19)
+
+### Miscellaneous Chores
+
+- **nuxt:** Synchronize main group versions
+
+### Dependencies
+
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.42.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.42.0
 
 ## [0.41.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.40.9...nuxt-v0.41.0) (2025-12-12)
 
-
 ### Miscellaneous Chores
 
-* **nuxt:** Synchronize main group versions
-
+- **nuxt:** Synchronize main group versions
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * bootstrap-vue-next bumped to 0.41.0
-  * peerDependencies
-    * bootstrap-vue-next bumped to 0.41.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - bootstrap-vue-next bumped to 0.41.0
+  - peerDependencies
+    - bootstrap-vue-next bumped to 0.41.0
 
 ## [0.40.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.40.8...nuxt-v0.40.9) (2025-11-28)
 

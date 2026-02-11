@@ -175,8 +175,3 @@ router: { prefetchLinks: false }
 ```
 
 </HighlightCard>
-
-<script setup lang="ts">
-import HighlightCard from '../../components/HighlightCard.vue'
-import NotYetImplemented from '../../components/NotYetImplemented.vue'
-</script>

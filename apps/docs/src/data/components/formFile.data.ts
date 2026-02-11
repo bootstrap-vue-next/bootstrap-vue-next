@@ -1,5 +1,5 @@
 import type {BFormFileProps, BFormFileSlots} from 'bootstrap-vue-next'
-import type {ComponentReference, PropRecord, SlotRecord} from '../../types'
+import type {ComponentReference, ExposedRecord, PropRecord, SlotRecord} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 
@@ -154,6 +154,24 @@ export default {
           scope: {},
         },
       } satisfies SlotRecord<keyof BFormFileSlots>,
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the file input',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the file input',
+        },
+        reset: {
+          type: '() => void',
+          description: 'Resets the file input, clearing selected files',
+        },
+        element: {
+          type: 'HTMLElement',
+          description: 'Reference to the underlying file input or browse button element',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

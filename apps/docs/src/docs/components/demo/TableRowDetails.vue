@@ -1,6 +1,7 @@
 <template>
   <div>
     <BTable
+      v-model:expanded-items="expandedItems"
       :items="items"
       :fields="fields"
       striped
@@ -10,21 +11,21 @@
         <BButton
           size="sm"
           class="mr-2"
-          @click="row.toggleDetails"
+          @click="row.toggleExpansion"
         >
-          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+          {{ row.expansionShowing ? 'Hide' : 'Show' }} Details
         </BButton>
 
-        <!-- As `row.showDetails` is one-way, we call the toggleDetails function on @change -->
+        <!-- As `row.expansionShowing` is one-way, we call the toggleExpansion function on @change -->
         <BFormCheckbox
-          v-model="row.detailsShowing"
-          @change="row.toggleDetails"
+          v-model="row.expansionShowing"
+          @change="row.toggleExpansion"
         >
           Details via check
         </BFormCheckbox>
       </template>
 
-      <template #row-details="row">
+      <template #row-expansion="row">
         <BCard>
           <BRow class="mb-2">
             <BCol
@@ -46,7 +47,7 @@
 
           <BButton
             size="sm"
-            @click="row.toggleDetails"
+            @click="row.toggleExpansion"
             >Hide Details</BButton
           >
         </BCard>
@@ -56,6 +57,8 @@
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
+
 const fields = ['first_name', 'last_name', 'show_details']
 const items = [
   {isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
@@ -65,8 +68,20 @@ const items = [
     age: 89,
     first_name: 'Geneva',
     last_name: 'Wilson',
-    _showDetails: true,
   },
   {isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney'},
 ]
+// The third row (Geneva Wilson) defaults to having details shown
+const expandedItems = ref([items[2]])
+// If we were using primary keys we would need the following
+/*
+const table = useTemplateRef<ComponentExposed<typeof BTable>>('table')
+const expandedItems = ref([])
+
+onMounted(() => {
+  expandedItems.value.push(table.value?.expansion.get(items[2])) // Geneva Wilson
+})
+
+// The get function simply looks up by primary key
+ */
 </script>

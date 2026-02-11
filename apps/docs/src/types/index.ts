@@ -1,12 +1,13 @@
 import type {useScrollspy} from 'bootstrap-vue-next'
 
+export * from './deprecation'
+
 export type ComponentItem = Exclude<keyof ComponentReference, 'component' | 'sections'>
 
 export interface PropReference {
   type?: string
   description?: string
   default?: unknown
-  notYetImplemented?: boolean
 }
 
 export type PropRecordWithOptions = {
@@ -34,7 +35,6 @@ export type SlotScopeReference = Record<
   {
     type: string | string[]
     description?: string
-    notYetImplemented?: boolean
   }
 >
 export type SlotReference = {
@@ -42,6 +42,12 @@ export type SlotReference = {
   description?: string
 }
 export type SlotRecord<T extends string = string> = Record<T, SlotReference>
+
+export type ExposedReference = {
+  type?: string
+  description?: string
+}
+export type ExposedRecord<T extends string = string> = Record<T, ExposedReference>
 
 export const enum StyleKind {
   BootstrapClass = 'BOOTSTRAP-CLASS',
@@ -55,7 +61,7 @@ export interface StyleSpec {
   value?: string
 }
 
-export type ComponentSection = 'Properties' | 'Events' | 'Slots'
+export type ComponentSection = 'Properties' | 'Events' | 'Slots' | 'Exposed'
 export type ComponentReference = Record<
   string,
   {
@@ -70,6 +76,7 @@ export type ComponentReference = Record<
     props: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections
     emits?: EmitRecord
     slots?: SlotRecord
+    exposed?: ExposedRecord
     sections?: ComponentSection[]
   }
 >

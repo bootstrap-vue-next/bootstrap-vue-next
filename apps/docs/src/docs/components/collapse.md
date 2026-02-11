@@ -66,14 +66,7 @@ to its children as well as the value of the `isNav` prop.
 
 ## Exposed functions
 
-`BCollapse` exposes several functions and properties that allow manipulation and examination of the state of the components.
-These are accessed through the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs)
-
-- hide: Hides the collapse and fires the `hide` event
-- show: Shows the collapse and fires the `show` event
-- toggle: Toggles the collapse and fires the `hide` or `show` event, as appropriate
-- isNav: The value of the `isNav` prop of the collapse
-- visible: The visible state of the collapse
+`BCollapse` exposes several functions and properties through template refs. See the [Component Reference Exposed section](#comp-reference-bcollapse-exposed) for details.
 
 <<< DEMO ./demo/CollapseExpose.vue
 

@@ -31,6 +31,18 @@ Always reference these instructions first and fallback to search or bash command
 - Docs dev server: `pnpm --filter docs run dev` (runs on <http://localhost:8000>)
 - All dev servers: `pnpm dev` (starts all development environments in parallel)
 
+### Exporting public files in the main bootstrap-vue-next package
+
+The library uses a custom export structure that must fit a specific pattern to ensure proper tree-shaking and module resolution. For the build process, as shown in the vite.config.ts file, it resolves the directories and files. The purpose of this is to allow for both high-level path imports, as well as more specific (and better tree-shaken) imports of individual components, composables, directives, and types. Ex: `import {BButton} from 'bootstrap-vue-next/components/button'` and `bootstrap-vue-next/components` are both valid, instead of `import {BButton} from 'bootstrap-vue-next'` which would import the entire package.
+
+The rules of how this functions is that files that are publicly exported must be in their own directory, with an index.ts file that exports the relevant items. The resolution of this build process is in the vite.config.ts file. Then the package.json file uses the "exports" field to map the paths to the built files.
+
+If the file is intended to be public, it must follow this pattern. For example, if you are adding a new composable, it must be in its own directory under `src/composables/` with an index.ts file that exports the composable. Then you must add the relevant entry to the "exports" field in the package.json file. It must also be exported from the main `src/composables/index.ts` file. This ensures that the composable can be imported both from the high-level path and the specific path for best tree-shaking.
+
+Private files should exist in the root of the domain they are related to. For example, utility functions for composables should be in the `src/composables/` directory but not exported in an index.ts file. This keeps the public API clean and ensures that only intended files are accessible to users of the library.
+
+The fault of not properly following this structure will lead to build errors or improper module resolution.
+
 ## Validation
 
 ### Always Validate Changes
@@ -247,7 +259,24 @@ const toggle = () => {
 Use the `<<< DEMO` syntax to reference demo files:
 
 - **Show full file**: `<<< DEMO ./demo/MyComponent.vue{vue}`
-- **Show specific section**: Use `#region name` markers in the demo file and reference with `#name` in the markdown (e.g., `#region template` is referenced as `#template`)
+- **Show specific section**: Use `#region name` markers in the demo file and reference with `#name` in the markdown (e.g., `#region template` is referenced as `#template`) - do not include region markers if showing full file
+
+Use the `<<< FRAGMENT` syntax to reference reusable code fragments:
+
+- **Vue fragments**: `<<< FRAGMENT ./demo/MyFragment.vue#region-name{vue-html}`
+- **TypeScript fragments**: `<<< FRAGMENT ./demo/MyFragment.ts#snippet{typescript}`
+- **HTML fragments**: `<<< FRAGMENT ./demo/MyFragment.html#template`
+
+FRAGMENT syntax should be used for:
+
+- Reusable code examples that are included in multiple places
+- Code snippets that need to be styled consistently with other examples
+- Examples that are referenced across different documentation pages
+
+DEMO syntax should be used for:
+
+- Full component demonstrations
+- Interactive examples specific to one component
 
 ### Demo File Guidelines
 
@@ -256,3 +285,9 @@ Use the `<<< DEMO` syntax to reference demo files:
 - Use unique IDs for all components to avoid conflicts when multiple demos render on same page
 - Keep examples focused on demonstrating one feature or pattern
 - Include comments for clarity when showing complex patterns
+
+## Style Guidelines
+
+Follow the established code style
+
+- When a Vue component event takes three or more arguments, use an object to pass the arguments instead of multiple positional parameters. For example: `emit('event-name', {arg1, arg2, arg3})` instead of `emit('event-name', arg1, arg2, arg3)`. Fewer than three arguments may use positional parameters.

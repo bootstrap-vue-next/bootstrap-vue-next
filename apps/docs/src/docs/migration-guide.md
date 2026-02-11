@@ -41,13 +41,7 @@ have found tricky or clarifcation if the details in the guide weren't sufficent.
 
 We will mark features of BootstrapVue as deprecated for one of several reasons.
 
-- If there is a more streamlined or consistent way of providing the functionality in BootstrapVueNext
-- If the feature is deprecated in Bootstrap 5
-- If we believe that this functionality can as easily (or more easily) be consumed using native bootstrap classes
-- If we haven't seen demand for the feature, especially if it is something we believe can be implemented later without a breaking change
-
-For any deprecated feature, especially the last case listed above, please feel free to open an
-[issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) or submit a pull request.
+<DeprecatedReasons/>
 
 ## Sync modifier
 
@@ -211,11 +205,8 @@ See [Show and Hide](#show-and-hide) shared properties.
 ### BAlert
 
 As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the means of showing the alert are different.
-The `bootstrap-vue` `show` prop is deprecated, use `model-value` instead.
 
-### BFormFile
-
-The `capture` prop no longer accepts a boolean value. Modern browser specifications require `capture` to be either `'user'` (for front-facing camera) or `'environment'` (for rear-facing camera).
+The primary way to control alert visibility is via `v-model` (or `model-value` in props). The `show` and `visible` props are still available for controlling initial visibility, with `show` enabling the initial animation on mount. See [Show and Hide](#show-and-hide) shared properties for details.
 
 **Before:**
 
@@ -237,12 +228,17 @@ now the `close` slot.
 
 ### BAspect
 
-<NotYetImplemented/>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BAspect` component">
+  This component will not be implemented for v1 due to insufficient demand.
+  Bootstrap's <BLink href="https://getbootstrap.com/docs/5.3/helpers/ratio/">ratio helper utilities</BLink> can be used directly instead.
+</DeprecatedFeature>
 
 ### BAvatar
 
-Icon support has been deprecated. Icons support can be implemented using the default slot including
-either [unplug icons](/docs/icons) or by embedding an `.svg`.
+<DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="Icon support on `BAvatar`">
+  Icons can be implemented using the default slot with either <BLink href="/docs/icons">unplugin-icons</BLink>
+  or by embedding an `.svg`. See the <BLink href="/docs/icons">Icons</BLink> guide for the recommended approach.
+</DeprecatedFeature>
 
 <<< DEMO ./demo/AvatarIcon.vue#template{vue-html}
 
@@ -254,6 +250,10 @@ Badge positioning has changed to using a single property `badge-placement` and o
 For instance, use `badge-placement='top'` in place of `badge-top` or `badge-placement='end'` in place of
 `badge-right`. For combined props, rather than using `badge-top` and `badge-right`, use
 `badge-placement='top-end'.
+
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`badge-offset`">
+  This property is <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/pull/2692">significantly more complex</BLink> to implement in BootstrapVueNext (due to Bootstrap 5.0's implementation).
+</DeprecatedFeature>
 
 #### Rounding Sides
 
@@ -270,16 +270,20 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 ### BButton
 
-The `block` prop is deprecated. See our [`BButton` documentation](/docs/components/button#block-level-buttons)
-and [Bootstrap's documentation](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons) for
-details.
+<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`block` prop on `BButton`">
+  See our <BLink href="/docs/components/button#block-level-buttons">`BButton` documentation</BLink>
+  and <BLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</BLink> for
+  details on creating block-level buttons with utility classes.
+</DeprecatedFeature>
 
 ### BButtonClose
 
 `BButtonClose` has been renamed to `BCloseButton` for consistency with [Bootstrap](https://getbootstrap.com/docs/5.3/components/close-button/)
 
-The `content` and `text-variant` props have been deprecated since Bootstrap 5 moved to using an
-embedded svg for the close icon. See [their migration guide](https://getbootstrap.com/docs/5.3/migration/#close-button-1) for details.
+<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`content` and `text-variant` props on `BButtonClose`" :plural="true">
+  Bootstrap 5 moved to using an embedded svg for the close icon.
+  See <BLink href="https://getbootstrap.com/docs/5.3/migration/#close-button-1">their migration guide</BLink> for details.
+</DeprecatedFeature>
 
 ### BButtonToolbar
 
@@ -288,7 +292,10 @@ not implemented.
 
 ### BCalendar
 
-<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BCalendar` component">
+  This component will not be implemented for v1.
+  See <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</BLink> for details.
+</DeprecatedFeature>
 
 ### BCard
 
@@ -296,20 +303,26 @@ Image placement is accomplished by the single `img-placement` prop, which takes 
 `top`, `bottom`, `start`, `end`, or `overlay`. This allows us to deprecate the `imgBottom`,
 `imgEnd`, `imgLeft`, `imgRight`, `imgStart`, and `imgTop` props from `BCard`.
 
-Similarly, the `top`, `bottom`, `left`, and `right` props on `BCardImg` are deprecated in favor
-of a single `placement` prop that take the values `top`, `bottom`, `start`, and `end`. Note that
-`end` and `start` are not yet implemented.
+<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`top`, `bottom`, `left`, and `right` props on `BCardImg`" :plural="true">
+  Use a single `placement` prop that takes the values `top` or `bottom` instead.
+  Note that `end` and `start` placements are not yet fully implemented as Bootstrap 5 does not provide the necessary CSS classes (`card-img-end` and `card-img-start`).
+  If these placements are needed, custom CSS will be required.
+</DeprecatedFeature>
 
 The `sub-title`, `sub-title-tag` and `sub-title-text-variant` props have been renamed to
 `subtitle`, `subtitle-tag` and `subtitle-text-variant`, respectively.
 
-For `BCardBody`, `BCardHeader`, `BCardFooter`, `BCardTitle`, and `BCardText` components the component name specific
-props are deprecated and replaced by the generalized props. For example `footer-bg-variant` is replaced by `bg-variant`.
-This is true for all of the `body-*`, `header-*`, and `footer-*` props on these components. Note
-that the specific props are still retained on the main `BCard` component.
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="Component-specific variant props (e.g. `footer-bg-variant`)" :plural="true">
+  For `BCardBody`, `BCardHeader`, `BCardFooter`, `BCardTitle`, and `BCardText` components, the component name specific
+  props are replaced by the generalized props. For example `footer-bg-variant` is replaced by `bg-variant`.
+  This is true for all of the `body-*`, `header-*`, and `footer-*` props on these components. Note
+  that the specific props are still retained on the main `BCard` component.
 
 Similarly the `text-tag` and `title-tag` props have been replaced by `tag` on the `BCardText`
 and `BCardTitle` components.
+</DeprecatedFeature>
+
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`body-border-variant` and `body-variant`" :plural="true" />
 
 `body-border-variant` and `body-variant` are not implemented on `BCard` and `border-variant` is not
 implemented on `BCardBody`.
@@ -317,6 +330,17 @@ implemented on `BCardBody`.
 See the [v-html](#v-html) section for information on deprecation of the `footer-html` and `header-html` props on
 `BCard` and the `html` props on `BCardFooter` and `BCardHeader`.
 
+### BCardBody
+
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`border-variant`" />
+
+### BCardGroup
+
+<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_5_REMOVED" what="card deck and card columns props">
+  The `deck` and `columns` props output CSS classes (`.card-deck` and `.card-columns`) that were removed from Bootstrap 5.
+  Use Bootstrap's grid system with `.row-cols-*` classes for responsive card layouts instead.
+  Only the default card group (without `deck` or `columns` props) works with Bootstrap 5 and is responsive.
+</DeprecatedFeature>
 ### BCardImgLazy
 
 This functionality has been replaced by lazy loading on `<BImg>` see [BImg notes](#bimg) for details.
@@ -331,9 +355,11 @@ on `BCarouselSlide`.
 
 ### BCollapse
 
-The `accordion` prop is deprecated: In `BootstrapVue`/`Bootstrap4`, accordions are implemented via `BCollapse`.
-In `BootstrapVueNext`/`Bootstrap5` accordions are first class citizens, so please use the
-[`BAccordion`](/docs/components/accordion) instead.
+<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`accordion` prop on `BCollapse`">
+  In `BootstrapVue`/`Bootstrap4`, accordions are implemented via `BCollapse`.
+  In `BootstrapVueNext`/`Bootstrap5` accordions are first class citizens, so please use the
+  <BLink href="/docs/components/accordion">`BAccordion`</BLink> component instead.
+</DeprecatedFeature>
 
 The prop `toggle` has replaced the prop `appear` with slightly different semantics. In order to create a
 collapse that is closed and transitions to open on the initial mount, set `visible` to false and `toggle` to true.
@@ -349,18 +375,31 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 BootstrapVueNext uses [floating-ui](https://floating-ui.com/) to implemented dropdowns. This affects values and behaviors
 for properties such as `boundary` as well as the alignment and placement properties. For fine control, use `floating-middleware`
-in place of `popper-opts`. Check out [our documentation](/docs/components/dropdown) and [theirs] for details.
+in place of `popper-opts`. Check out [our documentation](/docs/components/dropdown) and [theirs](https://floating-ui.com/) for details.
 
-BootstrapVueNext replaces `drop-up`, `drop-left` and `drop-right` props with a single `placement` prop.
-Valid values for `placement` are defined in `float-ui`'s docs [here](https://floating-ui.com/docs/computeposition#placement).
+BootstrapVueNext replaces `dropup`, `dropleft`, `dropright`, and `right` props with a single `placement` prop.
+Valid values for `placement` are: `top`, `top-start`, `top-end`, `bottom`, `bottom-start` (default), `bottom-end`, `left`, `left-start`, `left-end`, `right`, `right-start`, `right-end`.
+See [floating-ui's docs](https://floating-ui.com/docs/computeposition#placement) for details.
 
-The `block` prop is deprecated. See our [`BDropdown` documentation](/docs/components/dropdown#block-level-dropdowns)
-and [Bootstrap's documentation](https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons) for
-details.
+| BootstrapVue prop | BootstrapVueNext `placement` value |
+| ----------------- | ---------------------------------- |
+| (default)         | `bottom-start`                     |
+| `right`           | `bottom-end`                       |
+| `dropup`          | `top-start`                        |
+| `dropright`       | `right-start`                      |
+| `dropleft`        | `left-start`                       |
 
-The `right` prop is replaced by `end` see the [overview section](#overview) of this page for details.
+Additionally, BootstrapVueNext supports new placement options that were not available in BootstrapVue, such as `bottom` for center alignment, `top-end`, `left-end`, `right-end`, and others.
 
-The `html` prop has been deprecated, use the `button-content`.
+<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`block` prop on `BDropdown`">
+  See our <BLink href="/docs/components/dropdown#block-level-dropdowns">`BDropdown` documentation</BLink>
+  and <BLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</BLink> for
+  details on creating block-level dropdowns.
+</DeprecatedFeature>
+
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`html` prop on `BDropdown`">
+  Use the `button-content` slot instead.
+</DeprecatedFeature>
 
 `$root` instance events `bv::dropdown::hide` and `bv::dropdown::show` are deprecated.
 
@@ -376,7 +415,9 @@ has been replaced by a `split-click` which provides the native mouse event. This
 naming the event 'click' was hiding the native `click` event so supressing the that event for
 parents that might have unexpected actions (such as a link navigating to a new page) was difficult.
 
-<NotYetImplemented>`toggleAttrs`</NotYetImplemented>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`toggleAttrs` prop on `BDropdown`">
+  This prop will not be implemented for v1 due to insufficient demand.
+</DeprecatedFeature>
 
 #### Dropdown sub-components
 
@@ -411,14 +452,21 @@ a header id.
 
 ##### BDropdownForm
 
-`inline` is deprecated, see the [BForm](#bform) migration information. To add classes to the `<form>` tag in `BdropdownForm`
-use the `form-class` prop.
+<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`inline` prop on `BDropdownForm`">
+  See the <BLink href="#bform">BForm</BLink> migration information. To add classes to the `&lt;form&gt;` tag in `BDropdownForm`
+  use the `form-class` prop.
+</DeprecatedFeature>
 
-The `disabled` prop is deprecated, set the disabled prop on individual components as you do with `BForm`.
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`disabled` prop on `BDropdownForm`">
+  Set the disabled prop on individual components as you do with `BForm`.
+</DeprecatedFeature>
 
 ### BEmbed
 
-<NotYetImplemented/>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BEmbed` component">
+  This component will not be implemented for v1 due to insufficient demand.
+  It can be added post-v1 without breaking changes if needed.
+</DeprecatedFeature>
 
 ### BForm
 
@@ -449,11 +497,15 @@ See [BForm Components](/docs/components/form-checkbox)
 
 ### BFormDatePicker
 
-<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
+<DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="`BFormDatepicker` component">
+  See <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</BLink> for details.
+</DeprecatedFeature>
 
 ### BFormFile
 
 BootstrapVueNext has completely rewritten `BFormFile` using [VueUse](https://vueuse.org/) composables (`useFileDialog` and `useDropZone`), resulting in a more modern, maintainable implementation.
+
+The `capture` prop no longer accepts a boolean value. Modern browser specifications require `capture` to be either `'user'` (for front-facing camera) or `'environment'` (for rear-facing camera).
 
 #### Directory Mode
 
@@ -506,21 +558,24 @@ See [BForm Components](/docs/components/form-radio)
 `BFormRating` is now available in BootstrapVueNext, preserving most of the original BootstrapVue functionality under Vue 3's v-model conventions.
 See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html) for details on the new `v-model` syntax.
 
-The following features from BootstrapVue are <NotYetImplemented/>:
-
-- **`disabled` prop**: Interactive disabling of the rating component
-- **Form submission**: The `name` prop for generating hidden inputs for form submission
-- **Input groups**: Using `BFormRating` within `BInputGroup` components
-- **Internationalization**: The `locale` prop for localized display and RTL support
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="the internationalization feature">
+  The `locale` prop for localized display and RTL support will not be implemented for v1 due to insufficient demand.
+</DeprecatedFeature>
 
 #### Icon System Changes
 
-The following icon-related props from BootstrapVue have been deprecated:
-
-- `icon-empty`: For specifying empty star icon
-- `icon-half`: For specifying half-filled star icon
-- `icon-full`: For specifying filled star icon
-- `icon-clear`: For specifying clear button icon
+<DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="Icon-related props on form components" :plural="true">
+  The following icon-related props from BootstrapVue have been deprecated:
+  <ul>
+    <li><code>icon-empty</code>: For specifying empty star icon</li>
+    <li><code>icon-half</code>: For specifying half-filled star icon</li>
+    <li><code>icon-full</code>: For specifying filled star icon</li>
+    <li><code>icon-clear</code>: For specifying clear button icon</li>
+  </ul>
+  BootstrapVueNext does not include a built-in icon library. See
+  <BLink href="/docs/icons">Icons</BLink> for guidance on using unplugin-icons as the recommended
+  modern solution with automatic tree-shaking.
+</DeprecatedFeature>
 
 Instead, BootstrapVueNext provides two approaches for customizing icons:
 
@@ -550,14 +605,20 @@ take a look at these examples for guidance when migrating.
 
 ### BFormTimePicker
 
-<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BFormTimepicker` component">
+  This component will not be implemented for v1.
+  See <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</BLink> for details.
+</DeprecatedFeature>
 
 ### BImg
 
 See the [Rounding](#rounding) section.
 
-Lazy loading is now achieved through the native `loading` attribute rather than a separate component. Thus
-`BImgLazy` and `BCardImgLazy` are deprecated.
+Lazy loading is now achieved through the native `loading` attribute rather than a separate component.
+
+<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_NATIVE" what="`BImgLazy` and `BCardImgLazy` components" :plural="true">
+  Use the native <code>loading="lazy"</code> attribute on <code>&lt;BImg&gt;</code> and <code>&lt;BCardImg&gt;</code> instead.
+</DeprecatedFeature>
 
 ### BImgLazy
 
@@ -565,9 +626,11 @@ This functionality has been replaced by lazy loading on `<BImg>` see [BImg](#bim
 
 ### BInputGroup
 
-Bootstrap 5 [no longer requires](https://getbootstrap.com/docs/5.3/migration/#forms-1) `input-group-append` or `input-group-prepend`
-on elements to append or prepend them to the control, they can just be added as direct children of the input group.
-Due to this change `<BInputGroupAppend>`, `<BInputGroupPrepend>`, and `<BInputGroupAddon>` are no longer necessary and have been deprecated.
+<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`BInputGroupAppend`, `BInputGroupPrepend`, and `BInputGroupAddon` components" :plural="true">
+  Bootstrap 5 <BLink href="https://getbootstrap.com/docs/5.3/migration/#forms-1">no longer requires</BLink> `input-group-append` or `input-group-prepend`
+  on elements to append or prepend them to the control, they can just be added as direct children of the input group.
+</DeprecatedFeature>
+
 This also has implications on the use of `<BInputGroupText>` - in BootstrapVue, this component was used form grouping
 sub-components. In BootstrapVueNext, `<BInputGroupText>` should only be used to apply styles to textual elements
 appended or prepended to a group. Using it to group components breaks the automatic append and prepend stylings.
@@ -597,13 +660,19 @@ a limitation that affect your scenario, please [file an issue](https://github.co
 
 ### BFormTextbox
 
-`trim`, `lazy`, or `number` properties have been deprecated. We support the native modifiers
-[`trim`, `lazy`, and `number`](https://vuejs.org/guide/essentials/forms.html#modifiers).
-They work as documented in vue.js, so there is no longer a need for the properties.
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`trim`, `lazy`, and `number` props on `BFormTextbox`" :plural="true">
+  We support the native modifiers
+  <BLink href="https://vuejs.org/guide/essentials/forms.html#modifiers">`trim`, `lazy`, and `number`</BLink>.
+  They work as documented in Vue.js, so there is no longer a need for the properties.
+</DeprecatedFeature>
 
 ### BJumbotron
 
-<NotYetImplemented/>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BJumbotron` component">
+  This component will not be implemented for v1 due to insufficient demand.
+  Bootstrap has deprecated their Jumbotron component, but it can be replicated using
+  utility classes if needed.
+</DeprecatedFeature>
 
 Note that Bootstrap has deprecated their Jumbotron component, but it can be replicated using
 utility classes. See their [migration guide](https://getbootstrap.com/docs/5.3/migration/#jumbotron)
@@ -651,19 +720,22 @@ See [BLink](#blink) for changes to link and router behavior.
 
 ### BMedia
 
-<NotYetImplemented/>
-
-Note that Bootstrap has deprecated their Media object, but it can be replicated using
-flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.3/utilities/flex/#media-object) for details.
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BMedia` component">
+  This component will not be implemented for v1 due to insufficient demand.
+  Bootstrap has deprecated their Media object, but it can be replicated using flex utility classes.
+  See their <BLink href="https://getbootstrap.com/docs/5.3/utilities/flex/#media-object">documentation</BLink> for details.
+</DeprecatedFeature>
 
 ### BModal
 
-`footer-tag` and `header-tag` are deprecated, use the `footer` and `title` slots instead. See the
-[modal documentation](/docs/components/modal#custom-rendering-with-slots) for details.
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`footer-tag` and `header-tag` props on `BModal`" :plural="true">
+  Use the `footer` and `title` slots instead. See the
+  <BLink href="/docs/components/modal#custom-rendering-with-slots">modal documentation</BLink> for details.
+</DeprecatedFeature>
 
 #### Removed Global Modal Management
 
-**$bvModal instance methods are deprecated:**
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`$bvModal` instance methods" :plural="true">
 
 - `this.$bvModal.show(id)` → Use `useModal` composable or template refs with `.show()`
 - `this.$bvModal.hide(id)` → Use `useModal` composable or template refs with `.hide()`
@@ -680,6 +752,8 @@ flex utility classes. See their [documentation](https://getbootstrap.com/docs/5.
 
 Please see [useModal](/docs/composables/useModal) and [useToggle](/docs/composables/useToggle) for alternative methods of
 accessing modals globally.
+
+</DeprecatedFeature>
 
 #### Modal Event System Changes
 
@@ -877,7 +951,10 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 ### BPaginationNav
 
-<NotYetImplemented/>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BPaginationNav` component">
+  This component will not be implemented for v1 due to insufficient demand.
+  It can be added post-v1 without breaking changes if needed.
+</DeprecatedFeature>
 
 ### BPopover
 
@@ -1020,14 +1097,27 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 The slot `emptyfiltered` has been renamed to `empty-filtered` for consistency.
 
-The following are <NotYetImplemented/> -
+The following features are not included in v1:
 
-- The `filter-debounce`, `fixed`, `no-border-collapse`, `selected-variant`, and `table-footer-sorting` props
-- The `filter` prop does not yet support a RegEx object, only a string.
-- The `context-changed` and `refreshed` events
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND">
+  The <code>no-footer-sorting</code> prop. Footer sorting can be controlled through table structure.
+</DeprecatedFeature>
 
-`filter-included-fields` have been replaced by a single `filterable` prop. `filter-ignored-fields`
-is deprecated.
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND">
+  RegExp support for the <code>filter</code> prop. Use the <code>filterFunction</code> prop for complex filtering logic.
+</DeprecatedFeature>
+
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES">
+  The <code>context-changed</code> event. Use the <code>change</code> event and the exposed <code>displayItems</code> function as demonstrated in [the documentation](/docs/components/table#complete-example).
+</DeprecatedFeature>
+
+<DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES">
+  The <code>refreshed</code> event. Call the exposed <code>refresh()</code> method and watch <code>change</code> or <code>filtered</code> events.
+</DeprecatedFeature>
+
+`filter-included-fields` and `filter-ignored-fields` have been replaced by a single `filterable` prop.
+
+`filter-debounce` has been replaced by `debounce`.
 
 `no-sort-reset` is deprecated. Use `must-sort`. By default, sortability can be reset by clicking (3) times [asc => desc => undefined => asc...]
 
@@ -1046,7 +1136,7 @@ Sorting has been significantly reworked. Read the [sorting section](/docs/compon
 The slot scope for `table-colgroup` slot now only contains the `fields` prop, with the `columns` prop removed.
 
 BootstrapVue used the main v-model binding to expose a readonly version of the displayed items. This is deprecated. Instead,
-used the exposed function `displayedItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
+use the exposed function `displayedItems` as demonstrated in [the documentation](/docs/components/table#complete-example).
 
 The semantics of the `row-selected` event have changed. `row-selected` is now emitted for each selected
 row and sends the single row's item as it's parameter. There is a new matching event called `row-unselected`
@@ -1054,16 +1144,222 @@ that is emitted for each row that is unselected. There is also a named model `se
 like the BSV `row-selected` event, emitting an array of all seleted rows. An example of this is available
 in [the documentation](/docs/components/table#row-select-support)
 
+All row-level events (`row-clicked`, `row-dblclicked`, `row-hovered`, `row-unhovered`,
+`row-contextmenu`, `row-middle-clicked`) now emit a single payload object with `{item, index, event}`
+instead of positional arguments. The `head-clicked` event likewise now emits
+`{key, field, event, isFooter}` as one object payload.
+
 BootstrapVue adds utility classes to the `<table>` including `b-table-select-single`,`b-table-select-multi`, and `b-table-select-range`, these have been deprecated, as the functionality should be easily replicated by the developer without adding to the API surface.
 
-<NotYetImplemented/>The `aria-multiselect` attribute is not added to `<table>`
-<NotYetImplemented/>Automatically adding accessibility attributes `role` and `scope` to helper components
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND">
+  The <code>aria-multiselect</code> attribute. Modern screen readers handle table selection adequately.
+</DeprecatedFeature>
 
-The `filtered` event has a single argument `Items[]` rather than two arguments with an array and length. The semantics haven't changed.
+<DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE">
+  The <code>label-sort-clear</code>, <code>label-sort-asc</code>, and <code>label-sort-desc</code> props. These provided hidden text for screen readers to indicate sorting actions. BTable now uses proper ARIA attributes (<code>aria-label</code>, <code>aria-sort</code>) on header elements which provide the same accessibility information in a modern, standards-compliant way.
+</DeprecatedFeature>
 
-<NotYetImplemented/> Heading and data row accessibility
+Helper components (`BTbody`, `BThead`, `BTfoot`, `BTr`, `BTh`, `BTd`) use semantic HTML elements that provide implicit ARIA roles. `BTh` automatically calculates the `scope` attribute based on `colspan` and `rowspan` props.
 
-### Items Provider Functions
+The `filtered` event has a single argument `Item[]` rather than two arguments with an array and length. The semantics haven't changed.
+
+Heading and data row accessibility is implemented via keyboard navigation (tab and arrow keys for sortable headers and selectable rows) and proper semantic HTML structure.
+
+#### Row Expansion (formerly Row Details)
+
+**Terminology changes:** BootstrapVue used "details" terminology for expanding rows, which has been changed to "expansion" for clarity and linguistic correctness. The following changes have been made:
+
+- Scoped slot variable `detailsShowing` is now `expansionShowing`
+- Scoped slot function `toggleDetails` is now `toggleExpansion`
+- The concept of "detailed items" is now "expanded items"
+
+**v-model instead of object property:** The expansion state is no longer tracked using a property on item objects. Instead, use the `v-model:expanded-items` binding to manage which rows are expanded.
+
+**Before (BootstrapVue):**
+
+```vue
+<template>
+  <BTable :items="items">
+    <template #cell(show_details)="row">
+      <BButton @click="row.toggleDetails">
+        {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+      </BButton>
+    </template>
+    <template #row-details="row">
+      <BCard>{{ row.item.fullDetails }}</BCard>
+    </template>
+  </BTable>
+</template>
+
+<script setup>
+const items = [{name: 'Item 1'}, {name: 'Item 2'}]
+// Expansion was controlled via _showDetails property on items
+</script>
+```
+
+**After (BootstrapVueNext):**
+
+```vue
+<template>
+  <BTable :items="items" v-model:expanded-items="expandedItems">
+    <template #cell(show_details)="row">
+      <BButton @click="row.toggleExpansion">
+        {{ row.expansionShowing ? 'Hide' : 'Show' }} Details
+      </BButton>
+    </template>
+    <template #row-expansion="row">
+      <BCard>{{ row.item.fullDetails }}</BCard>
+    </template>
+  </BTable>
+</template>
+
+<script setup>
+import {ref} from 'vue'
+
+const items = [{name: 'Item 1'}, {name: 'Item 2'}]
+
+// Expansion state managed via v-model
+const expandedItems = ref([items[0]]) // Expand first item by default
+</script>
+```
+
+**Using with Primary Key:**
+
+When using a `primary-key`, expansion state persists across item array updates (like pagination or "Load more"). To set default expanded items with a `primary-key`, you must use the table's template ref `expansion.get()` function:
+
+```vue
+<template>
+  <BTable ref="tableRef" :items="items" primary-key="id" v-model:expanded-items="expandedItems">
+    <!-- ... -->
+  </BTable>
+</template>
+
+<script setup>
+import {ref, onMounted} from 'vue'
+
+const tableRef = ref()
+const expandedItems = ref([])
+
+// Set default expanded items after mount
+onMounted(() => {
+  expandedItems.value.push(tableRef.value.expansion.get(items[1]))
+})
+</script>
+```
+
+The slot name remains `row-expansion` (changed from `row-details` in earlier versions).
+
+#### Template Ref API
+
+**BREAKING: Template ref API reorganized into namespaced structure**
+
+The BTable template ref API has been reorganized from a flat structure to a namespaced structure with `expansion` and `selection` properties. This improves organization and makes it clearer which methods and properties relate to which feature.
+
+**Selection API changes:**
+
+Methods and properties related to row selection are now accessed via `ref.selection.*`:
+
+- `clearSelected()` → `selection.clearSelected()`
+- `selectAll()` → `selection.selectAll()`
+- `toggleSelectAll()` → `selection.toggleSelectAll()`
+- `selectedItems` → `selection.selectedItems`
+
+**Expansion API changes:**
+
+Methods and properties related to row expansion are now accessed via `ref.expansion.*`:
+
+- `expandedItems` → `expansion.expandedItems`
+- New methods available: `expansion.expandAll()`, `expansion.collapseAll()`, `expansion.toggleExpandAll()`
+
+**Before (flat structure):**
+
+```vue
+<template>
+  <BTable ref="tableRef" :items="items" selectable>
+    <BButton @click="handleClearSelection">Clear Selection</BButton>
+    <BButton @click="handleSelectAll">Select All</BButton>
+  </BTable>
+</template>
+
+<script setup>
+import {ref} from 'vue'
+
+const tableRef = ref()
+const items = [{name: 'Item 1'}, {name: 'Item 2'}]
+
+const handleClearSelection = () => {
+  tableRef.value.clearSelected()
+}
+
+const handleSelectAll = () => {
+  tableRef.value.selectAll()
+}
+
+// Access selected items
+const getSelectedItems = () => {
+  return tableRef.value.selectedItems
+}
+</script>
+```
+
+**After (namespaced structure):**
+
+```vue
+<template>
+  <BTable ref="tableRef" :items="items" selectable>
+    <BButton @click="handleClearSelection">Clear Selection</BButton>
+    <BButton @click="handleSelectAll">Select All</BButton>
+  </BTable>
+</template>
+
+<script setup>
+import {ref} from 'vue'
+
+const tableRef = ref()
+const items = [{name: 'Item 1'}, {name: 'Item 2'}]
+
+const handleClearSelection = () => {
+  tableRef.value.selection.clearSelected()
+}
+
+const handleSelectAll = () => {
+  tableRef.value.selection.selectAll()
+}
+
+// Access selected items
+const getSelectedItems = () => {
+  return tableRef.value.selection.selectedItems
+}
+</script>
+```
+
+**Expansion API example:**
+
+```vue
+<template>
+  <BTable ref="tableRef" :items="items" v-model:expanded-items="expandedItems">
+    <BButton @click="handleExpandAll">Expand All</BButton>
+    <BButton @click="handleCollapseAll">Collapse All</BButton>
+  </BTable>
+</template>
+
+<script setup>
+import {ref} from 'vue'
+
+const tableRef = ref()
+const expandedItems = ref([])
+
+const handleExpandAll = () => {
+  tableRef.value.expansion.expandAll()
+}
+
+const handleCollapseAll = () => {
+  tableRef.value.expansion.collapseAll()
+}
+</script>
+```
+
+#### Item Provider Functions
 
 To use an items provider, set the `provider` prop to a provider function and leave the
 `items` prop undefined (unlike in BootstrapVue, where the `items` prop was overloaded). See
@@ -1077,7 +1373,79 @@ as they are easily replaced by direct management of the api call by the user.
 
 The items provider no longer includes an optional callback parameter, use the async method of calling instead.
 
-### Field Definitions
+#### Field Definitions
+
+**BREAKING: `field.key` no longer supports nested paths**
+
+In BootstrapVue, the `field.key` property could be set to nested string paths like `name.firstName` to access nested properties. This is no longer supported. The `key` property must now be a simple string identifier used only for column identification and slot names.
+
+**New `accessor` property for data access**
+
+To access nested or computed data, use the new optional `accessor` property:
+
+- For root-level properties: The `accessor` can be a string matching a root property name (e.g., `'email'`)
+- For nested or computed values: The `accessor` should be a function that receives the row item and returns the value
+- If omitted, the `key` property is used by default (for root-level properties only)
+
+**Before (BootstrapVue):**
+
+```ts
+const fields = [
+  {key: 'name.first', label: 'First Name'},
+  {key: 'name.last', label: 'Last Name'},
+  {key: 'age', label: 'Age'},
+]
+```
+
+**After (BootstrapVueNext):**
+
+```ts
+const fields = [
+  {
+    key: 'firstName',
+    label: 'First Name',
+    accessor: (item) => item.name.first,
+  },
+  {
+    key: 'lastName',
+    label: 'Last Name',
+    accessor: (item) => item.name.last,
+  },
+  {key: 'age', label: 'Age'}, // Simple root property works as before
+]
+```
+
+**BREAKING: Function signatures changed to use single parameter objects**
+
+The following TableField properties now accept a single parameter object instead of multiple positional parameters:
+
+- `formatter`: Now receives `{value, key, item}` instead of `(value, key, item)`
+- `tdAttr`: Now receives `{value, key, item}` instead of `(value, key, item)`
+- `thAttr`: Now receives `{value, key, item, type}` instead of `(value, key, item, type)`
+
+**Before (BootstrapVue):**
+
+```ts
+const fields = [
+  {
+    key: 'status',
+    formatter: (value, key, item) => value.toUpperCase(),
+    tdAttr: (value, key, item) => ({class: value === 'active' ? 'text-success' : ''}),
+  },
+]
+```
+
+**After (BootstrapVueNext):**
+
+```ts
+const fields = [
+  {
+    key: 'status',
+    formatter: ({value, key, item}) => value.toUpperCase(),
+    tdAttr: ({value, key, item}) => ({class: value === 'active' ? 'text-success' : ''}),
+  },
+]
+```
 
 `formatter` Only the callback function value for this field is implemented, adding the name
 of a method in the component is deprecated.
@@ -1100,7 +1468,9 @@ See the [v-html](#v-html) section for information on deprecation of the `caption
 
 #### BTBody
 
-<NotYetImplemented>`tbody-transition-props` and `tbody-transition-handlers`</NotYetImplemented>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND">
+  The <code>tbody-transition-props</code> and <code>tbody-transition-handlers</code> props. Wrap the table in a custom transition component if needed.
+</DeprecatedFeature>
 
 #### BTFoot
 
@@ -1119,9 +1489,15 @@ the current tab index. See [programmatically activating and deactivating tabs](/
 
 The `changed` event on `BTabs` is deprecated.
 
+`activate-tab` now emits a single payload object (`{newTabId, prevTabId, newTabIndex, prevTabIndex, event}`)
+instead of positional arguments.
+
 ### BTime
 
-<NotYetImplemented><BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">See issue #1860</BLink></NotYetImplemented>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BTime` component">
+  This component will not be implemented for v1.
+  See <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</BLink> for details.
+</DeprecatedFeature>
 
 ### BToast
 
@@ -1272,7 +1648,11 @@ The default for `placement` is now `top` rather than `right`
 
 ### Hover
 
-<NotYetImplemented/>
+<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`v-b-hover` directive">
+  This directive will not be implemented. Consider using VueUse's
+  <BLink href="https://vueuse.org/core/useElementHover/">`useElementHover()`</BLink>
+  composable as a modern alternative.
+</DeprecatedFeature>
 
 ### Modal
 
@@ -1296,4 +1676,12 @@ The default for `placement` is now `top` rather than `right`
 
 ### Visible
 
-<NotYetImplemented />
+<DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="`v-b-visible` directive">
+  This directive will not be implemented. Use VueUse's
+  <BLink href="https://vueuse.org/core/useElementVisibility/">`useElementVisibility()`</BLink>
+  composable instead, which provides the same functionality with better performance.
+</DeprecatedFeature>
+
+<script setup lang="ts">
+import {DeprecationReason} from '../types/deprecation'
+</script>

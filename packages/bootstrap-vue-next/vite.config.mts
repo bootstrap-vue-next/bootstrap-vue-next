@@ -104,6 +104,7 @@ export default defineConfig({
         ...plugins,
         ...directives,
         ...composables,
+        'src/types/index': resolve(__dirname, 'src/types/index.ts'),
       },
       name: 'bootstrap-vue-next',
       fileName: (format, entryName) => {
