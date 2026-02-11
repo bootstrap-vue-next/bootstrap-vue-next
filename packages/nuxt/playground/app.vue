@@ -7,6 +7,7 @@
     <BModal v-model="show">
       Nuxt module playground!
     </BModal>
+
     <BButton @click="show = !show">
       Click me
     </BButton>
@@ -85,6 +86,13 @@
     <BContainer class="mt-5">
       <BRow>
         <BCol>
+          <BButton
+            to="/about"
+            prefetch
+            prefetched-class="btn-danger"
+          >
+            Go to about
+          </BButton>
           <BLink
             :to="{ path: '/about' }"
             variant="info"
@@ -117,10 +125,14 @@
       </BRow>
       <BRow>
         <BCol>
+          <NuxtLink>Fobar!</NuxtLink>
+
           <BLink
             :to="{ path: '/about' }"
             prefetched-class="link-underline-danger"
             variant="info"
+            :router-component-name="NuxtLink"
+            prefetch
           >
             About with prefetch underline class
           </BLink>
@@ -160,6 +172,10 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { NuxtLink } from '#components'
+import { useBreadcrumb, useColorMode, useModal, useToast } from 'bootstrap-vue-next'
+
 const show = ref(false)
 
 const f = useBreadcrumb()
