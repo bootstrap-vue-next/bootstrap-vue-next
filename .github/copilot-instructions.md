@@ -41,6 +41,19 @@ If the file is intended to be public, it must follow this pattern. For example, 
 
 Private files should exist in the root of the domain they are related to. For example, utility functions for composables should be in the `src/composables/` directory but not exported in an index.ts file. This keeps the public API clean and ensures that only intended files are accessible to users of the library.
 
+**Consuming imports for tree-shaking**: When importing components, composables, or directives from bootstrap-vue-next in demo files, documentation, or user code, always use the specific paths for optimal tree-shaking:
+
+- Components:
+  <<< FRAGMENT ./demo/ImportExamples.ts#components{typescript}
+- Type-only imports:
+  <<< FRAGMENT ./demo/ImportExamples.ts#types{typescript}
+- Composables:
+  <<< FRAGMENT ./demo/ImportExamples.ts#composables{typescript}
+- Directives:
+  <<< FRAGMENT ./demo/ImportExamples.ts#directives{typescript}
+
+Avoid importing from the root package (`'bootstrap-vue-next'`) as this imports the entire library and defeats tree-shaking.
+
 The fault of not properly following this structure will lead to build errors or improper module resolution.
 
 ## Validation
@@ -223,36 +236,11 @@ All demo files in `apps/docs/src/docs/*/demo/` must follow this structure:
 
 **Template-only example:**
 
-```vue
-<template>
-  <!-- #region template -->
-  <BButton v-b-toggle.my-collapse>Toggle</BButton>
-  <BCollapse id="my-collapse">
-    <BCard>Content</BCard>
-  </BCollapse>
-  <!-- #endregion template -->
-</template>
-```
+<<< DEMO ./demo/DemoTemplateOnly.vue#template{vue-html}
 
 **Example with script:**
 
-```vue
-<template>
-  <BButton @click="toggle">Toggle</BButton>
-  <BCollapse v-model="visible">
-    <BCard>Content</BCard>
-  </BCollapse>
-</template>
-
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const visible = ref(false)
-const toggle = () => {
-  visible.value = !visible.value
-}
-</script>
-```
+<<< DEMO ./demo/DemoWithScript.vue{vue}
 
 ### Demo References in Markdown
 
@@ -270,13 +258,20 @@ Use the `<<< FRAGMENT` syntax to reference reusable code fragments:
 FRAGMENT syntax should be used for:
 
 - Reusable code examples that are included in multiple places
+- Code snippets that need consistent styling via the documentation plugin
+- Migration guide before/after comparisons (even if referenced only once)
+- Any code example in documentation (avoid inline code blocks, use FRAGMENT files instead)
 - Code snippets that need to be styled consistently with other examples
 - Examples that are referenced across different documentation pages
+- **IMPORTANT**: Fragment files should contain ONLY the code snippet without `<template>`, `<script>`, or `<style>` blocks. They are not runnable demos.
 
 DEMO syntax should be used for:
 
 - Full component demonstrations
 - Interactive examples specific to one component
+- **IMPORTANT**: Demo files are complete, runnable Vue components with `<template>` and optionally `<script>`/`<style>` blocks.
+
+**Best Practice**: Do not mix FRAGMENT regions into DEMO files that have `<script>` blocks or complex templates. If you need both a runnable demo and a simple fragment, create separate files. It's acceptable to have multiple regions in the same file only when they serve the same purpose (e.g., multiple related fragments in one fragment file, or multiple demo regions in one demo file).
 
 ### Demo File Guidelines
 

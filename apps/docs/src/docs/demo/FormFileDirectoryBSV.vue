@@ -1,15 +1,8 @@
-<template>
-  <!-- #region template -->
-  <BFormFile
-    v-model="files"
-    directory
-    :no-traverse="false"
-  />
-  <!-- #endregion template -->
-</template>
+<!-- #region template -->
+<BFormFile directory />
+<!-- #endregion template -->
 
 <script setup lang="ts">
-import {ref} from 'vue'
-
-const files = ref<File[] | null>(null)
+// BSV pattern - directory mode not natively supported
+// Files would be handled via change event
 </script>

@@ -48,17 +48,29 @@ export const resolveContent = (
 
   // SSR guard: skip DOM attribute access on server
   if (typeof document !== 'undefined') {
-    const title = el.getAttribute('title') || el.getAttribute('data-original-title')
-    if (missingBindingValue) {
-      if (title) {
-        el.removeAttribute('title')
-        el.setAttribute('data-original-title', title)
+    const titleAttr = el.getAttribute('title') || el.getAttribute('data-original-title')
 
+    // Always remove title attribute to prevent native tooltip conflicts
+    if (titleAttr) {
+      el.removeAttribute('title')
+      el.setAttribute('data-original-title', titleAttr)
+    }
+
+    if (missingBindingValue) {
+      if (titleAttr) {
         return {
-          body: title,
+          body: titleAttr,
         }
       }
       return {}
+    }
+
+    // For string directive values, use title attribute as popover title
+    if (typeof values === 'string') {
+      return {
+        title: titleAttr || undefined,
+        body: values,
+      }
     }
   } else {
     // SSR: if no binding value provided, return empty
@@ -90,6 +102,9 @@ export const resolveDirectiveProps = (
   modelValue: binding.modifiers.show,
   inline: binding.modifiers.inline,
   click: binding.modifiers.click,
+  hover: binding.modifiers.hover,
+  focus: binding.modifiers.focus,
+  manual: binding.modifiers.manual,
   realtime: binding.modifiers.realtime,
   lazy: binding.modifiers.lazy,
   placement: binding.modifiers.left

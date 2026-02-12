@@ -1,9 +1,7 @@
-<template>
-  <!-- #region template -->
-  <!-- BootstrapVueNext -->
-  <BModal>
-    <template #header-close> ✕ </template>
-    Modal content
-  </BModal>
-  <!-- #endregion template -->
-</template>
+<!-- #region template -->
+<BModal>
+  <template #header-close>
+    <BIcon icon="x-lg" />
+  </template>
+</BModal>
+<!-- #endregion template -->

@@ -1,0 +1,20 @@
+<!-- #region bsv -->
+<!-- BSV directive -->
+<button v-b-popover.hover.topleft="complexContent">Button</button>
+<!-- #endregion bsv -->
+
+<!-- #region bsvn -->
+<!-- BSVN component (recommended for complex cases) -->
+<BButton id="btn">Button</BButton>
+<BPopover
+  target="btn"
+  placement="top-start"
+  hover
+>
+  <template #title>Custom Title</template>
+  <div>
+    <p>Rich content with <strong>HTML</strong></p>
+    <BButton size="sm">Action</BButton>
+  </div>
+</BPopover>
+<!-- #endregion bsvn -->
