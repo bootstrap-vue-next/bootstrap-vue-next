@@ -126,7 +126,7 @@ const input1Return = ref('')
 const input2Return = ref('')
 
 const input1Ref = ref<HTMLInputElement>()
-const targetButton = ref<InstanceType<BButton>>()
+const targetButton = ref<InstanceType<typeof BButton>>()
 
 const options: SelectOption[] = [
   {text: '- Choose 1 -', value: ''},
