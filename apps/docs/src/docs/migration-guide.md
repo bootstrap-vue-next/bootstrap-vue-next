@@ -1624,12 +1624,7 @@ BSVN adds new modifiers not available in BSV:
 
 Both versions support using the element's `title` attribute:
 
-```vue-html
-<!-- Same in both -->
-<button v-b-popover.hover.top="'Content'" title="Title">
-  Button
-</button>
-```
+<<< FRAGMENT ./demo/PopoverDirectiveTitleAttribute.html#template{vue-html}
 
 BSVN automatically removes the `title` attribute and stores it as `data-original-title` to prevent browser tooltips.
 
