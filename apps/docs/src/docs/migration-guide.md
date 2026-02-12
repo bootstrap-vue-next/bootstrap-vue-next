@@ -208,14 +208,6 @@ As in `bootstrap-vue`, a simple `BAlert` is not visible by default. However, the
 
 The primary way to control alert visibility is via `v-model` (or `model-value` in props). The `show` and `visible` props are still available for controlling initial visibility, with `show` enabling the initial animation on mount. See [Show and Hide](#show-and-hide) shared properties for details.
 
-**Before:**
-
-<<< FRAGMENT ./demo/FormFileCaptureBefore.html#template{vue-html}
-
-**After:**
-
-<<< FRAGMENT ./demo/FormFileCaptureAfter.vue#template{vue-html}
-
 <<< FRAGMENT ./demo/AlertBefore.vue#template{vue-html}
 
 becomes
