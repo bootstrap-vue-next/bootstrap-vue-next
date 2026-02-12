@@ -236,11 +236,11 @@ All demo files in `apps/docs/src/docs/*/demo/` must follow this structure:
 
 **Template-only example:**
 
-<<< FRAGMENT ./demo/DemoTemplateOnly.vue#template{vue-html}
+<<< DEMO ./demo/DemoTemplateOnly.vue#template{vue-html}
 
 **Example with script:**
 
-<<< FRAGMENT ./demo/DemoWithScript.vue{vue}
+<<< DEMO ./demo/DemoWithScript.vue{vue}
 
 ### Demo References in Markdown
 
@@ -258,6 +258,9 @@ Use the `<<< FRAGMENT` syntax to reference reusable code fragments:
 FRAGMENT syntax should be used for:
 
 - Reusable code examples that are included in multiple places
+- Code snippets that need consistent styling via the documentation plugin
+- Migration guide before/after comparisons (even if referenced only once)
+- Any code example in documentation (avoid inline code blocks, use FRAGMENT files instead)
 - Code snippets that need to be styled consistently with other examples
 - Examples that are referenced across different documentation pages
 - **IMPORTANT**: Fragment files should contain ONLY the code snippet without `<template>`, `<script>`, or `<style>` blocks. They are not runnable demos.
