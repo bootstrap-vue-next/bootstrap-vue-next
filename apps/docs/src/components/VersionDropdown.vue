@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue'
+import {computed} from 'vue'
 import {data as versionsData} from '../data/versions.data'
 import ChevronDown from '~icons/bi/chevron-down'
 import {useData} from 'vitepress'
@@ -25,14 +25,12 @@ import {useData} from 'vitepress'
 const {site} = useData()
 
 // Detect current version from the URL path
-const currentVersion = ref('latest')
-
-onMounted(() => {
-  // Parse version from URL: /bootstrap-vue-next/v0.43.1/ or /bootstrap-vue-next/latest/
-  const match = window.location.pathname.match(/\/bootstrap-vue-next\/(v\d+\.\d+\.\d+|latest)\//)
-  if (match) {
-    currentVersion.value = match[1]
-  }
+// Extracts version from the site base path
+const currentVersion = computed(() => {
+  const currentBase = site.value.base
+  // Match version in format: /some-path/v0.43.1/ or /some-path/latest/
+  const match = currentBase.match(/\/(v\d+\.\d+\.\d+|latest)\/$/)
+  return match ? match[1] : 'latest'
 })
 
 const versions = computed(() => versionsData)

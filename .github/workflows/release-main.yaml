@@ -158,8 +158,6 @@ jobs:
       - name: Checkout Main Branch
         run: git checkout main
 
-      - name: Reinstall Dependencies for Main
-        run: pnpm install --ignore-scripts --frozen-lockfile
       - name: Build Latest Documentation
         run: pnpm run build --filter docs
         env:
