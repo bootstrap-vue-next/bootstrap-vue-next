@@ -266,6 +266,11 @@
                       bordered
                       striped
                     >
+                      <template #cell(name)="d">
+                        <span :style="{paddingLeft: `${d.item.level * 1.5}rem`}">
+                          {{ d.item.name }}
+                        </span>
+                      </template>
                       <template #cell(type)="d">
                         <code>
                           {{ d.item.type }}
@@ -330,6 +335,34 @@ const deriveSourcePath = (componentName: string, baseDirectory: string): string 
 
 const goToLink = (link: string) => router.go(withBase(link))
 const globalData = inject(appInfoKey)
+
+/**
+ * Flattens nested exposed objects into a flat array for table display
+ * Adds indentation levels for nested properties
+ */
+const flattenExposedRecord = (
+  exposed: ExposedRecord,
+  level = 0
+): Array<{name: string; type?: string; description?: string; level: number}> => {
+  const result: Array<{name: string; type?: string; description?: string; level: number}> = []
+
+  Object.entries(exposed)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .forEach(([name, value]) => {
+      result.push({
+        name,
+        type: value.type,
+        description: value.description,
+        level,
+      })
+
+      if (value.properties) {
+        result.push(...flattenExposedRecord(value.properties, level + 1))
+      }
+    })
+
+  return result
+}
 
 /**
  * Sorts the items inside so they're uniform structure
@@ -411,12 +444,7 @@ const sortData = computed(() => {
             ...value,
             name,
           })),
-        exposed: Object.entries(exposed || {})
-          .sort(([a], [b]) => a.localeCompare(b))
-          .map(([name, value]) => ({
-            ...value,
-            name,
-          })),
+        exposed: flattenExposedRecord(exposed || {}),
         sections: [] as ComponentSection[],
       }
 
