@@ -5,6 +5,18 @@ export interface VersionData {
   publishedAt: string
 }
 
+interface GitHubRelease {
+  tag_name: string
+  published_at: string
+}
+
+const FALLBACK_VERSION: VersionData = {
+  version: 'latest',
+  tag: 'latest',
+  isLatest: true,
+  publishedAt: '',
+}
+
 declare const data: VersionData[]
 export {data}
 
@@ -30,15 +42,15 @@ export default {
 
       if (!response.ok) {
         console.warn('Failed to fetch releases from GitHub:', response.status)
-        return [{version: 'latest', tag: 'latest', isLatest: true, publishedAt: ''}]
+        return [FALLBACK_VERSION]
       }
 
-      const releases = await response.json()
+      const releases: GitHubRelease[] = await response.json()
 
       // Filter for bootstrapvuenext releases only and map to our format
       const versions: VersionData[] = releases
-        .filter((release: any) => release.tag_name.startsWith('bootstrapvuenext-v'))
-        .map((release: any) => ({
+        .filter((release) => release.tag_name.startsWith('bootstrapvuenext-v'))
+        .map((release) => ({
           version: release.tag_name.replace('bootstrapvuenext-v', 'v'),
           tag: release.tag_name,
           isLatest: false,
@@ -57,7 +69,7 @@ export default {
     } catch (error) {
       console.error('Error fetching releases:', error)
       // Return fallback data if fetch fails
-      return [{version: 'latest', tag: 'latest', isLatest: true, publishedAt: ''}]
+      return [FALLBACK_VERSION]
     }
   },
 }

@@ -37,22 +37,16 @@ const versions = computed(() => versionsData)
 
 /**
  * Generate URL for a specific version
- * For now, all versions point to the same documentation
- * In the future, this should point to version-specific deployments
- * e.g., /v0.40.0/ or /latest/
+ * Currently all versions point to the same documentation since
+ * multi-version deployment is not yet implemented.
+ * When implemented, this should return version-specific paths.
  */
 const getVersionUrl = (version: string): string => {
-  // Current implementation: all versions point to same docs
-  // since multi-version deployment is not yet implemented
-  const baseUrl = site.value.base || '/'
+  // TODO: When multi-version deployment is implemented, return version-specific URLs:
+  // if (version === 'latest') return `${site.value.base}latest/`
+  // return `${site.value.base}${version}/`
   
-  // TODO: When multi-version deployment is implemented:
-  // if (version === 'latest') {
-  //   return `${baseUrl}latest/`
-  // }
-  // return `${baseUrl}${version}/`
-  
-  return baseUrl
+  return site.value.base || '/'
 }
 </script>
 
