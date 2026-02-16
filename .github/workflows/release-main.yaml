@@ -18,6 +18,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      bootstrap_vue_next_release_created: ${{ steps.release.outputs['packages/bootstrap-vue-next--release_created'] }}
+
     steps:
       - name: Use Release Please
         uses: googleapis/release-please-action@v4
@@ -72,3 +76,66 @@ jobs:
       - name: Publish Nuxt
         run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public
         if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/nuxt--release_created'] }}
+
+  deploy-docs:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.releases_created && needs.release-please.outputs.bootstrap_vue_next_release_created }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    concurrency: ci-${{ github.ref }}
+
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x.x
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v4
+        id: pnpm-install
+
+      - name: Get PNPM Store Directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup PNPM Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install Dependencies
+        run: pnpm install --ignore-scripts --frozen-lockfile
+
+      - name: Build Library
+        run: pnpm run build --filter docs
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./apps/docs/.vitepress/dist
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
