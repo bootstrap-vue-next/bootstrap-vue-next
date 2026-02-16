@@ -10,7 +10,7 @@ on:
 jobs:
   build-and-deploy:
     # Only run for bootstrapvuenext releases or manual workflow dispatch
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.release.tag_name, 'bootstrapvuenext')
+    if: github.event_name == 'workflow_dispatch' || (github.event.release && startsWith(github.event.release.tag_name, 'bootstrapvuenext'))
     
     permissions:
       contents: read
