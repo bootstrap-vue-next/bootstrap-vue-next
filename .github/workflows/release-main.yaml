@@ -125,7 +125,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
 
-      - name: Build Library
+      - name: Build Documentation
         run: pnpm run build --filter docs
 
       - name: Configure Pages
