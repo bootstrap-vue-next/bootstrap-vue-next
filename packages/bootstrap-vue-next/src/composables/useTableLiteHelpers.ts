@@ -99,13 +99,13 @@ export const useTableFieldsMapper = <Item>({
     }
   })
   const total = computed(() => computedFields.value.items.length)
-  const showHeaders = computed(() => {
-    // We only hide the header if all fields have _noHeader set to true. Which would be our doing
-    // This usually happens under a circumstance of displaying an array of primitives
-    // Under any other circumstance, I'm not sure how this would apply
-    if (total.value > 0 && computedFields.value.opts?.noHeader === true) return false
-    return true
-  })
+  const showHeaders = computed(
+    () =>
+      // We only hide the header if all fields have _noHeader set to true. Which would be our doing
+      // This usually happens under a circumstance of displaying an array of primitives
+      // Under any other circumstance, I'm not sure how this would apply
+      !(total.value > 0 && computedFields.value.opts?.noHeader === true)
+  )
 
   return {
     total,
@@ -139,9 +139,7 @@ export const useItemTracker = <Item>({
     selectedItems.value = [...selectedItems.value, value]
   }
   const set = (items: readonly Item[]) => {
-    const values = pKey.value ? items.map(get) : items
-
-    selectedItems.value = values
+    selectedItems.value = pKey.value ? items.map(get) : items
   }
   const setAll = () => set([...toValue(allItems)])
   const remove = (item: Item) => {
@@ -164,7 +162,32 @@ export const useItemTracker = <Item>({
     clear()
   })
 
+  const objectsMap = computed(() => {
+    if (!pKey.value) return new Map()
+
+    return new Map<unknown, Item>(toValue(allItems).map((item) => [get(item), item]))
+  })
+  const getFromPrimaryKey = (value: unknown): Item | undefined => {
+    if (!pKey.value) return undefined
+
+    return objectsMap.value.get(value)
+  }
+  const resolvedItems = computed(() => {
+    if (!pKey.value) return selectedItems.value
+
+    const arr: unknown[] = []
+    selectedItems.value.forEach((item) => {
+      const resolved = getFromPrimaryKey(item)
+      if (resolved !== undefined) {
+        arr.push(resolved)
+      }
+    })
+    return arr
+  })
+
   return {
+    getFromPrimaryKey,
+    resolvedItems,
     isActivated,
     get,
     add,
