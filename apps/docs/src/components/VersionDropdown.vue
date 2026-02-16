@@ -40,10 +40,13 @@ const versions = computed(() => versionsData)
 /**
  * Generate URL for a specific version
  * Returns version-specific paths for deployed documentation
+ * Derives the base path from the current site config
  */
 const getVersionUrl = (version: string): string => {
-  // Get the base without the version part
-  const baseWithoutVersion = '/bootstrap-vue-next/'
+  // Extract base without version: /bootstrap-vue-next/latest/ -> /bootstrap-vue-next/
+  const currentBase = site.value.base
+  const baseWithoutVersion = currentBase.replace(/\/(v\d+\.\d+\.\d+|latest)\/$/, '/')
+  
   return `${baseWithoutVersion}${version}/`
 }
 </script>

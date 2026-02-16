@@ -61,6 +61,10 @@ jobs:
         id: version
         run: |
           TAG="${{ github.event.release.tag_name }}"
+          if [[ ! "$TAG" =~ ^bootstrapvuenext-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Tag '$TAG' does not match expected pattern 'bootstrapvuenext-vX.Y.Z'"
+            exit 1
+          fi
           VERSION=$(echo $TAG | sed 's/bootstrapvuenext-//')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Building docs for version: $VERSION"
