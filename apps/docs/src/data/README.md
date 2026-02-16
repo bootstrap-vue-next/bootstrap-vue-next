@@ -4,7 +4,7 @@ This directory contains the infrastructure for versioned documentation.
 
 ## Current Implementation
 
-The version dropdown in the navbar fetches release information from the GitHub API at build time and displays all available versions. Currently, all versions point to the same documentation (the latest build).
+The version dropdown in the navbar fetches release information from the GitHub API at build time and displays all available versions. **Version-specific deployments are now enabled** - each release is deployed to its own subdirectory.
 
 ## Files
 
@@ -17,69 +17,62 @@ The version dropdown in the navbar fetches release information from the GitHub A
 2. **Filtering**: Only releases tagged as `bootstrapvuenext-v*` are included (excludes Nuxt package releases)
 3. **Display**: Versions are shown with "latest" at the top (marked as "Current") followed by released versions in descending order
 4. **Graceful Fallback**: If GitHub API is unavailable, it falls back to showing only "latest"
+5. **Version Detection**: The component detects the current version from the URL path
+6. **Version Switching**: Clicking on a version navigates to the version-specific documentation
 
-## Future: Multi-Version Deployment
+## Deployment Structure
 
-To enable full version switching (deploying documentation for each version), you'll need to:
+Documentation is deployed with the following structure:
 
-### 1. Update GitHub Actions Workflow
-
-Modify `.github/workflows/docs-deploy.yaml` to:
-- Build documentation for each release tag
-- Deploy to version-specific subdirectories (e.g., `/v0.43.1/`, `/v0.42.0/`, `/latest/`)
-- Update the default redirect to point to the latest stable release
-
-Example structure:
 ```
 /bootstrap-vue-next/
-  /latest/          # Current main branch docs
-  /v0.43.1/         # Docs for v0.43.1 release
-  /v0.43.0/         # Docs for v0.43.0 release
-  /v0.42.0/         # Docs for v0.42.0 release
+  index.html          # Redirects to /bootstrap-vue-next/latest/
+  /latest/            # Current main branch docs
+  /v0.43.1/           # Docs for v0.43.1 release
+  /v0.43.0/           # Docs for v0.43.0 release
+  /v0.42.0/           # Docs for v0.42.0 release
 ```
 
-### 2. Update VersionDropdown Component
+## CI/CD Workflows
 
-Uncomment the TODO section in `VersionDropdown.vue` to enable actual version-specific URLs:
+### Release Workflow (`release-main.yaml`)
+
+When a release is created via Release Please:
+1. Builds versioned documentation for the release tag
+2. Builds latest documentation from main branch
+3. Creates root redirect to `/latest/`
+4. Deploys all to GitHub Pages
+
+### Manual Release Workflow (`docs-deploy.yaml`)
+
+When a release is manually created:
+1. Builds versioned documentation for the release tag
+2. Checks out main branch and builds latest documentation
+3. Creates root redirect to `/latest/`
+4. Deploys all to GitHub Pages
+
+## VitePress Configuration
+
+The VitePress config (`config.mts`) reads the `VITE_DOCS_VERSION` environment variable to set the correct base path:
 
 ```typescript
-const getVersionUrl = (version: string): string => {
-  const baseUrl = site.value.base || '/'
-  
-  if (version === 'latest') {
-    return `${baseUrl}latest/`
-  }
-  return `${baseUrl}${version}/`
-}
+const docsVersion = process.env.VITE_DOCS_VERSION || 'latest'
+const baseUrl = `/bootstrap-vue-next/${docsVersion}/`
 ```
 
-### 3. Detect Current Version
+This ensures all internal links work correctly for each version.
 
-Add logic to detect which version the user is currently viewing:
+## Version Dropdown Component
 
-```typescript
-const currentVersion = computed(() => {
-  // Parse from URL path
-  const match = window.location.pathname.match(/\/(v\d+\.\d+\.\d+|latest)\//)
-  return match ? match[1] : 'latest'
-})
-```
-
-### 4. Version-Specific Builds
-
-For each release:
-1. Checkout the specific git tag
-2. Build the documentation
-3. Deploy to the version-specific path
-
-### 5. Consider Version Limits
-
-To avoid unlimited growth:
-- Keep only the last N major versions
-- Keep all minor versions for the current major version
-- Add a note in old versions pointing to newer documentation
+The `VersionDropdown.vue` component:
+- Detects the current version from the URL path
+- Generates version-specific URLs for all available versions
+- Marks the current version with a "Current" badge
+- Allows users to switch between versions seamlessly
 
 ## Testing
+
+### Local Development
 
 Test the version dropdown UI in development:
 ```bash
@@ -88,4 +81,37 @@ pnpm --filter docs run dev
 
 The dropdown will show "latest" when GitHub API is unavailable (expected in local development).
 
-To test with mock data, you can temporarily modify `versions.data.ts` to return hardcoded version data.
+### Test Version-Specific Builds
+
+To test building for a specific version:
+
+```bash
+# Build for a specific version
+VITE_DOCS_VERSION=v0.43.1 pnpm --filter docs run build
+
+# Build for latest
+VITE_DOCS_VERSION=latest pnpm --filter docs run build
+```
+
+## Version Limits
+
+To manage storage and maintain relevance:
+- Keep the last 10-15 minor versions
+- Keep all patch versions for the current minor version
+- Older versions can be removed from deployment (but remain in git history)
+- Add a note in very old versions pointing to newer documentation
+
+## Troubleshooting
+
+### Version not detected correctly
+
+If the version detection fails, check:
+1. URL path format is correct: `/bootstrap-vue-next/{version}/`
+2. Version matches the pattern: `v\d+\.\d+\.\d+` or `latest`
+
+### Version dropdown shows only "latest"
+
+This indicates the GitHub API fetch failed during build:
+1. Check GitHub API rate limits
+2. Verify network connectivity during build
+3. Check console for error messages from `versions.data.ts`

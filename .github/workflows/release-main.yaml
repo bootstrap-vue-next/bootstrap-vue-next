@@ -122,11 +122,58 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Get Release Tag
+        id: release-tag
+        run: |
+          # Get the latest bootstrapvuenext tag
+          TAG=$(git describe --tags --match "bootstrapvuenext-v*" --abbrev=0)
+          VERSION=$(echo $TAG | sed 's/bootstrapvuenext-//')
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building docs for version: $VERSION"
+
       - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
 
-      - name: Build Documentation
+      # Build versioned docs for the release tag
+      - name: Build Versioned Documentation
         run: pnpm run build --filter docs
+        env:
+          VITE_DOCS_VERSION: ${{ steps.release-tag.outputs.version }}
+
+      - name: Create Versioned Directory
+        run: |
+          mkdir -p dist-final/${{ steps.release-tag.outputs.version }}
+          cp -r ./apps/docs/.vitepress/dist/* dist-final/${{ steps.release-tag.outputs.version }}/
+
+      # Build latest docs from main branch (current state)
+      - name: Build Latest Documentation
+        run: pnpm run build --filter docs
+        env:
+          VITE_DOCS_VERSION: latest
+
+      - name: Copy Latest Documentation
+        run: |
+          mkdir -p dist-final/latest
+          cp -r ./apps/docs/.vitepress/dist/* dist-final/latest/
+
+      # Create index.html redirect to latest
+      - name: Create Root Redirect
+        run: |
+          cat > dist-final/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>Redirecting to BootstrapVueNext Documentation</title>
+            <meta http-equiv="refresh" content="0; url=./latest/">
+            <link rel="canonical" href="./latest/">
+          </head>
+          <body>
+            <p>Redirecting to <a href="./latest/">latest documentation</a>...</p>
+          </body>
+          </html>
+          EOF
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -134,7 +181,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./apps/docs/.vitepress/dist
+          path: ./dist-final
 
       - name: Deploy Pages
         id: deployment

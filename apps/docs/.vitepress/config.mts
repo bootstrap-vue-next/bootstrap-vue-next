@@ -8,7 +8,11 @@ import {BootstrapVueNextResolver} from 'bootstrap-vue-next/resolvers'
 
 const title = 'BootstrapVueNext'
 const description = 'Quickly and Easily Integrate Bootstrap V5 Components With Vue 3'
-const baseUrl = '/bootstrap-vue-next/'
+
+// Support versioned documentation
+// VITE_DOCS_VERSION is set during CI build for versioned deployments
+const docsVersion = process.env.VITE_DOCS_VERSION || 'latest'
+const baseUrl = `/bootstrap-vue-next/${docsVersion}/`
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({

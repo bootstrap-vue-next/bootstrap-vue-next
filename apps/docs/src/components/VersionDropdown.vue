@@ -17,36 +17,34 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import {data as versionsData} from '../data/versions.data'
 import ChevronDown from '~icons/bi/chevron-down'
 import {useData} from 'vitepress'
 
 const {site} = useData()
 
-// Get current version from the URL or config
-// In the future, this could be enhanced to read from the URL path
-// e.g., /v0.40.0/docs or /latest/docs
-const currentVersion = computed(() => {
-  // For now, we're always on "latest" since we haven't implemented
-  // multi-version deployment yet. This sets up the infrastructure.
-  return 'latest'
+// Detect current version from the URL path
+const currentVersion = ref('latest')
+
+onMounted(() => {
+  // Parse version from URL: /bootstrap-vue-next/v0.43.1/ or /bootstrap-vue-next/latest/
+  const match = window.location.pathname.match(/\/bootstrap-vue-next\/(v\d+\.\d+\.\d+|latest)\//)
+  if (match) {
+    currentVersion.value = match[1]
+  }
 })
 
 const versions = computed(() => versionsData)
 
 /**
  * Generate URL for a specific version
- * Currently all versions point to the same documentation since
- * multi-version deployment is not yet implemented.
- * When implemented, this should return version-specific paths.
+ * Returns version-specific paths for deployed documentation
  */
 const getVersionUrl = (version: string): string => {
-  // TODO: When multi-version deployment is implemented, return version-specific URLs:
-  // if (version === 'latest') return `${site.value.base}latest/`
-  // return `${site.value.base}${version}/`
-  
-  return site.value.base || '/'
+  // Get the base without the version part
+  const baseWithoutVersion = '/bootstrap-vue-next/'
+  return `${baseWithoutVersion}${version}/`
 }
 </script>
 

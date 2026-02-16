@@ -1,4 +1,6 @@
-# This workflow builds and deploys the docs to GitHub Pages
+# This workflow builds and deploys versioned docs to GitHub Pages
+# It builds the current release to a version-specific directory
+# and also rebuilds "latest" from main branch
 
 name: docs-github-pages-deploy
 
@@ -14,7 +16,7 @@ jobs:
       pages: write
       id-token: write
 
-    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+    concurrency: ci-${{ github.ref }}
 
     runs-on: ubuntu-latest
 
@@ -55,11 +57,66 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Extract Version from Tag
+        id: version
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          VERSION=$(echo $TAG | sed 's/bootstrapvuenext-//')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building docs for version: $VERSION"
+
       - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
 
-      - name: Build Library
+      # Build versioned docs for the release tag
+      - name: Build Versioned Documentation
         run: pnpm run build --filter docs
+        env:
+          VITE_DOCS_VERSION: ${{ steps.version.outputs.version }}
+
+      - name: Create Versioned Directory
+        run: |
+          mkdir -p dist-final/${{ steps.version.outputs.version }}
+          cp -r ./apps/docs/.vitepress/dist/* dist-final/${{ steps.version.outputs.version }}/
+
+      # Build latest docs from main branch
+      - name: Checkout Main Branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          path: main-branch
+
+      - name: Build Latest Documentation
+        working-directory: main-branch
+        run: |
+          pnpm install --ignore-scripts --frozen-lockfile
+          pnpm run build --filter docs
+        env:
+          VITE_DOCS_VERSION: latest
+
+      - name: Copy Latest Documentation
+        run: |
+          mkdir -p dist-final/latest
+          cp -r main-branch/apps/docs/.vitepress/dist/* dist-final/latest/
+
+      # Create index.html redirect to latest
+      - name: Create Root Redirect
+        run: |
+          cat > dist-final/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>Redirecting to BootstrapVueNext Documentation</title>
+            <meta http-equiv="refresh" content="0; url=./latest/">
+            <link rel="canonical" href="./latest/">
+          </head>
+          <body>
+            <p>Redirecting to <a href="./latest/">latest documentation</a>...</p>
+          </body>
+          </html>
+          EOF
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -67,7 +124,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./apps/docs/.vitepress/dist
+          path: ./dist-final
 
       - name: Deploy Pages
         id: deployment
