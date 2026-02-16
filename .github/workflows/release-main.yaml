@@ -154,19 +154,26 @@ jobs:
           mkdir -p dist-final/${{ steps.release-tag.outputs.version }}
           cp -r ./apps/docs/.vitepress/dist/* dist-final/${{ steps.release-tag.outputs.version }}/
 
-      # Build latest docs from main branch
-      - name: Checkout Main Branch
-        run: git checkout main
+      # Build latest docs from main branch using fresh checkout
+      - name: Checkout Main Branch for Latest Docs
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          path: main-branch
 
       - name: Build Latest Documentation
-        run: pnpm run build --filter docs
+        working-directory: main-branch
+        run: |
+          pnpm install --ignore-scripts --frozen-lockfile
+          pnpm run build --filter docs
         env:
           VITE_DOCS_VERSION: latest
 
       - name: Copy Latest Documentation
         run: |
           mkdir -p dist-final/latest
-          cp -r ./apps/docs/.vitepress/dist/* dist-final/latest/
+          cp -r main-branch/apps/docs/.vitepress/dist/* dist-final/latest/
 
       # Create index.html redirect to latest
       - name: Create Root Redirect
