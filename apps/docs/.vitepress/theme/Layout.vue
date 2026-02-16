@@ -59,6 +59,8 @@
                 </BNavItem>
                 <div class="border border-secondary ms-2 me-3" />
                 <ClientOnly>
+                  <VersionDropdown />
+                  <div class="border border-secondary ms-2 me-3" />
                   <BNavItemDropdown toggle-class="px-0">
                     <!-- TODO there is no way to adjust these options, say if you wanted to remove the padding -->
                     <template #button-content>
@@ -198,6 +200,7 @@ import {VPNavBarSearch} from 'vitepress/theme'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
 import PageContents from '../../src/components/PageContents.vue'
+import VersionDropdown from '../../src/components/VersionDropdown.vue'
 import {type ContentsItem, type HeaderItem} from '../../src/types'
 
 // https://vitepress.dev/reference/runtime-api#usedata
