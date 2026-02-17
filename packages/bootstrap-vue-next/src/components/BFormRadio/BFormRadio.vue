@@ -88,8 +88,20 @@ const propDefaults = {
   state: null,
 }
 
-// Resolve plain from props or parent group — used for both label visibility and CSS classes
-const resolvedPlain = computed(() => props.plain ?? parentData?.plain.value ?? propDefaults.plain)
+// Single source of truth for resolved prop values with parent inheritance and defaults
+const resolvedProps = computed(() => ({
+  plain: props.plain ?? parentData?.plain.value ?? propDefaults.plain,
+  button: props.button ?? parentData?.buttons.value ?? propDefaults.button,
+  inline: props.inline ?? parentData?.inline.value ?? propDefaults.inline,
+  reverse: props.reverse ?? parentData?.reverse.value ?? propDefaults.reverse,
+  state: props.state ?? parentData?.state.value ?? propDefaults.state,
+  size: props.size ?? parentData?.size.value ?? propDefaults.size,
+  buttonVariant:
+    props.buttonVariant ?? parentData?.buttonVariant.value ?? propDefaults.buttonVariant,
+}))
+
+// Shorthand for template usage
+const resolvedPlain = computed(() => resolvedProps.value.plain)
 
 const localValue = computed({
   get: () => (parentData ? parentData.modelValue.value : modelValue.value),
@@ -110,14 +122,7 @@ const computedRequired = computed(
 const isButtonGroup = computed(() => props.buttonGroup || (parentData?.buttons.value ?? false))
 
 const classesObject = computed(() => ({
-  plain: resolvedPlain.value,
-  button: props.button ?? parentData?.buttons.value ?? propDefaults.button,
-  inline: props.inline ?? parentData?.inline.value ?? propDefaults.inline,
-  state: props.state ?? parentData?.state.value ?? propDefaults.state,
-  reverse: props.reverse ?? parentData?.reverse.value ?? propDefaults.reverse,
-  size: props.size ?? parentData?.size.value ?? propDefaults.size,
-  buttonVariant:
-    props.buttonVariant ?? parentData?.buttonVariant.value ?? propDefaults.buttonVariant,
+  ...resolvedProps.value,
   hasDefaultSlot: hasDefaultSlot.value,
 }))
 const computedClasses = getClasses(classesObject)
