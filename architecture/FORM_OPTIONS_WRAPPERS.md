@@ -381,6 +381,58 @@ When `Options` is not narrowed (default generic), these resolve to `unknown`-bas
 
 **Important:** If you see raw conditional types (e.g. `T extends {value: infer V} ? V : ...`) inlined in the `.d.ts` output, the build used stale cache. Delete `dist/` and rebuild.
 
+### Child Component Prop Inheritance Pattern
+
+`BFormRadio` and `BFormCheckbox` (the individual child components) support inheritance from their parent group components (`BFormRadioGroup` and `BFormCheckboxGroup`). These child components use a centralized pattern for resolving props from three sources: direct props, parent group context, and fallback defaults.
+
+**Architecture:**
+
+```typescript
+// 1. Define true default values
+const propDefaults = {
+  plain: false,
+  button: false,
+  inline: false,
+  reverse: false,
+  size: 'md' as const,
+  buttonVariant: 'secondary' as const,
+  state: null,
+  // switch: false  (BFormCheckbox only)
+}
+
+// 2. Single source of truth for all resolved prop values
+const resolvedProps = computed(() => ({
+  plain: props.plain ?? parentData?.plain.value ?? propDefaults.plain,
+  button: props.button ?? parentData?.buttons.value ?? propDefaults.button,
+  inline: props.inline ?? parentData?.inline.value ?? propDefaults.inline,
+  reverse: props.reverse ?? parentData?.reverse.value ?? propDefaults.reverse,
+  state: props.state ?? parentData?.state.value ?? propDefaults.state,
+  size: props.size ?? parentData?.size.value ?? propDefaults.size,
+  buttonVariant:
+    props.buttonVariant ?? parentData?.buttonVariant.value ?? propDefaults.buttonVariant,
+  // switch: props.switch ?? parentData?.switch.value ?? propDefaults.switch  (BFormCheckbox only)
+}))
+
+// 3. Use resolved values throughout component
+const classesObject = computed(() => ({
+  ...resolvedProps.value,
+  hasDefaultSlot: hasDefaultSlot.value,
+}))
+
+// 4. Template shorthand for label visibility
+const resolvedPlain = computed(() => resolvedProps.value.plain)
+```
+
+**Why this pattern:**
+
+- **Props default to `undefined`**: Allows children to defer to parent group when not explicitly set
+- **Centralized defaults**: `propDefaults` object documents all true fallback values in one place
+- **Single source of truth**: `resolvedProps` computed consolidates all resolution logic, preventing accidental use of unresolved `props.x` values
+- **Maintainability**: Changes to default values or inheritance logic happen in one place
+- **Type safety**: All resolved values have proper types (no magic values scattered in code)
+
+This pattern ensures consistency and makes the inheritance chain explicit: `props.x → parentData?.x.value → propDefaults.x`.
+
 ---
 
 ## Future Considerations
