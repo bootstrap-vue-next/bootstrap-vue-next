@@ -1,4 +1,3 @@
 <!-- #region template -->
-<BFormFile capture />
-<BFormFile :capture="true" />
+<BPopover target="btn" body="Body text" />
 <!-- #endregion template -->
