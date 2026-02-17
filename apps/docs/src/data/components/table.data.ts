@@ -528,20 +528,20 @@ export default {
           },
         },
         'row-selected': {
-          description: 'Emitted when a row or rows have been selected',
+          description: 'Emitted when a row is selected',
           args: {
             value: {
-              type: 'Item[]',
-              description: 'Array of the row items that are selected',
+              type: 'Item',
+              description: 'Item that is selected',
             },
           },
         },
         'row-unselected': {
-          description: 'Emitted when a row or rows have been unselected',
+          description: 'Emitted when a row is unselected',
           args: {
             value: {
-              type: 'Item[]',
-              description: 'Array of the row items that are unselected',
+              type: 'Item',
+              description: 'Item that is unselected',
             },
           },
         },
