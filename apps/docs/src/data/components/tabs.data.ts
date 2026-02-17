@@ -2,6 +2,7 @@ import type {BTabProps, BTabsEmits, BTabsProps, BTabsSlots} from 'bootstrap-vue-
 import {
   type ComponentReference,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   StyleKind,
@@ -222,6 +223,16 @@ export default {
             "CSS class (or classes) to apply to the tab's control button inner link element",
         },
       } satisfies PropRecord<keyof BTabProps>,
+      exposed: {
+        activate: {
+          type: '() => void',
+          description: 'Activates the tab',
+        },
+        deactivate: {
+          type: '() => void',
+          description: 'Deactivates the tab',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

@@ -1,4 +1,4 @@
-import type {ComponentReference, PropRecord} from '../../types'
+import type {ComponentReference, ExposedRecord, PropRecord} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 import type {BFormInputProps} from 'bootstrap-vue-next'
@@ -68,6 +68,20 @@ export default {
         },
       },
       slots: {},
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the input element',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the input element',
+        },
+        element: {
+          type: 'HTMLInputElement',
+          description: 'Reference to the underlying input element',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

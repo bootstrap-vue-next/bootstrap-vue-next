@@ -1803,4 +1803,93 @@ describe('BTable busyLoadingText', () => {
     })
     expect(tbody.text()).toBe('fred1joe1')
   })
+
+  describe('empty slots', () => {
+    it('shows empty slot when items is empty and filter is undefined', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: [],
+          fields: ['name'],
+          showEmpty: true,
+        },
+        slots: {
+          'empty': 'No items available',
+          'empty-filtered': 'No filtered items',
+        },
+      })
+      expect(wrapper.text()).toContain('No items available')
+      expect(wrapper.text()).not.toContain('No filtered items')
+    })
+
+    it('shows empty slot when items is empty and filter is empty string', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: [],
+          fields: ['name'],
+          showEmpty: true,
+          filter: '',
+        },
+        slots: {
+          'empty': 'No items available',
+          'empty-filtered': 'No filtered items',
+        },
+      })
+      expect(wrapper.text()).toContain('No items available')
+      expect(wrapper.text()).not.toContain('No filtered items')
+    })
+
+    it('shows empty-filtered slot when items is empty and filter has value', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: [],
+          fields: ['name'],
+          showEmpty: true,
+          filter: 'test',
+        },
+        slots: {
+          'empty': 'No items available',
+          'empty-filtered': 'No filtered items',
+        },
+      })
+      expect(wrapper.text()).toContain('No filtered items')
+      expect(wrapper.text()).not.toContain('No items available')
+    })
+
+    it('shows empty-filtered slot when filtering results in no items', async () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: [{name: 'fred'}, {name: 'joe'}],
+          fields: ['name'],
+          showEmpty: true,
+          filter: 'bob',
+        },
+        slots: {
+          'empty': 'No items available',
+          'empty-filtered': 'No filtered items',
+        },
+      })
+      expect(wrapper.text()).toContain('No filtered items')
+      expect(wrapper.text()).not.toContain('No items available')
+    })
+
+    it('switches from empty-filtered to empty when filter changes to empty string', async () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: [],
+          fields: ['name'],
+          showEmpty: true,
+          filter: 'test',
+        },
+        slots: {
+          'empty': 'No items available',
+          'empty-filtered': 'No filtered items',
+        },
+      })
+      expect(wrapper.text()).toContain('No filtered items')
+      await wrapper.setProps({filter: ''})
+      await nextTick()
+      expect(wrapper.text()).toContain('No items available')
+      expect(wrapper.text()).not.toContain('No filtered items')
+    })
+  })
 })

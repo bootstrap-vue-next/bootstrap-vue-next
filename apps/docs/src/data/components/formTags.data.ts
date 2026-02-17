@@ -9,6 +9,7 @@ import type {
 import {
   type ComponentReference,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   StyleKind,
@@ -461,6 +462,24 @@ export default {
           },
         },
       } satisfies SlotRecord<keyof BFormTagsSlots>,
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the tags input',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the tags input',
+        },
+        element: {
+          type: 'HTMLInputElement',
+          description: 'Reference to the underlying input element',
+        },
+        inputValue: {
+          type: 'Ref<string>',
+          description: 'Reactive reference to the current input value',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

@@ -1,0 +1,25 @@
+<!-- #region bsv -->
+<!-- BootstrapVue -->
+<button
+  v-b-popover="{
+    title: 'Title',
+    content: 'Body',
+    delay: { show: 500, hide: 100 }
+  }"
+>
+  Button
+</button>
+<!-- #endregion bsv -->
+
+<!-- #region bsvn -->
+<!-- BootstrapVueNext -->
+<BButton
+  v-b-popover.hover.top="{
+    title: 'Title',
+    body: 'Body',
+    delay: { show: 500, hide: 100 }
+  }"
+>
+  Button
+</BButton>
+<!-- #endregion bsvn -->

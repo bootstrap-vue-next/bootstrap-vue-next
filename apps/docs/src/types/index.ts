@@ -43,6 +43,13 @@ export type SlotReference = {
 }
 export type SlotRecord<T extends string = string> = Record<T, SlotReference>
 
+export type ExposedReference = {
+  type?: string
+  description?: string
+  properties?: ExposedRecord
+}
+export type ExposedRecord<T extends string = string> = Record<T, ExposedReference>
+
 export const enum StyleKind {
   BootstrapClass = 'BOOTSTRAP-CLASS',
   BsvnClass = 'BSVN-CLASS',
@@ -55,7 +62,7 @@ export interface StyleSpec {
   value?: string
 }
 
-export type ComponentSection = 'Properties' | 'Events' | 'Slots'
+export type ComponentSection = 'Properties' | 'Events' | 'Slots' | 'Exposed'
 export type ComponentReference = Record<
   string,
   {
@@ -70,6 +77,7 @@ export type ComponentReference = Record<
     props: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections
     emits?: EmitRecord
     slots?: SlotRecord
+    exposed?: ExposedRecord
     sections?: ComponentSection[]
   }
 >

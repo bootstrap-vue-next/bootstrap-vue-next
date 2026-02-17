@@ -8,6 +8,7 @@ import type {
 import {
   type ComponentReference,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   StyleKind,
@@ -177,6 +178,24 @@ export default {
           description: 'Content (slides) to place in the carousel',
         },
       } satisfies SlotRecord<keyof BCarouselSlots>,
+      exposed: {
+        next: {
+          type: '() => void',
+          description: 'Goes to the next slide',
+        },
+        prev: {
+          type: '() => void',
+          description: 'Goes to the previous slide',
+        },
+        pause: {
+          type: '() => void',
+          description: 'Pauses the automatic cycling of slides',
+        },
+        resume: {
+          type: '() => void',
+          description: 'Resumes the automatic cycling of slides',
+        },
+      } satisfies ExposedRecord,
     },
     BCarouselSlide: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.carousel-item'},

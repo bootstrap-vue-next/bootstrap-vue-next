@@ -1,4 +1,4 @@
-import {type ComponentReference, type PropRecord, StyleKind} from '../../types'
+import {type ComponentReference, type ExposedRecord, type PropRecord, StyleKind} from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
 import type {BFormTextareaProps} from 'bootstrap-vue-next'
@@ -76,6 +76,20 @@ export default {
         },
       },
       slots: {},
+      exposed: {
+        blur: {
+          type: '() => void',
+          description: 'Removes focus from the textarea element',
+        },
+        focus: {
+          type: '() => void',
+          description: 'Sets focus on the textarea element',
+        },
+        element: {
+          type: 'HTMLTextAreaElement',
+          description: 'Reference to the underlying textarea element',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

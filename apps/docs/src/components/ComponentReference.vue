@@ -239,6 +239,49 @@
               </BContainer>
             </BCol>
           </BRow>
+          <BRow v-if="component.exposed?.length" class="my-3">
+            <BCol>
+              <BContainer fluid>
+                <BRow>
+                  <BCol>
+                    <h5>
+                      <BLink
+                        :id="buildCompReferenceLink(`${component.component}-Exposed`).slice(1)"
+                        variant="info"
+                        :to="buildCompReferenceLink(`${component.component}-Exposed`)"
+                      >
+                        Exposed
+                      </BLink>
+                    </h5>
+                  </BCol>
+                </BRow>
+                <BRow>
+                  <BCol>
+                    <BTable
+                      :items="component.exposed"
+                      :fields="tableFieldDefinitions.exposed"
+                      hover
+                      small
+                      responsive
+                      bordered
+                      striped
+                    >
+                      <template #cell(name)="d">
+                        <span :style="{paddingLeft: `${d.item.level * 1.5}rem`}">
+                          {{ d.item.name }}
+                        </span>
+                      </template>
+                      <template #cell(type)="d">
+                        <code>
+                          {{ d.item.type }}
+                        </code>
+                      </template>
+                    </BTable>
+                  </BCol>
+                </BRow>
+              </BContainer>
+            </BCol>
+          </BRow>
         </BContainer>
       </BCol>
     </BRow>
@@ -253,6 +296,7 @@ import {
   type ComponentReference,
   type ComponentSection,
   defaultPropSectionSymbol,
+  type ExposedRecord,
   type PropRecord,
   type PropRecordWithMultipleSections,
   type PropRecordWithOptions,
@@ -293,13 +337,41 @@ const goToLink = (link: string) => router.go(withBase(link))
 const globalData = inject(appInfoKey)
 
 /**
+ * Flattens nested exposed objects into a flat array for table display
+ * Adds indentation levels for nested properties
+ */
+const flattenExposedRecord = (
+  exposed: ExposedRecord,
+  level = 0
+): Array<{name: string; type?: string; description?: string; level: number}> => {
+  const result: Array<{name: string; type?: string; description?: string; level: number}> = []
+
+  Object.entries(exposed)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .forEach(([name, value]) => {
+      result.push({
+        name,
+        type: value.type,
+        description: value.description,
+        level,
+      })
+
+      if (value.properties) {
+        result.push(...flattenExposedRecord(value.properties, level + 1))
+      }
+    })
+
+  return result
+}
+
+/**
  * Sorts the items inside so they're uniform structure
  */
 const sortData = computed(() => {
   const baseDirectory = deriveBaseDirectory()
 
   return Object.entries(props.data).map(
-    ([component, {props: localProps, sourcePath, emits, slots, styleSpec}]) => {
+    ([component, {props: localProps, sourcePath, emits, slots, exposed, styleSpec}]) => {
       const mapProps = () => {
         const isMultiplePropRecord = (
           val: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections
@@ -372,6 +444,7 @@ const sortData = computed(() => {
             ...value,
             name,
           })),
+        exposed: flattenExposedRecord(exposed || {}),
         sections: [] as ComponentSection[],
       }
 
@@ -381,6 +454,9 @@ const sortData = computed(() => {
       }
       if (data.slots?.length) {
         data.sections.push('Slots')
+      }
+      if (data.exposed?.length) {
+        data.sections.push('Exposed')
       }
 
       return data
@@ -396,6 +472,7 @@ const tableFieldDefinitions = {
   props: ['prop', 'type', 'default', 'description'],
   emits: ['event', 'args', 'description'],
   slots: ['name', 'scope', 'description'],
+  exposed: ['name', 'type', 'description'],
 } as const satisfies {[P in ComponentItemFree]: TableFieldRaw[]}
 
 const normalizeDefault = (val: unknown) =>

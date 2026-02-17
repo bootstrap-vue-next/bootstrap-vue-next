@@ -257,6 +257,8 @@ It is recommended to use the `disabled` attribute on the `<BTab>` component inst
 
 ### External controls using exposed methods
 
+You can control individual tabs programmatically using template ref methods. See the [Component Reference Exposed section](#comp-reference-btab-exposed) for details.
+
 <<< DEMO ./demo/TabsExposedMethodControl.vue
 
 ### Dynamic tabs + tabs-end slot

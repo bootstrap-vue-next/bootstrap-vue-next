@@ -25,6 +25,7 @@ export const useFormInput = (
   const computedState = computed(() =>
     props.state !== undefined ? props.state : (formGroupData?.state.value ?? null)
   )
+  const isDisabled = computed(() => props.disabled || (formGroupData?.disabled.value ?? false))
   const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, computedState)
   const stateClass = useStateClass(computedState)
 
@@ -123,13 +124,13 @@ export const useFormInput = (
   }
 
   const focus = () => {
-    if (!props.disabled) {
+    if (!isDisabled.value) {
       focused.value = true
     }
   }
 
   const blur = () => {
-    if (!props.disabled) {
+    if (!isDisabled.value) {
       focused.value = false
     }
   }
@@ -144,5 +145,6 @@ export const useFormInput = (
     focus,
     blur,
     stateClass,
+    isDisabled,
   }
 }

@@ -8,7 +8,7 @@
     :form="props.form || undefined"
     :multiple="props.multiple || undefined"
     :size="computedSelectSize"
-    :disabled="props.disabled"
+    :disabled="isDisabled"
     :required="props.required || undefined"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import type {BFormSelectBaseProps} from '../../types/ComponentProps'
-import {computed, provide, readonly, useTemplateRef} from 'vue'
+import {computed, inject, provide, readonly, useTemplateRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
@@ -44,7 +44,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
 import {useFormSelect} from '../../composables/useFormSelect'
-import {formSelectKey} from '../../utils/keys'
+import {formSelectKey, formGroupKey} from '../../utils/keys'
 
 /**
  * Base component for BFormSelect - non-generic implementation using useDefaults.
@@ -78,6 +78,9 @@ const modelValue = defineModel<unknown>({
 })
 
 const computedId = useId(() => props.id, 'input')
+
+const formGroupData = inject(formGroupKey, null)?.(computedId)
+const isDisabled = computed(() => props.disabled || (formGroupData?.disabled.value ?? false))
 
 const selectSizeNumber = useToNumber(() => props.selectSize)
 

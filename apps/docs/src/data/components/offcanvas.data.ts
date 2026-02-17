@@ -2,6 +2,7 @@ import type {BOffcanvasEmits, BOffcanvasProps, BOffcanvasSlots} from 'bootstrap-
 import {
   type ComponentReference,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   StyleKind,
@@ -249,6 +250,24 @@ export default {
           scope: {},
         },
       } satisfies SlotRecord<keyof BOffcanvasSlots>,
+      exposed: {
+        show: {
+          type: '() => void',
+          description: 'Shows the offcanvas',
+        },
+        hide: {
+          type: '() => void',
+          description: 'Hides the offcanvas',
+        },
+        toggle: {
+          type: '() => void',
+          description: 'Toggles the visibility of the offcanvas',
+        },
+        isOpenByBreakpoint: {
+          type: 'Ref<boolean>',
+          description: 'Reactive boolean indicating if the offcanvas is opened by responsive breakpoint',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

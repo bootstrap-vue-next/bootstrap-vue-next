@@ -2,6 +2,7 @@ import type {BCollapseEmits, BCollapseProps, BCollapseSlots} from 'bootstrap-vue
 import type {
   ComponentReference,
   EmitRecord,
+  ExposedRecord,
   PropRecord,
   SlotRecord,
   SlotScopeReference,
@@ -88,6 +89,20 @@ export default {
           scope: sharedSlotsScope,
         },
       } satisfies SlotRecord<keyof BCollapseSlots>,
+      exposed: {
+        show: {
+          type: '() => void',
+          description: 'Shows the collapse',
+        },
+        hide: {
+          type: '() => void',
+          description: 'Hides the collapse',
+        },
+        toggle: {
+          type: '() => void',
+          description: 'Toggles the visibility of the collapse',
+        },
+      } satisfies ExposedRecord,
     },
   }),
 }

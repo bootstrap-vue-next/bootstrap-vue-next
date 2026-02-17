@@ -14,6 +14,7 @@ import {
   type ComponentReference,
   defaultPropSectionSymbol,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   StyleKind,
@@ -173,6 +174,20 @@ export default {
       props: dropdownProps,
       emits: dropdownEmits,
       slots: dropdownSlots,
+      exposed: {
+        show: {
+          type: '() => void',
+          description: 'Shows the dropdown',
+        },
+        hide: {
+          type: '() => void',
+          description: 'Hides the dropdown',
+        },
+        toggle: {
+          type: '() => void',
+          description: 'Toggles the visibility of the dropdown',
+        },
+      } satisfies ExposedRecord,
     },
     BNavText: {
       styleSpec: {kind: StyleKind.OverrideClass, value: '.navbar-text'},

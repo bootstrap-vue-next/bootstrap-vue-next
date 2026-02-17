@@ -25,6 +25,7 @@ import {
   defaultPropSectionSymbol,
   type EmitArgReference,
   type EmitRecord,
+  type ExposedRecord,
   type PropRecord,
   type SlotRecord,
   type SlotScopeReference,
@@ -527,20 +528,20 @@ export default {
           },
         },
         'row-selected': {
-          description: 'Emitted when a row or rows have been selected',
+          description: 'Emitted when a row is selected',
           args: {
             value: {
-              type: 'Item[]',
-              description: 'Array of the row items that are selected',
+              type: 'Item',
+              description: 'Item that is selected',
             },
           },
         },
         'row-unselected': {
-          description: 'Emitted when a row or rows have been unselected',
+          description: 'Emitted when a row is unselected',
           args: {
             value: {
-              type: 'Item[]',
-              description: 'Array of the row items that are unselected',
+              type: 'Item',
+              description: 'Item that is unselected',
             },
           },
         },
@@ -825,6 +826,116 @@ export default {
         },
         emits: BTable.emits,
         slots: BTable.slots,
+        exposed: {
+          expansion: {
+            type: 'object',
+            description: 'Object containing expansion state methods and expandedItems ref',
+            properties: {
+              add: {
+                type: '(item: Item) => void',
+                description: 'Adds an item to the expanded items',
+              },
+              remove: {
+                type: '(item: Item) => void',
+                description: 'Removes an item from the expanded items',
+              },
+              set: {
+                type: '(items: readonly Item[]) => void',
+                description: 'Sets the expanded items to the provided items',
+              },
+              setAll: {
+                type: '() => void',
+                description: 'Sets the expanded items to all items',
+              },
+              clear: {
+                type: '() => void',
+                description: 'Clears all expanded items',
+              },
+              has: {
+                type: '(item: Item) => boolean',
+                description: 'Checks if an item is in the expanded items',
+              },
+              get: {
+                type: '(item: Item) => unknown',
+                description: 'Gets the item from the items prop, using the primary key if provided',
+              },
+              toggle: {
+                type: '(item: Item) => void',
+                description: 'Toggles the expansion state for the given item',
+              },
+              isActivated: {
+                type: 'ComputedRef<boolean>',
+                description: 'Whether the expansion tracker is activated (has any expanded items)',
+              },
+              expandedItems: {
+                type: 'Readonly<Ref<readonly unknown[]>>',
+                description: 'Readonly ref of the currently expanded items',
+              },
+            },
+          },
+          selection: {
+            type: 'object',
+            description: 'Object containing selection state methods and selectedItems ref',
+            properties: {
+              add: {
+                type: '(item: Item) => void',
+                description: 'Adds an item to the selected items',
+              },
+              remove: {
+                type: '(item: Item) => void',
+                description: 'Removes an item from the selected items',
+              },
+              set: {
+                type: '(items: readonly Item[]) => void',
+                description: 'Sets the selected items to the provided items',
+              },
+              setAll: {
+                type: '() => void',
+                description: 'Sets the selected items to all items',
+              },
+              clear: {
+                type: '() => void',
+                description: 'Clears all selected items',
+              },
+              has: {
+                type: '(item: Item) => boolean',
+                description: 'Checks if an item is in the selected items',
+              },
+              get: {
+                type: '(item: Item) => unknown',
+                description: 'Gets the item from the items prop, using the primary key if provided',
+              },
+              handleRowSelection: {
+                type: '(obj: {item: Item; index: number; shiftClicked?: boolean; ctrlClicked?: boolean; metaClicked?: boolean}) => void',
+                description: 'Handles row selection based on selection mode and modifier keys',
+              },
+              isActivated: {
+                type: 'ComputedRef<boolean>',
+                description: 'Whether the selection tracker is activated (has any selected items)',
+              },
+              selectedItems: {
+                type: 'Readonly<Ref<readonly unknown[]>>',
+                description: 'Readonly ref of the currently selected items',
+              },
+            },
+          },
+          items: {
+            type: 'ComputedRef<unknown[]>',
+            description: 'Computed ref of the table items',
+          },
+          displayItems: {
+            type: 'ComputedRef<unknown[]>',
+            description: 'Computed ref of the currently displayed table items after filtering and pagination',
+          },
+          getStringValue: {
+            type: '(key: string, item: unknown) => string',
+            description: 'Function to get the string value of an item field',
+          },
+          refresh: {
+            type: '() => Promise<void>',
+            description: 'Function to refresh the table data (calls the items provider if present)',
+          },
+        } satisfies ExposedRecord,
       },
       BTableLite: {
         props: {
@@ -833,6 +944,54 @@ export default {
         },
         emits: BTableLite.emits,
         slots: BTableLite.slots,
+        exposed: {
+          expansion: {
+            type: 'object',
+            description: 'Object containing expansion state methods and expandedItems ref',
+            properties: {
+              add: {
+                type: '(item: Item) => void',
+                description: 'Adds an item to the expanded items',
+              },
+              remove: {
+                type: '(item: Item) => void',
+                description: 'Removes an item from the expanded items',
+              },
+              set: {
+                type: '(items: readonly Item[]) => void',
+                description: 'Sets the expanded items to the provided items',
+              },
+              setAll: {
+                type: '() => void',
+                description: 'Sets the expanded items to all items',
+              },
+              clear: {
+                type: '() => void',
+                description: 'Clears all expanded items',
+              },
+              has: {
+                type: '(item: Item) => boolean',
+                description: 'Checks if an item is in the expanded items',
+              },
+              get: {
+                type: '(item: Item) => unknown',
+                description: 'Gets the item from the items prop, using the primary key if provided',
+              },
+              toggle: {
+                type: '(item: Item) => void',
+                description: 'Toggles the expansion state for the given item',
+              },
+              isActivated: {
+                type: 'ComputedRef<boolean>',
+                description: 'Whether the expansion tracker is activated (has any expanded items)',
+              },
+              expandedItems: {
+                type: 'Readonly<Ref<readonly unknown[]>>',
+                description: 'Readonly ref of the currently expanded items',
+              },
+            },
+          },
+        } satisfies ExposedRecord,
       },
       BTableSimple: {
         props: BTableSimple.props,

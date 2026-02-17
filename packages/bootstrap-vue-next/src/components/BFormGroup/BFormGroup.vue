@@ -161,12 +161,14 @@ const LabelContentTemplate = createReusableTemplate()
 const ContentTemplate = createReusableTemplate()
 
 const computedState = toRef(() => props.state)
+const computedDisabled = toRef(() => props.disabled)
 const childId = ref<Ref<string>[]>([])
 provide(formGroupKey, (id) => {
   childId.value = [id]
 
   return {
     state: computedState,
+    disabled: computedDisabled,
   }
 })
 const computedLabelFor = computed(() => {

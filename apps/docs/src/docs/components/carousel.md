@@ -115,12 +115,7 @@ You can change the default starting slide by binding the v-model to the index of
 
 ## Exposed Methods
 
-You are also able to use the built in methods for going to the next, or previous slide using the [template ref](https://vuejs.org/guide/essentials/template-refs.html#template-refs). In total there are four methods exposed, but this section only covers `prev()` and `next()`. Pause and Resume are mentioned [here](#autoplay-manipulation).
-
-1. `prev`: goes to the previous slide, ie, moving to the _left_
-2. `next`: goes to the next slide, ie, moving to the _right_
-3. `pause`: pauses the autoplay timer
-4. `resume`: resumes the autoplay timer
+You can control the carousel programmatically using template ref methods. See the [Component Reference Exposed section](#comp-reference-bcarousel-exposed) for available methods.
 
 <<< DEMO ./demo/CarouselMethods.vue
 

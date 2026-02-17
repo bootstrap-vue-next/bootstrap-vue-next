@@ -165,11 +165,7 @@ managed via the model. The model can also be used to observe the state of the dr
 
 ## Exposed Methods
 
-You are also able to use the built in methods for showing, hiding or toggling the dropdown via[template refs](https://vuejs.org/guide/essentials/template-refs.html#template-refs).
-
-1. `show`: shows the dropdown
-2. `hide`: hides the dropdown
-3. `toggle`: toggles the dropdown
+You can control the dropdown programmatically using template ref methods. See the [Component Reference Exposed section](#comp-reference-bdropdown-exposed) for available methods.
 
 <<< DEMO ./demo/DropdownMethods.vue
 
