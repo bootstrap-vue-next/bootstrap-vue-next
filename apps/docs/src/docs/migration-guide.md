@@ -243,9 +243,8 @@ For instance, use `badge-placement='top'` in place of `badge-top` or `badge-plac
 `badge-right`. For combined props, rather than using `badge-top` and `badge-right`, use
 `badge-placement='top-end'.
 
-<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`badge-offset`">
-  This property is <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/pull/2692">significantly more complex</BLink> to implement in BootstrapVueNext (due to Bootstrap 5.0's implementation).
-</DeprecatedFeature>
+The `badge-offset` property is supported via the `badge-offset` prop. It accepts a CSS length value
+(e.g. `2px`, `0.5em`) to shift the badge inward from its placement position.
 
 #### Rounding Sides
 

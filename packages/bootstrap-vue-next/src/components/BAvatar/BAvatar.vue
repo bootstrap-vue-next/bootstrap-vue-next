@@ -66,6 +66,7 @@ const _props = withDefaults(defineProps<BAvatarProps>(), {
   alt: 'avatar',
   badge: false,
   badgeBgVariant: null,
+  badgeOffset: undefined,
   badgeTextVariant: null,
   badgeVariant: 'primary',
   badgePlacement: 'bottom-end',
@@ -194,11 +195,40 @@ const computedClasses = computed(() => [
   },
 ])
 
+const badgeOffsetStyle = computed<CSSProperties>(() => {
+  const offset = props.badgeOffset
+  if (!offset) return {}
+
+  const placement = props.badgePlacement
+  const isTop = placement === 'top' || placement === 'top-start' || placement === 'top-end'
+  const isBottom =
+    placement === 'bottom' || placement === 'bottom-start' || placement === 'bottom-end'
+  const isStart = placement === 'start' || placement === 'top-start' || placement === 'bottom-start'
+  const isEnd = placement === 'end' || placement === 'top-end' || placement === 'bottom-end'
+
+  const style: CSSProperties = {}
+
+  if (isTop) {
+    style.top = `calc(0% + ${offset})`
+  } else if (isBottom) {
+    style.top = `calc(100% - ${offset})`
+  }
+
+  if (isStart) {
+    style.left = `calc(0% + ${offset})`
+  } else if (isEnd) {
+    style.left = `calc(100% - ${offset})`
+  }
+
+  return style
+})
+
 const badgeStyle = computed<StyleValue>(() => ({
   fontSize:
     (!computedSizeIsLiteralSize.value
       ? `calc(${computedSize.value} * ${BADGE_FONT_SIZE_SCALE})`
       : '') || '',
+  ...badgeOffsetStyle.value,
 }))
 
 const textFontStyle = computed<StyleValue>(() => {

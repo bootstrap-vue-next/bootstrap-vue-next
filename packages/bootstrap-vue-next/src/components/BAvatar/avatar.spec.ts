@@ -86,4 +86,75 @@ describe('avatar', () => {
     const wrapper = mount(BAvatar, {props: {size: 'lg'}})
     expect(wrapper.attributes('style')).toBeUndefined()
   })
+
+  it('applies badge-offset style for bottom-end placement', () => {
+    const wrapper = mount(BAvatar, {
+      props: {badge: true, badgePlacement: 'bottom-end', badgeOffset: '2px'},
+    })
+    const badge = wrapper.find('.badge')
+    expect(badge.exists()).toBe(true)
+    const style = badge.attributes('style')
+    expect(style).toContain('top: calc(100% - 2px)')
+    expect(style).toContain('left: calc(100% - 2px)')
+  })
+
+  it('applies badge-offset style for top-start placement', () => {
+    const wrapper = mount(BAvatar, {
+      props: {badge: true, badgePlacement: 'top-start', badgeOffset: '0.5em'},
+    })
+    const badge = wrapper.find('.badge')
+    const style = badge.attributes('style')
+    expect(style).toContain('top: calc(0% + 0.5em)')
+    expect(style).toContain('left: calc(0% + 0.5em)')
+  })
+
+  it('applies badge-offset style for top-end placement', () => {
+    const wrapper = mount(BAvatar, {
+      props: {badge: true, badgePlacement: 'top-end', badgeOffset: '3px'},
+    })
+    const badge = wrapper.find('.badge')
+    const style = badge.attributes('style')
+    expect(style).toContain('top: calc(0% + 3px)')
+    expect(style).toContain('left: calc(100% - 3px)')
+  })
+
+  it('applies badge-offset style for bottom-start placement', () => {
+    const wrapper = mount(BAvatar, {
+      props: {badge: true, badgePlacement: 'bottom-start', badgeOffset: '1rem'},
+    })
+    const badge = wrapper.find('.badge')
+    const style = badge.attributes('style')
+    expect(style).toContain('top: calc(100% - 1rem)')
+    expect(style).toContain('left: calc(0% + 1rem)')
+  })
+
+  it('applies badge-offset for top placement (only top axis)', () => {
+    const wrapper = mount(BAvatar, {
+      props: {badge: true, badgePlacement: 'top', badgeOffset: '4px'},
+    })
+    const badge = wrapper.find('.badge')
+    const style = badge.attributes('style')
+    expect(style).toContain('top: calc(0% + 4px)')
+    expect(style).not.toContain('left')
+  })
+
+  it('applies badge-offset for start placement (only left axis)', () => {
+    const wrapper = mount(BAvatar, {
+      props: {badge: true, badgePlacement: 'start', badgeOffset: '4px'},
+    })
+    const badge = wrapper.find('.badge')
+    const style = badge.attributes('style')
+    expect(style).toContain('left: calc(0% + 4px)')
+    expect(style).not.toContain('top')
+  })
+
+  it('does not apply badge-offset style when badgeOffset is not set', () => {
+    const wrapper = mount(BAvatar, {
+      props: {badge: true, badgePlacement: 'bottom-end'},
+    })
+    const badge = wrapper.find('.badge')
+    const style = badge.attributes('style') || ''
+    expect(style).not.toContain('top:')
+    expect(style).not.toContain('left:')
+  })
 })

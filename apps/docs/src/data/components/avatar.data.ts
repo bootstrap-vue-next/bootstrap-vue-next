@@ -72,6 +72,12 @@ export default {
             description:
               'When `true` shows a small dot indicator on the Avatar. All of the badge props are applied to the dot. `badge-dot-indicator` takes precedence over `badge`',
           },
+          badgeOffset: {
+            type: 'string',
+            default: undefined,
+            description:
+              'CSS length to offset the badge from its default position. Moves the badge inward by the specified amount (e.g. `2px`, `0.5em`)',
+          },
           badgeTextVariant: {
             type: 'TextColorVariant | null',
             default: null,
