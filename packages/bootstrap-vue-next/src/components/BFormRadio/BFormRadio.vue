@@ -7,7 +7,7 @@
       v-model="localValue"
       :class="inputClasses"
       type="radio"
-      :disabled="props.disabled || parentData?.disabled.value"
+      :disabled="props.disabled || parentData?.disabled.value || formGroupData?.disabled.value"
       :required="computedRequired || undefined"
       :name="props.name || parentData?.name.value"
       :form="props.form || parentData?.form.value"
@@ -32,7 +32,7 @@ import ConditionalWrapper from '../ConditionalWrapper.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {RadioValue} from '../../types/RadioTypes'
 import {useId} from '../../composables/useId'
-import {radioGroupKey} from '../../utils/keys'
+import {radioGroupKey, formGroupKey} from '../../utils/keys'
 import type {BFormRadioSlots} from '../../types'
 
 defineOptions({
@@ -68,6 +68,7 @@ const modelValue = defineModel<BFormRadioProps['modelValue']>({
 const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(radioGroupKey, null)
+const formGroupData = inject(formGroupKey, null)?.(computedId)
 
 const input = useTemplateRef('_input')
 
