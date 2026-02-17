@@ -32,7 +32,7 @@ import ConditionalWrapper from '../ConditionalWrapper.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {RadioValue} from '../../types/RadioTypes'
 import {useId} from '../../composables/useId'
-import {radioGroupKey, formGroupKey} from '../../utils/keys'
+import {formGroupKey, radioGroupKey} from '../../utils/keys'
 import type {BFormRadioSlots} from '../../types'
 
 defineOptions({

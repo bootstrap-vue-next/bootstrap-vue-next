@@ -7,10 +7,11 @@ export type CheckboxValue =
   | number
   | null
 
-export type CheckboxOption = {
+export interface CheckboxOption {
   text: string
   value: CheckboxValue
   disabled?: boolean
+  [key: string]: unknown
 }
 
 export type CheckboxOptionRaw =

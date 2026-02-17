@@ -44,7 +44,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
 import {useFormSelect} from '../../composables/useFormSelect'
-import {formSelectKey, formGroupKey} from '../../utils/keys'
+import {formGroupKey, formSelectKey} from '../../utils/keys'
 
 /**
  * Base component for BFormSelect - non-generic implementation using useDefaults.

@@ -17,8 +17,12 @@
   setup
   lang="ts"
   generic="
-    Options extends readonly (RadioOption | Record<string, unknown> | string | number | boolean)[] =
-      readonly (RadioOption | Record<string, unknown> | string | number | boolean)[]
+    Options extends readonly (object | string | number | boolean)[] = readonly (
+      | object
+      | string
+      | number
+      | boolean
+    )[]
   "
 >
 import type {BFormRadioGroupProps} from '../../types/ComponentProps'

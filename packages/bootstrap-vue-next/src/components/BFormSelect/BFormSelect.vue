@@ -17,13 +17,12 @@
   setup
   lang="ts"
   generic="
-    Options extends readonly (
-      | SelectOption
-      | Record<string, unknown>
+    Options extends readonly (object | string | number | boolean)[] = readonly (
+      | object
       | string
       | number
       | boolean
-    )[] = readonly (SelectOption | Record<string, unknown> | string | number | boolean)[]
+    )[]
   "
 >
 import type {BFormSelectProps} from '../../types/ComponentProps'

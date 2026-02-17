@@ -326,8 +326,8 @@ export interface BFormCheckboxGroupBaseProps {
 //
 // If Options is a complex object without a 'value' field, use computed mapping to standard format
 export interface BFormCheckboxGroupProps<
-  Options extends readonly (Record<string, unknown> | string | number | boolean)[] = readonly (
-    | Record<string, unknown>
+  Options extends readonly (object | string | number | boolean)[] = readonly (
+    | object
     | string
     | number
     | boolean
@@ -484,8 +484,8 @@ export interface BFormRadioGroupBaseProps {
  * standard `{value, text}` format for full type safety with custom-shaped objects.
  */
 export interface BFormRadioGroupProps<
-  Options extends readonly (Record<string, unknown> | string | number | boolean)[] = readonly (
-    | Record<string, unknown>
+  Options extends readonly (object | string | number | boolean)[] = readonly (
+    | object
     | string
     | number
     | boolean
@@ -578,8 +578,8 @@ export interface BFormSelectBaseProps {
 //
 // If Options is a complex object without a 'value' field, use computed mapping to standard format
 export interface BFormSelectProps<
-  Options extends readonly (Record<string, unknown> | string | number | boolean)[] = readonly (
-    | Record<string, unknown>
+  Options extends readonly (object | string | number | boolean)[] = readonly (
+    | object
     | string
     | number
     | boolean

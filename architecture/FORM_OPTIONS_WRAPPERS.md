@@ -41,40 +41,29 @@ Applies identically to `BFormSelect`/`BFormSelectBase` and `BFormCheckboxGroup`/
 
 ### Generic Signature (Options Array)
 
-All three wrapper components use an Options array generic parameter with explicit option types:
+All three wrapper components use an Options array generic parameter that accepts objects, strings, numbers, and booleans:
 
 ```typescript
-// BFormSelect
+// BFormSelect, BFormRadioGroup, BFormCheckboxGroup all use:
 generic="
-  Options extends readonly (SelectOption | Record<string, unknown> | string | number | boolean)[] =
-    readonly (SelectOption | Record<string, unknown> | string | number | boolean)[]
-"
-
-// BFormRadioGroup
-generic="
-  Options extends readonly (RadioOption | Record<string, unknown> | string | number | boolean)[] =
-    readonly (RadioOption | Record<string, unknown> | string | number | boolean)[]
-"
-
-// BFormCheckboxGroup
-generic="
-  Options extends readonly (CheckboxOption | Record<string, unknown> | string | number | boolean)[] =
-    readonly (CheckboxOption | Record<string, unknown> | string | number | boolean)[]
+  Options extends readonly (object | string | number | boolean)[] =
+    readonly (object | string | number | boolean)[]
 "
 ```
 
-**Why explicit option types are included:**
+**Why `object` instead of `Record<string, unknown>` or specific types:**
 
-- TypeScript strict mode doesn't always recognize that types with index signatures (like `SelectOption` with `[key: string]: unknown`) are assignable to `Record<string, unknown>`
-- Explicitly including `SelectOption`, `RadioOption`, and `CheckboxOption` ensures type compatibility when users pass properly typed option arrays
-- Prevents CI build failures when documentation or examples use these typed arrays
+- Vue's type extraction (`vue-tsc`) strips imported interface types (like `SelectOption`) from generic constraints during `.d.ts` generation
+- `Record<string, unknown>` can cause type compatibility issues with interfaces that have index signatures
+- `object` is a TypeScript built-in type that survives `.d.ts` generation and accepts any object type
+- All option types (`SelectOption`, `RadioOption`, `CheckboxOption`) have explicit `[key: string]: unknown` index signatures, making them assignable to `object`
 
 **Key characteristics:**
 
 - `Options` captures the entire options array type
 - Allows TypeScript to infer literal types from `as const` arrays
 - Components extract value union from the options type
-- Supports both generic `Record<string, unknown>` objects and specific option types
+- Supports both typed option arrays (`SelectOption[]`) and inline object literals
 
 ### modelValue Typing - ENHANCED
 
@@ -454,6 +443,51 @@ const resolvedPlain = computed(() => resolvedProps.value.plain)
 - **Type safety**: All resolved values have proper types (no magic values scattered in code)
 
 This pattern ensures consistency and makes the inheritance chain explicit: `props.x → parentData?.x.value → propDefaults.x`.
+
+---
+
+## Generic Constraint and Type Generation
+
+### The Problem: Vue .d.ts Generation
+
+The components use generic constraints to accept various option formats:
+
+```typescript
+Options extends readonly (object | string | number | boolean)[]
+```
+
+Originally, we tried using specific interface types in the constraint:
+
+```typescript
+// ❌ This gets stripped during .d.ts generation
+Options extends readonly (SelectOption | Record<string, unknown> | string | number | boolean)[]
+```
+
+**Issue:** Vue's type extraction (`vue-tsc`) strips custom interface types from generic constraints when generating `.d.ts` files. So while the source code had `SelectOption` in the constraint, the generated type definitions only had `Record<string, unknown>`, causing type errors when users wrote `const options: SelectOption[] = [...]`.
+
+### The Solution: `object` Constraint
+
+We changed the constraint to use the built-in `object` type:
+
+```typescript
+// ✅ Works - object is a TypeScript primitive that survives .d.ts generation
+Options extends readonly (object | string | number | boolean)[]
+```
+
+**Why this works:**
+
+- `object` is a TypeScript built-in type, not an imported interface
+- It's preserved during `.d.ts` generation by `vue-tsc`
+- `SelectOption`, `RadioOption`, and `CheckboxOption` all have index signatures `[key: string]: unknown`, making them assignable to `object`
+- Users can still explicitly type their option arrays: `const options: SelectOption[] = [...]`
+
+**Type Definitions Updated:**
+
+- `SelectOption<T>` has explicit `[key: string]: unknown` index signature
+- `RadioOption` has explicit `[key: string]: unknown` index signature
+- `CheckboxOption` has explicit `[key: string]: unknown` index signature
+
+These index signatures ensure the interfaces are structurally compatible with `object` in the constraint, enabling type-safe usage while working around Vue's type extraction limitations.
 
 ---
 
