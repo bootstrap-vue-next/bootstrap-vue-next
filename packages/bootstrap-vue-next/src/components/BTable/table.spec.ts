@@ -1813,7 +1813,7 @@ describe('BTable busyLoadingText', () => {
           showEmpty: true,
         },
         slots: {
-          empty: 'No items available',
+          'empty': 'No items available',
           'empty-filtered': 'No filtered items',
         },
       })
@@ -1830,7 +1830,7 @@ describe('BTable busyLoadingText', () => {
           filter: '',
         },
         slots: {
-          empty: 'No items available',
+          'empty': 'No items available',
           'empty-filtered': 'No filtered items',
         },
       })
@@ -1847,7 +1847,7 @@ describe('BTable busyLoadingText', () => {
           filter: 'test',
         },
         slots: {
-          empty: 'No items available',
+          'empty': 'No items available',
           'empty-filtered': 'No filtered items',
         },
       })
@@ -1864,7 +1864,7 @@ describe('BTable busyLoadingText', () => {
           filter: 'bob',
         },
         slots: {
-          empty: 'No items available',
+          'empty': 'No items available',
           'empty-filtered': 'No filtered items',
         },
       })
@@ -1881,7 +1881,7 @@ describe('BTable busyLoadingText', () => {
           filter: 'test',
         },
         slots: {
-          empty: 'No items available',
+          'empty': 'No items available',
           'empty-filtered': 'No filtered items',
         },
       })
