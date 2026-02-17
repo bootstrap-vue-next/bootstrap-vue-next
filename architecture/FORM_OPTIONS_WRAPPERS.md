@@ -41,18 +41,40 @@ Applies identically to `BFormSelect`/`BFormSelectBase` and `BFormCheckboxGroup`/
 
 ### Generic Signature (Options Array)
 
-All three wrapper components use an Options array generic parameter:
+All three wrapper components use an Options array generic parameter with explicit option types:
 
 ```typescript
+// BFormSelect
 generic="
-  Options extends readonly (Record<string, unknown> | string | number | boolean)[] =
-    readonly (Record<string, unknown> | string | number | boolean)[]
+  Options extends readonly (SelectOption | Record<string, unknown> | string | number | boolean)[] =
+    readonly (SelectOption | Record<string, unknown> | string | number | boolean)[]
+"
+
+// BFormRadioGroup
+generic="
+  Options extends readonly (RadioOption | Record<string, unknown> | string | number | boolean)[] =
+    readonly (RadioOption | Record<string, unknown> | string | number | boolean)[]
+"
+
+// BFormCheckboxGroup
+generic="
+  Options extends readonly (CheckboxOption | Record<string, unknown> | string | number | boolean)[] =
+    readonly (CheckboxOption | Record<string, unknown> | string | number | boolean)[]
 "
 ```
+
+**Why explicit option types are included:**
+
+- TypeScript strict mode doesn't always recognize that types with index signatures (like `SelectOption` with `[key: string]: unknown`) are assignable to `Record<string, unknown>`
+- Explicitly including `SelectOption`, `RadioOption`, and `CheckboxOption` ensures type compatibility when users pass properly typed option arrays
+- Prevents CI build failures when documentation or examples use these typed arrays
+
+**Key characteristics:**
 
 - `Options` captures the entire options array type
 - Allows TypeScript to infer literal types from `as const` arrays
 - Components extract value union from the options type
+- Supports both generic `Record<string, unknown>` objects and specific option types
 
 ### modelValue Typing - ENHANCED
 

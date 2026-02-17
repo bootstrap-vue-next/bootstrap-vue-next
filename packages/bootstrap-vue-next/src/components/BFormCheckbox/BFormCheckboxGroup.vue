@@ -21,18 +21,19 @@
   setup
   lang="ts"
   generic="
-    Options extends readonly (Record<string, unknown> | string | number | boolean)[] = readonly (
+    Options extends readonly (
+      | CheckboxOption
       | Record<string, unknown>
       | string
       | number
       | boolean
-    )[]
+    )[] = readonly (CheckboxOption | Record<string, unknown> | string | number | boolean)[]
   "
 >
 import type {BFormCheckboxGroupProps, BFormCheckboxGroupSlots} from '../../types'
 import {computed} from 'vue'
 import BFormCheckboxGroupBase from './BFormCheckboxGroupBase.vue'
-import type {CheckboxValue} from '../../types/CheckboxTypes'
+import type {CheckboxOption, CheckboxValue} from '../../types/CheckboxTypes'
 import type {OptionsValues} from '../../types/OptionsTypes'
 
 /**
