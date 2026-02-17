@@ -103,8 +103,20 @@ const {focused} = useFocus(input, {
 
 const hasDefaultSlot = computed(() => !isEmptySlot(slots.default))
 
+// True default values for props that are undefined to support inheritance
+const propDefaults = {
+  plain: false,
+  button: false,
+  inline: false,
+  reverse: false,
+  switch: false,
+  size: 'md' as const,
+  buttonVariant: 'secondary' as const,
+  state: null,
+}
+
 // Resolve plain from props or parent group — used for both label visibility and CSS classes
-const resolvedPlain = computed(() => props.plain ?? parentData?.plain.value ?? false)
+const resolvedPlain = computed(() => props.plain ?? parentData?.plain.value ?? propDefaults.plain)
 
 const localValue = computed({
   get: () => (parentData ? parentData.modelValue.value : modelValue.value),
@@ -133,13 +145,14 @@ const isButtonGroup = computed(() => props.buttonGroup || (parentData?.buttons.v
 
 const classesObject = computed(() => ({
   plain: resolvedPlain.value,
-  button: props.button ?? parentData?.buttons.value ?? false,
-  inline: props.inline ?? parentData?.inline.value ?? false,
-  reverse: props.reverse ?? parentData?.reverse.value ?? false,
-  switch: props.switch ?? parentData?.switch.value ?? false,
-  state: props.state ?? parentData?.state.value ?? null,
-  size: props.size ?? parentData?.size.value ?? 'md',
-  buttonVariant: props.buttonVariant ?? parentData?.buttonVariant.value ?? 'secondary',
+  button: props.button ?? parentData?.buttons.value ?? propDefaults.button,
+  inline: props.inline ?? parentData?.inline.value ?? propDefaults.inline,
+  reverse: props.reverse ?? parentData?.reverse.value ?? propDefaults.reverse,
+  switch: props.switch ?? parentData?.switch.value ?? propDefaults.switch,
+  state: props.state ?? parentData?.state.value ?? propDefaults.state,
+  size: props.size ?? parentData?.size.value ?? propDefaults.size,
+  buttonVariant:
+    props.buttonVariant ?? parentData?.buttonVariant.value ?? propDefaults.buttonVariant,
   hasDefaultSlot: hasDefaultSlot.value,
 }))
 const wrapperClasses = getClasses(classesObject)
