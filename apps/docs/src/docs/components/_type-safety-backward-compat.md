@@ -1,19 +1,9 @@
-## Backward Compatibility
-
-Type safety is completely opt-in and maintains 100% backward compatibility. Existing code without explicit types continues to work exactly as before:
+Type safety is fully opt-in and backward compatible. Existing code without explicit types
+continues to work exactly as before:
 
 ```vue
-<!-- Works without type annotations -->
 <ComponentName v-model="selected" :options="items" />
 ```
 
-To enable type safety, simply provide explicit types for your data:
-
-```typescript
-interface MyItem {
-  id: number
-  name: string
-}
-
-const items: MyItem[] = [...]
-```
+To enable stronger typing, provide explicit types for your data or use `as const` on your
+options arrays. See [Type-Safe Options](/docs/reference/type-safe-options) for details.

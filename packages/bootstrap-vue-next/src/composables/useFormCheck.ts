@@ -20,17 +20,12 @@ const getClasses = (items: MaybeRefOrGetter<ClassesItemsInput>) =>
   computed(() => {
     const resolvedItems = toValue(items)
     return {
-      'form-check':
-        resolvedItems.plain === false &&
-        resolvedItems.button === false &&
-        resolvedItems.hasDefaultSlot,
+      'form-check': !resolvedItems.plain && !resolvedItems.button && resolvedItems.hasDefaultSlot,
       'form-check-reverse': resolvedItems.reverse === true,
       'form-check-inline': resolvedItems.inline === true,
       'form-switch': resolvedItems.switch === true,
       [`form-control-${resolvedItems.size}`]:
-        resolvedItems.size !== undefined &&
-        resolvedItems.size !== 'md' &&
-        resolvedItems.button === false,
+        resolvedItems.size !== undefined && resolvedItems.size !== 'md' && !resolvedItems.button,
     }
   })
 
@@ -48,8 +43,7 @@ const getInputClasses = (items: MaybeRefOrGetter<InputClassesItemsInput>) => {
   return computed(() => [
     stateClass.value,
     {
-      'form-check-input':
-        resolvedItems.value.plain === false && resolvedItems.value.button === false,
+      'form-check-input': !resolvedItems.value.plain && !resolvedItems.value.button,
       'btn-check': resolvedItems.value.button === true,
     },
   ])
@@ -66,7 +60,7 @@ const getLabelClasses = (items: MaybeRefOrGetter<LabelClasesItemsInput>) =>
   computed(() => {
     const resolvedItems = toValue(items)
     return {
-      'form-check-label': resolvedItems.plain === false && resolvedItems.button === false,
+      'form-check-label': !resolvedItems.plain && !resolvedItems.button,
       'btn': resolvedItems.button === true,
       [`btn-${resolvedItems.buttonVariant}`]:
         resolvedItems.button === true &&

@@ -70,8 +70,17 @@ const [modelValue, modelModifiers] = defineModel<
 
 const input = useTemplateRef('_input')
 
-const {computedId, computedAriaInvalid, onInput, onChange, onBlur, stateClass, focus, blur, isDisabled} =
-  useFormInput(props, input, modelValue, modelModifiers)
+const {
+  computedId,
+  computedAriaInvalid,
+  onInput,
+  onChange,
+  onBlur,
+  stateClass,
+  focus,
+  blur,
+  isDisabled,
+} = useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => {
   const isRange = props.type === 'range'

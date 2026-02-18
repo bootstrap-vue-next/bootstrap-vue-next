@@ -16,71 +16,88 @@
 <script
   setup
   lang="ts"
-  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
+  generic="
+    Options extends readonly (object | string | number | boolean)[] = readonly (
+      | object
+      | string
+      | number
+      | boolean
+    )[]
+  "
 >
 import type {BFormSelectProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 import BFormSelectBase from './BFormSelectBase.vue'
 import type {ComplexSelectOptionRaw, SelectOption} from '../../types/SelectTypes'
 import type {BFormSelectSlots} from '../../types'
+import type {OptionsValues} from '../../types/OptionsTypes'
 
 /**
  * Type-safe wrapper component for BFormSelect.
- * Provides generic type safety for options and field names.
+ * Provides generic type safety for options array and strongly-typed modelValue.
+ * Uses Options array generic to extract union of all possible values.
  * Normalizes typed options and forwards to BFormSelectBase for rendering.
+ * Supports both complex objects and simple scalar types (string, number).
+ *
+ * For strongly-typed modelValue:
+ * - Primitive arrays: modelValue is union of those values (or array if multiple)
+ * - Object arrays with 'value' field: modelValue is union of value field types
+ * - Use 'as const' on options for literal type inference
  */
-const props = withDefaults(defineProps<Omit<BFormSelectProps<Item, ValueKey>, 'modelValue'>>(), {
+const props = withDefaults(defineProps<Omit<BFormSelectProps<Options>, 'modelValue'>>(), {
   ariaInvalid: undefined,
   autofocus: false,
   disabled: false,
-  disabledField: 'disabled' as keyof Item & string,
+  disabledField: 'disabled',
   form: undefined,
   id: undefined,
-  labelField: 'label' as keyof Item & string,
+  labelField: 'label',
   multiple: false,
   name: undefined,
-  options: () => [],
-  optionsField: 'options' as keyof Item & string,
+  options: () => [] as unknown as Options,
+  optionsField: 'options',
   plain: false,
   required: false,
   selectSize: 0,
   size: 'md',
   state: null,
-  textField: 'text' as keyof Item & string,
-  valueField: 'value' as ValueKey & string,
+  textField: 'text',
+  valueField: 'value',
 })
-defineSlots<BFormSelectSlots<Item[ValueKey]>>()
+defineSlots<BFormSelectSlots<OptionsValues<Options>>>()
 
-const modelValue = defineModel<Item[ValueKey] | Item[ValueKey][] | null>({
+// Type-safe model value - single value or array depending on multiple prop.
+// NOTE: OptionsValues assumes a static "value" key; custom valueField is not
+// reflected in the type — modelValue falls back to unknown in that case.
+const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[] | null>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: '' as any,
 })
 
 // Type-safe normalization of options (supports both simple and complex/grouped)
 const normalizedOptions = computed(() => {
-  const hasComplexOptions = props.options.some(
+  const optionsArray = props.options ?? []
+  const hasComplexOptions = optionsArray.some(
     (el) =>
       typeof el !== 'string' &&
       typeof el !== 'number' &&
-      el[props.optionsField as keyof Item] !== undefined
+      typeof el !== 'boolean' &&
+      (el as Record<string, unknown>)[props.optionsField as string] !== undefined
   )
 
   if (hasComplexOptions) {
-    return props.options.map((el) => {
-      if (typeof el === 'string') {
-        return el
-      }
-      if (typeof el === 'number') {
-        return String(el)
+    return optionsArray.map((el) => {
+      if (typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean') {
+        return {value: el, text: String(el), disabled: false} as SelectOption
       }
 
       // Check if this is a complex (grouped) option
-      const optionsField = el[props.optionsField as keyof Item]
+      const optionsField = (el as Record<string, unknown>)[props.optionsField as string]
       if (optionsField !== undefined && Array.isArray(optionsField)) {
         // Complex option with nested options
         const label =
-          (el[props.labelField as keyof Item] as string | undefined) ??
-          (el[props.textField as keyof Item] as string | undefined) ??
+          ((el as Record<string, unknown>)[props.labelField as string] as string | undefined) ??
+          ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ??
           ''
         return {
           label,
@@ -90,27 +107,30 @@ const normalizedOptions = computed(() => {
 
       // Simple option - spread all properties from the original object to preserve class, data-*, etc.
       return {
-        ...el,
-        value: el[props.valueField as ValueKey],
-        text: (el[props.textField as keyof Item] as string | undefined) ?? '',
-        disabled: (el[props.disabledField as keyof Item] as boolean | undefined) ?? false,
+        ...(el as Record<string, unknown>),
+        value: (el as Record<string, unknown>)[props.valueField as string],
+        text:
+          ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ?? '',
+        disabled:
+          ((el as Record<string, unknown>)[props.disabledField as string] as boolean | undefined) ??
+          false,
       } as SelectOption
     })
   }
 
-  return props.options.map((el) => {
-    if (typeof el === 'string') {
-      return el
-    }
-    if (typeof el === 'number') {
-      return String(el)
+  return optionsArray.map((el) => {
+    if (typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean') {
+      return {value: el, text: String(el), disabled: false} as SelectOption
     }
     // Spread all properties from the original object to preserve class, data-*, etc.
     return {
-      ...el,
-      value: el[props.valueField as ValueKey],
-      text: (el[props.textField as keyof Item] as string | undefined) ?? '',
-      disabled: (el[props.disabledField as keyof Item] as boolean | undefined) ?? false,
+      ...(el as Record<string, unknown>),
+      value: (el as Record<string, unknown>)[props.valueField as string],
+      text:
+        ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ?? '',
+      disabled:
+        ((el as Record<string, unknown>)[props.disabledField as string] as boolean | undefined) ??
+        false,
     } as SelectOption
   })
 })

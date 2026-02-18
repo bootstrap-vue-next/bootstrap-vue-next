@@ -206,36 +206,8 @@ The _indeterminate_ state is **visual only**. The checkbox is still either check
 
 `BFormCheckboxGroup` <!--@include: ./_type-safety-intro.md-->
 
-### Basic Type-Safe Usage
-
-When using TypeScript, specify `value-field`, `text-field`, and `disabled-field` to leverage type safety:
-
 <<< DEMO ./demo/CheckboxTypeSafeBasic.vue{vue}
 
-In this example, TypeScript knows that `selectedIds` is `readonly number[]` because the `id` field of `User` is typed as `number`.
-
-### Type-Safe Field Validation
-
-TypeScript will catch errors when you use invalid field names:
-
-<<< DEMO ./demo/CheckboxTypeSafeValidation.vue{vue}
-
-### Type-Safe API Responses
-
-Type safety is especially valuable when working with API data that uses different naming conventions:
-
-<<< DEMO ./demo/CheckboxTypeSafeAPI.vue{vue}
-
-### Type-Safe Enums
-
-Type safety works with TypeScript enums for strongly-typed value constraints:
-
-<<< DEMO ./demo/CheckboxTypeSafeEnum.vue{vue}
-
-### Benefits
-
 <!--@include: ./_type-safety-benefits.md-->
-
-### Backward Compatibility
 
 <!--@include: ./_type-safety-backward-compat.md-->

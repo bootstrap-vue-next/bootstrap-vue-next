@@ -20,64 +20,86 @@
 <script
   setup
   lang="ts"
-  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
+  generic="
+    Options extends readonly (object | string | number | boolean)[] = readonly (
+      | object
+      | string
+      | number
+      | boolean
+    )[]
+  "
 >
 import type {BFormCheckboxGroupProps, BFormCheckboxGroupSlots} from '../../types'
 import {computed} from 'vue'
 import BFormCheckboxGroupBase from './BFormCheckboxGroupBase.vue'
 import type {CheckboxValue} from '../../types/CheckboxTypes'
+import type {OptionsValues} from '../../types/OptionsTypes'
+
+/**
+ * Type-safe wrapper component for BFormCheckboxGroup.
+ * Provides generic type safety for options array and strongly-typed modelValue.
+ * Uses Options array generic to extract union of all possible values.
+ * Supports both complex objects and simple scalar types (string, number, boolean).
+ *
+ * For strongly-typed modelValue:
+ * - Primitive arrays: modelValue is array of those value types
+ * - Object arrays with 'value' field: modelValue is array of value field types
+ * - Use 'as const' on options for literal type inference
+ */
 
 // Generic props - type safety happens here
-const props = withDefaults(
-  defineProps<Omit<BFormCheckboxGroupProps<Item, ValueKey>, 'modelValue'>>(),
-  {
-    ariaInvalid: undefined,
-    autofocus: false,
-    buttonVariant: 'secondary',
-    buttons: false,
-    disabled: false,
-    disabledField: 'disabled' as keyof Item & string,
-    form: undefined,
-    id: undefined,
-    name: undefined,
-    options: () => [],
-    plain: false,
-    required: false,
-    reverse: false,
-    size: 'md',
-    stacked: false,
-    state: null,
-    switches: false,
-    textField: 'text' as keyof Item & string,
-    validated: false,
-    valueField: 'value' as ValueKey & string,
-  }
-)
+const props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps<Options>, 'modelValue'>>(), {
+  ariaInvalid: undefined,
+  autofocus: false,
+  buttonVariant: 'secondary',
+  buttons: false,
+  disabled: false,
+  disabledField: 'disabled',
+  form: undefined,
+  id: undefined,
+  name: undefined,
+  options: () => [] as unknown as Options,
+  plain: false,
+  required: false,
+  reverse: false,
+  size: 'md',
+  stacked: false,
+  state: null,
+  switches: false,
+  textField: 'text',
+  validated: false,
+  valueField: 'value',
+})
 defineSlots<BFormCheckboxGroupSlots>()
 
-// Type-safe model value
-const modelValue = defineModel<Item[ValueKey][] | undefined>({
+// Type-safe model value - extracts union from options, wraps in array.
+// NOTE: OptionsValues assumes a static "value" key; custom valueField is not
+// reflected in the type — modelValue falls back to unknown in that case.
+const modelValue = defineModel<OptionsValues<Options>[] | undefined>({
   default: () => [],
 })
 
 // Type-safe normalization of options
 const normalizedOptions = computed(() =>
-  props.options.map(
+  (props.options ?? []).map(
     (el) =>
-      (typeof el === 'string' || typeof el === 'number'
+      (typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean'
         ? {
             value: el,
             disabled: props.disabled,
             text: el.toString(),
           }
         : {
-            value: el[props.valueField as ValueKey],
+            value: (el as Record<string, unknown>)[props.valueField as string],
             disabled:
               props.disabled ||
-              ((el[props.disabledField as keyof Item] as boolean | undefined) ?? false),
+              (((el as Record<string, unknown>)[props.disabledField as string] as
+                | boolean
+                | undefined) ??
+                false),
             text:
-              (el[props.textField as keyof Item] as string | undefined) ??
-              String(el[props.valueField as ValueKey]),
+              ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ??
+              String((el as Record<string, unknown>)[props.valueField as string]),
           }) as {text: string; value: CheckboxValue; disabled: boolean}
   )
 )

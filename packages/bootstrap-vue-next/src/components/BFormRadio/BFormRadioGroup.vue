@@ -16,68 +16,84 @@
 <script
   setup
   lang="ts"
-  generic="Item = Record<string, unknown>, ValueKey extends keyof Item = keyof Item"
+  generic="
+    Options extends readonly (object | string | number | boolean)[] = readonly (
+      | object
+      | string
+      | number
+      | boolean
+    )[]
+  "
 >
 import type {BFormRadioGroupProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 import BFormRadioGroupBase from './BFormRadioGroupBase.vue'
 import type {RadioOption} from '../../types/RadioTypes'
+import type {OptionsValues} from '../../types/OptionsTypes'
 
 /**
  * Type-safe wrapper component for BFormRadioGroup.
- * Provides generic type safety for options and field names.
+ * Provides generic type safety for options array and strongly-typed modelValue.
+ * Uses Options array generic to extract union of all possible values.
  * Normalizes typed options and forwards to BFormRadioGroupBase for rendering.
+ * Supports both complex objects and simple scalar types (string, number, boolean).
+ *
+ * For strongly-typed modelValue:
+ * - Primitive arrays: modelValue is union of those values
+ * - Object arrays with 'value' field: modelValue is union of value field types
+ * - Use 'as const' on options for literal type inference
  */
-const props = withDefaults(
-  defineProps<Omit<BFormRadioGroupProps<Item, ValueKey>, 'modelValue'>>(),
-  {
-    ariaInvalid: undefined,
-    autofocus: false,
-    buttonVariant: 'secondary',
-    buttons: false,
-    disabled: false,
-    disabledField: 'disabled' as keyof Item & string,
-    form: undefined,
-    id: undefined,
-    name: undefined,
-    options: () => [],
-    plain: false,
-    required: false,
-    reverse: false,
-    size: 'md',
-    stacked: false,
-    state: null,
-    textField: 'text' as keyof Item & string,
-    validated: false,
-    valueField: 'value' as ValueKey & string,
-  }
-)
+const props = withDefaults(defineProps<Omit<BFormRadioGroupProps<Options>, 'modelValue'>>(), {
+  ariaInvalid: undefined,
+  autofocus: false,
+  buttonVariant: 'secondary',
+  buttons: false,
+  disabled: false,
+  disabledField: 'disabled',
+  form: undefined,
+  id: undefined,
+  name: undefined,
+  options: () => [] as unknown as Options,
+  plain: false,
+  required: false,
+  reverse: false,
+  size: 'md',
+  stacked: false,
+  state: null,
+  textField: 'text',
+  validated: false,
+  valueField: 'value',
+})
 
-// Type-safe model value
-const modelValue = defineModel<Item[ValueKey] | undefined>({
+// Type-safe model value - extracts union from options.
+// NOTE: OptionsValues assumes a static "value" key; custom valueField is not
+// reflected in the type — modelValue falls back to unknown in that case.
+const modelValue = defineModel<OptionsValues<Options> | undefined>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default: null as any,
+  default: undefined as any,
 })
 
 // Type-safe normalization of options
-// Note: We need to cast to RadioOption[] because TypeScript can't prove that Item[ValueKey]
-// is assignable to RadioValue. This is safe because the values are runtime compatible.
 const normalizedOptions = computed(
   () =>
-    props.options.map((el) =>
-      typeof el === 'string' || typeof el === 'number'
+    (props.options ?? []).map((el) =>
+      typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean'
         ? {
             value: el,
             disabled: props.disabled,
             text: el.toString(),
           }
         : {
-            value: el[props.valueField as ValueKey],
+            value: (el as Record<string, unknown>)[props.valueField as string],
             disabled:
-              (el[props.disabledField as keyof Item] as boolean | undefined) ??
-              props.disabled ??
-              false,
-            text: (el[props.textField as keyof Item] as string | undefined) ?? '',
+              props.disabled ||
+              (((el as Record<string, unknown>)[props.disabledField as string] as
+                | boolean
+                | undefined) ??
+                false),
+            text:
+              ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ??
+              '',
           }
     ) as RadioOption[]
 )

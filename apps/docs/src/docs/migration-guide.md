@@ -545,6 +545,10 @@ They work as documented in vue.js, so there is no longer a need for the properti
 
 See [BForm Components](/docs/components/form-radio)
 
+`BFormRadioGroup`, `BFormCheckboxGroup`, and `BFormSelect` now provide TypeScript type safety for the `options` prop:
+the `v-model` type is inferred from the option values. See the
+[Type-Safe Options](/docs/reference/type-safe-options) reference for details.
+
 ### BFormRating
 
 `BFormRating` is now available in BootstrapVueNext, preserving most of the original BootstrapVue functionality under Vue 3's v-model conventions.

@@ -6,10 +6,11 @@ export type RadioValue =
   | number
   | null
 
-export type RadioOption = {
+export interface RadioOption {
   text: string
   value: RadioValue
   disabled?: boolean
+  [key: string]: unknown
 }
 
 export type RadioOptionRaw = string | number | (Partial<RadioOption> & Record<string, unknown>)
