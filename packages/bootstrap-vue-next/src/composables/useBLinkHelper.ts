@@ -139,7 +139,7 @@ export const useBLinkTagResolver = ({
   const link = computed(() => (isOfRouterType.value ? _link : null))
 
   const computedHref = computed(() => {
-    if (link.value?.href.value) return link.value.href.value
+    if (link.value?.href.value && resolvedTo.value) return link.value.href.value
 
     const toFallback = '#'
     const resolvedHref = toValue(href)
