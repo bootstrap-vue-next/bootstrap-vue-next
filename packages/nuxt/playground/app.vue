@@ -89,9 +89,9 @@
           <BButton
             to="/about"
             prefetch
-            prefetched-class="btn-danger"
+            prefetched-class="btn-info"
           >
-            Go to about
+            Go to about with btn-info class when prefetched! (is nuxt link)
           </BButton>
           <BLink
             :to="{ path: '/about' }"
@@ -131,10 +131,9 @@
             :to="{ path: '/about' }"
             prefetched-class="link-underline-danger"
             variant="info"
-            :router-component-name="NuxtLink"
             prefetch
           >
-            About with prefetch underline class
+            About with prefetch underline danger class
           </BLink>
         </BCol>
       </BRow>
@@ -173,7 +172,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import { NuxtLink } from '#components'
 import { useBreadcrumb, useColorMode, useModal, useToast } from 'bootstrap-vue-next'
 
 const show = ref(false)

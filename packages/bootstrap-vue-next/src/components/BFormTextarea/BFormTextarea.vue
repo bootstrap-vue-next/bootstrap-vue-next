@@ -6,7 +6,7 @@
     :name="props.name || undefined"
     :form="props.form || undefined"
     :value="modelValue ?? undefined"
-    :disabled="props.disabled"
+    :disabled="isDisabled"
     :placeholder="props.placeholder"
     :required="props.required || undefined"
     :autocomplete="props.autocomplete || undefined"
@@ -75,7 +75,7 @@ const [modelValue, modelModifiers] = defineModel<
 
 const input = useTemplateRef('_input')
 
-const {computedId, computedAriaInvalid, onInput, stateClass, onChange, onBlur, focus, blur} =
+const {computedId, computedAriaInvalid, onInput, stateClass, onChange, onBlur, focus, blur, isDisabled} =
   useFormInput(props, input, modelValue, modelModifiers)
 
 const computedClasses = computed(() => [

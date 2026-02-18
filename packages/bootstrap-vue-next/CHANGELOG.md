@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.43.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.1...bootstrapvuenext-v0.43.2) (2026-02-17)
+
+
+### Bug Fixes
+
+* **BTable:** show empty slot instead of empty-filtered when filter is empty string ([#3026](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3026)) ([96b64e6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/96b64e66a198004c3575ae947e10b6cabad605c5))
+
 ## [0.43.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.0...bootstrapvuenext-v0.43.1) (2026-02-09)
 
 

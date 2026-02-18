@@ -1,8 +1,8 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BLink from './BLink.vue'
-import {createRouter, createWebHistory, type RouterLink} from 'vue-router'
-import {defineComponent, h} from 'vue'
+import {createRouter, createWebHistory} from 'vue-router'
+import {defineComponent, h, markRaw} from 'vue'
 
 describe('link', () => {
   enableAutoUnmount(afterEach)
@@ -51,7 +51,7 @@ describe('link', () => {
     const wrapper = mount(BLink, {
       props: {
         to: '/custom',
-        routerComponentName: CustomRouterLink,
+        routerComponentName: markRaw(CustomRouterLink),
       },
       global: {
         plugins: [router],
@@ -71,7 +71,7 @@ describe('link', () => {
       setup(props, {slots}) {
         return () => h('a', {'href': String(props.to), 'data-nuxt-link': 'true'}, slots.default?.())
       },
-    }) as typeof RouterLink
+    })
 
     // Register NuxtLink globally
     const wrapper = mount(BLink, {

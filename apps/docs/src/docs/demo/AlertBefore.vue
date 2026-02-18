@@ -1,9 +1,3 @@
-<template>
-  <!-- #region template -->
-  <BAlert
-    variant="primary"
-    show
-    >A simple primary alert—check it out!</BAlert
-  >
-  <!-- #endregion template -->
-</template>
+<!-- #region template -->
+<BAlert show dismissible>I am an alert!</BAlert>
+<!-- #endregion template -->

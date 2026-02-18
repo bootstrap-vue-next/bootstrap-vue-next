@@ -123,3 +123,34 @@ guide.
 Lazy loaded images are actived through the `lazy` prop. Eventually, the component will be expanded to include placeholder slots, but are not available at this time. See the [migration guide](/docs/migration-guide#bimg) for details.
 
 We implement this `lazy` prop using the native `loading` attribute. See the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/loading) for details including how this effect how the native [`load` event](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event) works.
+
+## Using with NuxtImg
+
+If you are using [Nuxt](https://nuxt.com/) and want to leverage [`NuxtImg`](https://image.nuxt.com/usage/nuxt-img) for optimized image handling, you can do so by creating a wrapper component around `BImg`. Since the library cannot automatically detect whether `NuxtImg` is available, you need to set this up yourself.
+
+First, create a wrapper component that passes `NuxtImg` as the `tag` prop:
+
+```vue
+<!-- components/BNuxtImg.vue -->
+<template>
+  <BImg v-bind="$attrs" tag="NuxtImg" />
+</template>
+
+<script setup lang="ts">
+import {BImg} from 'bootstrap-vue-next'
+</script>
+```
+
+Then, use your wrapper component in place of `BImg`:
+
+```vue
+<template>
+  <BNuxtImg src="/my-image.png" fluid />
+</template>
+
+<script setup lang="ts">
+import BNuxtImg from '~/components/BNuxtImg.vue'
+</script>
+```
+
+This approach allows you to use all of `BImg`'s styling and functionality (such as `fluid`, `thumbnail`, `rounded`, etc.) while benefiting from `NuxtImg`'s image optimizations.

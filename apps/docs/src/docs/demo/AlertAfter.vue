@@ -1,9 +1,3 @@
-<template>
-  <!-- #region template -->
-  <BAlert
-    :model-value="true"
-    variant="primary"
-    >A simple primary alert—check it out!</BAlert
-  >
-  <!-- #endregion template -->
-</template>
+<!-- #region template -->
+<BAlert model-value dismissible>I am an alert!</BAlert>
+<!-- #endregion template -->

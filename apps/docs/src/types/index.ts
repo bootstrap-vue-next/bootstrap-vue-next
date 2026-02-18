@@ -46,6 +46,7 @@ export type SlotRecord<T extends string = string> = Record<T, SlotReference>
 export type ExposedReference = {
   type?: string
   description?: string
+  properties?: ExposedRecord
 }
 export type ExposedRecord<T extends string = string> = Record<T, ExposedReference>
 

@@ -1,5 +1,4 @@
 <template>
-  <!-- #region template -->
   <div class="d-flex flex-wrap gap-2">
     <!-- Default: Hover + Focus -->
     <BPopover>
@@ -61,7 +60,6 @@
       Controlled manually via v-model
     </BPopover>
   </div>
-  <!-- #endregion template -->
 </template>
 
 <script setup lang="ts">
