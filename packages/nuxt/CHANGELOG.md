@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.43.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.43.2...nuxt-v0.43.3) (2026-02-18)
+
+
+### Features
+
+* **BImg:** add manual configuration support for NuxtImg and docs on how to ([78f330b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/78f330b115adf357fa2d80ee4264887531249e67))
+* **BLink:** add NuxtLink automatic support ([78f330b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/78f330b115adf357fa2d80ee4264887531249e67))
+* **BTable:** add getFromPrimaryKey and resolvedItems in the selection and expansion template ref keys as utility funcs ([78f330b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/78f330b115adf357fa2d80ee4264887531249e67))
+
+
+### Bug Fixes
+
+* **BFormOptions*:** Fix prop inheritance and type safety ([#3016](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3016)) ([b842f34](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b842f34e48f0b4c6c9e5b603a623060c15c88239))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 0.43.3
+  * peerDependencies
+    * bootstrap-vue-next bumped to 0.43.3
+
 ## [0.43.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.43.1...nuxt-v0.43.2) (2026-02-17)
 
 
