@@ -16,6 +16,6 @@ export const useComponents = (resolve: (...path: string[]) => string) => {
   addComponent({
     name: 'BLink',
     global: true,
-    filePath: resolve('runtime/app/components/BLink.vue'),
+    filePath: resolve('runtime/app/components/NuxtBLink.vue'),
   })
 }

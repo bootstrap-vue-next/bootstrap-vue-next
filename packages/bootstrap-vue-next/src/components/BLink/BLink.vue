@@ -118,8 +118,7 @@ const computedTabIndex = computed(() =>
 )
 
 const nuxtSpecificProps = computed(() => ({
-  prefetch: props.prefetch,
-  noPrefetch: props.noPrefetch,
+  ...(props.noPrefetch ? {noPrefetch: props.noPrefetch} : {prefetch: props.prefetch}),
   prefetchOn: props.prefetchOn,
   prefetchedClass: props.prefetchedClass,
   ...linkProps.value,
