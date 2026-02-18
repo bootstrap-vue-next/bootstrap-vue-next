@@ -12,12 +12,6 @@
       <template #title>Popover Title</template>
       I am popover <b>component</b> content using the <b>target</b> prop!
     </BPopover>
-    <BButton
-      v-b-popover.focus.top="'I am popover directive content!'"
-      title="Popover Title"
-    >
-      Hover Me
-    </BButton>
   </div>
 
   <!-- #endregion template -->

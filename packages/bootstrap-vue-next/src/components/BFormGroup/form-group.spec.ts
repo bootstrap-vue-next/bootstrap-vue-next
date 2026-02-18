@@ -4,6 +4,9 @@ import BFormGroup from './BFormGroup.vue'
 import {h, nextTick} from 'vue'
 import BFormInput from '../BFormInput/BFormInput.vue'
 import BFormTextarea from '../BFormTextarea/BFormTextarea.vue'
+import BFormSelect from '../BFormSelect/BFormSelect.vue'
+import BFormCheckbox from '../BFormCheckbox/BFormCheckbox.vue'
+import BFormRadio from '../BFormRadio/BFormRadio.vue'
 
 describe('form-group', () => {
   enableAutoUnmount(afterEach)
@@ -435,6 +438,85 @@ describe('form-group', () => {
         })
         await nextTick()
         expect(wrapper.get('#foobar').classes()).not.toContain('is-valid')
+      })
+    })
+
+    describe('sub input to receive disabled of parent', () => {
+      it('BFormInput should be disabled when parent BFormGroup is disabled', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', disabled: true},
+          slots: {
+            default: h(BFormInput, {id: 'foobar'}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').attributes('disabled')).toBeDefined()
+      })
+
+      it('BFormInput should not be disabled when parent BFormGroup is not disabled', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', disabled: false},
+          slots: {
+            default: h(BFormInput, {id: 'foobar'}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').attributes('disabled')).toBeUndefined()
+      })
+
+      it('BFormTextarea should be disabled when parent BFormGroup is disabled', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', disabled: true},
+          slots: {
+            default: h(BFormTextarea, {id: 'foobar'}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').attributes('disabled')).toBeDefined()
+      })
+
+      it('BFormInput own disabled prop should also disable the input', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', disabled: false},
+          slots: {
+            default: h(BFormInput, {id: 'foobar', disabled: true}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').attributes('disabled')).toBeDefined()
+      })
+
+      it('BFormSelect should be disabled when parent BFormGroup is disabled', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', disabled: true},
+          slots: {
+            default: h(BFormSelect, {id: 'foobar'}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').attributes('disabled')).toBeDefined()
+      })
+
+      it('BFormCheckbox should be disabled when parent BFormGroup is disabled', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', disabled: true},
+          slots: {
+            default: h(BFormCheckbox, {id: 'foobar'}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').attributes('disabled')).toBeDefined()
+      })
+
+      it('BFormRadio should be disabled when parent BFormGroup is disabled', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'foo', disabled: true},
+          slots: {
+            default: h(BFormRadio, {id: 'foobar'}),
+          },
+        })
+        await nextTick()
+        expect(wrapper.get('#foobar').attributes('disabled')).toBeDefined()
       })
     })
   })

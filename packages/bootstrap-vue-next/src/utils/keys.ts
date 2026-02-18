@@ -226,6 +226,7 @@ export const orchestratorRegistryKey: InjectionKey<{
 export const formGroupKey: InjectionKey<
   (id: Ref<string>) => {
     state: Readonly<Ref<ValidationState | undefined>>
+    disabled: Readonly<Ref<boolean>>
   }
 > = createBvnInjectionKey('formGroupPlugin')
 

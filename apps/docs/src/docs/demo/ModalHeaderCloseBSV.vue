@@ -1,6 +1,7 @@
-<template>
-  <!-- #region template -->
-  <!-- BootstrapVue -->
-  <BModal header-close-content="✕"> Modal content </BModal>
-  <!-- #endregion template -->
-</template>
+<!-- #region template -->
+<BModal>
+  <template #header-close>
+    <span aria-hidden="true">&times;</span>
+  </template>
+</BModal>
+<!-- #endregion template -->

@@ -10,7 +10,7 @@
       v-model="localValue"
       :class="computedInputClasses"
       type="checkbox"
-      :disabled="props.disabled || parentData?.disabled.value"
+      :disabled="props.disabled || parentData?.disabled.value || formGroupData?.disabled.value"
       :required="computedRequired || undefined"
       :name="props.name || parentData?.name.value"
       :form="props.form || parentData?.form.value"
@@ -34,7 +34,7 @@ import {useFocus} from '@vueuse/core'
 import {computed, inject, useAttrs, useTemplateRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
 import type {BFormCheckboxProps} from '../../types/ComponentProps'
-import {checkboxGroupKey} from '../../utils/keys'
+import {checkboxGroupKey, formGroupKey} from '../../utils/keys'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import {isEmptySlot} from '../../utils/dom'
 import {useDefaults} from '../../composables/useDefaults'
@@ -94,6 +94,7 @@ const processedAttrs = computed(() => {
 const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(checkboxGroupKey, null)
+const formGroupData = inject(formGroupKey, null)?.(computedId)
 
 const input = useTemplateRef('_input')
 
