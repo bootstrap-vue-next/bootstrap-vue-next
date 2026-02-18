@@ -3,11 +3,10 @@
     :is="tag"
     :class="computedClasses"
     :target="props.target"
-    :href="computedHref"
     :rel="computedRel"
     :tabindex="computedTabIndex"
     :aria-disabled="props.disabled ? true : null"
-    v-bind="computedSpecificProps"
+    v-bind="{...computedSpecificProps, ...(computedSpecificProps.to ? {} : {href: computedHref})}"
     @click="
       (e: MouseEvent) => {
         clicked(e)
@@ -22,11 +21,10 @@
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
 import {useLinkClasses} from '../../composables/useLinkClasses'
-import type {BLinkProps} from '../../types/ComponentProps'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils/keys'
 import {computed, inject, useAttrs} from 'vue'
 import {useBLinkTagResolver} from '../../composables/useBLinkHelper'
-import type {BLinkEmits, BLinkSlots} from '../../types'
+import type {BLinkEmits, BLinkProps, BLinkSlots} from '../../types'
 
 const defaultActiveClass = 'active'
 
@@ -87,7 +85,7 @@ const computedClasses = computed(() => [
     [defaultActiveClass]: props.active,
     [props.activeClass]: link.value?.isActive.value || false,
     [props.exactActiveClass]: link.value?.isExactActive.value || false,
-    'stretched-link': props.stretched === true,
+    'stretched-link': props.stretched,
   },
 ])
 const computedLinkClasses = computed(() => ({
@@ -120,8 +118,7 @@ const computedTabIndex = computed(() =>
 )
 
 const nuxtSpecificProps = computed(() => ({
-  prefetch: props.prefetch,
-  noPrefetch: props.noPrefetch,
+  ...(props.noPrefetch ? {noPrefetch: props.noPrefetch} : {prefetch: props.prefetch}),
   prefetchOn: props.prefetchOn,
   prefetchedClass: props.prefetchedClass,
   ...linkProps.value,

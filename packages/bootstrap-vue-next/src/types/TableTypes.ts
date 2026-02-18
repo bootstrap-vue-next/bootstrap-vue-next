@@ -146,6 +146,33 @@ export type ItemTrackerReturn<Item> = {
    */
   get: (item: Item) => unknown
   /**
+   * Gets the item from the internal "computed items" representation when using the primary key.
+   * This is used to get the object reference of the item from the items when using the primary key, since the items are stored as the primary key value rather than the item itself.
+   * If no `primaryKey` is used, it will return undefined
+   *
+   * @param primaryKey
+   */
+  getFromPrimaryKey: (primaryKey: unknown) => unknown
+  /**
+   * A computed array of items resolved from their primary key values
+   * against the table’s internal computed dataset.
+   *
+   * When a `primaryKey` is configured, selection and tracking mechanisms
+   * may store only the primary key values. This property provides the
+   * corresponding full item objects by resolving those keys against the
+   * current internal items representation.
+   *
+   * If no `primaryKey` is used, this will mirror the selectedItems array.
+   *
+   * Note:
+   * - Only items currently present in the internal computed dataset
+   *   can be resolved. Keys that do not match an available item
+   *   will be ignored.
+   * - This property is readonly and represents a derived projection,
+   *   not a source of truth.
+   */
+  resolvedItems: ComputedRef<readonly unknown[]>
+  /**
    * Adds an item to the selected items
    *
    * @param item

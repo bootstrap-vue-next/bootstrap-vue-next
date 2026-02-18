@@ -1,4 +1,5 @@
 import {
+  type Component,
   computed,
   getCurrentInstance,
   type MaybeRefOrGetter,
@@ -40,6 +41,8 @@ export const useBLinkHelper = <
             'to',
             'variant',
             'opacity',
+            'prefetch',
+            'prefetchedClass',
             'opacityHover',
             'underlineVariant',
             'underlineOffset',
@@ -61,7 +64,7 @@ export const useBLinkTagResolver = ({
   replace,
   routerComponentName,
 }: {
-  routerComponentName: MaybeRefOrGetter<string>
+  routerComponentName: MaybeRefOrGetter<string | Component>
   disabled: MaybeRefOrGetter<boolean>
   to: MaybeRefOrGetter<RouteLocationRaw | undefined>
   href: MaybeRefOrGetter<string | undefined>
@@ -71,33 +74,55 @@ export const useBLinkTagResolver = ({
   const instance = getCurrentInstance()
   const router = instance?.appContext?.app?.config?.globalProperties?.$router
   const route = instance?.appContext?.app?.config?.globalProperties?.$route
+
+  // resolvedynamiccomponent will return a string if the component is not found
   const RouterLinkComponent = resolveDynamicComponent('RouterLink') as typeof RouterLink | string
-  const useLink =
-    !!RouterLinkComponent &&
-    typeof RouterLinkComponent !== 'string' &&
-    'useLink' in RouterLinkComponent
-      ? RouterLinkComponent.useLink
-      : null
 
   // Resolving props
   const resolvedTo = computed(() => toValue(to) || '')
   const resolvedReplace = readonly(toRef(replace))
 
-  const routerName = computed(() => toPascalCase(toValue(routerComponentName)))
-
-  const tag = computed(() => {
-    const hasRouter = instance?.appContext?.app?.component(routerName.value) !== undefined
-    if (!hasRouter || toValue(disabled) || !resolvedTo.value) {
-      return 'a'
+  const routerName = computed(() => {
+    const routerComponent = toValue(routerComponentName)
+    if (typeof routerComponent === 'string') {
+      return toPascalCase(routerComponent)
     }
-    return routerName.value
+    return routerComponent
   })
+  const useLink = (
+    typeof routerName.value !== 'string' && 'useLink' in routerName.value
+      ? routerName.value.useLink
+      : typeof RouterLinkComponent !== 'string' && 'useLink' in RouterLinkComponent
+        ? RouterLinkComponent.useLink
+        : null
+  ) as (typeof RouterLink)['useLink'] | null
 
-  const isRouterLink = computed(() => tag.value === 'RouterLink')
   const isNuxtLink = computed(
     // @ts-expect-error we're doing an explicit check for Nuxt, so we can safely ignore this
-    () => isRouterLink.value && typeof instance?.appContext?.app?.$nuxt !== 'undefined'
+    () => typeof instance?.appContext?.app?.$nuxt !== 'undefined'
   )
+  const isRouterLink = computed(() => routerName.value === 'RouterLink')
+
+  const tag = computed(() => {
+    // If is disabled or there is no `to` prop, render a simple `<a>` tag
+    if (toValue(disabled) || !resolvedTo.value) {
+      return 'a'
+    }
+
+    // Is it actually a component? Use that
+    if (typeof routerName.value !== 'string') {
+      return routerName.value
+    }
+    // Check if is router link second
+    if (isRouterLink.value && typeof RouterLinkComponent !== 'string') {
+      return RouterLinkComponent
+    }
+
+    // routerName is a string, but we need to check if it's a component first
+    // return the component from the app context if it exists, otherwise fallback to 'a'
+    return instance?.appContext?.app?.component(routerName.value) || 'a'
+  })
+
   const isNonStandardTag = computed(
     () => tag.value !== 'a' && !isRouterLink.value && !isNuxtLink.value
   )
@@ -114,7 +139,7 @@ export const useBLinkTagResolver = ({
   const link = computed(() => (isOfRouterType.value ? _link : null))
 
   const computedHref = computed(() => {
-    if (link.value?.href.value) return link.value.href.value
+    if (link.value?.href.value && resolvedTo.value) return link.value.href.value
 
     const toFallback = '#'
     const resolvedHref = toValue(href)
