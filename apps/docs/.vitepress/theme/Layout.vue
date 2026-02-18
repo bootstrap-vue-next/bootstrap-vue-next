@@ -828,6 +828,16 @@ watch(
   margin-bottom: 1rem;
 }
 
+// Fix low contrast for code in custom blocks in dark mode
+// VitePress uses --vp-c-brand-1 for code color, but we override it to a dark color for the navbar
+// In dark mode, use Bootstrap's code color which has proper contrast
+[data-bs-theme='dark'] {
+  .custom-block.info code,
+  .custom-block.note code {
+    color: var(--bs-code-color);
+  }
+}
+
 @media (min-width: 992px) {
   .offcanvas-header.offcanvas-hidden-width .btn-close {
     display: none !important;

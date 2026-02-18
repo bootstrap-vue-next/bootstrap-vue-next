@@ -94,7 +94,7 @@
         <BTd :colspan="computedFields.length">
           <div role="alert" aria-live="polite">
             <div class="text-center my-2">
-              <slot v-if="isFilterableTable" name="empty-filtered" v-bind="emptySlotScope">
+              <slot v-if="showEmptyFiltered" name="empty-filtered" v-bind="emptySlotScope">
                 {{ props.emptyFilteredText }}
               </slot>
               <slot v-else name="empty" v-bind="emptySlotScope">
@@ -436,6 +436,12 @@ const emptySlotScope = computed(() => ({
   fields: computedFields.value,
   items: computedItems.value,
 }))
+
+// Determine if we should show the empty-filtered slot
+// Show empty-filtered only if filter is defined AND not an empty string
+const showEmptyFiltered = computed(
+  () => isFilterableTable.value && props.filter !== undefined && props.filter !== ''
+)
 
 defineExpose({
   expansion: {
