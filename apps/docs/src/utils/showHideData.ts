@@ -7,7 +7,8 @@ import type {PropRecord, SlotScopeReference} from '../types'
  */
 export const bvTriggerableEventArg = {
   type: 'BvTriggerableEvent',
-  description: 'The BvTriggerableEvent object',
+  description:
+    'The BvTriggerableEvent object. Includes event details and cancellation support via `preventDefault()`',
 } as const
 
 export const showHideEmits = {
@@ -21,10 +22,7 @@ export const showHideEmits = {
     description:
       "Always emits just before the component has hidden. Cancelable (as long as component wasn't forcibly hidden)",
     args: {
-      value: {
-        ...bvTriggerableEventArg,
-        description: 'Call value.preventDefault() to cancel hide',
-      },
+      value: bvTriggerableEventArg,
     },
   },
   'hide-prevented': {
@@ -48,10 +46,7 @@ export const showHideEmits = {
   },
   'show': {
     args: {
-      value: {
-        ...bvTriggerableEventArg,
-        description: 'Call value.preventDefault() to cancel show',
-      },
+      value: bvTriggerableEventArg,
     },
     description: 'Always emits just before the component is shown. Cancelable',
   },
@@ -72,10 +67,7 @@ export const showHideEmits = {
     description:
       "Always emits just before the component is toggled via the exposed 'toggle()' function or useToggle composable . Cancelable (as long as component wasn't forcibly hidden)",
     args: {
-      value: {
-        ...bvTriggerableEventArg,
-        description: 'Call value.preventDefault() to cancel hide',
-      },
+      value: bvTriggerableEventArg,
     },
   },
   'toggle-prevented': {
@@ -183,10 +175,7 @@ export const buildDismissibleEmits = () =>
     'close': {
       description: 'Emitted when the close button is clicked.',
       args: {
-        value: {
-          ...bvTriggerableEventArg,
-          description: 'The event object for the close button click.',
-        },
+        value: bvTriggerableEventArg,
       },
     },
     'close-countdown': {
