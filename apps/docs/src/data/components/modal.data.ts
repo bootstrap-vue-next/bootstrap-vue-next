@@ -9,7 +9,7 @@ import type {
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
-import {showHideEmits, showHideProps} from '../../utils/showHideData'
+import {bvTriggerableEventArg, showHideEmits, showHideProps} from '../../utils/showHideData'
 
 const sharedSlots: SlotScopeReference = {
   cancel: {
@@ -262,7 +262,7 @@ export default {
           description: 'Emitted when the default footer OK button is clicked. Cancelable',
           args: {
             value: {
-              type: 'BvTriggerableEvent',
+              ...bvTriggerableEventArg,
               description: 'The OK button click event details',
             },
           },
@@ -271,7 +271,7 @@ export default {
           description: 'Emitted when the default footer Cancel button is clicked. Cancelable',
           args: {
             value: {
-              type: 'BvTriggerableEvent',
+              ...bvTriggerableEventArg,
               description: 'The Cancel button click event details',
             },
           },
@@ -280,7 +280,7 @@ export default {
           description: 'Emitted when the default header close button is clicked. Cancelable',
           args: {
             value: {
-              type: 'BvTriggerableEvent',
+              ...bvTriggerableEventArg,
               description: 'The close button click event details',
             },
           },
@@ -289,7 +289,7 @@ export default {
           description: 'Emitted when the backdrop is clicked. Cancelable',
           args: {
             value: {
-              type: 'BvTriggerableEvent',
+              ...bvTriggerableEventArg,
               description: 'The backdrop click event details',
             },
           },
@@ -298,7 +298,7 @@ export default {
           description: 'Emitted when the Esc key is pressed. Cancelable',
           args: {
             value: {
-              type: 'BvTriggerableEvent',
+              ...bvTriggerableEventArg,
               description: 'The Esc key press event details',
             },
           },

@@ -8,7 +8,7 @@ import type {
   SlotScopeReference,
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
-import {showHideEmits, showHideProps} from '../../utils/showHideData'
+import {bvTriggerableEventArg, showHideEmits, showHideProps} from '../../utils/showHideData'
 import {buildCommonProps} from '../../utils/commonProps'
 
 const sharedSlotsScope: SlotScopeReference = {
@@ -66,10 +66,7 @@ export default {
         'toggle': {
           description: 'Emitted when collapse has started to toggle',
           args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The event object',
-            },
+            value: bvTriggerableEventArg,
           },
         },
       } satisfies EmitRecord<keyof BCollapseEmits | 'update:model-value'>,
