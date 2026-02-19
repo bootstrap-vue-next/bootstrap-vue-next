@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.43.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.4...bootstrapvuenext-v0.43.5) (2026-02-19)
+
+
+### Bug Fixes
+
+* add form-control class to range inputs inside input groups ([#3055](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3055)) ([1d3205a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1d3205a20abbd507c85c632fa63aba9d6aee3052))
+* add missing 'click' event to BPopoverEmits ([#3046](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3046)) ([23434f3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/23434f3c4c244de81751afb1174c1466d65508c7))
+* **BFormFile:** omit directory/webkitdirectory attrs when falsy to fix SSR rendering ([#3056](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3056)) ([c776ca3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c776ca3c61f9d1cc7253e9d6b4789a61291bf1e3))
+
 ## [0.43.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.3...bootstrapvuenext-v0.43.4) (2026-02-19)
 
 
