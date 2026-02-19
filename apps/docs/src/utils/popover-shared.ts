@@ -205,6 +205,15 @@ const sharedEmits = {
       },
     },
   },
+  'click': {
+    description: 'Emitted when the {component} is hidden by a click on the trigger element.',
+    args: {
+      value: {
+        type: 'BvTriggerableEvent',
+        description: '', // TODO missing description
+      },
+    },
+  },
   'click-outside': {
     description: 'Emitted when the mouse is clicked outside the {component}.',
     args: {

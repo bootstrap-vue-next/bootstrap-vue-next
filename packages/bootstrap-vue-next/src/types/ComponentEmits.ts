@@ -33,6 +33,7 @@ export interface BOffcanvasEmits extends showHideEmits {
 }
 
 export interface BPopoverEmits extends showHideEmits {
+  'click': [value: BvTriggerableEvent]
   'pointerleave': [value: BvTriggerableEvent]
   'blur': [value: BvTriggerableEvent]
   'click-outside': [value: BvTriggerableEvent]
