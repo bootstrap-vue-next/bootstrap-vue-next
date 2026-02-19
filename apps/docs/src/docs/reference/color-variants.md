@@ -182,6 +182,8 @@ You may also use the underlying class names directly on elements (and some compo
 
 When creating custom variants, follow the Bootstrap v5 variant CSS class naming scheme and they will become available to the various components that use that scheme (i.e. create a custom CSS class `btn-purple` and `purple` becomes a valid variant to use on `BButton`).
 
+To make TypeScript recognize your custom variants, you also need to augment the type interfaces. See the [Extending types](/docs/types#extending-types) section for details.
+
 Alternatively, you can create new variant theme colors by supplying custom Bootstrap SCSS theme color maps. The default theme color map is (from `bootstrap/scss/\_variables.scss`):
 
 <HighlightCard>
