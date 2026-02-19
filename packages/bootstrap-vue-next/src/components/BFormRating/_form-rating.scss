@@ -2,18 +2,9 @@ $clear-icon-size: 1em !default;
 
 .b-form-rating {
   display: flex;
-  //align-items: center;
+  align-items: center;
   justify-content: space-between;
-  padding: 0.375rem 0.75rem;
-  border-radius: 0.375rem;
-  border: 1px solid var(--bs-secondary-border-subtle, #dee2e6);
-  background-color: var(--bs-body-bg);
   gap: 0.25rem;
-
-  // Allow it to flex properly in input groups
-  flex: 1 1 auto;
-  width: 1%;
-  min-width: 0;
 
   &.no-border {
     border: none;

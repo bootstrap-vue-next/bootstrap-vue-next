@@ -1,6 +1,8 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BFormRating from './BFormRating.vue'
+import BInputGroup from '../BInputGroup/BInputGroup.vue'
+import {defineComponent, h} from 'vue'
 
 describe('rating', () => {
   enableAutoUnmount(afterEach)
@@ -343,5 +345,45 @@ describe('rating', () => {
     const clearBtn = wrapper.find('.clear-button-spacing')
     await clearBtn.trigger('click')
     expect(hiddenInput.attributes('value')).toBe('0')
+  })
+
+  // Input Group Integration Tests
+  it('renders inside BInputGroup with form-control class', () => {
+    const TestComponent = defineComponent({
+      render() {
+        return h(BInputGroup, {prepend: 'Rating'}, () => h(BFormRating, {modelValue: 3}))
+      },
+    })
+    const wrapper = mount(TestComponent)
+    const rating = wrapper.findComponent(BFormRating)
+    expect(rating.exists()).toBe(true)
+    expect(rating.classes()).toContain('form-control')
+    expect(rating.classes()).toContain('b-form-rating')
+  })
+
+  it('renders stars correctly inside BInputGroup', () => {
+    const TestComponent = defineComponent({
+      render() {
+        return h(BInputGroup, null, () => h(BFormRating, {modelValue: 3, stars: 5}))
+      },
+    })
+    const wrapper = mount(TestComponent)
+    const rating = wrapper.findComponent(BFormRating)
+    const stars = rating.findAll('.star')
+    expect(stars.length).toBe(5)
+  })
+
+  it('emits update:modelValue when clicked inside BInputGroup', async () => {
+    const TestComponent = defineComponent({
+      render() {
+        return h(BInputGroup, null, () => h(BFormRating, {modelValue: 1}))
+      },
+    })
+    const wrapper = mount(TestComponent)
+    const rating = wrapper.findComponent(BFormRating)
+    const stars = rating.findAll('.star')
+    await stars[2].trigger('click')
+    expect(rating.emitted('update:modelValue')).toBeTruthy()
+    expect(rating.emitted('update:modelValue')![0]).toEqual([3])
   })
 })

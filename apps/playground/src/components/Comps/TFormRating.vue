@@ -61,6 +61,34 @@
     <h2>11. readonly mode</h2>
     <BFormRating v-model="valRO" readonly :show-value="true" show-value-max />
     <p>valRO: {{ valRO }} (cannot change)</p>
+
+    <h2>12. Input Group</h2>
+    <BInputGroup>
+      <template #prepend>
+        <BInputGroupText>Rating</BInputGroupText>
+      </template>
+      <BFormRating v-model="valInputGroup" color="#ff8800" />
+      <template #append>
+        <BInputGroupText style="min-width: 3em" class="justify-content-center">
+          {{ valInputGroup }}
+        </BInputGroupText>
+      </template>
+    </BInputGroup>
+    <p>valInputGroup: {{ valInputGroup }}</p>
+
+    <h2>13. Input Group (lg)</h2>
+    <BInputGroup size="lg">
+      <template #prepend>
+        <BInputGroupText>Rating</BInputGroupText>
+      </template>
+      <BFormRating v-model="valInputGroupLg" variant="success" />
+      <template #append>
+        <BInputGroupText style="min-width: 3em" class="justify-content-center">
+          {{ valInputGroupLg }}
+        </BInputGroupText>
+      </template>
+    </BInputGroup>
+    <p>valInputGroupLg: {{ valInputGroupLg }}</p>
   </BContainer>
 </template>
 
@@ -83,6 +111,8 @@ const valSizeSm = ref(1)
 const valSizeDefault = ref(3)
 const valSizeLg = ref(4)
 const valRO = ref(3.5)
+const valInputGroup = ref(2)
+const valInputGroupLg = ref(3)
 </script>
 
 <style scoped>
