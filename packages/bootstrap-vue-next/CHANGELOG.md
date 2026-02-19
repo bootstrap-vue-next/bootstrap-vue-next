@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.43.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.3...bootstrapvuenext-v0.43.4) (2026-02-19)
+
+
+### Bug Fixes
+
+* **BLink:** routing not working in vitepress ([#3036](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3036)) ([2d1f534](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/2d1f53472ba9d1c752b434501e7cf5cfb6279740))
+
 ## [0.43.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.2...bootstrapvuenext-v0.43.3) (2026-02-18)
 
 
