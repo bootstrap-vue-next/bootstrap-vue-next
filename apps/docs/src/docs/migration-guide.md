@@ -1615,19 +1615,11 @@ BSV used a `customClass` property, while BSVN provides more granular control:
 
 **BSV:**
 
-```vue-html
-<BButton v-b-popover="{title: 'Title', body: 'Content', customClass: 'my-custom-class'}">
-  Button
-</BButton>
-```
+<<< FRAGMENT ./demo/PopoverDirectiveCustomClassBefore.html{vue-html}
 
 **BSVN:**
 
-```vue-html
-<BButton v-b-popover="{title: 'Title', body: 'Content', bodyClass: 'my-body-class', titleClass: 'my-title-class'}">
-  Button
-</BButton>
-```
+<<< FRAGMENT ./demo/PopoverDirectiveCustomClassAfter.html{vue-html}
 
 BSVN provides separate `bodyClass` and `titleClass` properties for more precise styling control.
 
@@ -1716,7 +1708,7 @@ Simple string tooltips work the same:
 
 #### Trigger Modifiers
 
-The main difference is that BSVN requires tooltip content in the directive value when using modifiers.
+When using modifiers, BSVN recommends providing tooltip content via the directive value, although it will still fall back to the element's `title`/`data-original-title` attributes when no value is given.
 
 **BSV:**
 
@@ -1743,7 +1735,7 @@ The object configuration interface has changed:
 Key changes:
 
 - `placement` is now specified via modifier (`.top`, `.bottom`, etc.) instead of in the object
-- `delay` now requires an object with `show` and `hide` properties (not a single number)
+- `delay` accepts either a scalar number (applies to both show and hide) or an object `{show: number, hide: number}` for independent control
 - Floating UI (instead of Popper.js) is used for positioning
 
 #### Custom Classes (Directive)

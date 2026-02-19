@@ -1,5 +1,10 @@
-<!-- #region focus -->
-<BLink href="#" tabindex="0" v-b-tooltip.focus="'Focus tooltip'">
-  Focusable link
-</BLink>
-<!-- #endregion focus -->
+<template>
+  <!-- #region focus -->
+  <BLink
+    v-b-tooltip.focus="'Focus tooltip'"
+    href="#"
+  >
+    Focusable link
+  </BLink>
+  <!-- #endregion focus -->
+</template>

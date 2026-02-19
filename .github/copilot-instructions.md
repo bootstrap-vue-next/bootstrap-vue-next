@@ -274,11 +274,9 @@ The directive accepts [`BTooltipProps`](link):
 ```typescript
 import type {BTooltipProps} from 'bootstrap-vue-next'
 ```
-````
 
 :::
-
-```
+````
 
 DEMO syntax should be used for:
 
@@ -301,4 +299,3 @@ DEMO syntax should be used for:
 Follow the established code style
 
 - When a Vue component event takes three or more arguments, use an object to pass the arguments instead of multiple positional parameters. For example: `emit('event-name', {arg1, arg2, arg3})` instead of `emit('event-name', arg1, arg2, arg3)`. Fewer than three arguments may use positional parameters.
-```

@@ -265,7 +265,8 @@ export default {
         },
         isOpenByBreakpoint: {
           type: 'Ref<boolean>',
-          description: 'Reactive boolean indicating if the offcanvas is opened by responsive breakpoint',
+          description:
+            'Reactive boolean indicating if the offcanvas is opened by responsive breakpoint',
         },
       } satisfies ExposedRecord,
     },

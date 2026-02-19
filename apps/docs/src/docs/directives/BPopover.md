@@ -52,7 +52,7 @@ You can combine multiple trigger modifiers:
 
 ### Manual Control
 
-Use `.manual` combined with `.show` to control visibility:
+Use `.manual` combined with `modelValue` to control visibility:
 
 <<< DEMO ./demo/BPopoverManualControl.vue#template{vue-html}
 
@@ -103,7 +103,7 @@ The directive accepts any property from `BPopoverProps`. Common properties inclu
 - `delay` - Show/hide delay in milliseconds or `{show: number, hide: number}`
 - `bodyClass` - Custom class for the popover body
 - `titleClass` - Custom class for the popover title
-- `placement` - Position: `'auto'` | `'top'` | `'bottom'` | `'left'` | `'right'`
+- `placement` - Position: `'auto'` | `'auto-start'` | `'auto-end'` | `'top'` | `'top-start'` | `'top-end'` | `'bottom'` | `'bottom-start'` | `'bottom-end'` | `'left'` | `'left-start'` | `'left-end'` | `'right'` | `'right-start'` | `'right-end'`
 - `click` - Enable click trigger
 - `hover` - Enable hover trigger
 - `focus` - Enable focus trigger

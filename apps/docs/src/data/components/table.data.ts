@@ -925,7 +925,8 @@ export default {
           },
           displayItems: {
             type: 'ComputedRef<unknown[]>',
-            description: 'Computed ref of the currently displayed table items after filtering and pagination',
+            description:
+              'Computed ref of the currently displayed table items after filtering and pagination',
           },
           getStringValue: {
             type: '(key: string, item: unknown) => string',

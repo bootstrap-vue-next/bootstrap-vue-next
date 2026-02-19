@@ -1,7 +1,10 @@
 <template>
   <div class="d-flex gap-2">
     <BButton
-      v-b-tooltip.manual.show="tooltipVisible"
+      v-b-tooltip.manual="{
+        modelValue: tooltipVisible,
+        title: 'Manually controlled tooltip',
+      }"
       variant="primary"
       @click="tooltipVisible = !tooltipVisible"
     >

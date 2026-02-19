@@ -53,7 +53,7 @@ You can combine multiple trigger modifiers:
 
 ### Manual Control
 
-Use `.manual` combined with `.show` to control visibility:
+Use `.manual` combined with `modelValue` to control visibility:
 
 <<< DEMO ./demo/BTooltipManualControl.vue{vue}
 
@@ -104,7 +104,7 @@ The directive accepts any property from `BTooltipProps` (which extends `BPopover
 - `delay` - Show/hide delay in milliseconds or `{show: number, hide: number}`
 - `bodyClass` - Custom class for the tooltip body
 - `titleClass` - Custom class for the tooltip title
-- `placement` - Position: `'top'` | `'bottom'` | `'left'` | `'right'`
+- `placement` - Position: `'auto'` | `'auto-start'` | `'auto-end'` | `'top'` | `'top-start'` | `'top-end'` | `'bottom'` | `'bottom-start'` | `'bottom-end'` | `'left'` | `'left-start'` | `'left-end'` | `'right'` | `'right-start'` | `'right-end'`
 - `interactive` - Allow hovering over the tooltip (default: `false`)
 
 See the [BTooltip component reference](/docs/components/tooltip#comp-reference-btooltip-props) for all available properties.
@@ -144,7 +144,7 @@ Control the delay for showing and hiding tooltips using the `delay` option:
 
 <<< DEMO ./demo/BTooltipDelay.vue#template{vue-html}
 
-The default delay is `{show: 100, hide: 300}` milliseconds.
+The default delay is `0` milliseconds (immediate show/hide).
 
 ## Advanced Modifiers
 
