@@ -28,10 +28,8 @@ interface Person {
   age: number
 }
 
-const fullName = (value: unknown) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const name = value as any as Name
-  return `${name.first} ${name.last}`
+const fullName = ({value}: {value: Name}) => {
+  return `${value.first} ${value.last}`
 }
 
 const fields: TableFieldRaw<Person>[] = [
