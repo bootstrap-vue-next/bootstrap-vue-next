@@ -8,8 +8,6 @@ description: 'Add tooltips to any element using the v-b-tooltip directive. Toolt
 
 ## Overview
 
-The `v-b-tooltip` directive makes it easy to add tooltips to elements. Tooltips provide helpful hints and can be triggered by various user interactions.
-
 Things to know when using the tooltip directive:
 
 - Tooltips rely on [floating-ui](https://floating-ui.com/) for positioning
