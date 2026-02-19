@@ -66,7 +66,9 @@ export const useSafeScrollLock = (
 
     const hasLockedAfter = Array.from(lockRegistry.values()).some((val) => val === true)
     if (!hasLockedAfter) {
-      document.body.style.paddingRight = prevousRightPadding
+      if (typeof document !== 'undefined') {
+        document.body.style.paddingRight = prevousRightPadding
+      }
       isLocked.value = false
     }
   })

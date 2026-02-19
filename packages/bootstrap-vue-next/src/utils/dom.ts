@@ -2,6 +2,7 @@ import type {Slot} from 'vue'
 
 // Get the currently active HTML element
 export const getActiveElement = (excludes: readonly HTMLElement[] = []): Element | null => {
+  if (typeof document === 'undefined') return null
   const {activeElement} = document
   return activeElement && !excludes?.some((el) => el === activeElement) ? activeElement : null
 }
@@ -68,7 +69,7 @@ export const sortSlotElementsByPosition = (
 }
 
 export const getModalZIndex = (element?: Readonly<HTMLElement | null>): number => {
-  if (typeof window === 'undefined') return 1055
+  if (typeof window === 'undefined' || typeof document === 'undefined') return 1055
   const target = element ?? document.body
   const raw = window.getComputedStyle(target).getPropertyValue('--bs-modal-zindex').trim()
   const parsed = Number.parseInt(raw, 10)

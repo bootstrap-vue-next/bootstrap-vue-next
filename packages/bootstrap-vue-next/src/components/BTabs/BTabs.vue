@@ -338,7 +338,9 @@ const handleClick = (event: Readonly<MouseEvent>, index: number) => {
   ) {
     tabs.value[index].onClick?.(event)
     if (event.defaultPrevented) {
-      document.getElementById(tabs.value[index].buttonId)?.blur()
+      if (typeof document !== 'undefined') {
+        document.getElementById(tabs.value[index].buttonId)?.blur()
+      }
       return
     }
   }
@@ -351,7 +353,7 @@ const keynav = (e: Event, direction: number) => {
   e.stopPropagation()
   activeIndex.value = nextIndex(activeIndex.value + direction, direction)
   nextTick(() => {
-    if (activeIndex.value >= 0) {
+    if (activeIndex.value >= 0 && typeof document !== 'undefined') {
       document.getElementById(tabs.value[activeIndex.value]?.buttonId)?.focus()
     }
   })
@@ -421,7 +423,7 @@ watch(activeIndex, (newValue, oldValue) => {
       activeId.value = tabs.value[prev]?.id
     }
     nextTick(() => {
-      if (prev >= 0) {
+      if (prev >= 0 && typeof document !== 'undefined') {
         document.getElementById(tabs.value[prev]?.buttonId)?.focus()
       }
     })

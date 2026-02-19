@@ -407,6 +407,7 @@ const onMouseup: EventListener = (event: Readonly<Event>) => {
 const setMouseup = (on: boolean) => {
   // Enable or disabled the body mouseup/touchend handlers
   // Use try/catch to handle case when called server side
+  if (typeof document === 'undefined') return
   try {
     eventOnOff(on, [document.body, 'mouseup', onMouseup, false])
     eventOnOff(on, [document.body, 'touchend', onMouseup, false])
