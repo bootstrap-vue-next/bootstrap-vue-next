@@ -1,12 +1,20 @@
 import type {showHide} from 'bootstrap-vue-next'
 import type {PropRecord, SlotScopeReference} from '../types'
 
+/**
+ * Shared argument definition for BvTriggerableEvent event args.
+ * Use this constant wherever an emit arg has type 'BvTriggerableEvent' to ensure consistency.
+ */
+export const bvTriggerableEventArg = {
+  type: 'BvTriggerableEvent',
+  description:
+    'The BvTriggerableEvent object. Includes event details and cancellation support via `preventDefault()`',
+} as const
+
 export const showHideEmits = {
   'cancel': {
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-      },
+      value: bvTriggerableEventArg,
     },
     description: 'Emitted when a cancel action is triggered.',
   },
@@ -14,60 +22,44 @@ export const showHideEmits = {
     description:
       "Always emits just before the component has hidden. Cancelable (as long as component wasn't forcibly hidden)",
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-        description: 'Call value.preventDefault() to cancel hide',
-      },
+      value: bvTriggerableEventArg,
     },
   },
   'hide-prevented': {
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-      },
+      value: bvTriggerableEventArg,
     },
     description:
       'Emitted when the component tried to close, but was prevented from closing.  This occurs when preventDefault() is called on the event, the user clicks escape and no-close-onbackdrop is set to true, or the user clicks on the backdrop and no-close-onbackdrop is set to true.',
   },
   'hidden': {
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-      },
+      value: bvTriggerableEventArg,
     },
     description: 'Always emits after the component is hidden',
   },
   'ok': {
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-      },
+      value: bvTriggerableEventArg,
     },
     description: 'Emitted when an ok action is triggered.',
   },
   'show': {
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-        description: 'Call value.preventDefault() to cancel show',
-      },
+      value: bvTriggerableEventArg,
     },
     description: 'Always emits just before the component is shown. Cancelable',
   },
   'show-prevented': {
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-      },
+      value: bvTriggerableEventArg,
     },
     description:
       'Emitted when the component tried to open, but was prevented from opening. This occurs when preventDefault() is called on the event',
   },
   'shown': {
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-      },
+      value: bvTriggerableEventArg,
     },
     description: 'Always emits just after component is shown.',
   },
@@ -75,17 +67,12 @@ export const showHideEmits = {
     description:
       "Always emits just before the component is toggled via the exposed 'toggle()' function or useToggle composable . Cancelable (as long as component wasn't forcibly hidden)",
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-        description: 'Call value.preventDefault() to cancel hide',
-      },
+      value: bvTriggerableEventArg,
     },
   },
   'toggle-prevented': {
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-      },
+      value: bvTriggerableEventArg,
     },
     description:
       'Emitted when the component tried to toggle, but was prevented from doing so.  This occurs when preventDefault() is called on the event, the user clicks escape and no-close-onbackdrop is set to true, or the user clicks on the backdrop and no-close-onbackdrop is set to true.',
@@ -188,10 +175,7 @@ export const buildDismissibleEmits = () =>
     'close': {
       description: 'Emitted when the close button is clicked.',
       args: {
-        value: {
-          type: 'BvTriggerableEvent',
-          description: 'The event object for the close button click.',
-        },
+        value: bvTriggerableEventArg,
       },
     },
     'close-countdown': {

@@ -9,7 +9,7 @@ import type {
 } from '../../types'
 import {pick} from '../../utils/objectUtils'
 import {buildCommonProps} from '../../utils/commonProps'
-import {showHideEmits, showHideProps} from '../../utils/showHideData'
+import {bvTriggerableEventArg, showHideEmits, showHideProps} from '../../utils/showHideData'
 
 const sharedSlots: SlotScopeReference = {
   cancel: {
@@ -261,46 +261,31 @@ export default {
         'ok': {
           description: 'Emitted when the default footer OK button is clicked. Cancelable',
           args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The OK button click event details',
-            },
+            value: bvTriggerableEventArg,
           },
         },
         'cancel': {
           description: 'Emitted when the default footer Cancel button is clicked. Cancelable',
           args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The Cancel button click event details',
-            },
+            value: bvTriggerableEventArg,
           },
         },
         'close': {
           description: 'Emitted when the default header close button is clicked. Cancelable',
           args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The close button click event details',
-            },
+            value: bvTriggerableEventArg,
           },
         },
         'backdrop': {
           description: 'Emitted when the backdrop is clicked. Cancelable',
           args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The backdrop click event details',
-            },
+            value: bvTriggerableEventArg,
           },
         },
         'esc': {
           description: 'Emitted when the Esc key is pressed. Cancelable',
           args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The Esc key press event details',
-            },
+            value: bvTriggerableEventArg,
           },
         },
       } satisfies EmitRecord<keyof BModalEmits | 'update:model-value'>,

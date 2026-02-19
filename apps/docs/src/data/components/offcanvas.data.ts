@@ -9,7 +9,7 @@ import {
 } from '../../types'
 import {buildCommonProps} from '../../utils/commonProps'
 import {pick} from '../../utils/objectUtils'
-import {showHideEmits, showHideProps} from '../../utils/showHideData'
+import {bvTriggerableEventArg, showHideEmits, showHideProps} from '../../utils/showHideData'
 
 export default {
   load: (): ComponentReference => ({
@@ -133,10 +133,7 @@ export default {
         },
         'breakpoint': {
           args: {
-            value: {
-              type: 'BvTriggerableEvent',
-              description: 'The event object',
-            },
+            value: bvTriggerableEventArg,
             opened: {
               type: 'boolean',
               description: 'Whether or not the offcanvas is above the breakpoint and is open by it',
@@ -147,28 +144,19 @@ export default {
         'close': {
           description: 'Emitted when the close button is clicked',
           args: {
-            value: {
-              description: 'BvTriggerableEvent object',
-              type: 'BvTriggerableEvent',
-            },
+            value: bvTriggerableEventArg,
           },
         },
         'esc': {
           description: 'Emitted when the Escape key is pressed while the offcanvas is open',
           args: {
-            value: {
-              description: 'BvTriggerableEvent object',
-              type: 'BvTriggerableEvent',
-            },
+            value: bvTriggerableEventArg,
           },
         },
         'backdrop': {
           description: 'Emitted when the backdrop is clicked',
           args: {
-            value: {
-              description: 'BvTriggerableEvent object',
-              type: 'BvTriggerableEvent',
-            },
+            value: bvTriggerableEventArg,
           },
         },
       } satisfies EmitRecord<keyof BOffcanvasEmits | 'update:model-value'>,

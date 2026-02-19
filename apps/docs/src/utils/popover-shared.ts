@@ -2,7 +2,7 @@ import type {BPopoverEmits, BPopoverProps} from 'bootstrap-vue-next'
 import {type EmitRecord, type EmitReference, type PropRecord, type PropReference} from '../types'
 import {buildCommonProps} from './commonProps'
 import {pick} from './objectUtils'
-import {showHideEmits, showHideProps} from './showHideData'
+import {bvTriggerableEventArg, showHideEmits, showHideProps} from './showHideData'
 
 export const popoverSharedProps = (type: string): PropRecord<keyof BPopoverProps> => {
   const clone = structuredClone(sharedProps) as Record<string, PropReference>
@@ -199,47 +199,32 @@ const sharedEmits = {
   'blur': {
     description: 'Emitted when the target element loses focus.',
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-        description: '', // TODO missing description
-      },
+      value: bvTriggerableEventArg,
     },
   },
   'click': {
     description: 'Emitted when the {component} is hidden by a click on the trigger element.',
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-        description: '', // TODO missing description
-      },
+      value: bvTriggerableEventArg,
     },
   },
   'click-outside': {
     description: 'Emitted when the mouse is clicked outside the {component}.',
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-        description: '', // TODO missing description
-      },
+      value: bvTriggerableEventArg,
     },
   },
   'close-on-hide': {
     description: 'Emitted when the {component} is closed due to being clipped.',
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-        description: '', // TODO missing description
-      },
+      value: bvTriggerableEventArg,
     },
   },
   'pointerleave': {
     description:
       'Emitted when the pointer leaves the target element, but not when leaving the popover element.',
     args: {
-      value: {
-        type: 'BvTriggerableEvent',
-        description: '', // TODO missing description
-      },
+      value: bvTriggerableEventArg,
     },
   },
   'update:model-value': {
