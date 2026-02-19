@@ -18,7 +18,7 @@ export default {
     const githubComponentsDirectory = `${githubPackageDirectory}/src/components`
     const githubComposablesDirectory = `${githubPackageDirectory}/src/composables`
     const githubDirectivesDirectory = `${githubPackageDirectory}/src/directives`
-    const githubDocsDirectory = `${githubUrl}/${base}/apps/docs/src/docs`
+    const githubDocsDirectory = `${githubUrl}/${base}/apps/docs/src`
     ctx.app.provide(appInfoKey, {
       githubMainBranch,
       githubUrl,
