@@ -1609,6 +1609,28 @@ The directive value can be a string or an object:
 
 Note: BSV used `content` property, BSVN uses `body` property in object configuration.
 
+#### Custom Class Properties
+
+BSV used a `customClass` property, while BSVN provides more granular control:
+
+**BSV:**
+
+```vue-html
+<BButton v-b-popover="{title: 'Title', body: 'Content', customClass: 'my-custom-class'}">
+  Button
+</BButton>
+```
+
+**BSVN:**
+
+```vue-html
+<BButton v-b-popover="{title: 'Title', body: 'Content', bodyClass: 'my-body-class', titleClass: 'my-title-class'}">
+  Button
+</BButton>
+```
+
+BSVN provides separate `bodyClass` and `titleClass` properties for more precise styling control.
+
 #### Special Modifiers
 
 BSVN adds new modifiers not available in BSV:
@@ -1678,7 +1700,69 @@ For complex scenarios, migrate to the `<BPopover>` component:
 
 ### Tooltip
 
-<NotYetDocumented type="directive"/>
+The `v-b-tooltip` directive works similarly between BSV and BSVN, but has some important differences:
+
+#### Basic Usage
+
+Simple string tooltips work the same:
+
+**BSV:**
+
+<<< FRAGMENT ./demo/TooltipDirectiveBasicBefore.html{html}
+
+**BSVN:**
+
+<<< FRAGMENT ./demo/TooltipDirectiveBasicAfter.html{html}
+
+#### Trigger Modifiers
+
+The main difference is that BSVN requires tooltip content in the directive value when using modifiers.
+
+**BSV:**
+
+<<< FRAGMENT ./demo/TooltipDirectiveTriggersBefore.html{html}
+
+**BSVN:**
+
+<<< FRAGMENT ./demo/TooltipDirectiveTriggersAfter.html{html}
+
+BSVN automatically removes the `title` attribute and stores it as `data-original-title` to prevent browser tooltips.
+
+#### Object Configuration
+
+The object configuration interface has changed:
+
+**BSV:**
+
+<<< FRAGMENT ./demo/TooltipDirectiveObjectBefore.html{html}
+
+**BSVN:**
+
+<<< FRAGMENT ./demo/TooltipDirectiveObjectAfter.html{html}
+
+Key changes:
+
+- `placement` is now specified via modifier (`.top`, `.bottom`, etc.) instead of in the object
+- `delay` now requires an object with `show` and `hide` properties (not a single number)
+- Floating UI (instead of Popper.js) is used for positioning
+
+#### Custom Classes (Directive)
+
+BSV's `customClass` property has been replaced with `bodyClass` and `titleClass` for more granular control:
+
+**BSV:**
+
+<<< FRAGMENT ./demo/TooltipDirectiveCustomClassBefore.html#template{html}
+
+**BSVN:**
+
+<<< FRAGMENT ./demo/TooltipDirectiveCustomClassAfter.html#template{html}
+
+::: tip Tooltip Rendering Behavior
+Unlike popovers which can display both title and body simultaneously, tooltips only display **either** title **or** body content. The `titleClass` and `bodyClass` properties are mutually exclusive - only one will apply at a time depending on which content is rendered.
+:::
+
+See the [Tooltip Directive documentation](/docs/directives/BTooltip) for complete details.
 
 ### Visible
 

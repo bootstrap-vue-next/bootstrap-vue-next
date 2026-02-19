@@ -265,6 +265,21 @@ FRAGMENT syntax should be used for:
 - Examples that are referenced across different documentation pages
 - **IMPORTANT**: Fragment files should contain ONLY the code snippet without `<template>`, `<script>`, or `<style>` blocks. They are not runnable demos.
 
+**Exception**: Small inline code blocks within `:::tip`, `:::warning`, `:::note`, or similar admonition blocks may remain inline for better formatting. The standard card formatting used for FRAGMENT references can disrupt the visual flow of tips. Example acceptable inline code:
+
+````markdown
+::: tip Type Definition
+The directive accepts [`BTooltipProps`](link):
+
+```typescript
+import type {BTooltipProps} from 'bootstrap-vue-next'
+```
+````
+
+:::
+
+```
+
 DEMO syntax should be used for:
 
 - Full component demonstrations
@@ -286,3 +301,4 @@ DEMO syntax should be used for:
 Follow the established code style
 
 - When a Vue component event takes three or more arguments, use an object to pass the arguments instead of multiple positional parameters. For example: `emit('event-name', {arg1, arg2, arg3})` instead of `emit('event-name', arg1, arg2, arg3)`. Fewer than three arguments may use positional parameters.
+```

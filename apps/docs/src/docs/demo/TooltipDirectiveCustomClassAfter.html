@@ -1,0 +1,8 @@
+<!-- #region template -->
+<!-- Use bodyClass for tooltip content styling -->
+<button v-b-tooltip="{title: 'My tooltip', bodyClass: 'my-tooltip-class'}">Hover me</button>
+
+<!-- Note: tooltips render EITHER title OR body, never both -->
+<!-- titleClass only applies when using the body property with title -->
+<button v-b-tooltip="{body: 'Content', bodyClass: 'my-body-class'}">Hover me</button>
+<!-- #endregion template -->

@@ -21,9 +21,7 @@ Things to know when using the popover directive:
 
 As shown above, the BootstrapVueNext directive `v-b-popover` can have a value and optionally one or more modifiers. The general format for directives is:
 
-```vue-html
-v-{name}.{modifier1}.{modifier2}.{etc}={value}
-```
+<<< FRAGMENT ./demo/DirectiveSyntaxFormat.html#format{vue-html}
 
 For example:
 
@@ -98,9 +96,39 @@ For advanced configuration, pass an object:
 
 <<< DEMO ./demo/BPopoverValueObject.vue#template{vue-html}
 
-The object interface supports these options:
+The directive accepts any property from `BPopoverProps`. Common properties include:
 
-<<< FRAGMENT ./demo/PopoverValueInterface.ts#interface{typescript}
+- `title` - The popover header text
+- `body` - The popover body content
+- `delay` - Show/hide delay in milliseconds or `{show: number, hide: number}`
+- `bodyClass` - Custom class for the popover body
+- `titleClass` - Custom class for the popover title
+- `placement` - Position: `'auto'` | `'top'` | `'bottom'` | `'left'` | `'right'`
+- `click` - Enable click trigger
+- `hover` - Enable hover trigger
+- `focus` - Enable focus trigger
+- `manual` - Disable automatic triggers
+
+See the [BPopover component reference](/docs/components/popover#comp-reference-bpopover-props) for all available properties.
+
+::: tip Type Definition
+The directive value accepts the TypeScript interface [`BPopoverProps`](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/packages/bootstrap-vue-next/src/types/ComponentProps.ts), which is exported from `bootstrap-vue-next` for use in your code:
+
+```typescript
+import type {BPopoverProps} from 'bootstrap-vue-next'
+```
+
+:::
+
+:::tip Rendering Behavior
+**Popovers can display both `title` AND `body` simultaneously:**
+
+- `title` → renders in header with `titleClass` applied
+- `body` → renders in body with `bodyClass` applied
+- Both provided → displays header + body (like a card)
+
+This differs from tooltips, which only display either title or body, never both.
+:::
 
 ## Title Attribute
 
