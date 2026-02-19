@@ -25,11 +25,12 @@
 </template>
 
 <script setup lang="ts">
-import {computed, useTemplateRef} from 'vue'
+import {computed, inject, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
 import type {BFormInputProps} from '../../types/ComponentProps'
 import {useFormInput} from '../../composables/useFormInput'
+import {inputGroupKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<Omit<BFormInputProps, 'modelValue'>>(), {
   max: undefined,
@@ -70,6 +71,8 @@ const [modelValue, modelModifiers] = defineModel<
 
 const input = useTemplateRef('_input')
 
+const inInputGroup = inject(inputGroupKey, false)
+
 const {
   computedId,
   computedAriaInvalid,
@@ -89,7 +92,7 @@ const computedClasses = computed(() => {
     stateClass.value,
     {
       'form-range': isRange,
-      'form-control': isColor || (!props.plaintext && !isRange),
+      'form-control': isColor || (!props.plaintext && !isRange) || (isRange && inInputGroup),
       'form-control-color': isColor,
       'form-control-plaintext': props.plaintext && !isRange && !isColor,
       [`form-control-${props.size}`]: !!props.size,
