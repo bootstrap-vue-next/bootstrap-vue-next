@@ -42,7 +42,7 @@ export const useTextareaResize = (
     computedMinRows.value === computedMaxRows.value ? computedMinRows.value : null
   )
 
-  const handleHeightChange = async () => {
+  const handleHeightChange = () => {
     // Element must be visible (not hidden) and in document
     // Must be checked after above checks
     if (!input.value || !isVisible(input.value)) {
@@ -68,14 +68,16 @@ export const useTextareaResize = (
 
     // Get the current style height (with `px` units)
     const oldHeight = input.value.style.height || computedStyle.height
+    // Save the current inline style height for restoration after probing
+    const oldStyleHeight = input.value.style.height
     // Probe scrollHeight by temporarily changing the height to `auto`
-    height.value = 'auto'
-    await nextTick() // We need to wait for the dom to update. These cannot be batched in the same tick
+    // Use direct DOM manipulation to avoid triggering reactive re-renders
+    // that would overwrite the textarea's value (e.g. when v-model.trim is used)
+    input.value.style.height = 'auto'
+    // Reading scrollHeight forces a synchronous browser reflow
     const {scrollHeight} = input.value
-    // Place the original old height back on the element, just in case `computedProp`
-    // returns the same value as before
-    height.value = oldHeight
-    await nextTick() // We need to wait for the dom to update. These cannot be batched in the same tick
+    // Restore the original inline style height
+    input.value.style.height = oldStyleHeight
 
     // Calculate content height in 'rows' (scrollHeight includes padding but not border)
     const contentRows = Math.max((scrollHeight - padding) / lineHeight, 2)
@@ -91,8 +93,27 @@ export const useTextareaResize = (
       return
     }
 
+    // Save current textarea state before updating reactive height
+    // This ensures we can restore the value if a re-render overwrites it
+    // (e.g. when v-model.trim removes trailing whitespace during typing)
+    const savedValue = input.value.value
+    const savedSelectionStart = input.value.selectionStart
+    const savedSelectionEnd = input.value.selectionEnd
+
     // Return the new computed CSS height in px units
     height.value = `${newHeight}px`
+
+    // If height changed, the re-render may overwrite the textarea's DOM value
+    // with the trimmed modelValue. Restore it after the render completes.
+    if (`${newHeight}px` !== oldHeight) {
+      nextTick(() => {
+        if (input.value && input.value.value !== savedValue) {
+          input.value.value = savedValue
+          input.value.selectionStart = savedSelectionStart
+          input.value.selectionEnd = savedSelectionEnd
+        }
+      })
+    }
   }
 
   onMounted(handleHeightChange)
