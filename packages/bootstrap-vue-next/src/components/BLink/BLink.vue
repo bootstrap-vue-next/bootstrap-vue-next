@@ -4,9 +4,10 @@
     :class="computedClasses"
     :target="props.target"
     :rel="computedRel"
+    :href="computedHref"
     :tabindex="computedTabIndex"
     :aria-disabled="props.disabled ? true : null"
-    v-bind="{...computedSpecificProps, ...(computedSpecificProps.to ? {} : {href: computedHref})}"
+    v-bind="computedSpecificProps"
     @click="
       (e: MouseEvent) => {
         clicked(e)
