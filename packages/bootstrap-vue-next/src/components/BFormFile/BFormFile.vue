@@ -77,8 +77,8 @@
         :required="props.required"
         :accept="computedAccept || undefined"
         :capture="props.capture"
-        :directory="props.directory"
-        :webkitdirectory="props.directory"
+        :directory="props.directory || undefined"
+        :webkitdirectory="props.directory || undefined"
         tabindex="-1"
         aria-hidden="true"
         style="
@@ -111,8 +111,8 @@
       :aria-label="props.ariaLabel"
       :aria-labelledby="props.ariaLabelledby"
       :aria-required="props.required || undefined"
-      :directory="props.directory"
-      :webkitdirectory="props.directory"
+      :directory="props.directory || undefined"
+      :webkitdirectory="props.directory || undefined"
       @change="onPlainChange"
     />
 

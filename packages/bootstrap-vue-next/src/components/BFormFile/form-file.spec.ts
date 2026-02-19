@@ -300,20 +300,20 @@ describe('form-file', () => {
       expect($input.attributes('directory')).toBe('true')
     })
 
-    it('input element has set attr directory to false when prop directory is false', () => {
+    it('input element does not have attr directory when prop directory is false', () => {
       const wrapper = mount(BFormFile, {
         props: {directory: false, plain: true},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('directory')).toBe('false')
+      expect($input.attributes('directory')).toBeUndefined()
     })
 
-    it('input element has set attr directory to false when prop directory is undefined', () => {
+    it('input element does not have attr directory when prop directory is undefined', () => {
       const wrapper = mount(BFormFile, {
         props: {directory: undefined, plain: true},
       })
       const $input = wrapper.get('input')
-      expect($input.attributes('directory')).toBe('false')
+      expect($input.attributes('directory')).toBeUndefined()
     })
 
     it('has custom attributes transferred to input element in plain mode', async () => {
