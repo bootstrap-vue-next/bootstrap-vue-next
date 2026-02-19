@@ -1,186 +1,208 @@
 ---
-description: 'Add custom tooltips to any element. Tooltips can be triggered by hovering, focusing, or clicking an element'
+description: 'Add tooltips to any element using the v-b-tooltip directive. Tooltips can be triggered by hovering, focusing, or clicking an element'
 ---
 
-<BCard class="bg-body-tertiary">
+> The `v-b-tooltip` directive makes it easy to add tooltips to elements. Tooltips provide helpful hints and can be triggered by various user interactions.
 
-```vue-html
-<BCard v-b-tooltip="'My title'" />
-<BCard v-b-tooltip="{title: 'My title'}" />
-<BCard v-b-tooltip.hover.top="'My title'" />
-<BCard v-b-tooltip.focus.right="{title: 'My title'}" />
-```
+<<< DEMO ./demo/BTooltipOverview.vue#template{vue-html}
 
-</BCard>
+## Overview
 
-As shown above, the BoostrapVueNext directive named `b-tooltip` should have a value, and optionally one or more modifiers. The general format for directives is is:
+Things to know when using the tooltip directive:
 
-```vue-html
-v-{name}.{modifier1}.{modifier2}.{etc.}={value}.
-```
+- Tooltips rely on [floating-ui](https://floating-ui.com/) for positioning
+- Triggering tooltips on hidden elements will not work
+- Tooltips for `disabled` elements must be triggered on a wrapper element
+- When triggered from hyperlinks that span multiple lines, tooltips will be centered. Use the `inline` modifier to improve positioning
+- Tooltips are lightweight and ideal for short text hints (for longer content, consider using [popover](/docs/directives/BPopover))
 
-## Triggers modifiers
+## Directive Syntax
 
-We can define when we want to trigger a tooltip with the following modifiers.
+As shown above, the BootstrapVueNext directive `v-b-tooltip` can have a value and optionally one or more modifiers. The general format for directives is:
 
-- click
-- hover
-- focus
-- manual
-- click
+<<< FRAGMENT ./demo/DirectiveSyntaxFormat.html#format{vue-html}
 
-If we do not specify any modifiers, the tooltip is by default enabled for "hover" and "focus".
+For example:
 
-## Placement modifiers
+<<< FRAGMENT ./demo/BTooltipSyntax.vue#syntax{vue-html}
 
-We can specify where to place the tooltip with the following modifiers.
+## Trigger Modifiers
 
-- left
-- right
-- bottom
-- top
+You can define when to trigger a tooltip with the following modifiers:
 
-If we do not define any modifier, the placement will be "top".
+- `.click` - Toggle tooltip on click
+- `.hover` - Show tooltip on hover (mouseenter/mouseleave)
+- `.focus` - Show tooltip on focus/blur
+- `.manual` - Disable automatic triggers (control via `.show` modifier)
+
+If you do not specify any trigger modifiers, the tooltip is enabled by default for **both hover and focus** events.
+
+<<< DEMO ./demo/BTooltipTriggerModifiers.vue#template{vue-html}
+
+### Default Behavior
+
+<<< DEMO ./demo/BTooltipDefaultBehavior.vue#template{vue-html}
+
+### Multiple Triggers
+
+You can combine multiple trigger modifiers:
+
+<<< DEMO ./demo/BTooltipMultipleTriggers.vue#template{vue-html}
+
+### Manual Control
+
+Use `.manual` combined with `modelValue` to control visibility:
+
+<<< DEMO ./demo/BTooltipManualControl.vue{vue}
+
+## Placement Modifiers
+
+Specify where to place the tooltip with the following modifiers:
+
+- `.top` - Above the element
+- `.bottom` - Below the element
+- `.left` - To the left of the element
+- `.right` - To the right of the element
+
+If you do not define a placement modifier, the default placement is **top**.
+
+<<< DEMO ./demo/BTooltipPlacementModifiers.vue#template{vue-html}
 
 ## Value
 
-The tooltip text is specified in the value, but remember that what is inside the "" is interpreted in Javascript, not as a string literal. So if you want have your tooltip say "My title", then you must use an extra pair of quotes, e.g. '', inside the "":
+The tooltip content and configuration is specified in the directive value. The value can be:
 
-```vue-html
-<BCard v-b-tooltip="'My title'" />
+- A **string** - used as the tooltip text content
+- An **object** - for advanced configuration
+- A **reactive variable** - dynamically updated content
+
+### String Values
+
+For simple text content, use a string literal (remember to use quotes):
+
+<<< DEMO ./demo/BTooltipValueString.vue{vue}
+
+:::warning Important
+What is inside the quotes (`""`) is interpreted as JavaScript, not as a string literal. To display literal text like "My tooltip", you must use an extra pair of quotes:
+
+<<< FRAGMENT ./demo/BTooltipValueWarning.vue#warning{vue-html}
+
+:::
+
+### Object Values
+
+For advanced configuration, pass an object:
+
+<<< DEMO ./demo/BTooltipValueObject.vue#template{vue-html}
+
+The directive accepts any property from `BTooltipProps` (which extends `BPopoverProps`). Common properties include:
+
+- `title` - The tooltip text content
+- `body` - Alternative content (used if `title` not provided)
+- `delay` - Show/hide delay in milliseconds or `{show: number, hide: number}`
+- `bodyClass` - Custom class for the tooltip body
+- `titleClass` - Custom class for the tooltip title
+- `placement` - Position: `'auto'` | `'auto-start'` | `'auto-end'` | `'top'` | `'top-start'` | `'top-end'` | `'bottom'` | `'bottom-start'` | `'bottom-end'` | `'left'` | `'left-start'` | `'left-end'` | `'right'` | `'right-start'` | `'right-end'`
+- `interactive` - Allow hovering over the tooltip (default: `false`)
+
+See the [BTooltip component reference](/docs/components/tooltip#comp-reference-btooltip-props) for all available properties.
+
+::: tip Type Definition
+The directive value accepts the TypeScript interface [`BTooltipProps`](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/packages/bootstrap-vue-next/src/types/ComponentProps.ts), which is exported from `bootstrap-vue-next` for use in your code:
+
+```typescript
+import type {BTooltipProps} from 'bootstrap-vue-next'
 ```
 
-If you want to refer to the reactive variable `userSurname`, you would do this:
+:::
 
-```vue-html
-<BCard v-b-tooltip="userSurname" />
-```
+:::tip Rendering Behavior
+**Tooltips display either `title` OR `body`, never both:**
 
-In general, the value can be an object, a string, a function, or an element.
+- If `title` is provided → renders with `titleClass` applied
+- If only `body` is provided → renders with `bodyClass` applied
+- Both `title` and `body` → only `title` is rendered
 
-<BCard class="bg-body-tertiary">
+This differs from popovers, which can display both title and body content simultaneously.
+:::
 
-```ts
-/**
- * Default title value if title attribute is not present.
- *
- * If a function is given, it will be called with its this reference set
- * to the element that the popover is attached to.
- *
- * @default ''
- */
-title: string | Element | JQuery | ((this: HTMLElement) => string | Element | JQuery)
-```
+## Title Attribute
 
-</BCard>
+When the directive value doesn't include a `title`, the tooltip will use the element's `title` attribute if present:
 
-The object interface is the most flexible, alllowing these options:
+<<< DEMO ./demo/BTooltipTitleAttribute.vue#template{vue-html}
 
-<BCard class="bg-body-tertiary">
-
-```ts
-interface ValueObject {
-  delay?: number // default: 0
-  placement?: 'auto' | 'top' | 'bottom' | 'left' | 'right'
-  title?: string
-  trigger?:
-    | 'click'
-    | 'hover'
-    | 'focus'
-    | 'manual'
-    | 'click hover'
-    | 'click focus'
-    | 'hover focus'
-    | 'click hover focus'
-}
-```
-
-</BCard>
+:::tip Note
+When using the `title` attribute, the directive automatically removes it from the element and stores it as `data-original-title` to prevent the browser's native tooltip from showing.
+:::
 
 ## Delay
 
-The delay to displaying (and hiding) the tooltip, in millisceonds. The default is 0.
+Control the delay for showing and hiding tooltips using the `delay` option:
 
-## Pitfalls
+<<< DEMO ./demo/BTooltipDelay.vue#template{vue-html}
 
-When we are using a directive, we have two ways to define the title to use in the tooltip.
+The default delay is `0` milliseconds (immediate show/hide).
 
-### Incorrect use
+## Advanced Modifiers
 
-<BCard class="bg-body-tertiary">
+### Positioning Modifiers
 
-```vue-html
-<BCard v-b-tooltip.hover.top title="my title" />
-```
+- `.body` - Append tooltip to `<body>` instead of next to the element
+- `.child` - Append tooltip as a child of the element
+- `.inline` - Use inline positioning for better alignment with multi-line text
 
-</BCard>
+### Rendering Modifiers
 
-- First example it is using the property from BCard "title", this property is going to render something like:
+- `.lazy` - Defer rendering until first shown (improves initial performance)
+- `.realtime` - Update position in real-time (useful for scrolling scenarios)
 
-<BCard class="bg-body-tertiary">
+### Combined Example
 
-```vue-html
-<div class="card">
-  <div/> // header
-    <div title="my title">
-      //something here
-    </div>
-  </div> // footer
-</div>
-```
+<<< DEMO ./demo/BTooltipModifiersCombined.vue#template{vue-html}
 
-</BCard>
+## Common Pitfalls
 
-Where our title is going to be attached to a child element, but the custom directive is attached to our parent div with class "card".
+### Using Components with Title Prop
 
-So, it is not going to work, and we are going to see a warning in the developer's console.
+When using the directive on components that have a `title` prop (like `BCard`), you must provide the tooltip content via the directive value, not the `title` prop:
 
-<BCard class="bg-body-tertiary">
+<<< FRAGMENT ./demo/BTooltipCommonPitfalls.vue#component{vue-html}
 
-```vue-html
-<BCard v-b-tooltip.hover.top="my title" />
-```
+This is because the component's `title` prop is applied to a child element, while the directive is attached to the root element.
 
-</BCard>
+### Using with Plain HTML
 
-Here we are not using a string, because is reading ts or js code. So, we need to set a literal string, a variable, function or so on.
+The directive works best with plain HTML elements when using the `title` attribute:
 
-## Correct use
+<<< FRAGMENT ./demo/BTooltipCommonPitfalls.vue#html{vue-html}
 
-In that cases is working when the title is created in the root component, like this example:
+## Comparison with Component
 
-<BCard class="bg-body-tertiary">
+The `v-b-tooltip` directive is ideal for simple tooltips with basic content. For more complex scenarios, consider using the [`<BTooltip>` component](/docs/components/tooltip):
 
-```vue-html
-<div v-b-tooltip.hover.top title="my title">
- //something
-</div>
-```
+| Feature                        | Directive          | Component                   |
+| ------------------------------ | ------------------ | --------------------------- |
+| Simple text content            | ✅ Ideal           | ✅ Supported                |
+| Reactive content               | ✅ Good            | ✅ Excellent                |
+| HTML/Vue components in content | ❌ Limited         | ✅ Full support (via slots) |
+| Programmatic control           | ⚠️ Via modifiers   | ✅ Full API                 |
+| Interactive content            | ❌ Not recommended | ✅ Designed for it          |
 
-</BCard>
+For tooltips with interactive elements or complex layouts, use the component version.
 
-<BCard class="bg-body-tertiary">
+## Accessibility
 
-```vue-html
-<div class="card" title="my title">
-    //something here
-</div>
-```
+### Focus Trigger on Buttons
 
-</BCard>
+For proper cross-browser behavior when using only the `.focus` trigger, use an element that renders an `<a>` tag with `tabindex="0"`:
 
-In that case, the directive is detecting the title value, and it is going to be used correctly.
+<<< FRAGMENT ./demo/BTooltipAccessibility.vue#focus{vue-html}
 
-<BCard class="bg-body-tertiary">
+### Keyboard Users
 
-```vue-html
-<BCard v-b-tooltip.hover.top="'my title'" />
-```
+- Only add tooltips to keyboard-focusable elements (links, buttons, form controls)
+- Avoid using `.hover` as the only trigger - keyboard users cannot trigger hover events
+- For interactive content, use the `<BTooltip>` component instead
 
-</BCard>
-
-We should use the value type when the component is not setting to the root component a title. Notice that we should use ts/js code, a variable and so on.
-
-<script setup lang="ts">
-import {ref} from 'vue'
-</script>
+<!-- Component reference added automatically from component package.json -->
