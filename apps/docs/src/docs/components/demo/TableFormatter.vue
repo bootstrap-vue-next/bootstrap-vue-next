@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type {TableFieldRaw} from 'bootstrap-vue-next'
+import type {TableFieldFormatter, TableFieldRaw} from 'bootstrap-vue-next'
 
 interface Name {
   first: string
@@ -28,10 +28,8 @@ interface Person {
   age: number
 }
 
-const fullName = (value: unknown) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const name = value as any as Name
-  return `${name.first} ${name.last}`
+const fullName: TableFieldFormatter<Person> = ({value}) => {
+ return `${value.first} ${value.last}`
 }
 
 const fields: TableFieldRaw<Person>[] = [
