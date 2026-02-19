@@ -1,10 +1,7 @@
-# Introduction
-
-<div class="lead">
-
-Get started with BootstrapVueNext and Bootstrap `v5`, the world's most popular framework for building responsive, mobile-first sites.
-
-</div>
+---
+title: Getting Started
+description: Get started with BootstrapVueNext and Bootstrap `v5`, the world's most popular framework for building responsive, mobile-first sites.
+---
 
 ## Why BootstrapVueNext?
 
@@ -188,7 +185,7 @@ export default defineConfig({
 The resolver import is from `bootstrap-vue-next`, not `unplugin-vue-components`
 </NoteAlert>
 
-##### Aliasing
+#### Aliasing
 
 With the `BootstrapVueNextResolver` we also have an option for aliasing components like so:
 
@@ -355,15 +352,26 @@ Below are some pointers on optimizing tree-shaking in the context of BootstrapVu
 
 ### Tree-shake CSS
 
-If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`). With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some additional CSS ourselves. So, using a method such as [Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the Bootstrap documentation is likely the best way to achieve the tiniest possible application size. Though it is not automatic, it should prove the safest bet for minifying your application.
+If you are using one of the preferred installation methods, JS will be tree-shaken by default. The one thing
+we are not able to do automatically is optimize CSS. Methods like PurgeCSS are not ideal because of a limitation
+with the dynamic nature of class renderings and Vue (Problematic code like: `[btn-${props.variant}]: props.variant !== undefined`).
+With that being said, BootstrapVueNext does not handle CSS imports from Bootstrap, we only add some
+additional CSS ourselves. So, using a method such as
+[Lean Sass Imports](https://getbootstrap.com/docs/5.3/customize/optimize/#lean-sass-imports) from the
+Bootstrap documentation is likely the best way to achieve the tiniest possible application size.
+Though it is not automatic, it should prove the safest bet for minifying your application.
 
 ### Tree-shaking with BApp
 
-When using the **BApp component approach**, you automatically get optimal tree-shaking as only the components and composables you actually use are included in your bundle.
+When using the **BApp component approach**, you automatically get optimal tree-shaking as only the
+components and composables you actually use are included in your bundle.
 
-When using the **plugin approach**, `createBootstrap` is a utility that provides everything required for the library to work. However, some plugins may not be needed and can be individually imported. All plugins are appended with `Plugin` (`registryPlugin`, `orchestratorPlugin`, etc.), so you can select only what is needed.
+When using the **plugin approach**, `createBootstrap` is a utility that provides everything required for
+the library to work. However, some plugins may not be needed and can be individually imported. All plugins
+are appended with `Plugin` (`registryPlugin`, `orchestratorPlugin`, etc.), so you can select only what is needed.
 
-The `createBootstrap` plugin is approximately ~20kb gzipped, with orchestrator functionality accounting for the majority. Use individual plugin imports if you want the tiniest possible bundle size.
+The `createBootstrap` plugin is approximately ~20kb gzipped, with orchestrator functionality accounting for the majority.
+Use individual plugin imports if you want the tiniest possible bundle size.
 
 <BootstrapPluginWarning />
 
@@ -384,6 +392,10 @@ import {BTab} from 'bootstrap-vue-next/components/BTabs'
 
 ## Comparison with BootstrapVue
 
-BootstrapVue is the parent project for which this is based on. We consider BootstrapVue as the best implementation of Bootstrap `v4`. We strive for a full compatibility list for BootstrapVue. However, due to the nature of the rewrite, some features may be missing or changed. If anyone has spotted a missing compatibility feature, we request that you submit a GitHub issue or contribute to the [parity report](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#help-verify-bootstrapvue-and-bootstrap-v5-parity).
+BootstrapVue is the parent project for which this is based on. We consider BootstrapVue as the best implementation
+of Bootstrap `v4`. We strive for a full compatibility list for BootstrapVue. However, due to the nature of the rewrite,
+some features may be missing or changed. If anyone has spotted a missing compatibility feature, we request that you
+submit a GitHub issue or contribute to the
+[parity report](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#help-verify-bootstrapvue-and-bootstrap-v5-parity).
 
 If you are migrating from BootstrapVue, please refer to our [migration guide](/docs/migration-guide)
