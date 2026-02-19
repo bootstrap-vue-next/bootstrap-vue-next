@@ -28,9 +28,7 @@ interface Person {
   age: number
 }
 
-const fullName: TableFieldFormatter<Person> = ({value}) => {
- return `${value.first} ${value.last}`
-}
+const fullName: TableFieldFormatter<Person> = ({item}) => `${item.name.first} ${item.name.last}`
 
 const fields: TableFieldRaw<Person>[] = [
   {
