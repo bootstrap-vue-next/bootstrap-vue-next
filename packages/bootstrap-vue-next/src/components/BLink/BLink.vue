@@ -6,7 +6,7 @@
     :rel="computedRel"
     :tabindex="computedTabIndex"
     :aria-disabled="props.disabled ? true : null"
-    v-bind="{...computedSpecificProps, ...(computedSpecificProps.to ? {} : {href: computedHref})}"
+    v-bind="{...computedSpecificProps, ...(isNuxtLink ? {} : {href: computedHref})}"
     @click="
       (e: MouseEvent) => {
         clicked(e)

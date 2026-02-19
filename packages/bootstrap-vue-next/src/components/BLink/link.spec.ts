@@ -61,6 +61,20 @@ describe('link', () => {
     expect(wrapper.attributes('href')).toBe('/custom')
   })
 
+  it('has href attribute when using to with RouterLink', () => {
+    const wrapper = mount(BLink, {
+      props: {
+        to: '/about',
+      },
+      global: {
+        plugins: [router],
+      },
+    })
+    // href must always be present for non-Nuxt router links (e.g. VitePress)
+    expect(wrapper.attributes('href')).toBe('/about')
+    expect(wrapper.element.tagName).toBe('A')
+  })
+
   it('renders NuxtLink when routerComponentName is set to "NuxtLink"', () => {
     // Mock NuxtLink component
     const NuxtLink = defineComponent({
