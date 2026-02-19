@@ -62,7 +62,9 @@ export type BTableProvider<T> = (
   context: Readonly<BTableProviderContext>
 ) => MaybePromise<T[] | undefined>
 
-export type TableFieldFormatter<T> = (obj: {value: unknown; key: string; item: T}) => string
+export type TableFieldFormatterObject<T> = {value: unknown; key: string; item: T}
+
+export type TableFieldFormatter<T> = (obj: TableFieldFormatterObject<T>) => string
 
 export type TableRowType = 'row' | 'row-expansion' | 'row-top' | 'row-bottom' | 'table-busy'
 export type TableRowThead = 'top' | 'bottom'

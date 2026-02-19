@@ -33,6 +33,7 @@ export type {
   BTableSortBy,
   TableField,
   TableFieldFormatter,
+  TableFieldFormatterObject,
   TableFieldRaw,
   TableItem,
   TableRowThead,

@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type {TableFieldFormatter, TableFieldRaw} from 'bootstrap-vue-next'
+import type {TableFieldFormatterObject, TableFieldRaw} from 'bootstrap-vue-next'
 
 interface Name {
   first: string
@@ -28,7 +28,7 @@ interface Person {
   age: number
 }
 
-const fullName: TableFieldFormatter<Person> = ({value}) => {
+const fullName = ({value}: TableFieldFormatterObject<Person>) => {
   const name = value as Name
   return `${name.first} ${name.last}`
 }
