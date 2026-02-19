@@ -100,17 +100,19 @@ export const useTextareaResize = (
     const savedSelectionStart = input.value.selectionStart
     const savedSelectionEnd = input.value.selectionEnd
 
+    const newHeightPx = `${newHeight}px`
+
     // Return the new computed CSS height in px units
-    height.value = `${newHeight}px`
+    height.value = newHeightPx
 
     // If height changed, the re-render may overwrite the textarea's DOM value
     // with the trimmed modelValue. Restore it after the render completes.
-    if (`${newHeight}px` !== oldHeight) {
+    if (newHeightPx !== oldHeight) {
       nextTick(() => {
         if (input.value && input.value.value !== savedValue) {
           input.value.value = savedValue
-          input.value.selectionStart = savedSelectionStart
-          input.value.selectionEnd = savedSelectionEnd
+          input.value.selectionStart = Math.min(savedSelectionStart, savedValue.length)
+          input.value.selectionEnd = Math.min(savedSelectionEnd, savedValue.length)
         }
       })
     }
