@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.43.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.5...bootstrapvuenext-v0.43.6) (2026-02-20)
+
+
+### Features
+
+* add borderVariant prop to BCardBody and bodyBorderVariant to BCard ([#3061](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3061)) ([abe1bff](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/abe1bff3100db3d461e4722369c2759ca8dbed6c))
+* add max-height and max-width CSS custom properties to floating-ui components ([#3065](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3065)) ([0749141](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/074914198fbae0a9b2233667fa896b5e525f29bb))
+* **BBreadcrumb:** add olClass and olAttrs props for styling inner ol element ([#3063](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3063)) ([88332b4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/88332b4abcd3900e900960a7cae338b44f9ed1a2))
+* **BFormRating:** add locale prop for internationalization support ([#3069](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3069)) ([662c339](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/662c339a052ad227216b7b9f6db5cb87d84fd6a2))
+* **BFormRating:** use semantic output element and improve ARIA attributes ([#3075](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3075)) ([c043592](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c043592f0aae0af3262ccc0e3e900806d89bd4aa))
+* **BFormTags:** implement ignoreInputFocusSelector prop ([#3074](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3074)) ([66f9d0d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/66f9d0d09d3674299c7534bc66313cb3cacc8311))
+* pass prefetch-related props through to BLink in all consuming components ([#3067](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3067)) ([8eb1718](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8eb1718eedf0f08a3135b20399f400e1bedc6fe5))
+
+
+### Bug Fixes
+
+* **BFormTextarea:** guard against null input ref after async nextTick in useTextareaResize ([#3062](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3062)) ([3ffa50f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3ffa50fa0db90e677926ee098f8872baab7a3527))
+* **BLink:** standardize computedLinkProps passthrough across all components ([#3072](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3072)) ([78d127b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/78d127b84a987d3f36ef4e3d5e186b30df33ad20))
+* **BNavItem:** pass BLink props through to inner BLink component ([#3066](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3066)) ([42b9f66](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/42b9f66e52d6289b5965f822c0c35ceb1ae72b4f))
+* improve form-range validation styling with focus, active states and Bootstrap 5 conventions ([#3070](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3070)) ([46ed78c](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/46ed78cb7cdb57f588e99aa9067d50bfe29a6e30))
+* move ok and cancel emits from showHideEmits to BModalEmits ([#3064](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3064)) ([27a76dc](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/27a76dce64a14c0d21cc60ce5b4103b12e892b07))
+
 ## [0.43.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.4...bootstrapvuenext-v0.43.5) (2026-02-19)
 
 
