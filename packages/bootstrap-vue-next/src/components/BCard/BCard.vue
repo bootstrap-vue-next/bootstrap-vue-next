@@ -24,6 +24,7 @@
       v-if="!props.noBody"
       :overlay="props.imgPlacement === 'overlay'"
       :bg-variant="props.bodyBgVariant"
+      :border-variant="props.bodyBorderVariant"
       :tag="props.bodyTag"
       :text-variant="props.bodyTextVariant"
       :subtitle="props.subtitle"
@@ -73,6 +74,7 @@ import type {BCardSlots} from '../../types'
 const _props = withDefaults(defineProps<BCardProps>(), {
   align: undefined,
   bodyBgVariant: undefined,
+  bodyBorderVariant: undefined,
   bodyClass: undefined,
   bodyTag: 'div',
   bodyText: '',

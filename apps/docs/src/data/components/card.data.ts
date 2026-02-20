@@ -36,7 +36,7 @@ export default {
           buildCommonProps({
             bodyBorderVariant: {
               description:
-                'Applies one of the Bootstrap theme color variants to the body border (NYI?)',
+                'Applies one of the Bootstrap theme color variants to the body border',
             },
           }),
           [
@@ -134,6 +134,7 @@ export default {
       props: {
         ...pick(buildCommonProps(), [
           'bgVariant',
+          'borderVariant',
           'subtitle',
           'subtitleTag',
           'subtitleTextVariant',

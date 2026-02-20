@@ -318,6 +318,14 @@ describe('card', () => {
     expect($body.props('bgVariant')).toBe('danger')
   })
 
+  it('child BCardBody has internal prop borderVariant as prop bodyBorderVariant', () => {
+    const wrapper = mount(BCard, {
+      props: {bodyBorderVariant: 'danger'},
+    })
+    const $body = wrapper.getComponent(BCardBody)
+    expect($body.props('borderVariant')).toBe('danger')
+  })
+
   it('child BCardHeader has internal prop bodyTag as prop bodyTag', () => {
     const wrapper = mount(BCard, {
       props: {bodyTag: 'span'},

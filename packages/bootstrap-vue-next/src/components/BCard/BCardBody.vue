@@ -33,6 +33,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {BCardBodySlots} from '../../types'
 
 const _props = withDefaults(defineProps<BCardBodyProps>(), {
+  borderVariant: null,
   overlay: false,
   subtitle: undefined,
   subtitleTag: 'h4',
