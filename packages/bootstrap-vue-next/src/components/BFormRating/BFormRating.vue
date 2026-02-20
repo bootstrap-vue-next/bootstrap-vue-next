@@ -128,10 +128,8 @@ const computedLocale = computed(() => {
 
 const computedRtl = computed(() => {
   const locale = computedLocale.value
-  const nf = new Intl.NumberFormat(locale)
-  const resolvedLocale = nf.resolvedOptions().locale
   try {
-    const localeObj = new Intl.Locale(resolvedLocale)
+    const localeObj = new Intl.Locale(locale)
     const {textInfo} = localeObj as Intl.Locale & {textInfo?: {direction: string}}
     if (textInfo) {
       return textInfo.direction === 'rtl'
@@ -175,18 +173,22 @@ const computedSize = computed(() => {
   return props.size
 })
 
+const computedFormatter = computed(
+  () =>
+    new Intl.NumberFormat(computedLocale.value, {
+      style: 'decimal',
+      useGrouping: false,
+      minimumFractionDigits: props.precision > 0 ? props.precision : 0,
+      maximumFractionDigits: props.precision > 0 ? props.precision : 0,
+      notation: 'standard',
+    })
+)
+
 const displayValueText = computed(() => {
   const val = props.precision > 0 ? roundedValue.value : displayValue.value
-  const nf = new Intl.NumberFormat(computedLocale.value, {
-    style: 'decimal',
-    useGrouping: false,
-    minimumFractionDigits: props.precision > 0 ? props.precision : 0,
-    maximumFractionDigits: props.precision > 0 ? props.precision : 0,
-    notation: 'standard',
-  })
-  const formattedValue = nf.format(val)
+  const formattedValue = computedFormatter.value.format(val)
   if (props.showValueMax) {
-    const formattedMax = nf.format(clampedStars.value)
+    const formattedMax = computedFormatter.value.format(clampedStars.value)
     return `${formattedValue}/${formattedMax}`
   }
   if (props.showValue) {
