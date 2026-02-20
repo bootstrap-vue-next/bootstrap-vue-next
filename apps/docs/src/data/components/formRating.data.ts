@@ -31,6 +31,12 @@ export default {
           description:
             'When `true` renders as an inline element rather than a block (100% width) element',
         },
+        locale: {
+          type: 'string',
+          default: 'undefined',
+          description:
+            'Locale (or locales) to use when showing the value when prop `show-value` is set. Defaults to the browser default locale. Also affects the left-to-right or right-to-left orientation of the component',
+        },
         modelValue: {
           type: 'number',
           default: 0,

@@ -2,6 +2,7 @@
   <div
     :id="computedId"
     :class="computedClasses"
+    :dir="computedRtl ? 'rtl' : 'ltr'"
     role="slider"
     :aria-valuemin="0"
     :aria-valuemax="clampedStars"
@@ -89,12 +90,14 @@ import {computed, ref} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {BFormRatingProps} from '../../types/ComponentProps'
 import {useId} from '../../composables/useId'
+import {useRtl} from '../../composables/useRtl'
 import type {BFormRatingSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(), {
   color: '',
   id: undefined,
   inline: false,
+  locale: undefined,
   noBorder: false,
   precision: 0,
   readonly: false,
@@ -114,6 +117,28 @@ defineSlots<BFormRatingSlots>()
 const modelValue = defineModel<Exclude<BFormRatingProps['modelValue'], undefined>>({default: 0})
 
 const computedId = useId(() => props.id, 'form-rating')
+
+const {isRtl, locale: globalLocale} = useRtl()
+
+const computedLocale = computed(() => {
+  const loc = (props.locale ?? globalLocale?.value) || undefined
+  const nf = new Intl.NumberFormat(loc)
+  return nf.resolvedOptions().locale
+})
+
+const computedRtl = computed(() => {
+  const locale = computedLocale.value
+  try {
+    const localeObj = new Intl.Locale(locale)
+    const {textInfo} = localeObj as Intl.Locale & {textInfo?: {direction: string}}
+    if (textInfo) {
+      return textInfo.direction === 'rtl'
+    }
+  } catch {
+    // Fallback
+  }
+  return isRtl?.value ?? false
+})
 
 const computedClasses = computed(() => ({
   'form-control': true,
@@ -148,13 +173,26 @@ const computedSize = computed(() => {
   return props.size
 })
 
+const computedFormatter = computed(
+  () =>
+    new Intl.NumberFormat(computedLocale.value, {
+      style: 'decimal',
+      useGrouping: false,
+      minimumFractionDigits: props.precision > 0 ? props.precision : 0,
+      maximumFractionDigits: props.precision > 0 ? props.precision : 0,
+      notation: 'standard',
+    })
+)
+
 const displayValueText = computed(() => {
-  const decimalValue = props.precision > 0 ? roundedValue.value : displayValue.value
+  const val = props.precision > 0 ? roundedValue.value : displayValue.value
+  const formattedValue = computedFormatter.value.format(val)
   if (props.showValueMax) {
-    return `${decimalValue}/${clampedStars.value}`
+    const formattedMax = computedFormatter.value.format(clampedStars.value)
+    return `${formattedValue}/${formattedMax}`
   }
   if (props.showValue) {
-    return `${decimalValue}`
+    return formattedValue
   }
   return ''
 })
@@ -186,12 +224,18 @@ function onKeydown(e: KeyboardEvent) {
 
   let newValue = modelValue.value
 
+  const isRtlMode = computedRtl.value
+
   switch (e.key) {
     case 'ArrowRight':
+      newValue = isRtlMode ? Math.max(newValue - 1, 0) : Math.min(newValue + 1, clampedStars.value)
+      break
     case 'ArrowUp':
       newValue = Math.min(newValue + 1, clampedStars.value)
       break
     case 'ArrowLeft':
+      newValue = isRtlMode ? Math.min(newValue + 1, clampedStars.value) : Math.max(newValue - 1, 0)
+      break
     case 'ArrowDown':
       newValue = Math.max(newValue - 1, 0)
       break

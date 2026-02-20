@@ -344,4 +344,56 @@ describe('rating', () => {
     await clearBtn.trigger('click')
     expect(hiddenInput.attributes('value')).toBe('0')
   })
+
+  // Internationalization Tests
+  it('has dir attribute set to ltr by default', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.attributes('dir')).toBe('ltr')
+  })
+
+  it('formats displayed value using locale when showValue is true', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        modelValue: 3,
+        showValue: true,
+        locale: 'ar-EG',
+      },
+    })
+    const valueText = wrapper.find('.rating-value-text')
+    expect(valueText.exists()).toBe(true)
+    const formatted = new Intl.NumberFormat('ar-EG').format(3)
+    expect(valueText.text()).toBe(formatted)
+  })
+
+  it('formats displayed value with precision using locale', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        modelValue: 3.567,
+        showValue: true,
+        precision: 2,
+        locale: 'de-DE',
+      },
+    })
+    const valueText = wrapper.find('.rating-value-text')
+    const formatted = new Intl.NumberFormat('de-DE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(3.57)
+    expect(valueText.text()).toBe(formatted)
+  })
+
+  it('formats showValueMax using locale', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        modelValue: 3,
+        stars: 5,
+        showValueMax: true,
+        locale: 'ar-EG',
+      },
+    })
+    const valueText = wrapper.find('.rating-value-text')
+    const formattedValue = new Intl.NumberFormat('ar-EG').format(3)
+    const formattedMax = new Intl.NumberFormat('ar-EG').format(5)
+    expect(valueText.text()).toBe(`${formattedValue}/${formattedMax}`)
+  })
 })
