@@ -1128,6 +1128,7 @@ export interface BCloseButtonProps {
 export interface BCardProps extends ColorExtendables {
   align?: AlignmentTextHorizontal
   bodyBgVariant?: BgColorVariant | null
+  bodyBorderVariant?: BorderColorVariant | null
   bodyClass?: ClassValue
   bodyTag?: string
   bodyText?: string
@@ -1162,6 +1163,7 @@ export interface BCardProps extends ColorExtendables {
 }
 
 export interface BCardBodyProps extends ColorExtendables {
+  borderVariant?: BorderColorVariant | null
   overlay?: boolean
   subtitle?: string
   subtitleTag?: string

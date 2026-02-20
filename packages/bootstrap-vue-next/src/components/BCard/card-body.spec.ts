@@ -42,6 +42,15 @@ describe('card-body', () => {
     expect(wrapper.classes()).not.toContain('bg-primary')
   })
 
+  it('has class border-{type} when prop borderVariant', async () => {
+    const wrapper = mount(BCardBody, {
+      props: {borderVariant: 'primary'},
+    })
+    expect(wrapper.classes()).toContain('border-primary')
+    await wrapper.setProps({borderVariant: undefined})
+    expect(wrapper.classes()).not.toContain('border-primary')
+  })
+
   it('does not have BCardTitle by default', () => {
     const wrapper = mount(BCardBody)
     const $bcardtitle = wrapper.findComponent(BCardTitle)
