@@ -87,8 +87,8 @@ const element = useTemplateRef<HTMLButtonElement | null>('_element')
 const pressedValue = defineModel<BButtonProps['pressed']>('pressed', {default: undefined})
 
 const {computedLink, computedLinkProps} = useBLinkHelper(props, [
-  'active-class',
-  'exact-active-class',
+  'activeClass',
+  'exactActiveClass',
   'replace',
   'routerComponentName',
   'routerTag',
