@@ -76,6 +76,10 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'underlineOpacity',
   'underlineOpacityHover',
   'icon',
+  'noPrefetch',
+  'prefetch',
+  'prefetchOn',
+  'prefetchedClass',
 ])
 
 const computedTag = computed(() => (computedLink.value ? BLink : props.tag))

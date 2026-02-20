@@ -83,6 +83,10 @@ const computedLinkProps = computed(() =>
         'underlineOpacity',
         'underlineOpacityHover',
         'icon',
+        'noPrefetch',
+        'prefetch',
+        'prefetchOn',
+        'prefetchedClass',
       ])
     : {}
 )
