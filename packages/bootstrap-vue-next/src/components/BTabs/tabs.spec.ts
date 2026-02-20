@@ -497,6 +497,30 @@ describe('tabs', () => {
     expect(wrapper.findComponent({name: 'b-tab'}).find('p').text()).toBe('bar')
   })
 
+  it('tab buttons always have type="button" even with titleLinkAttrs', async () => {
+    const customAttrs = {'data-custom': 'value'}
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'first', title: 'First', titleLinkAttrs: customAttrs}, () => 'one'),
+          h(BTab, {id: 'second', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+
+    await nextTick()
+    await nextTick()
+
+    const buttons = wrapper.findAll('button')
+    // type="button" is always present
+    expect(buttons[0].attributes('type')).toBe('button')
+    expect(buttons[1].attributes('type')).toBe('button')
+    // role="tab" is always present
+    expect(buttons[0].attributes('role')).toBe('tab')
+    // custom attributes from titleLinkAttrs are still applied
+    expect(buttons[0].attributes('data-custom')).toBe('value')
+  })
+
   it('emits activate-tab with an object payload', async () => {
     const wrapper = mount(BTabs, {
       slots: {

@@ -36,6 +36,7 @@
           role="presentation"
         >
           <button
+            v-bind="tab.titleLinkAttrs"
             :id="tab.buttonId"
             class="nav-link"
             :class="[tab.navItemClasses, tab.titleLinkClass]"
@@ -45,7 +46,6 @@
             :disabled="tab.disabled"
             :tabindex="props.noKeyNav ? undefined : tab.active ? undefined : -1"
             type="button"
-            v-bind="tab.titleLinkAttrs"
             @keydown.left.exact="!props.vertical && keynav($event, -1)"
             @keydown.left.shift="!props.vertical && keynav($event, -999)"
             @keydown.up.exact="props.vertical && keynav($event, -1)"
