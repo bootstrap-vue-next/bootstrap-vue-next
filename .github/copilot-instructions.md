@@ -58,6 +58,11 @@ The fault of not properly following this structure will lead to build errors or 
 
 ## Validation
 
+### Building documentation and checking doc files when adding new props
+
+When you add new props to the core packages' components, you must add those props in the .data.ts files from the documentation for that component. When you 
+add new props to the core packages' components, you must build the documentation to ensure no type-checking errors have occurred.
+
 ### Always Validate Changes
 
 - ALWAYS run `pnpm --filter bootstrap-vue-next run test:lint` before committing (12 seconds)
