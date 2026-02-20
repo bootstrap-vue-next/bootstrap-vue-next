@@ -8,7 +8,7 @@
     :target="isLink ? props.target : undefined"
     :href="!props.button ? props.href : undefined"
     :to="!props.button ? props.to : undefined"
-    v-bind="computedAttrs"
+    v-bind="{...(isLink ? computedLinkProps : {}), ...computedAttrs}"
   >
     <slot />
   </component>
@@ -57,7 +57,7 @@ const attrs = useAttrs()
 
 const parentData = inject(listGroupInjectionKey, null)
 
-const {computedLink} = useBLinkHelper(props)
+const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
 const isLink = computed(() => !props.button && computedLink.value)
 const tagComputed = computed(() =>

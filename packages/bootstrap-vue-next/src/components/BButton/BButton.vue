@@ -92,7 +92,9 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
   'replace',
   'routerComponentName',
   'routerTag',
+  'noPrefetch',
   'prefetch',
+  'prefetchOn',
   'prefetchedClass',
 ])
 

@@ -74,6 +74,10 @@ const computedLinkProps = computed(() =>
     'underlineOpacityHover',
     'underlineVariant',
     'variant',
+    'noPrefetch',
+    'prefetch',
+    'prefetchOn',
+    'prefetchedClass',
   ])
 )
 </script>
