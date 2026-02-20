@@ -93,8 +93,8 @@ const composables = {
 
 export default defineConfig({
   build: {
-    sourcemap: true,
-    minify: 'terser',
+    sourcemap: false,
+    minify: false,
     lib: {
       entry: {
         'bootstrap-vue-next': resolve(__dirname, 'src/index.ts'),
