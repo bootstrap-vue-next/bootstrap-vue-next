@@ -151,7 +151,12 @@ The `icon-empty`, `icon-half`, `icon-full`, and `icon-clear` props are available
 
 If you intend to submit the rating value via standard form submission, set the `name` prop to the
 desired form field name. A hidden input will be generated with the current value (or an empty string
-if there is no value).
+if there is no value). You can also use the `form` prop to associate the rating with a form by its
+`id` when the rating is not a descendant of the form.
+
+The root element of `BFormRating` is an `<output>` element, which is a form-associated element.
+
+<<< DEMO ./demo/RatingFormSubmission.vue
 
 ## Using in input groups
 

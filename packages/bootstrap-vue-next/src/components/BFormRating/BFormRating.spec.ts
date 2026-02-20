@@ -190,6 +190,22 @@ describe('rating', () => {
     expect(stars.length).toBe(3)
   })
 
+  // Root element tests
+  it('renders as an output element', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.element.tagName).toBe('OUTPUT')
+  })
+
+  it('renders form attribute on output element when form prop is set', () => {
+    const wrapper = mount(BFormRating, {props: {form: 'my-form'}})
+    expect(wrapper.attributes('form')).toBe('my-form')
+  })
+
+  it('does not render form attribute on output element when form prop is not set', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.attributes('form')).toBeUndefined()
+  })
+
   // ARIA Tests
   it('has proper ARIA attributes', () => {
     const wrapper = mount(BFormRating, {props: {modelValue: 3, stars: 5}})
@@ -197,6 +213,36 @@ describe('rating', () => {
     expect(wrapper.attributes('aria-valuemin')).toBe('0')
     expect(wrapper.attributes('aria-valuemax')).toBe('5')
     expect(wrapper.attributes('aria-valuenow')).toBe('3')
+  })
+
+  it('sets aria-disabled when disabled', () => {
+    const wrapper = mount(BFormRating, {props: {disabled: true}})
+    expect(wrapper.attributes('aria-disabled')).toBe('true')
+  })
+
+  it('does not set aria-disabled when not disabled', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.attributes('aria-disabled')).toBeUndefined()
+  })
+
+  it('sets aria-readonly when readonly', () => {
+    const wrapper = mount(BFormRating, {props: {readonly: true}})
+    expect(wrapper.attributes('aria-readonly')).toBe('true')
+  })
+
+  it('does not set aria-readonly when not readonly', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.attributes('aria-readonly')).toBeUndefined()
+  })
+
+  it('does not have tabindex when disabled', () => {
+    const wrapper = mount(BFormRating, {props: {disabled: true}})
+    expect(wrapper.attributes('tabindex')).toBeUndefined()
+  })
+
+  it('has tabindex 0 when not disabled', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.attributes('tabindex')).toBe('0')
   })
 
   it('applies correct classes when inline prop is used', () => {
