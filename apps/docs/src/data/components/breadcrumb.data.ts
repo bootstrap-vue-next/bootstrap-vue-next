@@ -29,6 +29,16 @@ export default {
           description:
             'ID of the breadcrumb component. When combined with the `useBreadcrumb` composable, it will use this id as a breadcrumb trail instead of the global trail.',
         },
+        olAttrs: {
+          type: 'Readonly<AttrsValue>',
+          default: undefined,
+          description: 'Attributes to be applied to the inner ol element',
+        },
+        olClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: 'Class to be applied to the inner ol element',
+        },
       } satisfies PropRecord<keyof BBreadcrumbProps>,
       emits: {},
       slots: {
