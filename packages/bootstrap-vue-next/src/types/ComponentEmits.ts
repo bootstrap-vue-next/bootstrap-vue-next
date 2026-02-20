@@ -10,8 +10,6 @@ export interface showHideEmits {
   'shown': [value: BvTriggerableEvent]
   'toggle': [value: BvTriggerableEvent]
   'toggle-prevented': [value: BvTriggerableEvent]
-  'cancel': [value: BvTriggerableEvent]
-  'ok': [value: BvTriggerableEvent]
 }
 
 export type BCollapseEmits = showHideEmits
@@ -21,8 +19,10 @@ export interface BDropdownEmits extends showHideEmits {
 }
 export interface BModalEmits extends showHideEmits {
   backdrop: [value: BvTriggerableEvent]
+  cancel: [value: BvTriggerableEvent]
   close: [value: BvTriggerableEvent]
   esc: [value: BvTriggerableEvent]
+  ok: [value: BvTriggerableEvent]
 }
 
 export interface BOffcanvasEmits extends showHideEmits {

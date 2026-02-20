@@ -12,12 +12,6 @@ export const bvTriggerableEventArg = {
 } as const
 
 export const showHideEmits = {
-  'cancel': {
-    args: {
-      value: bvTriggerableEventArg,
-    },
-    description: 'Emitted when a cancel action is triggered.',
-  },
   'hide': {
     description:
       "Always emits just before the component has hidden. Cancelable (as long as component wasn't forcibly hidden)",
@@ -37,12 +31,6 @@ export const showHideEmits = {
       value: bvTriggerableEventArg,
     },
     description: 'Always emits after the component is hidden',
-  },
-  'ok': {
-    args: {
-      value: bvTriggerableEventArg,
-    },
-    description: 'Emitted when an ok action is triggered.',
   },
   'show': {
     args: {
