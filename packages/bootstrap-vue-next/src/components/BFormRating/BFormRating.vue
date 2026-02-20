@@ -1,14 +1,17 @@
 <template>
-  <div
+  <output
     :id="computedId"
     :class="computedClasses"
     :dir="computedRtl ? 'rtl' : 'ltr'"
+    :form="props.form || undefined"
     role="slider"
     :aria-valuemin="0"
     :aria-valuemax="clampedStars"
     :aria-valuenow="displayValue"
     :aria-valuetext="`${displayValue} of ${clampedStars}`"
-    tabindex="0"
+    :aria-disabled="props.disabled || undefined"
+    :aria-readonly="props.readonly || undefined"
+    :tabindex="props.disabled ? undefined : '0'"
     @keydown="onKeydown"
   >
     <input
@@ -82,7 +85,7 @@
     >
       {{ displayValueText }}
     </span>
-  </div>
+  </output>
 </template>
 
 <script setup lang="ts">
