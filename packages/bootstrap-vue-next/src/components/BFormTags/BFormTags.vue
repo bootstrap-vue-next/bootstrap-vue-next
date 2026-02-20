@@ -5,6 +5,7 @@
     :class="computedClasses"
     role="group"
     tabindex="-1"
+    @click="onClick"
     @focusin="onFocusin"
     @focusout="emit('focusout', $event)"
   >
@@ -184,6 +185,7 @@ const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   duplicateTagText: 'Duplicate tag(s)',
   feedbackAriaLive: 'assertive',
   form: undefined,
+  ignoreInputFocusSelector: () => ['.b-form-tag', 'button', 'input', 'select'],
   inputAttrs: undefined,
   inputClass: undefined,
   inputId: undefined,
@@ -268,6 +270,25 @@ const onFocusin = (e: Readonly<FocusEvent>): void => {
   }
 
   emit('focusin', e)
+}
+
+const onClick = (e: Readonly<MouseEvent>): void => {
+  if (props.disabled || props.noOuterFocus) {
+    return
+  }
+
+  const target = e.target
+  const ignoreSelectors = props.ignoreInputFocusSelector
+  if (ignoreSelectors && target instanceof Element) {
+    const selector =
+      typeof ignoreSelectors === 'string' ? ignoreSelectors : ignoreSelectors.join(',')
+
+    if (selector && target.closest(selector)) {
+      return
+    }
+  }
+
+  focused.value = true
 }
 
 const onFocus = (e: Readonly<FocusEvent>): void => {

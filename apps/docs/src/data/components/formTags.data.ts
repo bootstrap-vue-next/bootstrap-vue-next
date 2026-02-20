@@ -112,6 +112,12 @@ export default {
           default: "'assertive'",
           description: 'Value to use for the `aria-live` attribute on the feedback text',
         },
+        ignoreInputFocusSelector: {
+          type: 'string | readonly string[]',
+          default: "['.b-form-tag', 'button', 'input', 'select']",
+          description:
+            'Ignore certain elements from the click to focus input routine, specified by CSS selector(s)',
+        },
         inputAttrs: {
           type: 'Readonly<AttrsValue>',
           default: undefined,
