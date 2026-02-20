@@ -135,6 +135,10 @@ export const useFormInput = (
     }
   }
 
+  const flush = () => {
+    internalUpdateModelValue.flush()
+  }
+
   return {
     input,
     computedId,
@@ -144,6 +148,7 @@ export const useFormInput = (
     onBlur,
     focus,
     blur,
+    flush,
     stateClass,
     isDisabled,
   }

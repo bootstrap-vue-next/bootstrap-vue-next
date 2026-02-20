@@ -84,6 +84,7 @@ const {
   onBlur,
   focus,
   blur,
+  flush,
   isDisabled,
 } = useFormInput(props, input, modelValue, modelModifiers)
 
@@ -113,6 +114,7 @@ const computedStyles = computed<CSSProperties>(() => ({
 defineExpose({
   blur,
   element: input,
+  flush,
   focus,
 })
 </script>

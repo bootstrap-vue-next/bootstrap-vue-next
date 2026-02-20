@@ -82,6 +82,7 @@ const {
   stateClass,
   focus,
   blur,
+  flush,
   isDisabled,
 } = useFormInput(props, input, modelValue, modelModifiers)
 
@@ -103,6 +104,7 @@ const computedClasses = computed(() => {
 defineExpose({
   blur,
   element: input,
+  flush,
   focus,
 })
 </script>
