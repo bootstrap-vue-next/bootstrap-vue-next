@@ -1,13 +1,17 @@
 <template>
-  <div
+  <output
     :id="computedId"
     :class="computedClasses"
+    :form="props.form || undefined"
     role="slider"
+    aria-live="off"
+    :aria-disabled="props.disabled ? true : undefined"
+    :aria-readonly="props.readonly ? true : undefined"
     :aria-valuemin="0"
     :aria-valuemax="clampedStars"
     :aria-valuenow="displayValue"
     :aria-valuetext="`${displayValue} of ${clampedStars}`"
-    tabindex="0"
+    :tabindex="props.disabled ? undefined : '0'"
     @keydown="onKeydown"
   >
     <input
@@ -81,7 +85,7 @@
     >
       {{ displayValueText }}
     </span>
-  </div>
+  </output>
 </template>
 
 <script setup lang="ts">
@@ -95,6 +99,7 @@ const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(),
   color: '',
   id: undefined,
   inline: false,
+  locale: undefined,
   noBorder: false,
   precision: 0,
   readonly: false,
@@ -148,13 +153,30 @@ const computedSize = computed(() => {
   return props.size
 })
 
+const computedLocale = computed(() => {
+  const locale = props.locale
+  if (Array.isArray(locale)) {
+    return locale
+  }
+  return locale || undefined
+})
+
+const formattedValue = computed(() => {
+  const val = props.precision > 0 ? roundedValue.value : displayValue.value
+  const nf = new Intl.NumberFormat(computedLocale.value, {
+    notation: 'standard',
+    minimumFractionDigits: props.precision > 0 ? props.precision : 0,
+    maximumFractionDigits: props.precision > 0 ? props.precision : 3,
+  })
+  return nf.format(val)
+})
+
 const displayValueText = computed(() => {
-  const decimalValue = props.precision > 0 ? roundedValue.value : displayValue.value
   if (props.showValueMax) {
-    return `${decimalValue}/${clampedStars.value}`
+    return `${formattedValue.value}/${clampedStars.value}`
   }
   if (props.showValue) {
-    return `${decimalValue}`
+    return `${formattedValue.value}`
   }
   return ''
 })

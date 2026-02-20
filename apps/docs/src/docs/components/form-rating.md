@@ -153,6 +153,15 @@ If you intend to submit the rating value via standard form submission, set the `
 desired form field name. A hidden input will be generated with the current value (or an empty string
 if there is no value).
 
+To associate the rating with a form that is not its ancestor, use the `form` prop with the `id` of the target form element.
+
+## Internationalization
+
+By default, `BFormRating` uses the browser's default locale to format the displayed value when
+`show-value` is set. You can override this by setting the `locale` prop to a BCP 47 language tag
+string (e.g., `'en-US'`, `'fr'`, `'de'`) or an array of such strings. The locale is used with
+`Intl.NumberFormat` for formatting the displayed value.
+
 ## Using in input groups
 
 `BFormRating` can be placed inside input groups. Since it uses the Bootstrap `form-control` class, it integrates seamlessly with `BInputGroup` components.

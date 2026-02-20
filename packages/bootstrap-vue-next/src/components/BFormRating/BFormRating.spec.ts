@@ -344,4 +344,86 @@ describe('rating', () => {
     await clearBtn.trigger('click')
     expect(hiddenInput.attributes('value')).toBe('0')
   })
+
+  // Output element tests
+  it('renders as an output element', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.element.tagName).toBe('OUTPUT')
+  })
+
+  it('sets form attribute on root output element', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        form: 'my-form',
+      },
+    })
+    expect(wrapper.attributes('form')).toBe('my-form')
+  })
+
+  it('does not set form attribute when form prop is not provided', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.attributes('form')).toBeUndefined()
+  })
+
+  // Aria attribute tests
+  it('sets aria-disabled when disabled', () => {
+    const wrapper = mount(BFormRating, {props: {disabled: true}})
+    expect(wrapper.attributes('aria-disabled')).toBe('true')
+  })
+
+  it('does not set aria-disabled when not disabled', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.attributes('aria-disabled')).toBeUndefined()
+  })
+
+  it('sets aria-readonly when readonly', () => {
+    const wrapper = mount(BFormRating, {props: {readonly: true}})
+    expect(wrapper.attributes('aria-readonly')).toBe('true')
+  })
+
+  it('does not set aria-readonly when not readonly', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.attributes('aria-readonly')).toBeUndefined()
+  })
+
+  it('sets aria-live to off', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.attributes('aria-live')).toBe('off')
+  })
+
+  it('does not set tabindex when disabled', () => {
+    const wrapper = mount(BFormRating, {props: {disabled: true}})
+    expect(wrapper.attributes('tabindex')).toBeUndefined()
+  })
+
+  it('sets tabindex to 0 when not disabled', () => {
+    const wrapper = mount(BFormRating)
+    expect(wrapper.attributes('tabindex')).toBe('0')
+  })
+
+  // Locale tests
+  it('formats value with locale', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        modelValue: 3,
+        showValue: true,
+        locale: 'en-US',
+      },
+    })
+    const valueText = wrapper.find('.rating-value-text')
+    expect(valueText.text()).toBe('3')
+  })
+
+  it('formats value with precision and locale', () => {
+    const wrapper = mount(BFormRating, {
+      props: {
+        modelValue: 3.567,
+        showValue: true,
+        precision: 2,
+        locale: 'en-US',
+      },
+    })
+    const valueText = wrapper.find('.rating-value-text')
+    expect(valueText.text()).toBe('3.57')
+  })
 })

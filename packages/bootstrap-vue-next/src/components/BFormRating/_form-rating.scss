@@ -15,6 +15,14 @@ $clear-icon-size: 1em !default;
   width: 1%;
   min-width: 0;
 
+  &:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+
   &.no-border {
     border: none;
   }

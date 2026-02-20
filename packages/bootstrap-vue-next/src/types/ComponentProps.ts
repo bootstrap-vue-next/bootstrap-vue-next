@@ -524,6 +524,7 @@ export interface BFormRatingProps {
   color?: string
   id?: string
   inline?: boolean
+  locale?: string | string[]
   modelValue?: number
   noBorder?: boolean
   precision?: number
