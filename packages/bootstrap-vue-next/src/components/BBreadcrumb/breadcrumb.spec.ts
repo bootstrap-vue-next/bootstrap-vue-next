@@ -62,6 +62,17 @@ describe('breadcrumb', () => {
     expect($ol.classes()).toContain('foobar')
   })
 
+  it('ol child has olAttrs when prop is provided', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {olAttrs: {'data-foo': 'bar'}},
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const $ol = wrapper.get('ol')
+    expect($ol.attributes('data-foo')).toBe('bar')
+  })
+
   it('renders default slot', () => {
     const wrapper = mount(BBreadcrumb, {
       slots: {default: 'foobar'},

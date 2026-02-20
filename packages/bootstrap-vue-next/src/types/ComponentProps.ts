@@ -1081,6 +1081,7 @@ export interface BBadgeProps extends Omit<BLinkProps, 'routerTag'>, ColorExtenda
 export interface BBreadcrumbProps {
   items?: readonly BreadcrumbItemRaw[]
   id?: string
+  olAttrs?: Readonly<AttrsValue>
   olClass?: ClassValue
 }
 
