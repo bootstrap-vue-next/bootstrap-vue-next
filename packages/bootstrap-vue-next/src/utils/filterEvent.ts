@@ -39,7 +39,9 @@ export const filterEvent = (event: Readonly<Event>) => {
   if (label) {
     const labelFor = label.getAttribute('for')
     const input = labelFor
-      ? document.getElementById(labelFor)
+      ? typeof document !== 'undefined'
+        ? document.getElementById(labelFor)
+        : null
       : label.querySelector('input, select, textarea')
     if (input && !(input as HTMLInputElement).disabled) {
       return true
