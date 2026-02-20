@@ -82,4 +82,44 @@ describe('nav-item', () => {
     })
     expect(wrapper.text()).toBe('foobar')
   })
+
+  it('passes exactActiveClass prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {
+        exactActiveClass: 'my-exact-active',
+      },
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('exactActiveClass')).toBe('my-exact-active')
+  })
+
+  it('passes stretched prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {
+        stretched: true,
+      },
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('stretched')).toBe(true)
+  })
+
+  it('passes noRel prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {
+        noRel: true,
+      },
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('noRel')).toBe(true)
+  })
+
+  it('passes prefetch prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {
+        prefetch: true,
+      },
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('prefetch')).toBe(true)
+  })
 })
