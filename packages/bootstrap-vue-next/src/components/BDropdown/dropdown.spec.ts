@@ -49,6 +49,14 @@ describe('dropdown', () => {
     expect($ul.classes()).toContain('dropdown-menu')
   })
 
+  it('child ul has class b-floating-size', () => {
+    const wrapper = mount(BDropdown, {
+      props: {modelValue: true},
+    })
+    const $ul = wrapper.get('ul')
+    expect($ul.classes()).toContain('b-floating-size')
+  })
+
   it('child ul has attr role to be prop role', () => {
     const wrapper = mount(BDropdown, {
       props: {role: 'foobar', modelValue: true},

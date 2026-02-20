@@ -75,6 +75,11 @@
   transition: none !important;
 }
 
+.b-floating-size {
+  max-height: var(--bv-floating-max-height, none);
+  max-width: var(--bv-floating-max-width, none);
+}
+
 :root {
   --bs-modal-zindex: #{$zindex-modal};
   --bs-toast-max-width: #{$toast-max-width};
