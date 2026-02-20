@@ -61,12 +61,12 @@ const computedLinkProps = computed(() =>
   pick(props, [
     'active',
     'activeClass',
-    'exactActiveClass',
     'disabled',
+    'exactActiveClass',
     'href',
     'icon',
-    'noPrefetch',
     'noRel',
+    'noPrefetch',
     'opacity',
     'opacityHover',
     'prefetch',
@@ -84,10 +84,6 @@ const computedLinkProps = computed(() =>
     'underlineOpacityHover',
     'underlineVariant',
     'variant',
-    'noPrefetch',
-    'prefetch',
-    'prefetchOn',
-    'prefetchedClass',
   ])
 )
 </script>

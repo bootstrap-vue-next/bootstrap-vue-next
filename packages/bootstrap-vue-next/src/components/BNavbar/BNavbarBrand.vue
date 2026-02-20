@@ -40,31 +40,7 @@ const _props = withDefaults(defineProps<BNavbarBrandProps>(), {
 const props = useDefaults(_props, 'BNavbarBrand')
 defineSlots<BNavbarBrandSlots>()
 
-const {computedLink, computedLinkProps} = useBLinkHelper(props, [
-  'active',
-  'activeClass',
-  'append',
-  'disabled',
-  'href',
-  'rel',
-  'replace',
-  'routerComponentName',
-  'target',
-  'to',
-  'variant',
-  'opacity',
-  'opacityHover',
-  'underlineVariant',
-  'underlineOffset',
-  'underlineOffsetHover',
-  'underlineOpacity',
-  'underlineOpacityHover',
-  'icon',
-  'noPrefetch',
-  'prefetch',
-  'prefetchOn',
-  'prefetchedClass',
-])
+const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
 const computedTag = computed(() => (computedLink.value ? BLink : props.tag))
 </script>
