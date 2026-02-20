@@ -277,13 +277,14 @@ const onClick = (e: Readonly<MouseEvent>): void => {
     return
   }
 
+  const target = e.target
   const ignoreSelectors = props.ignoreInputFocusSelector
-  if (ignoreSelectors) {
+  if (ignoreSelectors && target instanceof Element) {
     const selector = Array.isArray(ignoreSelectors)
       ? ignoreSelectors.join(',')
       : ignoreSelectors
 
-    if (selector && (e.target as Element).closest?.(selector as string)) {
+    if (selector && target.closest(selector)) {
       return
     }
   }
