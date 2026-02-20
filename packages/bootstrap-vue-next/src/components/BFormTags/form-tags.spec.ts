@@ -52,4 +52,62 @@ describe('form-tags', () => {
       expect(feedbackDiv.attributes('aria-live')).toBe('off')
     })
   })
+
+  describe('ignoreInputFocusSelector behavior', () => {
+    it('focuses the input when clicking on the wrapper area', async () => {
+      const wrapper = mount(BFormTags, {
+        props: {ignoreInputFocusSelector: []},
+        attachTo: document.body,
+      })
+      const rootDiv = wrapper.find('.b-form-tags')
+      await rootDiv.trigger('click')
+      const input = wrapper.find('.b-form-tags-input')
+      expect(input.element).toBe(document.activeElement)
+    })
+
+    it('does not focus the input when clicking on an element matching the default ignore selector', async () => {
+      const wrapper = mount(BFormTags, {
+        props: {modelValue: ['tag1']},
+        attachTo: document.body,
+      })
+      const button = wrapper.find('button')
+      await button.trigger('click')
+      const input = wrapper.find('.b-form-tags-input')
+      expect(input.element).not.toBe(document.activeElement)
+    })
+
+    it('accepts a string selector', async () => {
+      const wrapper = mount(BFormTags, {
+        props: {ignoreInputFocusSelector: '.custom-ignore'},
+        attachTo: document.body,
+      })
+      // Click on the root - no element matches '.custom-ignore'
+      const rootDiv = wrapper.find('.b-form-tags')
+      await rootDiv.trigger('click')
+      const input = wrapper.find('.b-form-tags-input')
+      expect(input.element).toBe(document.activeElement)
+    })
+
+    it('does not focus input when disabled', async () => {
+      const wrapper = mount(BFormTags, {
+        props: {disabled: true, ignoreInputFocusSelector: []},
+        attachTo: document.body,
+      })
+      const rootDiv = wrapper.find('.b-form-tags')
+      await rootDiv.trigger('click')
+      const input = wrapper.find('.b-form-tags-input')
+      expect(input.element).not.toBe(document.activeElement)
+    })
+
+    it('does not focus input when noOuterFocus is true', async () => {
+      const wrapper = mount(BFormTags, {
+        props: {noOuterFocus: true, ignoreInputFocusSelector: []},
+        attachTo: document.body,
+      })
+      const rootDiv = wrapper.find('.b-form-tags')
+      await rootDiv.trigger('click')
+      const input = wrapper.find('.b-form-tags-input')
+      expect(input.element).not.toBe(document.activeElement)
+    })
+  })
 })

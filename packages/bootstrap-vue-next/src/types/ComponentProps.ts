@@ -676,6 +676,7 @@ export interface BFormTagsProps {
   duplicateTagText?: string
   feedbackAriaLive?: AriaAttributes['aria-live']
   form?: string
+  ignoreInputFocusSelector?: string | readonly string[]
   inputAttrs?: Readonly<AttrsValue>
   inputClass?: ClassValue
   inputId?: string
