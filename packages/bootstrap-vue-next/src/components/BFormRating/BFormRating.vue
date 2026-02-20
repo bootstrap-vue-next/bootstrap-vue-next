@@ -2,7 +2,7 @@
   <output
     :id="computedId"
     :class="computedClasses"
-    :form="props.form || undefined"
+    :form="props.form"
     role="slider"
     aria-live="off"
     :aria-disabled="props.disabled ? true : undefined"
