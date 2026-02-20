@@ -93,7 +93,7 @@ const composables = {
 
 export default defineConfig({
   build: {
-    sourcemap: false,
+    sourcemap: true,
     minify: false,
     lib: {
       entry: {
