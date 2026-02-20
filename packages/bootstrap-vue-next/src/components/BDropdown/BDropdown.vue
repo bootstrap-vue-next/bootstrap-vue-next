@@ -55,7 +55,7 @@
           :id="computedId + '-menu'"
           ref="_floating"
           :style="[floatingStyles, sizeStyles, {display: showRef ? 'block' : 'none'}]"
-          class="dropdown-menu overflow-auto"
+          class="dropdown-menu overflow-auto b-floating-size"
           :class="[props.menuClass, computedMenuClasses]"
           :aria-labelledby="computedId"
           :role="props.role"
@@ -315,13 +315,13 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
         padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
-            maxHeight:
+            '--bv-floating-max-height':
               availableHeight >= (floatingElement.value?.scrollHeight ?? 0)
                 ? undefined
                 : availableHeight
                   ? `${Math.max(0, availableHeight)}px`
                   : undefined,
-            maxWidth:
+            '--bv-floating-max-width':
               availableWidth >= (floatingElement.value?.scrollWidth ?? 0)
                 ? undefined
                 : availableWidth

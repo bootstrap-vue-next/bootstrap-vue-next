@@ -229,6 +229,15 @@ describe('popover', () => {
     wrapper.unmount()
   })
 
+  it('content div has class b-floating-size', () => {
+    const wrapper = mount(BPopover, {
+      props: {modelValue: true},
+    })
+    const $div = wrapper.find('.b-floating-size')
+    expect($div.exists()).toBe(true)
+    expect($div.classes()).toContain('overflow-auto')
+  })
+
   // Functionally, this component does more, but this only tests the component
   // Behaviorally, the component does emit, which should be tested,
   // But as I am writting this, I am unsure of how to invoke the events from popover,

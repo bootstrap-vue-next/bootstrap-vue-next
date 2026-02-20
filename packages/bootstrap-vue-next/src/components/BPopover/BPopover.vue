@@ -26,7 +26,7 @@
           :style="arrowStyle"
           data-popper-arrow
         />
-        <div ref="_content" class="overflow-auto" :style="sizeStyles">
+        <div ref="_content" class="overflow-auto b-floating-size" :style="sizeStyles">
           <template v-if="props.title || slots.title">
             <div
               class="position-sticky top-0"
@@ -224,13 +224,13 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
         padding: props.boundaryPadding,
         apply({availableWidth, availableHeight}) {
           sizeStyles.value = {
-            maxHeight:
+            '--bv-floating-max-height':
               availableHeight >= (content.value?.scrollHeight ?? 0)
                 ? undefined
                 : availableHeight
                   ? `${Math.max(0, availableHeight)}px`
                   : undefined,
-            maxWidth:
+            '--bv-floating-max-width':
               availableWidth >= (content.value?.scrollWidth ?? 0)
                 ? undefined
                 : availableWidth
