@@ -71,11 +71,15 @@ export const useTextareaResize = (
     // Probe scrollHeight by temporarily changing the height to `auto`
     height.value = 'auto'
     await nextTick() // We need to wait for the dom to update. These cannot be batched in the same tick
+    // Re-check input.value after await since the element may have been unmounted
+    // (e.g., during SSR hydration when BFormGroup re-renders its wrapper element)
+    if (!input.value) return
     const {scrollHeight} = input.value
     // Place the original old height back on the element, just in case `computedProp`
     // returns the same value as before
     height.value = oldHeight
     await nextTick() // We need to wait for the dom to update. These cannot be batched in the same tick
+    if (!input.value) return
 
     // Calculate content height in 'rows' (scrollHeight includes padding but not border)
     const contentRows = Math.max((scrollHeight - padding) / lineHeight, 2)
