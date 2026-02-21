@@ -1,0 +1,39 @@
+<!-- #region modifiers -->
+<!-- Using modifiers (multiple targets allowed) -->
+<BButton v-b-toggle.target-id>Toggle</BButton>
+<BButton v-b-toggle.target-1.target-2>Toggle Multiple</BButton>
+<!-- #endregion modifiers -->
+
+<!-- #region argument -->
+<!-- Using directive argument (supports Vue dynamic arguments) -->
+<BButton v-b-toggle:target-id>Toggle</BButton>
+<BButton v-b-toggle:[dynamicTarget]>Toggle</BButton>
+<!-- #endregion argument -->
+
+<!-- #region value -->
+<!-- Using directive value (string or array) -->
+<BButton v-b-toggle="'target-id'">Toggle</BButton>
+<BButton v-b-toggle="'target-1 target-2'">Toggle Multiple (space-separated)</BButton>
+<BButton v-b-toggle="['target-1', 'target-2']">Toggle Multiple (array)</BButton>
+<!-- #endregion value -->
+
+<!-- #region href -->
+<!-- Using href attribute on links -->
+<blink
+  v-b-toggle
+  href="#target-id"
+  @click.prevent
+  >Toggle</blink
+>
+<a
+  v-b-toggle
+  href="#target-id"
+  @click.prevent
+  >Toggle</a
+>
+<!-- #endregion href -->
+
+<!-- #region combined -->
+<!-- Combining multiple methods (all targets will be toggled) -->
+<BButton v-b-toggle.target-1:target-2="['target-3', 'target-4']">Toggle 4 Targets</BButton>
+<!-- #endregion combined -->
