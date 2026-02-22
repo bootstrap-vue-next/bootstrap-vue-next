@@ -1692,7 +1692,22 @@ For complex scenarios, migrate to the `<BPopover>` component:
 
 ### Toggle
 
-<NotYetDocumented type="directive"/>
+The `v-b-toggle` directive syntax is fully compatible between BSV and BSVN with no changes required for most usage.
+
+**New features:**
+
+- Array value support: `v-b-toggle="['target-1', 'target-2']"`
+- Works with `<BModal>` (in addition to collapse/offcanvas)
+
+**Component changes:**
+
+- `<b-sidebar>` → `<BOffcanvas>`
+
+**Recommendations:**
+
+- When using on links with `href`, add `@click.prevent` to avoid URL changes
+
+See the [BToggle Directive documentation](/docs/directives/BToggle) for complete details.
 
 ### Tooltip
 

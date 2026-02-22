@@ -1,0 +1,11 @@
+<!-- #region css -->
+.collapsed > .when-open, .not-collapsed > .when-closed { display: none; }
+<!-- #endregion css -->
+
+<!-- #region template -->
+<BButton v-b-toggle.my-collapse>
+  <span class="when-open">Hide</span>
+  <span class="when-closed">Show</span>
+  Content
+</BButton>
+<!-- #endregion template -->
