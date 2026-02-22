@@ -1,4 +1,5 @@
 <template>
+  <!-- #region template -->
   <div>
     <h5>Using Modifiers</h5>
     <BButton
@@ -48,4 +49,5 @@
       </BCard>
     </BCollapse>
   </div>
+  <!-- #endregion template -->
 </template>

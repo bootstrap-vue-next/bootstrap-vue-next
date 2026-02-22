@@ -1,4 +1,5 @@
 <template>
+  <!-- #region template -->
   <div>
     <p>
       <BLink
@@ -36,4 +37,5 @@
       </BCard>
     </BCollapse>
   </div>
+  <!-- #endregion template -->
 </template>

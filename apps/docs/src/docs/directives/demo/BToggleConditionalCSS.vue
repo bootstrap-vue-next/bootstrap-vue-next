@@ -3,7 +3,6 @@
     <BButton
       v-b-toggle.collapse-css
       variant="primary"
-      class="toggle-button"
     >
       <span class="when-open">Hide</span>
       <span class="when-closed">Show</span>

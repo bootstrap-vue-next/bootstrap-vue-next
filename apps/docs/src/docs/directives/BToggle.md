@@ -29,9 +29,7 @@ The most common approach is using modifiers, where each modifier represents a ta
 
 For multiple targets, chain multiple modifiers:
 
-```vue-html
-<BButton v-b-toggle.target-1.target-2.target-3>Toggle Multiple</BButton>
-```
+<<< FRAGMENT ./demo/ToggleDirectiveTargetSpecification.html#modifiers{vue-html}
 
 ### Using Directive Argument
 
@@ -69,7 +67,7 @@ Toggle multiple components simultaneously using any of these methods:
 
 When the directive is applied to an `<a>` tag or `BLink`, the target can be specified via the `href` attribute:
 
-<<< DEMO ./demo/BToggleHref.vue
+<<< DEMO ./demo/BToggleHref.vue#template{vue-html}
 
 :::warning URL Navigation
 Without `@click.prevent`, clicking the link will change the browser URL and may scroll the page. Add `@click.prevent` to prevent this behavior.

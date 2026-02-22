@@ -1,4 +1,5 @@
 <template>
+  <!-- #region template -->
   <div>
     <BButton
       v-b-toggle.offcanvas-demo
@@ -14,4 +15,5 @@
       <p>Click the close button or outside the offcanvas to hide it.</p>
     </BOffcanvas>
   </div>
+  <!-- #endregion template -->
 </template>

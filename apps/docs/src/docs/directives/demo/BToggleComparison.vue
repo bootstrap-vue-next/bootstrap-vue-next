@@ -21,7 +21,7 @@
     <BButton
       variant="success"
       class="mb-3"
-      @click="toggleComposable"
+      @click="() => toggleComposable()"
     >
       Toggle with Composable
     </BButton>
@@ -57,13 +57,10 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {useToggle} from 'bootstrap-vue-next'
+import {useToggle} from 'bootstrap-vue-next/composables/useToggle'
 
 // Using useToggle composable
-const {toggle, value: composableValue} = useToggle('collapse-composable')
-const toggleComposable = () => {
-  toggle()
-}
+const {toggle: toggleComposable, value: composableValue} = useToggle('collapse-composable')
 
 // Using v-model
 const isManual = ref(false)
