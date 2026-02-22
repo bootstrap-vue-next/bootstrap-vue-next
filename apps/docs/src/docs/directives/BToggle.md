@@ -27,10 +27,6 @@ The most common approach is using modifiers, where each modifier represents a ta
 
 <<< DEMO ./demo/BToggleModifier.vue#template{vue-html}
 
-For multiple targets, chain multiple modifiers:
-
-<<< FRAGMENT ./demo/ToggleDirectiveTargetSpecification.html#modifiers{vue-html}
-
 ### Using Directive Argument
 
 You can specify the target as a directive argument (supports Vue's dynamic arguments):
@@ -147,8 +143,8 @@ The `v-b-toggle` directive sets:
 The target component (BCollapse, BOffcanvas, etc.) manages:
 
 - `aria-expanded` - Reflects current visibility state (`'true'` or `'false'`)
-- `collapsed` and `not-collapsed` CSS classes
-- Click event handlers
+
+The directive itself handles the CSS classes (`collapsed`/`not-collapsed`) and click event handlers on the trigger element.
 
 This separation of responsibilities ensures consistent accessibility across all show/hide components. For detailed information, see the [ARIA Visibility Architecture documentation](/docs/reference/accessibility#aria-trigger-registration-for-component-visibility).
 
