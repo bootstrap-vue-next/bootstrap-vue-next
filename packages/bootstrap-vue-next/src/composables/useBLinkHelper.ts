@@ -121,6 +121,11 @@ export const useBLinkTagResolver = ({
     }
     // Check if is router link second
     if (isRouterLink.value && typeof RouterLinkComponent !== 'string') {
+      // In Nuxt, prefer NuxtLink over RouterLink for native Nuxt navigation
+      if (isNuxtLink.value) {
+        const nuxtLink = instance?.appContext?.app?.component('NuxtLink')
+        if (nuxtLink) return nuxtLink
+      }
       return RouterLinkComponent
     }
 
