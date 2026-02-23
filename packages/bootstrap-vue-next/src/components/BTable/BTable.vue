@@ -109,7 +109,7 @@
 
 <script setup lang="ts" generic="Item">
 import {useToNumber} from '@vueuse/core'
-import {computed, type ComputedRef, readonly, toRef} from 'vue'
+import {computed, readonly, toRef} from 'vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'

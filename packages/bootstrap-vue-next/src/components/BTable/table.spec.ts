@@ -1523,7 +1523,7 @@ describe('v-model:items with provider', () => {
     const wrapper = mount(BTable, {
       props: {
         provider,
-        fields: simpleFields,
+        'fields': simpleFields,
         'onUpdate:items': (val: unknown) => wrapper.setProps({items: val as typeof providerItems}),
       },
     })
@@ -1548,9 +1548,8 @@ describe('v-model:items with provider', () => {
     const wrapper = mount(BTable, {
       props: {
         provider,
-        fields: simpleFields,
-        'onUpdate:items': (val: unknown) =>
-          wrapper.setProps({items: val as typeof initialItems}),
+        'fields': simpleFields,
+        'onUpdate:items': (val: unknown) => wrapper.setProps({items: val as typeof initialItems}),
       },
     })
 

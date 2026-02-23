@@ -217,18 +217,15 @@ export const useTableMapper = <Item>({
     }
     const noProviderFilteringValue = toValue(provider.noProviderFiltering)
 
-    const mappedItems = itemsValue.reduce(
-      (acc, val) => {
-        const item = mapItem(val)
-        const shouldFilter =
-          isFilterableTable.value && (!usesProviderResolved.value || noProviderFilteringValue)
+    const mappedItems = itemsValue.reduce((acc, val) => {
+      const item = mapItem(val)
+      const shouldFilter =
+        isFilterableTable.value && (!usesProviderResolved.value || noProviderFilteringValue)
 
-        if (!shouldFilter || filterItem(item)) acc.push(item)
+      if (!shouldFilter || filterItem(item)) acc.push(item)
 
-        return acc
-      },
-      [] as Item[]
-    )
+      return acc
+    }, [] as Item[])
 
     if (
       sortByItems?.length &&
@@ -598,7 +595,6 @@ export const useTableProvider = <Item>({
   onMounted(callItemsProvider)
 
   return {
-    items: readonly(items),
     usesProvider,
     callItemsProvider,
   }
