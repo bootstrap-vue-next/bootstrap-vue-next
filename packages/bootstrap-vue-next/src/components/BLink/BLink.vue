@@ -4,7 +4,7 @@
     :class="computedClasses"
     :target="props.target"
     :rel="computedRel"
-    :href="computedHref"
+    :href="isNuxtLink && props.to ? undefined : computedHref"
     :tabindex="computedTabIndex"
     :aria-disabled="props.disabled ? true : null"
     v-bind="computedSpecificProps"
