@@ -1511,6 +1511,74 @@ describe('provider debouncing', () => {
   })
 })
 
+describe('v-model:items with provider', () => {
+  it('updates v-model:items when provider returns data', async () => {
+    const providerItems: TableItem<SimplePerson>[] = [
+      {age: 30, first_name: 'John'},
+      {age: 25, first_name: 'Jane'},
+    ]
+
+    const provider = vi.fn(async () => providerItems)
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        'onUpdate:items': (val: unknown) => wrapper.setProps({items: val as typeof providerItems}),
+      },
+    })
+
+    // Wait for initial mount call to complete
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    // v-model:items should be updated with provider results
+    expect(wrapper.props('items')).toEqual(providerItems)
+  })
+
+  it('emits update:items when provider fetches new data on filter change', async () => {
+    const initialItems: TableItem<SimplePerson>[] = [{age: 30, first_name: 'John'}]
+    const filteredItems: TableItem<SimplePerson>[] = [{age: 25, first_name: 'Jane'}]
+
+    let callCount = 0
+    const provider = vi.fn(async () => {
+      callCount++
+      return callCount === 1 ? initialItems : filteredItems
+    })
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        'onUpdate:items': (val: unknown) =>
+          wrapper.setProps({items: val as typeof initialItems}),
+      },
+    })
+
+    // Wait for initial provider call
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(wrapper.props('items')).toEqual(initialItems)
+
+    // Trigger filter change to call provider again
+    await wrapper.setProps({filter: 'test'})
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    // v-model:items should now have the filtered data
+    expect(wrapper.props('items')).toEqual(filteredItems)
+  })
+
+  it('works with one-way binding :items when not using provider', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+      },
+    })
+
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows.length).toBe(simpleItems.length)
+  })
+})
+
 describe('event emissions', () => {
   const items = [
     {id: 1, first_name: 'John', age: 30},

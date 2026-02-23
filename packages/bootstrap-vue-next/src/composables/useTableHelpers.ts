@@ -5,7 +5,6 @@ import {
   onMounted,
   provide,
   readonly,
-  ref,
   type Ref,
   toRef,
   toValue,
@@ -451,6 +450,7 @@ export const useTableSelectedItems = <Item>({
 }
 
 export const useTableProvider = <Item>({
+  items,
   provider,
   busy,
   currentPage,
@@ -464,6 +464,7 @@ export const useTableProvider = <Item>({
   sortBy,
   events,
 }: {
+  items: Ref<readonly Item[]>
   sortBy: MaybeRefOrGetter<readonly BTableSortBy[] | undefined>
   currentPage: MaybeRefOrGetter<number>
   perPage: MaybeRefOrGetter<number>
@@ -488,10 +489,6 @@ export const useTableProvider = <Item>({
   const sortByResolved = readonly(toRef(sortBy))
   const filterResolved = readonly(toRef(filter))
 
-  /**
-   * Only stores data that is fetched when using the provider
-   */
-  const items: Ref<readonly Item[]> = ref([])
   const usesProvider = computed(() => providerResolved.value !== undefined)
 
   // AbortController for canceling previous provider requests
