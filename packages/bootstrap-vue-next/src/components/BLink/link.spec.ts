@@ -90,4 +90,53 @@ describe('link', () => {
     expect(wrapper.attributes('href')).toBe('/nuxt-page')
     expect(wrapper.attributes('data-nuxt-link')).toBe('true')
   })
+
+  it('does not pass href to NuxtLink when to is provided in Nuxt environment', () => {
+    // Mock NuxtLink component that tracks received props
+    const NuxtLink = defineComponent({
+      name: 'NuxtLink',
+      props: {
+        to: {type: [String, Object], default: undefined},
+        href: {type: String, default: undefined},
+      },
+      setup(props, {slots}) {
+        return () =>
+          h(
+            'a',
+            {
+              'href': String(props.to),
+              'data-nuxt-link': 'true',
+              'data-has-href-prop': props.href !== undefined ? 'true' : 'false',
+            },
+            slots.default?.()
+          )
+      },
+    })
+
+    // Plugin to simulate Nuxt environment by setting $nuxt on app
+    const nuxtMock = {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      install(app: any) {
+        app.$nuxt = {}
+      },
+    }
+
+    const wrapper = mount(BLink, {
+      props: {
+        to: '/nuxt-page',
+        routerComponentName: 'NuxtLink',
+      },
+      global: {
+        plugins: [router, nuxtMock],
+        components: {
+          NuxtLink,
+        },
+      },
+    })
+
+    expect(wrapper.attributes('href')).toBe('/nuxt-page')
+    expect(wrapper.attributes('data-nuxt-link')).toBe('true')
+    // href should not be passed as a prop to NuxtLink when to is provided
+    expect(wrapper.attributes('data-has-href-prop')).toBe('false')
+  })
 })
