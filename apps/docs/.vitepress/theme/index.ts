@@ -15,6 +15,7 @@ export default {
     // page content has finished rendering. VitePress's SPA router scrolls
     // before layout shifts settle, causing anchors to land off-screen.
     router.onAfterRouteChange = () => {
+      if (typeof window === 'undefined') return
       setTimeout(() => {
         const {hash} = window.location
         if (!hash) return
