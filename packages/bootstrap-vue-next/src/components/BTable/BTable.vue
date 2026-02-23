@@ -76,7 +76,11 @@
       </slot>
     </template>
     <template #custom-body="scope">
-      <BTr v-if="busyModel" class="b-table-busy-slot" :class="getBusyRowClasses">
+      <BTr
+        v-if="busyModel && (slots['table-busy'] || props.busyLoadingText !== undefined)"
+        class="b-table-busy-slot"
+        :class="getBusyRowClasses"
+      >
         <BTd :colspan="scope.fields.length">
           <slot name="table-busy">
             <div class="text-center my-2">
@@ -88,7 +92,7 @@
       </BTr>
 
       <BTr
-        v-else-if="props.showEmpty === true && computedItems.length === 0"
+        v-else-if="!busyModel && props.showEmpty === true && computedItems.length === 0"
         class="b-table-empty-row"
       >
         <BTd :colspan="computedFields.length">
@@ -161,7 +165,7 @@ const _props = withDefaults(
     selectHead: true,
     selectMode: 'multi',
     selectionVariant: 'primary',
-    busyLoadingText: 'Loading...',
+    busyLoadingText: undefined,
     currentPage: 1,
     sortCompare: undefined,
     debounce: 0,

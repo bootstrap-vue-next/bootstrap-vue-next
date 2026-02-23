@@ -1738,7 +1738,7 @@ describe('BTable busyLoadingText', () => {
     expect(wrapper.text()).toContain('Custom loading message...')
   })
 
-  it('uses default busyLoadingText when busy and none specified', async () => {
+  it('shows items when busy and no busyLoadingText or table-busy slot specified', async () => {
     const wrapper = mount(BTable, {
       props: {
         items: [{name: 'test'}],
@@ -1747,7 +1747,8 @@ describe('BTable busyLoadingText', () => {
       },
     })
     await nextTick()
-    expect(wrapper.text()).toContain('Loading...')
+    expect(wrapper.text()).not.toContain('Loading...')
+    expect(wrapper.text()).toContain('test')
   })
 
   it('prefers table-busy slot over busyLoadingText when both provided', async () => {

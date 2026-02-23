@@ -589,8 +589,9 @@ export default {
         },
         busyLoadingText: {
           type: 'string',
-          default: 'Loading...',
-          description: 'Text to display when table is busy and no table-busy slot is provided',
+          default: undefined,
+          description:
+            'Text to display when table is busy and no table-busy slot is provided. When set, items are replaced with a loading indicator. When not set, items remain visible with muted styling',
         },
         currentPage: {
           type: 'Numberish',
