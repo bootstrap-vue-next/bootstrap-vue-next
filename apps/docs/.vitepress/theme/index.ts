@@ -7,6 +7,8 @@ import {appInfoKey} from './keys'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
+let scrollTimer: ReturnType<typeof setTimeout> | undefined
+
 export default {
   extends: DefaultTheme,
   Layout,
@@ -14,9 +16,16 @@ export default {
     // After client-side route changes, re-scroll to the hash anchor once the
     // page content has finished rendering. VitePress's SPA router scrolls
     // before layout shifts settle, causing anchors to land off-screen.
-    router.onAfterRouteChange = () => {
+    const originalOnAfterRouteChange: typeof router.onAfterRouteChange = router.onAfterRouteChange
+    router.onAfterRouteChange = (...args) => {
+      if (originalOnAfterRouteChange) {
+        originalOnAfterRouteChange(
+          ...(args as Parameters<NonNullable<typeof originalOnAfterRouteChange>>)
+        )
+      }
       if (typeof window === 'undefined') return
-      setTimeout(() => {
+      clearTimeout(scrollTimer)
+      scrollTimer = setTimeout(() => {
         const {hash} = window.location
         if (!hash) return
         const decodedId = decodeURIComponent(hash.slice(1))
