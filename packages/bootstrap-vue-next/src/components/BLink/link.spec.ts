@@ -96,7 +96,7 @@ describe('link', () => {
     const NuxtLink = defineComponent({
       name: 'NuxtLink',
       props: {
-        to: {type: [String, Object], required: true},
+        to: {type: [String, Object], default: undefined},
         href: {type: String, default: undefined},
       },
       setup(props, {slots}) {
