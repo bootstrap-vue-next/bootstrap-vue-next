@@ -1,4 +1,5 @@
 ---
+migrationGuide: false
 description: 'The `BApp` component is the new recommended way to configure bootstrap-vue-next. It replaces the plugin-based approach and provides better defaults management, orchestrator integration, and improved type safety.'
 ---
 

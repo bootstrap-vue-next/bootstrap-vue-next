@@ -1,4 +1,5 @@
 ---
+migrationGuide: 'grid'
 description: >
   Use the powerful mobile-first flexbox grid (via the `<BContainer>`, `<BRow>` and
   `<BCol>` components) to build layouts of all shapes and sizes thanks to a twelve column system,

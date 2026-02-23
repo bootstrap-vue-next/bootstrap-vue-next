@@ -1,4 +1,5 @@
 ---
+migrationGuide: false
 description: >
   The `<BSpinner>` component can be used to show the loading state in your projects. They're
   rendered only with basic HTML and CSS as a lightweight Vue component. Their appearance,

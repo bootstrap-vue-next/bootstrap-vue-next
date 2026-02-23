@@ -8,11 +8,14 @@
       </BRow>
       <BRow v-if="showButtons">
         <BCol>
-          <ViewSourceButton v-if="sourceHref" :href="sourceHref" class="me-2">
+          <ViewSourceButton v-if="sourceHref" :href="sourceHref" target="_blank" class="me-2">
             View Source
           </ViewSourceButton>
-          <ViewSourceButton v-if="editHref" :href="editHref">
+          <ViewSourceButton v-if="editHref" :href="editHref" target="_blank" class="me-2">
             Edit this page on GitHub
+          </ViewSourceButton>
+          <ViewSourceButton v-if="migrationHref" :href="migrationHref">
+            Migration Guide
           </ViewSourceButton>
         </BCol>
       </BRow>
@@ -22,7 +25,7 @@
 
 <script setup lang="ts">
 import {computed, inject} from 'vue'
-import {useData} from 'vitepress'
+import {useData, withBase} from 'vitepress'
 import {useEditThisPageOnGithub} from '../composables/useEditLink'
 import {useMarkdownRenderer} from '../composables/useMarkdownRenderer'
 import {appInfoKey} from '../../.vitepress/theme/keys'
@@ -121,5 +124,49 @@ const sourceHref = computed(() =>
     : null
 )
 
-const showButtons = computed(() => props.withPageHeader && (editHref.value || sourceHref.value))
+/**
+ * Derive the migration guide anchor from the current page path.
+ * - Components: kebab filename → PascalCase → prepend B → lowercase anchor
+ *   e.g. "form-checkbox" → "BFormCheckbox" → "bformcheckbox"
+ * - Directives: PascalCase filename → strip B → lowercase anchor
+ *   e.g. "BToggle" → "Toggle" → "toggle"
+ *
+ * Frontmatter `migrationGuide` overrides:
+ *   - string value: used as the anchor fragment (e.g. `migrationGuide: 'grid'`)
+ *   - `false`: suppresses the button entirely
+ */
+const migrationHref = computed(() => {
+  const fmOverride = frontmatter.value?.migrationGuide
+  if (fmOverride === false || fmOverride === 'false') return null
+  if (typeof fmOverride === 'string' && fmOverride) {
+    return withBase(`/docs/migration-guide#${fmOverride}`)
+  }
+
+  const base = inferredBase.value
+  if (!base || !page.value?.relativePath) return null
+
+  const segments = page.value.relativePath.split('/')
+  const filename = segments[segments.length - 1]?.replace(/\.md$/i, '')
+  if (!filename) return null
+
+  // Skip partials (prefixed with _)
+  if (filename.startsWith('_')) return null
+
+  let anchor: string | null = null
+
+  if (base === 'githubComponentsDirectory') {
+    // Derive: kebab → PascalCase → prepend B → lowercase
+    anchor = `b${toPascalCase(filename)}`.toLowerCase()
+  } else if (base === 'githubDirectivesDirectory') {
+    // Derive: strip leading B from PascalCase filename → lowercase
+    const name = filename.startsWith('B') ? filename.slice(1) : filename
+    anchor = name.toLowerCase()
+  }
+
+  return anchor ? withBase(`/docs/migration-guide#${anchor}`) : null
+})
+
+const showButtons = computed(
+  () => props.withPageHeader && (editHref.value || sourceHref.value || migrationHref.value)
+)
 </script>
