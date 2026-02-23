@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.43.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.6...bootstrapvuenext-v0.43.7) (2026-02-23)
+
+
+### Bug Fixes
+
+* **BLink:** omit href when NuxtLink is used with to prop ([#3082](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3082)) ([d11f7bf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d11f7bf5809639015adf0ee30d3fc7122e10356f))
+* **BTable:** busy state shows items with muted styling instead of hiding them ([#3083](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3083)) ([f92e298](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f92e2988796df7f1b1111767af47d2e12ef3292b))
+
 ## [0.43.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.5...bootstrapvuenext-v0.43.6) (2026-02-20)
 
 
