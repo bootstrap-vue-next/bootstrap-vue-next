@@ -18,7 +18,9 @@ export default {
       setTimeout(() => {
         const {hash} = window.location
         if (!hash) return
-        const el = document.querySelector(hash)
+        const decodedId = decodeURIComponent(hash.slice(1))
+        if (!decodedId) return
+        const el = document.getElementById(decodedId)
         if (el) el.scrollIntoView()
       }, 300)
     }

@@ -137,7 +137,7 @@ const sourceHref = computed(() =>
  */
 const migrationHref = computed(() => {
   const fmOverride = frontmatter.value?.migrationGuide
-  if (fmOverride === false || fmOverride === 'false') return null
+  if (fmOverride === false) return null
   if (typeof fmOverride === 'string' && fmOverride) {
     return withBase(`/docs/migration-guide#${fmOverride}`)
   }
@@ -158,8 +158,13 @@ const migrationHref = computed(() => {
     // Derive: kebab → PascalCase → prepend B → lowercase
     anchor = `b${toPascalCase(filename)}`.toLowerCase()
   } else if (base === 'githubDirectivesDirectory') {
-    // Derive: strip leading B from PascalCase filename → lowercase
-    const name = filename.startsWith('B') ? filename.slice(1) : filename
+    // Normalize: handle both kebab-case (b-toggle) and PascalCase (BToggle)
+    // Strip b-/B prefix, remove hyphens, lowercase
+    const name = filename.startsWith('b-')
+      ? filename.slice(2).replace(/-/g, '')
+      : filename.startsWith('B')
+        ? filename.slice(1)
+        : filename
     anchor = name.toLowerCase()
   }
 

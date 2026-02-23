@@ -1,5 +1,4 @@
 ---
-migrationGuide: 'bformtextbox'
 description: 'Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states.'
 ---
 
