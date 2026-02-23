@@ -72,7 +72,6 @@ export const useTableMapper = <Item>({
     noProviderPaging: MaybeRefOrGetter<boolean>
     noProviderFiltering: MaybeRefOrGetter<boolean>
     usesProvider: MaybeRefOrGetter<boolean>
-    items: MaybeRefOrGetter<readonly Item[]>
   }
   events: {
     onChange: (items: readonly Item[]) => void
@@ -160,7 +159,6 @@ export const useTableMapper = <Item>({
   const computedItems = computed<Item[]>(() => {
     const filterableValue = toValue(pagination.filter.filterable)
     const filterFunctionValue = unref(pagination.filter.filterFunction)
-    const providerItems = toValue(provider.items)
     const itemsValue = toValue(items)
 
     const sortByItems = sortByModelResolved.value?.filter((el) => !!el.order)
@@ -219,7 +217,7 @@ export const useTableMapper = <Item>({
     }
     const noProviderFilteringValue = toValue(provider.noProviderFiltering)
 
-    const mappedItems = (usesProviderResolved.value ? providerItems : itemsValue).reduce(
+    const mappedItems = itemsValue.reduce(
       (acc, val) => {
         const item = mapItem(val)
         const shouldFilter =

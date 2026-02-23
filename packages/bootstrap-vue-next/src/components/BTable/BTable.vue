@@ -296,7 +296,6 @@ const {
 } = useTableMapper({
   fields: () => props.fields,
   provider: {
-    items: itemsModel,
     noProviderFiltering: () => props.noProviderFiltering,
     noProviderPaging: () => props.noProviderPaging,
     noProviderSorting: () => props.noProviderSorting,
