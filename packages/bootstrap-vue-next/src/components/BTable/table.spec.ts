@@ -1724,21 +1724,8 @@ describe('BTable styling props', () => {
   })
 })
 
-describe('BTable busyLoadingText', () => {
-  it('displays busyLoadingText when busy and no slot provided', async () => {
-    const wrapper = mount(BTable, {
-      props: {
-        items: [{name: 'test'}],
-        fields: ['name'],
-        busy: true,
-        busyLoadingText: 'Custom loading message...',
-      },
-    })
-    await nextTick()
-    expect(wrapper.text()).toContain('Custom loading message...')
-  })
-
-  it('uses default busyLoadingText when busy and none specified', async () => {
+describe('BTable busy state', () => {
+  it('shows items when busy and no table-busy slot specified', async () => {
     const wrapper = mount(BTable, {
       props: {
         items: [{name: 'test'}],
@@ -1747,16 +1734,15 @@ describe('BTable busyLoadingText', () => {
       },
     })
     await nextTick()
-    expect(wrapper.text()).toContain('Loading...')
+    expect(wrapper.text()).toContain('test')
   })
 
-  it('prefers table-busy slot over busyLoadingText when both provided', async () => {
+  it('shows table-busy slot content instead of items when busy and slot provided', async () => {
     const wrapper = mount(BTable, {
       props: {
         items: [{name: 'test'}],
         fields: ['name'],
         busy: true,
-        busyLoadingText: 'This should not appear',
       },
       slots: {
         'table-busy': '<div>Custom slot content</div>',
@@ -1764,19 +1750,23 @@ describe('BTable busyLoadingText', () => {
     })
     await nextTick()
     expect(wrapper.text()).toContain('Custom slot content')
-    expect(wrapper.text()).not.toContain('This should not appear')
+    expect(wrapper.text()).not.toContain('test')
   })
 
-  it('does not display busyLoadingText when not busy', () => {
+  it('does not show table-busy slot when not busy', async () => {
     const wrapper = mount(BTable, {
       props: {
         items: [{name: 'test'}],
         fields: ['name'],
         busy: false,
-        busyLoadingText: 'Should not appear',
+      },
+      slots: {
+        'table-busy': '<div>Custom slot content</div>',
       },
     })
-    expect(wrapper.text()).not.toContain('Should not appear')
+    await nextTick()
+    expect(wrapper.text()).not.toContain('Custom slot content')
+    expect(wrapper.text()).toContain('test')
   })
 
   it('filters correctly with filterFunction when filter prop is empty string', async () => {

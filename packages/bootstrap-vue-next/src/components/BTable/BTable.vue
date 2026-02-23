@@ -76,19 +76,18 @@
       </slot>
     </template>
     <template #custom-body="scope">
-      <BTr v-if="busyModel" class="b-table-busy-slot" :class="getBusyRowClasses">
+      <BTr
+        v-if="busyModel && slots['table-busy']"
+        class="b-table-busy-slot"
+        :class="getBusyRowClasses"
+      >
         <BTd :colspan="scope.fields.length">
-          <slot name="table-busy">
-            <div class="text-center my-2">
-              <BSpinner small class="align-middle me-2" />
-              <strong>{{ props.busyLoadingText }}</strong>
-            </div>
-          </slot>
+          <slot name="table-busy" />
         </BTd>
       </BTr>
 
       <BTr
-        v-else-if="props.showEmpty === true && computedItems.length === 0"
+        v-else-if="!busyModel && props.showEmpty === true && computedItems.length === 0"
         class="b-table-empty-row"
       >
         <BTd :colspan="computedFields.length">
@@ -114,7 +113,6 @@ import {computed, type ComputedRef, readonly, type Ref, toRef} from 'vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
-import BSpinner from '../BSpinner/BSpinner.vue'
 import {
   type TableField,
   type TableFieldRaw,
@@ -161,7 +159,6 @@ const _props = withDefaults(
     selectHead: true,
     selectMode: 'multi',
     selectionVariant: 'primary',
-    busyLoadingText: 'Loading...',
     currentPage: 1,
     sortCompare: undefined,
     debounce: 0,
