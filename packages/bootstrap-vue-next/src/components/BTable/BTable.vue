@@ -109,7 +109,7 @@
 
 <script setup lang="ts" generic="Item">
 import {useToNumber} from '@vueuse/core'
-import {computed, type ComputedRef, readonly, type Ref, toRef} from 'vue'
+import {computed, readonly, toRef} from 'vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
@@ -136,7 +136,7 @@ import {
 import {useItemExpansion} from '../../composables/useTableLiteHelpers'
 
 const _props = withDefaults(
-  defineProps<Omit<BTableProps<Item>, 'sortBy' | 'busy' | 'selectedItems'>>(),
+  defineProps<Omit<BTableProps<Item>, 'sortBy' | 'busy' | 'selectedItems' | 'items'>>(),
   {
     noSortableIcon: false,
     sortIconLeft: false,
@@ -164,7 +164,6 @@ const _props = withDefaults(
     debounce: 0,
     debounceMaxWait: Number.NaN,
     // BTableLite props
-    items: () => [],
     fields: () => [],
     // All others use defaults
     caption: undefined,
@@ -239,6 +238,9 @@ const expandedItems = defineModel<Exclude<BTableProps<Item>['expandedItems'], un
     default: () => [],
   }
 )
+const itemsModel = defineModel<Exclude<BTableProps<Item>['items'], undefined>>('items', {
+  default: () => [],
+})
 
 const computedId = useId(() => props.id)
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
@@ -259,6 +261,7 @@ const sortController = useTableSort({
   multisort: () => props.multisort,
 })
 const providerController = useTableProvider({
+  items: itemsModel,
   events: {
     onFiltered: () => {
       emit('filtered', computedItems.value)
@@ -280,9 +283,7 @@ const providerController = useTableProvider({
   sortBy: sortByModel,
 })
 const expandedItemsController = useItemExpansion({
-  allItems: computed(() =>
-    providerController.usesProvider.value ? providerController.items.value : props.items
-  ) as ComputedRef<Item[]>,
+  allItems: itemsModel,
   primaryKey: toRef(() => props.primaryKey),
   expandedItems,
 })
@@ -295,7 +296,6 @@ const {
 } = useTableMapper({
   fields: () => props.fields,
   provider: {
-    items: providerController.items as Ref<Item[]>,
     noProviderFiltering: () => props.noProviderFiltering,
     noProviderPaging: () => props.noProviderPaging,
     noProviderSorting: () => props.noProviderSorting,
@@ -306,7 +306,7 @@ const {
       emit('change', v)
     },
   },
-  items: () => props.items,
+  items: itemsModel,
   pagination: {
     perPage: perPageNumber,
     currentPage: currentPageNumber,

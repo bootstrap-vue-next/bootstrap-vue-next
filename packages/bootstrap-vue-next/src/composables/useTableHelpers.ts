@@ -5,7 +5,6 @@ import {
   onMounted,
   provide,
   readonly,
-  ref,
   type Ref,
   toRef,
   toValue,
@@ -73,7 +72,6 @@ export const useTableMapper = <Item>({
     noProviderPaging: MaybeRefOrGetter<boolean>
     noProviderFiltering: MaybeRefOrGetter<boolean>
     usesProvider: MaybeRefOrGetter<boolean>
-    items: MaybeRefOrGetter<readonly Item[]>
   }
   events: {
     onChange: (items: readonly Item[]) => void
@@ -161,7 +159,6 @@ export const useTableMapper = <Item>({
   const computedItems = computed<Item[]>(() => {
     const filterableValue = toValue(pagination.filter.filterable)
     const filterFunctionValue = unref(pagination.filter.filterFunction)
-    const providerItems = toValue(provider.items)
     const itemsValue = toValue(items)
 
     const sortByItems = sortByModelResolved.value?.filter((el) => !!el.order)
@@ -220,18 +217,15 @@ export const useTableMapper = <Item>({
     }
     const noProviderFilteringValue = toValue(provider.noProviderFiltering)
 
-    const mappedItems = (usesProviderResolved.value ? providerItems : itemsValue).reduce(
-      (acc, val) => {
-        const item = mapItem(val)
-        const shouldFilter =
-          isFilterableTable.value && (!usesProviderResolved.value || noProviderFilteringValue)
+    const mappedItems = itemsValue.reduce((acc, val) => {
+      const item = mapItem(val)
+      const shouldFilter =
+        isFilterableTable.value && (!usesProviderResolved.value || noProviderFilteringValue)
 
-        if (!shouldFilter || filterItem(item)) acc.push(item)
+      if (!shouldFilter || filterItem(item)) acc.push(item)
 
-        return acc
-      },
-      [] as Item[]
-    )
+      return acc
+    }, [] as Item[])
 
     if (
       sortByItems?.length &&
@@ -451,6 +445,7 @@ export const useTableSelectedItems = <Item>({
 }
 
 export const useTableProvider = <Item>({
+  items,
   provider,
   busy,
   currentPage,
@@ -464,6 +459,7 @@ export const useTableProvider = <Item>({
   sortBy,
   events,
 }: {
+  items: Ref<readonly Item[]>
   sortBy: MaybeRefOrGetter<readonly BTableSortBy[] | undefined>
   currentPage: MaybeRefOrGetter<number>
   perPage: MaybeRefOrGetter<number>
@@ -488,10 +484,6 @@ export const useTableProvider = <Item>({
   const sortByResolved = readonly(toRef(sortBy))
   const filterResolved = readonly(toRef(filter))
 
-  /**
-   * Only stores data that is fetched when using the provider
-   */
-  const items: Ref<readonly Item[]> = ref([])
   const usesProvider = computed(() => providerResolved.value !== undefined)
 
   // AbortController for canceling previous provider requests
@@ -603,7 +595,6 @@ export const useTableProvider = <Item>({
   onMounted(callItemsProvider)
 
   return {
-    items: readonly(items),
     usesProvider,
     callItemsProvider,
   }
