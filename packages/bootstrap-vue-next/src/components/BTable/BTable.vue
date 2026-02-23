@@ -283,7 +283,7 @@ const providerController = useTableProvider({
   sortBy: sortByModel,
 })
 const expandedItemsController = useItemExpansion({
-  allItems: computed(() => itemsModel.value) as ComputedRef<Item[]>,
+  allItems: itemsModel,
   primaryKey: toRef(() => props.primaryKey),
   expandedItems,
 })
