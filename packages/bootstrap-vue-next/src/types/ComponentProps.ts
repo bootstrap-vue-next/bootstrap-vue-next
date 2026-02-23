@@ -1353,7 +1353,6 @@ export interface BTableProps<Item>
   selectMode?: BTableSelectMode
   selectionVariant?: ColorVariant | null
   busy?: boolean
-  busyLoadingText?: string
   perPage?: Numberish
   currentPage?: Numberish
   filter?: string

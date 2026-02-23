@@ -346,12 +346,6 @@ following custom CSS:
 
 <<< DEMO ./demo/TableBusy.vue
 
-#### busy-loading-text
-
-You can also use the `busy-loading-text` prop to display a custom loading message with a spinner when the table is busy, without needing to provide a custom slot:
-
-<<< DEMO ./demo/TableBusyLoadingText.vue
-
 Also see the [Using Item Provider Functions](#using-items-provider-functions) below for additional
 information on the `busy` state.
 

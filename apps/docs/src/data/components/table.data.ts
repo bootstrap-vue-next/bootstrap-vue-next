@@ -587,12 +587,6 @@ export default {
           description:
             'When set, forces the table into the busy state. Automatically set when an items provider function is being called',
         },
-        busyLoadingText: {
-          type: 'string',
-          default: undefined,
-          description:
-            'Text to display when table is busy and no table-busy slot is provided. When set, items are replaced with a loading indicator. When not set, items remain visible with muted styling',
-        },
         currentPage: {
           type: 'Numberish',
           default: 1,
