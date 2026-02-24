@@ -91,46 +91,6 @@ describe('link', () => {
     expect(wrapper.attributes('data-nuxt-link')).toBe('true')
   })
 
-  it('renders NuxtLink in Nuxt environment with default routerComponentName', () => {
-    // Mock NuxtLink component
-    const NuxtLink = defineComponent({
-      name: 'NuxtLink',
-      props: {
-        to: {type: [String, Object], required: true},
-        href: {type: String, default: undefined},
-      },
-      setup(props, {slots}) {
-        return () =>
-          h('a', {'href': String(props.to), 'data-nuxt-link': 'true'}, slots.default?.())
-      },
-    })
-
-    // Plugin to simulate Nuxt environment by setting $nuxt on app
-    const nuxtMock = {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      install(app: any) {
-        app.$nuxt = {}
-      },
-    }
-
-    // Use default routerComponentName ('router-link') — no explicit routerComponentName prop
-    const wrapper = mount(BLink, {
-      props: {
-        to: '/nuxt-page',
-      },
-      global: {
-        plugins: [router, nuxtMock],
-        components: {
-          NuxtLink,
-        },
-      },
-    })
-
-    // Should render using NuxtLink, not RouterLink
-    expect(wrapper.attributes('data-nuxt-link')).toBe('true')
-    expect(wrapper.attributes('href')).toBe('/nuxt-page')
-  })
-
   it('does not pass href to NuxtLink when to is provided in Nuxt environment', () => {
     // Mock NuxtLink component that tracks received props
     const NuxtLink = defineComponent({

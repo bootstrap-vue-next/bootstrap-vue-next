@@ -9,6 +9,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       ...opts,
       components: {
         ...opts?.components,
+        global: {
+          routerComponentName: 'BLink',
+        },
         BModal: {
           teleportTo: '#teleports',
           ...opts?.components?.BModal,
