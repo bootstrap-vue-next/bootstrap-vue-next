@@ -1,19 +1,70 @@
 <template>
-  <component
-    :is="tag"
+  <a
+    v-if="isExternalLink || props.disabled"
+    :href="navigationProps.href"
+    v-bind="{...anchorProps, ...nonSpecialAttrs}"
     :class="computedClasses"
-    :target="props.target"
-    :rel="computedRel"
-    :href="isNuxtLink && props.to ? undefined : computedHref"
-    :tabindex="computedTabIndex"
-    :aria-disabled="props.disabled ? true : null"
-    v-bind="computedSpecificProps"
     @click="
-      (e: MouseEvent) => {
-        clicked(e)
-        link?.navigate(e)
+      (e) => {
+        if (props.disabled) {
+          preventNavigation(e)
+        }
+        emit('click', e)
       }
     "
+  >
+    <slot />
+  </a>
+  <component
+    :is="tag"
+    v-else-if="isNuxtLink || isRouterLink"
+    v-slot="slotProps"
+    custom
+    v-bind="routerProps"
+    :prefetch="true"
+  >
+    <a
+      v-bind="{...anchorProps, ...nonSpecialAttrs}"
+      :href="
+        typeof slotProps === 'object' && slotProps !== null && 'href' in slotProps
+          ? slotProps.href
+          : undefined
+      "
+      :class="[
+        computedClasses,
+        {
+          [props.activeClass]:
+            typeof slotProps === 'object' && slotProps !== null && 'isActive' in slotProps
+              ? slotProps.isActive || false
+              : false,
+          [props.exactActiveClass]:
+            typeof slotProps === 'object' && slotProps !== null && 'isExactActive' in slotProps
+              ? slotProps.isExactActive || false
+              : false,
+        },
+      ]"
+      @click="
+        (e) => {
+          routerNavigate(
+            e,
+            typeof slotProps === 'object' &&
+              slotProps !== null &&
+              'navigate' in slotProps &&
+              typeof slotProps.navigate === 'function'
+              ? slotProps.navigate
+              : undefined
+          )
+        }
+      "
+    >
+      <slot />
+    </a>
+  </component>
+  <component
+    :is="tag"
+    v-else
+    v-bind="{...routerProps, ...anchorProps, ...nonSpecialAttrs}"
+    :class="[computedClasses]"
   >
     <slot />
   </component>
@@ -23,12 +74,15 @@
 import {useDefaults} from '../../composables/useDefaults'
 import {useLinkClasses} from '../../composables/useLinkClasses'
 import {collapseInjectionKey, navbarInjectionKey} from '../../utils/keys'
-import {computed, inject, useAttrs} from 'vue'
+import {type Component, computed, inject, shallowRef, useAttrs, watch} from 'vue'
 import {useBLinkTagResolver} from '../../composables/useBLinkHelper'
 import type {BLinkEmits, BLinkProps, BLinkSlots} from '../../types'
 
 const defaultActiveClass = 'active'
 
+defineOptions({
+  inheritAttrs: false,
+})
 const _props = withDefaults(defineProps<BLinkProps>(), {
   active: undefined,
   activeClass: 'router-link-active',
@@ -62,14 +116,16 @@ const emit = defineEmits<BLinkEmits>()
 defineSlots<BLinkSlots>()
 const attrs = useAttrs()
 
-const {computedHref, tag, link, isNuxtLink, isRouterLink, linkProps, isNonStandardTag} =
-  useBLinkTagResolver({
-    routerComponentName: () => props.routerComponentName,
-    disabled: () => props.disabled,
-    to: () => props.to,
-    replace: () => props.replace,
-    href: () => props.href,
-  })
+const routerComponent = shallowRef<string | Component>(props.routerComponentName)
+watch(
+  () => props.routerComponentName,
+  (newValue) => {
+    routerComponent.value = newValue
+  }
+)
+const {tag, isNuxtLink, isRouterLink, isNonStandardTag} = useBLinkTagResolver({
+  routerComponentName: routerComponent,
+})
 
 const collapseData = inject(collapseInjectionKey, null)
 const navbarData = inject(navbarInjectionKey, null)
@@ -80,54 +136,107 @@ const navbarData = inject(navbarInjectionKey, null)
 const linkValueClasses = useLinkClasses(props)
 const computedClasses = computed(() => [
   linkValueClasses.value,
-  attrs.class,
-  computedLinkClasses.value,
   {
     [defaultActiveClass]: props.active,
-    [props.activeClass]: link.value?.isActive.value || false,
-    [props.exactActiveClass]: link.value?.isExactActive.value || false,
     'stretched-link': props.stretched,
+    'disabled': props.disabled,
   },
 ])
-const computedLinkClasses = computed(() => ({
-  [defaultActiveClass]: props.active,
-  disabled: props.disabled,
-}))
 
-const clicked = (e: Readonly<MouseEvent>): void => {
+const preventNavigation = (e: Readonly<MouseEvent>): void => {
+  e.preventDefault()
+  e.stopImmediatePropagation()
+}
+const routerNavigate = (
+  e: Readonly<MouseEvent>,
+  navigate: undefined | ((e: Readonly<MouseEvent>) => void)
+): void => {
   if (props.disabled) {
-    e.preventDefault()
-    e.stopImmediatePropagation()
+    preventNavigation(e)
+    emit('click', e)
     return
   }
 
+  emit('click', e)
+
   if (
-    (collapseData?.isNav?.value === true && navbarData === null) ||
-    (navbarData !== null && navbarData.noAutoClose?.value !== true)
+    !e.defaultPrevented &&
+    ((collapseData?.isNav?.value === true && navbarData === null) ||
+      (navbarData !== null && navbarData.noAutoClose?.value !== true))
   ) {
     collapseData?.hide?.()
   }
 
-  emit('click', e)
+  navigate?.(e)
 }
+const nonSpecialAttrs = computed(() => {
+  const obj = {...attrs}
+  delete obj.class
+  return obj
+})
+const navigationProps = computed(() => {
+  const toV = props.to || ''
 
-const computedRel = computed(() =>
-  props.target === '_blank' ? (!props.rel && props.noRel ? 'noopener' : props.rel) : undefined
+  return {
+    to: toV,
+    // vitepress requires href to be set in addition to `to` I think
+    href: props.href || (typeof toV === 'string' && toV ? toV : undefined),
+  }
+})
+const isExternalLink = computed(
+  () =>
+    !navigationProps.value.to ||
+    (typeof navigationProps.value.to === 'string' &&
+      (navigationProps.value.to.startsWith('//') ||
+        navigationProps.value.to.startsWith('http://') ||
+        navigationProps.value.to.startsWith('https://')))
 )
-const computedTabIndex = computed(() =>
-  props.disabled ? '-1' : typeof attrs.tabindex === 'undefined' ? null : attrs.tabindex
-)
+
+const computedRel = computed(() => {
+  if (props.rel) return props.rel
+  if (props.noRel) return undefined
+  if (isExternalLink.value || props.target) return 'noopener noreferrer'
+  return undefined
+})
+const computedTabIndex = computed(() => (props.disabled ? '-1' : props.tabindex))
+const anchorProps = computed(() => ({
+  target: props.target,
+  tabindex: computedTabIndex.value,
+  ariaDisabled: props.disabled ? true : undefined,
+  rel: computedRel.value,
+  class: attrs.class,
+}))
 
 const nuxtSpecificProps = computed(() => ({
-  ...(props.noPrefetch ? {noPrefetch: props.noPrefetch} : {prefetch: props.prefetch}),
+  prefetch: props.prefetch,
+  noPrefetch: props.noPrefetch,
   prefetchOn: props.prefetchOn,
   prefetchedClass: props.prefetchedClass,
-  ...linkProps.value,
+  ...navigationProps.value,
 }))
-const computedSpecificProps = computed(() => ({
-  ...(isRouterLink.value ? linkProps.value : undefined),
-  // In addition to being Nuxt specific, we add these values if it's some non-standard tag. We don't know what it is,
-  // So we just add it anyways. It will be made as an attr if it's unused so it's fine
-  ...(isNuxtLink.value || isNonStandardTag.value ? nuxtSpecificProps.value : undefined),
-}))
+const routerProps = computed(() => {
+  const obj = {
+    ...props,
+    ...(isRouterLink.value ? navigationProps.value : undefined),
+    // In addition to being Nuxt specific, we add these values if it's some non-standard tag. We don't know what it is,
+    // So we just add it anyways. It will be made as an attr if it's unused so it's fine
+    ...(isNuxtLink.value || isNonStandardTag.value ? nuxtSpecificProps.value : undefined),
+  }
+
+  // This is an anchor prop
+  delete obj.class
+  // Prevent a nuxt runtime warning
+  if (obj.noPrefetch === true) {
+    delete obj.prefetch
+  } else {
+    delete obj.noPrefetch
+  }
+  // Prevent a nuxt runtime warning when both href and to are used.
+  // We keep href for non-nuxt because vitepress needs it
+  if (isNuxtLink.value && obj.to) {
+    delete obj.href
+  }
+
+  return obj
+})
 </script>
