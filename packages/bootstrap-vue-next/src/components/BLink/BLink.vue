@@ -222,8 +222,6 @@ const routerProps = computed(() => {
     ...(isNuxtLink.value || isNonStandardTag.value ? nuxtSpecificProps.value : undefined),
   }
 
-  // This is an anchor prop
-  delete obj.class
   // Prevent a nuxt runtime warning
   if (obj.noPrefetch === true) {
     delete obj.prefetch
