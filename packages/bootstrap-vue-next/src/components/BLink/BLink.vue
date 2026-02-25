@@ -21,7 +21,6 @@
     v-slot="slotProps"
     custom
     v-bind="routerProps"
-    :prefetch="true"
   >
     <a
       v-bind="{...anchorProps, ...nonSpecialAttrs}"
@@ -64,7 +63,7 @@
     :is="tag"
     v-else
     v-bind="{...routerProps, ...anchorProps, ...nonSpecialAttrs}"
-    :class="[computedClasses]"
+    :class="computedClasses"
   >
     <slot />
   </component>
