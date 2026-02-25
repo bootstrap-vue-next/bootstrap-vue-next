@@ -13,6 +13,7 @@ import type {
   OrchestratorArrayValue,
   PromiseWithComponent,
   PromiseWithComponentInternal,
+  ShowPromiseWithComponent,
 } from '../../types/ComponentOrchestratorTypes'
 import type {BvTriggerableEvent} from '../../utils'
 import {orchestratorRegistryKey} from '../../utils/keys'
@@ -43,8 +44,30 @@ export function buildPromise<TComponent, TParam, TArrayValue extends Orchestrato
       const refWithMethods = this.ref as RefWithMethods | null
       if (refWithMethods?.show) {
         refWithMethods.show()
-      } else return this.set({modelValue: true} as unknown as Partial<TParam>)
-      return promise
+      } else {
+        this.set({modelValue: true} as unknown as Partial<TParam>)
+      }
+      const self = this as PromiseWithComponentInternal<TComponent, TParam>
+      const showPromise = promise.then((event) =>
+        Object.assign(event, {
+          async [Symbol.asyncDispose]() {
+            await self.destroy()
+          },
+        })
+      )
+      return Object.assign(showPromise, {
+        id: self.id,
+        ref: self.ref,
+        show: () => self.show(),
+        hide: (trigger?: string) => self.hide(trigger),
+        toggle: () => self.toggle(),
+        set: (val: Partial<TParam>) => self.set(val),
+        get: () => self.get(),
+        destroy: () => self.destroy(),
+        async [Symbol.asyncDispose]() {
+          await self.destroy()
+        },
+      }) as ShowPromiseWithComponent<TComponent, TParam>
     },
     hide(trigger?: string) {
       const refWithMethods = this.ref as RefWithMethods | null
