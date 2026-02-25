@@ -1,0 +1,41 @@
+<!-- #region basic-bsv -->
+<!-- BSV -->
+<BButton v-b-modal.my-modal>Show Modal</BButton>
+<BModal id="my-modal">Content</BModal>
+<!-- #endregion basic-bsv -->
+
+<!-- #region basic-bsvn -->
+<!-- BSVN (same syntax) -->
+<BButton v-b-modal.my-modal>Show Modal</BButton>
+<BModal id="my-modal">Content</BModal>
+<!-- #endregion basic-bsvn -->
+
+<!-- #region alias-bsv -->
+<!-- BSV: Only v-b-modal worked with modals -->
+<BButton v-b-modal.my-modal>Show Modal</BButton>
+<!-- #endregion alias-bsv -->
+
+<!-- #region alias-bsvn -->
+<!-- BSVN: Both work identically - choose based on semantics -->
+<BButton v-b-modal.my-modal>Show Modal</BButton>
+<BButton v-b-toggle.my-modal>Show Modal</BButton>
+<!-- #endregion alias-bsvn -->
+
+<!-- #region target-specs -->
+<!-- Using modifiers (most common) -->
+<BButton v-b-modal.modal-id>Show</BButton>
+
+<!-- Using directive argument -->
+<BButton v-b-modal:modal-id>Show</BButton>
+
+<!-- Using string value -->
+<BButton v-b-modal="'modal-id'">Show</BButton>
+
+<!-- Using array value (multiple modals) -->
+<BButton v-b-modal="['modal-1', 'modal-2']">Show Both</BButton>
+<!-- #endregion target-specs -->
+
+<!-- #region array-value -->
+<!-- BSVN allows arrays (BSV required space-separated strings) -->
+<BButton v-b-modal="['modal-1', 'modal-2']">Show Multiple</BButton>
+<!-- #endregion array-value -->

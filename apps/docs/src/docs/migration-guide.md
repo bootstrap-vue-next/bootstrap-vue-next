@@ -1690,6 +1690,64 @@ For complex scenarios, migrate to the `<BPopover>` component:
 
 <NotYetDocumented type="directive"/>
 
+### Modal
+
+The `v-b-modal` directive provides a semantic way to trigger modals and works identically between BSV and BSVN.
+
+#### Syntax Compatibility
+
+The directive syntax is fully compatible:
+
+<<< FRAGMENT ./directives/demo/ModalDirectiveMigration.html#basic-bsv{vue-html}
+
+<<< FRAGMENT ./directives/demo/ModalDirectiveMigration.html#basic-bsvn{vue-html}
+
+#### Relationship with v-b-toggle
+
+In BSVN, `v-b-modal` is an alias for `v-b-toggle`:
+
+- Both directives work identically
+- `v-b-modal` is semantically clearer when working with modals
+- `v-b-toggle` works with modals, collapse, and offcanvas
+- Use whichever makes your code more readable
+
+<<< FRAGMENT ./directives/demo/ModalDirectiveMigration.html#alias-bsv{vue-html}
+
+<<< FRAGMENT ./directives/demo/ModalDirectiveMigration.html#alias-bsvn{vue-html}
+
+#### New Features in BSVN
+
+**Array value support:**
+
+<<< FRAGMENT ./directives/demo/ModalDirectiveMigration.html#array-value{vue-html}
+
+**CSS class tracking:**
+
+BSVN adds `collapsed`/`not-collapsed` classes to trigger elements based on modal state, allowing for conditional styling.
+
+#### Comparison with Other Approaches
+
+BSVN offers multiple ways to control modals beyond the directive. For a comprehensive comparison of `v-b-modal` directive vs `v-model` vs template refs vs `useModal` composable, including code examples and guidance on when to use each approach, see the [Comparison with Other Approaches](/docs/directives/BModal#comparison-with-other-approaches) section in the BModal directive documentation.
+
+**Migration from BSV `this.$bvModal.show(id)`:**
+
+BSV's `this.$bvModal.show(id)` has been replaced with multiple approaches. See the [BModal directive documentation](/docs/directives/BModal#comparison-with-other-approaches) for detailed migration examples.
+
+#### Accessibility
+
+Both BSV and BSVN automatically handle accessibility:
+
+- `aria-controls` is set by the directive
+- `aria-expanded` is managed by the modal component
+- CSS classes track modal state
+- Works with `<BButton>`, `<BLink>`, and standard HTML elements
+
+#### Recommendations
+
+- Use `v-b-modal` instead of `v-b-toggle` for semantic clarity when working with modals
+- When using on links with `href`, add `@click.prevent` to avoid URL changes
+- See the [BModal Directive documentation](/docs/directives/BModal) for complete details and comparison of all approaches
+
 ### Toggle
 
 The `v-b-toggle` directive syntax is fully compatible between BSV and BSVN with no changes required for most usage.
