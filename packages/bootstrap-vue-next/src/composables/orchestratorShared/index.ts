@@ -48,11 +48,12 @@ export function buildPromise<TComponent, TParam, TArrayValue extends Orchestrato
         this.set({modelValue: true} as unknown as Partial<TParam>)
       }
       const self = this as PromiseWithComponentInternal<TComponent, TParam>
+      const asyncDispose = async () => {
+        await self.destroy()
+      }
       const showPromise = promise.then((event) =>
-        Object.assign(event, {
-          async [Symbol.asyncDispose]() {
-            await self.destroy()
-          },
+        Object.assign(Object.create(event), {
+          [Symbol.asyncDispose]: asyncDispose,
         })
       )
       return Object.assign(showPromise, {
@@ -64,9 +65,7 @@ export function buildPromise<TComponent, TParam, TArrayValue extends Orchestrato
         set: (val: Partial<TParam>) => self.set(val),
         get: () => self.get(),
         destroy: () => self.destroy(),
-        async [Symbol.asyncDispose]() {
-          await self.destroy()
-        },
+        [Symbol.asyncDispose]: asyncDispose,
       }) as ShowPromiseWithComponent<TComponent, TParam>
     },
     hide(trigger?: string) {
