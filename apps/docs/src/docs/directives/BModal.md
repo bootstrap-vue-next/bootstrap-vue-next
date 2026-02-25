@@ -79,26 +79,13 @@ The directive automatically adds CSS classes to the trigger element based on the
 
 You can use these classes to conditionally style the trigger:
 
-```css
-.collapsed .when-open {
-  display: none;
-}
-
-.not-collapsed .when-closed {
-  display: none;
-}
-```
+<<< FRAGMENT ./demo/ModalDirectiveCSSClasses.html#css{css}
 
 ## Disabled State
 
 Disabled elements will not trigger modals:
 
-```vue-html
-<!-- This button will not trigger the modal when disabled -->
-<BButton v-b-modal.my-modal :disabled="true">
-  Disabled Button
-</BButton>
-```
+<<< FRAGMENT ./demo/ModalDirectiveDisabled.html#disabled{vue-html}
 
 ## Comparison with Other Approaches
 
@@ -159,16 +146,11 @@ This separation of responsibilities ensures consistent accessibility across all 
 ### Best Practices
 
 - Only use the directive on keyboard-focusable elements (buttons, links, form controls)
-- Avoid applying to decorative elements like `<div>` or `<span>` (accessibility attributes will be added, but keyboard navigation won't work without additional setup)
-- For elements that don't have a native role of `button` or `link`, `role="button"` and `tabindex="0"` are automatically applied
+- Avoid applying to decorative elements like `<div>` or `<span>` unless you also add appropriate ARIA attributes and keyboard handling yourself
+- For elements that don't have a native role of `button` or `link`, manually add an appropriate `role` (for example, `role="button"`) and a `tabindex` (such as `tabindex="0"`) so they are keyboard-focusable
 
 ## Related Components
 
 - [BModal Component](/docs/components/modal) - Full modal component documentation
-- [BToggle Directive](/docs/directives/BToggle) - General purpose toggle directive for collapse, offcanvas, and modal
-
-## See Also
-
 - [v-b-toggle Directive](/docs/directives/BToggle) - The underlying directive (v-b-modal is an alias)
 - [useModal Composable](/docs/composables/useModal) - For creating modals dynamically
-- [Modal Component](/docs/components/modal) - Complete modal component documentation
