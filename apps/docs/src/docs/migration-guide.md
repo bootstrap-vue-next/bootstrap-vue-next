@@ -1565,7 +1565,32 @@ The default for `placement` is now `top` rather than `right`
 
 ### Modal
 
-<NotYetDocumented type="directive"/>
+#### Relationship with v-b-toggle
+
+In BSVN, `v-b-modal` is an alias for `v-b-toggle`:
+
+- Both directives work identically
+- `v-b-modal` is semantically clearer when working with modals
+- `v-b-toggle` works with modals, collapse, and offcanvas
+- Use whichever makes your code more readable
+
+<<< FRAGMENT ./directives/demo/ModalDirectiveMigration.html#alias-bsv{vue-html}
+
+<<< FRAGMENT ./directives/demo/ModalDirectiveMigration.html#alias-bsvn{vue-html}
+
+#### New Features in BSVN
+
+**Array value support:**
+
+<<< FRAGMENT ./directives/demo/ModalDirectiveMigration.html#array-value{vue-html}
+
+**CSS class tracking:**
+
+BSVN adds `collapsed`/`not-collapsed` classes to trigger elements based on modal state, allowing for conditional styling.
+
+**Migration from BSV `this.$bvModal.show(id)`:**
+
+BSV's `this.$bvModal.show(id)` has been replaced with multiple approaches. See the [BModal directive documentation](/docs/directives/BModal#comparison-with-other-approaches) for detailed migration examples.
 
 ### Popover
 
@@ -1687,8 +1712,6 @@ For complex scenarios, migrate to the `<BPopover>` component:
 <<< FRAGMENT ./demo/PopoverDirectiveComponentAlternative.html#bsvn{vue-html}
 
 ### ScrollSpy
-
-<NotYetDocumented type="directive"/>
 
 ### Toggle
 

@@ -1,0 +1,15 @@
+<!-- #region alias-bsv -->
+<!-- BSV: Only v-b-modal worked with modals -->
+<BButton v-b-modal.my-modal>Show Modal</BButton>
+<!-- #endregion alias-bsv -->
+
+<!-- #region alias-bsvn -->
+<!-- BSVN: Both work identically - choose based on semantics -->
+<BButton v-b-modal.my-modal>Show Modal</BButton>
+<BButton v-b-toggle.my-modal>Show Modal</BButton>
+<!-- #endregion alias-bsvn -->
+
+<!-- #region array-value -->
+<!-- BSVN allows arrays (BSV required space-separated strings) -->
+<BButton v-b-modal="['modal-1', 'modal-2']">Show Multiple</BButton>
+<!-- #endregion array-value -->
