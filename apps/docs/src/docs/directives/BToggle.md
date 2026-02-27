@@ -151,8 +151,8 @@ This separation of responsibilities ensures consistent accessibility across all 
 ### Best Practices
 
 - Only use the directive on keyboard-focusable elements (buttons, links, form controls)
-- Avoid applying to decorative elements like `<div>` or `<span>` (accessibility attributes will be added, but keyboard navigation won't work without additional setup)
-- For elements that don't have a native role of `button` or `link`, `role="button"` and `tabindex="0"` are automatically applied
+- Avoid applying to decorative elements like `<div>` or `<span>` unless you also add appropriate ARIA attributes and keyboard handling yourself
+- For elements that don't have a native role of `button` or `link`, manually add an appropriate `role` (for example, `role="button"`) and a `tabindex` (such as `tabindex="0"`) so they are keyboard-focusable
 
 ### Multiple Target Caveats
 

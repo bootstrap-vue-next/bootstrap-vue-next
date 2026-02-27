@@ -1,0 +1,45 @@
+<!-- #region modifiers -->
+<!-- Using modifiers: Chain modifiers for multiple modals -->
+<BButton v-b-modal.target-1.target-2>Toggle Multiple</BButton>
+<!-- #endregion modifiers -->
+
+<!-- #region argument -->
+<!-- Using directive argument -->
+<BButton v-b-modal:my-modal>Open Modal</BButton>
+
+<!-- Dynamic argument (Vue 3+) -->
+<BButton v-b-modal:[dynamicId]>Open Dynamic Modal</BButton>
+<!-- #endregion argument -->
+
+<!-- #region value -->
+<!-- Using string value -->
+<BButton v-b-modal="'my-modal'">Open Modal</BButton>
+
+<!-- Using array value for multiple modals -->
+<BButton v-b-modal="['modal-1', 'modal-2']">Open Multiple</BButton>
+
+<!-- Space-separated string for multiple modals -->
+<BButton v-b-modal="'modal-1 modal-2'">Open Multiple</BButton>
+<!-- #endregion value -->
+
+<!-- #region href -->
+<!-- Using href on links -->
+<blink
+  v-b-modal
+  href="#my-modal"
+  @click.prevent
+  >Open Modal</blink
+>
+
+<a
+  v-b-modal
+  href="#my-modal"
+  @click.prevent
+  >Open Modal</a
+>
+<!-- #endregion href -->
+
+<!-- #region combined -->
+<!-- Combined: modifier + argument + value -->
+<BButton v-b-modal:another-modal.my-modal="'third-modal'"> Open Three Modals </BButton>
+<!-- #endregion combined -->
