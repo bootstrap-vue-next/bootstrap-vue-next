@@ -742,4 +742,45 @@ describe('link', () => {
     expect(link.exists()).toBe(true)
     expect(link.attributes('href')).toBe('/custom')
   })
+
+  it('does not infinite loop when routerComponentName wraps BLink with to=undefined', () => {
+    // Simulates VBLink pattern: a wrapper that renders BLink with to=undefined and href=path
+    const VBLinkLike = markRaw(
+      defineComponent({
+        name: 'VBLinkLike',
+        props: {
+          to: {type: [String, Object], default: ''},
+          href: {type: String, default: undefined},
+        },
+        setup(props, {slots}) {
+          return () =>
+            h(
+              BLink,
+              {to: undefined, href: props.href || String(props.to)},
+              slots.default ? {default: () => slots.default!()} : undefined
+            )
+        },
+      })
+    )
+
+    // This would cause an infinite loop if the inner BLink tried to use VBLinkLike again
+    const wrapper = mount(BLink, {
+      props: {
+        to: '/page',
+      },
+      global: {
+        plugins: [router],
+        provide: {
+          [defaultsKey as symbol]: ref({
+            global: {
+              routerComponentName: VBLinkLike,
+            },
+          }),
+        },
+      },
+    })
+    // Should render successfully without infinite loop
+    expect(wrapper.find('a').exists()).toBe(true)
+    expect(wrapper.find('a').attributes('href')).toBe('/page')
+  })
 })
