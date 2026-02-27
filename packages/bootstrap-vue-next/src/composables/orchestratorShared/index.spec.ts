@@ -2,6 +2,7 @@ import {describe, expect, it} from 'vitest'
 import {ref} from 'vue'
 import {buildPromise} from '.'
 import type {ModalOrchestratorArrayValue} from '../../types/ComponentOrchestratorTypes'
+import {BvTriggerableEvent} from '../../utils'
 
 describe('buildPromise', () => {
   it('set method does not add undefined title and body when they are not in the value', () => {
@@ -96,5 +97,344 @@ describe('buildPromise', () => {
     expect(item).toBeDefined()
     // Title should remain as it was, not be overwritten with undefined
     expect(item?.title).toBe('Initial Title')
+  })
+
+  it('create returns a promise with Symbol.asyncDispose', () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    // The create result should implement AsyncDisposable
+    expect(typeof promise[Symbol.asyncDispose]).toBe('function')
+  })
+
+  it('create promise resolves to BvTriggerableEvent when awaited', async () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise, resolve} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: false,
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve},
+    } as ModalOrchestratorArrayValue)
+
+    // Resolve the promise with a BvTriggerableEvent
+    const event = new BvTriggerableEvent('test', {trigger: 'ok'})
+    resolve(event)
+
+    // Awaiting the create result directly should give BvTriggerableEvent
+    const result = await promise
+    expect(result).toBeInstanceOf(BvTriggerableEvent)
+    expect(result.trigger).toBe('ok')
+  })
+
+  it('create asyncDispose destroys the modal', async () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: false,
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve: () => {}},
+    } as ModalOrchestratorArrayValue)
+
+    expect(store.value.length).toBe(1)
+
+    // Calling asyncDispose (as `await using` would) should destroy the modal
+    await promise[Symbol.asyncDispose]()
+
+    expect(store.value.length).toBe(0)
+  })
+
+  it('show sets modelValue to true in the store', () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: false,
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve: () => {}},
+    } as ModalOrchestratorArrayValue)
+
+    expect(store.value[0].modelValue).toBe(false)
+
+    promise.show()
+
+    // After show(), modelValue should be true
+    expect(store.value[0].modelValue).toBe(true)
+  })
+
+  it('create().show() chain resolves to BvTriggerableEvent with ok and trigger', async () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise, resolve} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: false,
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve},
+    } as ModalOrchestratorArrayValue)
+
+    // Chain create().show() as done in existing demo code
+    const showPromise = promise.show()
+
+    // Resolve as the orchestrator would
+    const event = new BvTriggerableEvent('hidden', {trigger: 'ok'})
+    event.ok = true
+    resolve(event)
+
+    const result = await showPromise
+    expect(result.trigger).toBe('ok')
+    expect(result.ok).toBe(true)
+  })
+
+  it('hide sets modelValue to false in the store', () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: true,
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve: () => {}},
+    } as ModalOrchestratorArrayValue)
+
+    expect(store.value[0].modelValue).toBe(true)
+
+    promise.hide()
+
+    expect(store.value[0].modelValue).toBe(false)
+  })
+
+  it('toggle flips modelValue in the store', () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: false,
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve: () => {}},
+    } as ModalOrchestratorArrayValue)
+
+    expect(store.value[0].modelValue).toBe(false)
+
+    promise.toggle()
+    expect(store.value[0].modelValue).toBe(true)
+
+    promise.toggle()
+    expect(store.value[0].modelValue).toBe(false)
+  })
+
+  it('get returns the current store item', () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: false,
+      title: 'Test Title',
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve: () => {}},
+    } as ModalOrchestratorArrayValue)
+
+    const item = promise.get() as ModalOrchestratorArrayValue | undefined
+    expect(item).toBeDefined()
+    expect(item?.title).toBe('Test Title')
+  })
+
+  it('destroy removes item from store', async () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: false,
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve: () => {}},
+    } as ModalOrchestratorArrayValue)
+
+    expect(store.value.length).toBe(1)
+
+    await promise.destroy()
+
+    expect(store.value.length).toBe(0)
+  })
+
+  it('show returns a promise with Symbol.asyncDispose on the resolved value', async () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise, resolve} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: false,
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve},
+    } as ModalOrchestratorArrayValue)
+
+    const showResult = promise.show()
+
+    // The show result should be a promise (thenable)
+    expect(showResult).toBeInstanceOf(Promise)
+
+    // The show result should have Symbol.asyncDispose
+    expect(typeof showResult[Symbol.asyncDispose]).toBe('function')
+
+    // Resolve the underlying promise
+    const event = new BvTriggerableEvent('test', {trigger: 'ok'})
+    resolve(event)
+
+    // The resolved value should have Symbol.asyncDispose
+    const resolved = await showResult
+    expect(typeof resolved[Symbol.asyncDispose]).toBe('function')
+    expect(resolved.trigger).toBe('ok')
+  })
+
+  it('show result asyncDispose calls destroy', async () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise, resolve} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: false,
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve},
+    } as ModalOrchestratorArrayValue)
+
+    const showResult = promise.show()
+
+    // Resolve the underlying promise
+    resolve(new BvTriggerableEvent('test'))
+
+    const resolved = await showResult
+
+    // Store should have the item
+    expect(store.value.length).toBe(1)
+
+    // Set modelValue back to false so destroy doesn't wait for onHidden
+    store.value[0].modelValue = false
+
+    // Call asyncDispose on the resolved value
+    await resolved[Symbol.asyncDispose]()
+
+    // Store should be empty after dispose
+    expect(store.value.length).toBe(0)
+  })
+
+  it('show result has component control methods', () => {
+    const store = ref<ModalOrchestratorArrayValue[]>([])
+    const _self = Symbol('test-modal')
+
+    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+      _self,
+      store
+    )
+
+    store.value.push({
+      type: 'modal',
+      _self,
+      position: 'modal',
+      modelValue: false,
+      _component: {},
+      options: {},
+      promise: {value: promise, resolve: () => {}},
+    } as ModalOrchestratorArrayValue)
+
+    const showResult = promise.show()
+
+    // show result should have all control methods for backward compatibility
+    expect(typeof showResult.show).toBe('function')
+    expect(typeof showResult.hide).toBe('function')
+    expect(typeof showResult.toggle).toBe('function')
+    expect(typeof showResult.set).toBe('function')
+    expect(typeof showResult.get).toBe('function')
+    expect(typeof showResult.destroy).toBe('function')
   })
 })
