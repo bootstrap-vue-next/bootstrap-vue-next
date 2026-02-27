@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.43.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.7...bootstrapvuenext-v0.43.8) (2026-02-27)
+
+
+### Features
+
+* **BTable:** convert items prop to v-model:items for provider support -- non breaking ([b020da8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b020da8bbb62ec1188b84e2f5383129ca1feed28))
+* do not minify lib build ([f3521ef](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f3521efc7808fae6dee126afe93cd8a66c3ca349))
+
 ## [0.43.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.6...bootstrapvuenext-v0.43.7) (2026-02-23)
 
 
