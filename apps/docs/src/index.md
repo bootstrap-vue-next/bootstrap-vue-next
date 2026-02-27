@@ -5,24 +5,24 @@ description: With BootstrapVueNext you can build fast, responsive, and ARIA acce
 
 <BRow>
   <BCol class="text-center" cols="12" sm="6">
-    <BLink class="card-link" href="https://getbootstrap.com" target="_blank" rel="noopener">
+    <VBLink class="card-link" href="https://getbootstrap.com" target="_blank" rel="noopener">
       <BCard class="p-3">
         <BootstrapIcon aria-hidden class="icon-lg" />
         <BCardText class="mt-4">
           Bootstrap v5 is the world's most popular framework for building responsive, mobile-first sites.
         </BCardText>
       </BCard>
-    </BLink>
+    </VBLink>
   </BCol>
   <BCol class="text-center">
-    <BLink class="card-link" href="https://vuejs.org" target="_blank" rel="noopener">
+    <VBLink class="card-link" href="https://vuejs.org" target="_blank" rel="noopener">
       <BCard class="p-3">
         <VueIcon aria-hidden class="icon-lg" />
         <BCardText class="mt-4">
           Vue.js (pronounced /vjuː/, like view) is a progressive framework for building user interfaces.
         </BCardText>
       </BCard>
-    </BLink>
+    </VBLink>
   </BCol>
 </BRow>
 

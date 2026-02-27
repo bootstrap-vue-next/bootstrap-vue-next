@@ -222,14 +222,14 @@ now the `close` slot.
 
 <DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BAspect` component">
   This component will not be implemented for v1 due to insufficient demand.
-  Bootstrap's <BLink href="https://getbootstrap.com/docs/5.3/helpers/ratio/">ratio helper utilities</BLink> can be used directly instead.
+  Bootstrap's <VBLink href="https://getbootstrap.com/docs/5.3/helpers/ratio/">ratio helper utilities</VBLink> can be used directly instead.
 </DeprecatedFeature>
 
 ### BAvatar
 
 <DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="Icon support on `BAvatar`">
-  Icons can be implemented using the default slot with either <BLink href="/docs/icons">unplugin-icons</BLink>
-  or by embedding an `.svg`. See the <BLink href="/docs/icons">Icons</BLink> guide for the recommended approach.
+  Icons can be implemented using the default slot with either <VBLink to="/docs/icons">unplugin-icons</VBLink>
+  or by embedding an `.svg`. See the <VBLink to="/docs/icons">Icons</VBLink> guide for the recommended approach.
 </DeprecatedFeature>
 
 <<< DEMO ./demo/AvatarIcon.vue#template{vue-html}
@@ -244,7 +244,7 @@ For instance, use `badge-placement='top'` in place of `badge-top` or `badge-plac
 `badge-placement='top-end'.
 
 <DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`badge-offset`">
-  This property is <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/pull/2692">significantly more complex</BLink> to implement in BootstrapVueNext (due to Bootstrap 5.0's implementation).
+  This property is <VBLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/pull/2692">significantly more complex</VBLink> to implement in BootstrapVueNext (due to Bootstrap 5.0's implementation).
 </DeprecatedFeature>
 
 #### Rounding Sides
@@ -263,8 +263,8 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 ### BButton
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`block` prop on `BButton`">
-  See our <BLink href="/docs/components/button#block-level-buttons">`BButton` documentation</BLink>
-  and <BLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</BLink> for
+  See our <VBLink to="/docs/components/button#block-level-buttons">`BButton` documentation</VBLink>
+  and <VBLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</VBLink> for
   details on creating block-level buttons with utility classes.
 </DeprecatedFeature>
 
@@ -274,7 +274,7 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`content` and `text-variant` props on `BButtonClose`" :plural="true">
   Bootstrap 5 moved to using an embedded svg for the close icon.
-  See <BLink href="https://getbootstrap.com/docs/5.3/migration/#close-button-1">their migration guide</BLink> for details.
+  See <VBLink href="https://getbootstrap.com/docs/5.3/migration/#close-button-1">their migration guide</VBLink> for details.
 </DeprecatedFeature>
 
 ### BButtonToolbar
@@ -286,7 +286,7 @@ not implemented.
 
 <DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BCalendar` component">
   This component will not be implemented for v1.
-  See <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</BLink> for details.
+  See <VBLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</VBLink> for details.
 </DeprecatedFeature>
 
 ### BCard
@@ -350,7 +350,7 @@ on `BCarouselSlide`.
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`accordion` prop on `BCollapse`">
   In `BootstrapVue`/`Bootstrap4`, accordions are implemented via `BCollapse`.
   In `BootstrapVueNext`/`Bootstrap5` accordions are first class citizens, so please use the
-  <BLink href="/docs/components/accordion">`BAccordion`</BLink> component instead.
+  <VBLink to="/docs/components/accordion">`BAccordion`</VBLink> component instead.
 </DeprecatedFeature>
 
 The prop `toggle` has replaced the prop `appear` with slightly different semantics. In order to create a
@@ -384,8 +384,8 @@ See [floating-ui's docs](https://floating-ui.com/docs/computeposition#placement)
 Additionally, BootstrapVueNext supports new placement options that were not available in BootstrapVue, such as `bottom` for center alignment, `top-end`, `left-end`, `right-end`, and others.
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`block` prop on `BDropdown`">
-  See our <BLink href="/docs/components/dropdown#block-level-dropdowns">`BDropdown` documentation</BLink>
-  and <BLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</BLink> for
+  See our <VBLink to="/docs/components/dropdown#block-level-dropdowns">`BDropdown` documentation</VBLink>
+  and <VBLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</VBLink> for
   details on creating block-level dropdowns.
 </DeprecatedFeature>
 
@@ -445,7 +445,7 @@ a header id.
 ##### BDropdownForm
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`inline` prop on `BDropdownForm`">
-  See the <BLink href="#bform">BForm</BLink> migration information. To add classes to the `&lt;form&gt;` tag in `BDropdownForm`
+  See the <VBLink to="#bform">BForm</VBLink> migration information. To add classes to the `&lt;form&gt;` tag in `BDropdownForm`
   use the `form-class` prop.
 </DeprecatedFeature>
 
@@ -490,7 +490,7 @@ See [BForm Components](/docs/components/form-checkbox)
 ### BFormDatePicker
 
 <DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="`BFormDatepicker` component">
-  See <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</BLink> for details.
+  See <VBLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</VBLink> for details.
 </DeprecatedFeature>
 
 ### BFormFile
@@ -569,7 +569,7 @@ See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/
     <li><code>icon-clear</code>: For specifying clear button icon</li>
   </ul>
   BootstrapVueNext does not include a built-in icon library. See
-  <BLink href="/docs/icons">Icons</BLink> for guidance on using unplugin-icons as the recommended
+  <VBLink to="/docs/icons">Icons</VBLink> for guidance on using unplugin-icons as the recommended
   modern solution with automatic tree-shaking.
 </DeprecatedFeature>
 
@@ -603,7 +603,7 @@ take a look at these examples for guidance when migrating.
 
 <DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BFormTimepicker` component">
   This component will not be implemented for v1.
-  See <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</BLink> for details.
+  See <VBLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</VBLink> for details.
 </DeprecatedFeature>
 
 ### BImg
@@ -623,7 +623,7 @@ This functionality has been replaced by lazy loading on `<BImg>` see [BImg](#bim
 ### BInputGroup
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`BInputGroupAppend`, `BInputGroupPrepend`, and `BInputGroupAddon` components" :plural="true">
-  Bootstrap 5 <BLink href="https://getbootstrap.com/docs/5.3/migration/#forms-1">no longer requires</BLink> `input-group-append` or `input-group-prepend`
+  Bootstrap 5 <VBLink href="https://getbootstrap.com/docs/5.3/migration/#forms-1">no longer requires</VBLink> `input-group-append` or `input-group-prepend`
   on elements to append or prepend them to the control, they can just be added as direct children of the input group.
 </DeprecatedFeature>
 
@@ -658,7 +658,7 @@ a limitation that affect your scenario, please [file an issue](https://github.co
 
 <DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`trim`, `lazy`, and `number` props on `BFormTextbox`" :plural="true">
   We support the native modifiers
-  <BLink href="https://vuejs.org/guide/essentials/forms.html#modifiers">`trim`, `lazy`, and `number`</BLink>.
+  <VBLink href="https://vuejs.org/guide/essentials/forms.html#modifiers">`trim`, `lazy`, and `number`</VBLink>.
   They work as documented in Vue.js, so there is no longer a need for the properties.
 </DeprecatedFeature>
 
@@ -719,14 +719,14 @@ See [BLink](#blink) for changes to link and router behavior.
 <DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BMedia` component">
   This component will not be implemented for v1 due to insufficient demand.
   Bootstrap has deprecated their Media object, but it can be replicated using flex utility classes.
-  See their <BLink href="https://getbootstrap.com/docs/5.3/utilities/flex/#media-object">documentation</BLink> for details.
+  See their <VBLink href="https://getbootstrap.com/docs/5.3/utilities/flex/#media-object">documentation</VBLink> for details.
 </DeprecatedFeature>
 
 ### BModal
 
 <DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`footer-tag` and `header-tag` props on `BModal`" :plural="true">
   Use the `footer` and `title` slots instead. See the
-  <BLink href="/docs/components/modal#custom-rendering-with-slots">modal documentation</BLink> for details.
+  <VBLink to="/docs/components/modal#custom-rendering-with-slots">modal documentation</VBLink> for details.
 </DeprecatedFeature>
 
 #### Removed Global Modal Management
@@ -1405,7 +1405,7 @@ instead of positional arguments.
 
 <DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`BTime` component">
   This component will not be implemented for v1.
-  See <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</BLink> for details.
+  See <VBLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1860#event-14531487213">issue #1860</VBLink> for details.
 </DeprecatedFeature>
 
 ### BToast
@@ -1559,7 +1559,7 @@ The default for `placement` is now `top` rather than `right`
 
 <DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`v-b-hover` directive">
   This directive will not be implemented. Consider using VueUse's
-  <BLink href="https://vueuse.org/core/useElementHover/">`useElementHover()`</BLink>
+  <VBLink href="https://vueuse.org/core/useElementHover/">`useElementHover()`</VBLink>
   composable as a modern alternative.
 </DeprecatedFeature>
 
@@ -1802,7 +1802,7 @@ See the [Tooltip Directive documentation](/docs/directives/BTooltip) for complet
 
 <DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="`v-b-visible` directive">
   This directive will not be implemented. Use VueUse's
-  <BLink href="https://vueuse.org/core/useElementVisibility/">`useElementVisibility()`</BLink>
+  <VBLink href="https://vueuse.org/core/useElementVisibility/">`useElementVisibility()`</VBLink>
   composable instead, which provides the same functionality with better performance.
 </DeprecatedFeature>
 

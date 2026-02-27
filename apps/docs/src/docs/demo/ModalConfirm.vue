@@ -20,7 +20,6 @@ const confirmBox = async () => {
     okTitle: 'Yes',
     cancelTitle: 'No',
   }).show()
-  confirmResult.value =
-    typeof value === 'object' && value !== null && 'ok' in value ? value.ok : null
+  confirmResult.value = value.ok
 }
 </script>

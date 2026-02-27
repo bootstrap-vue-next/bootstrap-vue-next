@@ -2,7 +2,7 @@ import { addComponent } from '@nuxt/kit'
 import { componentsWithExternalPath } from 'bootstrap-vue-next/types'
 
 export const useComponents = (resolve: (...path: string[]) => string) => {
-  const omittedSpecialComponents = new Set<string>(['BLink'])
+  const omittedSpecialComponents = new Set<string>(['BLink', 'BButton'])
 
   for (const [name, path] of Object.entries(componentsWithExternalPath)) {
     if (omittedSpecialComponents.has(name)) continue
@@ -17,5 +17,10 @@ export const useComponents = (resolve: (...path: string[]) => string) => {
     name: 'BLink',
     global: true,
     filePath: resolve('runtime/app/components/NuxtBLink.vue'),
+  })
+  addComponent({
+    name: 'BButton',
+    global: true,
+    filePath: resolve('runtime/app/components/NuxtBButton.vue'),
   })
 }

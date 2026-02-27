@@ -127,6 +127,7 @@ export interface BOrchestratorProps {
 export interface BLinkProps {
   active?: boolean
   activeClass?: string
+  tabindex?: Numberish | undefined
   disabled?: boolean
   exactActiveClass?: string
   href?: string

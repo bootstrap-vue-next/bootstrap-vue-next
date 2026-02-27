@@ -2,7 +2,7 @@
   <NoteAlert>
     If not using <code>&lt;BApp&gt;</code>, you must have initialized the createBootstrap plugin for
     this to work properly. Read
-    <BLink :to="withBase('/docs#plugin-approach-legacy')">here</BLink>
+    <VBLink :to="withBase('/docs#plugin-approach-legacy')">here</VBLink>
   </NoteAlert>
 </template>
 

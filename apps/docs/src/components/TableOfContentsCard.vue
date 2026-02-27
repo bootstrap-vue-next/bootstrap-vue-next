@@ -1,11 +1,11 @@
 <template>
   <BCard>
     <template #header>
-      <BLink :to="routeWithBase">
+      <VBLink :to="routeWithBase">
         <h3 :id="routeWithBase" class="m-0">
           {{ name }}
         </h3>
-      </BLink>
+      </VBLink>
     </template>
     <span v-html="renderedDescription" />
   </BCard>
