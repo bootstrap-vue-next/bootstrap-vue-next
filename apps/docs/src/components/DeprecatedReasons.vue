@@ -21,12 +21,12 @@
       There hasn't been enough demand to implement this feature, and in many cases we believe we can
       add it in a future version without causing a breaking change. If you would like this feature,
       please
-      <BLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues"
-        >submit an issue</BLink
+      <VBLink href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues"
+        >submit an issue</VBLink
       >, upvote an existing issue, or better yet
-      <BLink
+      <VBLink
         href="https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#developing"
-        >submit a pull request</BLink
+        >submit a pull request</VBLink
       >.
     </li>
   </ol>
