@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <BApp>
+  <BApp :defaults="appDefaults">
     <BNavbar
       v-b-color-mode="'dark'"
       variant="primary"
@@ -180,6 +180,7 @@ import {
   type ComponentPublicInstance,
   computed,
   inject,
+  markRaw,
   onMounted,
   ref,
   useTemplateRef,
@@ -199,10 +200,17 @@ import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
 import PageContents from '../../src/components/PageContents.vue'
 import {type ContentsItem, type HeaderItem} from '../../src/types'
+import VBLink from '../../src/components/VBLink.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const {page} = useData()
 const route = useRoute()
+
+const appDefaults = {
+  global: {
+    routerComponentName: markRaw(VBLink),
+  },
+}
 
 const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
 const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')

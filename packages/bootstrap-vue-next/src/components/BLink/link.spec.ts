@@ -1,8 +1,11 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BLink from './BLink.vue'
+import BButton from '../BButton/BButton.vue'
+import BBadge from '../BBadge/BBadge.vue'
 import {createRouter, createWebHistory} from 'vue-router'
-import {defineComponent, h, markRaw} from 'vue'
+import {defineComponent, h, markRaw, ref} from 'vue'
+import {defaultsKey} from '../../utils/keys'
 
 describe('link', () => {
   enableAutoUnmount(afterEach)
@@ -11,6 +14,20 @@ describe('link', () => {
     history: createWebHistory(),
     routes: [],
   })
+
+  const CustomRouterLink = markRaw(
+    defineComponent({
+      name: 'CustomRouterLink',
+      props: {
+        to: {type: [String, Object], default: ''},
+        href: {type: String, default: undefined},
+      },
+      setup(props, {slots}) {
+        return () =>
+          h('a', {href: props.href || String(props.to), 'data-custom': 'true'}, slots.default?.())
+      },
+    })
+  )
 
   it('has correct href when using just href', () => {
     const wrapper = mount(BLink, {
@@ -648,5 +665,122 @@ describe('link', () => {
     expect(wrapper.classes()).toContain('link-opacity-100-hover')
     expect(wrapper.classes()).toContain('active')
     expect(wrapper.classes()).toContain('stretched-link')
+  })
+
+  it('uses custom component routerComponentName passed through BButton', () => {
+    const wrapper = mount(BButton, {
+      props: {
+        to: '/custom',
+        routerComponentName: CustomRouterLink,
+      },
+      global: {
+        plugins: [router],
+      },
+    })
+    const $blink = wrapper.getComponent(BLink)
+    expect($blink.props('routerComponentName')).toBe(CustomRouterLink)
+    const link = wrapper.find('[data-custom="true"]')
+    expect(link.exists()).toBe(true)
+    expect(link.attributes('href')).toBe('/custom')
+  })
+
+  it('uses custom component routerComponentName passed through BBadge', () => {
+    const wrapper = mount(BBadge, {
+      props: {
+        to: '/custom',
+        routerComponentName: CustomRouterLink,
+      },
+      global: {
+        plugins: [router],
+      },
+    })
+    const $blink = wrapper.getComponent(BLink)
+    expect($blink.props('routerComponentName')).toBe(CustomRouterLink)
+    const link = wrapper.find('[data-custom="true"]')
+    expect(link.exists()).toBe(true)
+    expect(link.attributes('href')).toBe('/custom')
+  })
+
+  it('uses global default routerComponentName provided via defaults', () => {
+    const wrapper = mount(BLink, {
+      props: {
+        to: '/custom',
+      },
+      global: {
+        plugins: [router],
+        provide: {
+          [defaultsKey as symbol]: ref({
+            global: {
+              routerComponentName: CustomRouterLink,
+            },
+          }),
+        },
+      },
+    })
+    const link = wrapper.find('[data-custom="true"]')
+    expect(link.exists()).toBe(true)
+    expect(link.attributes('href')).toBe('/custom')
+  })
+
+  it('BButton uses global default routerComponentName provided via defaults', () => {
+    const wrapper = mount(BButton, {
+      props: {
+        to: '/custom',
+      },
+      global: {
+        plugins: [router],
+        provide: {
+          [defaultsKey as symbol]: ref({
+            global: {
+              routerComponentName: CustomRouterLink,
+            },
+          }),
+        },
+      },
+    })
+    const link = wrapper.find('[data-custom="true"]')
+    expect(link.exists()).toBe(true)
+    expect(link.attributes('href')).toBe('/custom')
+  })
+
+  it('does not infinite loop when routerComponentName wraps BLink with to=undefined', () => {
+    // Simulates VBLink pattern: a wrapper that renders BLink with to=undefined and href=path
+    const VBLinkLike = markRaw(
+      defineComponent({
+        name: 'VBLinkLike',
+        props: {
+          to: {type: [String, Object], default: ''},
+          href: {type: String, default: undefined},
+        },
+        setup(props, {slots}) {
+          return () =>
+            h(
+              BLink,
+              {to: undefined, href: props.href || String(props.to)},
+              slots.default ? {default: () => slots.default!()} : undefined
+            )
+        },
+      })
+    )
+
+    // This would cause an infinite loop if the inner BLink tried to use VBLinkLike again
+    const wrapper = mount(BLink, {
+      props: {
+        to: '/page',
+      },
+      global: {
+        plugins: [router],
+        provide: {
+          [defaultsKey as symbol]: ref({
+            global: {
+              routerComponentName: VBLinkLike,
+            },
+          }),
+        },
+      },
+    })
+    // Should render successfully without infinite loop
+    expect(wrapper.find('a').exists()).toBe(true)
+    expect(wrapper.find('a').attributes('href')).toBe('/page')
   })
 })

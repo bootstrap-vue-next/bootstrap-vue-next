@@ -81,10 +81,10 @@ export const linkProps = {
       'Setting replace prop will call router.replace() instead of router.push() when clicked',
   },
   routerComponentName: {
-    type: 'string',
+    type: 'string | Component',
     default: 'router-link',
     description:
-      'BootstrapVue auto detects between `<router-link>` and `<nuxt-link>`. Set this this property to explicity set the name of the router component.',
+      'BootstrapVue auto detects between `<router-link>` and `<nuxt-link>`. Set this property to explicitly set the name or component to use as the router component.',
   },
   routerTag: {
     type: 'string',
