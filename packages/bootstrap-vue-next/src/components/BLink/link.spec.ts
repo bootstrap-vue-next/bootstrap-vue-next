@@ -15,6 +15,20 @@ describe('link', () => {
     routes: [],
   })
 
+  const CustomRouterLink = markRaw(
+    defineComponent({
+      name: 'CustomRouterLink',
+      props: {
+        to: {type: [String, Object], default: ''},
+        href: {type: String, default: undefined},
+      },
+      setup(props, {slots}) {
+        return () =>
+          h('a', {href: props.href || String(props.to), 'data-custom': 'true'}, slots.default?.())
+      },
+    })
+  )
+
   it('has correct href when using just href', () => {
     const wrapper = mount(BLink, {
       props: {
@@ -654,20 +668,6 @@ describe('link', () => {
   })
 
   it('uses custom component routerComponentName passed through BButton', () => {
-    const CustomRouterLink = markRaw(
-      defineComponent({
-        name: 'CustomRouterLink',
-        props: {
-          to: {type: [String, Object], default: ''},
-          href: {type: String, default: undefined},
-        },
-        setup(props, {slots}) {
-          return () =>
-            h('a', {href: props.href || String(props.to), 'data-custom': 'true'}, slots.default?.())
-        },
-      })
-    )
-
     const wrapper = mount(BButton, {
       props: {
         to: '/custom',
@@ -685,20 +685,6 @@ describe('link', () => {
   })
 
   it('uses custom component routerComponentName passed through BBadge', () => {
-    const CustomRouterLink = markRaw(
-      defineComponent({
-        name: 'CustomRouterLink',
-        props: {
-          to: {type: [String, Object], default: ''},
-          href: {type: String, default: undefined},
-        },
-        setup(props, {slots}) {
-          return () =>
-            h('a', {href: props.href || String(props.to), 'data-custom': 'true'}, slots.default?.())
-        },
-      })
-    )
-
     const wrapper = mount(BBadge, {
       props: {
         to: '/custom',
@@ -716,20 +702,6 @@ describe('link', () => {
   })
 
   it('uses global default routerComponentName provided via defaults', () => {
-    const CustomRouterLink = markRaw(
-      defineComponent({
-        name: 'CustomRouterLink',
-        props: {
-          to: {type: [String, Object], default: ''},
-          href: {type: String, default: undefined},
-        },
-        setup(props, {slots}) {
-          return () =>
-            h('a', {href: props.href || String(props.to), 'data-custom': 'true'}, slots.default?.())
-        },
-      })
-    )
-
     const wrapper = mount(BLink, {
       props: {
         to: '/custom',
@@ -751,20 +723,6 @@ describe('link', () => {
   })
 
   it('BButton uses global default routerComponentName provided via defaults', () => {
-    const CustomRouterLink = markRaw(
-      defineComponent({
-        name: 'CustomRouterLink',
-        props: {
-          to: {type: [String, Object], default: ''},
-          href: {type: String, default: undefined},
-        },
-        setup(props, {slots}) {
-          return () =>
-            h('a', {href: props.href || String(props.to), 'data-custom': 'true'}, slots.default?.())
-        },
-      })
-    )
-
     const wrapper = mount(BButton, {
       props: {
         to: '/custom',
