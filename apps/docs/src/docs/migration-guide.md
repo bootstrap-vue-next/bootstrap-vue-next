@@ -228,8 +228,8 @@ now the `close` slot.
 ### BAvatar
 
 <DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="Icon support on `BAvatar`">
-  Icons can be implemented using the default slot with either <VBLink href="/docs/icons">unplugin-icons</VBLink>
-  or by embedding an `.svg`. See the <VBLink href="/docs/icons">Icons</VBLink> guide for the recommended approach.
+  Icons can be implemented using the default slot with either <VBLink to="/docs/icons">unplugin-icons</VBLink>
+  or by embedding an `.svg`. See the <VBLink to="/docs/icons">Icons</VBLink> guide for the recommended approach.
 </DeprecatedFeature>
 
 <<< DEMO ./demo/AvatarIcon.vue#template{vue-html}
@@ -263,7 +263,7 @@ See the [v-html](#v-html) section for information on deprecation of the `html` p
 ### BButton
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`block` prop on `BButton`">
-  See our <VBLink href="/docs/components/button#block-level-buttons">`BButton` documentation</VBLink>
+  See our <VBLink to="/docs/components/button#block-level-buttons">`BButton` documentation</VBLink>
   and <VBLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</VBLink> for
   details on creating block-level buttons with utility classes.
 </DeprecatedFeature>
@@ -350,7 +350,7 @@ on `BCarouselSlide`.
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`accordion` prop on `BCollapse`">
   In `BootstrapVue`/`Bootstrap4`, accordions are implemented via `BCollapse`.
   In `BootstrapVueNext`/`Bootstrap5` accordions are first class citizens, so please use the
-  <VBLink href="/docs/components/accordion">`BAccordion`</VBLink> component instead.
+  <VBLink to="/docs/components/accordion">`BAccordion`</VBLink> component instead.
 </DeprecatedFeature>
 
 The prop `toggle` has replaced the prop `appear` with slightly different semantics. In order to create a
@@ -384,7 +384,7 @@ See [floating-ui's docs](https://floating-ui.com/docs/computeposition#placement)
 Additionally, BootstrapVueNext supports new placement options that were not available in BootstrapVue, such as `bottom` for center alignment, `top-end`, `left-end`, `right-end`, and others.
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`block` prop on `BDropdown`">
-  See our <VBLink href="/docs/components/dropdown#block-level-dropdowns">`BDropdown` documentation</VBLink>
+  See our <VBLink to="/docs/components/dropdown#block-level-dropdowns">`BDropdown` documentation</VBLink>
   and <VBLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</VBLink> for
   details on creating block-level dropdowns.
 </DeprecatedFeature>
@@ -445,7 +445,7 @@ a header id.
 ##### BDropdownForm
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`inline` prop on `BDropdownForm`">
-  See the <VBLink href="#bform">BForm</VBLink> migration information. To add classes to the `&lt;form&gt;` tag in `BDropdownForm`
+  See the <VBLink to="#bform">BForm</VBLink> migration information. To add classes to the `&lt;form&gt;` tag in `BDropdownForm`
   use the `form-class` prop.
 </DeprecatedFeature>
 
@@ -569,7 +569,7 @@ See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/
     <li><code>icon-clear</code>: For specifying clear button icon</li>
   </ul>
   BootstrapVueNext does not include a built-in icon library. See
-  <VBLink href="/docs/icons">Icons</VBLink> for guidance on using unplugin-icons as the recommended
+  <VBLink to="/docs/icons">Icons</VBLink> for guidance on using unplugin-icons as the recommended
   modern solution with automatic tree-shaking.
 </DeprecatedFeature>
 
@@ -726,7 +726,7 @@ See [BLink](#blink) for changes to link and router behavior.
 
 <DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`footer-tag` and `header-tag` props on `BModal`" :plural="true">
   Use the `footer` and `title` slots instead. See the
-  <VBLink href="/docs/components/modal#custom-rendering-with-slots">modal documentation</VBLink> for details.
+  <VBLink to="/docs/components/modal#custom-rendering-with-slots">modal documentation</VBLink> for details.
 </DeprecatedFeature>
 
 #### Removed Global Modal Management
