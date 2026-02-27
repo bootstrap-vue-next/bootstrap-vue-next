@@ -5,29 +5,29 @@
         <span :class="headerInsideClasses"><GearIcon aria-hidden class="me-2" />General </span>
       </strong>
       <BListGroupItem v-for="link in headerLinks" :key="link.label" :class="listGroupItemClasses">
-        <BLink :to="link.route" :class="linkClasses">
+        <VBLink :to="link.route" :class="linkClasses">
           {{ link.label }}
-        </BLink>
+        </VBLink>
       </BListGroupItem>
     </BListGroup>
     <BListGroup v-for="group in groupComputedList" :key="group.label">
       <strong :class="headerClasses">
-        <BLink :to="withBase(group.uri)" :class="headerInsideClasses">
+        <VBLink :to="withBase(group.uri)" :class="headerInsideClasses">
           <component :is="group.icon()" class="me-2" /> {{ group.label }}
-        </BLink>
+        </VBLink>
       </strong>
       <BListGroupItem
         v-for="component in group.children"
         :key="component.name"
         :class="listGroupItemClasses"
       >
-        <BLink
+        <VBLink
           :to="withBase(component.route)"
           :active="isRouteActive(component.route)"
           :class="linkClasses"
         >
           {{ component.name }}
-        </BLink>
+        </VBLink>
       </BListGroupItem>
     </BListGroup>
   </nav>

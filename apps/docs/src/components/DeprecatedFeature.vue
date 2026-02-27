@@ -1,7 +1,7 @@
 <template>
   <BAlert variant="warning" show class="deprecation-warning">
     <strong v-html="deprecatedLabel" /> {{ reasonText }}.
-    <BLink :href="learnMoreUrl">Learn more about deprecation reasons</BLink
+    <VBLink :href="learnMoreUrl">Learn more about deprecation reasons</VBLink
     ><template v-if="$slots.default"> – <slot /></template>
   </BAlert>
 </template>
@@ -39,7 +39,7 @@ import {DEPRECATION_REASON_TEXT, DeprecationReason} from '../types/deprecation'
  * @example With additional context
  * ```vue
  * <DeprecatedFeature reason="insufficient-demand">
- *   <BLink href="https://github.com/.../issues/123">See issue #123</BLink>
+ *   <VBLink href="https://github.com/.../issues/123">See issue #123</VBLink>
  * </DeprecatedFeature>
  * ```
  */

@@ -28,9 +28,9 @@
             <BCol>
               <ul>
                 <li v-for="section in component.sections" :key="section">
-                  <BLink :to="buildCompReferenceLink(`${component.component}-${section}`)">
+                  <VBLink :to="buildCompReferenceLink(`${component.component}-${section}`)">
                     &lt;{{ component.component }}&gt; {{ section }}
-                  </BLink>
+                  </VBLink>
                 </li>
               </ul>
             </BCol>
@@ -44,13 +44,13 @@
                 <BRow>
                   <BCol>
                     <h5>
-                      <BLink
+                      <VBLink
                         :id="buildCompReferenceLink(`${component.component}-Properties`).slice(1)"
                         variant="info"
                         :to="buildCompReferenceLink(`${component.component}-Properties`)"
                       >
                         Properties
-                      </BLink>
+                      </VBLink>
                     </h5>
                   </BCol>
                 </BRow>
@@ -111,12 +111,12 @@
                         >
                           <template #title>
                             <!-- using :to was causing a full page refresh. Don't know why. Super odd -->
-                            <BLink
+                            <VBLink
                               v-if="table._opts?.linkTo"
-                              @click.stop="goToLink(table._opts.linkTo)"
+                              :to="table._opts.linkTo"
                             >
                               {{ table.name }}
-                            </BLink>
+                            </VBLink>
                             <template v-else>
                               {{ table.name }}
                             </template>
@@ -157,13 +157,13 @@
                 <BRow>
                   <BCol>
                     <h5>
-                      <BLink
+                      <VBLink
                         :id="buildCompReferenceLink(`${component.component}-Events`).slice(1)"
                         variant="info"
                         :to="buildCompReferenceLink(`${component.component}-Events`)"
                       >
                         Events
-                      </BLink>
+                      </VBLink>
                     </h5>
                   </BCol>
                 </BRow>
@@ -201,13 +201,13 @@
                 <BRow>
                   <BCol>
                     <h5>
-                      <BLink
+                      <VBLink
                         :id="buildCompReferenceLink(`${component.component}-Slots`).slice(1)"
                         variant="info"
                         :to="buildCompReferenceLink(`${component.component}-Slots`)"
                       >
                         Slots
-                      </BLink>
+                      </VBLink>
                     </h5>
                   </BCol>
                 </BRow>
@@ -245,13 +245,13 @@
                 <BRow>
                   <BCol>
                     <h5>
-                      <BLink
+                      <VBLink
                         :id="buildCompReferenceLink(`${component.component}-Exposed`).slice(1)"
                         variant="info"
                         :to="buildCompReferenceLink(`${component.component}-Exposed`)"
                       >
                         Exposed
-                      </BLink>
+                      </VBLink>
                     </h5>
                   </BCol>
                 </BRow>
@@ -303,10 +303,7 @@ import {
   type PropReference,
 } from '../types'
 import {kebabCase} from '../utils/objectUtils'
-import {useRouter, withBase} from 'vitepress'
 import {appInfoKey} from '../../.vitepress/theme/keys'
-
-const router = useRouter()
 
 const props = defineProps<{data: ComponentReference}>()
 
@@ -333,7 +330,6 @@ const deriveBaseDirectory = (): string => {
 const deriveSourcePath = (componentName: string, baseDirectory: string): string =>
   `/${baseDirectory}/${componentName}.vue`
 
-const goToLink = (link: string) => router.go(withBase(link))
 const globalData = inject(appInfoKey)
 
 /**
