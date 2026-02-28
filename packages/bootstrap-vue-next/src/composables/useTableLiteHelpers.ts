@@ -267,7 +267,13 @@ export const useTableKeyboardNavigation = <Item>(
   const handleHeaderKeydown = (field: TableField, event: KeyboardEvent, isFooter = false) => {
     const {target, code} = event
 
-    if (target && (target as Element).tagName !== 'TH' && document.activeElement === target) return
+    if (
+      target &&
+      (target as Element).tagName !== 'TH' &&
+      typeof document !== 'undefined' &&
+      document.activeElement === target
+    )
+      return
 
     if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
       stopEvent(event)
@@ -278,7 +284,13 @@ export const useTableKeyboardNavigation = <Item>(
   const handleRowKeydown = (item: Item, itemIndex: number, event: KeyboardEvent) => {
     const {target, code, shiftKey} = event
 
-    if (target && (target as Element).tagName !== 'TR' && document.activeElement === target) return
+    if (
+      target &&
+      (target as Element).tagName !== 'TR' &&
+      typeof document !== 'undefined' &&
+      document.activeElement === target
+    )
+      return
 
     if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
       stopEvent(event)
@@ -293,6 +305,7 @@ export const useTableKeyboardNavigation = <Item>(
   }
 
   const handleRowNavigation = (code: string, shiftKey: boolean, currentIndex: number) => {
+    if (typeof document === 'undefined') return
     const rows = Array.from(
       document.querySelectorAll(`#${toValue(id)} tbody tr[tabindex]`)
     ) as HTMLTableRowElement[]

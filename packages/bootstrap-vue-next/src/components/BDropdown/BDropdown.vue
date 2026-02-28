@@ -265,7 +265,7 @@ const keynav = (e: Readonly<Event>, v: number) => {
     '.dropdown-item:not(.disabled):not(:disabled)'
   )
   if (!list) return
-  if (floatingElement.value?.contains(document.activeElement)) {
+  if (typeof document !== 'undefined' && floatingElement.value?.contains(document.activeElement)) {
     const active = floatingElement.value.querySelector('.dropdown-item:focus')
     const index = Array.prototype.indexOf.call(list, active) + v
     if (index >= 0 && index < list?.length) (list[index] as HTMLElement)?.focus()

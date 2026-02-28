@@ -262,7 +262,7 @@ const pickFocusItem = () => {
 let activeElement: HTMLElement | null = null
 const onAfterEnter = () => {
   if (props.noTrap && props.focus !== false) {
-    activeElement = document.activeElement as HTMLElement
+    activeElement = typeof document !== 'undefined' ? (document.activeElement as HTMLElement) : null
     if (activeElement === element.value) {
       activeElement = null
     }
