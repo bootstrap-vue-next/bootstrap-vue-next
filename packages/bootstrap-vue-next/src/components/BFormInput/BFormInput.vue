@@ -103,6 +103,7 @@ const computedClasses = computed(() => {
 defineExpose({
   blur,
   element: input,
+  flushDebounce: onBlur,
   focus,
 })
 </script>
