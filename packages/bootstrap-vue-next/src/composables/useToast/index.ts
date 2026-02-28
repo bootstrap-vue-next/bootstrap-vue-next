@@ -88,9 +88,11 @@ export const useToast = () => {
           } else if (key === 'slots' && newValue.slots) {
             v.slots = markRaw(newValue.slots)
           } else {
-            v[key as keyof ToastOrchestratorCreateParam] = toValue(
-              newValue[key as keyof ToastOrchestratorCreateParam]
-            )
+            // Don't call toValue on functions as they should be passed as-is (not as getters)
+            const val = newValue[key as keyof ToastOrchestratorCreateParam]
+            v[key as keyof ToastOrchestratorCreateParam] = (
+              typeof val === 'function' ? val : toValue(val)
+            ) as never
           }
         }
         v.position = v.position || posDefault

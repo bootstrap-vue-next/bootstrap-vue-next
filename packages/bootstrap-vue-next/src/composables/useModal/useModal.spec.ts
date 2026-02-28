@@ -142,4 +142,74 @@ describe('useModal', () => {
 
     expect(wrapper.exists()).toBe(true)
   })
+
+  it('create method passes function props correctly without calling them', async () => {
+    let functionCallCount = 0
+    const testFunction = () => {
+      functionCallCount++
+      return ['item1', 'item2', 'item3']
+    }
+
+    const CustomModal = defineComponent({
+      name: 'CustomModalWithFunction',
+      props: {
+        getterProp: {
+          type: Function,
+          required: true,
+        },
+      },
+      setup(props) {
+        return () => {
+          // The function should not have been called yet
+          const initialCount = functionCallCount
+          // Now call it to verify it's actually a function
+          const result = props.getterProp()
+          return h('div', {class: 'custom'}, [
+            h('p', {class: 'initial-count'}, `Initial count: ${initialCount}`),
+            h('p', {class: 'result'}, `Result: ${JSON.stringify(result)}`),
+          ])
+        }
+      },
+    })
+
+    const TestComponent = defineComponent({
+      setup() {
+        const {create} = useModal()
+
+        const modal = create({
+          component: CustomModal,
+          getterProp: testFunction,
+        })
+
+        return () =>
+          h('div', [
+            h(
+              'button',
+              {
+                onClick: () => modal.show(),
+              },
+              'Show Modal'
+            ),
+          ])
+      },
+    })
+
+    const wrapper = mount(BApp, {
+      slots: {
+        default: () => h(TestComponent),
+      },
+    })
+
+    // The function should not have been called during setup
+    expect(functionCallCount).toBe(0)
+
+    // Show the modal
+    await wrapper.find('button').trigger('click')
+
+    // Wait for modal to be rendered
+    await wrapper.vm.$nextTick()
+
+    // Now the function should have been called once by the modal component
+    expect(functionCallCount).toBe(1)
+  })
 })
