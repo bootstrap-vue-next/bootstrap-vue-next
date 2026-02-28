@@ -58,7 +58,7 @@ const classList = computed(() => [
       orderXl: props.orderXl,
       orderXxl: props.orderXxl,
     },
-    ['order', 'orderLg', 'orderMd', 'orderSm', 'orderXl', 'orderXxl'],
+    ['order', 'orderSm', 'orderMd', 'orderLg', 'orderXl', 'orderXxl'],
     'order'
   ),
   ...getClasses(
@@ -70,7 +70,7 @@ const classList = computed(() => [
       offsetXl: props.offsetXl,
       offsetXxl: props.offsetXxl,
     },
-    ['offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXxl'],
+    ['offset', 'offsetSm', 'offsetMd', 'offsetLg', 'offsetXl', 'offsetXxl'],
     'offset'
   ),
 ])
