@@ -91,6 +91,33 @@ describe('link', () => {
     expect(wrapper.attributes('data-nuxt-link')).toBe('true')
   })
 
+  it('does not apply router active class to href-only link when router is present', () => {
+    const wrapper = mount(BLink, {
+      props: {
+        href: '/external-page',
+      },
+      global: {
+        plugins: [router],
+      },
+    })
+    expect(wrapper.classes()).not.toContain('router-link-active')
+    expect(wrapper.classes()).not.toContain('router-link-exact-active')
+  })
+
+  it('does not call router navigate on click for href-only link', async () => {
+    const wrapper = mount(BLink, {
+      props: {
+        href: 'https://www.example.com',
+      },
+      global: {
+        plugins: [router],
+      },
+    })
+    // The link should render as a plain <a> tag with the href
+    expect(wrapper.element.tagName).toBe('A')
+    expect(wrapper.attributes('href')).toBe('https://www.example.com')
+  })
+
   it('does not pass href to NuxtLink when to is provided in Nuxt environment', () => {
     // Mock NuxtLink component that tracks received props
     const NuxtLink = defineComponent({
