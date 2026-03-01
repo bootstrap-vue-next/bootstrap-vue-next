@@ -36,7 +36,7 @@ description: With BootstrapVueNext you can build fast, responsive, and ARIA acce
 With more than 35 components, several directives and composables (and growing), BootstrapVueNext provides one of the most comprehensive implementations of the Bootstrap v5 component and grid system available for Vue.js v3 / Nuxt.js 3, complete with extensive and automated WAI-ARIA accessibility markup.
 
 <div class="d-flex gap-2 mt-4">
-  <BButton :to="withBase('/docs')" variant="primary">Get Started</BButton>
+  <BButton to="/docs" variant="primary">Get Started</BButton>
   <BButton :href="globalData.githubUrl" target="_blank" rel="noopener" variant="outline-secondary">GitHub</BButton>
 </div>
 
@@ -44,7 +44,7 @@ With more than 35 components, several directives and composables (and growing), 
 
 Easily integrate BootstrapVueNext into your Nuxt.js projects using our included Nuxt.js module. You can optionally specify only the components, directives and/or plugins you require.
 
-<BButton variant="secondary" :to="withBase('/docs#installation-nuxt-js-3')" class="my-3">BootstrapVueNext Nuxt.js module</BButton>
+<BButton variant="secondary" to="/docs#installation-nuxt-js-3" class="my-3">BootstrapVueNext Nuxt.js module</BButton>
 
 ## Our OpenCollective
 
@@ -52,7 +52,6 @@ Easily integrate BootstrapVueNext into your Nuxt.js projects using our included 
 
 <script setup lang="ts">
 import {inject} from 'vue'
-import {withBase} from 'vitepress'
 import BootstrapIcon from '~icons/logos/bootstrap'
 import VueIcon from '~icons/logos/vue'
 import {appInfoKey} from '../.vitepress/theme/keys'

@@ -144,8 +144,39 @@ export interface BLinkProps {
   prefetchedClass?: ClassValue
   rel?: string
   replace?: boolean
+  /**
+   * This should be a (renderless) component that uses the vue-router RouterLink slot mechanism for navigation.
+   * NuxtLink inherits from this and is the most common other use case. If it is a string, we attempt to get the Component from global scope.
+   * If it is not found, we will use routerTag as the tag for the link.
+   *
+   * @hint
+   * ```html
+   * <RouterLink v-slot="slotProps">
+   *   <RouterTag @click="slotProps.navigate">Link</RouterTag>
+   * </RouterLink>
+   */
   routerComponentName?: string | Component
-  routerTag?: string
+  /**
+   * This tag serves a dual purpose. When using a `RouterLink` renderless component, it will be the tag used under the link.
+   * When routerComponentName is not found, then we will use this tag as well by default, and not be wrapped by `RouterComponentName`
+   *
+   * @hint
+   * ```html
+   * <RouterLink v-slot="slotProps">
+   *   <RouterTag @click="slotProps.navigate">Link</RouterTag>
+   * </RouterLink>
+   * ```
+   * OR
+   * ```html
+   * <RouterTag to="/somewhere">
+   *   <slot />
+   * </RouterTag>
+   * ```
+   *
+   * Router Tag itself could be a component that handles some sort of navigation itself internally. For example, our Vitepress docs use a custom link
+   * component that handles both internal and external links.
+   */
+  routerTag?: string | Component
   stretched?: boolean
   target?: LinkTarget
   to?: RouteLocationRaw

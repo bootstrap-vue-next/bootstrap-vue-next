@@ -8,7 +8,6 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {withBase} from 'vitepress'
 import {DEPRECATION_REASON_TEXT, DeprecationReason} from '../types/deprecation'
 
 /**
@@ -93,9 +92,8 @@ const deprecatedLabel = computed(() => {
 
 /**
  * URL to the deprecation section in the migration guide
- * Uses withBase to ensure the correct path including the base URL
  */
-const learnMoreUrl = withBase('/docs/migration-guide#deprecation')
+const learnMoreUrl = '/docs/migration-guide#deprecation'
 </script>
 
 <style scoped>

@@ -1,7 +1,11 @@
 <template>
   <BContainer>
     <BRow>
-      <BCol> Hello World! </BCol>
+      <BCol>
+        <BLink to="/test">test</BLink>
+        <BLink to="/">home</BLink>
+        <RouterView />
+      </BCol>
     </BRow>
   </BContainer>
 </template>

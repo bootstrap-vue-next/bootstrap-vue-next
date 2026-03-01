@@ -1,8 +1,8 @@
 <template>
   <BCard>
     <template #header>
-      <VBLink :to="routeWithBase">
-        <h3 :id="routeWithBase" class="m-0">
+      <VBLink :to="props.route">
+        <h3 :id="props.route" class="m-0">
           {{ name }}
         </h3>
       </VBLink>
@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {withBase} from 'vitepress'
 import {useMarkdownRenderer} from '../composables/useMarkdownRenderer'
 
 const props = defineProps<{
@@ -24,5 +23,4 @@ const props = defineProps<{
 
 const descriptionRef = computed(() => props.description)
 const renderedDescription = useMarkdownRenderer(descriptionRef)
-const routeWithBase = computed(() => withBase(props.route))
 </script>

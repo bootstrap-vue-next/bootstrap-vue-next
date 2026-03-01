@@ -99,11 +99,9 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props, [
 ])
 
 const isToggle = computed(() => typeof pressedValue.value === 'boolean')
-const isButton = computed(
-  () => props.tag === 'button' && props.href === undefined && props.to === undefined
-)
-const isBLink = computed(() => props.to !== undefined)
-const nonStandardTag = computed(() => (props.href !== undefined ? false : !isButton.value))
+const isButton = computed(() => props.tag === 'button' && !props.href && !props.to)
+const isBLink = computed(() => !!props.to || !!props.href)
+const nonStandardTag = computed(() => (props.href ? false : !isButton.value))
 
 const linkProps = computed(() => (isBLink.value ? computedLinkProps.value : []))
 const computedAriaDisabled = computed(() => {

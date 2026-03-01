@@ -8,7 +8,7 @@
       toggleable="lg"
       :container="isLargeScreen ? true : 'fluid'"
     >
-      <BNavbarBrand :to="withBase('/')" class="p-0 me-0 me-lg-2">
+      <BNavbarBrand to="/" class="p-0 me-0 me-lg-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 953 953"
@@ -194,7 +194,7 @@ import SunFill from '~icons/bi/sun-fill'
 import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import List from '~icons/bi/list'
-import {useData, useRoute, withBase} from 'vitepress'
+import {useData, useRoute} from 'vitepress'
 import {VPNavBarSearch} from 'vitepress/theme'
 import {appInfoKey} from './keys'
 import {useMediaQuery} from '@vueuse/core'
@@ -208,7 +208,7 @@ const route = useRoute()
 
 const appDefaults = {
   global: {
-    routerComponentName: markRaw(VBLink),
+    routerTag: markRaw(VBLink),
   },
 }
 
@@ -255,23 +255,23 @@ const onThisPage = ref(false)
 
 const headerLinks = [
   {
-    route: withBase('/docs'),
+    route: '/docs',
     label: 'Getting Started',
   },
   {
-    route: withBase('/docs/icons'),
+    route: '/docs/icons',
     label: 'Icons',
   },
   {
-    route: withBase('/docs/types'),
+    route: '/docs/types',
     label: 'Types',
   },
   {
-    route: withBase('/docs/reference'),
+    route: '/docs/reference',
     label: 'Reference',
   },
   {
-    route: withBase('/docs/migration-guide'),
+    route: '/docs/migration-guide',
     label: 'Migrate',
   },
 ]

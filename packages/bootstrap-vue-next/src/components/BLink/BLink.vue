@@ -1,28 +1,13 @@
 <template>
-  <a
-    v-if="isExternalLink || props.disabled"
-    :href="navigationProps.href"
-    v-bind="{...anchorProps, ...nonSpecialAttrs}"
-    :class="computedClasses"
-    @click="
-      (e) => {
-        if (props.disabled) {
-          preventNavigation(e)
-        }
-        emit('click', e)
-      }
-    "
-  >
-    <slot />
-  </a>
   <component
-    :is="tag"
-    v-else-if="isNuxtLink || isRouterLink"
+    :is="tag.routerComponent"
+    v-if="tag.routerComponent !== undefined"
     v-slot="slotProps"
     custom
     v-bind="routerProps"
   >
-    <a
+    <component
+      :is="tag.tagComponent"
       v-bind="{...anchorProps, ...nonSpecialAttrs}"
       :href="
         typeof slotProps === 'object' && slotProps !== null && 'href' in slotProps
@@ -43,7 +28,7 @@
         },
       ]"
       @click="
-        (e) => {
+        (e: MouseEvent) => {
           routerNavigate(
             e,
             typeof slotProps === 'object' &&
@@ -57,13 +42,21 @@
       "
     >
       <slot />
-    </a>
+    </component>
   </component>
   <component
-    :is="tag"
+    :is="tag.tagComponent"
     v-else
     v-bind="{...routerProps, ...anchorProps, ...nonSpecialAttrs}"
     :class="computedClasses"
+    @click="
+      (e: MouseEvent) => {
+        if (props.disabled) {
+          preventNavigation(e)
+        }
+        emit('click', e)
+      }
+    "
   >
     <slot />
   </component>
@@ -116,14 +109,22 @@ defineSlots<BLinkSlots>()
 const attrs = useAttrs()
 
 const routerComponent = shallowRef<string | Component>(props.routerComponentName)
+const routerTag = shallowRef<string | Component>(props.routerTag)
 watch(
   () => props.routerComponentName,
   (newValue) => {
     routerComponent.value = newValue
   }
 )
-const {tag, isNuxtLink, isRouterLink, isNonStandardTag} = useBLinkTagResolver({
+watch(
+  () => props.routerTag,
+  (newValue) => {
+    routerTag.value = newValue
+  }
+)
+const {tag, isNuxtLink} = useBLinkTagResolver({
   routerComponentName: routerComponent,
+  routerTag,
 })
 
 const collapseData = inject(collapseInjectionKey, null)
@@ -178,8 +179,7 @@ const navigationProps = computed(() => {
 
   return {
     to: toV,
-    // vitepress requires href to be set in addition to `to` I think
-    href: props.href || (typeof toV === 'string' && toV ? toV : undefined),
+    href: toV ? undefined : props.href,
   }
 })
 const isExternalLink = computed(
@@ -216,10 +216,8 @@ const nuxtSpecificProps = computed(() => ({
 const routerProps = computed(() => {
   const obj = {
     ...props,
-    ...(isRouterLink.value ? navigationProps.value : undefined),
-    // In addition to being Nuxt specific, we add these values if it's some non-standard tag. We don't know what it is,
-    // So we just add it anyways. It will be made as an attr if it's unused so it's fine
-    ...(isNuxtLink.value || isNonStandardTag.value ? nuxtSpecificProps.value : undefined),
+    ...navigationProps.value,
+    ...nuxtSpecificProps.value,
   }
 
   // Prevent a nuxt runtime warning
@@ -228,8 +226,6 @@ const routerProps = computed(() => {
   } else {
     delete obj.noPrefetch
   }
-  // Prevent a nuxt runtime warning when both href and to are used.
-  // We keep href for non-nuxt because vitepress needs it
   if (isNuxtLink.value && obj.to) {
     delete obj.href
   }

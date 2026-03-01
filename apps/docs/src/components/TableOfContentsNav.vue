@@ -12,7 +12,7 @@
     </BListGroup>
     <BListGroup v-for="group in groupComputedList" :key="group.label">
       <strong :class="headerClasses">
-        <VBLink :to="withBase(group.uri)" :class="headerInsideClasses">
+        <VBLink :to="group.uri" :class="headerInsideClasses">
           <component :is="group.icon()" class="me-2" /> {{ group.label }}
         </VBLink>
       </strong>
@@ -21,11 +21,7 @@
         :key="component.name"
         :class="listGroupItemClasses"
       >
-        <VBLink
-          :to="withBase(component.route)"
-          :active="isRouteActive(component.route)"
-          :class="linkClasses"
-        >
+        <VBLink :to="component.route" :active="isRouteActive(component.route)" :class="linkClasses">
           {{ component.name }}
         </VBLink>
       </BListGroupItem>
@@ -35,7 +31,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from 'vue'
-import {useRoute, withBase} from 'vitepress'
+import {useRoute} from 'vitepress'
 import {breakpointsBootstrapV5, useBreakpoints} from '@vueuse/core'
 import IntersectIcon from '~icons/bi/intersect'
 import CodeSlashIcon from '~icons/bi/code-slash'
@@ -59,7 +55,7 @@ const isLargeScreen = ref(true)
 
 // Helper to check if a route is active (handles base path and .html suffix)
 const isRouteActive = (route: string) => {
-  const normalizedRoute = withBase(route)
+  const normalizedRoute = route
   const currentPath = routerRoute.path
   return currentPath === normalizedRoute || currentPath === `${normalizedRoute}.html`
 }
@@ -87,23 +83,23 @@ const headerInsideClasses = [
 
 const headerLinks = [
   {
-    route: withBase('/docs'),
+    route: '/docs',
     label: 'Getting Started',
   },
   {
-    route: withBase('/docs/icons'),
+    route: '/docs/icons',
     label: 'Icons',
   },
   {
-    route: withBase('/docs/types'),
+    route: '/docs/types',
     label: 'Types',
   },
   {
-    route: withBase('/docs/reference'),
+    route: '/docs/reference',
     label: 'Reference',
   },
   {
-    route: withBase('/docs/migration-guide'),
+    route: '/docs/migration-guide',
     label: 'Migrate',
   },
 ]

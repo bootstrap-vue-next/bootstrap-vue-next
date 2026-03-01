@@ -6,9 +6,12 @@
     >
       <template #cell(name)="data">
         <!-- `data.value` is the value after formatted by the Formatter -->
-        <a :href="`#${(data.value as any as string).replace(/[^a-z]+/i, '-').toLowerCase()}`">{{
-          data.value
-        }}</a>
+        <a
+          :href="`#${String(data.value)
+            .replace(/[^a-z]+/i, '-')
+            .toLowerCase()}`"
+          >{{ data.value }}</a
+        >
       </template>
     </BTable>
   </div>

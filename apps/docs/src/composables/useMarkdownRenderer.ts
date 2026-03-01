@@ -1,6 +1,6 @@
 import {computed, type ComputedRef} from 'vue'
-import {withBase} from 'vitepress'
 import MarkdownIt from 'markdown-it'
+import {withBase} from 'vitepress'
 
 // Create a shared markdown-it instance
 const md = new MarkdownIt({
