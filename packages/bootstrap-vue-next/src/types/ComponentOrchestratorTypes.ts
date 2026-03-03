@@ -13,10 +13,12 @@ export type ControllerKey = symbol | string
 
 export interface PromiseWithComponent<T, P>
   extends Promise<BvTriggerableEvent>, PromiseWithComponentInternal<T, P> {}
+export interface ShowPromiseWithComponent<T, P>
+  extends Promise<BvTriggerableEvent & AsyncDisposable>, PromiseWithComponentInternal<T, P> {}
 export interface PromiseWithComponentInternal<T, P> extends AsyncDisposable {
   id: ControllerKey
   ref: ComponentPublicInstance<T> | null
-  show: () => PromiseWithComponent<T, P>
+  show: () => ShowPromiseWithComponent<T, P>
   hide: (trigger?: string) => PromiseWithComponent<T, P>
   toggle: () => PromiseWithComponent<T, P>
   set: (val: Partial<P>) => PromiseWithComponent<T, P>
