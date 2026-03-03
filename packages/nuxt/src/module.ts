@@ -61,7 +61,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // Add components
-    useComponents(resolve)
+    useComponents()
 
     // Add directives
     if (Object.values(normalizedDirectiveOptions).includes(true)) {
