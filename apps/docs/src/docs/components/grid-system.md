@@ -1,4 +1,5 @@
 ---
+migrationGuide: 'grid'
 description: >
   Use the powerful mobile-first flexbox grid (via the `<BContainer>`, `<BRow>` and
   `<BCol>` components) to build layouts of all shapes and sizes thanks to a twelve column system,
@@ -165,7 +166,7 @@ See how aspects of the Bootstrap grid system work across multiple devices with a
         <td>720px</td>
         <td>960px</td>
         <td>1140px</td>
-        <td>13200px</td>
+        <td>1320px</td>
       </tr>
       <tr>
         <th class="text-left">Prop</th>

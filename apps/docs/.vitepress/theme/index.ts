@@ -7,10 +7,34 @@ import {appInfoKey} from './keys'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
+let scrollTimer: ReturnType<typeof setTimeout> | undefined
+
 export default {
   extends: DefaultTheme,
   Layout,
-  enhanceApp(ctx: EnhanceAppContext) {
+  enhanceApp({app, router}: EnhanceAppContext) {
+    // After client-side route changes, re-scroll to the hash anchor once the
+    // page content has finished rendering. VitePress's SPA router scrolls
+    // before layout shifts settle, causing anchors to land off-screen.
+    const originalOnAfterRouteChange: typeof router.onAfterRouteChange = router.onAfterRouteChange
+    router.onAfterRouteChange = (...args) => {
+      if (originalOnAfterRouteChange) {
+        originalOnAfterRouteChange(
+          ...(args as Parameters<NonNullable<typeof originalOnAfterRouteChange>>)
+        )
+      }
+      if (typeof window === 'undefined') return
+      clearTimeout(scrollTimer)
+      scrollTimer = setTimeout(() => {
+        const {hash} = window.location
+        if (!hash) return
+        const decodedId = decodeURIComponent(hash.slice(1))
+        if (!decodedId) return
+        const el = document.getElementById(decodedId)
+        if (el) el.scrollIntoView()
+      }, 300)
+    }
+
     const githubMainBranch = 'main'
     const base = `tree/${githubMainBranch}`
     const githubUrl = 'https://github.com/bootstrap-vue-next/bootstrap-vue-next'
@@ -19,7 +43,7 @@ export default {
     const githubComposablesDirectory = `${githubPackageDirectory}/src/composables`
     const githubDirectivesDirectory = `${githubPackageDirectory}/src/directives`
     const githubDocsDirectory = `${githubUrl}/${base}/apps/docs/src`
-    ctx.app.provide(appInfoKey, {
+    app.provide(appInfoKey, {
       githubMainBranch,
       githubUrl,
       githubDocsDirectory,

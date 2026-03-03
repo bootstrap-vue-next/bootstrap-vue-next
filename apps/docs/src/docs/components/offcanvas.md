@@ -1,4 +1,5 @@
 ---
+migrationGuide: 'bsidebar'
 description: >
   The `<BOffcanvas>` component is a fixed-position toggleable slide out box, which can be used for navigation, menus, details, etc. It can be positioned on any side of the viewport (top, bottom, start, or end), with optional backdrop support.
 ---
