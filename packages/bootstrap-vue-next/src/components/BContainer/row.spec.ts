@@ -83,4 +83,35 @@ describe('row', () => {
     expect(wrapper.classes()).toContain('row-cols-xl-5')
     expect(wrapper.classes()).toContain('row-cols-xxl-6')
   })
+
+  it('breakpoint cols classes are generated in ascending order', () => {
+    const wrapper = mount(BRow, {
+      props: {cols: 1, colsSm: 2, colsMd: 3, colsLg: 4, colsXl: 5, colsXxl: 6},
+    })
+    const classes = wrapper.classes()
+    const colsClasses = classes.filter((c) => c.startsWith('row-cols-'))
+
+    // Verify all cols classes are present
+    expect(colsClasses).toContain('row-cols-1')
+    expect(colsClasses).toContain('row-cols-sm-2')
+    expect(colsClasses).toContain('row-cols-md-3')
+    expect(colsClasses).toContain('row-cols-lg-4')
+    expect(colsClasses).toContain('row-cols-xl-5')
+    expect(colsClasses).toContain('row-cols-xxl-6')
+
+    // Verify they appear in ascending breakpoint order
+    const colsClassIndexes = [
+      classes.indexOf('row-cols-1'),
+      classes.indexOf('row-cols-sm-2'),
+      classes.indexOf('row-cols-md-3'),
+      classes.indexOf('row-cols-lg-4'),
+      classes.indexOf('row-cols-xl-5'),
+      classes.indexOf('row-cols-xxl-6'),
+    ]
+
+    // Each index should be less than the next (ascending order)
+    for (let i = 0; i < colsClassIndexes.length - 1; i++) {
+      expect(colsClassIndexes[i]).toBeLessThan(colsClassIndexes[i + 1])
+    }
+  })
 })
