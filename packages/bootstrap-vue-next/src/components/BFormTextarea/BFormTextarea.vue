@@ -113,6 +113,7 @@ const computedStyles = computed<CSSProperties>(() => ({
 defineExpose({
   blur,
   element: input,
+  flushDebounce: onBlur,
   focus,
 })
 </script>
