@@ -91,6 +91,8 @@
               tag="li"
               :variant="props.tagVariant"
               :pill="props.tagPills"
+              :no-remove="props.noTagRemove"
+              :disabled="props.disabled"
               @remove="removeTag"
               >{{ tag }}</BFormTag
             >
