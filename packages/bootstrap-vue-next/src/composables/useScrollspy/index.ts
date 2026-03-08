@@ -10,6 +10,7 @@ import {
   type Ref,
   ref,
   toRef,
+  toValue,
   watch,
 } from 'vue'
 import {getElement} from '../../utils/getElement'
@@ -35,7 +36,7 @@ interface ScrollspyOptions {
   contentQuery: string
   targetQuery: string
   manual: boolean
-  root: string | ComponentPublicInstance | HTMLElement | null
+  root: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>
   rootMargin: string
   threshold: number | number[]
   watchChanges: boolean
@@ -114,6 +115,14 @@ export const useScrollspy = (
       : resolvedContent.value
   )
 
+  const resolvedRoot = computed(() => {
+    if (root !== undefined) {
+      const v = toValue(root)
+      if (v) return getElement(v)
+    }
+    return scrollRoot.value
+  })
+
   const iobs = useIntersectionObserver(
     nodeList,
     (entries) => {
@@ -153,7 +162,7 @@ export const useScrollspy = (
       }
     },
     {
-      root: root ? getElement(root) : scrollRoot,
+      root: resolvedRoot,
       rootMargin,
       threshold,
     }
