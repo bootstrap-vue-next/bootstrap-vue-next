@@ -25,7 +25,7 @@ export const attemptFocus = (
   return isActiveElement(el)
 }
 
-export const isEmptySlot = (el: Slot | undefined): boolean => (el?.() ?? []).length === 0
+export const isEmptySlot = (el: Slot | undefined): boolean => (el?.({}) ?? []).length === 0
 
 /**
  * @deprecated only used in BFormGroup, which is not an SFC... Function could probably be replaced with pure Vue
