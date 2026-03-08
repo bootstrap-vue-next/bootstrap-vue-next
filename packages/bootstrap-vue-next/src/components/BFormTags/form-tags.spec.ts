@@ -53,6 +53,32 @@ describe('form-tags', () => {
     })
   })
 
+  describe('noTagRemove behavior', () => {
+    it('renders remove buttons on tags by default', () => {
+      const wrapper = mount(BFormTags, {
+        props: {modelValue: ['apple', 'orange']},
+      })
+      const removeButtons = wrapper.findAll('.b-form-tag-remove')
+      expect(removeButtons.length).toBe(2)
+    })
+
+    it('hides remove buttons on tags when noTagRemove is true', () => {
+      const wrapper = mount(BFormTags, {
+        props: {modelValue: ['apple', 'orange'], noTagRemove: true},
+      })
+      const removeButtons = wrapper.findAll('.b-form-tag-remove')
+      expect(removeButtons.length).toBe(0)
+    })
+
+    it('hides remove buttons on tags when disabled is true', () => {
+      const wrapper = mount(BFormTags, {
+        props: {modelValue: ['apple', 'orange'], disabled: true},
+      })
+      const removeButtons = wrapper.findAll('.b-form-tag-remove')
+      expect(removeButtons.length).toBe(0)
+    })
+  })
+
   describe('ignoreInputFocusSelector behavior', () => {
     it('focuses the input when clicking on the wrapper area', async () => {
       const wrapper = mount(BFormTags, {
