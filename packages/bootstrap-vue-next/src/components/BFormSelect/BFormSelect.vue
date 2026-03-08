@@ -74,6 +74,20 @@ const modelValue = defineModel<OptionsValues<Options> | OptionsValues<Options>[]
   default: '' as any,
 })
 
+// Normalize a single simple option using custom field names
+const normalizeSimpleOption = (el: object): SelectOption =>
+  ({
+    ...(el as Record<string, unknown>),
+    value: (el as Record<string, unknown>)[props.valueField as string],
+    text: ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ?? '',
+    disabled:
+      ((el as Record<string, unknown>)[props.disabledField as string] as boolean | undefined) ??
+      false,
+  }) as SelectOption
+
+const normalizePrimitive = (el: string | number | boolean): SelectOption =>
+  ({value: el, text: String(el), disabled: false}) as SelectOption
+
 // Type-safe normalization of options (supports both simple and complex/grouped)
 const normalizedOptions = computed(() => {
   const optionsArray = props.options ?? []
@@ -88,7 +102,7 @@ const normalizedOptions = computed(() => {
   if (hasComplexOptions) {
     return optionsArray.map((el) => {
       if (typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean') {
-        return {value: el, text: String(el), disabled: false} as SelectOption
+        return normalizePrimitive(el)
       }
 
       // Check if this is a complex (grouped) option
@@ -101,37 +115,30 @@ const normalizedOptions = computed(() => {
           ''
         return {
           label,
-          options: optionsField,
+          options: optionsField.map((subOpt: unknown) => {
+            if (
+              typeof subOpt === 'string' ||
+              typeof subOpt === 'number' ||
+              typeof subOpt === 'boolean'
+            ) {
+              return normalizePrimitive(subOpt)
+            }
+            return normalizeSimpleOption(subOpt as object)
+          }),
         } as ComplexSelectOptionRaw
       }
 
       // Simple option - spread all properties from the original object to preserve class, data-*, etc.
-      return {
-        ...(el as Record<string, unknown>),
-        value: (el as Record<string, unknown>)[props.valueField as string],
-        text:
-          ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ?? '',
-        disabled:
-          ((el as Record<string, unknown>)[props.disabledField as string] as boolean | undefined) ??
-          false,
-      } as SelectOption
+      return normalizeSimpleOption(el as object)
     })
   }
 
   return optionsArray.map((el) => {
     if (typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean') {
-      return {value: el, text: String(el), disabled: false} as SelectOption
+      return normalizePrimitive(el)
     }
     // Spread all properties from the original object to preserve class, data-*, etc.
-    return {
-      ...(el as Record<string, unknown>),
-      value: (el as Record<string, unknown>)[props.valueField as string],
-      text:
-        ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ?? '',
-      disabled:
-        ((el as Record<string, unknown>)[props.disabledField as string] as boolean | undefined) ??
-        false,
-    } as SelectOption
+    return normalizeSimpleOption(el as object)
   })
 })
 
