@@ -3,6 +3,7 @@ import {
   type ComponentPublicInstance,
   computed,
   getCurrentInstance,
+  type MaybeRef,
   type MaybeRefOrGetter,
   nextTick,
   onMounted,
@@ -10,7 +11,7 @@ import {
   type Ref,
   ref,
   toRef,
-  toValue,
+  unref,
   watch,
 } from 'vue'
 import {getElement} from '../../utils/getElement'
@@ -36,7 +37,7 @@ interface ScrollspyOptions {
   contentQuery: string
   targetQuery: string
   manual: boolean
-  root: MaybeRefOrGetter<string | ComponentPublicInstance | HTMLElement | null>
+  root: MaybeRef<string | ComponentPublicInstance | HTMLElement | null>
   rootMargin: string
   threshold: number | number[]
   watchChanges: boolean
@@ -117,7 +118,7 @@ export const useScrollspy = (
 
   const resolvedRoot = computed(() => {
     if (root !== undefined) {
-      const v = toValue(root)
+      const v = unref(root)
       if (v) return getElement(v)
     }
     return scrollRoot.value
