@@ -232,4 +232,75 @@ describe('BFormSelect', () => {
     expect(options[0].attributes('data-group')).toBe('1')
     expect(options[1].classes()).toContain('group-class')
   })
+
+  it('renders grouped options with custom field names', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        labelField: 'name',
+        valueField: 'id',
+        textField: 'name',
+        optionsField: 'items',
+        options: [
+          {
+            name: 'Fruits',
+            items: [
+              {id: 1, name: 'Apple'},
+              {id: 2, name: 'Banana'},
+            ],
+          },
+          {
+            name: 'Vegetables',
+            items: [
+              {id: 3, name: 'Carrot'},
+              {id: 4, name: 'Potato'},
+            ],
+          },
+        ],
+      },
+    })
+
+    const optgroups = wrapper.findAll('optgroup')
+    expect(optgroups.length).toBe(2)
+    expect(optgroups[0].attributes('label')).toBe('Fruits')
+    expect(optgroups[1].attributes('label')).toBe('Vegetables')
+
+    const allOptions = wrapper.findAll('option')
+    expect(allOptions.length).toBe(4)
+    expect(allOptions[0].text()).toBe('Apple')
+    expect(allOptions[0].attributes('value')).toBe('1')
+    expect(allOptions[1].text()).toBe('Banana')
+    expect(allOptions[1].attributes('value')).toBe('2')
+    expect(allOptions[2].text()).toBe('Carrot')
+    expect(allOptions[2].attributes('value')).toBe('3')
+    expect(allOptions[3].text()).toBe('Potato')
+    expect(allOptions[3].attributes('value')).toBe('4')
+  })
+
+  it('selects correct value in grouped options with custom field names', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        modelValue: 2,
+        labelField: 'name',
+        valueField: 'id',
+        textField: 'name',
+        optionsField: 'items',
+        options: [
+          {
+            name: 'Fruits',
+            items: [
+              {id: 1, name: 'Apple'},
+              {id: 2, name: 'Banana'},
+            ],
+          },
+        ],
+      },
+    })
+
+    const allOptions = wrapper.findAll('option')
+    expect(allOptions.length).toBe(2)
+
+    const selectedOption = allOptions.find((option) => option.attributes('value') === '2')
+    expect(selectedOption).toBeDefined()
+    expect(selectedOption?.attributes('selected')).toBeDefined()
+  })
 })
