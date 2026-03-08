@@ -5,9 +5,6 @@
     :class="computedClasses"
     :aria-current="props.active ? true : undefined"
     :aria-disabled="props.disabled ? true : undefined"
-    :target="isLink ? props.target : undefined"
-    :href="!props.button ? props.href : undefined"
-    :to="!props.button ? props.to : undefined"
     v-bind="{...(isLink ? computedLinkProps : {}), ...computedAttrs}"
   >
     <slot />
@@ -32,11 +29,16 @@ const _props = withDefaults(defineProps<BListGroupItemProps>(), {
   // All others use defaults
   activeClass: undefined,
   disabled: undefined,
-  exactActiveClass: undefined,
+  exactActiveClass: 'router-link-exact-active active',
   href: undefined,
   icon: undefined,
+  noRel: undefined,
+  noPrefetch: undefined,
   opacity: undefined,
   opacityHover: undefined,
+  prefetch: undefined,
+  prefetchedClass: undefined,
+  prefetchOn: undefined,
   stretched: false,
   rel: undefined,
   replace: undefined,

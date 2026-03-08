@@ -2,6 +2,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BListGroup from './BListGroup.vue'
 import BListGroupItem from './BListGroupItem.vue'
+import BLink from '../BLink/BLink.vue'
 
 describe('list-group > list-group-item', () => {
   enableAutoUnmount(afterEach)
@@ -213,5 +214,78 @@ describe('list-group > list-group-item', () => {
     const $listItem = wrapper.findComponent(BListGroupItem)
     expect($listItem).toBeDefined()
     expect($listItem.element.tagName).toBe('LI')
+  })
+
+  it('should render as BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.exists()).toBe(true)
+  })
+
+  it('should pass href to BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('href')).toBe('/foobar')
+  })
+
+  it('should pass target to BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar', target: '_blank'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('target')).toBe('_blank')
+  })
+
+  it('should pass exactActiveClass to BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar', exactActiveClass: 'my-exact-active'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('exactActiveClass')).toBe('my-exact-active')
+  })
+
+  it('should have default exactActiveClass that includes active', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('exactActiveClass')).toContain('active')
+  })
+
+  it('should pass activeClass to BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar', activeClass: 'my-active'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('activeClass')).toBe('my-active')
+  })
+
+  it('should pass rel to BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar', rel: 'noopener'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('rel')).toBe('noopener')
+  })
+
+  it('should pass replace to BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar', replace: true},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('replace')).toBe(true)
+  })
+
+  it('should not render as BLink when button=true even with href', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {button: true, href: '/foobar'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.exists()).toBe(false)
+    expect(wrapper.element.tagName).toBe('BUTTON')
   })
 })
