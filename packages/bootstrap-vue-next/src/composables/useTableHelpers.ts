@@ -140,7 +140,10 @@ export const useTableMapper = <Item>({
 
       return false
     })
-    const val = getWithGetter(ob, key)
+    const val =
+      isTableField(sortField) && sortField.accessor
+        ? getWithGetter(ob, sortField.accessor)
+        : getWithGetter(ob, key)
     if (isTableField(sortField) && !!sortField.sortByFormatted) {
       const formatter = getFormatter(sortField)
       if (formatter) {
