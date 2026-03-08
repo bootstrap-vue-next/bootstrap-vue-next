@@ -856,6 +856,109 @@ describe('custom sort comparers', () => {
   })
 })
 
+describe('sorting with accessor function', () => {
+  interface PersonWithNested {
+    id: number
+    name: {first: string; last: string}
+  }
+
+  const nestedItems: TableItem<PersonWithNested>[] = [
+    {id: 1, name: {first: 'Charlie', last: 'Brown'}},
+    {id: 2, name: {first: 'Alice', last: 'Smith'}},
+    {id: 3, name: {first: 'Bob', last: 'Jones'}},
+  ]
+
+  it('sorts correctly when field uses an accessor function', () => {
+    const fields: Exclude<TableField<PersonWithNested>, string>[] = [
+      {
+        key: 'full_name',
+        label: 'Full Name',
+        sortable: true,
+        accessor: (item: PersonWithNested) => item.name.first,
+      },
+      {key: 'id', label: 'ID'},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: nestedItems,
+        fields,
+        sortBy: [{order: 'asc', key: 'full_name'}],
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Alice', 'Bob', 'Charlie'])
+  })
+
+  it('sorts correctly in desc order when field uses an accessor function', () => {
+    const fields: Exclude<TableField<PersonWithNested>, string>[] = [
+      {
+        key: 'full_name',
+        label: 'Full Name',
+        sortable: true,
+        accessor: (item: PersonWithNested) => item.name.first,
+      },
+      {key: 'id', label: 'ID'},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: nestedItems,
+        fields,
+        sortBy: [{order: 'desc', key: 'full_name'}],
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Charlie', 'Bob', 'Alice'])
+  })
+
+  it('sorts correctly when field uses a string accessor', () => {
+    interface PersonWithAlias {
+      id: number
+      first_name: string
+      display_name: string
+    }
+
+    const aliasItems: TableItem<PersonWithAlias>[] = [
+      {id: 1, first_name: 'Charlie', display_name: 'Charlie B'},
+      {id: 2, first_name: 'Alice', display_name: 'Alice S'},
+      {id: 3, first_name: 'Bob', display_name: 'Bob J'},
+    ]
+
+    const fields: Exclude<TableField<PersonWithAlias>, string>[] = [
+      {
+        key: 'name',
+        label: 'Name',
+        sortable: true,
+        accessor: 'first_name',
+      },
+      {key: 'id', label: 'ID'},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: aliasItems,
+        fields,
+        sortBy: [{order: 'asc', key: 'name'}],
+      },
+    })
+
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Alice', 'Bob', 'Charlie'])
+  })
+})
+
 describe('combined sorting features', () => {
   it('uses custom comparer with custom initial sort direction', async () => {
     const reverseCompare = (a: SimplePerson, b: SimplePerson, key: string) => {
