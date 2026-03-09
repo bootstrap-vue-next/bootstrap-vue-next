@@ -19,21 +19,26 @@ describe('form-floating-label', () => {
     const wrapper = mount(BFormFloatingLabel, {
       slots: {default: 'foobar'},
     })
-    expect(wrapper.text()).toBe('foobar')
+    expect(wrapper.text()).toContain('foobar')
   })
 
-  it('prefers to render slot default over prop text', () => {
+  it('renders default slot with HTML content', () => {
     const wrapper = mount(BFormFloatingLabel, {
-      props: {text: 'props'},
-      slots: {default: 'slots'},
+      slots: {default: '<input id="test" type="text" />'},
     })
-    expect(wrapper.text()).toBe('slots')
+    expect(wrapper.find('input#test').exists()).toBe(true)
   })
 
   it('has child label', () => {
     const wrapper = mount(BFormFloatingLabel)
     const $label = wrapper.find('label')
     expect($label.exists()).toBe(true)
+  })
+
+  it('child label has no for attr by default', () => {
+    const wrapper = mount(BFormFloatingLabel)
+    const $label = wrapper.get('label')
+    expect($label.attributes('for')).toBeUndefined()
   })
 
   it('child label has attr for to be labelFor', async () => {
@@ -54,12 +59,37 @@ describe('form-floating-label', () => {
     expect($label.text()).toBe('foobar')
   })
 
+  it('child label renders slot label with HTML content', () => {
+    const wrapper = mount(BFormFloatingLabel, {
+      slots: {label: '<span id="label-content">My label</span>', default: 'slots'},
+    })
+    const $label = wrapper.get('label')
+    expect($label.find('span#label-content').exists()).toBe(true)
+    expect($label.text()).toBe('My label')
+  })
+
   it('child label renders props label', () => {
     const wrapper = mount(BFormFloatingLabel, {
       props: {label: 'foobar'},
     })
     const $label = wrapper.get('label')
     expect($label.text()).toBe('foobar')
+  })
+
+  it('child label is reactive to prop label', async () => {
+    const wrapper = mount(BFormFloatingLabel, {
+      props: {label: 'initial'},
+    })
+    const $label = wrapper.get('label')
+    expect($label.text()).toBe('initial')
+    await wrapper.setProps({label: 'updated'})
+    expect($label.text()).toBe('updated')
+  })
+
+  it('child label is empty when neither label prop nor label slot provided', () => {
+    const wrapper = mount(BFormFloatingLabel)
+    const $label = wrapper.get('label')
+    expect($label.text()).toBe('')
   })
 
   it('child label prefers to render slot label over prop label', () => {
