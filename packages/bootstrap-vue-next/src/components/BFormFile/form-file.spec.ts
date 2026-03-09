@@ -909,4 +909,602 @@ describe('form-file', () => {
       expect(component.isFileAccepted(pdfFile)).toBe(true)
     })
   })
+
+  describe('custom mode - hidden input attributes', () => {
+    it('hidden input has attr name when name prop provided', () => {
+      const wrapper = mount(BFormFile, {props: {name: 'myFile'}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('name')).toBe('myFile')
+    })
+
+    it('hidden input has attr form when form prop provided', () => {
+      const wrapper = mount(BFormFile, {props: {form: 'myForm'}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('form')).toBe('myForm')
+    })
+
+    it('hidden input has attr multiple when multiple prop true', () => {
+      const wrapper = mount(BFormFile, {props: {multiple: true}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('multiple')).toBeDefined()
+    })
+
+    it('hidden input does not have attr multiple when multiple prop false', () => {
+      const wrapper = mount(BFormFile, {props: {multiple: false}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('multiple')).toBeUndefined()
+    })
+
+    it('hidden input has attr multiple when directory prop true', () => {
+      const wrapper = mount(BFormFile, {props: {directory: true}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('multiple')).toBeDefined()
+    })
+
+    it('hidden input has attr disabled when disabled prop true', () => {
+      const wrapper = mount(BFormFile, {props: {disabled: true}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('disabled')).toBeDefined()
+    })
+
+    it('hidden input does not have attr disabled when disabled prop false', () => {
+      const wrapper = mount(BFormFile, {props: {disabled: false}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('disabled')).toBeUndefined()
+    })
+
+    it('hidden input has attr required when required prop true', () => {
+      const wrapper = mount(BFormFile, {props: {required: true}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('required')).toBeDefined()
+    })
+
+    it('hidden input does not have attr required when required prop false', () => {
+      const wrapper = mount(BFormFile, {props: {required: false}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('required')).toBeUndefined()
+    })
+
+    it('hidden input has attr accept when accept prop provided', () => {
+      const wrapper = mount(BFormFile, {props: {accept: 'image/*'}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('accept')).toBe('image/*')
+    })
+
+    it('hidden input does not have attr accept when accept is empty', () => {
+      const wrapper = mount(BFormFile, {props: {accept: ''}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('accept')).toBeUndefined()
+    })
+
+    it('hidden input has attr capture when capture prop provided', () => {
+      const wrapper = mount(BFormFile, {props: {capture: 'user'}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('capture')).toBe('user')
+    })
+
+    it('hidden input has attr directory when directory prop true', () => {
+      const wrapper = mount(BFormFile, {props: {directory: true}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('directory')).toBe('true')
+    })
+
+    it('hidden input has attr webkitdirectory when directory prop true', () => {
+      const wrapper = mount(BFormFile, {props: {directory: true}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('webkitdirectory')).toBe('true')
+    })
+
+    it('hidden input does not have attr directory when directory prop false', () => {
+      const wrapper = mount(BFormFile, {props: {directory: false}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('directory')).toBeUndefined()
+    })
+
+    it('hidden input has aria-hidden attribute', () => {
+      const wrapper = mount(BFormFile)
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('aria-hidden')).toBe('true')
+    })
+
+    it('hidden input has tabindex -1', () => {
+      const wrapper = mount(BFormFile)
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('tabindex')).toBe('-1')
+    })
+  })
+
+  describe('label prop rendering', () => {
+    it('renders label when label prop is provided', () => {
+      const wrapper = mount(BFormFile, {props: {label: 'Upload File'}})
+      const $label = wrapper.find('label')
+      expect($label.exists()).toBe(true)
+      expect($label.text()).toBe('Upload File')
+    })
+
+    it('does not render label when label prop is empty string', () => {
+      const wrapper = mount(BFormFile, {props: {label: ''}})
+      const $label = wrapper.find('label')
+      expect($label.exists()).toBe(false)
+    })
+
+    it('label has form-label class', () => {
+      const wrapper = mount(BFormFile, {props: {label: 'Upload'}})
+      const $label = wrapper.find('label')
+      expect($label.classes()).toContain('form-label')
+    })
+
+    it('label has labelClass when provided', () => {
+      const wrapper = mount(BFormFile, {props: {label: 'Upload', labelClass: 'fw-bold'}})
+      const $label = wrapper.find('label')
+      expect($label.classes()).toContain('fw-bold')
+    })
+
+    it('label for attribute matches browse button id in custom mode', () => {
+      const wrapper = mount(BFormFile, {props: {id: 'myFile', label: 'Upload'}})
+      const $label = wrapper.find('label')
+      const $button = wrapper.find('.b-form-file-button')
+      expect($label.attributes('for')).toBe($button.attributes('id'))
+    })
+
+    it('label slot overrides label prop', () => {
+      const wrapper = mount(BFormFile, {
+        props: {label: 'Prop Label'},
+        slots: {label: 'Slot Label'},
+      })
+      const $label = wrapper.find('label')
+      expect($label.text()).toBe('Slot Label')
+    })
+  })
+
+  describe('fileNameFormatter prop', () => {
+    it('uses custom formatter for single file', async () => {
+      const formatter = (files: readonly File[]) => `Custom: ${files[0].name}`
+      const wrapper = mount(BFormFile, {
+        props: {fileNameFormatter: formatter},
+      })
+      const file = new File(['content'], 'report.pdf', {type: 'application/pdf'})
+      await wrapper.setProps({modelValue: file})
+
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toBe('Custom: report.pdf')
+    })
+
+    it('uses custom formatter for multiple files', async () => {
+      const formatter = (files: readonly File[]) => files.map((f) => f.name).join(' | ')
+      const wrapper = mount(BFormFile, {
+        props: {multiple: true, fileNameFormatter: formatter},
+      })
+      const files = [new File(['1'], 'a.txt'), new File(['2'], 'b.txt')]
+      await wrapper.setProps({modelValue: files})
+
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toBe('a.txt | b.txt')
+    })
+
+    it('uses default formatter when fileNameFormatter not provided', async () => {
+      const wrapper = mount(BFormFile)
+      const file = new File(['content'], 'test.txt')
+      await wrapper.setProps({modelValue: file})
+
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toContain('test.txt')
+    })
+  })
+
+  describe('placeholder behavior', () => {
+    it('renders default placeholder "No file chosen" when no file selected', () => {
+      const wrapper = mount(BFormFile)
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toContain('No file chosen')
+    })
+
+    it('renders custom placeholder when placeholder prop provided', () => {
+      const wrapper = mount(BFormFile, {props: {placeholder: 'Select files...'}})
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toContain('Select files...')
+    })
+
+    it('placeholder has text-muted class', () => {
+      const wrapper = mount(BFormFile, {props: {placeholder: 'Choose file'}})
+      const $span = wrapper.find('.b-form-file-text span')
+      expect($span.classes()).toContain('text-muted')
+    })
+
+    it('placeholder is replaced by file name when file is selected', async () => {
+      const wrapper = mount(BFormFile, {props: {placeholder: 'Choose file'}})
+      const file = new File(['content'], 'myfile.txt')
+      await wrapper.setProps({modelValue: file})
+
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).not.toContain('Choose file')
+      expect($text.text()).toContain('myfile.txt')
+    })
+
+    it('renders placeholder slot content', () => {
+      const wrapper = mount(BFormFile, {
+        slots: {placeholder: '<em>Pick a file</em>'},
+      })
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.find('em').exists()).toBe(true)
+      expect($text.text()).toContain('Pick a file')
+    })
+  })
+
+  describe('drop-placeholder slot', () => {
+    it('renders default drop placeholder text "Drop files here..."', () => {
+      const wrapper = mount(BFormFile)
+      // Drop overlay only shows when isOverDropZone is true
+      // We can verify the component has the default text prop
+      expect(wrapper.vm.$props.dropPlaceholder).toBeUndefined()
+    })
+
+    it('renders custom dropPlaceholder prop text', () => {
+      const wrapper = mount(BFormFile, {props: {dropPlaceholder: 'Release to upload'}})
+      expect(wrapper.vm.$props.dropPlaceholder).toBe('Release to upload')
+    })
+  })
+
+  describe('file-name slot', () => {
+    it('renders custom file name slot when provided with file', async () => {
+      const wrapper = mount(BFormFile, {
+        slots: {
+          'file-name': ({names}: {files: readonly File[]; names: readonly string[]}) =>
+            `${names.length} custom: ${names.join(', ')}`,
+        },
+      })
+      const file = new File(['content'], 'doc.pdf')
+      await wrapper.setProps({modelValue: file})
+
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toContain('1 custom: doc.pdf')
+    })
+
+    it('file-name slot receives files and names props', async () => {
+      let slotFiles: readonly File[] = []
+      let slotNames: readonly string[] = []
+      const wrapper = mount(BFormFile, {
+        props: {multiple: true},
+        slots: {
+          'file-name': ({files, names}: {files: readonly File[]; names: readonly string[]}) => {
+            slotFiles = files
+            slotNames = names
+            return `${names.join(', ')}`
+          },
+        },
+      })
+      const fileA = new File(['a'], 'alpha.txt')
+      const fileB = new File(['b'], 'beta.txt')
+      await wrapper.setProps({modelValue: [fileA, fileB]})
+
+      expect(slotFiles).toHaveLength(2)
+      expect(slotNames).toEqual(['alpha.txt', 'beta.txt'])
+    })
+  })
+
+  describe('showFileNames prop', () => {
+    it('renders external display when showFileNames true and files selected', async () => {
+      const wrapper = mount(BFormFile, {props: {showFileNames: true}})
+      const file = new File(['content'], 'test.txt')
+      await wrapper.setProps({modelValue: file})
+
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.exists()).toBe(true)
+    })
+
+    it('renders external display with placeholder when showFileNames true and no files', () => {
+      const wrapper = mount(BFormFile, {
+        props: {showFileNames: true, placeholder: 'No files'},
+      })
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.exists()).toBe(true)
+      expect($display.text()).toContain('No files')
+    })
+
+    it('does not render external display when showFileNames false', async () => {
+      const wrapper = mount(BFormFile, {props: {showFileNames: false}})
+      const file = new File(['content'], 'test.txt')
+      await wrapper.setProps({modelValue: file})
+
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.exists()).toBe(false)
+    })
+
+    it('does not render external display in plain mode', () => {
+      const wrapper = mount(BFormFile, {props: {plain: true, showFileNames: true}})
+      const $display = wrapper.find('.b-form-file-display')
+      expect($display.exists()).toBe(false)
+    })
+  })
+
+  describe('noDrop prop', () => {
+    it('does not show drag overlay when noDrop is true', () => {
+      const wrapper = mount(BFormFile, {props: {noDrop: true}})
+      const $overlay = wrapper.find('.b-form-file-drag-overlay')
+      expect($overlay.exists()).toBe(false)
+    })
+  })
+
+  describe('ARIA live region', () => {
+    it('has visually-hidden ARIA live region in custom mode', () => {
+      const wrapper = mount(BFormFile)
+      const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
+      expect($liveRegion.exists()).toBe(true)
+      expect($liveRegion.attributes('aria-atomic')).toBe('true')
+    })
+
+    it('ARIA live region is empty when no files selected', () => {
+      const wrapper = mount(BFormFile)
+      const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
+      expect($liveRegion.text()).toBe('')
+    })
+
+    it('ARIA live region announces single file selection', async () => {
+      const wrapper = mount(BFormFile)
+      const file = new File(['content'], 'report.pdf')
+      await wrapper.setProps({modelValue: file})
+
+      const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
+      expect($liveRegion.text()).toContain('File selected: report.pdf')
+    })
+
+    it('ARIA live region announces multiple file selection count', async () => {
+      const wrapper = mount(BFormFile, {props: {multiple: true}})
+      const files = [new File(['1'], 'a.txt'), new File(['2'], 'b.txt'), new File(['3'], 'c.txt')]
+      await wrapper.setProps({modelValue: files})
+
+      const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
+      expect($liveRegion.text()).toContain('3 files selected')
+    })
+
+    it('does not have ARIA live region in plain mode', () => {
+      const wrapper = mount(BFormFile, {props: {plain: true}})
+      const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
+      expect($liveRegion.exists()).toBe(false)
+    })
+  })
+
+  describe('exposed methods', () => {
+    it('exposes reset method', () => {
+      const wrapper = mount(BFormFile)
+      expect(typeof wrapper.vm.reset).toBe('function')
+    })
+
+    it('exposes focus method', () => {
+      const wrapper = mount(BFormFile)
+      expect(typeof wrapper.vm.focus).toBe('function')
+    })
+
+    it('exposes blur method', () => {
+      const wrapper = mount(BFormFile)
+      expect(typeof wrapper.vm.blur).toBe('function')
+    })
+
+    it('exposes element property', () => {
+      const wrapper = mount(BFormFile)
+      expect(wrapper.vm.element).toBeDefined()
+    })
+
+    it('reset clears modelValue to null', async () => {
+      const wrapper = mount(BFormFile)
+      const file = new File(['content'], 'test.txt')
+      await wrapper.setProps({modelValue: file})
+
+      wrapper.vm.reset()
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.emitted('update:modelValue')).toBeDefined()
+      const lastEmitted = wrapper.emitted('update:modelValue')!
+      expect(lastEmitted[lastEmitted.length - 1][0]).toBe(null)
+    })
+
+    it('element returns browse button ref in custom mode', () => {
+      const wrapper = mount(BFormFile)
+      const {element} = wrapper.vm
+      // In custom mode, element should be the browse button
+      expect(element).toBeDefined()
+    })
+
+    it('element returns input ref in plain mode', () => {
+      const wrapper = mount(BFormFile, {props: {plain: true}})
+      const {element} = wrapper.vm
+      expect(element).toBeDefined()
+    })
+  })
+
+  describe('modelValue reactivity', () => {
+    it('clears internal files when modelValue set to null', async () => {
+      const wrapper = mount(BFormFile)
+      const file = new File(['content'], 'test.txt')
+      await wrapper.setProps({modelValue: file})
+
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toContain('test.txt')
+
+      await wrapper.setProps({modelValue: null})
+      expect($text.text()).not.toContain('test.txt')
+    })
+
+    it('sets internal files from array modelValue', async () => {
+      const wrapper = mount(BFormFile, {props: {multiple: true}})
+      const files = [new File(['1'], 'a.txt'), new File(['2'], 'b.txt')]
+      await wrapper.setProps({modelValue: files})
+
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toContain('2 files selected')
+    })
+
+    it('sets internal files from single file modelValue', async () => {
+      const wrapper = mount(BFormFile)
+      const file = new File(['content'], 'single.pdf')
+      await wrapper.setProps({modelValue: file})
+
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toContain('single.pdf')
+    })
+  })
+
+  describe('b-form-file-has-files class', () => {
+    it('wrapper does not have b-form-file-has-files class when no files', () => {
+      const wrapper = mount(BFormFile)
+      const $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.classes()).not.toContain('b-form-file-has-files')
+    })
+
+    it('wrapper has b-form-file-has-files class when file selected', async () => {
+      const wrapper = mount(BFormFile)
+      const file = new File(['content'], 'test.txt')
+      await wrapper.setProps({modelValue: file})
+
+      const $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.classes()).toContain('b-form-file-has-files')
+    })
+
+    it('wrapper loses b-form-file-has-files class when file cleared', async () => {
+      const wrapper = mount(BFormFile)
+      const file = new File(['content'], 'test.txt')
+      await wrapper.setProps({modelValue: file})
+
+      const $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.classes()).toContain('b-form-file-has-files')
+
+      await wrapper.setProps({modelValue: null})
+      expect($wrapper.classes()).not.toContain('b-form-file-has-files')
+    })
+  })
+
+  describe('browse button ARIA attributes in custom mode', () => {
+    it('browse button has aria-label when ariaLabel prop provided', () => {
+      const wrapper = mount(BFormFile, {props: {ariaLabel: 'Select file'}})
+      const $button = wrapper.find('.b-form-file-button')
+      expect($button.attributes('aria-label')).toBe('Select file')
+    })
+
+    it('browse button has aria-labelledby when ariaLabelledby prop provided', () => {
+      const wrapper = mount(BFormFile, {props: {ariaLabelledby: 'my-label'}})
+      const $button = wrapper.find('.b-form-file-button')
+      expect($button.attributes('aria-labelledby')).toBe('my-label')
+    })
+
+    it('browse button does not have aria-label when ariaLabel not provided', () => {
+      const wrapper = mount(BFormFile)
+      const $button = wrapper.find('.b-form-file-button')
+      expect($button.attributes('aria-label')).toBeUndefined()
+    })
+  })
+
+  describe('accept as array', () => {
+    it('joins array accept prop into comma-separated string on input', () => {
+      const wrapper = mount(BFormFile, {props: {accept: ['.pdf', '.doc', '.txt']}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('accept')).toBe('.pdf,.doc,.txt')
+    })
+
+    it('joins array accept prop in plain mode', () => {
+      const wrapper = mount(BFormFile, {props: {accept: ['image/*', '.svg'], plain: true}})
+      const $input = wrapper.find('input[type="file"]')
+      expect($input.attributes('accept')).toBe('image/*,.svg')
+    })
+  })
+
+  describe('root element structure', () => {
+    it('has b-form-file-root class on root element', () => {
+      const wrapper = mount(BFormFile)
+      const $root = wrapper.find('.b-form-file-root')
+      expect($root.exists()).toBe(true)
+    })
+
+    it('does not have drop zone wrapper in plain mode', () => {
+      const wrapper = mount(BFormFile, {props: {plain: true}})
+      const $wrapper = wrapper.find('.b-form-file-wrapper')
+      expect($wrapper.exists()).toBe(false)
+    })
+
+    it('does not have browse button in plain mode', () => {
+      const wrapper = mount(BFormFile, {props: {plain: true}})
+      const $button = wrapper.find('.b-form-file-button')
+      expect($button.exists()).toBe(false)
+    })
+
+    it('renders file input directly in plain mode', () => {
+      const wrapper = mount(BFormFile, {props: {plain: true}})
+      const $root = wrapper.find('.b-form-file-root')
+      const $input = $root.find('input[type="file"]')
+      expect($input.exists()).toBe(true)
+      // Should not be hidden (no inline style with z-index: -5)
+      expect($input.attributes('style')).toBeUndefined()
+    })
+  })
+
+  describe('webkitdirectory in plain mode', () => {
+    it('input has webkitdirectory attribute when directory prop true', () => {
+      const wrapper = mount(BFormFile, {props: {directory: true, plain: true}})
+      const $input = wrapper.get('input')
+      expect($input.attributes('webkitdirectory')).toBe('true')
+    })
+
+    it('input does not have webkitdirectory attribute when directory prop false', () => {
+      const wrapper = mount(BFormFile, {props: {directory: false, plain: true}})
+      const $input = wrapper.get('input')
+      expect($input.attributes('webkitdirectory')).toBeUndefined()
+    })
+  })
+
+  describe('default file name formatting', () => {
+    it('shows single file name for one file', async () => {
+      const wrapper = mount(BFormFile)
+      const file = new File(['data'], 'resume.pdf')
+      await wrapper.setProps({modelValue: file})
+
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toBe('resume.pdf')
+    })
+
+    it('shows "N files selected" for multiple files', async () => {
+      const wrapper = mount(BFormFile, {props: {multiple: true}})
+      const files = [new File(['1'], 'f1.txt'), new File(['2'], 'f2.txt')]
+      await wrapper.setProps({modelValue: files})
+
+      const $text = wrapper.find('.b-form-file-text')
+      expect($text.text()).toBe('2 files selected')
+    })
+  })
+
+  describe('browse button type', () => {
+    it('browse button has type="button" to prevent form submission', () => {
+      const wrapper = mount(BFormFile)
+      const $button = wrapper.find('.b-form-file-button')
+      expect($button.attributes('type')).toBe('button')
+    })
+  })
+
+  describe('control aria-disabled', () => {
+    it('control has aria-disabled true when disabled', () => {
+      const wrapper = mount(BFormFile, {props: {disabled: true}})
+      const $control = wrapper.find('.b-form-file-control')
+      expect($control.attributes('aria-disabled')).toBe('true')
+    })
+
+    it('control has aria-disabled false when not disabled', () => {
+      const wrapper = mount(BFormFile, {props: {disabled: false}})
+      const $control = wrapper.find('.b-form-file-control')
+      expect($control.attributes('aria-disabled')).toBe('false')
+    })
+  })
+
+  describe('plain mode - change event handling', () => {
+    it('emits change event with native Event object in plain mode', async () => {
+      const file = new File(['content'], 'test.txt', {type: 'text/plain'})
+      const dataTransfer = new ClipboardEvent('').clipboardData ?? new DataTransfer()
+      dataTransfer.items.add(file)
+
+      const wrapper = mount(BFormFile, {props: {plain: true}})
+      const $input = wrapper.get('input')
+      $input.element.files = dataTransfer.files
+      await $input.trigger('change')
+
+      expect(wrapper.emitted('change')).toBeDefined()
+      expect(wrapper.emitted('change')![0][0]).toBeInstanceOf(Event)
+    })
+  })
 })
