@@ -191,32 +191,40 @@ describe('col', () => {
     expect(wrapper.classes()).not.toContain('offset-sm-2')
   })
 
-  it('has class offset-md-{value} when prop offsetMd', () => {
+  it('has class offset-md-{value} when prop offsetMd', async () => {
     const wrapper = mount(BCol, {
       props: {offsetMd: 3},
     })
     expect(wrapper.classes()).toContain('offset-md-3')
+    await wrapper.setProps({offsetMd: undefined})
+    expect(wrapper.classes()).not.toContain('offset-md-3')
   })
 
-  it('has class offset-lg-{value} when prop offsetLg', () => {
+  it('has class offset-lg-{value} when prop offsetLg', async () => {
     const wrapper = mount(BCol, {
       props: {offsetLg: 4},
     })
     expect(wrapper.classes()).toContain('offset-lg-4')
+    await wrapper.setProps({offsetLg: undefined})
+    expect(wrapper.classes()).not.toContain('offset-lg-4')
   })
 
-  it('has class offset-xl-{value} when prop offsetXl', () => {
+  it('has class offset-xl-{value} when prop offsetXl', async () => {
     const wrapper = mount(BCol, {
       props: {offsetXl: 5},
     })
     expect(wrapper.classes()).toContain('offset-xl-5')
+    await wrapper.setProps({offsetXl: undefined})
+    expect(wrapper.classes()).not.toContain('offset-xl-5')
   })
 
-  it('has class offset-xxl-{value} when prop offsetXxl', () => {
+  it('has class offset-xxl-{value} when prop offsetXxl', async () => {
     const wrapper = mount(BCol, {
       props: {offsetXxl: 6},
     })
     expect(wrapper.classes()).toContain('offset-xxl-6')
+    await wrapper.setProps({offsetXxl: undefined})
+    expect(wrapper.classes()).not.toContain('offset-xxl-6')
   })
 
   it('has class order-sm-{value} when prop orderSm', async () => {
@@ -228,32 +236,40 @@ describe('col', () => {
     expect(wrapper.classes()).not.toContain('order-sm-1')
   })
 
-  it('has class order-md-{value} when prop orderMd', () => {
+  it('has class order-md-{value} when prop orderMd', async () => {
     const wrapper = mount(BCol, {
       props: {orderMd: 2},
     })
     expect(wrapper.classes()).toContain('order-md-2')
+    await wrapper.setProps({orderMd: undefined})
+    expect(wrapper.classes()).not.toContain('order-md-2')
   })
 
-  it('has class order-lg-{value} when prop orderLg', () => {
+  it('has class order-lg-{value} when prop orderLg', async () => {
     const wrapper = mount(BCol, {
       props: {orderLg: 3},
     })
     expect(wrapper.classes()).toContain('order-lg-3')
+    await wrapper.setProps({orderLg: undefined})
+    expect(wrapper.classes()).not.toContain('order-lg-3')
   })
 
-  it('has class order-xl-{value} when prop orderXl', () => {
+  it('has class order-xl-{value} when prop orderXl', async () => {
     const wrapper = mount(BCol, {
       props: {orderXl: 4},
     })
     expect(wrapper.classes()).toContain('order-xl-4')
+    await wrapper.setProps({orderXl: undefined})
+    expect(wrapper.classes()).not.toContain('order-xl-4')
   })
 
-  it('has class order-xxl-{value} when prop orderXxl', () => {
+  it('has class order-xxl-{value} when prop orderXxl', async () => {
     const wrapper = mount(BCol, {
       props: {orderXxl: 5},
     })
     expect(wrapper.classes()).toContain('order-xxl-5')
+    await wrapper.setProps({orderXxl: undefined})
+    expect(wrapper.classes()).not.toContain('order-xxl-5')
   })
 
   it('combines multiple responsive breakpoint classes', () => {

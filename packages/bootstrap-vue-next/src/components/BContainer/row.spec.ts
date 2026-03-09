@@ -121,32 +121,40 @@ describe('row', () => {
     expect(wrapper.classes()).not.toContain('row-cols-sm-2')
   })
 
-  it('has class row-cols-md-{value} when prop colsMd', () => {
+  it('has class row-cols-md-{value} when prop colsMd', async () => {
     const wrapper = mount(BRow, {
       props: {colsMd: 4},
     })
     expect(wrapper.classes()).toContain('row-cols-md-4')
+    await wrapper.setProps({colsMd: undefined})
+    expect(wrapper.classes()).not.toContain('row-cols-md-4')
   })
 
-  it('has class row-cols-lg-{value} when prop colsLg', () => {
+  it('has class row-cols-lg-{value} when prop colsLg', async () => {
     const wrapper = mount(BRow, {
       props: {colsLg: 3},
     })
     expect(wrapper.classes()).toContain('row-cols-lg-3')
+    await wrapper.setProps({colsLg: undefined})
+    expect(wrapper.classes()).not.toContain('row-cols-lg-3')
   })
 
-  it('has class row-cols-xl-{value} when prop colsXl', () => {
+  it('has class row-cols-xl-{value} when prop colsXl', async () => {
     const wrapper = mount(BRow, {
       props: {colsXl: 5},
     })
     expect(wrapper.classes()).toContain('row-cols-xl-5')
+    await wrapper.setProps({colsXl: undefined})
+    expect(wrapper.classes()).not.toContain('row-cols-xl-5')
   })
 
-  it('has class row-cols-xxl-{value} when prop colsXxl', () => {
+  it('has class row-cols-xxl-{value} when prop colsXxl', async () => {
     const wrapper = mount(BRow, {
       props: {colsXxl: 6},
     })
     expect(wrapper.classes()).toContain('row-cols-xxl-6')
+    await wrapper.setProps({colsXxl: undefined})
+    expect(wrapper.classes()).not.toContain('row-cols-xxl-6')
   })
 
   it('has class align-items-start when prop alignV is start', () => {
