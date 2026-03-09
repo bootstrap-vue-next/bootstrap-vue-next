@@ -116,4 +116,60 @@ describe('dropdown-item-button', () => {
     const $button = wrapper.get('button')
     expect($button.classes()).toContain('foo')
   })
+
+  it('button class includes prop buttonClass reactivity', async () => {
+    const wrapper = mount(BDropdownItemButton, {
+      props: {buttonClass: ['foo']},
+    })
+    const $button = wrapper.get('button')
+    expect($button.classes()).toContain('foo')
+    await wrapper.setProps({buttonClass: undefined})
+    expect($button.classes()).not.toContain('foo')
+  })
+
+  it('does not emit click when disabled', async () => {
+    const wrapper = mount(BDropdownItemButton, {
+      props: {disabled: true},
+    })
+    const $button = wrapper.get('button')
+    await $button.trigger('click')
+    expect(wrapper.emitted()).not.toHaveProperty('click')
+  })
+
+  it('li has class from attrs class', () => {
+    const wrapper = mount(BDropdownItemButton, {
+      attrs: {class: 'foo'},
+    })
+    expect(wrapper.classes()).toContain('foo')
+  })
+
+  it('button has non-class attrs', () => {
+    const wrapper = mount(BDropdownItemButton, {
+      attrs: {'data-foo': 'bar'},
+    })
+    const $button = wrapper.get('button')
+    expect($button.attributes('data-foo')).toBe('bar')
+  })
+
+  it('li does not have non-class attrs', () => {
+    const wrapper = mount(BDropdownItemButton, {
+      attrs: {'data-foo': 'bar'},
+    })
+    expect(wrapper.attributes('data-foo')).toBeUndefined()
+  })
+
+  it('wrapperAttrs prop is applied to li', () => {
+    const wrapper = mount(BDropdownItemButton, {
+      props: {wrapperAttrs: {'data-foo': 'bar'}},
+    })
+    expect(wrapper.attributes('data-foo')).toBe('bar')
+  })
+
+  it('child button does not have class active when prop active is false', () => {
+    const wrapper = mount(BDropdownItemButton, {
+      props: {active: false},
+    })
+    const $button = wrapper.get('button')
+    expect($button.classes()).not.toContain('active')
+  })
 })
