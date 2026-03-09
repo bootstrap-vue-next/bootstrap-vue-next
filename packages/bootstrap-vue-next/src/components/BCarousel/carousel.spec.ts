@@ -2,6 +2,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import BCarousel from './BCarousel.vue'
 import BCarouselSlide from './BCarouselSlide.vue'
+import BImg from '../BImg/BImg.vue'
 import {h, nextTick} from 'vue'
 
 describe('carousel', () => {
@@ -740,13 +741,17 @@ describe('carousel', () => {
   })
 
   describe('provide', () => {
-    it('provides background to child slides', () => {
+    it('provides background to child slides via injection', () => {
       const wrapper = mount(BCarousel, {
         props: {background: 'red'},
         slots: {default: () => [h(BCarouselSlide)]},
       })
       const slide = wrapper.findComponent(BCarouselSlide)
       expect(slide.exists()).toBe(true)
+      // Background is set via computedStyle in BCarouselSlide which uses the injected value
+      // happy-dom strips color values from CSS background shorthand, so we verify
+      // the style attribute is present (background is always set on the slide)
+      expect(slide.attributes('style')).toContain('background:')
     })
 
     it('provides imgWidth to child slides', () => {
@@ -754,8 +759,8 @@ describe('carousel', () => {
         props: {imgWidth: '500'},
         slots: {default: () => [h(BCarouselSlide)]},
       })
-      const slide = wrapper.findComponent(BCarouselSlide)
-      expect(slide.exists()).toBe(true)
+      const img = wrapper.findComponent(BImg)
+      expect(img.props('width')).toBe('500')
     })
 
     it('provides imgHeight to child slides', () => {
@@ -763,8 +768,26 @@ describe('carousel', () => {
         props: {imgHeight: '300'},
         slots: {default: () => [h(BCarouselSlide)]},
       })
-      const slide = wrapper.findComponent(BCarouselSlide)
-      expect(slide.exists()).toBe(true)
+      const img = wrapper.findComponent(BImg)
+      expect(img.props('height')).toBe('300')
+    })
+
+    it('slide own imgWidth overrides carousel provided imgWidth', () => {
+      const wrapper = mount(BCarousel, {
+        props: {imgWidth: '500'},
+        slots: {default: () => [h(BCarouselSlide, {imgWidth: '200'})]},
+      })
+      const img = wrapper.findComponent(BImg)
+      expect(img.props('width')).toBe('200')
+    })
+
+    it('slide own imgHeight overrides carousel provided imgHeight', () => {
+      const wrapper = mount(BCarousel, {
+        props: {imgHeight: '300'},
+        slots: {default: () => [h(BCarouselSlide, {imgHeight: '100'})]},
+      })
+      const img = wrapper.findComponent(BImg)
+      expect(img.props('height')).toBe('100')
     })
   })
 
