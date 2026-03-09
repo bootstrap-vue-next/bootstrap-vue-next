@@ -324,9 +324,7 @@ describe('carousel-slide', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {text: 'My Text', textTag: 'span'},
     })
-    // The textTag replaces the wrapping element, so look for span directly within carousel-caption
     const captionEl = wrapper.find('.carousel-caption')
-    // span is used instead of p
     const span = captionEl.find('span')
     expect(span.exists()).toBe(true)
     expect(span.text()).toBe('My Text')
@@ -382,29 +380,21 @@ describe('carousel-slide', () => {
   })
 
   // --- Background style ---
-  // Note: jsdom normalizes CSS shorthand properties, so we check the raw style text
   it('has background style attribute', () => {
     const wrapper = mount(BCarouselSlide)
     expect(wrapper.attributes('style')).toBeDefined()
     expect(wrapper.attributes('style')).toContain('background:')
   })
 
-  it('background prop applies to style', async () => {
+  it('has background style attribute when background prop is set', () => {
     const wrapper = mount(BCarouselSlide, {
       props: {background: 'red'},
     })
-    // The component sets a CSS background property
     expect(wrapper.attributes('style')).toBeDefined()
-    // Verify component uses the background prop by re-mounting with different value
-    const wrapper2 = mount(BCarouselSlide, {
-      props: {background: 'blue'},
-    })
-    // Both wrappers should have background style
     expect(wrapper.attributes('style')).toContain('background:')
-    expect(wrapper2.attributes('style')).toContain('background:')
   })
 
-  it('background from parent injection is used when no background prop', () => {
+  it('has background style attribute with parent injection', () => {
     const wrapper = mount(BCarouselSlide, {
       global: {
         provide: {
@@ -416,6 +406,7 @@ describe('carousel-slide', () => {
         },
       },
     })
+    expect(wrapper.attributes('style')).toBeDefined()
     expect(wrapper.attributes('style')).toContain('background:')
   })
 
