@@ -79,6 +79,14 @@ describe('dropdown-group', () => {
     expect($ul.text()).toBe('foobar')
   })
 
+  it('ul child has attrs from attrs', () => {
+    const wrapper = mount(BDropdownGroup, {
+      attrs: {'data-foo': 'bar'},
+    })
+    const $ul = wrapper.get('ul')
+    expect($ul.attributes('data-foo')).toBe('bar')
+  })
+
   it('has dynamic component whos tag is default header', () => {
     const wrapper = mount(BDropdownGroup)
     const $header = wrapper.find('header')
