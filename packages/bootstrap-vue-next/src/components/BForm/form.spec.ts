@@ -58,4 +58,45 @@ describe('form', () => {
     const $emitted = wrapper.emitted('submit') ?? []
     expect($emitted[0][0] instanceof Event).toBe(true)
   })
+
+  it('emits reset when event reset', async () => {
+    const wrapper = mount(BForm)
+    await wrapper.trigger('reset')
+    expect(wrapper.emitted()).toHaveProperty('reset')
+  })
+
+  it('reset event is instanceOf Event', async () => {
+    const wrapper = mount(BForm)
+    await wrapper.trigger('reset')
+    const $emitted = wrapper.emitted('reset') ?? []
+    expect($emitted[0][0] instanceof Event).toBe(true)
+  })
+
+  it('renders default slot', () => {
+    const wrapper = mount(BForm, {
+      slots: {default: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('foobar')
+  })
+
+  it('does not have class form-floating by default', () => {
+    const wrapper = mount(BForm)
+    expect(wrapper.classes()).not.toContain('form-floating')
+  })
+
+  it('does not have class was-validated by default', () => {
+    const wrapper = mount(BForm)
+    expect(wrapper.classes()).not.toContain('was-validated')
+  })
+
+  it('does not have attr novalidate by default', () => {
+    const wrapper = mount(BForm)
+    expect(wrapper.attributes('novalidate')).toBeUndefined()
+  })
+
+  it('exposes element as HTMLFormElement', () => {
+    const wrapper = mount(BForm)
+    expect(wrapper.vm.element).not.toBeNull()
+    expect(wrapper.vm.element instanceof HTMLFormElement).toBe(true)
+  })
 })
