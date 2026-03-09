@@ -53,6 +53,13 @@ describe('form-valid-feedback', () => {
     expect(wrapper.classes()).not.toContain('d-block')
   })
 
+  it('has no class d-block when prop state is null', () => {
+    const wrapper = mount(BFormValidFeedback, {
+      props: {state: null},
+    })
+    expect(wrapper.classes()).not.toContain('d-block')
+  })
+
   it('has attr id when prop id', async () => {
     const wrapper = mount(BFormValidFeedback, {
       props: {id: 'foobar'},
