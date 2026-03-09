@@ -302,7 +302,7 @@ describe('BApp', () => {
 
       const showHide = captured.showHide as {
         register: (...args: unknown[]) => unknown
-        values: Ref
+        values: Ref<Map<string, unknown>>
       } | null
       expect(showHide).not.toBeNull()
       expect(showHide).toHaveProperty('register')
@@ -337,7 +337,7 @@ describe('BApp', () => {
       })
 
       const breadcrumb = captured.breadcrumb as {
-        items: Ref
+        items: Ref<Record<string, unknown[]>>
         reset: (...args: unknown[]) => void
       } | null
       expect(breadcrumb).not.toBeNull()
@@ -371,7 +371,7 @@ describe('BApp', () => {
       expect(rtl.locale.value).toBeUndefined()
     })
 
-    it('configures rtl with boolean true', () => {
+    it('does not enable rtl when boolean true is passed (requires object with rtlInitial)', () => {
       const {captured, ChildComponent} = createInjectionCapture()
 
       mount(BApp, {
