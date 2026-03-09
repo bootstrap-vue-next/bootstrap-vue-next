@@ -361,9 +361,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           stacked: false,
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -374,9 +372,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           stacked: true,
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -389,9 +385,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           switches: true,
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -402,9 +396,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           switches: false,
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -417,9 +409,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           buttons: true,
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -431,9 +421,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           buttons: false,
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -447,9 +435,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           plain: true,
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -462,9 +448,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           reverse: true,
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -477,9 +461,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           size: 'lg',
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -490,9 +472,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           size: 'sm',
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -505,9 +485,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           state: false,
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -519,9 +497,7 @@ describe('form-checkbox-group-base', () => {
       const wrapper = mount(BFormCheckboxGroupBase, {
         props: {
           state: true,
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -536,9 +512,7 @@ describe('form-checkbox-group-base', () => {
         props: {
           buttons: true,
           buttonVariant: 'primary',
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const checkbox = wrapper.findComponent(BFormCheckbox)
@@ -587,9 +561,7 @@ describe('form-checkbox-group-base', () => {
         props: {
           required: true,
           name: 'my-group',
-          options: [
-            {text: 'A', value: 'a', disabled: false},
-          ],
+          options: [{text: 'A', value: 'a', disabled: false}],
         },
       })
       const input = wrapper.get('input[type="checkbox"]')
