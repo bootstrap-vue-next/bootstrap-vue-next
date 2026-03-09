@@ -675,19 +675,22 @@ describe('alert', () => {
   })
 
   // show prop
-  it('has show prop available', () => {
+  it('show prop triggers show event emission', async () => {
     const wrapper = mount(BAlert, {
-      props: {show: true},
+      props: {show: true, noAnimation: true},
     })
-    expect(wrapper.vm).toBeDefined()
+    await wrapper.vm.$nextTick()
+    expect(wrapper.emitted()).toHaveProperty('show')
   })
 
   // visible prop
-  it('has visible prop available', () => {
+  it('visible prop makes the component render', async () => {
     const wrapper = mount(BAlert, {
-      props: {visible: true},
+      props: {visible: true, noAnimation: true},
     })
-    expect(wrapper.vm).toBeDefined()
+    await wrapper.vm.$nextTick()
+    const $div = wrapper.find('div')
+    expect($div.exists()).toBe(true)
   })
 
   // exposed methods
