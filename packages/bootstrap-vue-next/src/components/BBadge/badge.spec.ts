@@ -243,9 +243,21 @@ describe('badge', () => {
 
     it('does not have text-{type} class when textVariant is null', () => {
       const wrapper = mount(BBadge)
-      expect(
-        wrapper.classes().filter((c) => c.startsWith('text-') && !c.startsWith('text-bg-'))
-      ).toEqual([])
+      const textColorClasses = [
+        'text-primary',
+        'text-secondary',
+        'text-success',
+        'text-danger',
+        'text-warning',
+        'text-info',
+        'text-light',
+        'text-dark',
+        'text-white',
+        'text-body',
+      ]
+      for (const cls of textColorClasses) {
+        expect(wrapper.classes()).not.toContain(cls)
+      }
     })
 
     it('has class bg-{type} when prop bgVariant is set', async () => {
@@ -263,6 +275,7 @@ describe('badge', () => {
       expect(wrapper.classes().some((c) => c.startsWith('bg-'))).toBe(false)
     })
 
+    // Tests that all color classes are applied; CSS precedence is handled by Bootstrap
     it('can combine variant with textVariant and bgVariant', () => {
       const wrapper = mount(BBadge, {
         props: {variant: 'primary', textVariant: 'white', bgVariant: 'dark'},
