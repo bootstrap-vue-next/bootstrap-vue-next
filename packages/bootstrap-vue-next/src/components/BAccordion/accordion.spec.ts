@@ -39,11 +39,6 @@ describe('accordion', () => {
     expect(wrapper.classes()).not.toContain('accordion-flush')
   })
 
-  it('does not have class accordion-flush by default', () => {
-    const wrapper = mount(BAccordion)
-    expect(wrapper.classes()).not.toContain('accordion-flush')
-  })
-
   it('renders default slot', () => {
     const wrapper = mount(BAccordion, {
       slots: {default: 'foobar'},
