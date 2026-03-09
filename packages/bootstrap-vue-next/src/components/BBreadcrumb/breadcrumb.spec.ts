@@ -214,4 +214,273 @@ describe('breadcrumb', () => {
     const [, $bbreadcrumbitem] = wrapper.findAllComponents(BBreadcrumbItem)
     expect($bbreadcrumbitem.props('href')).toBeUndefined()
   })
+
+  it('nav has id attribute when id prop is provided', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {id: 'my-breadcrumb'},
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    expect(wrapper.attributes('id')).toBe('my-breadcrumb')
+  })
+
+  it('nav does not have id attribute when id prop is not provided', () => {
+    const wrapper = mount(BBreadcrumb, {
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    expect(wrapper.attributes('id')).toBeUndefined()
+  })
+
+  it('renders no BBreadcrumbItem when items is empty array', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {items: []},
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const items = wrapper.findAllComponents(BBreadcrumbItem)
+    expect(items).toHaveLength(0)
+  })
+
+  it('renders no BBreadcrumbItem when items is not provided', () => {
+    const wrapper = mount(BBreadcrumb, {
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const items = wrapper.findAllComponents(BBreadcrumbItem)
+    expect(items).toHaveLength(0)
+  })
+
+  it('renders correct number of BBreadcrumbItem for multiple object items', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {
+        items: [
+          {text: 'Home', href: '/'},
+          {text: 'Library', href: '/library'},
+          {text: 'Data'},
+        ] as readonly BreadcrumbItemRaw[],
+      },
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const items = wrapper.findAllComponents(BBreadcrumbItem)
+    expect(items).toHaveLength(3)
+  })
+
+  it('renders correct number of BBreadcrumbItem for multiple string items', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {items: ['Home', 'Library', 'Data']},
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const items = wrapper.findAllComponents(BBreadcrumbItem)
+    expect(items).toHaveLength(3)
+  })
+
+  it('auto-sets active on last item when no active explicitly defined for object items', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {
+        items: [{text: 'Home', href: '/'}, {text: 'Library'}] as readonly BreadcrumbItemRaw[],
+      },
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const items = wrapper.findAllComponents(BBreadcrumbItem)
+    expect(items[0].props('active')).toBe(false)
+    expect(items[1].props('active')).toBe(true)
+  })
+
+  it('auto-sets active on last item for string items', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {items: ['Home', 'Library']},
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const items = wrapper.findAllComponents(BBreadcrumbItem)
+    expect(items[0].props('active')).toBe(false)
+    expect(items[1].props('active')).toBe(true)
+  })
+
+  it('does not auto-set active on later items when an earlier item has active true', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {
+        items: [
+          {text: 'Home', active: true},
+          {text: 'Library'},
+          {text: 'Data'},
+        ] as readonly BreadcrumbItemRaw[],
+      },
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const items = wrapper.findAllComponents(BBreadcrumbItem)
+    expect(items[0].props('active')).toBe(true)
+    expect(items[1].props('active')).toBe(false)
+    expect(items[2].props('active')).toBe(false)
+  })
+
+  it('renders text content for object items', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {
+        items: [{text: 'Home'}, {text: 'Library'}] as readonly BreadcrumbItemRaw[],
+      },
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    expect(wrapper.text()).toContain('Home')
+    expect(wrapper.text()).toContain('Library')
+  })
+
+  it('renders text content for string items', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {items: ['Home', 'Library']},
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    expect(wrapper.text()).toContain('Home')
+    expect(wrapper.text()).toContain('Library')
+  })
+
+  it('passes disabled prop to BBreadcrumbItem', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {
+        items: [{text: 'Home', disabled: true}] as readonly BreadcrumbItemRaw[],
+      },
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const $bbreadcrumbitem = wrapper.getComponent(BBreadcrumbItem)
+    expect($bbreadcrumbitem.props('disabled')).toBe(true)
+  })
+
+  it('passes to prop to BBreadcrumbItem', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {
+        items: [{text: 'Home', to: '/home'}] as readonly BreadcrumbItemRaw[],
+      },
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const $bbreadcrumbitem = wrapper.getComponent(BBreadcrumbItem)
+    expect($bbreadcrumbitem.props('to')).toBe('/home')
+  })
+
+  it('ol only has breadcrumb class when olClass is not provided', () => {
+    const wrapper = mount(BBreadcrumb, {
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const $ol = wrapper.get('ol')
+    expect($ol.classes()).toEqual(['breadcrumb'])
+  })
+
+  it('string items not at last position have href # and last item does not', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {items: ['Home', 'Library', 'Data']},
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const items = wrapper.findAllComponents(BBreadcrumbItem)
+    expect(items[0].props('href')).toBe('#')
+    expect(items[1].props('href')).toBe('#')
+    expect(items[2].props('href')).toBeUndefined()
+  })
+
+  it('single string item has active true and no href', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {items: ['Home']},
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const $bbreadcrumbitem = wrapper.getComponent(BBreadcrumbItem)
+    expect($bbreadcrumbitem.props('active')).toBe(true)
+    expect($bbreadcrumbitem.props('href')).toBeUndefined()
+  })
+
+  it('single object item without active set gets active true', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {
+        items: [{text: 'Home'}] as readonly BreadcrumbItemRaw[],
+      },
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const $bbreadcrumbitem = wrapper.getComponent(BBreadcrumbItem)
+    expect($bbreadcrumbitem.props('active')).toBe(true)
+  })
+
+  it('object item with explicit active false in middle position is not overridden', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {
+        items: [
+          {text: 'Home', active: false},
+          {text: 'Library'},
+        ] as readonly BreadcrumbItemRaw[],
+      },
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const items = wrapper.findAllComponents(BBreadcrumbItem)
+    expect(items[0].props('active')).toBe(false)
+    expect(items[1].props('active')).toBe(true)
+  })
+
+  it('renders items with append slot in correct order', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {items: [{text: 'foo'}] as readonly BreadcrumbItemRaw[]},
+      slots: {append: 'append'},
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    expect(wrapper.text()).toBe('fooappend')
+  })
+
+  it('renders items with all slots in correct order', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {items: [{text: 'item'}] as readonly BreadcrumbItemRaw[]},
+      slots: {prepend: 'prepend', default: 'default', append: 'append'},
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    expect(wrapper.text()).toBe('prependitemdefaultappend')
+  })
+
+  it('object items with href preserve original href', () => {
+    const wrapper = mount(BBreadcrumb, {
+      props: {
+        items: [
+          {text: 'Home', href: '/home'},
+          {text: 'Library', href: '/library'},
+          {text: 'Data'},
+        ] as readonly BreadcrumbItemRaw[],
+      },
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+    const items = wrapper.findAllComponents(BBreadcrumbItem)
+    expect(items[0].props('href')).toBe('/home')
+    expect(items[1].props('href')).toBe('/library')
+    expect(items[2].props('href')).toBeUndefined()
+  })
 })
