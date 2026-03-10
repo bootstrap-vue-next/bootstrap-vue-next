@@ -2,6 +2,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormRadioGroup from './BFormRadioGroup.vue'
 import BFormRadio from './BFormRadio.vue'
+import BFormRadioGroupBase from './BFormRadioGroupBase.vue'
 
 describe('form-radio-group', () => {
   enableAutoUnmount(afterEach)
@@ -345,6 +346,260 @@ describe('form-radio-group', () => {
       const inputs = wrapper.findAll('input[type="radio"]')
       expect((inputs[1].element as HTMLInputElement).checked).toBe(true)
       expect(radios[1].vm.value).toBe(20)
+    })
+  })
+
+  describe('disabled prop', () => {
+    it('disables all child radios when disabled is true', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          disabled: true,
+          options: ['a', 'b', 'c'],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="radio"]')
+      expect(inputs[0].attributes('disabled')).toBe('')
+      expect(inputs[1].attributes('disabled')).toBe('')
+      expect(inputs[2].attributes('disabled')).toBe('')
+    })
+
+    it('does not disable child radios when disabled is false', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          disabled: false,
+          options: ['a', 'b', 'c'],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="radio"]')
+      expect(inputs[0].attributes('disabled')).toBeUndefined()
+      expect(inputs[1].attributes('disabled')).toBeUndefined()
+      expect(inputs[2].attributes('disabled')).toBeUndefined()
+    })
+  })
+
+  describe('slots', () => {
+    it('renders first slot before options', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options: ['a'],
+        },
+        slots: {
+          first: '<span class="first-slot">First!</span>',
+        },
+      })
+      const firstSlot = wrapper.find('.first-slot')
+      expect(firstSlot.exists()).toBe(true)
+      expect(firstSlot.text()).toBe('First!')
+    })
+
+    it('renders default slot after options', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options: ['a'],
+        },
+        slots: {
+          default: '<span class="default-slot">Default!</span>',
+        },
+      })
+      const defaultSlot = wrapper.find('.default-slot')
+      expect(defaultSlot.exists()).toBe(true)
+      expect(defaultSlot.text()).toBe('Default!')
+    })
+
+    it('renders manually placed BFormRadio in default slot', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        slots: {
+          default: '<BFormRadio value="manual">Manual Radio</BFormRadio>',
+        },
+        global: {
+          components: {BFormRadio},
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios).toHaveLength(1)
+      expect(radios[0].text()).toBe('Manual Radio')
+    })
+  })
+
+  describe('modelValue', () => {
+    it('emits update:modelValue when a radio is selected', async () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          modelValue: undefined,
+          options: ['a', 'b', 'c'],
+        },
+        attachTo: document.body,
+      })
+      const inputs = wrapper.findAll('input[type="radio"]')
+      await inputs[1].setValue()
+      expect(wrapper.emitted('update:modelValue')).toBeDefined()
+      expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe('b')
+    })
+
+    it('reflects checked state from modelValue for string options', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          modelValue: 'b',
+          options: ['a', 'b', 'c'],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="radio"]')
+      expect((inputs[0].element as HTMLInputElement).checked).toBe(false)
+      expect((inputs[1].element as HTMLInputElement).checked).toBe(true)
+      expect((inputs[2].element as HTMLInputElement).checked).toBe(false)
+    })
+
+    it('reflects checked state from modelValue for number options', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          modelValue: 2,
+          options: [1, 2, 3],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="radio"]')
+      expect((inputs[0].element as HTMLInputElement).checked).toBe(false)
+      expect((inputs[1].element as HTMLInputElement).checked).toBe(true)
+      expect((inputs[2].element as HTMLInputElement).checked).toBe(false)
+    })
+  })
+
+  describe('prop forwarding to BFormRadioGroupBase', () => {
+    it('forwards buttons prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {buttons: true},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('buttons')).toBe(true)
+    })
+
+    it('forwards stacked prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {stacked: true},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('stacked')).toBe(true)
+    })
+
+    it('forwards validated prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {validated: true},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('validated')).toBe(true)
+    })
+
+    it('forwards size prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {size: 'lg'},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('size')).toBe('lg')
+    })
+
+    it('forwards required prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {required: true},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('required')).toBe(true)
+    })
+
+    it('forwards ariaInvalid prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {ariaInvalid: 'grammar'},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('ariaInvalid')).toBe('grammar')
+    })
+
+    it('forwards plain prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {plain: true},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('plain')).toBe(true)
+    })
+
+    it('forwards reverse prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {reverse: true},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('reverse')).toBe(true)
+    })
+
+    it('forwards name prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {name: 'my-name'},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('name')).toBe('my-name')
+    })
+
+    it('forwards form prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {form: 'my-form'},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('form')).toBe('my-form')
+    })
+
+    it('forwards state prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {state: false},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('state')).toBe(false)
+    })
+
+    it('forwards buttonVariant prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {buttonVariant: 'primary'},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('buttonVariant')).toBe('primary')
+    })
+
+    it('forwards id prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {id: 'my-id'},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('id')).toBe('my-id')
+    })
+
+    it('forwards disabled prop', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {disabled: true},
+      })
+      const base = wrapper.findComponent(BFormRadioGroupBase)
+      expect(base.props('disabled')).toBe(true)
+    })
+  })
+
+  describe('boolean options', () => {
+    it('renders boolean options', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options: [true, false],
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios).toHaveLength(2)
+      expect(radios[0].text()).toBe('true')
+      expect(radios[1].text()).toBe('false')
+    })
+  })
+
+  describe('empty options', () => {
+    it('renders no radios when options is empty', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options: [],
+        },
+      })
+      const radios = wrapper.findAllComponents(BFormRadio)
+      expect(radios).toHaveLength(0)
     })
   })
 })
