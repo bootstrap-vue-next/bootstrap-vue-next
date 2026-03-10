@@ -1,5 +1,4 @@
-import {enableAutoUnmount, mount} from '@vue/test-utils'
-import type {DOMWrapper} from '@vue/test-utils'
+import {type DOMWrapper, enableAutoUnmount, mount} from '@vue/test-utils'
 import {nextTick} from 'vue'
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import BButtonToolbar from './BButtonToolbar.vue'

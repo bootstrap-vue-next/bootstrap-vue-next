@@ -2051,5 +2051,1161 @@ describe('BTable busy state', () => {
       expect(wrapper.text()).toContain('No items available')
       expect(wrapper.text()).not.toContain('No filtered items')
     })
+
+    it('shows default emptyText when no empty slot is provided', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: [],
+          fields: ['name'],
+          showEmpty: true,
+        },
+      })
+      expect(wrapper.text()).toContain('There are no records to show')
+    })
+
+    it('shows default emptyFilteredText when no empty-filtered slot is provided', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: [],
+          fields: ['name'],
+          showEmpty: true,
+          filter: 'test',
+        },
+      })
+      expect(wrapper.text()).toContain('There are no records matching your request')
+    })
+
+    it('uses custom emptyText prop', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: [],
+          fields: ['name'],
+          showEmpty: true,
+          emptyText: 'Custom empty message',
+        },
+      })
+      expect(wrapper.text()).toContain('Custom empty message')
+    })
+
+    it('uses custom emptyFilteredText prop', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: [],
+          fields: ['name'],
+          showEmpty: true,
+          filter: 'search',
+          emptyFilteredText: 'Custom filtered message',
+        },
+      })
+      expect(wrapper.text()).toContain('Custom filtered message')
+    })
+
+    it('does not show empty content when showEmpty is false', () => {
+      const wrapper = mount(BTable, {
+        props: {
+          items: [],
+          fields: ['name'],
+          showEmpty: false,
+        },
+      })
+      expect(wrapper.text()).not.toContain('There are no records to show')
+    })
+
+    it('provides emptySlotScope bindings to empty slot', () => {
+      let receivedScope: Record<string, unknown> | undefined
+      const wrapper = mount(BTable, {
+        props: {
+          items: [],
+          fields: ['name'],
+          showEmpty: true,
+          emptyText: 'Nothing here',
+          emptyFilteredText: 'Nothing filtered',
+        },
+        slots: {
+          empty: (scope: Record<string, unknown>) => {
+            receivedScope = scope
+            return 'Empty'
+          },
+        },
+      })
+      expect(wrapper.text()).toContain('Empty')
+      expect(receivedScope).toBeDefined()
+      expect(receivedScope?.emptyText).toBe('Nothing here')
+      expect(receivedScope?.emptyFilteredText).toBe('Nothing filtered')
+      expect(receivedScope?.fields).toBeDefined()
+      expect(receivedScope?.items).toBeDefined()
+    })
+  })
+})
+
+describe('pagination', () => {
+  const paginationItems = Array.from({length: 15}, (_, i) => ({
+    id: i + 1,
+    name: `Item ${i + 1}`,
+  }))
+  const paginationFields: TableField[] = [{key: 'id'}, {key: 'name'}]
+
+  it('limits displayed items to perPage value', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: paginationItems,
+        fields: paginationFields,
+        perPage: 5,
+        currentPage: 1,
+      },
+    })
+    expect(wrapper.findAll('tbody tr')).toHaveLength(5)
+  })
+
+  it('shows correct items for page 2', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: paginationItems,
+        fields: paginationFields,
+        perPage: 5,
+        currentPage: 2,
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows).toHaveLength(5)
+    expect(rows[0].text()).toContain('6')
+    expect(rows[4].text()).toContain('10')
+  })
+
+  it('shows remaining items on last page', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: paginationItems,
+        fields: paginationFields,
+        perPage: 5,
+        currentPage: 3,
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows).toHaveLength(5)
+    expect(rows[0].text()).toContain('11')
+    expect(rows[4].text()).toContain('15')
+  })
+
+  it('shows all items when perPage is not set (defaults to Infinity)', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: paginationItems,
+        fields: paginationFields,
+      },
+    })
+    expect(wrapper.findAll('tbody tr')).toHaveLength(15)
+  })
+
+  it('updates displayed items when currentPage changes', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: paginationItems,
+        fields: paginationFields,
+        perPage: 5,
+        currentPage: 1,
+      },
+    })
+    expect(wrapper.findAll('tbody tr')).toHaveLength(5)
+    expect(wrapper.findAll('tbody tr')[0].text()).toContain('1')
+
+    await wrapper.setProps({currentPage: 2})
+    await nextTick()
+    expect(wrapper.findAll('tbody tr')[0].text()).toContain('6')
+  })
+
+  it('accepts string perPage value (Numberish)', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: paginationItems,
+        fields: paginationFields,
+        perPage: '5' as unknown as number,
+        currentPage: 1,
+      },
+    })
+    expect(wrapper.findAll('tbody tr')).toHaveLength(5)
+  })
+
+  it('accepts string currentPage value (Numberish)', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: paginationItems,
+        fields: paginationFields,
+        perPage: 5,
+        currentPage: '2' as unknown as number,
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows[0].text()).toContain('6')
+  })
+})
+
+describe('filtering', () => {
+  const filterItems = [
+    {name: 'Alice', age: 30, city: 'New York'},
+    {name: 'Bob', age: 25, city: 'London'},
+    {name: 'Charlie', age: 35, city: 'New York'},
+    {name: 'Diana', age: 28, city: 'Paris'},
+  ]
+  const filterFields: TableField[] = [{key: 'name'}, {key: 'age'}, {key: 'city'}]
+
+  it('filters items by string filter across all fields', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: filterItems,
+        fields: filterFields,
+        filter: 'New York',
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows).toHaveLength(2)
+  })
+
+  it('uses filterable prop to restrict which fields are searched', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: filterItems,
+        fields: filterFields,
+        filter: 'Alice',
+        filterable: ['name'],
+      },
+    })
+    expect(wrapper.findAll('tbody tr')).toHaveLength(1)
+  })
+
+  it('does not match fields not in filterable list', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: filterItems,
+        fields: filterFields,
+        filter: '30',
+        filterable: ['name'],
+      },
+    })
+    // Age field shouldn't be searched since only 'name' is filterable
+    expect(wrapper.findAll('tbody tr')).toHaveLength(0)
+  })
+
+  it('uses custom filterFunction', () => {
+    const filterFn = vi.fn(
+      (item: (typeof filterItems)[0], filter: string) =>
+        item.city.toLowerCase() === filter.toLowerCase()
+    )
+    const wrapper = mount(BTable, {
+      props: {
+        items: filterItems,
+        fields: filterFields,
+        filter: 'Paris',
+        filterFunction: filterFn,
+      },
+    })
+    expect(wrapper.findAll('tbody tr')).toHaveLength(1)
+    expect(wrapper.findAll('tbody tr')[0].text()).toContain('Diana')
+    expect(filterFn).toHaveBeenCalled()
+  })
+
+  it('updates filtered results when filter prop changes', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: filterItems,
+        fields: filterFields,
+        filter: 'Alice',
+      },
+    })
+    expect(wrapper.findAll('tbody tr')).toHaveLength(1)
+
+    await wrapper.setProps({filter: 'Bob'})
+    await nextTick()
+    expect(wrapper.findAll('tbody tr')).toHaveLength(1)
+    expect(wrapper.findAll('tbody tr')[0].text()).toContain('Bob')
+  })
+
+  it('shows all items when filter is cleared', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: filterItems,
+        fields: filterFields,
+        filter: 'Alice',
+      },
+    })
+    expect(wrapper.findAll('tbody tr')).toHaveLength(1)
+
+    await wrapper.setProps({filter: ''})
+    await nextTick()
+    expect(wrapper.findAll('tbody tr')).toHaveLength(filterItems.length)
+  })
+
+  it('filter is case-insensitive by default', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: filterItems,
+        fields: filterFields,
+        filter: 'alice',
+      },
+    })
+    expect(wrapper.findAll('tbody tr')).toHaveLength(1)
+  })
+})
+
+describe('noSelectOnClick', () => {
+  const selectItems = [
+    {id: 1, name: 'Alice'},
+    {id: 2, name: 'Bob'},
+  ]
+
+  it('does not select row on click when noSelectOnClick is true', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        'items': selectItems,
+        'selectable': true,
+        'selectMode': 'multi' as const,
+        'noSelectOnClick': true,
+        'selectedItems': [],
+        'onUpdate:selectedItems': (value: unknown) =>
+          wrapper.setProps({selectedItems: value as typeof selectItems}),
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+    expect(rows[0].classes()).not.toContain('selected')
+  })
+
+  it('still emits row-clicked event when noSelectOnClick is true', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: selectItems,
+        selectable: true,
+        noSelectOnClick: true,
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+    expect(wrapper.emitted('row-clicked')).toBeTruthy()
+  })
+
+  it('applies user-select-none class when selectable and items are selected', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        'items': selectItems,
+        'selectable': true,
+        'selectMode': 'multi' as const,
+        'selectedItems': [],
+        'onUpdate:selectedItems': (value: unknown) =>
+          wrapper.setProps({selectedItems: value as typeof selectItems}),
+      },
+    })
+    const $table = wrapper.get('table')
+    expect($table.classes()).not.toContain('user-select-none')
+
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+    expect($table.classes()).toContain('user-select-none')
+  })
+
+  it('does not apply user-select-none when noSelectOnClick is true', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: selectItems,
+        selectable: true,
+        noSelectOnClick: true,
+        selectedItems: selectItems,
+      },
+    })
+    const $table = wrapper.get('table')
+    expect($table.classes()).not.toContain('user-select-none')
+  })
+})
+
+describe('selectionVariant', () => {
+  it('applies correct variant class to selected rows', async () => {
+    const items = [
+      {id: 1, name: 'Alice'},
+      {id: 2, name: 'Bob'},
+    ]
+    const wrapper = mount(BTable, {
+      props: {
+        'items': items,
+        'selectable': true,
+        'selectMode': 'multi' as const,
+        'selectionVariant': 'success',
+        'selectedItems': [],
+        'onUpdate:selectedItems': (value: unknown) =>
+          wrapper.setProps({selectedItems: value as typeof items}),
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+    expect(rows[0].classes()).toContain('table-success')
+    expect(rows[0].classes()).toContain('selected')
+  })
+
+  it('defaults to primary variant for selected rows', async () => {
+    const items = [{id: 1, name: 'Alice'}]
+    const wrapper = mount(BTable, {
+      props: {
+        'items': items,
+        'selectable': true,
+        'selectMode': 'multi' as const,
+        'selectedItems': [],
+        'onUpdate:selectedItems': (value: unknown) =>
+          wrapper.setProps({selectedItems: value as typeof items}),
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('click')
+    expect(rows[0].classes()).toContain('table-primary')
+  })
+})
+
+describe('exposed selection API', () => {
+  const items = [
+    {id: 1, name: 'Alice'},
+    {id: 2, name: 'Bob'},
+    {id: 3, name: 'Charlie'},
+  ]
+
+  it('exposes selection.add() and selection.remove()', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        'items': items,
+        'selectable': true,
+        'primaryKey': 'id',
+        'selectedItems': [],
+        'onUpdate:selectedItems': (value: unknown) =>
+          wrapper.setProps({selectedItems: value as typeof items}),
+      },
+    })
+    wrapper.vm.selection.add(items[0])
+    await nextTick()
+    expect(wrapper.vm.selection.has(items[0])).toBe(true)
+
+    wrapper.vm.selection.remove(items[0])
+    await nextTick()
+    expect(wrapper.vm.selection.has(items[0])).toBe(false)
+  })
+
+  it('exposes selection.setAll() and selection.clear()', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        'items': items,
+        'selectable': true,
+        'primaryKey': 'id',
+        'selectedItems': [],
+        'onUpdate:selectedItems': (value: unknown) =>
+          wrapper.setProps({selectedItems: value as typeof items}),
+      },
+    })
+    wrapper.vm.selection.setAll()
+    await nextTick()
+    expect(wrapper.vm.selection.has(items[0])).toBe(true)
+    expect(wrapper.vm.selection.has(items[1])).toBe(true)
+    expect(wrapper.vm.selection.has(items[2])).toBe(true)
+
+    wrapper.vm.selection.clear()
+    await nextTick()
+    expect(wrapper.vm.selection.has(items[0])).toBe(false)
+    expect(wrapper.vm.selection.has(items[1])).toBe(false)
+    expect(wrapper.vm.selection.has(items[2])).toBe(false)
+  })
+
+  it('exposes selection.set() to replace selection', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        'items': items,
+        'selectable': true,
+        'primaryKey': 'id',
+        'selectedItems': [],
+        'onUpdate:selectedItems': (value: unknown) =>
+          wrapper.setProps({selectedItems: value as typeof items}),
+      },
+    })
+    wrapper.vm.selection.set([items[1]])
+    await nextTick()
+    expect(wrapper.vm.selection.has(items[0])).toBe(false)
+    expect(wrapper.vm.selection.has(items[1])).toBe(true)
+    expect(wrapper.vm.selection.has(items[2])).toBe(false)
+  })
+
+  it('exposes selection.isActivated computed', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        'items': items,
+        'selectable': true,
+        'primaryKey': 'id',
+        'selectedItems': [],
+        'onUpdate:selectedItems': (value: unknown) =>
+          wrapper.setProps({selectedItems: value as typeof items}),
+      },
+    })
+    expect(wrapper.vm.selection.isActivated.value).toBe(false)
+    wrapper.vm.selection.add(items[0])
+    await nextTick()
+    expect(wrapper.vm.selection.isActivated.value).toBe(true)
+  })
+
+  it('exposes selection.selectedItems as readonly ref', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: items,
+        selectable: true,
+        primaryKey: 'id',
+        selectedItems: [],
+      },
+    })
+    expect(wrapper.vm.selection.selectedItems).toBeDefined()
+  })
+})
+
+describe('exposed expansion API', () => {
+  const items = [
+    {id: 1, name: 'Alice'},
+    {id: 2, name: 'Bob'},
+    {id: 3, name: 'Charlie'},
+  ]
+
+  it('exposes expansion.toggle()', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        'items': items,
+        'primaryKey': 'id',
+        'expandedItems': [],
+        'onUpdate:expandedItems': (value: unknown) =>
+          wrapper.setProps({expandedItems: value as typeof items}),
+      },
+    })
+    wrapper.vm.expansion.toggle(items[0])
+    await nextTick()
+    expect(wrapper.vm.expansion.has(items[0])).toBe(true)
+
+    wrapper.vm.expansion.toggle(items[0])
+    await nextTick()
+    expect(wrapper.vm.expansion.has(items[0])).toBe(false)
+  })
+
+  it('exposes expansion.add() and expansion.remove()', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        'items': items,
+        'primaryKey': 'id',
+        'expandedItems': [],
+        'onUpdate:expandedItems': (value: unknown) =>
+          wrapper.setProps({expandedItems: value as typeof items}),
+      },
+    })
+    wrapper.vm.expansion.add(items[0])
+    await nextTick()
+    expect(wrapper.vm.expansion.has(items[0])).toBe(true)
+
+    wrapper.vm.expansion.remove(items[0])
+    await nextTick()
+    expect(wrapper.vm.expansion.has(items[0])).toBe(false)
+  })
+
+  it('exposes expansion.setAll() and expansion.clear()', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        'items': items,
+        'primaryKey': 'id',
+        'expandedItems': [],
+        'onUpdate:expandedItems': (value: unknown) =>
+          wrapper.setProps({expandedItems: value as typeof items}),
+      },
+    })
+    wrapper.vm.expansion.setAll()
+    await nextTick()
+    expect(wrapper.vm.expansion.has(items[0])).toBe(true)
+    expect(wrapper.vm.expansion.has(items[1])).toBe(true)
+    expect(wrapper.vm.expansion.has(items[2])).toBe(true)
+
+    wrapper.vm.expansion.clear()
+    await nextTick()
+    expect(wrapper.vm.expansion.has(items[0])).toBe(false)
+  })
+
+  it('exposes expansion.isActivated computed', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        'items': items,
+        'primaryKey': 'id',
+        'expandedItems': [],
+        'onUpdate:expandedItems': (value: unknown) =>
+          wrapper.setProps({expandedItems: value as typeof items}),
+      },
+    })
+    expect(wrapper.vm.expansion.isActivated.value).toBe(false)
+    wrapper.vm.expansion.add(items[0])
+    await nextTick()
+    expect(wrapper.vm.expansion.isActivated.value).toBe(true)
+  })
+
+  it('exposes expansion.expandedItems as readonly ref', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: items,
+        primaryKey: 'id',
+        expandedItems: [],
+      },
+    })
+    expect(wrapper.vm.expansion.expandedItems).toBeDefined()
+  })
+})
+
+describe('exposed items and displayItems', () => {
+  const items = Array.from({length: 10}, (_, i) => ({
+    id: i + 1,
+    name: `Item ${i + 1}`,
+  }))
+
+  it('exposes items computed with all filtered/sorted items', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: items,
+        fields: [{key: 'id'}, {key: 'name'}],
+      },
+    })
+    expect(wrapper.vm.items).toHaveLength(10)
+  })
+
+  it('exposes displayItems with paginated items', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: items,
+        fields: [{key: 'id'}, {key: 'name'}],
+        perPage: 3,
+        currentPage: 1,
+      },
+    })
+    expect(wrapper.vm.displayItems).toHaveLength(3)
+  })
+
+  it('items reflects filtered results', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: items,
+        fields: [{key: 'id'}, {key: 'name'}],
+        filter: 'Item 1',
+      },
+    })
+    // "Item 1", "Item 10" should match
+    expect(wrapper.vm.items.length).toBeLessThan(10)
+  })
+
+  it('displayItems reflects pagination on filtered results', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: items,
+        fields: [{key: 'id'}, {key: 'name'}],
+        perPage: 2,
+        currentPage: 1,
+      },
+    })
+    expect(wrapper.vm.displayItems).toHaveLength(2)
+    expect(wrapper.vm.items).toHaveLength(10)
+  })
+})
+
+describe('exposed refresh method', () => {
+  it('re-invokes provider when refresh is called', async () => {
+    let callCount = 0
+    const provider = vi.fn(async () => {
+      callCount++
+      return simpleItems
+    })
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+      },
+    })
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    const initialCalls = callCount
+
+    wrapper.vm.refresh()
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    expect(callCount).toBeGreaterThan(initialCalls)
+  })
+})
+
+describe('BTable additional event emissions', () => {
+  const items = [
+    {id: 1, name: 'Alice'},
+    {id: 2, name: 'Bob'},
+  ]
+  const fields: TableField[] = [{key: 'id'}, {key: 'name'}]
+
+  it('emits row-contextmenu event', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('contextmenu')
+    expect(wrapper.emitted('row-contextmenu')).toBeTruthy()
+    expect(wrapper.emitted('row-contextmenu')?.[0]).toEqual([
+      {
+        item: items[0],
+        index: 0,
+        event: expect.any(Object),
+      },
+    ])
+  })
+
+  it('emits row-hovered event', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('mouseenter')
+    expect(wrapper.emitted('row-hovered')).toBeTruthy()
+    expect(wrapper.emitted('row-hovered')?.[0]).toEqual([
+      {
+        item: items[0],
+        index: 0,
+        event: expect.any(Object),
+      },
+    ])
+  })
+
+  it('emits row-unhovered event', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('mouseleave')
+    expect(wrapper.emitted('row-unhovered')).toBeTruthy()
+    expect(wrapper.emitted('row-unhovered')?.[0]).toEqual([
+      {
+        item: items[0],
+        index: 0,
+        event: expect.any(Object),
+      },
+    ])
+  })
+
+  it('emits row-middle-clicked event', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+    const rows = wrapper.findAll('tbody tr')
+    await rows[0].trigger('mousedown', {button: 1})
+    expect(wrapper.emitted('row-middle-clicked')).toBeTruthy()
+    expect(wrapper.emitted('row-middle-clicked')?.[0]).toEqual([
+      {
+        item: items[0],
+        index: 0,
+        event: expect.any(Object),
+      },
+    ])
+  })
+})
+
+describe('tbodyTrClass as function', () => {
+  it('calls tbodyTrClass function with item and row type', () => {
+    const trClassFn = vi.fn((item: {name: string} | null) => (item ? 'has-item' : 'no-item'))
+    mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        tbodyTrClass: trClassFn,
+      },
+    })
+    expect(trClassFn).toHaveBeenCalled()
+    const [rowCall] = trClassFn.mock.calls.filter((c) => c[0] !== null)
+    expect(rowCall).toBeDefined()
+    expect(rowCall?.[0]).toEqual({name: 'test'})
+  })
+
+  it('calls tbodyTrClass with null and "table-busy" for busy row', () => {
+    const trClassFn = vi.fn(() => 'custom-class')
+    mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+        tbodyTrClass: trClassFn,
+      },
+      slots: {
+        'table-busy': '<div>Loading...</div>',
+      },
+    })
+    expect(trClassFn).toHaveBeenCalledWith(null, 'table-busy')
+  })
+
+  it('applies string tbodyTrClass to all rows', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'Alice'}, {name: 'Bob'}],
+        fields: ['name'],
+        tbodyTrClass: 'custom-row-class',
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    rows.forEach((row) => {
+      expect(row.classes()).toContain('custom-row-class')
+    })
+  })
+})
+
+describe('BTable selectable class', () => {
+  it('applies b-table-selectable class when selectable is true', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        selectable: true,
+      },
+    })
+    expect(wrapper.find('table').classes()).toContain('b-table-selectable')
+  })
+
+  it('does not apply b-table-selectable class when selectable is false', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        selectable: false,
+      },
+    })
+    expect(wrapper.find('table').classes()).not.toContain('b-table-selectable')
+  })
+})
+
+describe('busy state aria-busy', () => {
+  it('sets aria-busy to true when busy', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+      },
+    })
+    expect(wrapper.get('table').attributes('ariabusy')).toBe('true')
+  })
+
+  it('does not set aria-busy when not busy', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: false,
+      },
+    })
+    expect(wrapper.get('table').attributes('ariabusy')).toBe('false')
+  })
+
+  it('applies b-table-busy class when busy', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+      },
+    })
+    expect(wrapper.find('table').classes()).toContain('b-table-busy')
+  })
+
+  it('does not apply b-table-busy class when not busy', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: false,
+      },
+    })
+    expect(wrapper.find('table').classes()).not.toContain('b-table-busy')
+  })
+
+  it('shows busy slot with b-table-busy-slot class', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: [{name: 'test'}],
+        fields: ['name'],
+        busy: true,
+      },
+      slots: {
+        'table-busy': '<div class="spinner">Loading...</div>',
+      },
+    })
+    expect(wrapper.find('.b-table-busy-slot').exists()).toBe(true)
+  })
+})
+
+describe('noLocalSorting', () => {
+  it('does not sort items locally when noLocalSorting is true', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        noLocalSorting: true,
+        sortBy: [{key: 'first_name', order: 'asc' as const}],
+      },
+    })
+
+    const $tbody = wrapper.get('tbody')
+    const $trs = $tbody.findAll('tr')
+    // Items should remain in original order
+    expect($trs[0].text()).toContain('Havij')
+    expect($trs[1].text()).toContain('Cyndi')
+    expect($trs[2].text()).toContain('Robert')
+  })
+
+  it('still emits sorted event when noLocalSorting is true', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        noLocalSorting: true,
+      },
+    })
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+    expect(wrapper.emitted('sorted')).toBeTruthy()
+  })
+})
+
+describe('provider context', () => {
+  it('sends sortBy in provider context', async () => {
+    let receivedContext: BTableProviderContext | undefined
+
+    const provider = vi.fn(async (context: Readonly<BTableProviderContext>) => {
+      receivedContext = {...context}
+      return simpleItems
+    })
+
+    mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        sortBy: [{key: 'first_name', order: 'asc' as const}],
+      },
+    })
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(receivedContext).toBeDefined()
+    expect(receivedContext?.sortBy).toEqual([{key: 'first_name', order: 'asc'}])
+  })
+
+  it('sends filter in provider context', async () => {
+    let receivedContext: BTableProviderContext | undefined
+
+    const provider = vi.fn(async (context: Readonly<BTableProviderContext>) => {
+      receivedContext = {...context}
+      return simpleItems
+    })
+
+    mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        filter: 'test-filter',
+      },
+    })
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(receivedContext).toBeDefined()
+    expect(receivedContext?.filter).toBe('test-filter')
+  })
+
+  it('sends currentPage and perPage in provider context', async () => {
+    let receivedContext: BTableProviderContext | undefined
+
+    const provider = vi.fn(async (context: Readonly<BTableProviderContext>) => {
+      receivedContext = {...context}
+      return simpleItems
+    })
+
+    mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        currentPage: 3,
+        perPage: 10,
+      },
+    })
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(receivedContext).toBeDefined()
+    expect(receivedContext?.currentPage).toBe(3)
+    expect(receivedContext?.perPage).toBe(10)
+  })
+
+  it('applies local sorting when noProviderSorting is true', async () => {
+    const provider = vi.fn(async () => [
+      {first_name: 'Zebra', age: 1},
+      {first_name: 'Apple', age: 2},
+    ])
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        noProviderSorting: true,
+        sortBy: [{key: 'first_name', order: 'asc' as const}],
+      },
+    })
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows[0].text()).toContain('Apple')
+    expect(rows[1].text()).toContain('Zebra')
+  })
+
+  it('applies local filtering when noProviderFiltering is true', async () => {
+    const provider = vi.fn(async () => [
+      {first_name: 'Alice', age: 30},
+      {first_name: 'Bob', age: 25},
+      {first_name: 'Charlie', age: 35},
+    ])
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        noProviderFiltering: true,
+        filter: 'Alice',
+      },
+    })
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(wrapper.findAll('tbody tr')).toHaveLength(1)
+    expect(wrapper.findAll('tbody tr')[0].text()).toContain('Alice')
+  })
+
+  it('applies local pagination when noProviderPaging is true', async () => {
+    const manyItems = Array.from({length: 10}, (_, i) => ({
+      first_name: `Person ${i + 1}`,
+      age: 20 + i,
+    }))
+    const provider = vi.fn(async () => manyItems)
+
+    const wrapper = mount(BTable, {
+      props: {
+        provider,
+        fields: simpleFields,
+        noProviderPaging: true,
+        perPage: 3,
+        currentPage: 1,
+      },
+    })
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(wrapper.findAll('tbody tr')).toHaveLength(3)
+  })
+})
+
+describe('mustSort prop', () => {
+  it('prevents clearing sort when mustSort is true', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        mustSort: true,
+      },
+    })
+    const headers = wrapper.findAll('thead th')
+
+    // First click: asc
+    await headers[0].trigger('click')
+    let sortEvents = wrapper.emitted('sorted') as BTableSortBy[][]
+    expect(sortEvents[0][0]).toMatchObject({order: 'asc'})
+
+    // Second click: desc
+    await headers[0].trigger('click')
+    sortEvents = wrapper.emitted('sorted') as BTableSortBy[][]
+    expect(sortEvents[1][0]).toMatchObject({order: 'desc'})
+
+    // Third click: back to asc (not undefined)
+    await headers[0].trigger('click')
+    sortEvents = wrapper.emitted('sorted') as BTableSortBy[][]
+    expect(sortEvents[2][0]).toMatchObject({order: 'asc'})
+  })
+
+  it('allows clearing sort when mustSort is false', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+        mustSort: false,
+      },
+    })
+    const headers = wrapper.findAll('thead th')
+
+    // First click: asc
+    await headers[0].trigger('click')
+    // Second click: desc
+    await headers[0].trigger('click')
+    // Third click: undefined (cleared)
+    await headers[0].trigger('click')
+
+    const sortEvents = wrapper.emitted('sorted') as BTableSortBy[][]
+    expect(sortEvents[2][0]).toMatchObject({order: undefined})
+  })
+})
+
+describe('slot pass-through', () => {
+  it('passes through thead-top slot', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+      },
+      slots: {
+        'thead-top': '<tr><th colspan="2">Custom header top</th></tr>',
+      },
+    })
+    expect(wrapper.text()).toContain('Custom header top')
+  })
+
+  it('passes through table-caption slot', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+      },
+      slots: {
+        'table-caption': 'My Table Caption',
+      },
+    })
+    expect(wrapper.text()).toContain('My Table Caption')
+  })
+
+  it('passes through custom-foot slot', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+      },
+      slots: {
+        'custom-foot': '<tr><td colspan="2">Custom footer</td></tr>',
+      },
+    })
+    expect(wrapper.text()).toContain('Custom footer')
+  })
+
+  it('passes through bottom-row slot', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+      },
+      slots: {
+        'bottom-row': '<tr><td colspan="2">Bottom row content</td></tr>',
+      },
+    })
+    expect(wrapper.text()).toContain('Bottom row content')
+  })
+
+  it('passes through top-row slot', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: simpleItems,
+        fields: simpleFields,
+      },
+      slots: {
+        'top-row': '<tr><td colspan="2">Top row content</td></tr>',
+      },
+    })
+    expect(wrapper.text()).toContain('Top row content')
   })
 })
