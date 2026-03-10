@@ -164,7 +164,7 @@ describe('tab', () => {
 
   it('has class fade when no parent data', () => {
     const wrapper = mount(BTab)
-    // Without parent, noFade is undefined, so !undefined = true => fade
+    // When no parent is provided, the fade class is applied by default
     expect(wrapper.classes()).toContain('fade')
   })
 

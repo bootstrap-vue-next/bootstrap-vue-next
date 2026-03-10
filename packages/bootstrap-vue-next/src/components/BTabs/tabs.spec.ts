@@ -148,7 +148,7 @@ describe('tabs', () => {
     })
     await nextTick()
     const $div = wrapper.get('.tab-content')
-    // The empty div (tab-pane active) should not exist when tabs have content
+    // Verify no empty tab-pane divs are rendered when tabs have actual content
     const $emptyDiv = $div.findAll('div.tab-pane.active')
     expect($emptyDiv.length).toBe(0)
   })
