@@ -1240,7 +1240,7 @@ describe('form-group', () => {
       })
       await nextTick()
       const floatingDiv = wrapper.find('.form-floating')
-      const children = floatingDiv.element.children
+      const {children} = floatingDiv.element
       // Input should be before label in the DOM for floating labels
       // When child BFormInput provides its id, labelTag becomes 'label' instead of 'legend'
       expect(children[0].tagName).toBe('INPUT')
@@ -1388,9 +1388,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('col-3')
     })
@@ -1402,9 +1400,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('col-sm-4')
     })
@@ -1416,9 +1412,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('col-md-5')
     })
@@ -1430,9 +1424,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('col-lg-2')
     })
@@ -1444,9 +1436,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('col-xl-6')
     })
@@ -1458,9 +1448,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('col')
     })
@@ -1483,9 +1471,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('text-md-end')
     })
@@ -1497,9 +1483,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('text-sm-center')
     })
@@ -1511,9 +1495,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('text-lg-start')
     })
@@ -1525,9 +1507,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('text-xl-end')
     })
@@ -1614,9 +1594,7 @@ describe('form-group', () => {
           default: h(BFormInput),
         },
       })
-      const labelCol = wrapper
-        .findAll('[class*="col"]')
-        .find((el) => el.text().includes('Name'))
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
       expect(labelCol).toBeDefined()
       expect(labelCol!.classes()).toContain('col-auto')
     })
