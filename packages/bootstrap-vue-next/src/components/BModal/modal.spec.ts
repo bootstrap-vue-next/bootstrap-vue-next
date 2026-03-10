@@ -666,7 +666,857 @@ describe('modal', () => {
     wrapper.unmount()
   })
 
-  // Test isActive states
+  describe('title', () => {
+    it('renders title from prop', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {title: 'My Title'},
+      })
+      const $title = wrapper.find('.modal-title')
+      expect($title.exists()).toBe(true)
+      expect($title.text()).toBe('My Title')
+    })
 
-  // Test emit states
+    it('renders title from slot', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        slots: {title: 'Slot Title'},
+      })
+      const $title = wrapper.find('.modal-title')
+      expect($title.exists()).toBe(true)
+      expect($title.text()).toBe('Slot Title')
+    })
+
+    it('title slot takes precedence over prop', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {title: 'Prop Title'},
+        slots: {title: 'Slot Title'},
+      })
+      const $title = wrapper.find('.modal-title')
+      expect($title.text()).toBe('Slot Title')
+    })
+
+    it('title tag defaults to h5', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {title: 'Test'},
+      })
+      const $title = wrapper.find('.modal-title')
+      expect($title.element.tagName).toBe('H5')
+    })
+
+    it('title tag can be changed with titleTag prop', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {title: 'Test', titleTag: 'h3'},
+      })
+      const $title = wrapper.find('.modal-title')
+      expect($title.element.tagName).toBe('H3')
+    })
+
+    it('applies titleClass to title element', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {title: 'Test', titleClass: 'my-title-class'},
+      })
+      const $title = wrapper.find('.modal-title')
+      expect($title.classes()).toContain('my-title-class')
+    })
+
+    it('adds visually-hidden class when titleVisuallyHidden is true', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {title: 'Test', titleVisuallyHidden: true},
+      })
+      const $title = wrapper.find('.modal-title')
+      expect($title.classes()).toContain('visually-hidden')
+    })
+
+    it('does not add visually-hidden class when titleVisuallyHidden is false', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {title: 'Test', titleVisuallyHidden: false},
+      })
+      const $title = wrapper.find('.modal-title')
+      expect($title.classes()).not.toContain('visually-hidden')
+    })
+
+    it('title element has correct id', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {id: 'test-modal', title: 'Test'},
+      })
+      const $title = wrapper.find('.modal-title')
+      expect($title.attributes('id')).toBe('test-modal-label')
+    })
+  })
+
+  describe('header', () => {
+    it('renders header by default', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      expect(wrapper.find('.modal-header').exists()).toBe(true)
+    })
+
+    it('does not render header when noHeader is true', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {noHeader: true},
+      })
+      expect(wrapper.find('.modal-header').exists()).toBe(false)
+    })
+
+    it('applies headerClass to header element', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {headerClass: 'custom-header'},
+      })
+      const $header = wrapper.find('.modal-header')
+      expect($header.classes()).toContain('custom-header')
+    })
+
+    it('applies headerBgVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {headerBgVariant: 'danger'},
+      })
+      const $header = wrapper.find('.modal-header')
+      expect($header.classes()).toContain('bg-danger')
+    })
+
+    it('applies headerTextVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {headerTextVariant: 'light'},
+      })
+      const $header = wrapper.find('.modal-header')
+      expect($header.classes()).toContain('text-light')
+    })
+
+    it('applies headerVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {headerVariant: 'success'},
+      })
+      const $header = wrapper.find('.modal-header')
+      expect($header.classes()).toContain('text-bg-success')
+    })
+
+    it('applies headerBorderVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {headerBorderVariant: 'primary'},
+      })
+      const $header = wrapper.find('.modal-header')
+      expect($header.classes()).toContain('border-primary')
+    })
+
+    it('does not render close button when noHeaderClose is true', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {noHeaderClose: true},
+      })
+      const $header = wrapper.find('.modal-header')
+      expect($header.find('button').exists()).toBe(false)
+    })
+
+    it('renders close button by default', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      const $header = wrapper.find('.modal-header')
+      expect($header.find('button').exists()).toBe(true)
+    })
+
+    it('header slot replaces default header content', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        slots: {header: '<span class="custom-header-content">Custom</span>'},
+      })
+      const $header = wrapper.find('.modal-header')
+      expect($header.find('.custom-header-content').exists()).toBe(true)
+      expect($header.find('.modal-title').exists()).toBe(false)
+    })
+  })
+
+  describe('footer', () => {
+    it('renders footer by default', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      expect(wrapper.find('.modal-footer').exists()).toBe(true)
+    })
+
+    it('does not render footer when noFooter is true', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {noFooter: true},
+      })
+      expect(wrapper.find('.modal-footer').exists()).toBe(false)
+    })
+
+    it('applies footerClass to footer element', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {footerClass: 'custom-footer'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      expect($footer.classes()).toContain('custom-footer')
+    })
+
+    it('applies footerBgVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {footerBgVariant: 'info'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      expect($footer.classes()).toContain('bg-info')
+    })
+
+    it('applies footerTextVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {footerTextVariant: 'dark'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      expect($footer.classes()).toContain('text-dark')
+    })
+
+    it('applies footerVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {footerVariant: 'warning'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      expect($footer.classes()).toContain('text-bg-warning')
+    })
+
+    it('applies footerBorderVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {footerBorderVariant: 'danger'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      expect($footer.classes()).toContain('border-danger')
+    })
+
+    it('footer slot replaces default footer content', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        slots: {footer: '<span class="custom-footer-content">Custom</span>'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      expect($footer.find('.custom-footer-content').exists()).toBe(true)
+      expect($footer.findAll('button').length).toBe(0)
+    })
+  })
+
+  describe('body', () => {
+    it('renders body text from body prop', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {body: 'Body text'},
+      })
+      const $body = wrapper.find('.modal-body')
+      expect($body.text()).toBe('Body text')
+    })
+
+    it('renders body content from default slot', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        slots: {default: '<p>Slot content</p>'},
+      })
+      const $body = wrapper.find('.modal-body')
+      expect($body.find('p').text()).toBe('Slot content')
+    })
+
+    it('default slot takes precedence over body prop', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {body: 'Body text'},
+        slots: {default: 'Slot content'},
+      })
+      const $body = wrapper.find('.modal-body')
+      expect($body.text()).toBe('Slot content')
+    })
+
+    it('body has correct id', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {id: 'test-modal'},
+      })
+      const $body = wrapper.find('.modal-body')
+      expect($body.attributes('id')).toBe('test-modal-body')
+    })
+
+    it('applies bodyBgVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {bodyBgVariant: 'dark'},
+      })
+      const $body = wrapper.find('.modal-body')
+      expect($body.classes()).toContain('bg-dark')
+    })
+
+    it('applies bodyTextVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {bodyTextVariant: 'white'},
+      })
+      const $body = wrapper.find('.modal-body')
+      expect($body.classes()).toContain('text-white')
+    })
+
+    it('applies bodyVariant class', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {bodyVariant: 'primary'},
+      })
+      const $body = wrapper.find('.modal-body')
+      expect($body.classes()).toContain('text-bg-primary')
+    })
+  })
+
+  describe('ok button', () => {
+    it('renders ok button with default text', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      const $okButton = $buttons[$buttons.length - 1]
+      expect($okButton.text()).toBe('OK')
+    })
+
+    it('ok button text from okTitle prop', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {okTitle: 'Submit'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      const $okButton = $buttons[$buttons.length - 1]
+      expect($okButton.text()).toBe('Submit')
+    })
+
+    it('ok button has default variant primary', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      const $okButton = $buttons[$buttons.length - 1]
+      expect($okButton.classes()).toContain('btn-primary')
+    })
+
+    it('ok button variant from okVariant prop', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {okVariant: 'success'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      const $okButton = $buttons[$buttons.length - 1]
+      expect($okButton.classes()).toContain('btn-success')
+    })
+
+    it('ok button applies okClass', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {okClass: 'custom-ok'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      const $okButton = $buttons[$buttons.length - 1]
+      expect($okButton.classes()).toContain('custom-ok')
+    })
+
+    it('ok button is disabled when okDisabled is true', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {okDisabled: true},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      const $okButton = $buttons[$buttons.length - 1]
+      expect($okButton.attributes('disabled')).toBeDefined()
+    })
+
+    it('ok button is not disabled by default', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      const $okButton = $buttons[$buttons.length - 1]
+      expect($okButton.attributes('disabled')).toBeUndefined()
+    })
+
+    it('ok button click emits ok event', async () => {
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {modelValue: true},
+      })
+      await nextTick()
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      const $okButton = $buttons[$buttons.length - 1]
+      await $okButton.trigger('click')
+      const okEvents = wrapper.emitted<BvTriggerableEvent[]>('ok')
+      expect(okEvents).toHaveLength(1)
+      expect(okEvents?.[0][0]).toBeInstanceOf(BvTriggerableEvent)
+      wrapper.unmount()
+    })
+
+    it('ok slot replaces ok button', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        slots: {ok: '<span class="custom-ok">Custom OK</span>'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      expect($footer.find('.custom-ok').exists()).toBe(true)
+    })
+  })
+
+  describe('cancel button', () => {
+    it('renders cancel button with default text', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons[0].text()).toBe('Cancel')
+    })
+
+    it('cancel button text from cancelTitle prop', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {cancelTitle: 'Dismiss'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons[0].text()).toBe('Dismiss')
+    })
+
+    it('cancel button has default variant secondary', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons[0].classes()).toContain('btn-secondary')
+    })
+
+    it('cancel button variant from cancelVariant prop', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {cancelVariant: 'danger'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons[0].classes()).toContain('btn-danger')
+    })
+
+    it('cancel button applies cancelClass', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {cancelClass: 'custom-cancel'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons[0].classes()).toContain('custom-cancel')
+    })
+
+    it('cancel button is disabled when cancelDisabled is true', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {cancelDisabled: true},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons[0].attributes('disabled')).toBeDefined()
+    })
+
+    it('cancel button is not disabled by default', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons[0].attributes('disabled')).toBeUndefined()
+    })
+
+    it('cancel button is hidden when okOnly is true', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {okOnly: true},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons.length).toBe(1)
+      expect($buttons[0].text()).toBe('OK')
+    })
+
+    it('cancel button click emits cancel event', async () => {
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {modelValue: true},
+      })
+      await nextTick()
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      await $buttons[0].trigger('click')
+      const cancelEvents = wrapper.emitted<BvTriggerableEvent[]>('cancel')
+      expect(cancelEvents).toHaveLength(1)
+      expect(cancelEvents?.[0][0]).toBeInstanceOf(BvTriggerableEvent)
+      wrapper.unmount()
+    })
+
+    it('cancel slot replaces cancel button', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        slots: {cancel: '<span class="custom-cancel">Custom Cancel</span>'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      expect($footer.find('.custom-cancel').exists()).toBe(true)
+    })
+  })
+
+  describe('button size', () => {
+    it('applies buttonSize to ok and cancel buttons', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {buttonSize: 'sm'},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons[0].classes()).toContain('btn-sm')
+      expect($buttons[1].classes()).toContain('btn-sm')
+    })
+  })
+
+  describe('busy state', () => {
+    it('busy disables ok button', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {busy: true},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      const $okButton = $buttons[$buttons.length - 1]
+      expect($okButton.attributes('disabled')).toBeDefined()
+    })
+
+    it('busy disables cancel button', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {busy: true},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons[0].attributes('disabled')).toBeDefined()
+    })
+
+    it('buttons are not disabled when busy is false', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {busy: false},
+      })
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      expect($buttons[0].attributes('disabled')).toBeUndefined()
+      expect($buttons[1].attributes('disabled')).toBeUndefined()
+    })
+  })
+
+  describe('dialog class', () => {
+    it('applies dialogClass to modal-dialog element', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {dialogClass: 'custom-dialog'},
+      })
+      const $dialog = wrapper.find('.modal-dialog')
+      expect($dialog.classes()).toContain('custom-dialog')
+    })
+  })
+
+  describe('backdrop', () => {
+    it('renders backdrop when modal is shown', async () => {
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {modelValue: true},
+      })
+      await nextTick()
+      expect(wrapper.find('.modal-backdrop').exists()).toBe(true)
+      wrapper.unmount()
+    })
+
+    it('does not render backdrop when noBackdrop is true', async () => {
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {noBackdrop: true, modelValue: true},
+      })
+      await nextTick()
+      expect(wrapper.find('.modal-backdrop').exists()).toBe(false)
+      wrapper.unmount()
+    })
+
+    it('backdrop slot replaces default backdrop', async () => {
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {modelValue: true},
+        slots: {backdrop: '<div class="custom-backdrop"></div>'},
+      })
+      await nextTick()
+      expect(wrapper.find('.custom-backdrop').exists()).toBe(true)
+      wrapper.unmount()
+    })
+  })
+
+  describe('ARIA attributes', () => {
+    it('aria-labelledby references title element id', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {id: 'aria-modal'},
+      })
+      const $modal = wrapper.find('.modal')
+      expect($modal.attributes('aria-labelledby')).toBe('aria-modal-label')
+    })
+
+    it('aria-labelledby is undefined when noHeader is true', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {id: 'aria-modal', noHeader: true},
+      })
+      const $modal = wrapper.find('.modal')
+      expect($modal.attributes('aria-labelledby')).toBeUndefined()
+    })
+
+    it('aria-describedby references body element id', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {id: 'aria-modal'},
+      })
+      const $modal = wrapper.find('.modal')
+      expect($modal.attributes('aria-describedby')).toBe('aria-modal-body')
+    })
+
+    it('modal has role dialog', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      const $modal = wrapper.find('.modal')
+      expect($modal.attributes('role')).toBe('dialog')
+    })
+  })
+
+  describe('size', () => {
+    it('does not add size class for default md', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      const $dialog = wrapper.find('.modal-dialog')
+      expect($dialog.classes()).not.toContain('modal-md')
+    })
+
+    it('adds modal-sm class for size sm', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {size: 'sm'},
+      })
+      const $dialog = wrapper.find('.modal-dialog')
+      expect($dialog.classes()).toContain('modal-sm')
+    })
+
+    it('adds modal-lg class for size lg', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {size: 'lg'},
+      })
+      const $dialog = wrapper.find('.modal-dialog')
+      expect($dialog.classes()).toContain('modal-lg')
+    })
+
+    it('adds modal-xl class for size xl', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {size: 'xl'},
+      })
+      const $dialog = wrapper.find('.modal-dialog')
+      expect($dialog.classes()).toContain('modal-xl')
+    })
+  })
+
+  describe('exposed methods', () => {
+    it('exposes show method', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      expect(typeof wrapper.vm.show).toBe('function')
+    })
+
+    it('exposes hide method', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      expect(typeof wrapper.vm.hide).toBe('function')
+    })
+
+    it('exposes toggle method', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      expect(typeof wrapper.vm.toggle).toBe('function')
+    })
+
+    it('exposes id', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {id: 'exposed-id'},
+      })
+      expect(wrapper.vm.id).toBe('exposed-id')
+    })
+
+    it('exposes visible ref', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      expect(wrapper.vm.visible).toBeDefined()
+    })
+
+    it('show method opens modal', async () => {
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {id: 'test'},
+      })
+      expect(wrapper.find('div.modal').isVisible()).toBe(false)
+      wrapper.vm.show()
+      await new Promise((resolve) => setTimeout(resolve, 30))
+      expect(wrapper.find('div.modal').isVisible()).toBe(true)
+      wrapper.unmount()
+    })
+
+    it('hide method closes modal', async () => {
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {modelValue: true, id: 'test'},
+      })
+      await nextTick()
+      expect(wrapper.find('div.modal').isVisible()).toBe(true)
+      wrapper.vm.hide()
+      await new Promise((resolve) => setTimeout(resolve, 30))
+      expect(wrapper.find('div.modal').isVisible()).toBe(false)
+      wrapper.unmount()
+    })
+
+    it('toggle method toggles modal visibility', async () => {
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {id: 'test'},
+      })
+      expect(wrapper.find('div.modal').isVisible()).toBe(false)
+      wrapper.vm.toggle()
+      await new Promise((resolve) => setTimeout(resolve, 30))
+      expect(wrapper.find('div.modal').isVisible()).toBe(true)
+      wrapper.vm.toggle()
+      await new Promise((resolve) => setTimeout(resolve, 30))
+      expect(wrapper.find('div.modal').isVisible()).toBe(false)
+      wrapper.unmount()
+    })
+  })
+
+  describe('modal events', () => {
+    it('cancel button event is preventable', async () => {
+      let preventCancel = true
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {modelValue: true, id: 'test'},
+        attrs: {
+          onCancel: (bvEvent: BvTriggerableEvent) => {
+            if (preventCancel) bvEvent.preventDefault()
+          },
+        },
+      })
+      await nextTick()
+
+      const $footer = wrapper.find('.modal-footer')
+      const $cancelBtn = $footer.findAll('button')[0]
+      await $cancelBtn.trigger('click')
+
+      const cancelEvents = wrapper.emitted<BvTriggerableEvent[]>('cancel')
+      expect(cancelEvents).toHaveLength(1)
+      expect(wrapper.find('div.modal').isVisible()).toBe(true)
+
+      preventCancel = false
+      await $cancelBtn.trigger('click')
+      await new Promise((resolve) => setTimeout(resolve, 30))
+      expect(wrapper.find('div.modal').isVisible()).toBe(false)
+
+      wrapper.unmount()
+    })
+
+    it('ok button event is preventable', async () => {
+      let preventOk = true
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {modelValue: true, id: 'test'},
+        attrs: {
+          onOk: (bvEvent: BvTriggerableEvent) => {
+            if (preventOk) bvEvent.preventDefault()
+          },
+        },
+      })
+      await nextTick()
+
+      const $footer = wrapper.find('.modal-footer')
+      const $buttons = $footer.findAll('button')
+      const $okBtn = $buttons[$buttons.length - 1]
+      await $okBtn.trigger('click')
+
+      const okEvents = wrapper.emitted<BvTriggerableEvent[]>('ok')
+      expect(okEvents).toHaveLength(1)
+      expect(wrapper.find('div.modal').isVisible()).toBe(true)
+
+      preventOk = false
+      await $okBtn.trigger('click')
+      await new Promise((resolve) => setTimeout(resolve, 30))
+      expect(wrapper.find('div.modal').isVisible()).toBe(false)
+
+      wrapper.unmount()
+    })
+  })
+
+  describe('content class', () => {
+    it('applies contentClass to modal-content element', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {contentClass: 'custom-content'},
+      })
+      const $content = wrapper.find('.modal-content')
+      expect($content.classes()).toContain('custom-content')
+    })
+  })
+
+  describe('inheritAttrs', () => {
+    it('does not apply attrs to component root', () => {
+      const wrapper = mount(BModal, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        attrs: {'data-testid': 'my-modal'},
+      })
+      const $modal = wrapper.find('.modal')
+      expect($modal.attributes('data-testid')).toBe('my-modal')
+    })
+  })
 })
