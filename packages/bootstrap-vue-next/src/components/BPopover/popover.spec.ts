@@ -490,12 +490,12 @@ describe('popover', () => {
   })
 
   describe('noSize prop', () => {
-    it('does not add b-floating-size class when noSize is true', () => {
+    it('b-floating-size class is always present on content div regardless of noSize', () => {
       const wrapper = mount(BPopover, {
         props: {modelValue: true, noSize: true},
       })
-      // b-floating-size is always rendered as a static class on the content div,
-      // but noSize controls whether the sizeMiddleware is included
+      // b-floating-size is a static class on the content div;
+      // noSize controls whether the sizeMiddleware is included, not this class
       const $div = wrapper.find('.b-floating-size')
       expect($div.exists()).toBe(true)
     })
