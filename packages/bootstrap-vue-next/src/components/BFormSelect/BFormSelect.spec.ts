@@ -1,10 +1,12 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormSelect from './BFormSelect.vue'
-import {ref} from 'vue'
+import {h, ref} from 'vue'
 
 describe('BFormSelect', () => {
   enableAutoUnmount(afterEach)
+
+  // --- Rendering / Structure ---
 
   it('has expected default structure', () => {
     const wrapper = mount(BFormSelect)
@@ -47,6 +49,57 @@ describe('BFormSelect', () => {
     expect(options[2].text()).toBe('Three')
   })
 
+  it('renders number options', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [10, 20, 30],
+      },
+    })
+    const options = wrapper.findAll('option')
+    expect(options.length).toBe(3)
+    expect(options[0].text()).toBe('10')
+    expect(options[0].attributes('value')).toBe('10')
+    expect(options[1].text()).toBe('20')
+    expect(options[2].text()).toBe('30')
+  })
+
+  it('renders boolean options', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [true, false],
+      },
+    })
+    const options = wrapper.findAll('option')
+    expect(options.length).toBe(2)
+    expect(options[0].text()).toBe('true')
+    expect(options[1].text()).toBe('false')
+  })
+
+  it('renders empty when options is empty array', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {options: []},
+    })
+    expect(wrapper.findAll('option')).toHaveLength(0)
+  })
+
+  it('renders options with disabled property', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [
+          {value: 'a', text: 'A', disabled: true},
+          {value: 'b', text: 'B'},
+          {value: 'c', text: 'C', disabled: false},
+        ],
+      },
+    })
+    const options = wrapper.findAll('option')
+    expect(options[0].attributes('disabled')).toBeDefined()
+    expect(options[1].attributes('disabled')).toBeUndefined()
+    expect(options[2].attributes('disabled')).toBeUndefined()
+  })
+
+  // --- modelValue / SSR ---
+
   it('applies modelValue correctly during initial render (SSR simulation)', () => {
     const wrapper = mount(BFormSelect, {
       props: {
@@ -64,7 +117,6 @@ describe('BFormSelect', () => {
     expect(selectedOption).toBeDefined()
 
     // For SSR compatibility, the selected option should have the selected attribute
-    // This is currently failing, which is the bug we need to fix
     expect(selectedOption?.attributes('selected')).toBeDefined()
   })
 
@@ -122,6 +174,22 @@ describe('BFormSelect', () => {
     expect(selectedOption?.attributes('selected')).toBeDefined()
   })
 
+  it('non-selected options do not have selected attribute', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        modelValue: 'two',
+        options: ['one', 'two', 'three'],
+      },
+    })
+    const options = wrapper.findAll('option')
+    const nonSelected = options.filter((o) => o.attributes('value') !== 'two')
+    nonSelected.forEach((o) => {
+      expect(o.attributes('selected')).toBeUndefined()
+    })
+  })
+
+  // --- Events ---
+
   it('updates modelValue when option is selected', async () => {
     const modelValue = ref('one')
     const wrapper = mount(BFormSelect, {
@@ -140,6 +208,145 @@ describe('BFormSelect', () => {
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     expect(wrapper.emitted('update:modelValue')![0]).toEqual(['two'])
   })
+
+  // --- CSS Classes ---
+
+  it('has form-select-sm class when size is sm', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {size: 'sm'},
+    })
+    expect(wrapper.classes()).toContain('form-select')
+    expect(wrapper.classes()).toContain('form-select-sm')
+  })
+
+  it('has form-select-lg class when size is lg', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {size: 'lg'},
+    })
+    expect(wrapper.classes()).toContain('form-select')
+    expect(wrapper.classes()).toContain('form-select-lg')
+  })
+
+  it('does not have size class when size is md', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {size: 'md'},
+    })
+    expect(wrapper.classes()).toContain('form-select')
+    expect(wrapper.classes()).not.toContain('form-select-md')
+  })
+
+  it('has form-control class when plain is true', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {plain: true},
+    })
+    expect(wrapper.classes()).toContain('form-control')
+    expect(wrapper.classes()).not.toContain('form-select')
+  })
+
+  it('has form-control-sm when plain is true and size is sm', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {plain: true, size: 'sm'},
+    })
+    expect(wrapper.classes()).toContain('form-control')
+    expect(wrapper.classes()).toContain('form-control-sm')
+  })
+
+  it('has is-valid class when state is true', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {state: true},
+    })
+    expect(wrapper.classes()).toContain('is-valid')
+    expect(wrapper.classes()).not.toContain('is-invalid')
+  })
+
+  it('has is-invalid class when state is false', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {state: false},
+    })
+    expect(wrapper.classes()).toContain('is-invalid')
+    expect(wrapper.classes()).not.toContain('is-valid')
+  })
+
+  it('has no state class when state is null', () => {
+    const wrapper = mount(BFormSelect)
+    expect(wrapper.classes()).not.toContain('is-valid')
+    expect(wrapper.classes()).not.toContain('is-invalid')
+  })
+
+  // --- Attributes ---
+
+  it('has disabled attribute when disabled is true', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {disabled: true},
+    })
+    expect(wrapper.attributes('disabled')).toBeDefined()
+  })
+
+  it('does not have disabled attribute when disabled is false', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {disabled: false},
+    })
+    expect(wrapper.attributes('disabled')).toBeUndefined()
+  })
+
+  it('has required attribute when required is true', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {required: true},
+    })
+    expect(wrapper.attributes('required')).toBeDefined()
+    expect(wrapper.attributes('aria-required')).toBe('true')
+  })
+
+  it('has name attribute when name prop is set', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {name: 'my-select'},
+    })
+    expect(wrapper.attributes('name')).toBe('my-select')
+  })
+
+  it('has form attribute when form prop is set', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {form: 'my-form'},
+    })
+    expect(wrapper.attributes('form')).toBe('my-form')
+  })
+
+  it('has id attribute when id prop is set', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {id: 'my-id'},
+    })
+    expect(wrapper.attributes('id')).toBe('my-id')
+  })
+
+  it('has multiple attribute when multiple is true', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {multiple: true},
+    })
+    expect(wrapper.attributes('multiple')).toBeDefined()
+  })
+
+  it('has HTML size attribute when selectSize > 0', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {selectSize: 4},
+    })
+    expect(wrapper.attributes('size')).toBe('4')
+  })
+
+  it('has aria-invalid when ariaInvalid is true', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {ariaInvalid: true},
+    })
+    expect(wrapper.attributes('aria-invalid')).toBe('true')
+  })
+
+  it('has aria-invalid when state is false', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {state: false},
+    })
+    expect(wrapper.attributes('aria-invalid')).toBe('true')
+  })
+
+  // --- Class / Attrs on options ---
 
   it('applies class to options', () => {
     const wrapper = mount(BFormSelect, {
@@ -233,6 +440,8 @@ describe('BFormSelect', () => {
     expect(options[1].classes()).toContain('group-class')
   })
 
+  // --- Custom field names ---
+
   it('renders grouped options with custom field names', () => {
     const wrapper = mount(BFormSelect, {
       props: {
@@ -302,5 +511,122 @@ describe('BFormSelect', () => {
     const selectedOption = allOptions.find((option) => option.attributes('value') === '2')
     expect(selectedOption).toBeDefined()
     expect(selectedOption?.attributes('selected')).toBeDefined()
+  })
+
+  it('renders options with custom disabledField', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        valueField: 'id',
+        textField: 'label',
+        disabledField: 'inactive',
+        options: [
+          {id: 1, label: 'Active', inactive: false},
+          {id: 2, label: 'Inactive', inactive: true},
+        ],
+      },
+    })
+    const options = wrapper.findAll('option')
+    expect(options[0].attributes('disabled')).toBeUndefined()
+    expect(options[1].attributes('disabled')).toBeDefined()
+  })
+
+  // --- Slots ---
+
+  it('renders first slot before options', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {options: ['one', 'two']},
+      slots: {
+        first: h('option', {value: ''}, 'Choose...'),
+      },
+    })
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(3)
+    expect(options[0].text()).toBe('Choose...')
+    expect(options[0].attributes('value')).toBe('')
+    expect(options[1].text()).toBe('one')
+  })
+
+  it('renders default slot after options', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {options: ['one']},
+      slots: {
+        default: h('option', {value: 'extra'}, 'Extra'),
+      },
+    })
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(2)
+    expect(options[0].text()).toBe('one')
+    expect(options[1].text()).toBe('Extra')
+  })
+
+  it('renders first, options, and default slots in correct order', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {options: ['middle']},
+      slots: {
+        first: h('option', {value: 'first'}, 'First'),
+        default: h('option', {value: 'last'}, 'Last'),
+      },
+    })
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(3)
+    expect(options[0].text()).toBe('First')
+    expect(options[1].text()).toBe('middle')
+    expect(options[2].text()).toBe('Last')
+  })
+
+  it('option scoped slot receives option data', () => {
+    let receivedProps: Record<string, unknown> | undefined
+    mount(BFormSelect, {
+      props: {
+        options: [{value: 'x', text: 'Option X'}],
+      },
+      slots: {
+        option: (props: Record<string, unknown>) => {
+          receivedProps = props
+          return 'custom'
+        },
+      },
+    })
+    expect(receivedProps).toBeDefined()
+    expect(receivedProps?.value).toBe('x')
+    expect(receivedProps?.text).toBe('Option X')
+  })
+
+  // --- Options reactivity ---
+
+  it('options are reactive', async () => {
+    const wrapper = mount(BFormSelect, {
+      props: {options: ['a', 'b']},
+    })
+    expect(wrapper.findAll('option')).toHaveLength(2)
+
+    await wrapper.setProps({options: ['x', 'y', 'z']})
+    expect(wrapper.findAll('option')).toHaveLength(3)
+    expect(wrapper.findAll('option')[0].text()).toBe('x')
+  })
+
+  // --- Mixed options ---
+
+  it('renders mixed simple and complex options', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [
+          {value: 'solo', text: 'Solo option'},
+          {
+            label: 'Grouped',
+            options: [
+              {value: 'g1', text: 'Grouped 1'},
+              {value: 'g2', text: 'Grouped 2'},
+            ],
+          },
+        ],
+      },
+    })
+    const optgroups = wrapper.findAll('optgroup')
+    expect(optgroups).toHaveLength(1)
+    expect(optgroups[0].attributes('label')).toBe('Grouped')
+
+    const allOptions = wrapper.findAll('option')
+    expect(allOptions).toHaveLength(3)
   })
 })
