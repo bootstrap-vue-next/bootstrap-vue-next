@@ -4,7 +4,7 @@ import BPlaceholderTable from './BPlaceholderTable.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BTableSimple from '../BTable//BTableSimple.vue'
 
-describe.skip('placeholder-table', () => {
+describe('placeholder-table', () => {
   enableAutoUnmount(afterEach)
 
   it('has BTableSimple', () => {
@@ -96,15 +96,15 @@ describe.skip('placeholder-table', () => {
     expect($th.exists()).toBe(false)
   })
 
-  it('child thead child tr does not have child th when prop columns 0', () => {
+  it('child thead child tr has 5 child th when prop columns 0 (falls back to default)', () => {
     const wrapper = mount(BPlaceholderTable, {
       props: {columns: 0},
     })
     const $tablesimple = wrapper.getComponent(BTableSimple)
     const $thead = $tablesimple.get('thead')
     const $tr = $thead.get('tr')
-    const $th = $tr.find('th')
-    expect($th.exists()).toBe(false)
+    const all$th = $tr.findAll('th')
+    expect(all$th).toHaveLength(5)
   })
 
   it('child thead child tr has child th has child BPlaceholder', () => {
@@ -131,7 +131,7 @@ describe.skip('placeholder-table', () => {
     expect($placeholder.props('size')).toBe('xs')
   })
 
-  it('child thead child tr has child th child BPlaceholder has prop size to be undefined by default', () => {
+  it('child thead child tr has child th child BPlaceholder has prop size to be md by default', () => {
     const wrapper = mount(BPlaceholderTable, {
       props: {headerColumns: 1},
     })
@@ -140,7 +140,7 @@ describe.skip('placeholder-table', () => {
     const $tr = $thead.get('tr')
     const $th = $tr.get('th')
     const $placeholder = $th.getComponent(BPlaceholder)
-    expect($placeholder.props('size')).toBeUndefined()
+    expect($placeholder.props('size')).toBe('md')
   })
 
   it('child thead child tr has child th child BPlaceholder has prop variant to be prop headerVariant', () => {
@@ -155,7 +155,7 @@ describe.skip('placeholder-table', () => {
     expect($placeholder.props('variant')).toBe('danger')
   })
 
-  it('child thead child tr has child th child BPlaceholder has prop variant to be undefined by default', () => {
+  it('child thead child tr has child th child BPlaceholder has prop variant to be null by default', () => {
     const wrapper = mount(BPlaceholderTable, {
       props: {headerColumns: 1},
     })
@@ -164,7 +164,7 @@ describe.skip('placeholder-table', () => {
     const $tr = $thead.get('tr')
     const $th = $tr.get('th')
     const $placeholder = $th.getComponent(BPlaceholder)
-    expect($placeholder.props('variant')).toBeUndefined()
+    expect($placeholder.props('variant')).toBeNull()
   })
 
   it('child thead child tr has child th child BPlaceholder has prop animation to be prop headerAnimation', () => {
@@ -323,14 +323,14 @@ describe.skip('placeholder-table', () => {
     expect($placeholder.exists()).toBe(true)
   })
 
-  it('child tbody child tr child td child BPlaceholder has prop size to be undefined by default', () => {
+  it('child tbody child tr child td child BPlaceholder has prop size to be md by default', () => {
     const wrapper = mount(BPlaceholderTable)
     const $tablesimple = wrapper.getComponent(BTableSimple)
     const $tbody = $tablesimple.get('tbody')
     const $tr = $tbody.get('tr')
     const $td = $tr.get('td')
     const $placeholder = $td.getComponent(BPlaceholder)
-    expect($placeholder.props('size')).toBeUndefined()
+    expect($placeholder.props('size')).toBe('md')
   })
 
   it('child tbody child tr child td child BPlaceholder has prop size to be prop size', () => {
@@ -345,14 +345,14 @@ describe.skip('placeholder-table', () => {
     expect($placeholder.props('size')).toBe('xs')
   })
 
-  it('child tbody child tr child td child BPlaceholder has prop variant to be undefined by default', () => {
+  it('child tbody child tr child td child BPlaceholder has prop variant to be null by default', () => {
     const wrapper = mount(BPlaceholderTable)
     const $tablesimple = wrapper.getComponent(BTableSimple)
     const $tbody = $tablesimple.get('tbody')
     const $tr = $tbody.get('tr')
     const $td = $tr.get('td')
     const $placeholder = $td.getComponent(BPlaceholder)
-    expect($placeholder.props('variant')).toBeUndefined()
+    expect($placeholder.props('variant')).toBeNull()
   })
 
   it('child tbody child tr child td child BPlaceholder has prop variant to be prop variant', () => {
@@ -633,7 +633,7 @@ describe.skip('placeholder-table', () => {
     expect($placeholder.props('size')).toBe('xs')
   })
 
-  it('child tfoot child tr child th child BPlaceholder has prop size to be undefined by default', () => {
+  it('child tfoot child tr child th child BPlaceholder has prop size to be md by default', () => {
     const wrapper = mount(BPlaceholderTable, {
       props: {showFooter: true},
     })
@@ -642,7 +642,7 @@ describe.skip('placeholder-table', () => {
     const $tr = $tfoot.get('tr')
     const $th = $tr.get('th')
     const $placeholder = $th.getComponent(BPlaceholder)
-    expect($placeholder.props('size')).toBeUndefined()
+    expect($placeholder.props('size')).toBe('md')
   })
 
   it('child tfoot child tr child th child BPlaceholder has prop variant to be prop footerVariant', () => {
@@ -657,7 +657,7 @@ describe.skip('placeholder-table', () => {
     expect($placeholder.props('variant')).toBe('danger')
   })
 
-  it('child tfoot child tr child th child BPlaceholder has prop variant to be undefined by default', () => {
+  it('child tfoot child tr child th child BPlaceholder has prop variant to be null by default', () => {
     const wrapper = mount(BPlaceholderTable, {
       props: {showFooter: true},
     })
@@ -666,7 +666,7 @@ describe.skip('placeholder-table', () => {
     const $tr = $tfoot.get('tr')
     const $th = $tr.get('th')
     const $placeholder = $th.getComponent(BPlaceholder)
-    expect($placeholder.props('variant')).toBeUndefined()
+    expect($placeholder.props('variant')).toBeNull()
   })
 
   it('child tfoot child tr child th child BPlaceholder has prop animation to be prop footerAnimation', () => {

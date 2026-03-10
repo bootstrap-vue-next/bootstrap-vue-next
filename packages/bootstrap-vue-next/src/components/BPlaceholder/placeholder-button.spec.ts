@@ -3,7 +3,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import BPlaceholderButton from './BPlaceholderButton.vue'
 import BPlaceholder from './BPlaceholder.vue'
 
-describe.skip('placeholder-button', () => {
+describe('placeholder-button', () => {
   enableAutoUnmount(afterEach)
 
   it('is BPlaceholder', () => {
@@ -14,28 +14,24 @@ describe.skip('placeholder-button', () => {
 
   it('BPlaceholder has class btn', () => {
     const wrapper = mount(BPlaceholderButton)
-    const $placeholder = wrapper.getComponent(BPlaceholder)
-    expect($placeholder.classes()).toContain('btn')
+    expect(wrapper.find('.placeholder').classes()).toContain('btn')
   })
 
   it('BPlaceholder has class disabled', () => {
     const wrapper = mount(BPlaceholderButton)
-    const $placeholder = wrapper.getComponent(BPlaceholder)
-    expect($placeholder.classes()).toContain('disabled')
+    expect(wrapper.find('.placeholder').classes()).toContain('disabled')
   })
 
   it('BPlaceholder has class btn-primary by default', () => {
     const wrapper = mount(BPlaceholderButton)
-    const $placeholder = wrapper.getComponent(BPlaceholder)
-    expect($placeholder.classes()).toContain('btn-primary')
+    expect(wrapper.find('.placeholder').classes()).toContain('btn-primary')
   })
 
   it('BPlaceholder has class btn-{type} when prop variant', () => {
     const wrapper = mount(BPlaceholderButton, {
       props: {variant: 'danger'},
     })
-    const $placeholder = wrapper.getComponent(BPlaceholder)
-    expect($placeholder.classes()).toContain('btn-danger')
+    expect(wrapper.find('.placeholder').classes()).toContain('btn-danger')
   })
 
   it('BPlaceholder has prop tag to be div by default', () => {
@@ -66,10 +62,10 @@ describe.skip('placeholder-button', () => {
     expect($placeholder.props('width')).toBe(1000)
   })
 
-  it('BPlaceholder has prop cols to be div by default', () => {
+  it('BPlaceholder has prop cols to be 12 by default', () => {
     const wrapper = mount(BPlaceholderButton)
     const $placeholder = wrapper.getComponent(BPlaceholder)
-    expect($placeholder.props('cols')).toBeUndefined()
+    expect($placeholder.props('cols')).toBe(12)
   })
 
   it('BPlaceholder has prop cols to be prop cols', () => {
