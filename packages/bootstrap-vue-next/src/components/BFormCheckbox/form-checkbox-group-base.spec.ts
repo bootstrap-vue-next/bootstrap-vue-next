@@ -568,4 +568,246 @@ describe('form-checkbox-group-base', () => {
       expect(input.attributes('required')).toBe('')
     })
   })
+
+  describe('exposed methods', () => {
+    it('exposes focus method', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        attachTo: document.body,
+      })
+      expect(typeof wrapper.vm.focus).toBe('function')
+    })
+
+    it('exposes blur method', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        attachTo: document.body,
+      })
+      expect(typeof wrapper.vm.blur).toBe('function')
+    })
+  })
+
+  describe('autofocus', () => {
+    it('accepts autofocus prop true', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {autofocus: true},
+        attachTo: document.body,
+      })
+      expect(wrapper.props('autofocus')).toBe(true)
+    })
+
+    it('accepts autofocus prop false', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {autofocus: false},
+        attachTo: document.body,
+      })
+      expect(wrapper.props('autofocus')).toBe(false)
+    })
+  })
+
+  describe('slot ordering', () => {
+    it('renders first slot before options and default slot after', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          options: [{text: 'Option', value: 'opt', disabled: false}],
+        },
+        slots: {
+          first: '<span class="first-marker">FIRST</span>',
+          default: '<span class="default-marker">DEFAULT</span>',
+        },
+      })
+      const html = wrapper.html()
+      const firstIdx = html.indexOf('first-marker')
+      const optionIdx = html.indexOf('Option')
+      const defaultIdx = html.indexOf('default-marker')
+      expect(firstIdx).toBeLessThan(optionIdx)
+      expect(optionIdx).toBeLessThan(defaultIdx)
+    })
+
+    it('renders first slot even without options', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        slots: {
+          first: '<span class="first-marker">FIRST</span>',
+        },
+      })
+      expect(wrapper.find('.first-marker').exists()).toBe(true)
+    })
+  })
+
+  describe('option normalization edge cases', () => {
+    it('options with null value render with null', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          options: [{text: 'None', value: null, disabled: false}],
+        },
+      })
+      const checkbox = wrapper.findComponent(BFormCheckbox)
+      expect(checkbox.props('value')).toBe(null)
+    })
+
+    it('options without text use String(value) as text', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          options: [{value: 42, disabled: false}],
+        },
+      })
+      const checkbox = wrapper.findComponent(BFormCheckbox)
+      expect(checkbox.text()).toBe('42')
+    })
+
+    it('options without value default to null', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          options: [{text: 'No Value', disabled: false}],
+        },
+      })
+      const checkbox = wrapper.findComponent(BFormCheckbox)
+      expect(checkbox.props('value')).toBe(null)
+    })
+  })
+
+  describe('options reactivity', () => {
+    it('updates checkboxes when options change', async () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          options: [
+            {text: 'A', value: 'a', disabled: false},
+            {text: 'B', value: 'b', disabled: false},
+          ],
+        },
+      })
+      expect(wrapper.findAllComponents(BFormCheckbox)).toHaveLength(2)
+      await wrapper.setProps({
+        options: [
+          {text: 'A', value: 'a', disabled: false},
+          {text: 'B', value: 'b', disabled: false},
+          {text: 'C', value: 'c', disabled: false},
+        ],
+      })
+      expect(wrapper.findAllComponents(BFormCheckbox)).toHaveLength(3)
+    })
+  })
+
+  describe('auto-generated name', () => {
+    it('generates a name when name prop is not provided', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          options: [{text: 'A', value: 'a', disabled: false}],
+        },
+      })
+      const input = wrapper.get('input[type="checkbox"]')
+      expect(input.attributes('name')).toBeDefined()
+    })
+  })
+
+  describe('size classes', () => {
+    it('adds btn-group-md class for size md', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {size: 'md'},
+      })
+      expect(wrapper.classes()).toContain('btn-group-md')
+    })
+
+    it('adds btn-group-sm class for size sm', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {size: 'sm'},
+      })
+      expect(wrapper.classes()).toContain('btn-group-sm')
+    })
+  })
+
+  describe('multiple modelValue selections', () => {
+    it('reflects multiple checked states from modelValue', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          modelValue: ['a', 'c'],
+          options: [
+            {text: 'A', value: 'a', disabled: false},
+            {text: 'B', value: 'b', disabled: false},
+            {text: 'C', value: 'c', disabled: false},
+          ],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="checkbox"]')
+      expect((inputs[0].element as HTMLInputElement).checked).toBe(true)
+      expect((inputs[1].element as HTMLInputElement).checked).toBe(false)
+      expect((inputs[2].element as HTMLInputElement).checked).toBe(true)
+    })
+
+    it('reflects all checked state when all values are in modelValue', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          modelValue: ['a', 'b', 'c'],
+          options: [
+            {text: 'A', value: 'a', disabled: false},
+            {text: 'B', value: 'b', disabled: false},
+            {text: 'C', value: 'c', disabled: false},
+          ],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="checkbox"]')
+      expect((inputs[0].element as HTMLInputElement).checked).toBe(true)
+      expect((inputs[1].element as HTMLInputElement).checked).toBe(true)
+      expect((inputs[2].element as HTMLInputElement).checked).toBe(true)
+    })
+
+    it('reflects none checked when modelValue is empty', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          modelValue: [],
+          options: [
+            {text: 'A', value: 'a', disabled: false},
+            {text: 'B', value: 'b', disabled: false},
+          ],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="checkbox"]')
+      expect((inputs[0].element as HTMLInputElement).checked).toBe(false)
+      expect((inputs[1].element as HTMLInputElement).checked).toBe(false)
+    })
+  })
+
+  describe('disabled option normalization', () => {
+    it('group disabled overrides individual option disabled=false', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          disabled: true,
+          options: [{text: 'A', value: 'a', disabled: false}],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="checkbox"]')
+      expect(inputs[0].attributes('disabled')).toBe('')
+    })
+
+    it('primitive options inherit group disabled', () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {
+          disabled: true,
+          options: [{text: 'Primitive', value: 'p', disabled: false}],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="checkbox"]')
+      expect(inputs[0].attributes('disabled')).toBe('')
+    })
+  })
+
+  describe('validation classes reactivity', () => {
+    it('button group class reacts to buttons prop change', async () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {buttons: false},
+      })
+      expect(wrapper.classes()).not.toContain('btn-group')
+      await wrapper.setProps({buttons: true})
+      expect(wrapper.classes()).toContain('btn-group')
+    })
+
+    it('stacked class reacts to prop change', async () => {
+      const wrapper = mount(BFormCheckboxGroupBase, {
+        props: {buttons: true, stacked: false},
+      })
+      expect(wrapper.classes()).toContain('btn-group')
+      expect(wrapper.classes()).not.toContain('btn-group-vertical')
+      await wrapper.setProps({stacked: true})
+      expect(wrapper.classes()).not.toContain('btn-group')
+      expect(wrapper.classes()).toContain('btn-group-vertical')
+    })
+  })
 })
