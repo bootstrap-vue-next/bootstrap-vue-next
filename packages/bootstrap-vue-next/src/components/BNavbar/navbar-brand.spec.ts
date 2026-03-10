@@ -63,4 +63,45 @@ describe('navbar-brand', () => {
     })
     expect(wrapper.text()).toBe('foobar')
   })
+
+  it('renders html default slot content', () => {
+    const wrapper = mount(BNavbarBrand, {
+      slots: {default: '<span>hello</span>'},
+    })
+    expect(wrapper.find('span').exists()).toBe(true)
+    expect(wrapper.find('span').text()).toBe('hello')
+  })
+
+  it('tag reactivity changes from div to span', async () => {
+    const wrapper = mount(BNavbarBrand, {
+      props: {tag: 'div'},
+    })
+    expect(wrapper.element.tagName).toBe('DIV')
+    await wrapper.setProps({tag: 'span'})
+    expect(wrapper.element.tagName).toBe('SPAN')
+  })
+
+  it('switches to BLink when href is added reactively', async () => {
+    const wrapper = mount(BNavbarBrand)
+    expect(wrapper.findComponent(BLink).exists()).toBe(false)
+    await wrapper.setProps({href: '/foo'})
+    expect(wrapper.findComponent(BLink).exists()).toBe(true)
+  })
+
+  it('switches from BLink back to tag when href is removed', async () => {
+    const wrapper = mount(BNavbarBrand, {
+      props: {href: '/foo', tag: 'span'},
+    })
+    expect(wrapper.findComponent(BLink).exists()).toBe(true)
+    await wrapper.setProps({href: undefined})
+    expect(wrapper.findComponent(BLink).exists()).toBe(false)
+    expect(wrapper.element.tagName).toBe('SPAN')
+  })
+
+  it('href is set as attribute on BLink', () => {
+    const wrapper = mount(BNavbarBrand, {
+      props: {href: '/foo'},
+    })
+    expect(wrapper.attributes('href')).toBe('/foo')
+  })
 })
