@@ -111,7 +111,7 @@ describe('collapse', () => {
   // --- visibility / v-show ---
   it('is hidden by default (no modelValue)', () => {
     const wrapper = mount(BCollapse)
-    const [$el] = wrapper.findAll('*')
+    const [, $el] = wrapper.findAll('*')
     expect($el.attributes('style')).toContain('display: none')
   })
 
@@ -128,7 +128,7 @@ describe('collapse', () => {
     const wrapper = mount(BCollapse, {
       props: {visible: true},
     })
-    const [$el] = wrapper.findAll('*')
+    const [, $el] = wrapper.findAll('*')
     expect($el.classes()).toContain('show')
   })
 
@@ -440,7 +440,7 @@ describe('collapse', () => {
     const wrapper = mount(BCollapse, {
       attrs: {'data-testid': 'my-collapse'},
     })
-    const [$el] = wrapper.findAll('*')
+    const [, $el] = wrapper.findAll('*')
     expect($el.attributes('data-testid')).toBe('my-collapse')
   })
 
@@ -492,7 +492,7 @@ describe('collapse', () => {
     const wrapper = mount(BCollapse, {
       props: {isNav: true, horizontal: true, modelValue: true},
     })
-    const [$el] = wrapper.findAll('*')
+    const [, $el] = wrapper.findAll('*')
     expect($el.classes()).toContain('collapse')
     expect($el.classes()).toContain('show')
     expect($el.classes()).toContain('navbar-collapse')
@@ -503,7 +503,7 @@ describe('collapse', () => {
     const wrapper = mount(BCollapse, {
       props: {modelValue: false},
     })
-    const [$el] = wrapper.findAll('*')
+    const [, $el] = wrapper.findAll('*')
     expect($el.classes()).toContain('collapse')
     expect($el.classes()).not.toContain('show')
     expect($el.classes()).not.toContain('navbar-collapse')
