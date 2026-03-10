@@ -558,4 +558,176 @@ describe('form-textarea', () => {
       expect(wrapper.attributes('tabindex')).toBe('2')
     })
   })
+
+  describe('model modifiers', () => {
+    describe('.number modifier', () => {
+      it('converts numeric string to number on input', async () => {
+        const wrapper = mount(BFormTextarea, {
+          props: {modelValue: '', modelModifiers: {number: true}},
+        })
+        wrapper.element.value = '42'
+        await wrapper.trigger('input')
+        expect(wrapper.emitted('update:modelValue')![0]).toEqual([42])
+      })
+
+      it('keeps non-numeric string as string on input', async () => {
+        const wrapper = mount(BFormTextarea, {
+          props: {modelValue: '', modelModifiers: {number: true}},
+        })
+        wrapper.element.value = 'abc'
+        await wrapper.trigger('input')
+        expect(wrapper.emitted('update:modelValue')![0]).toEqual(['abc'])
+      })
+
+      it('converts decimal numeric string to float on input', async () => {
+        const wrapper = mount(BFormTextarea, {
+          props: {modelValue: '', modelModifiers: {number: true}},
+        })
+        wrapper.element.value = '3.14'
+        await wrapper.trigger('input')
+        expect(wrapper.emitted('update:modelValue')![0]).toEqual([3.14])
+      })
+    })
+
+    describe('.lazy modifier', () => {
+      it('does not emit update:modelValue on input event', async () => {
+        const wrapper = mount(BFormTextarea, {
+          props: {modelValue: '', modelModifiers: {lazy: true}},
+        })
+        wrapper.element.value = 'hello'
+        await wrapper.trigger('input')
+        expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+      })
+
+      it('emits update:modelValue on change event', async () => {
+        const wrapper = mount(BFormTextarea, {
+          props: {modelValue: '', modelModifiers: {lazy: true}},
+        })
+        wrapper.element.value = 'hello'
+        await wrapper.trigger('change')
+        expect(wrapper.emitted('update:modelValue')![0]).toEqual(['hello'])
+      })
+
+      it('emits update:modelValue on blur event', async () => {
+        const wrapper = mount(BFormTextarea, {
+          props: {modelValue: '', modelModifiers: {lazy: true}},
+        })
+        wrapper.element.value = 'hello'
+        await wrapper.trigger('blur')
+        expect(wrapper.emitted('update:modelValue')![0]).toEqual(['hello'])
+      })
+    })
+
+    describe('.trim modifier', () => {
+      it('trims whitespace from value on blur', async () => {
+        const wrapper = mount(BFormTextarea, {
+          props: {modelValue: '', modelModifiers: {trim: true}},
+        })
+        wrapper.element.value = '  hello  '
+        await wrapper.trigger('blur')
+        expect(wrapper.emitted('update:modelValue')![0]).toEqual(['hello'])
+      })
+
+      it('trims whitespace from value on input', async () => {
+        const wrapper = mount(BFormTextarea, {
+          props: {modelValue: '', modelModifiers: {trim: true}},
+        })
+        wrapper.element.value = '  hello  '
+        await wrapper.trigger('input')
+        expect(wrapper.emitted('update:modelValue')![0]).toEqual(['hello'])
+      })
+
+      it('updates textarea element value to trimmed string on blur', async () => {
+        const wrapper = mount(BFormTextarea, {
+          props: {modelValue: '', modelModifiers: {trim: true}},
+        })
+        wrapper.element.value = '  hello  '
+        await wrapper.trigger('blur')
+        expect(wrapper.element.value).toBe('hello')
+      })
+    })
+  })
+
+  describe('debounceMaxWait', () => {
+    it('fires update before debounce timeout expires when maxWait is reached', async () => {
+      vi.useFakeTimers()
+      const wrapper = mount(BFormTextarea, {
+        props: {modelValue: '', debounce: 500, debounceMaxWait: 200},
+      })
+      wrapper.element.value = 'test'
+      await wrapper.trigger('input')
+      expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+      vi.advanceTimersByTime(200)
+      await nextTick()
+      expect(wrapper.emitted('update:modelValue')![0]).toEqual(['test'])
+      vi.useRealTimers()
+    })
+  })
+
+  describe('maxRows prop', () => {
+    it('sets rows attribute to rows value when maxRows equals rows', () => {
+      const wrapper = mount(BFormTextarea, {props: {rows: 4, maxRows: 4}})
+      expect(wrapper.attributes('rows')).toBe('4')
+    })
+
+    it('falls back to rows 2 when maxRows is greater than rows (auto-resize mode)', () => {
+      const wrapper = mount(BFormTextarea, {props: {rows: 4, maxRows: 6}})
+      expect(wrapper.attributes('rows')).toBe('2')
+    })
+
+    it('updates rows reactively when maxRows is set to match rows', async () => {
+      const wrapper = mount(BFormTextarea, {props: {rows: 4, maxRows: 6}})
+      expect(wrapper.attributes('rows')).toBe('2')
+      await wrapper.setProps({maxRows: 4})
+      expect(wrapper.attributes('rows')).toBe('4')
+    })
+  })
+
+  describe('noAutoShrink prop', () => {
+    it('applies resize none style when noAutoShrink is true', () => {
+      const wrapper = mount(BFormTextarea, {props: {noAutoShrink: true}})
+      expect(wrapper.element.style.resize).toBe('none')
+    })
+
+    it('does not apply resize none style from noAutoShrink when false and noResize is false', () => {
+      const wrapper = mount(BFormTextarea, {props: {noAutoShrink: false, noResize: false}})
+      expect(wrapper.element.style.resize).not.toBe('none')
+    })
+
+    it('updates noAutoShrink reactively', async () => {
+      const wrapper = mount(BFormTextarea, {props: {noAutoShrink: false, noResize: false}})
+      expect(wrapper.element.style.resize).not.toBe('none')
+      await wrapper.setProps({noAutoShrink: true})
+      expect(wrapper.element.style.resize).toBe('none')
+    })
+  })
+
+  describe('autofocus', () => {
+    it('focuses the textarea element on mount when autofocus is true', async () => {
+      const wrapper = mount(BFormTextarea, {
+        props: {autofocus: true},
+        attachTo: document.body,
+      })
+      await nextTick()
+      expect(document.activeElement).toBe(wrapper.element)
+      wrapper.unmount()
+    })
+
+    it('does not focus textarea on mount when autofocus is false', async () => {
+      const wrapper = mount(BFormTextarea, {
+        props: {autofocus: false},
+        attachTo: document.body,
+      })
+      await nextTick()
+      expect(document.activeElement).not.toBe(wrapper.element)
+      wrapper.unmount()
+    })
+  })
+
+  describe('null modelValue', () => {
+    it('renders empty value when modelValue is null', () => {
+      const wrapper = mount(BFormTextarea, {props: {modelValue: null}})
+      expect(wrapper.element.value).toBe('')
+    })
+  })
 })
