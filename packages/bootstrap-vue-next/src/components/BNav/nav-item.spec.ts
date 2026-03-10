@@ -122,4 +122,100 @@ describe('nav-item', () => {
     const $blink = wrapper.findComponent(BLink)
     expect($blink.props('prefetch')).toBe(true)
   })
+
+  it('renders content from after slot', () => {
+    const wrapper = mount(BNavItem, {
+      slots: {after: 'after-content'},
+    })
+    expect(wrapper.text()).toBe('after-content')
+  })
+
+  it('emits click event when BLink is clicked', async () => {
+    const wrapper = mount(BNavItem)
+    const $blink = wrapper.findComponent(BLink)
+    await $blink.trigger('click')
+    expect(wrapper.emitted('click')).toBeDefined()
+  })
+
+  it('passes active prop to BLink', async () => {
+    const wrapper = mount(BNavItem, {
+      props: {active: true},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('active')).toBe(true)
+    await wrapper.setProps({active: false})
+    expect($blink.props('active')).toBe(false)
+  })
+
+  it('passes href prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {href: '/test'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('href')).toBe('/test')
+  })
+
+  it('passes to prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {to: '/test'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('to')).toBe('/test')
+  })
+
+  it('passes activeClass prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {activeClass: 'custom-active'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('activeClass')).toBe('custom-active')
+  })
+
+  it('passes rel prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {rel: 'noopener'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('rel')).toBe('noopener')
+  })
+
+  it('passes target prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {target: '_blank'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('target')).toBe('_blank')
+  })
+
+  it('passes variant prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {variant: 'primary'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('variant')).toBe('primary')
+  })
+
+  it('passes replace prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {replace: true},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('replace')).toBe(true)
+  })
+
+  it('passes opacity prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {opacity: 50},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('opacity')).toBe(50)
+  })
+
+  it('passes opacityHover prop to BLink', () => {
+    const wrapper = mount(BNavItem, {
+      props: {opacityHover: 75},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('opacityHover')).toBe(75)
+  })
 })

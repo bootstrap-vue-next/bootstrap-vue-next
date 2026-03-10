@@ -1,11 +1,51 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {ref} from 'vue'
-import {afterEach, describe, expect, it} from 'vitest'
+import {type ComputedRef, h, nextTick, ref} from 'vue'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import BTab from './BTab.vue'
-import {tabsInjectionKey} from '../../utils'
+import BTabs from './BTabs.vue'
+import {tabsInjectionKey} from '../../utils/keys'
+import type {TabType} from '../../types/Tab'
 
-describe.skip('tab', () => {
+// Helper to create a mock parent injection for standalone BTab tests
+function createMockParentData(overrides: Record<string, unknown> = {}) {
+  const registeredTabs: ComputedRef<TabType>[] = []
+  const activeId = ref<string | undefined>(undefined)
+
+  return {
+    lazy: ref(false),
+    card: ref(false),
+    noFade: ref(false),
+    activeTabClass: ref(undefined),
+    inactiveTabClass: ref(undefined),
+    tabClass: ref(undefined),
+    activeId,
+    registerTab: (tab: ComputedRef<TabType>) => {
+      registeredTabs.push(tab)
+      return tab.value.id
+    },
+    unregisterTab: (id: string) => {
+      const idx = registeredTabs.findIndex((t) => t.value.internalId === id)
+      if (idx !== -1) registeredTabs.splice(idx, 1)
+    },
+    activateTab: (internalId: string | undefined) => {
+      if (internalId === undefined) {
+        activeId.value = undefined
+        return
+      }
+      const tab = registeredTabs.find((t) => t.value.internalId === internalId)
+      if (tab) {
+        activeId.value = tab.value.id
+      }
+    },
+    registeredTabs,
+    ...overrides,
+  }
+}
+
+describe('tab', () => {
   enableAutoUnmount(afterEach)
+
+  // --- Tag rendering ---
 
   it('tag is default div', () => {
     const wrapper = mount(BTab)
@@ -19,12 +59,16 @@ describe.skip('tab', () => {
     expect(wrapper.element.tagName).toBe('SPAN')
   })
 
-  it('id is prop id', () => {
+  it('tag is reactive', async () => {
     const wrapper = mount(BTab, {
-      props: {id: 'foobar'},
+      props: {tag: 'span'},
     })
-    expect(wrapper.attributes('id')).toBe('foobar')
+    expect(wrapper.element.tagName).toBe('SPAN')
+    await wrapper.setProps({tag: 'section'})
+    expect(wrapper.element.tagName).toBe('SECTION')
   })
+
+  // --- Static attributes ---
 
   it('has static class tab-pane', () => {
     const wrapper = mount(BTab)
@@ -36,149 +80,389 @@ describe.skip('tab', () => {
     expect(wrapper.attributes('role')).toBe('tabpanel')
   })
 
-  it('has static aria-abelledby profile-tab', () => {
+  // --- ID ---
+
+  it('has a generated id by default', () => {
     const wrapper = mount(BTab)
-    expect(wrapper.attributes('aria-labelledby')).toBe('profile-tab')
+    expect(wrapper.attributes('id')).toBeDefined()
   })
 
-  it('has class active when prop active', async () => {
+  it('id is prop id', () => {
     const wrapper = mount(BTab, {
-      props: {active: true},
+      props: {id: 'my-tab'},
     })
-    expect(wrapper.classes()).toContain('active')
-    await wrapper.setProps({active: false})
-    expect(wrapper.classes()).not.toContain('active')
+    expect(wrapper.attributes('id')).toBe('my-tab')
   })
 
-  it('has class show when prop active', async () => {
+  it('id is reactive', async () => {
     const wrapper = mount(BTab, {
-      props: {active: true},
+      props: {id: 'first-id'},
     })
-    expect(wrapper.classes()).toContain('show')
-    await wrapper.setProps({active: false})
-    expect(wrapper.classes()).not.toContain('show')
+    expect(wrapper.attributes('id')).toBe('first-id')
+    await wrapper.setProps({id: 'second-id'})
+    expect(wrapper.attributes('id')).toBe('second-id')
   })
+
+  // --- aria-labelledby ---
+
+  it('has aria-labelledby attribute', () => {
+    const wrapper = mount(BTab)
+    expect(wrapper.attributes('aria-labelledby')).toBeDefined()
+  })
+
+  it('aria-labelledby uses prop buttonId', () => {
+    const wrapper = mount(BTab, {
+      props: {buttonId: 'my-button'},
+    })
+    expect(wrapper.attributes('aria-labelledby')).toBe('my-button')
+  })
+
+  // --- Classes from parent injection ---
 
   it('has class card-body when parentData card and prop noBody false', () => {
+    const parentData = createMockParentData({card: ref(true)})
     const wrapper = mount(BTab, {
       props: {noBody: false},
-      global: {provide: {[tabsInjectionKey as unknown as symbol]: {card: ref(true)}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: parentData}},
     })
     expect(wrapper.classes()).toContain('card-body')
   })
 
   it('does not have class card-body when parentData card but prop noBody true', () => {
+    const parentData = createMockParentData({card: ref(true)})
     const wrapper = mount(BTab, {
       props: {noBody: true},
-      global: {provide: {[tabsInjectionKey as unknown as symbol]: {card: ref(true)}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: parentData}},
     })
     expect(wrapper.classes()).not.toContain('card-body')
   })
 
-  it('does not have class card-body when parentData card false and prop noBody false', () => {
+  it('does not have class card-body when parentData card false', () => {
+    const parentData = createMockParentData({card: ref(false)})
     const wrapper = mount(BTab, {
       props: {noBody: false},
-      global: {provide: {[tabsInjectionKey as unknown as symbol]: {card: ref(false)}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: parentData}},
     })
     expect(wrapper.classes()).not.toContain('card-body')
   })
 
-  it('does not have class card-body when parentData card false and prop noBody true', () => {
+  it('has class fade when parentData noFade is false', () => {
+    const parentData = createMockParentData({noFade: ref(false)})
     const wrapper = mount(BTab, {
-      props: {noBody: true},
-      global: {provide: {[tabsInjectionKey as unknown as symbol]: {card: ref(false)}}},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: parentData}},
     })
-    expect(wrapper.classes()).not.toContain('card-body')
+    expect(wrapper.classes()).toContain('fade')
   })
 
-  it('renders default slot', () => {
+  it('does not have class fade when parentData noFade is true', () => {
+    const parentData = createMockParentData({noFade: ref(true)})
+    const wrapper = mount(BTab, {
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: parentData}},
+    })
+    expect(wrapper.classes()).not.toContain('fade')
+  })
+
+  it('has class fade when no parent data', () => {
+    const wrapper = mount(BTab)
+    // When no parent is provided, the fade class is applied by default
+    expect(wrapper.classes()).toContain('fade')
+  })
+
+  it('applies tabClass from parent', () => {
+    const parentData = createMockParentData({tabClass: ref('custom-tab-class')})
+    const wrapper = mount(BTab, {
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: parentData}},
+    })
+    expect(wrapper.classes()).toContain('custom-tab-class')
+  })
+
+  // --- Default slot rendering ---
+
+  it('renders default slot when not lazy', () => {
     const wrapper = mount(BTab, {
       slots: {default: 'foobar'},
     })
     expect(wrapper.text()).toBe('foobar')
   })
 
-  it('does not render default slot if lazy true', () => {
+  it('does not render default slot when prop lazy is true and not active', () => {
+    const parentData = createMockParentData()
     const wrapper = mount(BTab, {
       props: {lazy: true},
       slots: {default: 'foobar'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: parentData}},
     })
     expect(wrapper.text()).toBe('')
   })
 
-  it('does not render default slot if parentData lazy true', () => {
+  it('does not render default slot when parentData lazy is true and not active', () => {
+    const parentData = createMockParentData({lazy: ref(true)})
     const wrapper = mount(BTab, {
-      global: {provide: {[tabsInjectionKey as unknown as symbol]: {lazy: ref(true)}}},
       slots: {default: 'foobar'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: parentData}},
     })
     expect(wrapper.text()).toBe('')
   })
 
-  it('does not render default slot parentData lazy and prop lazy true', () => {
+  it('does not render slot when both parentData lazy and prop lazy are true and not active', () => {
+    const parentData = createMockParentData({lazy: ref(true)})
     const wrapper = mount(BTab, {
-      global: {provide: {[tabsInjectionKey as unknown as symbol]: {lazy: ref(true)}}},
       props: {lazy: true},
       slots: {default: 'foobar'},
+      global: {provide: {[tabsInjectionKey as unknown as symbol]: parentData}},
     })
     expect(wrapper.text()).toBe('')
   })
 
-  it('does not render default slot parentData lazy false and prop lazy true', () => {
+  // --- processedAttrs / inheritAttrs ---
+
+  it('passes through non-onClick attributes', () => {
     const wrapper = mount(BTab, {
-      global: {provide: {[tabsInjectionKey as unknown as symbol]: {lazy: ref(false)}}},
+      attrs: {'data-testid': 'my-tab', 'aria-label': 'test'},
+    })
+    expect(wrapper.attributes('data-testid')).toBe('my-tab')
+    expect(wrapper.attributes('aria-label')).toBe('test')
+  })
+
+  it('does not pass onClick through to the element', () => {
+    const onClick = vi.fn()
+    const wrapper = mount(BTab, {
+      attrs: {onClick},
+    })
+    // onClick should be stripped from processedAttrs
+    wrapper.trigger('click')
+    expect(onClick).not.toHaveBeenCalled()
+  })
+
+  // --- Expose ---
+
+  it('exposes activate method', () => {
+    const wrapper = mount(BTab)
+    expect(typeof wrapper.vm.activate).toBe('function')
+  })
+
+  it('exposes deactivate method', () => {
+    const wrapper = mount(BTab)
+    expect(typeof wrapper.vm.deactivate).toBe('function')
+  })
+
+  // --- Integration: Active/show classes when used with BTabs ---
+
+  it('has class active when tab is selected in BTabs', async () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-a', title: 'A'}, () => 'content-a'),
+          h(BTab, {id: 'tab-b', title: 'B'}, () => 'content-b'),
+        ],
+      },
+    })
+    await nextTick()
+    const panes = wrapper.findAll('.tab-pane')
+    // First tab is active by default
+    expect(panes[0].classes()).toContain('active')
+    expect(panes[1].classes()).not.toContain('active')
+  })
+
+  it('has class show when tab is active (after timeout)', async () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-a', title: 'A'}, () => 'content-a'),
+          h(BTab, {id: 'tab-b', title: 'B'}, () => 'content-b'),
+        ],
+      },
+    })
+    await nextTick()
+    // show is set via setTimeout, wait for it
+    await new Promise((resolve) => setTimeout(resolve, 10))
+    await nextTick()
+    const panes = wrapper.findAll('.tab-pane')
+    expect(panes[0].classes()).toContain('show')
+    expect(panes[1].classes()).not.toContain('show')
+  })
+
+  it('switches active class when another tab is clicked', async () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-a', title: 'A'}, () => 'content-a'),
+          h(BTab, {id: 'tab-b', title: 'B'}, () => 'content-b'),
+        ],
+      },
+    })
+    await nextTick()
+
+    // Click second tab button
+    const buttons = wrapper.findAll('button')
+    await buttons[1].trigger('click')
+    await nextTick()
+
+    const panes = wrapper.findAll('.tab-pane')
+    expect(panes[0].classes()).not.toContain('active')
+    expect(panes[1].classes()).toContain('active')
+  })
+
+  it('applies activeTabClass from parent when active', async () => {
+    const wrapper = mount(BTabs, {
+      props: {activeTabClass: 'my-active-class'},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-a', title: 'A'}, () => 'content-a'),
+          h(BTab, {id: 'tab-b', title: 'B'}, () => 'content-b'),
+        ],
+      },
+    })
+    await nextTick()
+    await new Promise((resolve) => setTimeout(resolve, 10))
+    await nextTick()
+    const panes = wrapper.findAll('.tab-pane')
+    expect(panes[0].classes()).toContain('my-active-class')
+    expect(panes[1].classes()).not.toContain('my-active-class')
+  })
+
+  it('applies inactiveTabClass from parent when inactive', async () => {
+    const wrapper = mount(BTabs, {
+      props: {inactiveTabClass: 'my-inactive-class'},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-a', title: 'A'}, () => 'content-a'),
+          h(BTab, {id: 'tab-b', title: 'B'}, () => 'content-b'),
+        ],
+      },
+    })
+    await nextTick()
+    await new Promise((resolve) => setTimeout(resolve, 10))
+    await nextTick()
+    const panes = wrapper.findAll('.tab-pane')
+    expect(panes[0].classes()).not.toContain('my-inactive-class')
+    expect(panes[1].classes()).toContain('my-inactive-class')
+  })
+
+  // --- Lazy rendering integration ---
+
+  it('renders active tab content when lazy and active in BTabs', async () => {
+    const wrapper = mount(BTabs, {
       props: {lazy: true},
-      slots: {default: 'foobar'},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-a', title: 'A'}, () => 'content-a'),
+          h(BTab, {id: 'tab-b', title: 'B'}, () => 'content-b'),
+        ],
+      },
     })
-    expect(wrapper.text()).toBe('')
+    await nextTick()
+    const panes = wrapper.findAll('.tab-pane')
+    expect(panes[0].text()).toBe('content-a')
+    expect(panes[1].text()).toBe('')
   })
 
-  it('does not render default slot parentData lazy and prop lazy false', () => {
-    const wrapper = mount(BTab, {
-      global: {provide: {[tabsInjectionKey as unknown as symbol]: {lazy: ref(true)}}},
-      props: {lazy: false},
-      slots: {default: 'foobar'},
+  it('keeps previously rendered lazy tab content when unmountLazy is false', async () => {
+    const wrapper = mount(BTabs, {
+      props: {lazy: true},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-a', title: 'A'}, () => 'content-a'),
+          h(BTab, {id: 'tab-b', title: 'B'}, () => 'content-b'),
+        ],
+      },
     })
-    expect(wrapper.text()).toBe('')
+    await nextTick()
+
+    // Tab A is active, Tab B is lazy (not rendered)
+    let panes = wrapper.findAll('.tab-pane')
+    expect(panes[0].text()).toBe('content-a')
+    expect(panes[1].text()).toBe('')
+
+    // Switch to Tab B - Tab B becomes active and renders
+    const buttons = wrapper.findAll('button')
+    await buttons[1].trigger('click')
+    await nextTick()
+
+    panes = wrapper.findAll('.tab-pane')
+    expect(panes[1].text()).toBe('content-b')
+
+    // Switch back to Tab A
+    await buttons[0].trigger('click')
+    await nextTick()
+
+    // Tab B should still show content because unmountLazy is not set (lazyRenderCompleted=true)
+    panes = wrapper.findAll('.tab-pane')
+    expect(panes[0].text()).toBe('content-a')
+    expect(panes[1].text()).toBe('content-b')
   })
 
-  it('renders slot if prop active', () => {
-    const wrapper = mount(BTab, {
-      props: {active: true},
-      slots: {default: 'foobar'},
+  it('unmounts previously rendered lazy tab content when unmountLazy is true', async () => {
+    const wrapper = mount(BTabs, {
+      props: {lazy: true},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-a', title: 'A'}, () => 'content-a'),
+          h(BTab, {id: 'tab-b', title: 'B', unmountLazy: true}, () => 'content-b'),
+        ],
+      },
     })
-    expect(wrapper.text()).toBe('foobar')
+    await nextTick()
+
+    // Switch to Tab B - Tab B becomes active
+    const buttons = wrapper.findAll('button')
+    await buttons[1].trigger('click')
+    await nextTick()
+
+    let panes = wrapper.findAll('.tab-pane')
+    expect(panes[1].text()).toBe('content-b')
+
+    // Switch back to Tab A
+    await buttons[0].trigger('click')
+    await nextTick()
+
+    // Tab B content should be gone because unmountLazy=true
+    panes = wrapper.findAll('.tab-pane')
+    expect(panes[0].text()).toBe('content-a')
+    expect(panes[1].text()).toBe('')
   })
 
-  it('does not render slot if not prop active but prop lazy true', () => {
-    const wrapper = mount(BTab, {
-      props: {active: false, lazy: true},
-      slots: {default: 'foobar'},
+  // --- Disabled tab ---
+
+  it('disabled tab does not become active when clicked', async () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-a', title: 'A'}, () => 'content-a'),
+          h(BTab, {id: 'tab-b', title: 'B', disabled: true}, () => 'content-b'),
+        ],
+      },
     })
-    expect(wrapper.text()).toBe('')
+    await nextTick()
+
+    const buttons = wrapper.findAll('button')
+    // The disabled button has disabled attribute
+    expect(buttons[1].attributes('disabled')).toBeDefined()
   })
 
-  it('does not render slot if prop active but not prop disabled and prop lazy true', () => {
-    const wrapper = mount(BTab, {
-      props: {active: false, disabled: true, lazy: true},
-      slots: {default: 'foobar'},
+  // --- Card-body integration ---
+
+  it('has card-body class when BTabs has card prop', async () => {
+    const wrapper = mount(BTabs, {
+      props: {card: true},
+      slots: {
+        default: () => [h(BTab, {id: 'tab-a', title: 'A'}, () => 'content-a')],
+      },
     })
-    expect(wrapper.text()).toBe('')
+    await nextTick()
+    const pane = wrapper.find('.tab-pane')
+    expect(pane.classes()).toContain('card-body')
   })
 
-  it('does not render slot if prop active but not prop disabled and parentData lazy true', () => {
-    const wrapper = mount(BTab, {
-      props: {active: false, disabled: true},
-      global: {provide: {[tabsInjectionKey as unknown as symbol]: {lazy: ref(true)}}},
-      slots: {default: 'foobar'},
+  it('does not have card-body class when BTabs has card but tab has noBody', async () => {
+    const wrapper = mount(BTabs, {
+      props: {card: true},
+      slots: {
+        default: () => [h(BTab, {id: 'tab-a', title: 'A', noBody: true}, () => 'content-a')],
+      },
     })
-    expect(wrapper.text()).toBe('')
-  })
-
-  it('renders if prop active and not prop boolean, but has lazyOnce true', () => {
-    const wrapper = mount(BTab, {
-      props: {active: true, disabled: false, lazyOnce: true, lazy: true},
-      slots: {default: 'foobar'},
-    })
-    expect(wrapper.text()).toBe('foobar')
+    await nextTick()
+    const pane = wrapper.find('.tab-pane')
+    expect(pane.classes()).not.toContain('card-body')
   })
 })

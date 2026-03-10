@@ -856,11 +856,13 @@ export default {
               },
               getFromPrimaryKey: {
                 type: '(primaryKey: unknown) => unknown',
-                description: 'Gets the item from the internal "computed items" representation when using the primary key. This is used to get the object reference of the item from the items when using the primary key, since the items are stored as the primary key value rather than the item itself. If no primaryKey is used, it will return undefined',
+                description:
+                  'Gets the item from the internal "computed items" representation when using the primary key. This is used to get the object reference of the item from the items when using the primary key, since the items are stored as the primary key value rather than the item itself. If no primaryKey is used, it will return undefined',
               },
               resolvedItems: {
                 type: 'ComputedRef<readonly unknown[]>',
-                description: 'A computed array of items resolved from their primary key values against the table\'s internal computed dataset. When a primaryKey is configured, expansion mechanisms may store only the primary key values. This property provides the corresponding full item objects by resolving those keys against the current internal items representation. If no primaryKey is used, this will mirror the expandedItems array. Note: Only items currently present in the internal computed dataset can be resolved. Keys that do not match an available item will be ignored',
+                description:
+                  "A computed array of items resolved from their primary key values against the table's internal computed dataset. When a primaryKey is configured, expansion mechanisms may store only the primary key values. This property provides the corresponding full item objects by resolving those keys against the current internal items representation. If no primaryKey is used, this will mirror the expandedItems array. Note: Only items currently present in the internal computed dataset can be resolved. Keys that do not match an available item will be ignored",
               },
               toggle: {
                 type: '(item: Item) => void',
@@ -910,11 +912,13 @@ export default {
               },
               getFromPrimaryKey: {
                 type: '(primaryKey: unknown) => unknown',
-                description: 'Gets the item from the internal "computed items" representation when using the primary key. This is used to get the object reference of the item from the items when using the primary key, since the items are stored as the primary key value rather than the item itself. If no primaryKey is used, it will return undefined',
+                description:
+                  'Gets the item from the internal "computed items" representation when using the primary key. This is used to get the object reference of the item from the items when using the primary key, since the items are stored as the primary key value rather than the item itself. If no primaryKey is used, it will return undefined',
               },
               resolvedItems: {
                 type: 'ComputedRef<readonly unknown[]>',
-                description: 'A computed array of items resolved from their primary key values against the table\'s internal computed dataset. When a primaryKey is configured, selection mechanisms may store only the primary key values. This property provides the corresponding full item objects by resolving those keys against the current internal items representation. If no primaryKey is used, this will mirror the selectedItems array. Note: Only items currently present in the internal computed dataset can be resolved. Keys that do not match an available item will be ignored',
+                description:
+                  "A computed array of items resolved from their primary key values against the table's internal computed dataset. When a primaryKey is configured, selection mechanisms may store only the primary key values. This property provides the corresponding full item objects by resolving those keys against the current internal items representation. If no primaryKey is used, this will mirror the selectedItems array. Note: Only items currently present in the internal computed dataset can be resolved. Keys that do not match an available item will be ignored",
               },
               handleRowSelection: {
                 type: '(obj: {item: Item; index: number; shiftClicked?: boolean; ctrlClicked?: boolean; metaClicked?: boolean}) => void',
@@ -991,11 +995,13 @@ export default {
               },
               getFromPrimaryKey: {
                 type: '(primaryKey: unknown) => unknown',
-                description: 'Gets the item from the internal "computed items" representation when using the primary key. This is used to get the object reference of the item from the items when using the primary key, since the items are stored as the primary key value rather than the item itself. If no primaryKey is used, it will return undefined',
+                description:
+                  'Gets the item from the internal "computed items" representation when using the primary key. This is used to get the object reference of the item from the items when using the primary key, since the items are stored as the primary key value rather than the item itself. If no primaryKey is used, it will return undefined',
               },
               resolvedItems: {
                 type: 'ComputedRef<readonly unknown[]>',
-                description: 'A computed array of items resolved from their primary key values against the table\'s internal computed dataset. When a primaryKey is configured, expansion mechanisms may store only the primary key values. This property provides the corresponding full item objects by resolving those keys against the current internal items representation. If no primaryKey is used, this will mirror the expandedItems array. Note: Only items currently present in the internal computed dataset can be resolved. Keys that do not match an available item will be ignored',
+                description:
+                  "A computed array of items resolved from their primary key values against the table's internal computed dataset. When a primaryKey is configured, expansion mechanisms may store only the primary key values. This property provides the corresponding full item objects by resolving those keys against the current internal items representation. If no primaryKey is used, this will mirror the expandedItems array. Note: Only items currently present in the internal computed dataset can be resolved. Keys that do not match an available item will be ignored",
               },
               toggle: {
                 type: '(item: Item) => void',

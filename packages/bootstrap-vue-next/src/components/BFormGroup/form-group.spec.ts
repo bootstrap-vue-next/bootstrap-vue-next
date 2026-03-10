@@ -11,6 +11,18 @@ import BFormRadio from '../BFormRadio/BFormRadio.vue'
 describe('form-group', () => {
   enableAutoUnmount(afterEach)
 
+  it('has static class b-form-group', () => {
+    const wrapper = mount(BFormGroup)
+    expect(wrapper.classes()).toContain('b-form-group')
+  })
+
+  it('has static class b-form-group when labelFor is set', () => {
+    const wrapper = mount(BFormGroup, {
+      props: {labelFor: 'foo'},
+    })
+    expect(wrapper.classes()).toContain('b-form-group')
+  })
+
   it('tag is default fieldset', () => {
     const wrapper = mount(BFormGroup)
     expect(wrapper.element.tagName).toBe('FIELDSET')
@@ -60,6 +72,23 @@ describe('form-group', () => {
     expect(wrapper.classes()).not.toContain('is-invalid')
   })
 
+  it('state class is reactive', async () => {
+    const wrapper = mount(BFormGroup, {
+      props: {state: null},
+    })
+    expect(wrapper.classes()).not.toContain('is-valid')
+    expect(wrapper.classes()).not.toContain('is-invalid')
+    await wrapper.setProps({state: true})
+    expect(wrapper.classes()).toContain('is-valid')
+    expect(wrapper.classes()).not.toContain('is-invalid')
+    await wrapper.setProps({state: false})
+    expect(wrapper.classes()).not.toContain('is-valid')
+    expect(wrapper.classes()).toContain('is-invalid')
+    await wrapper.setProps({state: null})
+    expect(wrapper.classes()).not.toContain('is-valid')
+    expect(wrapper.classes()).not.toContain('is-invalid')
+  })
+
   it('has class was-validated when prop validated true', () => {
     const wrapper = mount(BFormGroup, {
       props: {validated: true},
@@ -71,6 +100,17 @@ describe('form-group', () => {
     const wrapper = mount(BFormGroup, {
       props: {validated: false},
     })
+    expect(wrapper.classes()).not.toContain('was-validated')
+  })
+
+  it('validated class is reactive', async () => {
+    const wrapper = mount(BFormGroup, {
+      props: {validated: false},
+    })
+    expect(wrapper.classes()).not.toContain('was-validated')
+    await wrapper.setProps({validated: true})
+    expect(wrapper.classes()).toContain('was-validated')
+    await wrapper.setProps({validated: false})
     expect(wrapper.classes()).not.toContain('was-validated')
   })
 
@@ -753,6 +793,876 @@ describe('form-group', () => {
       // Button click should not focus the input
       expect(document.activeElement).not.toBe(input.element)
       wrapper.unmount()
+    })
+  })
+
+  describe('label rendering', () => {
+    it('renders legend tag when no labelFor is set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'My Label'},
+      })
+      expect(wrapper.find('legend').exists()).toBe(true)
+      expect(wrapper.find('label').exists()).toBe(false)
+    })
+
+    it('renders label tag when labelFor is set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'My Label', labelFor: 'input-id'},
+      })
+      expect(wrapper.find('label').exists()).toBe(true)
+      expect(wrapper.find('legend').exists()).toBe(false)
+    })
+
+    it('renders label text from prop', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'My Label Text'},
+      })
+      expect(wrapper.find('legend').text()).toBe('My Label Text')
+    })
+
+    it('renders label text from slot', () => {
+      const wrapper = mount(BFormGroup, {
+        slots: {label: 'Slot Label Text'},
+      })
+      expect(wrapper.find('legend').text()).toBe('Slot Label Text')
+    })
+
+    it('renders label HTML from slot', () => {
+      const wrapper = mount(BFormGroup, {
+        slots: {label: '<strong>Bold Label</strong>'},
+      })
+      expect(wrapper.find('legend').find('strong').exists()).toBe(true)
+      expect(wrapper.find('legend').find('strong').text()).toBe('Bold Label')
+    })
+
+    it('slot label takes precedence over prop label', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Prop Label'},
+        slots: {label: 'Slot Label'},
+      })
+      expect(wrapper.find('legend').text()).toBe('Slot Label')
+    })
+
+    it('does not render label element when no label prop or slot is provided and not horizontal', () => {
+      const wrapper = mount(BFormGroup)
+      expect(wrapper.find('legend').exists()).toBe(false)
+      expect(wrapper.find('label').exists()).toBe(false)
+    })
+
+    it('renders label element when horizontal even without label prop or slot', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {labelCols: 3},
+      })
+      expect(wrapper.find('legend').exists()).toBe(true)
+    })
+
+    it('label has for attribute matching labelFor prop', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'My Label', labelFor: 'my-input'},
+      })
+      expect(wrapper.find('label').attributes('for')).toBe('my-input')
+    })
+
+    it('label prop is reactive', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Initial'},
+      })
+      expect(wrapper.find('legend').text()).toBe('Initial')
+      await wrapper.setProps({label: 'Updated'})
+      expect(wrapper.find('legend').text()).toBe('Updated')
+    })
+  })
+
+  describe('label classes', () => {
+    it('legend has col-form-label class by default', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo'},
+      })
+      expect(wrapper.find('legend').classes()).toContain('col-form-label')
+    })
+
+    it('label has form-label and d-block classes when labelFor is set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelFor: 'bar'},
+      })
+      const label = wrapper.find('label')
+      expect(label.classes()).toContain('form-label')
+      expect(label.classes()).toContain('d-block')
+    })
+
+    it('legend has bv-no-focus-ring class', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo'},
+      })
+      expect(wrapper.find('legend').classes()).toContain('bv-no-focus-ring')
+    })
+
+    it('label does not have bv-no-focus-ring class when labelFor is set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelFor: 'bar'},
+      })
+      expect(wrapper.find('label').classes()).not.toContain('bv-no-focus-ring')
+    })
+
+    it('legend has pt-0 class when not horizontal', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo'},
+      })
+      expect(wrapper.find('legend').classes()).toContain('pt-0')
+    })
+
+    it('legend does not have pt-0 class when horizontal', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelCols: 3},
+      })
+      expect(wrapper.find('legend').classes()).not.toContain('pt-0')
+    })
+
+    it('applies col-form-label-{size} class when labelSize is set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelSize: 'lg'},
+      })
+      expect(wrapper.find('legend').classes()).toContain('col-form-label-lg')
+    })
+
+    it('applies col-form-label-sm class when labelSize is sm', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelSize: 'sm'},
+      })
+      expect(wrapper.find('legend').classes()).toContain('col-form-label-sm')
+    })
+
+    it('does not apply col-form-label-{size} class when labelSize is not set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo'},
+      })
+      const classes = wrapper.find('legend').classes()
+      expect(classes.some((c) => c.startsWith('col-form-label-'))).toBe(false)
+    })
+
+    it('applies visually-hidden class when labelVisuallyHidden is true', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelVisuallyHidden: true},
+      })
+      expect(wrapper.find('legend').classes()).toContain('visually-hidden')
+    })
+
+    it('does not apply visually-hidden class when labelVisuallyHidden is false', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelVisuallyHidden: false},
+      })
+      expect(wrapper.find('legend').classes()).not.toContain('visually-hidden')
+    })
+
+    it('applies custom labelClass', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelClass: 'my-custom-class'},
+      })
+      expect(wrapper.find('legend').classes()).toContain('my-custom-class')
+    })
+
+    it('applies array labelClass', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelClass: ['class-a', 'class-b']},
+      })
+      const legend = wrapper.find('legend')
+      expect(legend.classes()).toContain('class-a')
+      expect(legend.classes()).toContain('class-b')
+    })
+
+    it('label has col-form-label class in horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelCols: 3},
+      })
+      expect(wrapper.find('legend').classes()).toContain('col-form-label')
+    })
+
+    it('applies labelAlign classes in non-horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelFor: 'bar', labelAlign: 'end'},
+      })
+      expect(wrapper.find('label').classes()).toContain('text-end')
+    })
+
+    it('applies labelAlignSm classes in non-horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelFor: 'bar', labelAlignSm: 'center'},
+      })
+      expect(wrapper.find('label').classes()).toContain('text-sm-center')
+    })
+
+    it('applies labelAlignLg classes in non-horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelFor: 'bar', labelAlignLg: 'start'},
+      })
+      expect(wrapper.find('label').classes()).toContain('text-lg-start')
+    })
+
+    it('applies labelAlignXl classes in non-horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelFor: 'bar', labelAlignXl: 'end'},
+      })
+      expect(wrapper.find('label').classes()).toContain('text-xl-end')
+    })
+  })
+
+  describe('label id', () => {
+    it('legend has an auto-generated id', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo'},
+      })
+      expect(wrapper.find('legend').attributes('id')).toBeDefined()
+    })
+
+    it('label has an auto-generated id when labelFor is set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelFor: 'bar'},
+      })
+      expect(wrapper.find('label').attributes('id')).toBeDefined()
+    })
+
+    it('legend has tabindex -1', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo'},
+      })
+      expect(wrapper.find('legend').attributes('tabindex')).toBe('-1')
+    })
+
+    it('label does not have tabindex when labelFor is set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo', labelFor: 'bar'},
+      })
+      expect(wrapper.find('label').attributes('tabindex')).toBeUndefined()
+    })
+  })
+
+  describe('invalid feedback', () => {
+    it('renders invalid feedback from prop', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {invalidFeedback: 'Error message'},
+      })
+      expect(wrapper.text()).toContain('Error message')
+    })
+
+    it('renders invalid feedback from slot', () => {
+      const wrapper = mount(BFormGroup, {
+        slots: {'invalid-feedback': 'Slot error message'},
+      })
+      expect(wrapper.text()).toContain('Slot error message')
+    })
+
+    it('slot invalid-feedback takes precedence over prop', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {invalidFeedback: 'Prop error'},
+        slots: {'invalid-feedback': 'Slot error'},
+      })
+      expect(wrapper.text()).toContain('Slot error')
+      expect(wrapper.text()).not.toContain('Prop error')
+    })
+
+    it('does not render invalid feedback when neither prop nor slot is provided', () => {
+      const wrapper = mount(BFormGroup)
+      expect(wrapper.find('.invalid-feedback').exists()).toBe(false)
+      expect(wrapper.find('.invalid-tooltip').exists()).toBe(false)
+    })
+
+    it('invalid feedback has auto-generated id', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {invalidFeedback: 'Error'},
+      })
+      const feedback = wrapper.find('.invalid-feedback')
+      expect(feedback.attributes('id')).toBeDefined()
+    })
+  })
+
+  describe('valid feedback', () => {
+    it('renders valid feedback from prop', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {validFeedback: 'Success message'},
+      })
+      expect(wrapper.text()).toContain('Success message')
+    })
+
+    it('renders valid feedback from slot', () => {
+      const wrapper = mount(BFormGroup, {
+        slots: {'valid-feedback': 'Slot success message'},
+      })
+      expect(wrapper.text()).toContain('Slot success message')
+    })
+
+    it('slot valid-feedback takes precedence over prop', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {validFeedback: 'Prop success'},
+        slots: {'valid-feedback': 'Slot success'},
+      })
+      expect(wrapper.text()).toContain('Slot success')
+      expect(wrapper.text()).not.toContain('Prop success')
+    })
+
+    it('does not render valid feedback when neither prop nor slot is provided', () => {
+      const wrapper = mount(BFormGroup)
+      expect(wrapper.find('.valid-feedback').exists()).toBe(false)
+      expect(wrapper.find('.valid-tooltip').exists()).toBe(false)
+    })
+
+    it('valid feedback has auto-generated id', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {validFeedback: 'Good'},
+      })
+      const feedback = wrapper.find('.valid-feedback')
+      expect(feedback.attributes('id')).toBeDefined()
+    })
+  })
+
+  describe('description', () => {
+    it('renders description from prop', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {description: 'Help text'},
+      })
+      expect(wrapper.text()).toContain('Help text')
+    })
+
+    it('renders description from slot', () => {
+      const wrapper = mount(BFormGroup, {
+        slots: {description: 'Slot help text'},
+      })
+      expect(wrapper.text()).toContain('Slot help text')
+    })
+
+    it('slot description takes precedence over prop', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {description: 'Prop help'},
+        slots: {description: 'Slot help'},
+      })
+      expect(wrapper.text()).toContain('Slot help')
+      expect(wrapper.text()).not.toContain('Prop help')
+    })
+
+    it('does not render description when neither prop nor slot is provided', () => {
+      const wrapper = mount(BFormGroup)
+      expect(wrapper.find('.form-text').exists()).toBe(false)
+    })
+
+    it('description has auto-generated id', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {description: 'Help'},
+      })
+      const desc = wrapper.find('.form-text')
+      expect(desc.attributes('id')).toBeDefined()
+    })
+  })
+
+  describe('tooltip feedback', () => {
+    it('renders invalid-tooltip class when tooltip is true', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {invalidFeedback: 'Error', tooltip: true},
+      })
+      expect(wrapper.find('.invalid-tooltip').exists()).toBe(true)
+      expect(wrapper.find('.invalid-feedback').exists()).toBe(false)
+    })
+
+    it('renders valid-tooltip class when tooltip is true', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {validFeedback: 'Good', tooltip: true},
+      })
+      expect(wrapper.find('.valid-tooltip').exists()).toBe(true)
+      expect(wrapper.find('.valid-feedback').exists()).toBe(false)
+    })
+
+    it('renders feedback classes (not tooltip) when tooltip is false', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {invalidFeedback: 'Error', validFeedback: 'Good', tooltip: false},
+      })
+      expect(wrapper.find('.invalid-feedback').exists()).toBe(true)
+      expect(wrapper.find('.valid-feedback').exists()).toBe(true)
+      expect(wrapper.find('.invalid-tooltip').exists()).toBe(false)
+      expect(wrapper.find('.valid-tooltip').exists()).toBe(false)
+    })
+  })
+
+  describe('feedbackAriaLive', () => {
+    it('invalid feedback has aria-live assertive by default', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {invalidFeedback: 'Error'},
+      })
+      expect(wrapper.find('.invalid-feedback').attributes('aria-live')).toBe('assertive')
+    })
+
+    it('invalid feedback has custom aria-live value', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {invalidFeedback: 'Error', feedbackAriaLive: 'polite'},
+      })
+      expect(wrapper.find('.invalid-feedback').attributes('aria-live')).toBe('polite')
+    })
+
+    it('valid feedback has aria-live assertive by default', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {validFeedback: 'Good'},
+      })
+      expect(wrapper.find('.valid-feedback').attributes('aria-live')).toBe('assertive')
+    })
+
+    it('valid feedback has custom aria-live value', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {validFeedback: 'Good', feedbackAriaLive: 'polite'},
+      })
+      expect(wrapper.find('.valid-feedback').attributes('aria-live')).toBe('polite')
+    })
+  })
+
+  describe('floating label', () => {
+    it('renders form-floating wrapper when floating is true', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {floating: true, label: 'Email'},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      expect(wrapper.find('.form-floating').exists()).toBe(true)
+    })
+
+    it('does not render form-floating wrapper when floating is false', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {floating: false, label: 'Email'},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      expect(wrapper.find('.form-floating').exists()).toBe(false)
+    })
+
+    it('in floating mode, label comes after default slot content', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {floating: true, label: 'Email'},
+        slots: {
+          default: h(BFormInput, {id: 'email-input'}),
+        },
+      })
+      await nextTick()
+      const floatingDiv = wrapper.find('.form-floating')
+      const {children} = floatingDiv.element
+      // Input should be before label in the DOM for floating labels
+      // When child BFormInput provides its id, labelTag becomes 'label' instead of 'legend'
+      expect(children[0].tagName).toBe('INPUT')
+      expect(children[1].tagName).toBe('LABEL')
+    })
+
+    it('does not apply form-floating when horizontal', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {floating: true, label: 'Email', labelCols: 3},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      expect(wrapper.find('.form-floating').exists()).toBe(false)
+    })
+  })
+
+  describe('default slot props', () => {
+    it('passes id to default slot', () => {
+      let slotProps: Record<string, unknown> | undefined
+      mount(BFormGroup, {
+        props: {id: 'my-group'},
+        slots: {
+          default: (props: Record<string, unknown>) => {
+            slotProps = props
+            return h('div')
+          },
+        },
+      })
+      expect(slotProps).toBeDefined()
+      expect(slotProps!.id).toBe('my-group')
+    })
+
+    it('passes descriptionId to default slot', () => {
+      let slotProps: Record<string, unknown> | undefined
+      mount(BFormGroup, {
+        props: {description: 'Help text'},
+        slots: {
+          default: (props: Record<string, unknown>) => {
+            slotProps = props
+            return h('div')
+          },
+        },
+      })
+      expect(slotProps).toBeDefined()
+      expect(slotProps!.descriptionId).toBeDefined()
+    })
+
+    it('passes labelId to default slot', () => {
+      let slotProps: Record<string, unknown> | undefined
+      mount(BFormGroup, {
+        props: {label: 'My Label'},
+        slots: {
+          default: (props: Record<string, unknown>) => {
+            slotProps = props
+            return h('div')
+          },
+        },
+      })
+      expect(slotProps).toBeDefined()
+      expect(slotProps!.labelId).toBeDefined()
+    })
+
+    it('passes ariaDescribedby as null to default slot', () => {
+      let slotProps: Record<string, unknown> | undefined
+      mount(BFormGroup, {
+        slots: {
+          default: (props: Record<string, unknown>) => {
+            slotProps = props
+            return h('div')
+          },
+        },
+      })
+      expect(slotProps).toBeDefined()
+      expect(slotProps!.ariaDescribedby).toBeNull()
+    })
+  })
+
+  describe('disabled reactivity', () => {
+    it('disabled attribute is reactive', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {disabled: false},
+      })
+      expect(wrapper.attributes('disabled')).toBeUndefined()
+      await wrapper.setProps({disabled: true})
+      expect(wrapper.attributes('disabled')).toBe('')
+      await wrapper.setProps({disabled: false})
+      expect(wrapper.attributes('disabled')).toBeUndefined()
+    })
+  })
+
+  describe('inheritAttrs', () => {
+    it('forwards custom attrs to root element', () => {
+      const wrapper = mount(BFormGroup, {
+        attrs: {'data-testid': 'my-form-group', 'aria-label': 'test'},
+      })
+      expect(wrapper.attributes('data-testid')).toBe('my-form-group')
+      expect(wrapper.attributes('aria-label')).toBe('test')
+    })
+
+    it('forwards style attribute to root element', () => {
+      const wrapper = mount(BFormGroup, {
+        attrs: {style: 'margin-top: 10px'},
+      })
+      expect(wrapper.attributes('style')).toContain('margin-top')
+    })
+  })
+
+  describe('horizontal layout structure', () => {
+    it('renders row structure when labelCols is set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelCols: 3},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      // BFormRow renders a row d-flex flex-wrap div
+      expect(wrapper.find('.row').exists()).toBe(true)
+    })
+
+    it('renders row structure when contentCols is set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', contentCols: 9},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      expect(wrapper.find('.row').exists()).toBe(true)
+    })
+
+    it('does not render row structure when no col props are set', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name'},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      expect(wrapper.find('.row').exists()).toBe(false)
+    })
+
+    it('renders col-3 class on label when labelCols is 3', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelCols: 3},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('col-3')
+    })
+
+    it('renders correct labelColsSm class', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelColsSm: 4},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('col-sm-4')
+    })
+
+    it('renders correct labelColsMd class', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelColsMd: 5},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('col-md-5')
+    })
+
+    it('renders correct labelColsLg class', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelColsLg: 2},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('col-lg-2')
+    })
+
+    it('renders correct labelColsXl class', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelColsXl: 6},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('col-xl-6')
+    })
+
+    it('renders col class when labelCols is true (boolean)', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelCols: true},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('col')
+    })
+
+    it('renders col class when contentCols is true (boolean)', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', contentCols: true},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      // Content area should have col class
+      expect(wrapper.find('.row').exists()).toBe(true)
+    })
+
+    it('applies labelAlignMd to label in horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelColsMd: 3, labelAlignMd: 'end'},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('text-md-end')
+    })
+
+    it('applies labelAlignSm to label in horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelColsSm: 3, labelAlignSm: 'center'},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('text-sm-center')
+    })
+
+    it('applies labelAlignLg to label in horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelColsLg: 3, labelAlignLg: 'start'},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('text-lg-start')
+    })
+
+    it('applies labelAlignXl to label in horizontal mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelColsXl: 3, labelAlignXl: 'end'},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('text-xl-end')
+    })
+
+    it('applies content col classes with contentCols number', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', contentCols: 9},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      // Find the content column (not the label)
+      const cols = wrapper.findAll('[class*="col"]')
+      const contentCol = cols.find(
+        (el) => el.classes().includes('col-9') && !el.text().includes('Name')
+      )
+      expect(contentCol).toBeDefined()
+    })
+
+    it('applies contentColsSm classes', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', contentColsSm: 8},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const cols = wrapper.findAll('[class*="col"]')
+      const contentCol = cols.find((el) => el.classes().includes('col-sm-8'))
+      expect(contentCol).toBeDefined()
+    })
+
+    it('applies contentColsMd classes', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', contentColsMd: 7},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const cols = wrapper.findAll('[class*="col"]')
+      const contentCol = cols.find((el) => el.classes().includes('col-md-7'))
+      expect(contentCol).toBeDefined()
+    })
+
+    it('applies contentColsLg classes', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', contentColsLg: 6},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const cols = wrapper.findAll('[class*="col"]')
+      const contentCol = cols.find((el) => el.classes().includes('col-lg-6'))
+      expect(contentCol).toBeDefined()
+    })
+
+    it('applies contentColsXl classes', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', contentColsXl: 5},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const cols = wrapper.findAll('[class*="col"]')
+      const contentCol = cols.find((el) => el.classes().includes('col-xl-5'))
+      expect(contentCol).toBeDefined()
+    })
+
+    it('uses auto keyword for content cols', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', contentCols: 'auto'},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const cols = wrapper.findAll('[class*="col"]')
+      const contentCol = cols.find((el) => el.classes().includes('col-auto'))
+      expect(contentCol).toBeDefined()
+    })
+
+    it('uses auto keyword for label cols', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Name', labelCols: 'auto'},
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      const labelCol = wrapper.findAll('[class*="col"]').find((el) => el.text().includes('Name'))
+      expect(labelCol).toBeDefined()
+      expect(labelCol!.classes()).toContain('col-auto')
+    })
+  })
+
+  describe('default slot rendering', () => {
+    it('renders text in default slot', () => {
+      const wrapper = mount(BFormGroup, {
+        slots: {default: 'Default content'},
+      })
+      expect(wrapper.text()).toContain('Default content')
+    })
+
+    it('renders HTML in default slot', () => {
+      const wrapper = mount(BFormGroup, {
+        slots: {default: '<span class="custom">Content</span>'},
+      })
+      expect(wrapper.find('.custom').exists()).toBe(true)
+      expect(wrapper.find('.custom').text()).toBe('Content')
+    })
+
+    it('renders component in default slot', () => {
+      const wrapper = mount(BFormGroup, {
+        slots: {
+          default: h(BFormInput, {id: 'my-input'}),
+        },
+      })
+      expect(wrapper.find('#my-input').exists()).toBe(true)
+    })
+  })
+
+  describe('combined rendering', () => {
+    it('renders label, default slot, description, and feedback together', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Username',
+          description: 'Enter your username',
+          invalidFeedback: 'Username is required',
+          validFeedback: 'Looks good!',
+          state: false,
+        },
+        slots: {
+          default: h(BFormInput, {id: 'username'}),
+        },
+      })
+      expect(wrapper.text()).toContain('Username')
+      expect(wrapper.text()).toContain('Enter your username')
+      expect(wrapper.text()).toContain('Username is required')
+      expect(wrapper.text()).toContain('Looks good!')
+      expect(wrapper.find('#username').exists()).toBe(true)
+    })
+
+    it('fieldset contains label, default, feedback and description in vertical mode', () => {
+      const wrapper = mount(BFormGroup, {
+        props: {
+          label: 'Name',
+          invalidFeedback: 'Invalid',
+          description: 'Help',
+        },
+        slots: {
+          default: h(BFormInput),
+        },
+      })
+      expect(wrapper.element.tagName).toBe('FIELDSET')
+      expect(wrapper.find('legend').text()).toBe('Name')
+      expect(wrapper.find('.invalid-feedback').text()).toBe('Invalid')
+      expect(wrapper.find('.form-text').text()).toBe('Help')
+      expect(wrapper.find('input').exists()).toBe(true)
     })
   })
 })

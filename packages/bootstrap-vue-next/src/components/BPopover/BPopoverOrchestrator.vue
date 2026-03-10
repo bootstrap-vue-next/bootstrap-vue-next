@@ -11,6 +11,7 @@ import BOrchestrator from '../BApp/BOrchestrator.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 
 import {usePopover} from '../../composables'
+import {deprecatedNote} from '../../utils/deprecatedTools.ts'
 
 const _props = withDefaults(defineProps<BPopoverOrchestratorProps>(), {
   teleportDisabled: false,
@@ -24,9 +25,7 @@ if (!tools._isOrchestratorInstalled.value) {
   renderOrchestrator = true
 }
 
-if (process.env.NODE_ENV === 'development') {
-  console.warn('BPopoverOrchestrator is deprecated, use BOrchestrator instead')
-}
+deprecatedNote('BPopoverOrchestrator is deprecated, use BOrchestrator instead')
 
 defineExpose({
   ...tools,

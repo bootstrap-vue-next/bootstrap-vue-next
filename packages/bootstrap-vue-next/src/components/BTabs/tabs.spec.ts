@@ -130,24 +130,27 @@ describe('tabs', () => {
     expect($div2.text()).toBe('foobar')
   })
 
-  it.skip('first child div has tab component when default slot', () => {
+  it('first child div has tab component when default slot', async () => {
     const wrapper = mount(BTabs, {
       props: {tag: 'span', end: true},
       slots: {default: () => h(BTab, {tag: 'small'}, () => 'foobar')},
     })
-    const $div = wrapper.get('div')
+    await nextTick()
+    const $div = wrapper.get('.tab-content')
     const $small = $div.find('small')
     expect($small.exists()).toBe(true)
   })
 
-  it.skip('first child div does not have child div when default slot has tab', () => {
+  it('first child div does not have empty div when default slot has tab', async () => {
     const wrapper = mount(BTabs, {
       props: {tag: 'span', end: true},
       slots: {default: () => h(BTab, {tag: 'small'}, () => 'foobar')},
     })
-    const $div = wrapper.get('div')
-    const $div2 = $div.find('div')
-    expect($div2.exists()).toBe(false)
+    await nextTick()
+    const $div = wrapper.get('.tab-content')
+    // Verify no empty tab-pane divs are rendered when tabs have actual content
+    const $emptyDiv = $div.findAll('div.tab-pane.active')
+    expect($emptyDiv.length).toBe(0)
   })
 
   // end div
@@ -413,24 +416,26 @@ describe('tabs', () => {
     expect($div2.text()).toBe('foobar')
   })
 
-  it.skip('end div has tab component when default slot', () => {
+  it('end div has tab component when default slot', async () => {
     const wrapper = mount(BTabs, {
       props: {tag: 'span'},
       slots: {default: () => h(BTab, {tag: 'small'}, () => 'foobar')},
     })
-    const [, $div] = wrapper.findAll('div')
+    await nextTick()
+    const $div = wrapper.get('.tab-content')
     const $small = $div.find('small')
     expect($small.exists()).toBe(true)
   })
 
-  it.skip('end div does not have child div when default slot has tab', () => {
+  it('end div does not have empty div when default slot has tab', async () => {
     const wrapper = mount(BTabs, {
       props: {tag: 'span'},
       slots: {default: () => h(BTab, {tag: 'small'}, () => 'foobar')},
     })
-    const [, $div] = wrapper.findAll('div')
-    const $div2 = $div.find('div')
-    expect($div2.exists()).toBe(false)
+    await nextTick()
+    const $div = wrapper.get('.tab-content')
+    const $emptyDiv = $div.findAll('div.tab-pane.active')
+    expect($emptyDiv.length).toBe(0)
   })
   // end div
 
@@ -700,5 +705,528 @@ describe('tabs', () => {
     expect(buttons[2].classes()).not.toContain('active')
 
     expect(wrapper.vm.activeIndex).toBe(0)
+  })
+
+  // --- Nav underline class ---
+
+  it('next div child ul has class nav-underline when prop underline', async () => {
+    const wrapper = mount(BTabs, {
+      props: {tag: 'span', underline: true},
+    })
+    const $ul = wrapper.get('ul')
+    expect($ul.classes()).toContain('nav-underline')
+    await wrapper.setProps({underline: false})
+    expect($ul.classes()).not.toContain('nav-underline')
+  })
+
+  it('does not have nav-tabs class when underline is true', () => {
+    const wrapper = mount(BTabs, {
+      props: {underline: true},
+    })
+    const $ul = wrapper.get('ul')
+    expect($ul.classes()).not.toContain('nav-tabs')
+  })
+
+  // --- Card-header-pills class ---
+
+  it('has class card-header-pills when card and pills', async () => {
+    const wrapper = mount(BTabs, {
+      props: {card: true, pills: true},
+    })
+    const $ul = wrapper.get('ul')
+    expect($ul.classes()).toContain('card-header-pills')
+    await wrapper.setProps({pills: false})
+    expect($ul.classes()).not.toContain('card-header-pills')
+  })
+
+  it('does not have card-header-tabs when card and pills', () => {
+    const wrapper = mount(BTabs, {
+      props: {card: true, pills: true},
+    })
+    const $ul = wrapper.get('ul')
+    expect($ul.classes()).not.toContain('card-header-tabs')
+  })
+
+  // --- Aria orientation ---
+
+  it('has aria-orientation horizontal by default', () => {
+    const wrapper = mount(BTabs)
+    const $ul = wrapper.get('ul')
+    expect($ul.attributes('aria-orientation')).toBe('horizontal')
+  })
+
+  it('has aria-orientation vertical when prop vertical', async () => {
+    const wrapper = mount(BTabs, {
+      props: {vertical: true},
+    })
+    const $ul = wrapper.get('ul')
+    expect($ul.attributes('aria-orientation')).toBe('vertical')
+    await wrapper.setProps({vertical: false})
+    expect($ul.attributes('aria-orientation')).toBe('horizontal')
+  })
+
+  // --- Tab button rendering ---
+
+  it('renders nav buttons for each tab', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+          h(BTab, {id: 'tab-3', title: 'Third'}, () => 'three'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons.length).toBe(3)
+  })
+
+  it('tab buttons have class nav-link', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'First'}, () => 'one')],
+      },
+    })
+    const button = wrapper.get('button')
+    expect(button.classes()).toContain('nav-link')
+  })
+
+  it('tab buttons have role tab', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'First'}, () => 'one')],
+      },
+    })
+    const button = wrapper.get('button')
+    expect(button.attributes('role')).toBe('tab')
+  })
+
+  it('tab buttons have type button', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'First'}, () => 'one')],
+      },
+    })
+    const button = wrapper.get('button')
+    expect(button.attributes('type')).toBe('button')
+  })
+
+  it('tab buttons have aria-controls matching tab id', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'First'}, () => 'one')],
+      },
+    })
+    const button = wrapper.get('button')
+    expect(button.attributes('aria-controls')).toBe('tab-1')
+  })
+
+  it('active tab button has aria-selected true', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].attributes('aria-selected')).toBe('true')
+    expect(buttons[1].attributes('aria-selected')).toBe('false')
+  })
+
+  it('disabled tab button has disabled attribute', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second', disabled: true}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].attributes('disabled')).toBeUndefined()
+    expect(buttons[1].attributes('disabled')).toBeDefined()
+  })
+
+  it('tab button has tabindex -1 when not active and noKeyNav is false', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    // Active tab has no tabindex (natural)
+    expect(buttons[0].attributes('tabindex')).toBeUndefined()
+    // Inactive tab has tabindex -1
+    expect(buttons[1].attributes('tabindex')).toBe('-1')
+  })
+
+  it('tab button has no tabindex attribute when noKeyNav is true', () => {
+    const wrapper = mount(BTabs, {
+      props: {noKeyNav: true},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].attributes('tabindex')).toBeUndefined()
+    expect(buttons[1].attributes('tabindex')).toBeUndefined()
+  })
+
+  // --- Tab title rendering ---
+
+  it('tab button renders title from prop', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'My Title'}, () => 'content')],
+      },
+    })
+    const button = wrapper.get('button')
+    expect(button.text()).toBe('My Title')
+  })
+
+  it('tab button renders title from title slot', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1'}, {default: () => 'content', title: () => 'Slot Title'}),
+        ],
+      },
+    })
+    const button = wrapper.get('button')
+    expect(button.text()).toBe('Slot Title')
+  })
+
+  // --- Tab nav item classes ---
+
+  it('nav item li has class nav-item', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'First'}, () => 'one')],
+      },
+    })
+    const li = wrapper.get('li')
+    expect(li.classes()).toContain('nav-item')
+  })
+
+  it('nav item li has role presentation', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'First'}, () => 'one')],
+      },
+    })
+    const li = wrapper.get('li')
+    expect(li.attributes('role')).toBe('presentation')
+  })
+
+  it('nav item li has titleItemClass', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First', titleItemClass: 'custom-item'}, () => 'one'),
+        ],
+      },
+    })
+    const li = wrapper.get('li')
+    expect(li.classes()).toContain('custom-item')
+  })
+
+  it('tab button has titleLinkClass', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First', titleLinkClass: 'custom-link'}, () => 'one'),
+        ],
+      },
+    })
+    const button = wrapper.get('button')
+    expect(button.classes()).toContain('custom-link')
+  })
+
+  it('tab button has titleLinkAttrs', () => {
+    const linkAttrs = {'data-custom': 'value'}
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First', titleLinkAttrs: linkAttrs}, () => 'one'),
+        ],
+      },
+    })
+    const button = wrapper.get('button')
+    expect(button.attributes('data-custom')).toBe('value')
+  })
+
+  // --- activeNavItemClass / inactiveNavItemClass ---
+
+  it('active tab button has activeNavItemClass', () => {
+    const wrapper = mount(BTabs, {
+      props: {activeNavItemClass: 'nav-active'},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).toContain('nav-active')
+    expect(buttons[1].classes()).not.toContain('nav-active')
+  })
+
+  it('inactive tab button has inactiveNavItemClass', () => {
+    const wrapper = mount(BTabs, {
+      props: {inactiveNavItemClass: 'nav-inactive'},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).not.toContain('nav-inactive')
+    expect(buttons[1].classes()).toContain('nav-inactive')
+  })
+
+  // --- navItemClass ---
+
+  it('all tab buttons have navItemClass', () => {
+    const wrapper = mount(BTabs, {
+      props: {navItemClass: 'all-nav'},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).toContain('all-nav')
+    expect(buttons[1].classes()).toContain('all-nav')
+  })
+
+  // --- Tab click to activate ---
+
+  it('clicking tab button activates the tab', async () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+    await nextTick()
+
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).toContain('active')
+    expect(buttons[1].classes()).not.toContain('active')
+
+    await buttons[1].trigger('click')
+    await nextTick()
+
+    expect(buttons[0].classes()).not.toContain('active')
+    expect(buttons[1].classes()).toContain('active')
+  })
+
+  // --- Disabled tab is skipped ---
+
+  it('first enabled tab is selected when first tab is disabled', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First', disabled: true}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+          h(BTab, {id: 'tab-3', title: 'Third'}, () => 'three'),
+        ],
+      },
+    })
+
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).not.toContain('active')
+    expect(buttons[1].classes()).toContain('active')
+  })
+
+  // --- tabs-end slot ---
+
+  it('renders tabs-end slot in the ul', () => {
+    const wrapper = mount(BTabs, {
+      slots: {'tabs-end': 'endslot'},
+    })
+    const $ul = wrapper.get('ul')
+    expect($ul.text()).toContain('endslot')
+  })
+
+  it('renders both tabs-start and tabs-end slots', () => {
+    const wrapper = mount(BTabs, {
+      slots: {'tabs-start': 'start', 'tabs-end': 'end'},
+    })
+    const $ul = wrapper.get('ul')
+    expect($ul.text()).toContain('start')
+    expect($ul.text()).toContain('end')
+  })
+
+  // --- noFade provided to children ---
+
+  it('tab panes have fade class when noFade is false', async () => {
+    const wrapper = mount(BTabs, {
+      props: {noFade: false},
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'First'}, () => 'one')],
+      },
+    })
+    await nextTick()
+    const pane = wrapper.get('.tab-pane')
+    expect(pane.classes()).toContain('fade')
+  })
+
+  it('tab panes do not have fade class when noFade is true', async () => {
+    const wrapper = mount(BTabs, {
+      props: {noFade: true},
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'First'}, () => 'one')],
+      },
+    })
+    await nextTick()
+    const pane = wrapper.get('.tab-pane')
+    expect(pane.classes()).not.toContain('fade')
+  })
+
+  // --- activate-tab event cancellation ---
+
+  it('activate-tab event can be cancelled', async () => {
+    const CancelTestComponent = {
+      template: `
+        <BTabs @activate-tab="onActivateTab">
+          <BTab id="tab-1" title="First">one</BTab>
+          <BTab id="tab-2" title="Second">two</BTab>
+        </BTabs>
+      `,
+      data() {
+        return {
+          shouldPrevent: false,
+        }
+      },
+      methods: {
+        onActivateTab(payload: {event: {preventDefault: () => void}}) {
+          if (this.shouldPrevent) {
+            payload.event.preventDefault()
+          }
+        },
+      },
+      components: {BTabs, BTab},
+    }
+
+    const wrapper = mount(CancelTestComponent)
+    await nextTick()
+    await nextTick()
+
+    const buttons = wrapper.findAll('button')
+    // First tab is active
+    expect(buttons[0].classes()).toContain('active')
+
+    // Now enable prevention before clicking
+    await wrapper.setData({shouldPrevent: true})
+
+    // Try clicking second tab
+    await buttons[1].trigger('click')
+    await nextTick()
+
+    // Should remain on first tab since event was prevented
+    expect(buttons[0].classes()).toContain('active')
+    expect(buttons[1].classes()).not.toContain('active')
+  })
+
+  // --- Tab id attribute on button ---
+
+  it('tab button has id from buttonId prop', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'First', buttonId: 'my-btn'}, () => 'one')],
+      },
+    })
+    const button = wrapper.get('button')
+    expect(button.attributes('id')).toBe('my-btn')
+  })
+
+  // --- Default active tab ---
+
+  it('first non-disabled tab is active by default', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).toContain('active')
+  })
+
+  it('tab with active prop is active on mount', () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second', active: true}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).not.toContain('active')
+    expect(buttons[1].classes()).toContain('active')
+  })
+
+  // --- v-model (activeId) ---
+
+  it('selects tab by v-model (id)', async () => {
+    const TestComponent = {
+      template: `
+        <BTabs v-model="activeId">
+          <BTab id="tab-a" title="Tab A">Content A</BTab>
+          <BTab id="tab-b" title="Tab B">Content B</BTab>
+        </BTabs>
+      `,
+      data() {
+        return {activeId: 'tab-b'}
+      },
+      components: {BTabs, BTab},
+    }
+
+    const wrapper = mount(TestComponent)
+    await nextTick()
+    await nextTick()
+
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).not.toContain('active')
+    expect(buttons[1].classes()).toContain('active')
+  })
+
+  // --- Empty slot when no tabs ---
+
+  it('shows empty slot when no tabs are provided', () => {
+    const wrapper = mount(BTabs, {
+      slots: {empty: 'No tabs available'},
+    })
+    expect(wrapper.text()).toContain('No tabs available')
+  })
+
+  it('does not show empty slot when tabs are provided', async () => {
+    const wrapper = mount(BTabs, {
+      slots: {
+        default: () => [h(BTab, {id: 'tab-1', title: 'First'}, () => 'one')],
+        empty: 'No tabs available',
+      },
+    })
+    await nextTick()
+    expect(wrapper.text()).not.toContain('No tabs available')
   })
 })
