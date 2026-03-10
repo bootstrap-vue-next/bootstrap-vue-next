@@ -957,6 +957,83 @@ describe('sorting with accessor function', () => {
       .map((row) => row.find('td').text())
     expect(text).toStrictEqual(['Alice', 'Bob', 'Charlie'])
   })
+
+  it('emits sorted event with field key when using function accessor', async () => {
+    const fields: Exclude<TableField<PersonWithNested>, string>[] = [
+      {
+        key: 'full_name',
+        label: 'Full Name',
+        sortable: true,
+        accessor: (item: PersonWithNested) => item.name.first,
+      },
+      {key: 'id', label: 'ID'},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: nestedItems,
+        fields,
+      },
+    })
+
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+
+    expect(wrapper.emitted('sorted')).toBeTruthy()
+    const sortEvent = wrapper.emitted('sorted')?.[0]?.[0] as BTableSortBy
+    expect(sortEvent).toMatchObject({
+      key: 'full_name',
+      order: 'asc',
+    })
+  })
+
+  it('emits sorted event with field key when using string accessor', async () => {
+    interface PersonWithAlias {
+      id: number
+      first_name: string
+      display_name: string
+    }
+
+    const aliasItems: TableItem<PersonWithAlias>[] = [
+      {id: 1, first_name: 'Charlie', display_name: 'Charlie B'},
+      {id: 2, first_name: 'Alice', display_name: 'Alice S'},
+      {id: 3, first_name: 'Bob', display_name: 'Bob J'},
+    ]
+
+    const fields: Exclude<TableField<PersonWithAlias>, string>[] = [
+      {
+        key: 'name',
+        label: 'Name',
+        sortable: true,
+        accessor: 'first_name',
+      },
+      {key: 'id', label: 'ID'},
+    ]
+
+    const wrapper = mount(BTable, {
+      props: {
+        items: aliasItems,
+        fields,
+      },
+    })
+
+    const headers = wrapper.findAll('thead th')
+    await headers[0].trigger('click')
+
+    expect(wrapper.emitted('sorted')).toBeTruthy()
+    const sortEvent = wrapper.emitted('sorted')?.[0]?.[0] as BTableSortBy
+    expect(sortEvent).toMatchObject({
+      key: 'name',
+      order: 'asc',
+    })
+
+    // Verify items are sorted by the accessor value (first_name), not the key
+    const text = wrapper
+      .get('tbody')
+      .findAll('tr')
+      .map((row) => row.find('td').text())
+    expect(text).toStrictEqual(['Alice', 'Bob', 'Charlie'])
+  })
 })
 
 describe('combined sorting features', () => {
