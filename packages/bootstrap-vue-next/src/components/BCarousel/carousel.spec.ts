@@ -482,8 +482,8 @@ describe('carousel', () => {
     it('does not navigate when prev-click event is prevented', async () => {
       const wrapper = mount(BCarousel, {
         props: {
-          controls: true,
-          modelValue: 1,
+          'controls': true,
+          'modelValue': 1,
           'onPrev-click': (e: MouseEvent) => e.preventDefault(),
         },
         slots: {default: () => [h(BCarouselSlide), h(BCarouselSlide)]},
@@ -496,8 +496,8 @@ describe('carousel', () => {
     it('does not navigate when next-click event is prevented', async () => {
       const wrapper = mount(BCarousel, {
         props: {
-          controls: true,
-          modelValue: 0,
+          'controls': true,
+          'modelValue': 0,
           'onNext-click': (e: MouseEvent) => e.preventDefault(),
         },
         slots: {default: () => [h(BCarouselSlide), h(BCarouselSlide)]},
@@ -631,7 +631,11 @@ describe('carousel', () => {
     it('only renders BCarouselSlide components as slides', () => {
       const wrapper = mount(BCarousel, {
         slots: {
-          default: () => [h(BCarouselSlide), h('div', {class: 'not-a-slide'}, 'ignored'), h(BCarouselSlide)],
+          default: () => [
+            h(BCarouselSlide),
+            h('div', {class: 'not-a-slide'}, 'ignored'),
+            h(BCarouselSlide),
+          ],
         },
       })
       const slides = wrapper.get('.carousel-inner').findAll('.carousel-item')

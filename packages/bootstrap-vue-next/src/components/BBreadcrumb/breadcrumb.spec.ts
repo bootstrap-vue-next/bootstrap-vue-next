@@ -429,10 +429,7 @@ describe('breadcrumb', () => {
   it('object item with explicit active false in middle position is not overridden', () => {
     const wrapper = mount(BBreadcrumb, {
       props: {
-        items: [
-          {text: 'Home', active: false},
-          {text: 'Library'},
-        ] as readonly BreadcrumbItemRaw[],
+        items: [{text: 'Home', active: false}, {text: 'Library'}] as readonly BreadcrumbItemRaw[],
       },
       global: {
         plugins: [createBootstrap()],

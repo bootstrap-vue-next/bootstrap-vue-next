@@ -2424,7 +2424,7 @@ describe('selectionVariant', () => {
     ]
     const wrapper = mount(BTable, {
       props: {
-        'items': items,
+        items,
         'selectable': true,
         'selectMode': 'multi' as const,
         'selectionVariant': 'success',
@@ -2443,7 +2443,7 @@ describe('selectionVariant', () => {
     const items = [{id: 1, name: 'Alice'}]
     const wrapper = mount(BTable, {
       props: {
-        'items': items,
+        items,
         'selectable': true,
         'selectMode': 'multi' as const,
         'selectedItems': [],
@@ -2467,7 +2467,7 @@ describe('exposed selection API', () => {
   it('exposes selection.add() and selection.remove()', async () => {
     const wrapper = mount(BTable, {
       props: {
-        'items': items,
+        items,
         'selectable': true,
         'primaryKey': 'id',
         'selectedItems': [],
@@ -2487,7 +2487,7 @@ describe('exposed selection API', () => {
   it('exposes selection.setAll() and selection.clear()', async () => {
     const wrapper = mount(BTable, {
       props: {
-        'items': items,
+        items,
         'selectable': true,
         'primaryKey': 'id',
         'selectedItems': [],
@@ -2511,7 +2511,7 @@ describe('exposed selection API', () => {
   it('exposes selection.set() to replace selection', async () => {
     const wrapper = mount(BTable, {
       props: {
-        'items': items,
+        items,
         'selectable': true,
         'primaryKey': 'id',
         'selectedItems': [],
@@ -2529,7 +2529,7 @@ describe('exposed selection API', () => {
   it('exposes selection.isActivated computed', async () => {
     const wrapper = mount(BTable, {
       props: {
-        'items': items,
+        items,
         'selectable': true,
         'primaryKey': 'id',
         'selectedItems': [],
@@ -2546,7 +2546,7 @@ describe('exposed selection API', () => {
   it('exposes selection.selectedItems as readonly ref', () => {
     const wrapper = mount(BTable, {
       props: {
-        items: items,
+        items,
         selectable: true,
         primaryKey: 'id',
         selectedItems: [],
@@ -2566,7 +2566,7 @@ describe('exposed expansion API', () => {
   it('exposes expansion.toggle()', async () => {
     const wrapper = mount(BTable, {
       props: {
-        'items': items,
+        items,
         'primaryKey': 'id',
         'expandedItems': [],
         'onUpdate:expandedItems': (value: unknown) =>
@@ -2585,7 +2585,7 @@ describe('exposed expansion API', () => {
   it('exposes expansion.add() and expansion.remove()', async () => {
     const wrapper = mount(BTable, {
       props: {
-        'items': items,
+        items,
         'primaryKey': 'id',
         'expandedItems': [],
         'onUpdate:expandedItems': (value: unknown) =>
@@ -2604,7 +2604,7 @@ describe('exposed expansion API', () => {
   it('exposes expansion.setAll() and expansion.clear()', async () => {
     const wrapper = mount(BTable, {
       props: {
-        'items': items,
+        items,
         'primaryKey': 'id',
         'expandedItems': [],
         'onUpdate:expandedItems': (value: unknown) =>
@@ -2625,7 +2625,7 @@ describe('exposed expansion API', () => {
   it('exposes expansion.isActivated computed', async () => {
     const wrapper = mount(BTable, {
       props: {
-        'items': items,
+        items,
         'primaryKey': 'id',
         'expandedItems': [],
         'onUpdate:expandedItems': (value: unknown) =>
@@ -2641,7 +2641,7 @@ describe('exposed expansion API', () => {
   it('exposes expansion.expandedItems as readonly ref', () => {
     const wrapper = mount(BTable, {
       props: {
-        items: items,
+        items,
         primaryKey: 'id',
         expandedItems: [],
       },
@@ -2659,7 +2659,7 @@ describe('exposed items and displayItems', () => {
   it('exposes items computed with all filtered/sorted items', () => {
     const wrapper = mount(BTable, {
       props: {
-        items: items,
+        items,
         fields: [{key: 'id'}, {key: 'name'}],
       },
     })
@@ -2669,7 +2669,7 @@ describe('exposed items and displayItems', () => {
   it('exposes displayItems with paginated items', () => {
     const wrapper = mount(BTable, {
       props: {
-        items: items,
+        items,
         fields: [{key: 'id'}, {key: 'name'}],
         perPage: 3,
         currentPage: 1,
@@ -2681,7 +2681,7 @@ describe('exposed items and displayItems', () => {
   it('items reflects filtered results', () => {
     const wrapper = mount(BTable, {
       props: {
-        items: items,
+        items,
         fields: [{key: 'id'}, {key: 'name'}],
         filter: 'Item 1',
       },
@@ -2693,7 +2693,7 @@ describe('exposed items and displayItems', () => {
   it('displayItems reflects pagination on filtered results', () => {
     const wrapper = mount(BTable, {
       props: {
-        items: items,
+        items,
         fields: [{key: 'id'}, {key: 'name'}],
         perPage: 2,
         currentPage: 1,

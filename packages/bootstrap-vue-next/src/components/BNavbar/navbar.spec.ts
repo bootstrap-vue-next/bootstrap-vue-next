@@ -1,6 +1,6 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
-import {defineComponent, h, inject, ref} from 'vue'
+import {defineComponent, h, inject} from 'vue'
 import BNavbar from './BNavbar.vue'
 import {navbarInjectionKey} from '../../utils/keys'
 

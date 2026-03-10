@@ -287,9 +287,7 @@ describe('form-datalist-base', () => {
   it('passes extra attributes from object options to option element', () => {
     const wrapper = mount(BFormDatalistBase, {
       props: {
-        options: [
-          {'value': 'a', 'text': 'A', 'data-custom': 'test-attr'},
-        ],
+        options: [{'value': 'a', 'text': 'A', 'data-custom': 'test-attr'}],
       },
     })
     const options = wrapper.findAll('option')
@@ -299,10 +297,7 @@ describe('form-datalist-base', () => {
   it('renders mixed string and object options', () => {
     const wrapper = mount(BFormDatalistBase, {
       props: {
-        options: [
-          'StringOption',
-          {value: 'obj', text: 'Object Option'},
-        ],
+        options: ['StringOption', {value: 'obj', text: 'Object Option'}],
       },
     })
     const options = wrapper.findAll('option')

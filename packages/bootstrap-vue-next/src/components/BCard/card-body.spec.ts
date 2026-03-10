@@ -373,12 +373,10 @@ describe('card-body', () => {
     const wrapper = mount(BCardBody, {
       props: {title: 'title', subtitle: 'subtitle'},
     })
-    const children = wrapper.element.children
-    const titleIndex = Array.from(children).findIndex(
-      (el) => el.classList.contains('card-title')
-    )
-    const subtitleIndex = Array.from(children).findIndex(
-      (el) => el.classList.contains('card-subtitle')
+    const {children} = wrapper.element
+    const titleIndex = Array.from(children).findIndex((el) => el.classList.contains('card-title'))
+    const subtitleIndex = Array.from(children).findIndex((el) =>
+      el.classList.contains('card-subtitle')
     )
     expect(titleIndex).toBeLessThan(subtitleIndex)
   })

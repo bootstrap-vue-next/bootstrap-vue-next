@@ -1841,8 +1841,7 @@ describe('form-file', () => {
       const wrapper = mount(BFormFile, {
         props: {showFileNames: true},
         slots: {
-          'file-name': ({names}: {names: readonly string[]}) =>
-            `Custom: ${names.join(', ')}`,
+          'file-name': ({names}: {names: readonly string[]}) => `Custom: ${names.join(', ')}`,
         },
       })
       const file = new File(['data'], 'custom.txt')

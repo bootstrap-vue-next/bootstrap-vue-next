@@ -96,8 +96,8 @@ describe('img', () => {
         name: 'CustomImg',
         props: {
           src: {type: String, required: true},
-          width: {type: [String, Number]},
-          height: {type: [String, Number]},
+          width: {type: [String, Number], required: true},
+          height: {required: true, type: [String, Number]},
         },
         setup(props) {
           return () =>

@@ -244,7 +244,9 @@ describe('accordion-item', () => {
       props: {collapseClass: 'custom-collapse'},
     })
     const $bcollapse = wrapper.findComponent(BCollapse)
-    const $collapseEl = $bcollapse.findAll('*').find((el) => el.classes().includes('accordion-collapse'))
+    const $collapseEl = $bcollapse
+      .findAll('*')
+      .find((el) => el.classes().includes('accordion-collapse'))
     expect($collapseEl?.classes()).toContain('custom-collapse')
   })
 
@@ -332,7 +334,9 @@ describe('accordion-item', () => {
       attrs: {'data-custom': 'value'},
     })
     const $bcollapse = wrapper.findComponent(BCollapse)
-    const $collapseEl = $bcollapse.findAll('*').find((el) => el.classes().includes('accordion-collapse'))
+    const $collapseEl = $bcollapse
+      .findAll('*')
+      .find((el) => el.classes().includes('accordion-collapse'))
     expect($collapseEl?.attributes('data-custom')).toBe('value')
   })
 

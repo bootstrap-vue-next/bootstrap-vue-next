@@ -10,6 +10,7 @@ import type {BModalOrchestratorProps} from '../../types/ComponentProps'
 import {useModal} from '../../composables/useModal'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import BOrchestrator from '../BApp/BOrchestrator.vue'
+import {deprecatedNote} from '../../utils/deprecatedTools.ts'
 
 defineOptions({
   inheritAttrs: false,
@@ -27,9 +28,7 @@ if (!tools._isOrchestratorInstalled.value) {
   renderOrchestrator = true
 }
 
-if (process.env.NODE_ENV === 'development') {
-  console.warn('BModalOrchestrator is deprecated, use BOrchestrator instead')
-}
+deprecatedNote('BModalOrchestrator is deprecated, use BOrchestrator instead')
 
 defineExpose({
   ...tools,

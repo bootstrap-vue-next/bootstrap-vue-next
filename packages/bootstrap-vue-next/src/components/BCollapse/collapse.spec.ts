@@ -1,6 +1,6 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
-import {Transition, nextTick} from 'vue'
+import {nextTick, Transition} from 'vue'
 import BCollapse from './BCollapse.vue'
 
 describe('collapse', () => {
@@ -111,7 +111,7 @@ describe('collapse', () => {
   // --- visibility / v-show ---
   it('is hidden by default (no modelValue)', () => {
     const wrapper = mount(BCollapse)
-    const $el = wrapper.findAll('*')[1]
+    const [$el] = wrapper.findAll('*')
     expect($el.attributes('style')).toContain('display: none')
   })
 
@@ -119,7 +119,7 @@ describe('collapse', () => {
     const wrapper = mount(BCollapse, {
       props: {modelValue: true},
     })
-    const $el = wrapper.findAll('*')[1]
+    const [$el] = wrapper.findAll('*')
     expect($el.attributes('style')).toBeUndefined()
   })
 
@@ -128,7 +128,7 @@ describe('collapse', () => {
     const wrapper = mount(BCollapse, {
       props: {visible: true},
     })
-    const $el = wrapper.findAll('*')[1]
+    const [$el] = wrapper.findAll('*')
     expect($el.classes()).toContain('show')
   })
 
@@ -142,7 +142,7 @@ describe('collapse', () => {
     await nextTick()
     await new Promise((resolve) => setTimeout(resolve, 30))
     await nextTick()
-    const $el = wrapper.findAll('*')[1]
+    const [$el] = wrapper.findAll('*')
     expect($el.attributes('style')).toBeUndefined()
   })
 
@@ -295,8 +295,7 @@ describe('collapse', () => {
     const wrapper = mount(BCollapse, {
       props: {id: 'test-default', modelValue: true},
       slots: {
-        default: ({id, visible}: {id: string; visible: boolean}) =>
-          `id:${id},visible:${visible}`,
+        default: ({id, visible}: {id: string; visible: boolean}) => `id:${id},visible:${visible}`,
       },
     })
     expect(wrapper.text()).toContain('id:test-default,visible:true')
@@ -441,7 +440,7 @@ describe('collapse', () => {
     const wrapper = mount(BCollapse, {
       attrs: {'data-testid': 'my-collapse'},
     })
-    const $el = wrapper.findAll('*')[1]
+    const [$el] = wrapper.findAll('*')
     expect($el.attributes('data-testid')).toBe('my-collapse')
   })
 
@@ -493,7 +492,7 @@ describe('collapse', () => {
     const wrapper = mount(BCollapse, {
       props: {isNav: true, horizontal: true, modelValue: true},
     })
-    const $el = wrapper.findAll('*')[1]
+    const [$el] = wrapper.findAll('*')
     expect($el.classes()).toContain('collapse')
     expect($el.classes()).toContain('show')
     expect($el.classes()).toContain('navbar-collapse')
@@ -504,7 +503,7 @@ describe('collapse', () => {
     const wrapper = mount(BCollapse, {
       props: {modelValue: false},
     })
-    const $el = wrapper.findAll('*')[1]
+    const [$el] = wrapper.findAll('*')
     expect($el.classes()).toContain('collapse')
     expect($el.classes()).not.toContain('show')
     expect($el.classes()).not.toContain('navbar-collapse')

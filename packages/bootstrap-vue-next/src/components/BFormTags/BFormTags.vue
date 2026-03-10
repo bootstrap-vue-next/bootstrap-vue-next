@@ -279,7 +279,7 @@ const onClick = (e: Readonly<MouseEvent>): void => {
     return
   }
 
-  const target = e.target
+  const {target} = e
   const ignoreSelectors = props.ignoreInputFocusSelector
   if (ignoreSelectors && target instanceof Element) {
     const selector =

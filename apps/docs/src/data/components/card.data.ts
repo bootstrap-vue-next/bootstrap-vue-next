@@ -35,8 +35,7 @@ export default {
         ...pick(
           buildCommonProps({
             bodyBorderVariant: {
-              description:
-                'Applies one of the Bootstrap theme color variants to the body border',
+              description: 'Applies one of the Bootstrap theme color variants to the body border',
             },
           }),
           [

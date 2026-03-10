@@ -1,10 +1,12 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it, vi} from 'vitest'
-import {readonly, ref} from 'vue'
+import {type ComponentInternalInstance, readonly, ref} from 'vue'
 import BNavbarToggle from './BNavbarToggle.vue'
-import {showHideRegistryKey} from '../../utils/keys'
-import type {RegisterShowHideInstances, RegisterShowHideMapValue} from '../../utils/keys'
-import type {ComponentInternalInstance} from 'vue'
+import {
+  type RegisterShowHideInstances,
+  type RegisterShowHideMapValue,
+  showHideRegistryKey,
+} from '../../utils/keys'
 
 const createMockShowHideInstance = (shown = false): RegisterShowHideMapValue => ({
   id: 'test-id',
@@ -17,7 +19,9 @@ const createMockShowHideInstance = (shown = false): RegisterShowHideMapValue => 
   unregisterTrigger: vi.fn(),
 })
 
-const createRegistryHolder = (instances: RegisterShowHideMapValue[]): RegisterShowHideInstances => ({
+const createRegistryHolder = (
+  instances: RegisterShowHideMapValue[]
+): RegisterShowHideInstances => ({
   instances,
   getActive: () => instances[instances.length - 1],
 })
