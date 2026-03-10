@@ -883,4 +883,760 @@ describe('btablelite', () => {
       expect(wrapper.emitted('row-unhovered')).toBeTruthy()
     })
   })
+
+  describe('caption', () => {
+    it('renders caption when caption prop is set', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], caption: 'My Table Caption'},
+      })
+      const $caption = wrapper.find('caption')
+      expect($caption.exists()).toBe(true)
+      expect($caption.text()).toBe('My Table Caption')
+    })
+
+    it('does not render caption when caption prop is not set', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+      })
+      expect(wrapper.find('caption').exists()).toBe(false)
+    })
+
+    it('renders table-caption slot over caption prop', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], caption: 'Prop Caption'},
+        slots: {'table-caption': 'Slot Caption'},
+      })
+      const $caption = wrapper.find('caption')
+      expect($caption.exists()).toBe(true)
+      expect($caption.text()).toBe('Slot Caption')
+    })
+
+    it('renders table-caption slot without caption prop', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+        slots: {'table-caption': 'Slot Caption'},
+      })
+      expect(wrapper.find('caption').text()).toBe('Slot Caption')
+    })
+  })
+
+  describe('table structure', () => {
+    it('contains BTableSimple, BThead, BTbody', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1, b: 2}]},
+      })
+      expect(wrapper.find('table').exists()).toBe(true)
+      expect(wrapper.find('thead').exists()).toBe(true)
+      expect(wrapper.find('tbody').exists()).toBe(true)
+    })
+
+    it('does not render tfoot by default', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+      })
+      expect(wrapper.find('tfoot').exists()).toBe(false)
+    })
+
+    it('renders tfoot when footClone is true', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], footClone: true},
+      })
+      expect(wrapper.find('tfoot').exists()).toBe(true)
+    })
+
+    it('tfoot contains same headers as thead when footClone is true', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1, b: 2}],
+          footClone: true,
+        },
+      })
+      const theadHeaders = wrapper.findAll('thead th').map((th) => th.text())
+      const tfootHeaders = wrapper.findAll('tfoot th').map((th) => th.text())
+      expect(tfootHeaders).toEqual(theadHeaders)
+    })
+  })
+
+  describe('fields prop', () => {
+    it('uses field objects to define columns', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{name: 'John', age: 30}],
+          fields: [
+            {key: 'name', label: 'Full Name'},
+            {key: 'age', label: 'User Age'},
+          ],
+        },
+      })
+      const $th = wrapper.findAll('thead th')
+      expect($th.length).toBe(2)
+      expect($th[0].text()).toBe('Full Name')
+      expect($th[1].text()).toBe('User Age')
+    })
+
+    it('uses string fields', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{name: 'John', age: 30}],
+          fields: ['name', 'age'],
+        },
+      })
+      const $th = wrapper.findAll('thead th')
+      expect($th.length).toBe(2)
+      expect($th[0].text()).toBe('Name')
+      expect($th[1].text()).toBe('Age')
+    })
+
+    it('limits visible columns to those specified in fields', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{name: 'John', age: 30, email: 'john@test.com'}],
+          fields: ['name', 'age'],
+        },
+      })
+      const $td = wrapper.findAll('tbody td')
+      expect($td.length).toBe(2)
+      expect($td[0].text()).toBe('John')
+      expect($td[1].text()).toBe('30')
+    })
+  })
+
+  describe('tbodyClass prop', () => {
+    it('applies tbodyClass to tbody element', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], tbodyClass: 'custom-tbody'},
+      })
+      expect(wrapper.get('tbody').classes()).toContain('custom-tbody')
+    })
+  })
+
+  describe('theadClass prop', () => {
+    it('applies theadClass to thead element', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], theadClass: 'custom-thead'},
+      })
+      expect(wrapper.get('thead').classes()).toContain('custom-thead')
+    })
+  })
+
+  describe('theadTrClass prop', () => {
+    it('applies theadTrClass to the tr in thead', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], theadTrClass: 'custom-tr'},
+      })
+      expect(wrapper.get('thead tr').classes()).toContain('custom-tr')
+    })
+  })
+
+  describe('tfootClass prop', () => {
+    it('applies tfootClass to tfoot element', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], footClone: true, tfootClass: 'custom-tfoot'},
+      })
+      expect(wrapper.get('tfoot').classes()).toContain('custom-tfoot')
+    })
+
+    it('falls back to theadClass for tfoot when tfootClass is not set', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], footClone: true, theadClass: 'thead-class'},
+      })
+      expect(wrapper.get('tfoot').classes()).toContain('thead-class')
+    })
+  })
+
+  describe('tfootTrClass prop', () => {
+    it('applies tfootTrClass to the tr in tfoot', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], footClone: true, tfootTrClass: 'custom-foot-tr'},
+      })
+      expect(wrapper.get('tfoot tr').classes()).toContain('custom-foot-tr')
+    })
+
+    it('falls back to theadTrClass when tfootTrClass is not set', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], footClone: true, theadTrClass: 'head-tr-class'},
+      })
+      expect(wrapper.get('tfoot tr').classes()).toContain('head-tr-class')
+    })
+  })
+
+  describe('primaryKey prop', () => {
+    it('generates row id based on primaryKey', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{id: 'abc', name: 'John'}],
+          primaryKey: 'id',
+          id: 'my-table',
+        },
+      })
+      const $tr = wrapper.get('tbody tr')
+      expect($tr.attributes('id')).toBe('my-table__row_abc')
+    })
+
+    it('does not generate row id without primaryKey', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{id: 'abc', name: 'John'}],
+          id: 'my-table',
+        },
+      })
+      const $tr = wrapper.get('tbody tr')
+      expect($tr.attributes('id')).toBeUndefined()
+    })
+  })
+
+  describe('_rowVariant', () => {
+    it('applies row variant class from _rowVariant property', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1, _rowVariant: 'danger'}],
+        },
+      })
+      const $tr = wrapper.get('tbody tr')
+      expect($tr.classes()).toContain('table-danger')
+    })
+  })
+
+  describe('_cellVariants', () => {
+    it('applies cell variant class from _cellVariants property', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1, b: 2, _cellVariants: {a: 'success'}}],
+        },
+      })
+      const $tds = wrapper.findAll('tbody td')
+      expect($tds[0].classes()).toContain('table-success')
+    })
+  })
+
+  describe('custom-body slot', () => {
+    it('renders custom-body slot content', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+        slots: {
+          'custom-body': '<tr><td>Custom Body Content</td></tr>',
+        },
+      })
+      expect(wrapper.text()).toContain('Custom Body Content')
+    })
+
+    it('custom-body slot replaces default body rendering', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1, b: 2}]},
+        slots: {
+          'custom-body': '<tr><td>Custom Only</td></tr>',
+        },
+      })
+      const $tbody = wrapper.get('tbody')
+      expect($tbody.text()).toBe('Custom Only')
+    })
+  })
+
+  describe('thead-top slot', () => {
+    it('renders thead-top slot content before the header row', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+        slots: {
+          'thead-top': '<tr><th colspan="1">Top Row</th></tr>',
+        },
+      })
+      const $trs = wrapper.findAll('thead tr')
+      expect($trs.length).toBe(2)
+      expect($trs[0].text()).toBe('Top Row')
+    })
+  })
+
+  describe('thead-sub slot', () => {
+    it('renders thead-sub row when slot is provided', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1, b: 2}],
+        },
+        slots: {
+          'thead-sub': '<template #thead-sub>Sub Header</template>',
+        },
+      })
+      const $trs = wrapper.findAll('thead tr')
+      expect($trs.length).toBe(2)
+    })
+  })
+
+  describe('top-row and bottom-row slots', () => {
+    it('renders top-row slot', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+        slots: {
+          'top-row': '<td>Top Row Content</td>',
+        },
+      })
+      const $trs = wrapper.findAll('tbody tr')
+      expect($trs.length).toBe(2)
+      expect($trs[0].text()).toBe('Top Row Content')
+    })
+
+    it('renders bottom-row slot', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+        slots: {
+          'bottom-row': '<td>Bottom Row Content</td>',
+        },
+      })
+      const $trs = wrapper.findAll('tbody tr')
+      expect($trs.length).toBe(2)
+      expect($trs[$trs.length - 1].text()).toBe('Bottom Row Content')
+      expect($trs[$trs.length - 1].classes()).toContain('bottom-row')
+    })
+
+    it('does not render top-row when stacked is true', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], stacked: true},
+        slots: {
+          'top-row': '<td>Top Row Content</td>',
+        },
+      })
+      expect(wrapper.text()).not.toContain('Top Row Content')
+    })
+
+    it('does not render bottom-row when stacked is true', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], stacked: true},
+        slots: {
+          'bottom-row': '<td>Bottom Row Content</td>',
+        },
+      })
+      expect(wrapper.text()).not.toContain('Bottom Row Content')
+    })
+  })
+
+  describe('custom-foot slot', () => {
+    it('renders custom-foot slot when footClone is false', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+        slots: {
+          'custom-foot': '<tr><td>Custom Footer</td></tr>',
+        },
+      })
+      expect(wrapper.find('tfoot').exists()).toBe(true)
+      expect(wrapper.find('tfoot').text()).toBe('Custom Footer')
+    })
+
+    it('does not render custom-foot when footClone is true', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], footClone: true},
+        slots: {
+          'custom-foot': '<tr><td>Custom Footer</td></tr>',
+        },
+      })
+      expect(wrapper.find('tfoot').text()).not.toBe('Custom Footer')
+    })
+  })
+
+  describe('table-colgroup slot', () => {
+    it('renders table-colgroup slot', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1, b: 2}]},
+        slots: {
+          'table-colgroup': '<col style="width: 50%"><col style="width: 50%">',
+        },
+      })
+      expect(wrapper.find('colgroup').exists()).toBe(true)
+      const $cols = wrapper.findAll('col')
+      expect($cols.length).toBe(2)
+    })
+
+    it('does not render colgroup when slot is not provided', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+      })
+      expect(wrapper.find('colgroup').exists()).toBe(false)
+    })
+  })
+
+  describe('tbodyTrClass prop', () => {
+    it('applies static class to body rows', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}, {a: 2}],
+          tbodyTrClass: 'custom-row',
+        },
+      })
+      const $trs = wrapper.findAll('tbody tr')
+      $trs.forEach(($tr) => {
+        expect($tr.classes()).toContain('custom-row')
+      })
+    })
+
+    it('applies function-based class to body rows', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}, {a: 2}],
+          tbodyTrClass: (item: {a: number} | null, type: string) =>
+            type === 'row' && item?.a === 1 ? 'highlight' : '',
+        },
+      })
+      const $trs = wrapper.findAll('tbody tr')
+      expect($trs[0].classes()).toContain('highlight')
+      expect($trs[1].classes()).not.toContain('highlight')
+    })
+  })
+
+  describe('tbodyTrAttrs prop', () => {
+    it('applies static attributes to body rows', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          tbodyTrAttrs: {'data-custom': 'value'},
+        },
+      })
+      expect(wrapper.get('tbody tr').attributes('data-custom')).toBe('value')
+    })
+
+    it('applies function-based attributes to body rows', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}, {a: 2}],
+          tbodyTrAttrs: (item: {a: number} | null) => ({
+            'data-id': item?.a?.toString(),
+          }),
+        },
+      })
+      const $trs = wrapper.findAll('tbody tr')
+      expect($trs[0].attributes('data-id')).toBe('1')
+      expect($trs[1].attributes('data-id')).toBe('2')
+    })
+  })
+
+  describe('align prop', () => {
+    it('applies align class to table', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], align: 'middle'},
+      })
+      expect(wrapper.get('table').classes()).toContain('align-middle')
+    })
+
+    it('does not apply align class when not set', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+      })
+      const classes = wrapper.get('table').classes().join(' ')
+      expect(classes).not.toMatch(/align-/)
+    })
+  })
+
+  describe('stacked and labelStacked', () => {
+    it('renders stacked labels when both stacked and labelStacked are true', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{name: 'John', age: 30}],
+          stacked: true,
+          labelStacked: true,
+        },
+      })
+      const labels = wrapper.findAll('.b-table-stacked-label')
+      expect(labels.length).toBe(2)
+      expect(labels[0].text()).toBe('Name')
+      expect(labels[1].text()).toBe('Age')
+    })
+
+    it('does not render stacked labels when stacked is false', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{name: 'John'}],
+          stacked: false,
+          labelStacked: true,
+        },
+      })
+      expect(wrapper.find('.b-table-stacked-label').exists()).toBe(false)
+    })
+  })
+
+  describe('field formatter', () => {
+    it('applies field formatter function to cell values', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{price: 100}],
+          fields: [
+            {
+              key: 'price',
+              label: 'Price',
+              formatter: ({value}: {value: unknown}) => `$${value}`,
+            },
+          ],
+        },
+      })
+      expect(wrapper.get('tbody td').text()).toBe('$100')
+    })
+  })
+
+  describe('field thStyle', () => {
+    it('applies thStyle to header cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          fields: [{key: 'a', label: 'A', thStyle: {width: '200px'}}],
+        },
+      })
+      expect(wrapper.get('thead th').attributes('style')).toContain('width: 200px')
+    })
+  })
+
+  describe('field headerTitle', () => {
+    it('sets title attribute on header cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          fields: [{key: 'a', label: 'A', headerTitle: 'Column A'}],
+        },
+      })
+      expect(wrapper.get('thead th').attributes('title')).toBe('Column A')
+    })
+  })
+
+  describe('field headerAbbr', () => {
+    it('sets abbr attribute on header cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          fields: [{key: 'a', label: 'A', headerAbbr: 'col-a'}],
+        },
+      })
+      expect(wrapper.get('thead th').attributes('abbr')).toBe('col-a')
+    })
+  })
+
+  describe('field stickyColumn', () => {
+    it('applies b-table-sticky-column class to header and body cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          fields: [{key: 'a', label: 'A', stickyColumn: true}],
+        },
+      })
+      expect(wrapper.get('thead th').classes()).toContain('b-table-sticky-column')
+      expect(wrapper.get('tbody td').classes()).toContain('b-table-sticky-column')
+    })
+  })
+
+  describe('field tdAttr', () => {
+    it('applies static tdAttr to body cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          fields: [{key: 'a', label: 'A', tdAttr: {'data-test': 'hello'}}],
+        },
+      })
+      expect(wrapper.get('tbody td').attributes('data-test')).toBe('hello')
+    })
+
+    it('applies function tdAttr to body cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 42}],
+          fields: [
+            {
+              key: 'a',
+              label: 'A',
+              tdAttr: ({value}: {value: unknown}) => ({'data-value': String(value)}),
+            },
+          ],
+        },
+      })
+      expect(wrapper.get('tbody td').attributes('data-value')).toBe('42')
+    })
+  })
+
+  describe('field tdClass', () => {
+    it('applies static tdClass to body cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          fields: [{key: 'a', label: 'A', tdClass: 'custom-td'}],
+        },
+      })
+      expect(wrapper.get('tbody td').classes()).toContain('custom-td')
+    })
+
+    it('applies function tdClass to body cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 42}],
+          fields: [
+            {
+              key: 'a',
+              label: 'A',
+              tdClass: (value: unknown) => (value === 42 ? 'is-42' : ''),
+            },
+          ],
+        },
+      })
+      expect(wrapper.get('tbody td').classes()).toContain('is-42')
+    })
+  })
+
+  describe('fieldColumnClass prop', () => {
+    it('applies static fieldColumnClass to header cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          fieldColumnClass: 'col-class',
+        },
+      })
+      expect(wrapper.get('thead th').classes()).toContain('col-class')
+    })
+
+    it('applies function fieldColumnClass to header cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1, b: 2}],
+          fieldColumnClass: (field: {key: string}) => `col-${field.key}`,
+        },
+      })
+      const $ths = wrapper.findAll('thead th')
+      expect($ths[0].classes()).toContain('col-a')
+      expect($ths[1].classes()).toContain('col-b')
+    })
+  })
+
+  describe('nested object access', () => {
+    it('supports accessor function for nested objects', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{name: {first: 'John', last: 'Doe'}, age: 30}],
+          fields: [
+            {
+              key: 'name',
+              label: 'First Name',
+              accessor: (item: {name: {first: string}}) => item.name.first,
+            },
+            {key: 'age', label: 'Age'},
+          ],
+        },
+      })
+      const $tds = wrapper.findAll('tbody td')
+      expect($tds[0].text()).toBe('John')
+      expect($tds[1].text()).toBe('30')
+    })
+  })
+
+  describe('empty items', () => {
+    it('renders no body rows when items is empty', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [], fields: ['a', 'b']},
+      })
+      expect(wrapper.findAll('tbody tr').length).toBe(0)
+    })
+  })
+
+  describe('BTableSimple props pass-through', () => {
+    it('passes bordered prop to BTableSimple', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], bordered: true},
+      })
+      expect(wrapper.get('table').classes()).toContain('table-bordered')
+    })
+
+    it('passes striped prop to BTableSimple', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], striped: true},
+      })
+      expect(wrapper.get('table').classes()).toContain('table-striped')
+    })
+
+    it('passes hover prop to BTableSimple', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], hover: true},
+      })
+      expect(wrapper.get('table').classes()).toContain('table-hover')
+    })
+
+    it('passes dark prop to BTableSimple', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], dark: true},
+      })
+      expect(wrapper.get('table').classes()).toContain('table-dark')
+    })
+
+    it('passes small prop to BTableSimple', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], small: true},
+      })
+      expect(wrapper.get('table').classes()).toContain('table-sm')
+    })
+
+    it('passes responsive prop to BTableSimple', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], responsive: true},
+      })
+      expect(wrapper.find('.table-responsive').exists()).toBe(true)
+    })
+
+    it('passes fixed prop to BTableSimple', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], fixed: true},
+      })
+      expect(wrapper.get('table').classes()).toContain('b-table-fixed')
+    })
+
+    it('passes outlined prop to BTableSimple', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], outlined: true},
+      })
+      expect(wrapper.get('table').classes()).toContain('border')
+    })
+
+    it('passes borderless prop to BTableSimple', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], borderless: true},
+      })
+      expect(wrapper.get('table').classes()).toContain('table-borderless')
+    })
+
+    it('passes captionTop prop to BTableSimple', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}], captionTop: true, caption: 'Test'},
+      })
+      expect(wrapper.get('table').classes()).toContain('caption-top')
+    })
+  })
+
+  describe('cell() scoped slot', () => {
+    it('renders cell() slot for all cells', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1, b: 2}],
+        },
+        slots: {
+          'cell()': '<template #cell()="data">val:{{ data.value }}</template>',
+        },
+      })
+      const $tds = wrapper.findAll('tbody td')
+      expect($tds[0].text()).toBe('val:1')
+      expect($tds[1].text()).toBe('val:2')
+    })
+
+    it('cell(key) slot takes precedence over cell() slot', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1, b: 2}],
+        },
+        slots: {
+          'cell()': '<template #cell()="data">generic:{{ data.value }}</template>',
+          'cell(a)': '<template #cell(a)="data">specific:{{ data.value }}</template>',
+        },
+      })
+      const $tds = wrapper.findAll('tbody td')
+      expect($tds[0].text()).toBe('specific:1')
+      expect($tds[1].text()).toBe('generic:2')
+    })
+  })
+
+  describe('expose', () => {
+    it('exposes expansion controller', () => {
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+      })
+      expect(wrapper.vm.expansion).toBeDefined()
+      expect(wrapper.vm.expansion.expandedItems).toBeDefined()
+    })
+  })
 })
