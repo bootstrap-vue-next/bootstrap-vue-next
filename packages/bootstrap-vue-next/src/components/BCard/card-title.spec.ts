@@ -15,6 +15,12 @@ describe('card-title', () => {
     expect(wrapper.classes()).toContain('card-title')
   })
 
+  it('default should contain only single class of card-title', () => {
+    const wrapper = mount(BCardTitle)
+    expect(wrapper.classes().length).toBe(1)
+    expect(wrapper.classes()).toContain('card-title')
+  })
+
   it('tag is prop tag', () => {
     const wrapper = mount(BCardTitle, {
       props: {tag: 'div'},
@@ -29,11 +35,25 @@ describe('card-title', () => {
     expect(wrapper.text()).toBe('foobar')
   })
 
+  it('renders default slot with HTML content', () => {
+    const wrapper = mount(BCardTitle, {
+      slots: {default: '<span class="custom">title content</span>'},
+    })
+    const $span = wrapper.find('span.custom')
+    expect($span.exists()).toBe(true)
+    expect($span.text()).toBe('title content')
+  })
+
   it('renders prop text', () => {
     const wrapper = mount(BCardTitle, {
       props: {text: 'foobar'},
     })
     expect(wrapper.text()).toBe('foobar')
+  })
+
+  it('renders empty when no text prop and no slot provided', () => {
+    const wrapper = mount(BCardTitle)
+    expect(wrapper.text()).toBe('')
   })
 
   it('renders default slot over prop text', () => {

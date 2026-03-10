@@ -20,6 +20,12 @@ export default [
   },
   skipFormatting,
   {
+    files: ['**/*.spec.ts', '**/*.spec.tsx'],
+    rules: {
+      'vue/one-component-per-file': 'off',
+    },
+  },
+  {
     rules: {
       'prettier/prettier': [
         'warn',

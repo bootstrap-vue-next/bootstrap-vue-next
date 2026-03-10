@@ -1,11 +1,21 @@
 <template>
   <!-- #region template -->
   <BForm @submit.prevent="onSubmit">
-    <BFormRating v-model="rating" name="rating" />
+    <BFormRating
+      v-model="rating"
+      name="rating"
+    />
     <div class="mt-2">
-      <BButton type="submit" variant="primary">Submit</BButton>
+      <BButton
+        type="submit"
+        variant="primary"
+        >Submit</BButton
+      >
     </div>
-    <div v-if="result" class="mt-2">
+    <div
+      v-if="result"
+      class="mt-2"
+    >
       Submitted value: {{ result }}
     </div>
   </BForm>

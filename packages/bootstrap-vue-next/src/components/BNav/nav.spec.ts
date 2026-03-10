@@ -168,4 +168,13 @@ describe('nav', () => {
     await wrapper.setProps({small: false})
     expect(wrapper.classes()).not.toContain('small')
   })
+
+  it('has class nav-underline when prop underline is set', async () => {
+    const wrapper = mount(BNav, {
+      props: {underline: true},
+    })
+    expect(wrapper.classes()).toContain('nav-underline')
+    await wrapper.setProps({underline: false})
+    expect(wrapper.classes()).not.toContain('nav-underline')
+  })
 })

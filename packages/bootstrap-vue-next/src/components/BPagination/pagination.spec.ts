@@ -499,6 +499,210 @@ describe('pagination', () => {
     expect(document.activeElement?.textContent).toBe('4')
     window.HTMLElement.prototype.getBoundingClientRect = originalGetBoundingClientRect
   })
+
+  it('has class pagination-sm when prop size is sm', () => {
+    const wrapper = mount(BPagination, {
+      props: {size: 'sm'},
+    })
+    expect(wrapper.classes()).toContain('pagination-sm')
+  })
+
+  it('has class pagination-lg when prop size is lg', () => {
+    const wrapper = mount(BPagination, {
+      props: {size: 'lg'},
+    })
+    expect(wrapper.classes()).toContain('pagination-lg')
+  })
+
+  it('does not have pagination-{size} class when size is undefined', () => {
+    const wrapper = mount(BPagination)
+    const classes = wrapper.classes()
+    expect(classes.find((c) => c.startsWith('pagination-'))).toBeUndefined()
+  })
+
+  it('li children have class flex-fill when align is fill', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 1, align: 'fill'},
+    })
+    const $li = wrapper.get('li')
+    expect($li.classes()).toContain('flex-fill')
+  })
+
+  it('has class justify-content-start when align is start', () => {
+    const wrapper = mount(BPagination, {
+      props: {align: 'start'},
+    })
+    expect(wrapper.classes()).toContain('justify-content-start')
+  })
+
+  it('has prev button by default', () => {
+    const wrapper = mount(BPagination, {props: {totalRows: 100, perPage: 1, modelValue: 5}})
+    expect(wrapper.find('[aria-label="Go to previous page"]').exists()).toBeTruthy()
+  })
+
+  it('has next button by default', () => {
+    const wrapper = mount(BPagination, {props: {totalRows: 100, perPage: 1, modelValue: 5}})
+    expect(wrapper.find('[aria-label="Go to next page"]').exists()).toBeTruthy()
+  })
+
+  it('active page button renders as button element', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 3},
+    })
+    const $active = wrapper.find('li.active')
+    expect($active.find('button').exists()).toBe(true)
+  })
+
+  it('disabled page renders as span element', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 1},
+    })
+    // first button is disabled when on first page
+    const [$firstLi] = wrapper.findAll('li')
+    expect($firstLi.find('span').exists()).toBe(true)
+  })
+
+  it('emits page-click when a page button is clicked', async () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 1},
+    })
+    await wrapper.get('button[aria-posinset="2"]').trigger('click')
+    expect(wrapper.emitted('page-click')).toHaveLength(1)
+  })
+
+  it('page-click event has two arguments: BvEvent and page number', async () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 1},
+    })
+    await wrapper.get('button[aria-posinset="2"]').trigger('click')
+    const emitted = wrapper.emitted('page-click') ?? []
+    expect(emitted[0]).toHaveLength(2)
+    expect(emitted[0][1]).toBe(2)
+  })
+
+  it('updates modelValue when a page button is clicked', async () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 1},
+    })
+    await wrapper.get('button[aria-posinset="3"]').trigger('click')
+    const emitted = wrapper.emitted('update:modelValue') ?? []
+    expect(emitted[0][0]).toBe(3)
+  })
+
+  it('does not emit page-click when clicking the active page', async () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 2},
+    })
+    await wrapper.get('button[aria-posinset="2"]').trigger('click')
+    expect(wrapper.emitted('page-click')).toBeUndefined()
+  })
+
+  it('has aria-controls on buttons when ariaControls is set', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 1, ariaControls: 'my-table'},
+    })
+    expect(wrapper.find('button[aria-controls="my-table"]').exists()).toBe(true)
+  })
+
+  it('uses custom labelPage for page buttons', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 1, labelPage: 'Page'},
+    })
+    expect(wrapper.find('[aria-label="Page 2"]').exists()).toBeTruthy()
+  })
+
+  it('uses custom labelFirstPage for first button', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 100, perPage: 1, modelValue: 5, labelFirstPage: 'First'},
+    })
+    expect(wrapper.find('[aria-label="First"]').exists()).toBeTruthy()
+  })
+
+  it('uses custom labelLastPage for last button', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 100, perPage: 1, modelValue: 5, labelLastPage: 'Last'},
+    })
+    expect(wrapper.find('[aria-label="Last"]').exists()).toBeTruthy()
+  })
+
+  it('uses custom labelNextPage for next button', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 100, perPage: 1, modelValue: 5, labelNextPage: 'Next'},
+    })
+    expect(wrapper.find('[aria-label="Next"]').exists()).toBeTruthy()
+  })
+
+  it('uses custom labelPrevPage for prev button', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 100, perPage: 1, modelValue: 5, labelPrevPage: 'Prev'},
+    })
+    expect(wrapper.find('[aria-label="Prev"]').exists()).toBeTruthy()
+  })
+
+  it('uses custom ellipsisText', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 100, perPage: 1, modelValue: 50, ellipsisText: '***'},
+    })
+    const separators = wrapper.findAll('[role="separator"]')
+    expect(separators[0].text()).toBe('***')
+  })
+
+  it('perPage affects number of pages', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 100, perPage: 10, modelValue: 1, lastNumber: true},
+    })
+    // 100 rows / 10 per page = 10 pages, so last button should be page 10
+    expect(wrapper.find('[aria-label="Go to page 10"]').exists()).toBeTruthy()
+  })
+
+  it('all li children have role presentation', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 1},
+    })
+    // Separator (ellipsis) items use role="separator", all other page items use role="presentation"
+    const $lis = wrapper.findAll('li:not([role="separator"])')
+    expect($lis.every((li) => li.attributes('role') === 'presentation')).toBe(true)
+  })
+
+  it('page buttons have role menuitem', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 1},
+    })
+    const $buttons = wrapper.findAll('button[aria-posinset]')
+    expect($buttons.every((btn) => btn.attributes('role') === 'menuitem')).toBe(true)
+  })
+
+  it('disabled all buttons when prop disabled', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 3, disabled: true},
+    })
+    // No button elements should exist when disabled (all rendered as spans)
+    const $buttons = wrapper.findAll('button')
+    expect($buttons).toHaveLength(0)
+  })
+
+  it('active li has class active', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 3},
+    })
+    const $active = wrapper.find('li.active')
+    expect($active.exists()).toBe(true)
+  })
+
+  it('active li button has tabindex 0', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 3},
+    })
+    expect(wrapper.find('li.active button').attributes('tabindex')).toBe('0')
+  })
+
+  it('inactive page buttons have tabindex -1', () => {
+    const wrapper = mount(BPagination, {
+      props: {totalRows: 10, perPage: 1, modelValue: 3},
+    })
+    const $inactive = wrapper.find('button[aria-posinset="2"]')
+    expect($inactive.attributes('tabindex')).toBe('-1')
+  })
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

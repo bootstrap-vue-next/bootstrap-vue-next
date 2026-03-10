@@ -35,6 +35,14 @@ describe('form-text', () => {
     expect(wrapper.classes()).toContain('text-body-secondary')
   })
 
+  it('has no text class when prop textVariant is null', () => {
+    const wrapper = mount(BFormText, {
+      props: {textVariant: null},
+    })
+    const textClasses = wrapper.classes().filter((c) => c.startsWith('text-'))
+    expect(textClasses).toHaveLength(0)
+  })
+
   it('has attr id when prop id', async () => {
     const wrapper = mount(BFormText, {
       props: {id: 'foobar'},
@@ -58,7 +66,7 @@ describe('form-text', () => {
     expect(wrapper.text()).toBe('foobar')
   })
 
-  it('renders default slot over propt ext', () => {
+  it('renders default slot over prop text', () => {
     const wrapper = mount(BFormText, {
       slots: {default: 'slots'},
       props: {text: 'props'},
