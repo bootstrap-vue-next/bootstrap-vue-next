@@ -74,4 +74,43 @@ describe('nav-form', () => {
     const $bform = wrapper.findComponent(BForm)
     expect($bform.props('validated')).toBe(true)
   })
+
+  it('bform has class formClass when prop formClass', () => {
+    const wrapper = mount(BNavForm, {
+      props: {formClass: 'custom-form-class'},
+    })
+    const $bform = wrapper.findComponent(BForm)
+    expect($bform.classes()).toContain('custom-form-class')
+  })
+
+  it('emits submit event when form is submitted', async () => {
+    const wrapper = mount(BNavForm)
+    const $bform = wrapper.findComponent(BForm)
+    await $bform.trigger('submit')
+    expect(wrapper.emitted('submit')).toBeDefined()
+  })
+
+  it('li receives attributes from wrapperAttrs prop', () => {
+    const wrapper = mount(BNavForm, {
+      props: {wrapperAttrs: {'data-test': 'testvalue'}},
+    })
+    const $li = wrapper.get('li')
+    expect($li.attributes('data-test')).toBe('testvalue')
+  })
+
+  it('li includes class from attrs', () => {
+    const wrapper = mount(BNavForm, {
+      attrs: {class: 'custom-li-class'},
+    })
+    const $li = wrapper.get('li')
+    expect($li.classes()).toContain('custom-li-class')
+  })
+
+  it('non-class attrs are passed to BForm', () => {
+    const wrapper = mount(BNavForm, {
+      attrs: {'data-custom': 'myvalue'},
+    })
+    const $bform = wrapper.findComponent(BForm)
+    expect($bform.attributes('data-custom')).toBe('myvalue')
+  })
 })
