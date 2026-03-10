@@ -87,7 +87,7 @@ describe('dropdown-group', () => {
     expect($ul.attributes('data-foo')).toBe('bar')
   })
 
-  it('has dynamic component whos tag is default header', () => {
+  it('has dynamic component whose tag is default header', () => {
     const wrapper = mount(BDropdownGroup)
     const $header = wrapper.find('header')
     expect($header.exists()).toBe(true)
