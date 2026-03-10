@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.43.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.8...bootstrapvuenext-v0.43.9) (2026-03-10)
+
+
+### Features
+
+* **BInput:** expose the "onBlur" method as the "flushDebounce" method ([#2758](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2758)) ([980754a](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/980754a5cd5783178013dbfc470cc5a8e8f1eecb))
+
+
+### Bug Fixes
+
+* **BFormSelect:** normalize sub-options within groups using custom field names ([#3104](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3104)) ([d6e36b2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d6e36b2c528449b95324f034fd12ba6cb3044fcf))
+* **BFormTags:** pass noTagRemove and disabled props to BFormTag children ([#3101](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3101)) ([412f8dc](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/412f8dc097273e62e4c6d7650a882e125060170b))
+* **BTable:** use field accessor for sorting when available ([#3103](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3103)) ([67a41a5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/67a41a5245af73d126967ac0bf86d4c7459ce7f4))
+
 ## [0.43.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.7...bootstrapvuenext-v0.43.8) (2026-03-03)
 
 
