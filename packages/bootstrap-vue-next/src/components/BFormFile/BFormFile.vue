@@ -156,11 +156,11 @@ const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   ariaLabelledby: undefined,
   accept: '',
   autofocus: false,
-  browseText: undefined,
+  browseText: 'Browse',
   capture: undefined,
   directory: false,
   disabled: false,
-  dropPlaceholder: undefined,
+  dropPlaceholder: 'Drop files here...',
   fileNameFormatter: undefined,
   form: undefined,
   id: undefined,
@@ -308,8 +308,8 @@ const ariaLiveMessage = computed(() => {
   return `${count} files selected`
 })
 
-const effectiveBrowseText = computed(() => props.browseText ?? 'Browse')
-const effectiveDropPlaceholder = computed(() => props.dropPlaceholder ?? 'Drop files here...')
+const effectiveBrowseText = computed(() => props.browseText)
+const effectiveDropPlaceholder = computed(() => props.dropPlaceholder)
 
 // Validate file against accept criteria
 const isFileAccepted = (file: File): boolean => {

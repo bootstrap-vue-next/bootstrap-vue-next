@@ -1137,7 +1137,7 @@ describe('form-file', () => {
       const wrapper = mount(BFormFile)
       // Drop overlay only shows when isOverDropZone is true
       // We can verify the component has the default text prop
-      expect(wrapper.vm.$props.dropPlaceholder).toBeUndefined()
+      expect(wrapper.vm.$props.dropPlaceholder).toBe('Drop files here...')
     })
 
     it('renders custom dropPlaceholder prop text', () => {
