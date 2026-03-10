@@ -1451,7 +1451,7 @@ describe('modal', () => {
       await nextTick()
 
       const $footer = wrapper.find('.modal-footer')
-      const $cancelBtn = $footer.findAll('button')[0]
+      const [$cancelBtn] = $footer.findAll('button')
       await $cancelBtn.trigger('click')
 
       const cancelEvents = wrapper.emitted<BvTriggerableEvent[]>('cancel')
