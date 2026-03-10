@@ -1,7 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BOverlay from './BOverlay.vue'
-import {Transition as BTransition} from 'vue'
+import {Transition as BTransition, nextTick} from 'vue'
 import BSpinner from '../BSpinner/BSpinner.vue'
 
 describe('overlay', () => {
@@ -568,5 +568,109 @@ describe('overlay', () => {
     const [, $third] = $div.findAll('div')
     const $spinner = $third.getComponent(BSpinner)
     expect($spinner.props('small')).toBe(true)
+  })
+
+  it('child BTransition child div second child div does not render BSpinner when prop noSpinner', () => {
+    const wrapper = mount(BOverlay, {
+      props: {show: true, noSpinner: true},
+    })
+    const $transition = wrapper.getComponent(BTransition)
+    const $div = $transition.get('div')
+    const [, $third] = $div.findAll('div')
+    const $spinner = $third.findComponent(BSpinner)
+    expect($spinner.exists()).toBe(false)
+  })
+
+  it('child BTransition child div second child div renders BSpinner when noSpinner is false', () => {
+    const wrapper = mount(BOverlay, {
+      props: {show: true, noSpinner: false},
+    })
+    const $transition = wrapper.getComponent(BTransition)
+    const $div = $transition.get('div')
+    const [, $third] = $div.findAll('div')
+    const $spinner = $third.findComponent(BSpinner)
+    expect($spinner.exists()).toBe(true)
+  })
+
+  it('does not have class b-overlay-wrap when prop noWrap is true', () => {
+    const wrapper = mount(BOverlay, {
+      props: {noWrap: true},
+    })
+    expect(wrapper.classes()).not.toContain('b-overlay-wrap')
+  })
+
+  it('has class b-overlay-wrap when prop noWrap is false', () => {
+    const wrapper = mount(BOverlay, {
+      props: {noWrap: false},
+    })
+    expect(wrapper.classes()).toContain('b-overlay-wrap')
+  })
+
+  it('child BTransition child div first child div has class rounded-top when prop roundedTop is true', () => {
+    const wrapper = mount(BOverlay, {
+      props: {show: true, roundedTop: true},
+    })
+    const $transition = wrapper.getComponent(BTransition)
+    const $div = $transition.get('div')
+    const $second = $div.get('div')
+    expect($second.classes()).toContain('rounded-top')
+  })
+
+  it('child BTransition child div first child div has class rounded-bottom when prop roundedBottom is true', () => {
+    const wrapper = mount(BOverlay, {
+      props: {show: true, roundedBottom: true},
+    })
+    const $transition = wrapper.getComponent(BTransition)
+    const $div = $transition.get('div')
+    const $second = $div.get('div')
+    expect($second.classes()).toContain('rounded-bottom')
+  })
+
+  it('child BTransition child div first child div has class rounded-start when prop roundedStart is true', () => {
+    const wrapper = mount(BOverlay, {
+      props: {show: true, roundedStart: true},
+    })
+    const $transition = wrapper.getComponent(BTransition)
+    const $div = $transition.get('div')
+    const $second = $div.get('div')
+    expect($second.classes()).toContain('rounded-start')
+  })
+
+  it('child BTransition child div first child div has class rounded-end when prop roundedEnd is true', () => {
+    const wrapper = mount(BOverlay, {
+      props: {show: true, roundedEnd: true},
+    })
+    const $transition = wrapper.getComponent(BTransition)
+    const $div = $transition.get('div')
+    const $second = $div.get('div')
+    expect($second.classes()).toContain('rounded-end')
+  })
+
+  it('emits shown after overlay enters', async () => {
+    const wrapper = mount(BOverlay, {
+      props: {show: true},
+    })
+    const $t = wrapper.getComponent(BTransition)
+    // Transition after-enter hooks are not triggered in the test environment without CSS animations,
+    // so we invoke the onAfterEnter prop directly via the internal vnode to simulate transition completion
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onAfterEnter = ($t.vm as any).$.vnode?.props?.onAfterEnter as (() => void) | undefined
+    onAfterEnter?.()
+    await nextTick()
+    expect(wrapper.emitted('shown')).toHaveLength(1)
+  })
+
+  it('emits hidden after overlay leaves', async () => {
+    const wrapper = mount(BOverlay, {
+      props: {show: true},
+    })
+    const $t = wrapper.getComponent(BTransition)
+    // Transition after-leave hooks are not triggered in the test environment without CSS animations,
+    // so we invoke the onAfterLeave prop directly via the internal vnode to simulate transition completion
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onAfterLeave = ($t.vm as any).$.vnode?.props?.onAfterLeave as (() => void) | undefined
+    onAfterLeave?.()
+    await nextTick()
+    expect(wrapper.emitted('hidden')).toHaveLength(1)
   })
 })
