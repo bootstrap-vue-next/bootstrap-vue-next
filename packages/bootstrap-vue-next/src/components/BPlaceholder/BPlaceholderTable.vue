@@ -88,9 +88,17 @@ const columnsNumber = computed(() => columnsToNumber.value || 5)
 const rowsNumber = computed(() => rowsToNumber.value || 3)
 
 const computedHeaderColumnsLength = computed(() =>
-  props.headerColumns === undefined ? columnsNumber.value : headerColumnsNumber.value
+  props.headerColumns === undefined
+    ? columnsNumber.value
+    : Number.isNaN(headerColumnsNumber.value)
+      ? columnsNumber.value
+      : headerColumnsNumber.value
 )
 const computedFooterColumnsLength = computed(() =>
-  props.footerColumns === undefined ? columnsNumber.value : footerColumnsNumber.value
+  props.footerColumns === undefined
+    ? columnsNumber.value
+    : Number.isNaN(footerColumnsNumber.value)
+      ? columnsNumber.value
+      : footerColumnsNumber.value
 )
 </script>
