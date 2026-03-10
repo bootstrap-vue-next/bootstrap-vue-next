@@ -3,7 +3,7 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {ref} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import BFormCheckboxGroup from './BFormCheckboxGroup.vue'
-import {checkboxGroupKey} from '../../utils/keys'
+import {checkboxGroupKey, formGroupKey} from '../../utils/keys'
 import type {CheckboxValue} from '../../types/CheckboxTypes'
 
 describe('form-checkbox', () => {
@@ -1300,6 +1300,427 @@ describe('form-checkbox', () => {
         slots: {default: 'foo'},
       })
       expect(wrapper.classes()).toContain('extra-class')
+    })
+
+    it('does not forward class attr to input element', () => {
+      const wrapper = mount(BFormCheckbox, {
+        attrs: {class: 'extra-class'},
+        slots: {default: 'foo'},
+      })
+      const $input = wrapper.get('input')
+      expect($input.classes()).not.toContain('extra-class')
+    })
+
+    it('forwards multiple extra attributes to input element', () => {
+      const wrapper = mount(BFormCheckbox, {
+        attrs: {'data-foo': 'bar', 'data-baz': 'qux'},
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('data-foo')).toBe('bar')
+      expect($input.attributes('data-baz')).toBe('qux')
+    })
+  })
+
+  describe('autofocus', () => {
+    it('accepts autofocus prop true', () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {autofocus: true},
+        attachTo: document.body,
+      })
+      expect(wrapper.props('autofocus')).toBe(true)
+    })
+
+    it('accepts autofocus prop false', () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {autofocus: false},
+        attachTo: document.body,
+      })
+      expect(wrapper.props('autofocus')).toBe(false)
+    })
+  })
+
+  describe('buttonGroup / ConditionalWrapper', () => {
+    it('wrapper div is rendered when buttonGroup is false', () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {buttonGroup: false},
+        slots: {default: 'foo'},
+      })
+      expect(wrapper.element.tagName).toBe('DIV')
+    })
+
+    it('wrapper div is skipped when buttonGroup is true', () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {buttonGroup: true},
+        slots: {default: 'foo'},
+      })
+      // When ConditionalWrapper skips, VTU wraps in a div
+      // but it should not have the form-check class
+      expect(wrapper.classes()).not.toContain('form-check')
+    })
+
+    it('wrapper div is skipped when parent has buttons=true', () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [checkboxGroupKey as symbol]: {
+              modelValue: ref<CheckboxValue[]>([]),
+              switch: ref(false),
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('test-group'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(true),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      const $input = wrapper.find('input')
+      expect($input.exists()).toBe(true)
+      expect($input.classes()).toContain('btn-check')
+    })
+  })
+
+  describe('disabled from multiple sources', () => {
+    it('is disabled when own disabled prop is true', () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {disabled: true},
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('disabled')).toBe('')
+    })
+
+    it('is disabled when parent group disabled is true', () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {value: 'a', disabled: false},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [checkboxGroupKey as symbol]: {
+              modelValue: ref<CheckboxValue[]>([]),
+              switch: ref(false),
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('test-group'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(false),
+              disabled: ref(true),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('disabled')).toBe('')
+    })
+
+    it('is disabled when formGroup disabled is true', () => {
+      const disabled = ref(true)
+      const state = ref<boolean | undefined>(undefined)
+      const wrapper = mount(BFormCheckbox, {
+        global: {
+          provide: {
+            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('disabled')).toBe('')
+    })
+
+    it('is not disabled when all sources are false', () => {
+      const disabled = ref(false)
+      const state = ref<boolean | undefined>(undefined)
+      const wrapper = mount(BFormCheckbox, {
+        props: {disabled: false},
+        global: {
+          provide: {
+            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('disabled')).toBeUndefined()
+    })
+  })
+
+  describe('model behavior with various value types', () => {
+    it('emits numeric value when clicked', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {value: 42, uncheckedValue: 0},
+        attachTo: document.body,
+      })
+      await wrapper.find('input').trigger('click')
+      expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe(42)
+    })
+
+    it('emits null uncheckedValue when unchecked', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {modelValue: 'yes', value: 'yes', uncheckedValue: null},
+        attachTo: document.body,
+      })
+      await wrapper.find('input').trigger('click')
+      expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe(null)
+    })
+
+    it('does not emit when disabled and clicked', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {disabled: true, modelValue: false},
+        attachTo: document.body,
+      })
+      await wrapper.find('input').trigger('click')
+      expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+    })
+
+    it('clears indeterminate when value changes via click', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {
+          'modelValue': false,
+          'indeterminate': true,
+          'onUpdate:indeterminate': (e: boolean) => {
+            wrapper.setProps({indeterminate: e})
+          },
+          'onUpdate:modelValue': (e: unknown) => {
+            wrapper.setProps({modelValue: e as boolean})
+          },
+        },
+        attachTo: document.body,
+      })
+      expect(wrapper.props('indeterminate')).toBe(true)
+      await wrapper.find('input').trigger('click')
+      expect(wrapper.props('indeterminate')).toBe(false)
+    })
+  })
+
+  describe('prop reactivity', () => {
+    it('inline class reacts to prop change', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {inline: false},
+      })
+      expect(wrapper.classes()).not.toContain('form-check-inline')
+      await wrapper.setProps({inline: true})
+      expect(wrapper.classes()).toContain('form-check-inline')
+    })
+
+    it('reverse class reacts to prop change', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {reverse: false},
+      })
+      expect(wrapper.classes()).not.toContain('form-check-reverse')
+      await wrapper.setProps({reverse: true})
+      expect(wrapper.classes()).toContain('form-check-reverse')
+    })
+
+    it('size class reacts to prop change', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {size: 'sm'},
+      })
+      expect(wrapper.classes()).toContain('form-control-sm')
+      await wrapper.setProps({size: 'lg'})
+      expect(wrapper.classes()).not.toContain('form-control-sm')
+      expect(wrapper.classes()).toContain('form-control-lg')
+    })
+
+    it('switch class reacts to prop change', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {switch: false},
+        slots: {default: 'foo'},
+      })
+      expect(wrapper.classes()).not.toContain('form-switch')
+      await wrapper.setProps({switch: true})
+      expect(wrapper.classes()).toContain('form-switch')
+    })
+
+    it('state class on input reacts to prop change', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {state: true},
+      })
+      const $input = wrapper.get('input')
+      expect($input.classes()).toContain('is-valid')
+      await wrapper.setProps({state: false})
+      expect($input.classes()).not.toContain('is-valid')
+      expect($input.classes()).toContain('is-invalid')
+    })
+
+    it('disabled attribute reacts to prop change', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {disabled: false},
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('disabled')).toBeUndefined()
+      await wrapper.setProps({disabled: true})
+      expect($input.attributes('disabled')).toBe('')
+    })
+
+    it('name attribute reacts to prop change', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {name: 'first'},
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('name')).toBe('first')
+      await wrapper.setProps({name: 'second'})
+      expect($input.attributes('name')).toBe('second')
+    })
+
+    it('id attribute reacts to prop change', async () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {id: 'id-1'},
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('id')).toBe('id-1')
+      await wrapper.setProps({id: 'id-2'})
+      expect($input.attributes('id')).toBe('id-2')
+    })
+  })
+
+  describe('checkbox group click interaction', () => {
+    it('clicking checkbox in group updates parent modelValue', async () => {
+      const parentModelValue = ref<CheckboxValue[]>([])
+      const wrapper = mount(BFormCheckbox, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        attachTo: document.body,
+        global: {
+          provide: {
+            [checkboxGroupKey as symbol]: {
+              modelValue: parentModelValue,
+              switch: ref(false),
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('test-group'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      await wrapper.find('input').trigger('click')
+      expect(parentModelValue.value).toEqual(['a'])
+    })
+
+    it('unchecking checkbox in group removes value from parent modelValue', async () => {
+      const parentModelValue = ref<CheckboxValue[]>(['a'])
+      const wrapper = mount(BFormCheckbox, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        attachTo: document.body,
+        global: {
+          provide: {
+            [checkboxGroupKey as symbol]: {
+              modelValue: parentModelValue,
+              switch: ref(false),
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('test-group'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      await wrapper.find('input').trigger('click')
+      expect(parentModelValue.value).toEqual([])
+    })
+  })
+
+  describe('computedRequired', () => {
+    it('required is true when parent group provides name and required', () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [checkboxGroupKey as symbol]: {
+              modelValue: ref<CheckboxValue[]>([]),
+              switch: ref(false),
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('group-name'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(true),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('required')).toBe('')
+      expect($input.attributes('aria-required')).toBe('true')
+    })
+
+    it('required is false when parent group has no name even if required is true', () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [checkboxGroupKey as symbol]: {
+              modelValue: ref<CheckboxValue[]>([]),
+              switch: ref(false),
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref(''),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(true),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('required')).toBeUndefined()
+    })
+  })
+
+  describe('default slot content', () => {
+    it('renders HTML content in default slot', () => {
+      const wrapper = mount(BFormCheckbox, {
+        slots: {default: '<strong>Bold</strong>'},
+      })
+      const $label = wrapper.get('label')
+      expect($label.find('strong').exists()).toBe(true)
+      expect($label.text()).toBe('Bold')
+    })
+
+    it('renders empty when no slot and plain is true', () => {
+      const wrapper = mount(BFormCheckbox, {
+        props: {plain: true},
+      })
+      const $label = wrapper.find('label')
+      expect($label.exists()).toBe(false)
     })
   })
 })

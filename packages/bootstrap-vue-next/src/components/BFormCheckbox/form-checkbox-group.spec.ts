@@ -497,4 +497,158 @@ describe('form-checkbox-group', () => {
       expect(wrapper.attributes('id')).toBe('my-group-id')
     })
   })
+
+  describe('options reactivity', () => {
+    it('updates checkboxes when options change', async () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          options: ['a', 'b'],
+        },
+      })
+      let checkboxes = wrapper.findAllComponents(BFormCheckbox)
+      expect(checkboxes).toHaveLength(2)
+      await wrapper.setProps({options: ['a', 'b', 'c', 'd']})
+      checkboxes = wrapper.findAllComponents(BFormCheckbox)
+      expect(checkboxes).toHaveLength(4)
+    })
+
+    it('reduces checkboxes when options are removed', async () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          options: ['a', 'b', 'c'],
+        },
+      })
+      let checkboxes = wrapper.findAllComponents(BFormCheckbox)
+      expect(checkboxes).toHaveLength(3)
+      await wrapper.setProps({options: ['a']})
+      checkboxes = wrapper.findAllComponents(BFormCheckbox)
+      expect(checkboxes).toHaveLength(1)
+    })
+
+    it('renders empty when options become empty array', async () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          options: ['a', 'b'],
+        },
+      })
+      expect(wrapper.findAllComponents(BFormCheckbox)).toHaveLength(2)
+      await wrapper.setProps({options: []})
+      expect(wrapper.findAllComponents(BFormCheckbox)).toHaveLength(0)
+    })
+  })
+
+  describe('missing text field fallback', () => {
+    it('uses String(value) when text field is missing from object', () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          options: [{value: 42}, {value: 'hello'}],
+        },
+      })
+      const checkboxes = wrapper.findAllComponents(BFormCheckbox)
+      expect(checkboxes[0].text()).toBe('42')
+      expect(checkboxes[1].text()).toBe('hello')
+    })
+
+    it('uses String(value) for custom valueField when textField is missing', () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          options: [{id: 100}, {id: 200}],
+          valueField: 'id',
+        },
+      })
+      const checkboxes = wrapper.findAllComponents(BFormCheckbox)
+      expect(checkboxes[0].text()).toBe('100')
+      expect(checkboxes[1].text()).toBe('200')
+    })
+  })
+
+  describe('disabled with option-level disabled', () => {
+    it('group disabled overrides option disabled=false', () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          disabled: true,
+          options: [
+            {text: 'A', value: 'a', disabled: false},
+            {text: 'B', value: 'b', disabled: false},
+          ],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="checkbox"]')
+      expect(inputs[0].attributes('disabled')).toBe('')
+      expect(inputs[1].attributes('disabled')).toBe('')
+    })
+
+    it('individual options can be disabled when group is not disabled', () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          disabled: false,
+          options: [
+            {text: 'A', value: 'a', disabled: true},
+            {text: 'B', value: 'b', disabled: false},
+          ],
+        },
+      })
+      const inputs = wrapper.findAll('input[type="checkbox"]')
+      expect(inputs[0].attributes('disabled')).toBe('')
+      expect(inputs[1].attributes('disabled')).toBeUndefined()
+    })
+  })
+
+  describe('unchecking behavior', () => {
+    it('removes value from modelValue when unchecked', async () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          'modelValue': ['a', 'b'],
+          'options': ['a', 'b', 'c'],
+          'onUpdate:modelValue': (e: unknown) => {
+            wrapper.setProps({modelValue: e as string[]})
+          },
+        },
+        attachTo: document.body,
+      })
+      const inputs = wrapper.findAll('input[type="checkbox"]')
+      await inputs[0].trigger('click')
+      expect(wrapper.props('modelValue')).toEqual(['b'])
+    })
+
+    it('handles checking and unchecking multiple values', async () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {
+          'modelValue': [],
+          'options': ['a', 'b', 'c'],
+          'onUpdate:modelValue': (e: unknown) => {
+            wrapper.setProps({modelValue: e as string[]})
+          },
+        },
+        attachTo: document.body,
+      })
+      const inputs = wrapper.findAll('input[type="checkbox"]')
+      await inputs[0].trigger('click')
+      expect(wrapper.props('modelValue')).toEqual(['a'])
+      await inputs[2].trigger('click')
+      expect(wrapper.props('modelValue')).toEqual(['a', 'c'])
+      await inputs[0].trigger('click')
+      expect(wrapper.props('modelValue')).toEqual(['c'])
+    })
+  })
+
+  describe('auto-generated id', () => {
+    it('has a generated id when id prop is not provided', () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {options: ['a']},
+      })
+      expect(wrapper.attributes('id')).toBeDefined()
+    })
+  })
+
+  describe('default modelValue', () => {
+    it('defaults to empty array when modelValue is not provided', () => {
+      const wrapper = mount(BFormCheckboxGroup, {
+        props: {options: ['a', 'b']},
+      })
+      const inputs = wrapper.findAll('input[type="checkbox"]')
+      expect((inputs[0].element as HTMLInputElement).checked).toBe(false)
+      expect((inputs[1].element as HTMLInputElement).checked).toBe(false)
+    })
+  })
 })
