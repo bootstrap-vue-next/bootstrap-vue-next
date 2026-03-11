@@ -365,7 +365,8 @@ const tryHide = (e?: Readonly<Event>) => {
       isOutside &&
       triggerIsOutside &&
       !floatingElement.value?.contains(document?.activeElement) &&
-      !triggerElement.value?.contains(document?.activeElement)) ||
+      (!computedTriggers.value.focus ||
+        !triggerElement.value?.contains(document?.activeElement))) ||
     (props.noninteractive && triggerIsOutside)
   ) {
     hide(e?.type)
