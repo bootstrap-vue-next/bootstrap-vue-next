@@ -1509,10 +1509,13 @@ describe('modal', () => {
 
       // Trigger hide with 'ok' trigger
       wrapper.vm.hide('ok')
-      // Simulate a modelValue reactivity cycle calling hide again (as happens in Nuxt)
+      // Simulate a modelValue reactivity cycle calling hide again (as happens in Nuxt
+      // when the parent re-renders and passes modelValue: false back as a prop)
       wrapper.vm.hide('modelValue', true)
 
-      // Only one 'hide' event should have been emitted with trigger 'ok'
+      // Only one 'hide' event should have been emitted with trigger 'ok'.
+      // This proves leaveTrigger is preserved, which means the 'hidden' event
+      // (emitted in onAfterLeave) will also have the correct trigger.
       const hideEvents = wrapper.emitted<BvTriggerableEvent[]>('hide')
       expect(hideEvents).toHaveLength(1)
       expect(hideEvents?.[0][0].trigger).toBe('ok')
