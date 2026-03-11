@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.43.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.9...bootstrapvuenext-v0.43.10) (2026-03-11)
+
+
+### Bug Fixes
+
+* **BPopover:** Allow focus=false popovers to hide when target is focused ([#3113](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3113)) ([#3114](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3114)) ([f445f91](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f445f91b9e8e2cd86d89c7a058a368d6e68e07f3))
+
 ## [0.43.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.8...bootstrapvuenext-v0.43.9) (2026-03-10)
 
 
