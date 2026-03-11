@@ -233,6 +233,9 @@ export const useShowHide = (
   let leaveTrigger: string | undefined
   const hide = (trigger?: string, noTriggerEmit?: boolean): Promise<string> => {
     if (!showRef.value && !showTimeout && !renderRef.value) return Promise.resolve('')
+    if (hideTimeout || isLeaving.value) {
+      return (_Promise as Promise<string>) || Promise.resolve('')
+    }
     if (!_Promise)
       _Promise = new Promise<string>((resolve) => {
         ;(_Resolve as (value: string | PromiseLike<string>) => void) = resolve
