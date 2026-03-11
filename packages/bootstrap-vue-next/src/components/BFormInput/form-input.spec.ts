@@ -446,6 +446,30 @@ describe('form-input', () => {
       await wrapper.trigger('input')
       expect(formatter).toHaveBeenCalledWith('test', expect.any(Event))
     })
+    
+    it('keeps input display value in sync with formatted value when formatted equals previous model', async () => {
+      // Reproduces: typing disallowed chars when formatter strips them and formatted == previous model
+      // e.g. model is "1", user types "a" making raw value "1a", formatter returns "1"
+      // Since model stays "1" (no change), Vue won't re-render, so the input must be updated directly
+      const digitsOnly = (val: string) => val.replace(/\D/g, '')
+      const wrapper = mount(BFormInput, {props: {modelValue: '1', formatter: digitsOnly}})
+      // Simulate the user having typed "1a" into the field
+      wrapper.element.value = '1a'
+      await wrapper.trigger('input')
+      // The model should remain "1" (no new emission since value is unchanged)
+      // The displayed input value must also be "1" (not "1a")
+      expect(wrapper.element.value).toBe('1')
+    })
+
+    it('updates input display value to formatted value when formatter strips characters', async () => {
+      // Formatter only allows digits
+      const digitsOnly = (val: string) => val.replace(/\D/g, '')
+      const wrapper = mount(BFormInput, {props: {modelValue: '', formatter: digitsOnly}})
+      // User types "a" — formatter returns "" which equals previous model ""
+      wrapper.element.value = 'a'
+      await wrapper.trigger('input')
+      expect(wrapper.element.value).toBe('')
+    })
   })
 
   describe('formGroupKey injection', () => {

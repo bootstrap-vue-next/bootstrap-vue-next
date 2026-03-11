@@ -81,6 +81,13 @@ export const useFormInput = (
     const nextModel = formattedValue
 
     updateModelValue(nextModel)
+     // If the formatter changed the value, directly update the input's visual value
+    // to keep the displayed text in sync with the model. Without this, if the
+    // formatted value equals the previous model value, Vue's reactivity won't
+    // re-render the input and the raw (unformatted) text remains visible.
+    if (formattedValue !== value && input.value) {
+      ;(input.value as HTMLInputElement | HTMLTextAreaElement).value = formattedValue
+    }
   }
 
   const onChange = (evt: Readonly<Event>) => {
