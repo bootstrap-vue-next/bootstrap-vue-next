@@ -1498,6 +1498,32 @@ describe('modal', () => {
     })
   })
 
+  describe('hide trigger preservation', () => {
+    it('second hide call is ignored when hide is already in progress', async () => {
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {modelValue: true, noAnimation: true},
+      })
+      await nextTick()
+
+      // Trigger hide with 'ok' trigger
+      wrapper.vm.hide('ok')
+      // Simulate a modelValue reactivity cycle calling hide again (as happens in Nuxt
+      // when the parent re-renders and passes modelValue: false back as a prop)
+      wrapper.vm.hide('modelValue', true)
+
+      // Only one 'hide' event should have been emitted with trigger 'ok'.
+      // This proves leaveTrigger is preserved, which means the 'hidden' event
+      // (emitted in onAfterLeave) will also have the correct trigger.
+      const hideEvents = wrapper.emitted<BvTriggerableEvent[]>('hide')
+      expect(hideEvents).toHaveLength(1)
+      expect(hideEvents?.[0][0].trigger).toBe('ok')
+
+      wrapper.unmount()
+    })
+  })
+
   describe('content class', () => {
     it('applies contentClass to modal-content element', () => {
       const wrapper = mount(BModal, {
