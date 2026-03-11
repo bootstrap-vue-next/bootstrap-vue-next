@@ -321,6 +321,7 @@ const props = defineProps<{data: ComponentReference}>()
  *   {BTabs: {...}, BTab: {...}} → BTabs
  */
 const deriveBaseDirectory = (): string => {
+  if (!props.data) return ''
   const componentNames = Object.keys(props.data)
   return componentNames[0] // First component is the base directory
 }
@@ -368,6 +369,7 @@ const flattenExposedRecord = (
  * Sorts the items inside so they're uniform structure
  */
 const sortData = computed(() => {
+  if (!props.data) return []
   const baseDirectory = deriveBaseDirectory()
 
   return Object.entries(props.data).map(

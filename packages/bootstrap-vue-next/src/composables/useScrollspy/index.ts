@@ -3,6 +3,7 @@ import {
   type ComponentPublicInstance,
   computed,
   getCurrentInstance,
+  type MaybeRef,
   type MaybeRefOrGetter,
   nextTick,
   onMounted,
@@ -10,6 +11,7 @@ import {
   type Ref,
   ref,
   toRef,
+  unref,
   watch,
 } from 'vue'
 import {getElement} from '../../utils/getElement'
@@ -35,7 +37,7 @@ interface ScrollspyOptions {
   contentQuery: string
   targetQuery: string
   manual: boolean
-  root: string | ComponentPublicInstance | HTMLElement | null
+  root: MaybeRef<string | ComponentPublicInstance | HTMLElement | null>
   rootMargin: string
   threshold: number | number[]
   watchChanges: boolean
@@ -114,10 +116,22 @@ export const useScrollspy = (
       : resolvedContent.value
   )
 
+  const resolvedRoot = computed(() => {
+    if (root !== undefined) {
+      const v = unref(root)
+      if (v) return getElement(v)
+    }
+    return scrollRoot.value
+  })
+
   const iobs = useIntersectionObserver(
     nodeList,
     (entries) => {
-      const scrollTop = (scrollRoot.value || document?.documentElement)?.scrollTop
+      const scrollTop =
+        (
+          scrollRoot.value ||
+          (typeof document !== 'undefined' ? document.documentElement : undefined)
+        )?.scrollTop ?? 0
       isScrollingDown = scrollTop > previousScrollTop
       previousScrollTop = scrollTop
       entries.forEach((entry) => {
@@ -149,7 +163,7 @@ export const useScrollspy = (
       }
     },
     {
-      root: root ? getElement(root) : scrollRoot,
+      root: resolvedRoot,
       rootMargin,
       threshold,
     }
@@ -210,7 +224,8 @@ export const useScrollspy = (
   const scrollIntoView = (event: Readonly<MouseEvent>, smooth: boolean = false) => {
     event.preventDefault()
     const href = (event.target as HTMLElement)?.getAttribute?.('href')
-    const el: HTMLElement | null = href ? document?.querySelector(href) : null
+    const el: HTMLElement | null =
+      href && typeof document !== 'undefined' ? document.querySelector(href) : null
     // console.log('scrollIntoView', event, el, content.value.$el)
     if (el && resolvedContent.value) {
       if (resolvedContent.value.scrollTo) {
