@@ -41,9 +41,7 @@ export const useToast = () => {
     options: OrchestratorCreateOptions = {}
   ): PromiseWithComponent<typeof BToast, ToastOrchestratorParam> => {
     if (!_isOrchestratorInstalled.value) {
-      throw new Error(
-        'The BApp or BOrchestrator component must be mounted to use the toast composable'
-      )
+      throw new Error('The BApp component must be mounted to use the toast composable')
     }
 
     const resolvedProps = isRef(obj) ? obj : shallowRef(obj)

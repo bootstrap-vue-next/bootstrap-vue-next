@@ -44,7 +44,7 @@ export const useModal = () => {
     options: OrchestratorCreateOptions = {}
   ): PromiseWithComponent<typeof BModal, ModalOrchestratorParam<ComponentProps>> => {
     if (!_isOrchestratorInstalled.value) {
-      throw new Error('BApp or BOrchestrator component must be mounted to use the modal controller')
+      throw new Error('BApp component must be mounted to use the modal controller')
     }
 
     const resolvedProps = (isRef(obj) ? obj : shallowRef(obj)) as Ref<
