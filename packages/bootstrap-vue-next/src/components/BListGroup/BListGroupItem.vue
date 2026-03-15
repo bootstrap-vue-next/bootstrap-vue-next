@@ -29,7 +29,7 @@ const _props = withDefaults(defineProps<BListGroupItemProps>(), {
   // All others use defaults
   activeClass: undefined,
   disabled: undefined,
-  exactActiveClass: 'router-link-exact-active active',
+  exactActiveClass: undefined,
   href: undefined,
   icon: undefined,
   noRel: undefined,
