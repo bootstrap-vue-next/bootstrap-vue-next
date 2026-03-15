@@ -12,6 +12,7 @@ import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useToast} from '../../composables/useToast'
 import {watch} from 'vue'
 import BOrchestrator from '../BApp/BOrchestrator.vue'
+import {deprecatedNote} from '../../utils/deprecatedTools.ts'
 
 defineOptions({
   inheritAttrs: false,
@@ -30,9 +31,7 @@ if (!tools._isOrchestratorInstalled.value) {
   renderOrchestrator = true
 }
 
-if (process.env.NODE_ENV === 'development') {
-  console.warn('BToastOrchestrator is deprecated, use BOrchestrator instead')
-}
+deprecatedNote('BToastOrchestrator is deprecated, use BOrchestrator instead')
 
 watch(
   () => props.appendToast,

@@ -43,4 +43,33 @@ describe('input-group-text', () => {
     })
     expect(wrapper.text()).toBe('slots')
   })
+
+  it('tag is reactive', async () => {
+    const wrapper = mount(BInputGroupText)
+    expect(wrapper.element.tagName).toBe('DIV')
+    await wrapper.setProps({tag: 'span'})
+    expect(wrapper.element.tagName).toBe('SPAN')
+  })
+
+  it('text prop is reactive', async () => {
+    const wrapper = mount(BInputGroupText, {
+      props: {text: 'foobar'},
+    })
+    expect(wrapper.text()).toBe('foobar')
+    await wrapper.setProps({text: 'baz'})
+    expect(wrapper.text()).toBe('baz')
+  })
+
+  it('renders HTML content in slot', () => {
+    const wrapper = mount(BInputGroupText, {
+      slots: {default: '<strong>bold</strong>'},
+    })
+    expect(wrapper.find('strong').exists()).toBe(true)
+    expect(wrapper.find('strong').text()).toBe('bold')
+  })
+
+  it('renders nothing when no text or slot provided', () => {
+    const wrapper = mount(BInputGroupText)
+    expect(wrapper.text()).toBe('')
+  })
 })

@@ -2,6 +2,8 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BInputGroup from './BInputGroup.vue'
 import BFormInput from '../BFormInput/BFormInput.vue'
 import {afterEach, describe, expect, it} from 'vitest'
+import {defineComponent, inject} from 'vue'
+import {inputGroupKey} from '../../utils/keys'
 
 describe('input-group', () => {
   enableAutoUnmount(afterEach)
@@ -173,6 +175,42 @@ describe('input-group', () => {
       slots: {default: 'default'},
     })
     expect(wrapper.text()).toBe('prependdefaultappend')
+  })
+
+  it('tag is reactive', async () => {
+    const wrapper = mount(BInputGroup)
+    expect(wrapper.element.tagName).toBe('DIV')
+    await wrapper.setProps({tag: 'span'})
+    expect(wrapper.element.tagName).toBe('SPAN')
+  })
+
+  it('does not have size class when size is md', () => {
+    const wrapper = mount(BInputGroup, {
+      props: {size: 'md'},
+    })
+    expect(wrapper.classes()).not.toContain('input-group-md')
+  })
+
+  it('size class is reactive', async () => {
+    const wrapper = mount(BInputGroup, {
+      props: {size: 'sm'},
+    })
+    expect(wrapper.classes()).toContain('input-group-sm')
+    await wrapper.setProps({size: 'lg'})
+    expect(wrapper.classes()).not.toContain('input-group-sm')
+    expect(wrapper.classes()).toContain('input-group-lg')
+  })
+
+  it('provides inputGroupKey as true to child components', () => {
+    let injected: boolean | undefined
+    const Child = defineComponent({
+      setup() {
+        injected = inject(inputGroupKey, false)
+        return () => null
+      },
+    })
+    mount(BInputGroup, {slots: {default: Child}})
+    expect(injected).toBe(true)
   })
 
   it('range input inside input group has both form-range and form-control classes', () => {

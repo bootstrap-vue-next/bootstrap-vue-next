@@ -1,7 +1,10 @@
 import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
+import {ref} from 'vue'
 import BFormRadio from './BFormRadio.vue'
 import BFormRadioGroup from './BFormRadioGroup.vue'
+import {radioGroupKey} from '../../utils/keys'
+import type {RadioValue} from '../../types/RadioTypes'
 
 describe('form-radio', () => {
   enableAutoUnmount(afterEach)
@@ -810,6 +813,344 @@ describe('form-radio', () => {
       // Default size should be 'md' which doesn't add a class
       expect($radio.classes()).not.toContain('form-control-sm')
       expect($radio.classes()).not.toContain('form-control-lg')
+    })
+  })
+
+  describe('model behavior', () => {
+    it('emits update:modelValue with value when clicked', async () => {
+      const wrapper = mount(BFormRadio, {
+        props: {modelValue: undefined, value: 'foo'},
+        attachTo: document.body,
+      })
+      await wrapper.find('input').setValue()
+      expect(wrapper.emitted('update:modelValue')).toBeDefined()
+      expect(wrapper.emitted('update:modelValue')?.length).toBe(1)
+      expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe('foo')
+    })
+
+    it('emits update:modelValue with default value true when no value prop', async () => {
+      const wrapper = mount(BFormRadio, {
+        props: {modelValue: undefined},
+        attachTo: document.body,
+      })
+      await wrapper.find('input').setValue()
+      expect(wrapper.emitted('update:modelValue')).toBeDefined()
+      expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe(true)
+    })
+
+    it('radio is checked when modelValue matches value', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {modelValue: 'foo', value: 'foo'},
+      })
+      const $input = wrapper.get('input')
+      expect(($input.element as HTMLInputElement).checked).toBe(true)
+    })
+
+    it('radio is not checked when modelValue does not match value', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {modelValue: 'bar', value: 'foo'},
+      })
+      const $input = wrapper.get('input')
+      expect(($input.element as HTMLInputElement).checked).toBe(false)
+    })
+
+    it('radio becomes checked when modelValue changes to match value', async () => {
+      const wrapper = mount(BFormRadio, {
+        props: {modelValue: 'bar', value: 'foo'},
+      })
+      const $input = wrapper.get('input')
+      expect(($input.element as HTMLInputElement).checked).toBe(false)
+      await wrapper.setProps({modelValue: 'foo'})
+      expect(($input.element as HTMLInputElement).checked).toBe(true)
+    })
+  })
+
+  describe('state validation classes on input', () => {
+    it('input has class is-valid when state is true', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {state: true},
+      })
+      const $input = wrapper.get('input')
+      expect($input.classes()).toContain('is-valid')
+    })
+
+    it('input has class is-invalid when state is false', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {state: false},
+      })
+      const $input = wrapper.get('input')
+      expect($input.classes()).toContain('is-invalid')
+    })
+
+    it('input does not have is-valid or is-invalid when state is null', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {state: null},
+      })
+      const $input = wrapper.get('input')
+      expect($input.classes()).not.toContain('is-valid')
+      expect($input.classes()).not.toContain('is-invalid')
+    })
+
+    it('input does not have is-valid or is-invalid when state is undefined', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {state: undefined},
+      })
+      const $input = wrapper.get('input')
+      expect($input.classes()).not.toContain('is-valid')
+      expect($input.classes()).not.toContain('is-invalid')
+    })
+  })
+
+  describe('exposed methods', () => {
+    it('exposes element ref', () => {
+      const wrapper = mount(BFormRadio, {
+        attachTo: document.body,
+      })
+      expect(wrapper.vm.element).toBeDefined()
+    })
+
+    it('exposes focus method', () => {
+      const wrapper = mount(BFormRadio, {
+        attachTo: document.body,
+      })
+      expect(typeof wrapper.vm.focus).toBe('function')
+    })
+
+    it('exposes blur method', () => {
+      const wrapper = mount(BFormRadio, {
+        attachTo: document.body,
+      })
+      expect(typeof wrapper.vm.blur).toBe('function')
+    })
+  })
+
+  describe('radio group injection', () => {
+    it('inherits disabled from injected parent group', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [radioGroupKey as symbol]: {
+              modelValue: ref<RadioValue>(null),
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('test-group'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(false),
+              disabled: ref(true),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('disabled')).toBe('')
+    })
+
+    it('inherits name from injected parent group', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [radioGroupKey as symbol]: {
+              modelValue: ref<RadioValue>(null),
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('parent-name'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('name')).toBe('parent-name')
+    })
+
+    it('inherits form from injected parent group', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [radioGroupKey as symbol]: {
+              modelValue: ref<RadioValue>(null),
+              buttonVariant: ref('secondary'),
+              form: ref('parent-form'),
+              name: ref('test-group'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('form')).toBe('parent-form')
+    })
+
+    it('inherits required from injected parent group', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [radioGroupKey as symbol]: {
+              modelValue: ref<RadioValue>(null),
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('test-group'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(true),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('required')).toBe('')
+    })
+
+    it('child prop overrides parent name when explicitly set', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {value: 'a', name: 'child-name'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [radioGroupKey as symbol]: {
+              modelValue: ref<RadioValue>(null),
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('parent-name'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('name')).toBe('child-name')
+    })
+
+    it('child prop overrides parent form when explicitly set', () => {
+      const wrapper = mount(BFormRadio, {
+        props: {value: 'a', form: 'child-form'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [radioGroupKey as symbol]: {
+              modelValue: ref<RadioValue>(null),
+              buttonVariant: ref('secondary'),
+              form: ref('parent-form'),
+              name: ref('test-group'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('form')).toBe('child-form')
+    })
+
+    it('uses parent modelValue when in a group', () => {
+      const parentModelValue = ref<RadioValue>('a')
+      const wrapper = mount(BFormRadio, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [radioGroupKey as symbol]: {
+              modelValue: parentModelValue,
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('test-group'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect(($input.element as HTMLInputElement).checked).toBe(true)
+    })
+
+    it('radio is unchecked when value is not parent modelValue', () => {
+      const parentModelValue = ref<RadioValue>('b')
+      const wrapper = mount(BFormRadio, {
+        props: {value: 'a'},
+        slots: {default: 'A'},
+        global: {
+          provide: {
+            [radioGroupKey as symbol]: {
+              modelValue: parentModelValue,
+              buttonVariant: ref('secondary'),
+              form: ref(undefined),
+              name: ref('test-group'),
+              state: ref(undefined),
+              plain: ref(false),
+              size: ref('md'),
+              inline: ref(false),
+              reverse: ref(false),
+              required: ref(false),
+              buttons: ref(false),
+              disabled: ref(false),
+            },
+          },
+        },
+      })
+      const $input = wrapper.get('input')
+      expect(($input.element as HTMLInputElement).checked).toBe(false)
+    })
+  })
+
+  describe('attrs forwarding', () => {
+    it('forwards extra attributes to input element', () => {
+      const wrapper = mount(BFormRadio, {
+        attrs: {'data-custom': 'test'},
+      })
+      const $input = wrapper.get('input')
+      expect($input.attributes('data-custom')).toBe('test')
     })
   })
 })

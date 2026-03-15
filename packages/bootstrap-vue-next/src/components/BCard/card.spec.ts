@@ -495,4 +495,58 @@ describe('card', () => {
     expect($second.exists()).toBe(true)
     expect($second.attributes('src')).toBe('/abc')
   })
+
+  it('child BCardImg has its alt attribute as imgAlt', () => {
+    const wrapper = mount(BCard, {
+      props: {imgSrc: '/abc', imgAlt: 'foobar'},
+    })
+    const $img = wrapper.find('img')
+    expect($img.attributes('alt')).toBe('foobar')
+  })
+
+  it('child BCardImg has its prop width as imgWidth number', () => {
+    const wrapper = mount(BCard, {
+      props: {imgSrc: '/abc', imgWidth: 100},
+    })
+    const $img = wrapper.getComponent(BCardImg)
+    expect($img.props('width')).toBe(100)
+  })
+
+  it('child BCardImg has its prop placement as imgPlacement', () => {
+    const wrapper = mount(BCard, {
+      props: {imgSrc: '/abc', imgPlacement: 'top'},
+    })
+    const $img = wrapper.getComponent(BCardImg)
+    expect($img.props('placement')).toBe('top')
+  })
+
+  it('child BCardHeader has internal prop variant as prop headerVariant', () => {
+    const wrapper = mount(BCard, {
+      props: {header: 'foobar', headerVariant: 'danger'},
+    })
+    const $header = wrapper.getComponent(BCardHeader)
+    expect($header.props('variant')).toBe('danger')
+  })
+
+  it('child BCardFooter has internal prop variant as prop footerVariant', () => {
+    const wrapper = mount(BCard, {
+      props: {footer: 'foobar', footerVariant: 'danger'},
+    })
+    const $footer = wrapper.getComponent(BCardFooter)
+    expect($footer.props('variant')).toBe('danger')
+  })
+
+  it('child BCardBody has overlay false by default', () => {
+    const wrapper = mount(BCard)
+    const $body = wrapper.getComponent(BCardBody)
+    expect($body.props('overlay')).toBe(false)
+  })
+
+  it('child BCardBody has overlay true when imgPlacement is overlay', () => {
+    const wrapper = mount(BCard, {
+      props: {imgPlacement: 'overlay'},
+    })
+    const $body = wrapper.getComponent(BCardBody)
+    expect($body.props('overlay')).toBe(true)
+  })
 })

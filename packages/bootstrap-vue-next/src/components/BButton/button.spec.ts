@@ -4,7 +4,7 @@ import BSpinner from '../BSpinner/BSpinner.vue'
 import BButton from './BButton.vue'
 import BLink from '../BLink/BLink.vue'
 
-describe.skip('button', () => {
+describe('button', () => {
   enableAutoUnmount(afterEach)
 
   it('has static class btn', () => {
@@ -15,6 +15,16 @@ describe.skip('button', () => {
   it('has tag button by default', () => {
     const wrapper = mount(BButton)
     expect(wrapper.element.tagName).toBe('BUTTON')
+  })
+
+  it('has default variant class btn-secondary', () => {
+    const wrapper = mount(BButton)
+    expect(wrapper.classes()).toContain('btn-secondary')
+  })
+
+  it('has default size class btn-md', () => {
+    const wrapper = mount(BButton)
+    expect(wrapper.classes()).toContain('btn-md')
   })
 
   it('is blink if prop to', () => {
@@ -79,6 +89,14 @@ describe.skip('button', () => {
     expect(wrapper.classes()).not.toContain('btn-primary')
   })
 
+  it('does not have btn-{variant} class when variant is null', () => {
+    const wrapper = mount(BButton, {
+      props: {variant: null},
+    })
+    expect(wrapper.classes()).not.toContain('btn-secondary')
+    expect(wrapper.classes()).not.toContain('btn-null')
+  })
+
   it('has class btn-{type} when prop size', async () => {
     const wrapper = mount(BButton, {
       props: {size: 'sm'},
@@ -133,25 +151,39 @@ describe.skip('button', () => {
     expect(wrapper.classes()).not.toContain('disabled')
   })
 
-  it('has aria-disabled if prop href', () => {
+  it('has aria-disabled true when prop href is # and prop disabled', () => {
+    const wrapper = mount(BButton, {
+      props: {href: '#', disabled: true},
+    })
+    expect(wrapper.attributes('aria-disabled')).toBe('true')
+  })
+
+  it('does not have aria-disabled when prop href is not # and prop disabled', () => {
     const wrapper = mount(BButton, {
       props: {href: '/abc', disabled: true},
     })
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
   })
 
-  it('has aria-disabled if prop to', () => {
+  it('has aria-disabled if prop to and prop disabled', () => {
     const wrapper = mount(BButton, {
       props: {to: '/abc', disabled: true},
     })
     expect(wrapper.attributes('aria-disabled')).toBe('true')
   })
 
-  it('has aria-disabled if prop disabled and prop tag is button', () => {
+  it('does not have aria-disabled when tag is button and prop disabled', () => {
     const wrapper = mount(BButton, {
       props: {disabled: true},
     })
     expect(wrapper.attributes('aria-disabled')).toBeUndefined()
+  })
+
+  it('has aria-disabled when non-standard tag and prop disabled', () => {
+    const wrapper = mount(BButton, {
+      props: {disabled: true, tag: 'div'},
+    })
+    expect(wrapper.attributes('aria-disabled')).toBe('true')
   })
 
   it('has attr aria-pressed when prop pressed', async () => {
@@ -215,13 +247,12 @@ describe.skip('button', () => {
     expect(wrapper.attributes('href')).toBeUndefined()
   })
 
-  it('has attr rel when prop rel and prop to', async () => {
+  it('passes rel prop to BLink when prop rel and prop to', () => {
     const wrapper = mount(BButton, {
       props: {to: '/abc', rel: 'foobar'},
     })
-    expect(wrapper.attributes('rel')).toBe('foobar')
-    await wrapper.setProps({to: undefined})
-    expect(wrapper.attributes('rel')).toBeUndefined()
+    const $blink = wrapper.getComponent(BLink)
+    expect($blink.props('rel')).toBe('foobar')
   })
 
   it('has attr rel when prop rel and prop href', async () => {
@@ -233,7 +264,7 @@ describe.skip('button', () => {
     expect(wrapper.attributes('rel')).toBeUndefined()
   })
 
-  it('has attr rel when prop rel when not href or to', () => {
+  it('does not have attr rel when not href or to', () => {
     const wrapper = mount(BButton, {
       props: {rel: 'foobar'},
     })
@@ -261,7 +292,7 @@ describe.skip('button', () => {
     expect(wrapper.attributes('role')).toBe('button')
   })
 
-  it('has attr role as button by default', () => {
+  it('does not have attr role by default', () => {
     const wrapper = mount(BButton)
     expect(wrapper.attributes('role')).toBeUndefined()
   })
@@ -275,7 +306,7 @@ describe.skip('button', () => {
 
   it('has prop target when prop href and prop target', () => {
     const wrapper = mount(BButton, {
-      props: {to: '/abc', target: '_blank'},
+      props: {href: '/abc', target: '_blank'},
     })
     expect(wrapper.attributes('target')).toBe('_blank')
   })
@@ -287,7 +318,12 @@ describe.skip('button', () => {
     expect(wrapper.attributes('target')).toBeUndefined()
   })
 
-  it('has attr type when when prop type', async () => {
+  it('has attr type button by default', () => {
+    const wrapper = mount(BButton)
+    expect(wrapper.attributes('type')).toBe('button')
+  })
+
+  it('has attr type when prop type', async () => {
     const wrapper = mount(BButton)
     expect(wrapper.attributes('type')).toBe('button')
     await wrapper.setProps({type: 'submit'})
@@ -296,49 +332,49 @@ describe.skip('button', () => {
     expect(wrapper.attributes('type')).toBe('reset')
   })
 
-  it('does not have attr type prop type and prop tag', async () => {
+  it('does not have attr type when prop type and prop tag', () => {
     const wrapper = mount(BButton, {
       props: {type: 'submit', tag: 'div'},
     })
     expect(wrapper.attributes('type')).toBeUndefined()
   })
 
-  it('does not have attr type prop type and prop to', async () => {
+  it('does not have attr type when prop type and prop to', () => {
     const wrapper = mount(BButton, {
       props: {type: 'submit', to: '/abc'},
     })
     expect(wrapper.attributes('type')).toBeUndefined()
   })
 
-  it('does not have attr type prop type and prop href', async () => {
+  it('does not have attr type when prop type and prop href', () => {
     const wrapper = mount(BButton, {
       props: {type: 'submit', href: '/abc'},
     })
     expect(wrapper.attributes('type')).toBeUndefined()
   })
 
-  it('has attr to when prop to', async () => {
+  it('has attr to when prop to', () => {
     const wrapper = mount(BButton, {
       props: {to: '/abc'},
     })
     expect(wrapper.attributes('to')).toBe('/abc')
   })
 
-  it('has attr to when prop href and prop to', async () => {
+  it('has attr to when prop href and prop to', () => {
     const wrapper = mount(BButton, {
       props: {href: '/abc', to: '/def'},
     })
     expect(wrapper.attributes('to')).toBe('/def')
   })
 
-  it('has attr to when prop to and prop tag', async () => {
+  it('has attr to when prop to and prop tag', () => {
     const wrapper = mount(BButton, {
       props: {tag: 'div', to: '/def'},
     })
     expect(wrapper.attributes('to')).toBe('/def')
   })
 
-  it('does not have attr to when prop', () => {
+  it('does not have attr to by default', () => {
     const wrapper = mount(BButton)
     expect(wrapper.attributes('to')).toBeUndefined()
   })
@@ -405,10 +441,25 @@ describe.skip('button', () => {
     expect($emitted[0][0]).toBe(false)
   })
 
+  it('emit update:pressed value is true when pressed is false', async () => {
+    const wrapper = mount(BButton, {
+      props: {pressed: false},
+    })
+    await wrapper.trigger('click')
+    const $emitted = wrapper.emitted('update:pressed') ?? []
+    expect($emitted[0][0]).toBe(true)
+  })
+
   it('does not emit update:pressed when prop pressed and prop disabled', async () => {
     const wrapper = mount(BButton, {
       props: {pressed: true, disabled: true},
     })
+    await wrapper.trigger('click')
+    expect(wrapper.emitted('update:pressed')).toBeUndefined()
+  })
+
+  it('does not emit update:pressed when pressed is undefined', async () => {
+    const wrapper = mount(BButton)
     await wrapper.trigger('click')
     expect(wrapper.emitted('update:pressed')).toBeUndefined()
   })
@@ -429,128 +480,183 @@ describe.skip('button', () => {
     expect(wrapper.text()).toBe('foobar')
   })
 
-  it('contains div child when prop loading', () => {
+  it('renders HTML content in default slot', () => {
+    const wrapper = mount(BButton, {
+      slots: {default: '<strong>bold</strong>'},
+    })
+    expect(wrapper.find('strong').exists()).toBe(true)
+    expect(wrapper.find('strong').text()).toBe('bold')
+  })
+
+  it('does not show default slot when loading', () => {
     const wrapper = mount(BButton, {
       props: {loading: true},
-    })
-    const $div = wrapper.find('div')
-    expect($div.exists()).toBe(true)
-  })
-
-  it('first div child has static class btn-loading', () => {
-    const wrapper = mount(BButton, {
-      props: {loading: true},
-    })
-    const $div = wrapper.get('div')
-    expect($div.classes()).toContain('btn-loading')
-  })
-
-  it('first div child has class mode-fill when prop loadingMode is fill', () => {
-    const wrapper = mount(BButton, {
-      props: {loading: true, loadingMode: 'fill'},
-    })
-    const $div = wrapper.get('div')
-    expect($div.classes()).toContain('mode-fill')
-  })
-
-  it('first div child has class mode-inline when prop loadingMode is inline', () => {
-    const wrapper = mount(BButton, {
-      props: {loading: true, loadingMode: 'inline'},
-    })
-    const $div = wrapper.get('div')
-    expect($div.classes()).toContain('mode-inline')
-  })
-
-  it('first div child has nested BSpinner by default', () => {
-    const wrapper = mount(BButton, {
-      props: {loading: true, loadingMode: 'inline'},
-    })
-    const $div = wrapper.get('div')
-    const $bspinner = $div.findComponent(BSpinner)
-    expect($bspinner.exists()).toBe(true)
-  })
-
-  it('first div child nested BSpinner has static class btn-spinner', () => {
-    const wrapper = mount(BButton, {
-      props: {loading: true, loadingMode: 'inline'},
-    })
-    const $div = wrapper.get('div')
-    const $bspinner = $div.getComponent(BSpinner)
-    expect($bspinner.classes()).toContain('btn-spinner')
-  })
-
-  it('first div child nested BSpinner has prop small true when size is not lg', async () => {
-    const wrapper = mount(BButton, {
-      props: {loading: true, loadingMode: 'inline'},
-    })
-    const $div = wrapper.get('div')
-    const $bspinner = $div.getComponent(BSpinner)
-    expect($bspinner.props('small')).toBe(true)
-    await wrapper.setProps({size: 'lg'})
-    expect($bspinner.props('small')).toBe(false)
-  })
-
-  it('first div child does not have bspinner when slot loading', async () => {
-    const wrapper = mount(BButton, {
-      props: {loading: true, loadingMode: 'inline'},
-      slots: {loading: 'loading...'},
-    })
-    const $div = wrapper.get('div')
-    const $bspinner = $div.findComponent(BSpinner)
-    expect($bspinner.exists()).toBe(false)
-  })
-
-  it('first div child renders slot loading', async () => {
-    const wrapper = mount(BButton, {
-      props: {loading: true, loadingMode: 'inline'},
-      slots: {loading: 'loading...'},
-    })
-    const $div = wrapper.get('div')
-    expect($div.text()).toBe('loading...')
-  })
-
-  it('both child divs exist when prop loading', () => {
-    const wrapper = mount(BButton, {
-      props: {loading: true},
-    })
-    const [$first, $second] = wrapper.findAll('div')
-    expect($first.exists()).toBe(true)
-    expect($second.exists()).toBe(true)
-  })
-
-  it('has a second child div when not prop loading', () => {
-    const wrapper = mount(BButton)
-    const $div = wrapper.find('div')
-    expect($div.exists()).toBe(true)
-  })
-
-  it('second child div has static class btn-content', () => {
-    const wrapper = mount(BButton)
-    const $div = wrapper.get('div')
-    expect($div.classes()).toContain('btn-content')
-  })
-
-  it('second child div does not have class btn-loading-fill when prop loading false', () => {
-    const wrapper = mount(BButton)
-    const $div = wrapper.get('div')
-    expect($div.classes()).not.toContain('btn-loading-fill')
-  })
-
-  it('second child div renders default slot', () => {
-    const wrapper = mount(BButton, {
       slots: {default: 'foobar'},
     })
-    const $div = wrapper.get('div')
-    expect($div.text()).toBe('foobar')
+    expect(wrapper.text()).not.toContain('foobar')
   })
 
-  it('renders both slots when prop loading in correct order', () => {
+  it('shows loadingText when loading and not loadingFill', () => {
     const wrapper = mount(BButton, {
       props: {loading: true},
-      slots: {default: 'foobar', loading: 'loading'},
     })
-    const [$first, $second] = wrapper.findAll('div')
-    expect($first.text()).toBe('loading')
-    expect($second.text()).toBe('foobar')
+    expect(wrapper.text()).toContain('Loading...')
+  })
+
+  it('shows custom loadingText when loading', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingText: 'Please wait...'},
+    })
+    expect(wrapper.text()).toContain('Please wait...')
+  })
+
+  it('does not show loadingText directly when loadingFill', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingFill: true},
+    })
+    const textNodes = wrapper.element.childNodes
+    let hasDirectText = false
+    textNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim() === 'Loading...') {
+        hasDirectText = true
+      }
+    })
+    expect(hasDirectText).toBe(false)
+  })
+
+  it('contains BSpinner when loading', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true},
+    })
+    const $spinner = wrapper.findComponent(BSpinner)
+    expect($spinner.exists()).toBe(true)
+  })
+
+  it('does not contain BSpinner when not loading', () => {
+    const wrapper = mount(BButton)
+    const $spinner = wrapper.findComponent(BSpinner)
+    expect($spinner.exists()).toBe(false)
+  })
+
+  it('BSpinner has small true when size is not lg', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true},
+    })
+    const $spinner = wrapper.getComponent(BSpinner)
+    expect($spinner.props('small')).toBe(true)
+  })
+
+  it('BSpinner has small true when size is sm', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, size: 'sm'},
+    })
+    const $spinner = wrapper.getComponent(BSpinner)
+    expect($spinner.props('small')).toBe(true)
+  })
+
+  it('BSpinner has small false when size is lg', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, size: 'lg'},
+    })
+    const $spinner = wrapper.getComponent(BSpinner)
+    expect($spinner.props('small')).toBe(false)
+  })
+
+  it('BSpinner small reacts to size change', async () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, size: 'sm'},
+    })
+    const $spinner = wrapper.getComponent(BSpinner)
+    expect($spinner.props('small')).toBe(true)
+    await wrapper.setProps({size: 'lg'})
+    expect($spinner.props('small')).toBe(false)
+  })
+
+  it('BSpinner has label equal to loadingText when loadingFill', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingFill: true},
+    })
+    const $spinner = wrapper.getComponent(BSpinner)
+    expect($spinner.props('label')).toBe('Loading...')
+  })
+
+  it('BSpinner has label equal to custom loadingText when loadingFill', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingFill: true, loadingText: 'Wait...'},
+    })
+    const $spinner = wrapper.getComponent(BSpinner)
+    expect($spinner.props('label')).toBe('Wait...')
+  })
+
+  it('BSpinner has undefined label when not loadingFill', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true, loadingFill: false},
+    })
+    const $spinner = wrapper.getComponent(BSpinner)
+    expect($spinner.props('label')).toBeUndefined()
+  })
+
+  it('loading slot overrides default loading content', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true},
+      slots: {loading: 'custom loading...'},
+    })
+    expect(wrapper.text()).toBe('custom loading...')
+    expect(wrapper.text()).not.toContain('Loading...')
+    const $spinner = wrapper.findComponent(BSpinner)
+    expect($spinner.exists()).toBe(false)
+  })
+
+  it('loading-spinner slot overrides default BSpinner', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true},
+      slots: {'loading-spinner': '<div class="custom-spinner">spinning</div>'},
+    })
+    const $spinner = wrapper.findComponent(BSpinner)
+    expect($spinner.exists()).toBe(false)
+    const $custom = wrapper.find('.custom-spinner')
+    expect($custom.exists()).toBe(true)
+    expect($custom.text()).toBe('spinning')
+  })
+
+  it('shows loadingText alongside loading-spinner slot when not loadingFill', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true},
+      slots: {'loading-spinner': '<span class="custom-spinner" />'},
+    })
+    expect(wrapper.text()).toContain('Loading...')
+    expect(wrapper.find('.custom-spinner').exists()).toBe(true)
+  })
+
+  it('shows default slot when loading is false', () => {
+    const wrapper = mount(BButton, {
+      props: {loading: false},
+      slots: {default: 'click me'},
+    })
+    expect(wrapper.text()).toBe('click me')
+  })
+
+  it('switches from loading to default slot content', async () => {
+    const wrapper = mount(BButton, {
+      props: {loading: true},
+      slots: {default: 'click me', loading: 'loading...'},
+    })
+    expect(wrapper.text()).toBe('loading...')
+    await wrapper.setProps({loading: false})
+    expect(wrapper.text()).toBe('click me')
+  })
+
+  it('has class btn-link when variant is link', () => {
+    const wrapper = mount(BButton, {
+      props: {variant: 'link'},
+    })
+    expect(wrapper.classes()).toContain('btn-link')
+  })
+
+  it('does not have btn-link-{color} class when variant is link-primary', () => {
+    const wrapper = mount(BButton, {
+      props: {variant: 'link-primary'},
+    })
+    expect(wrapper.classes()).not.toContain('btn-link-primary')
   })
 })

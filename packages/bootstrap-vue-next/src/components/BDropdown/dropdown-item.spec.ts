@@ -1,7 +1,9 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import BDropdownItem from './BDropdownItem.vue'
 import BLink from '../BLink/BLink.vue'
+import {ref} from 'vue'
+import {collapseInjectionKey, dropdownInjectionKey, navbarInjectionKey} from '../../utils/keys'
 
 describe('dropdown-item', () => {
   enableAutoUnmount(afterEach)
@@ -202,5 +204,81 @@ describe('dropdown-item', () => {
     })
     const $a = wrapper.get('a')
     expect($a.attributes('type')).toBeUndefined()
+  })
+
+  it('child has static attr role to be menuitem', () => {
+    const wrapper = mount(BDropdownItem)
+    const $button = wrapper.get('button')
+    expect($button.attributes('role')).toBe('menuitem')
+  })
+
+  it('wrapperAttrs are bound to the li wrapper', () => {
+    const wrapper = mount(BDropdownItem, {
+      props: {wrapperAttrs: {'data-foo': 'bar'}},
+    })
+    expect(wrapper.attributes('data-foo')).toBe('bar')
+  })
+
+  it('class from attrs is applied to the li wrapper, not the inner element', () => {
+    const wrapper = mount(BDropdownItem, {
+      attrs: {class: 'custom-wrapper-class'},
+    })
+    expect(wrapper.classes()).toContain('custom-wrapper-class')
+    const $button = wrapper.get('button')
+    expect($button.classes()).not.toContain('custom-wrapper-class')
+  })
+
+  it('calls dropdownData.hide when clicked', async () => {
+    const hide = vi.fn()
+    const wrapper = mount(BDropdownItem, {
+      global: {
+        provide: {
+          [dropdownInjectionKey as unknown as symbol]: {hide},
+        },
+      },
+    })
+    await wrapper.get('button').trigger('click')
+    expect(hide).toHaveBeenCalledOnce()
+  })
+
+  it('calls collapseData.hide when clicked and navbarData is present with noAutoClose false', async () => {
+    const collapseHide = vi.fn()
+    const wrapper = mount(BDropdownItem, {
+      global: {
+        provide: {
+          [navbarInjectionKey as unknown as symbol]: {noAutoClose: ref(false)},
+          [collapseInjectionKey as unknown as symbol]: {hide: collapseHide},
+        },
+      },
+    })
+    await wrapper.get('button').trigger('click')
+    expect(collapseHide).toHaveBeenCalledOnce()
+  })
+
+  it('does not call collapseData.hide when navbarData.noAutoClose is true', async () => {
+    const collapseHide = vi.fn()
+    const wrapper = mount(BDropdownItem, {
+      global: {
+        provide: {
+          [navbarInjectionKey as unknown as symbol]: {noAutoClose: ref(true)},
+          [collapseInjectionKey as unknown as symbol]: {hide: collapseHide},
+        },
+      },
+    })
+    await wrapper.get('button').trigger('click')
+    expect(collapseHide).not.toHaveBeenCalled()
+  })
+
+  it('does not call collapseData.hide when navbarData is not present', async () => {
+    const collapseHide = vi.fn()
+    const wrapper = mount(BDropdownItem, {
+      global: {
+        provide: {
+          [collapseInjectionKey as unknown as symbol]: {hide: collapseHide},
+        },
+      },
+    })
+    await wrapper.get('button').trigger('click')
+    expect(collapseHide).not.toHaveBeenCalled()
   })
 })
