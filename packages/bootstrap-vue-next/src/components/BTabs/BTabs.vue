@@ -90,14 +90,12 @@ import {BvEvent} from '../../utils/classes'
 import {useAlignment} from '../../composables/useAlignment'
 import {useId} from '../../composables/useId'
 import {createReusableTemplate} from '@vueuse/core'
-import type {TabType} from '../../types/Tab'
-import type {BTabsProps} from '../../types/ComponentProps'
+import type {TabType, BTabsProps, BTabsEmits, BTabsSlots} from '../../types'
 import {tabsInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {sortSlotElementsByPosition} from '../../utils/dom'
 import {flattenFragments} from '../../utils/flattenFragments'
 import BTab from './BTab.vue'
-import type {BTabsEmits, BTabsSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeIndex'>>(), {
   activeNavItemClass: undefined,
@@ -332,7 +330,7 @@ const navTabsClasses = computed(() => ({
 const handleClick = (event: Readonly<MouseEvent>, index: number) => {
   if (
     index >= 0 &&
-    !tabs.value[index].disabled &&
+    !tabs.value[index]?.disabled &&
     tabs.value[index]?.onClick &&
     typeof tabs.value[index].onClick === 'function'
   ) {
@@ -363,13 +361,13 @@ const nextIndex = (start: number, direction: number) => {
   let maxIdx = -1
 
   for (let i = 0; i < tabs.value.length; i++) {
-    if (!tabs.value[i].disabled) {
+    if (!tabs.value[i]?.disabled) {
       if (minIdx === -1) minIdx = i
       maxIdx = i
     }
   }
 
-  while (index >= minIdx && index <= maxIdx && tabs.value[index].disabled) {
+  while (index >= minIdx && index <= maxIdx && tabs.value[index]?.disabled) {
     index += direction
   }
 

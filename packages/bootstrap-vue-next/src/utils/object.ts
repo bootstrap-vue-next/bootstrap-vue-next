@@ -126,11 +126,15 @@ export const set = <T extends object, K>(initial: T, path: string, value: K): T 
   const _set = (node: any) => {
     if (segments.length > 1) {
       const key = segments.shift() as string
-      const nextIsNum = toInt(segments[0], null) === null ? false : true
-      node[key] = node[key] === undefined ? (nextIsNum ? [] : {}) : node[key]
-      _set(node[key])
+      if (segments[0] !== undefined) {
+        const nextIsNum = toInt(segments[0], null) !== null
+        node[key] = node[key] === undefined ? (nextIsNum ? [] : {}) : node[key]
+        _set(node[key])
+      }
     } else {
-      node[segments[0]] = value
+      if (segments[0] !== undefined) {
+        node[segments[0]] = value
+      }
     }
   }
   const cloned = clone(initial)

@@ -1,5 +1,5 @@
-import type {MarkdownEnv, MarkdownRenderer} from 'vitepress'
-import type {RuleBlock} from 'markdown-it/lib/parser_block.mjs'
+import type { MarkdownEnv, MarkdownRenderer } from 'vitepress'
+import type { RuleBlock } from 'markdown-it/lib/parser_block.mjs'
 import path from 'path'
 import fs from 'fs'
 
@@ -12,8 +12,15 @@ import fs from 'fs'
 
 export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
   const blockParser: RuleBlock = (state, startLine, endLine, silent) => {
-    const demoSentinal = '<<< DEMO '
-    const fragmentSentinal = '<<< FRAGMENT '
+    const demoSentinel = '<<< DEMO '
+    const fragmentSentinel = '<<< FRAGMENT '
+    if (
+      state.bMarks[startLine] === undefined ||
+      state.tShift[startLine] === undefined ||
+      state.sCount[startLine] === undefined ||
+      state.eMarks[startLine] === undefined
+    )
+      throw new Error(`Unexpected state in demo container plugin at line ${startLine}`)
     const pos = state.bMarks[startLine] + state.tShift[startLine]
     const max = state.eMarks[startLine]
 
@@ -22,13 +29,13 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
       return false
     }
 
-    const isDemo = state.src.slice(pos, pos + demoSentinal.length) === demoSentinal
-    const isFragment = state.src.slice(pos, pos + fragmentSentinal.length) === fragmentSentinal
+    const isDemo = state.src.slice(pos, pos + demoSentinel.length) === demoSentinel
+    const isFragment = state.src.slice(pos, pos + fragmentSentinel.length) === fragmentSentinel
 
     if (!isDemo && !isFragment) {
       return false
     }
-    const sentinalLength = isDemo ? demoSentinal.length : fragmentSentinal.length
+    const sentinalLength = isDemo ? demoSentinel.length : fragmentSentinel.length
 
     if (silent) {
       return true
@@ -39,7 +46,7 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
 
     const rawPath = state.src.slice(start, end).trim().replace(/^@/, srcDir).trim()
 
-    const {filepath, extension, region, lines, lang, title} = rawPathToToken(rawPath)
+    const { filepath, extension, region, lines, lang, title } = rawPathToToken(rawPath)
     const component = isDemo ? `<${title.substring(0, title.indexOf('.'))}/>` : ''
 
     // Generate kebab-case ID from filename (without extension)
@@ -51,7 +58,7 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
       .toLowerCase()
 
     // Resolve path early so it can be used in the prefix token
-    const {realPath, path: _path} = state.env as MarkdownEnv
+    const { realPath, path: _path } = state.env as MarkdownEnv
     const resolvedPath = path.resolve(path.dirname(realPath ?? _path), filepath)
 
     // Read the source code file during build time
@@ -59,7 +66,6 @@ export const demoContainer = (md: MarkdownRenderer, srcDir: string) => {
     try {
       fullFileContent = fs.readFileSync(resolvedPath, 'utf-8')
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.warn(`Failed to read source code from ${resolvedPath}:`, error)
     }
 
@@ -110,5 +116,5 @@ function rawPathToToken(rawPath: string) {
 
   const title = rawTitle || filepath.split('/').pop() || ''
 
-  return {filepath, extension, region, lines, lang, title}
+  return { filepath, extension, region, lines, lang, title }
 }

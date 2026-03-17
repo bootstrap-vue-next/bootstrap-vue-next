@@ -1,8 +1,8 @@
-import {describe, expect, it} from 'vitest'
+import { describe, expect, it } from 'vitest'
 import fs from 'node:fs'
 import path from 'node:path'
-import {fileURLToPath} from 'node:url'
-import {Window} from 'happy-dom'
+import { fileURLToPath } from 'node:url'
+import { Window } from 'happy-dom'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -20,7 +20,7 @@ interface HeaderItem {
  * Validate that a page has exactly one root header (typically h1)
  * This matches the runtime validation in Layout.vue
  */
-function validatePageStructure(html: string): {valid: boolean; error?: string} {
+function validatePageStructure(html: string): { valid: boolean; error?: string } {
   const window = new Window({
     url: 'http://localhost/',
     settings: {
@@ -35,13 +35,13 @@ function validatePageStructure(html: string): {valid: boolean; error?: string} {
   try {
     // Write HTML without executing scripts
     window.document.write(html)
-    const {document} = window
+    const { document } = window
 
     // Use the same query selector as the runtime Layout.vue
     // Note: We query from .doc-content and then filter out demo content
     const docContent = document.querySelector('.doc-content')
     if (!docContent) {
-      return {valid: true} // No doc content, skip validation
+      return { valid: true } // No doc content, skip validation
     }
 
     const contentQuery = [
@@ -84,20 +84,20 @@ function validatePageStructure(html: string): {valid: boolean; error?: string} {
     })
 
     // Build the same tree structure as runtime
-    const root: (HeaderItem & {children: HeaderItem[]})[] = []
-    const stack: (HeaderItem & {children: HeaderItem[]})[] = []
+    const root: (HeaderItem & { children: HeaderItem[] })[] = []
+    const stack: (HeaderItem & { children: HeaderItem[] })[] = []
 
     headers.forEach((header) => {
-      const item = {...header, children: []}
+      const item = { ...header, children: [] }
 
-      while (stack.length && stack[stack.length - 1].level >= item.level) {
+      while ((stack.length && stack[stack.length - 1]?.level) || -1 >= item.level) {
         stack.pop()
       }
 
       if (stack.length === 0) {
         root.push(item)
       } else {
-        stack[stack.length - 1].children.push(item)
+        stack[stack.length - 1]?.children.push(item)
       }
 
       stack.push(item)
@@ -108,14 +108,14 @@ function validatePageStructure(html: string): {valid: boolean; error?: string} {
       return {
         valid: false,
         error: `Expected exactly 1 root header, found ${root.length}. Headers: ${JSON.stringify(
-          headers.map((h) => ({tag: h.tag, level: h.level, text: h.text.substring(0, 50)})),
+          headers.map((h) => ({ tag: h.tag, level: h.level, text: h.text.substring(0, 50) })),
           null,
-          2
+          2,
         )}`,
       }
     }
 
-    return {valid: true}
+    return { valid: true }
   } catch (error) {
     return {
       valid: false,
@@ -131,7 +131,7 @@ function validatePageStructure(html: string): {valid: boolean; error?: string} {
  */
 function findHtmlFiles(dir: string): string[] {
   const files: string[] = []
-  const entries = fs.readdirSync(dir, {withFileTypes: true})
+  const entries = fs.readdirSync(dir, { withFileTypes: true })
 
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name)
@@ -149,18 +149,18 @@ describe('Page Structure Validation', () => {
   it('should have a built docs directory', () => {
     expect(
       fs.existsSync(distDir),
-      `Build directory not found: ${distDir}\nRun "pnpm --filter docs run build" first`
+      `Build directory not found: ${distDir}\nRun "pnpm --filter docs run build" first`,
     ).toBe(true)
   })
 
-  it('should validate all page header structures', {timeout: 30000}, () => {
+  it('should validate all page header structures', { timeout: 30000 }, () => {
     if (!fs.existsSync(distDir)) {
       // Skip if dist doesn't exist (covered by previous test)
       return
     }
 
     const htmlFiles = findHtmlFiles(distDir)
-    const errors: {file: string; error: string}[] = []
+    const errors: { file: string; error: string }[] = []
 
     // Files to skip validation (special pages that don't follow normal structure)
     const skipPatterns = ['404.html', 'index.html']
@@ -178,7 +178,7 @@ describe('Page Structure Validation', () => {
       const result = validatePageStructure(html)
 
       if (!result.valid) {
-        errors.push({file: relativePath, error: result.error || 'Unknown error'})
+        errors.push({ file: relativePath, error: result.error || 'Unknown error' })
       }
     }
 
@@ -187,7 +187,7 @@ describe('Page Structure Validation', () => {
       const errorMessage = [
         `Found ${errors.length} page(s) with invalid header structure:`,
         '',
-        ...errors.map(({file, error}) => `  ${file}\n  ${error}`),
+        ...errors.map(({ file, error }) => `  ${file}\n  ${error}`),
       ].join('\n')
 
       throw new Error(errorMessage)

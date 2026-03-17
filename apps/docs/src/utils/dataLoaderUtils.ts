@@ -40,7 +40,7 @@ export function extractTitleFromUrl(url: string, directory: string): string {
   const match = url.match(regex)
   if (!match) return ''
 
-  return kebabToTitleCase(match[1])
+  return kebabToTitleCase(match[1] || '')
 }
 
 /**
@@ -51,14 +51,14 @@ export function extractTitleFromUrl(url: string, directory: string): string {
  * @returns Sorted array of doc items
  */
 export function transformDocData(
-  rawData: Array<{url: string; frontmatter: Record<string, unknown>}>,
+  rawData: Array<{ url: string; frontmatter: Record<string, unknown> }>,
   directory: string,
   options: {
     filterByDescription?: boolean
     useTitleCase?: boolean
-  } = {}
+  } = {},
 ): DocItem[] {
-  const {filterByDescription = true, useTitleCase = true} = options
+  const { filterByDescription = true, useTitleCase = true } = options
 
   let items = rawData.map((page) => {
     let name: string

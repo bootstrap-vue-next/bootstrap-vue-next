@@ -1,34 +1,18 @@
 <template>
   <div>
-    <BButton
-      v-b-toggle.aria-demo-programmatic
-      class="mb-2"
-    >
-      Toggle using v-b-toggle
-    </BButton>
+    <BButton v-b-toggle.aria-demo-programmatic class="mb-2"> Toggle using v-b-toggle </BButton>
 
-    <BCollapse
-      id="aria-demo-programmatic"
-      v-model="visible"
-    >
-      <template #default="{hide}">
+    <BCollapse id="aria-demo-programmatic" v-model="visible">
+      <template #default="scope">
         <BCard>
           <p>This demonstrates combining v-model with v-b-toggle.</p>
           <p>The v-b-toggle button above has automatic ARIA management.</p>
           <p>You can close this from inside using the slot's hide function:</p>
           <div class="d-flex gap-2">
-            <BButton
-              variant="danger"
-              size="sm"
-              @click="() => hide()"
-            >
+            <BButton variant="danger" size="sm" @click="() => scope.hide()">
               Close (slot function)
             </BButton>
-            <BButton
-              variant="secondary"
-              size="sm"
-              @click="closeFromCode"
-            >
+            <BButton variant="secondary" size="sm" @click="closeFromCode">
               Close (v-model)
             </BButton>
           </div>
@@ -39,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import { ref } from 'vue'
 
 const visible = ref(false)
 

@@ -3,9 +3,9 @@
     :id="computedId"
     v-slot="{segments, isInvalid, modelValue: currentValue}"
     v-model="modelValue"
+    v-model:placeholder="placeholderModel"
     :default-value="props.defaultValue"
     :default-placeholder="props.defaultPlaceholder"
-    :placeholder="props.placeholder"
     :hour-cycle="props.hourCycle"
     :step="props.step"
     :granularity="props.granularity"
@@ -21,7 +21,6 @@
     :is-date-unavailable="props.isDateUnavailable"
     :class="computedRootClasses"
     class="b-date-field form-control d-inline-flex align-items-center gap-0"
-    @update:placeholder="(val: DateValue) => emit('update:placeholder', val)"
   >
     <slot :model-value="currentValue" :segments="segments" :is-invalid="isInvalid">
       <template v-for="{part, value} in segments" :key="part">
@@ -38,13 +37,13 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {DateFieldInput, DateFieldRoot, type DateValue} from 'reka-ui'
+import {DateFieldInput, DateFieldRoot} from 'reka-ui'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BDateFieldEmits, BDateFieldSlots} from '../../types'
+import type {BDateFieldSlots} from '../../types'
 import type {BDateFieldProps} from '../../types/ComponentProps'
 
-const _props = withDefaults(defineProps<Omit<BDateFieldProps, 'modelValue'>>(), {
+const _props = withDefaults(defineProps<Omit<BDateFieldProps, 'modelValue' | 'placeholder'>>(), {
   defaultPlaceholder: undefined,
   defaultValue: undefined,
   dir: undefined,
@@ -58,7 +57,6 @@ const _props = withDefaults(defineProps<Omit<BDateFieldProps, 'modelValue'>>(), 
   maxValue: undefined,
   minValue: undefined,
   name: undefined,
-  placeholder: undefined,
   readonly: false,
   required: false,
   size: undefined,
@@ -66,12 +64,13 @@ const _props = withDefaults(defineProps<Omit<BDateFieldProps, 'modelValue'>>(), 
   step: undefined,
 })
 const props = useDefaults(_props, 'BDateField')
-const emit = defineEmits<BDateFieldEmits>()
 defineSlots<BDateFieldSlots>()
 
 const modelValue = defineModel<Exclude<BDateFieldProps['modelValue'], undefined>>({
   default: null,
 })
+
+const placeholderModel = defineModel<BDateFieldProps['placeholder']>('placeholder')
 
 const computedId = useId(() => props.id, 'date-field')
 

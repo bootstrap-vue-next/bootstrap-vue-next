@@ -3,7 +3,7 @@ export {autoUpdate} from '@floating-ui/vue'
 
 import {type DirectiveBinding, h, render} from 'vue'
 import BPopover from '../components/BPopover/BPopover.vue'
-import type {BPopoverProps} from '../types/ComponentProps'
+import type {BPopoverProps} from '../types'
 
 export const resolveBootstrapPlacement = (placement: Placement): string => {
   const [_placement] = placement.split('-')
@@ -13,7 +13,7 @@ export const resolveBootstrapPlacement = (placement: Placement): string => {
     case 'right':
       return 'end'
     default:
-      return _placement
+      return _placement || 'start'
   }
 }
 export const resolveBootstrapCaret = (placement: Placement): string => {
@@ -28,7 +28,7 @@ export const resolveBootstrapCaret = (placement: Placement): string => {
     case 'bottom':
       return 'down'
     default:
-      return _placement
+      return _placement || 'start'
   }
 }
 
@@ -85,7 +85,6 @@ export const resolveContent = (
 
   // TODO: deprication remove warning in 2025-07
   if (values?.content)
-    // eslint-disable-next-line no-console
     console.warn('v-b-popover/v-b-tooltip: `content` is deprecated, use `body` instead')
 
   return {

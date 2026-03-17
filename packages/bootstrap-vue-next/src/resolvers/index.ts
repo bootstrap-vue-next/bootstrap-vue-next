@@ -82,15 +82,18 @@ export const BootstrapVueNextResolver = Object.assign(
       new Map<string, string>()
     )
 
-    const resolvers: ComponentResolver[] = [
+    return [
       {
         type: 'component',
         resolve(name) {
           const destination = compImports.get(name)
-          const aliasDestination = compImports.get(aliases[name])
+          const aliasDestination =
+            aliases[name] === undefined ? undefined : compImports.get(aliases[name])
           if (aliasDestination) {
             const val = aliases[name]
-            usedComponents.add(val)
+            if (val !== undefined) {
+              usedComponents.add(val)
+            }
             return {
               name: val,
               from: aliasDestination,
@@ -121,7 +124,6 @@ export const BootstrapVueNextResolver = Object.assign(
         },
       },
     ]
-    return resolvers
   },
   {
     __usedComponents: usedComponents,

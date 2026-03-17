@@ -46,7 +46,6 @@
 <script setup lang="ts">
 import {BvEvent} from '../../utils'
 import {computed, nextTick, useTemplateRef, watch} from 'vue'
-import type {BPaginationProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
 import {useToNumber} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
@@ -54,7 +53,7 @@ import type {ClassValue} from '../../types/AnyValuedAttributes'
 import {CODE_DOWN, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
 import {stopEvent} from '../../utils/event'
 import {getActiveElement} from '../../utils/dom'
-import {type BPaginationEmits, type BPaginationSlots} from '../../types'
+import {type BPaginationEmits, type BPaginationSlots, type BPaginationProps} from '../../types'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
@@ -332,7 +331,7 @@ const pageClick = (event: Readonly<MouseEvent>, pageNumber: number) => {
 }
 
 const isDisabled = (el: HTMLButtonElement) => {
-  const isElement = !!(el && el.nodeType === Node.ELEMENT_NODE)
+  const isElement = el && el.nodeType === Node.ELEMENT_NODE
   const hasAttr = isElement ? el.hasAttribute('disabled') : null
   const hasClass = isElement && el.classList ? el.classList.contains('disabled') : false
 
@@ -348,11 +347,11 @@ const getButtons = (): HTMLButtonElement[] =>
     )
     .map((page) => page.children[0])
     .filter((el) => {
-      if (el.getAttribute('display') === 'none' || el.tagName.toUpperCase() !== 'BUTTON') {
+      if (el?.getAttribute('display') === 'none' || el?.tagName.toUpperCase() !== 'BUTTON') {
         return false
       }
 
-      const bcr = el.getBoundingClientRect()
+      const bcr = el?.getBoundingClientRect()
 
       return !!(bcr && bcr.height > 0 && bcr.width > 0)
     })
@@ -370,7 +369,8 @@ const focusPrev = () => {
     const buttons = getButtons()
     const index = buttons.indexOf(getActiveElement() as HTMLButtonElement)
 
-    if (index > 0 && !isDisabled(buttons[index - 1])) {
+    const button = buttons[index - 1]
+    if (index > 0 && button !== undefined && !isDisabled(button)) {
       buttons[index - 1]?.focus()
     }
   })
@@ -389,7 +389,8 @@ const focusNext = () => {
   nextTick(() => {
     const buttons = getButtons()
     const index = buttons.indexOf(getActiveElement() as HTMLButtonElement)
-    if (index < buttons.length - 1 && !isDisabled(buttons[index + 1])) {
+    const button = buttons[index + 1]
+    if (index < buttons.length - 1 && button !== undefined && !isDisabled(button)) {
       buttons[index + 1]?.focus()
     }
   })
@@ -458,12 +459,18 @@ const pages = computed(() => {
   if (numberOfPages.value > 3) {
     if (value > numberOfPages.value - halfLimit.value - lastPage.value) {
       const idx = 2 + showFirstButton.value
-      els[idx] = {id: els[idx].id, ...getPageButtonProps(els[idx].id, true)}
+      const el = els[idx]
+      if (el !== undefined) {
+        els[idx] = {id: el.id, ...getPageButtonProps(el.id, true)}
+      }
     }
 
     if (value <= halfLimit.value + firstPage.value) {
       const idx = els.length - (3 + showLastButton.value)
-      els[idx] = {id: els[idx].id, ...getPageButtonProps(els[idx].id, true)}
+      const el = els[idx]
+      if (el !== undefined) {
+        els[idx] = {id: el.id, ...getPageButtonProps(el.id, true)}
+      }
     }
   }
 

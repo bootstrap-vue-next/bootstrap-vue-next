@@ -114,10 +114,16 @@ export const useScrollspy = (
       : resolvedContent.value
   )
 
-  const iobs = useIntersectionObserver(
+  const jobs = useIntersectionObserver(
     nodeList,
     (entries) => {
-      const scrollTop = (scrollRoot.value || document?.documentElement)?.scrollTop
+      const scrollTop =
+        (scrollRoot.value
+          ? scrollRoot.value
+          : typeof document !== 'undefined'
+            ? document.documentElement
+            : undefined
+        )?.scrollTop || 0
       isScrollingDown = scrollTop > previousScrollTop
       previousScrollTop = scrollTop
       entries.forEach((entry) => {
@@ -210,7 +216,8 @@ export const useScrollspy = (
   const scrollIntoView = (event: Readonly<MouseEvent>, smooth: boolean = false) => {
     event.preventDefault()
     const href = (event.target as HTMLElement)?.getAttribute?.('href')
-    const el: HTMLElement | null = href ? document?.querySelector(href) : null
+    const el: HTMLElement | null =
+      href && typeof document !== 'undefined' ? document.querySelector(href) : null
     // console.log('scrollIntoView', event, el, content.value.$el)
     if (el && resolvedContent.value) {
       if (resolvedContent.value.scrollTo) {
@@ -221,7 +228,7 @@ export const useScrollspy = (
     }
   }
   const cleanup = () => {
-    iobs.stop()
+    jobs.stop()
     mobs.stop()
   }
   return {

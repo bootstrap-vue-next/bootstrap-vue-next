@@ -3,9 +3,9 @@
     :id="computedId"
     v-model="modelValue"
     v-model:open="openModel"
+    v-model:placeholder="placeholderModel"
     :default-value="props.defaultValue"
     :default-placeholder="props.defaultPlaceholder"
-    :placeholder="props.placeholder"
     :hour-cycle="props.hourCycle"
     :step="props.step"
     :granularity="props.granularity"
@@ -29,7 +29,6 @@
     :weekday-format="props.weekdayFormat"
     :fixed-weeks="props.fixedWeeks"
     :prevent-deselect="props.preventDeselect"
-    @update:placeholder="(val: DateValue) => emit('update:placeholder', val)"
   >
     <DatePickerField
       v-slot="{segments}"
@@ -166,46 +165,46 @@ import {
   DatePickerPrev,
   DatePickerRoot,
   DatePickerTrigger,
-  type DateValue,
 } from 'reka-ui'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BDatePickerEmits, BDatePickerSlots} from '../../types'
+import type {BDatePickerSlots} from '../../types'
 import type {BDatePickerProps} from '../../types/ComponentProps'
 
-const _props = withDefaults(defineProps<Omit<BDatePickerProps, 'modelValue' | 'open'>>(), {
-  closeOnSelect: true,
-  defaultOpen: false,
-  defaultPlaceholder: undefined,
-  defaultValue: undefined,
-  dir: undefined,
-  disabled: false,
-  fixedWeeks: false,
-  granularity: undefined,
-  hideTimeZone: undefined,
-  hourCycle: undefined,
-  id: undefined,
-  isDateDisabled: undefined,
-  isDateUnavailable: undefined,
-  locale: undefined,
-  maxValue: undefined,
-  minValue: undefined,
-  modal: false,
-  name: undefined,
-  numberOfMonths: 1,
-  pagedNavigation: false,
-  placeholder: undefined,
-  preventDeselect: false,
-  readonly: false,
-  required: false,
-  size: undefined,
-  state: null,
-  step: undefined,
-  weekStartsOn: undefined,
-  weekdayFormat: undefined,
-})
+const _props = withDefaults(
+  defineProps<Omit<BDatePickerProps, 'modelValue' | 'open' | 'placeholder'>>(),
+  {
+    closeOnSelect: true,
+    defaultOpen: false,
+    defaultPlaceholder: undefined,
+    defaultValue: undefined,
+    dir: undefined,
+    disabled: false,
+    fixedWeeks: false,
+    granularity: undefined,
+    hideTimeZone: undefined,
+    hourCycle: undefined,
+    id: undefined,
+    isDateDisabled: undefined,
+    isDateUnavailable: undefined,
+    locale: undefined,
+    maxValue: undefined,
+    minValue: undefined,
+    modal: false,
+    name: undefined,
+    numberOfMonths: 1,
+    pagedNavigation: false,
+    preventDeselect: false,
+    readonly: false,
+    required: false,
+    size: undefined,
+    state: null,
+    step: undefined,
+    weekStartsOn: undefined,
+    weekdayFormat: undefined,
+  }
+)
 const props = useDefaults(_props, 'BDatePicker')
-const emit = defineEmits<BDatePickerEmits>()
 defineSlots<BDatePickerSlots>()
 
 const modelValue = defineModel<Exclude<BDatePickerProps['modelValue'], undefined>>({
@@ -213,6 +212,8 @@ const modelValue = defineModel<Exclude<BDatePickerProps['modelValue'], undefined
 })
 
 const openModel = defineModel<boolean>('open', {default: false})
+
+const placeholderModel = defineModel<BDatePickerProps['placeholder']>('placeholder')
 
 const computedId = useId(() => props.id, 'date-picker')
 

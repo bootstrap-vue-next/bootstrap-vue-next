@@ -6,9 +6,9 @@
     "noUncheckedIndexedAccess": true,
 
     "paths": {
-      "@floating-ui/core": ["node_modules/@floating-ui/core"],
-      "@vue/shared": ["node_modules/@vue/shared"],
-      "@vueuse/shared": ["node_modules/@vueuse/shared"]
+      "@floating-ui/core": ["./node_modules/@floating-ui/core"],
+      "@vue/shared": ["./node_modules/@vue/shared"],
+      "@vueuse/shared": ["./node_modules/@vueuse/shared"]
     },
 
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"

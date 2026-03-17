@@ -12,9 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import type {BButtonToolbarSlots} from '../../types'
+import type {BButtonToolbarSlots, BButtonToolbarProps} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BButtonToolbarProps} from '../../types/ComponentProps'
 import {computed, nextTick, useTemplateRef} from 'vue'
 import {CODE_DOWN, CODE_END, CODE_HOME, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
 import {stopEvent} from '../../utils/event'
@@ -78,7 +77,8 @@ const focusPrev = () => {
     if (currentIndex > 0) {
       // Look backwards for the first non-disabled element
       for (let i = currentIndex - 1; i >= 0; i--) {
-        if (!isDisabled(elements[i])) {
+        const el = elements[i]
+        if (el !== undefined && !isDisabled(el)) {
           elements[i]?.focus()
           break
         }
@@ -96,7 +96,8 @@ const focusNext = () => {
     if (currentIndex < elements.length - 1) {
       // Look forwards for the first non-disabled element
       for (let i = currentIndex + 1; i < elements.length; i++) {
-        if (!isDisabled(elements[i])) {
+        const el = elements[i]
+        if (el !== undefined && !isDisabled(el)) {
           elements[i]?.focus()
           break
         }

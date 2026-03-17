@@ -3,9 +3,9 @@
     :id="computedId"
     v-model="modelValue"
     v-model:open="openModel"
+    v-model:placeholder="placeholderModel"
     :default-value="props.defaultValue"
     :default-placeholder="props.defaultPlaceholder"
-    :placeholder="props.placeholder"
     :hour-cycle="props.hourCycle"
     :step="props.step"
     :granularity="props.granularity"
@@ -33,7 +33,6 @@
     :fixed-date="props.fixedDate"
     :maximum-days="props.maximumDays"
     :is-date-highlightable="props.isDateHighlightable"
-    @update:placeholder="(val: DateValue) => emit('update:placeholder', val)"
     @update:start-value="(val: DateValue | undefined) => emit('update:startValue', val)"
   >
     <DateRangePickerField
@@ -205,41 +204,43 @@ import {useId} from '../../composables/useId'
 import type {BDateRangePickerEmits, BDateRangePickerSlots} from '../../types'
 import type {BDateRangePickerProps} from '../../types/ComponentProps'
 
-const _props = withDefaults(defineProps<Omit<BDateRangePickerProps, 'modelValue' | 'open'>>(), {
-  allowNonContiguousRanges: false,
-  closeOnSelect: true,
-  defaultOpen: false,
-  defaultPlaceholder: undefined,
-  defaultValue: undefined,
-  dir: undefined,
-  disabled: false,
-  fixedDate: undefined,
-  fixedWeeks: false,
-  granularity: undefined,
-  hideTimeZone: undefined,
-  hourCycle: undefined,
-  id: undefined,
-  isDateDisabled: undefined,
-  isDateHighlightable: undefined,
-  isDateUnavailable: undefined,
-  locale: undefined,
-  maxValue: undefined,
-  maximumDays: undefined,
-  minValue: undefined,
-  modal: false,
-  name: undefined,
-  numberOfMonths: 1,
-  pagedNavigation: false,
-  placeholder: undefined,
-  preventDeselect: false,
-  readonly: false,
-  required: false,
-  size: undefined,
-  state: null,
-  step: undefined,
-  weekStartsOn: undefined,
-  weekdayFormat: undefined,
-})
+const _props = withDefaults(
+  defineProps<Omit<BDateRangePickerProps, 'modelValue' | 'open' | 'placeholder'>>(),
+  {
+    allowNonContiguousRanges: false,
+    closeOnSelect: true,
+    defaultOpen: false,
+    defaultPlaceholder: undefined,
+    defaultValue: undefined,
+    dir: undefined,
+    disabled: false,
+    fixedDate: undefined,
+    fixedWeeks: false,
+    granularity: undefined,
+    hideTimeZone: undefined,
+    hourCycle: undefined,
+    id: undefined,
+    isDateDisabled: undefined,
+    isDateHighlightable: undefined,
+    isDateUnavailable: undefined,
+    locale: undefined,
+    maxValue: undefined,
+    maximumDays: undefined,
+    minValue: undefined,
+    modal: false,
+    name: undefined,
+    numberOfMonths: 1,
+    pagedNavigation: false,
+    preventDeselect: false,
+    readonly: false,
+    required: false,
+    size: undefined,
+    state: null,
+    step: undefined,
+    weekStartsOn: undefined,
+    weekdayFormat: undefined,
+  }
+)
 const props = useDefaults(_props, 'BDateRangePicker')
 const emit = defineEmits<BDateRangePickerEmits>()
 defineSlots<BDateRangePickerSlots>()
@@ -249,6 +250,8 @@ const modelValue = defineModel<Exclude<BDateRangePickerProps['modelValue'], unde
 })
 
 const openModel = defineModel<boolean>('open', {default: false})
+
+const placeholderModel = defineModel<BDateRangePickerProps['placeholder']>('placeholder')
 
 const computedId = useId(() => props.id, 'date-range-picker')
 

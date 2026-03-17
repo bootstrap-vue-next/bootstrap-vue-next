@@ -3,9 +3,9 @@
     :id="computedId"
     v-slot="{segments, isInvalid, modelValue: currentValue}"
     v-model="modelValue"
+    v-model:placeholder="placeholderModel"
     :default-value="props.defaultValue"
     :default-placeholder="props.defaultPlaceholder"
-    :placeholder="props.placeholder"
     :hour-cycle="props.hourCycle"
     :step="props.step"
     :step-snapping="props.stepSnapping"
@@ -21,7 +21,6 @@
     :dir="props.dir"
     :class="computedRootClasses"
     class="b-time-field form-control d-inline-flex align-items-center gap-0"
-    @update:placeholder="(val: TimeValue) => emit('update:placeholder', val)"
   >
     <slot :model-value="currentValue" :segments="segments" :is-invalid="isInvalid">
       <template v-for="{part, value} in segments" :key="part">
@@ -38,13 +37,13 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import {TimeFieldInput, TimeFieldRoot, type TimeValue} from 'reka-ui'
+import {TimeFieldInput, TimeFieldRoot} from 'reka-ui'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BTimeFieldEmits, BTimeFieldSlots} from '../../types'
+import type {BTimeFieldSlots} from '../../types'
 import type {BTimeFieldProps} from '../../types/ComponentProps'
 
-const _props = withDefaults(defineProps<Omit<BTimeFieldProps, 'modelValue'>>(), {
+const _props = withDefaults(defineProps<Omit<BTimeFieldProps, 'modelValue' | 'placeholder'>>(), {
   defaultPlaceholder: undefined,
   defaultValue: undefined,
   dir: undefined,
@@ -57,7 +56,6 @@ const _props = withDefaults(defineProps<Omit<BTimeFieldProps, 'modelValue'>>(), 
   maxValue: undefined,
   minValue: undefined,
   name: undefined,
-  placeholder: undefined,
   readonly: false,
   required: false,
   size: undefined,
@@ -66,12 +64,13 @@ const _props = withDefaults(defineProps<Omit<BTimeFieldProps, 'modelValue'>>(), 
   stepSnapping: false,
 })
 const props = useDefaults(_props, 'BTimeField')
-const emit = defineEmits<BTimeFieldEmits>()
 defineSlots<BTimeFieldSlots>()
 
 const modelValue = defineModel<Exclude<BTimeFieldProps['modelValue'], undefined>>({
   default: null,
 })
+
+const placeholderModel = defineModel<BTimeFieldProps['placeholder']>('placeholder')
 
 const computedId = useId(() => props.id, 'time-field')
 
