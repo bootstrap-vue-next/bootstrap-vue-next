@@ -322,7 +322,7 @@ const props = defineProps<{data: ComponentReference}>()
  */
 const deriveBaseDirectory = (): string | undefined => {
   const componentNames = Object.keys(props.data ?? {})
-  return componentNames[0] // First component is the base directory
+  return componentNames.length > 0 ? componentNames[0] : undefined
 }
 
 /**
@@ -331,7 +331,7 @@ const deriveBaseDirectory = (): string | undefined => {
  * Pattern: /<BaseDirectory>/<ComponentName>.vue
  */
 const deriveSourcePath = (componentName: string, baseDirectory: string | undefined): string =>
-  baseDirectory ? `/${baseDirectory}/${componentName}.vue` : `${componentName}.vue`
+  baseDirectory ? `/${baseDirectory}/${componentName}.vue` : `/${componentName}/${componentName}.vue`
 
 const goToLink = (link: string) => router.go(withBase(link))
 const globalData = inject(appInfoKey)
