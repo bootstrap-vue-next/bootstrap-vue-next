@@ -1,13 +1,14 @@
-import type {BColSlots, BRowSlots} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
-import {pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
 import type {
   BColProps,
+  BColSlots,
   BContainerProps,
   BContainerSlots,
   BRowProps,
-} from 'node_modules/bootstrap-vue-next/dist/src'
+  BRowSlots,
+} from 'bootstrap-vue-next'
+import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
+import {pick} from '../../utils/objectUtils'
+import {buildCommonProps} from '../../utils/commonProps'
 
 export default {
   load: (): ComponentReference => ({

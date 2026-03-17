@@ -320,8 +320,8 @@ const props = defineProps<{data: ComponentReference}>()
  *   {BFormTags: {...}, BFormTag: {...}} → BFormTags
  *   {BTabs: {...}, BTab: {...}} → BTabs
  */
-const deriveBaseDirectory = (): string => {
-  const componentNames = Object.keys(props.data)
+const deriveBaseDirectory = (): string | undefined => {
+  const componentNames = Object.keys(props.data ?? {})
   return componentNames[0] // First component is the base directory
 }
 
@@ -330,8 +330,8 @@ const deriveBaseDirectory = (): string => {
  *
  * Pattern: /<BaseDirectory>/<ComponentName>.vue
  */
-const deriveSourcePath = (componentName: string, baseDirectory: string): string =>
-  `/${baseDirectory}/${componentName}.vue`
+const deriveSourcePath = (componentName: string, baseDirectory: string | undefined): string =>
+  baseDirectory ? `/${baseDirectory}/${componentName}.vue` : `${componentName}.vue`
 
 const goToLink = (link: string) => router.go(withBase(link))
 const globalData = inject(appInfoKey)
@@ -368,6 +368,7 @@ const flattenExposedRecord = (
  * Sorts the items inside so they're uniform structure
  */
 const sortData = computed(() => {
+  if (!props.data) return []
   const baseDirectory = deriveBaseDirectory()
 
   return Object.entries(props.data).map(
