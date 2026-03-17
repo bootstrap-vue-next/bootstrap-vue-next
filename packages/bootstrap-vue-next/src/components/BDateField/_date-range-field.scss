@@ -1,0 +1,49 @@
+.b-date-range-field {
+  cursor: text;
+
+  &.disabled,
+  &.readonly {
+    cursor: default;
+  }
+
+  &.disabled {
+    background-color: var(--bs-secondary-bg);
+    opacity: 1;
+  }
+}
+
+.b-date-range-field-segment {
+  padding: 0.125rem 0.125rem;
+  border-radius: 0.25rem;
+  outline: none;
+  caret-color: transparent;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+
+  &:focus {
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+  }
+
+  &[data-placeholder] {
+    color: var(--bs-secondary-color);
+  }
+
+  &[data-disabled] {
+    color: var(--bs-secondary-color);
+    cursor: default;
+  }
+}
+
+.b-date-range-field-literal {
+  padding: 0 0.0625rem;
+  user-select: none;
+  color: var(--bs-secondary-color);
+}
+
+.b-date-range-field-separator {
+  padding: 0 0.25rem;
+  user-select: none;
+  color: var(--bs-secondary-color);
+}

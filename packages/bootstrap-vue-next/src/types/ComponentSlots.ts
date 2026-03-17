@@ -8,6 +8,9 @@ import type {SelectOption} from './SelectTypes'
 import type {SpinnerType} from './SpinnerType'
 import type {InputType} from './InputType'
 import type {TableField} from './TableTypes'
+import type {DateRange, DateValue, SegmentPart, TimeValue} from 'reka-ui'
+
+type TimeRange = {start: TimeValue | undefined; end: TimeValue | undefined}
 
 export interface ShowHideSlotsData {
   id: string
@@ -690,4 +693,63 @@ export type BPaginationSlots = {
   'next-text'?: (props: BPaginatonSharedScope) => any
   'last-text'?: (props: BPaginatonSharedScope) => any
   'ellipsis-text'?: (props: Record<string, never>) => any
+}
+
+export type BTimeFieldSlots = {
+  default?: (props: {
+    modelValue: TimeValue | undefined
+    segments: {part: SegmentPart; value: string}[]
+    isInvalid: boolean
+  }) => any
+}
+
+export type BDateFieldSlots = {
+  default?: (props: {
+    modelValue: DateValue | undefined
+    segments: {part: SegmentPart; value: string}[]
+    isInvalid: boolean
+  }) => any
+}
+
+export type BDateRangeFieldSlots = {
+  default?: (props: {
+    modelValue: DateRange | null
+    segments: {
+      start: {part: SegmentPart; value: string}[]
+      end: {part: SegmentPart; value: string}[]
+    }
+    isInvalid: boolean
+  }) => any
+}
+
+export type BTimeRangeFieldSlots = {
+  default?: (props: {
+    modelValue: TimeRange | undefined
+    segments: {
+      start: {part: SegmentPart; value: string}[]
+      end: {part: SegmentPart; value: string}[]
+    }
+    isInvalid: boolean
+  }) => any
+}
+
+export type BDatePickerSlots = {
+  'field'?: (props: {segments: {part: SegmentPart; value: string}[]}) => any
+  'calendar'?: (props: {weekDays: string[]; grid: any[]}) => any
+  'trigger-icon'?: (props: Record<string, never>) => any
+  'prev-icon'?: (props: Record<string, never>) => any
+  'next-icon'?: (props: Record<string, never>) => any
+}
+
+export type BDateRangePickerSlots = {
+  'field'?: (props: {
+    segments: {
+      start: {part: SegmentPart; value: string}[]
+      end: {part: SegmentPart; value: string}[]
+    }
+  }) => any
+  'calendar'?: (props: {weekDays: string[]; grid: any[]}) => any
+  'trigger-icon'?: (props: Record<string, never>) => any
+  'prev-icon'?: (props: Record<string, never>) => any
+  'next-icon'?: (props: Record<string, never>) => any
 }

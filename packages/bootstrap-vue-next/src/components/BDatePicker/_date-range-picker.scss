@@ -1,0 +1,125 @@
+.b-date-range-picker-field {
+  cursor: text;
+
+  &.disabled,
+  &.readonly {
+    cursor: default;
+  }
+
+  &.disabled {
+    background-color: var(--bs-secondary-bg);
+    opacity: 1;
+  }
+}
+
+.b-date-range-picker-segment {
+  padding: 0.125rem 0.125rem;
+  border-radius: 0.25rem;
+  outline: none;
+  caret-color: transparent;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+
+  &:focus {
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+  }
+
+  &[data-placeholder] {
+    color: var(--bs-secondary-color);
+  }
+
+  &[data-disabled] {
+    color: var(--bs-secondary-color);
+    cursor: default;
+  }
+}
+
+.b-date-range-picker-literal {
+  padding: 0 0.0625rem;
+  user-select: none;
+  color: var(--bs-secondary-color);
+}
+
+.b-date-range-picker-separator {
+  padding: 0 0.25rem;
+  user-select: none;
+  color: var(--bs-secondary-color);
+}
+
+.b-date-range-picker-trigger {
+  border: none;
+  padding: 0.125rem 0.375rem;
+  line-height: 1;
+}
+
+.b-date-range-picker-content {
+  z-index: 1050;
+}
+
+.b-date-range-picker-head-cell {
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 0.25rem;
+  color: var(--bs-secondary-color);
+}
+
+.b-date-range-picker-cell {
+  text-align: center;
+  padding: 0.0625rem;
+}
+
+.b-date-range-picker-cell-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--bs-border-radius);
+  border: none;
+  background: transparent;
+  font-size: 0.875rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--bs-tertiary-bg);
+  }
+
+  &[data-selected] {
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+  }
+
+  &[data-highlighted] {
+    background-color: var(--bs-primary-bg-subtle);
+  }
+
+  &[data-selection-start],
+  &[data-selection-end] {
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+  }
+
+  &[data-today] {
+    font-weight: 700;
+  }
+
+  &[data-disabled] {
+    color: var(--bs-secondary-color);
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  &[data-unavailable] {
+    color: var(--bs-danger);
+    text-decoration: line-through;
+    cursor: default;
+  }
+
+  &[data-outside-month] {
+    color: var(--bs-secondary-color);
+    opacity: 0.5;
+  }
+}

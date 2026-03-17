@@ -1,11 +1,19 @@
 {
   "extends": "./tsconfig.app.json",
-  "include": ["env.d.ts", "**/*.spec.*", "**/*.test.*", "tests/utils.ts", "src/plugins/**.ts"],
+  "include": [
+    "env.d.ts",
+    "**/*.spec.*",
+    "**/*.test.*",
+    "tests/utils.ts",
+    "src/plugins/**.ts",
+    "src/**/__tests__/*",
+    "env.d.ts"
+  ],
   "exclude": [],
   "compilerOptions": {
-    "composite": true,
+    "lib": [],
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
 
-    "types": ["node"]
+    "types": ["node", "happy-dom"]
   }
 }
