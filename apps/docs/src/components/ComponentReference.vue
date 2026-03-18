@@ -91,7 +91,7 @@
                     >
                       <span
                         id="extension-info"
-                        :style="{cursor: 'help'}"
+                        :style="{ cursor: 'help' }"
                         class="text-decoration-underline text-info cursor-help"
                       >
                         Extensions:
@@ -103,7 +103,7 @@
                       <BAccordion free>
                         <BAccordionItem
                           v-for="(table, index) in component.props.filter(
-                            (el) => el.name !== defaultPropSectionSymbol
+                            (el) => el.name !== defaultPropSectionSymbol,
                           )"
                           :key="index"
                           header-tag="span"
@@ -122,7 +122,7 @@
                             </template>
                           </template>
                           <BTable
-                            :items="table._data.map((el) => ({prop: el[0], ...el[1]}))"
+                            :items="table._data.map((el) => ({ prop: el[0], ...el[1] }))"
                             :fields="tableFieldDefinitions.props"
                             table-class="m-0 p-0"
                             class="m-0 p-0"
@@ -267,7 +267,7 @@
                       striped
                     >
                       <template #cell(name)="d">
-                        <span :style="{paddingLeft: `${d.item.level * 1.5}rem`}">
+                        <span :style="{ paddingLeft: `${d.item.level * 1.5}rem` }">
                           {{ d.item.name }}
                         </span>
                       </template>
@@ -289,8 +289,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject} from 'vue'
-import type {TableFieldRaw} from 'bootstrap-vue-next'
+import { computed, inject } from 'vue'
+import type { TableFieldRaw } from 'bootstrap-vue-next'
 import {
   type ComponentItem,
   type ComponentReference,
@@ -302,13 +302,13 @@ import {
   type PropRecordWithOptions,
   type PropReference,
 } from '../types'
-import {kebabCase} from '../utils/objectUtils'
-import {useRouter, withBase} from 'vitepress'
-import {appInfoKey} from '../../.vitepress/theme/keys'
+import { kebabCase } from '../utils/objectUtils'
+import { useRouter, withBase } from 'vitepress'
+import { appInfoKey } from '../../.vitepress/theme/keys'
 
 const router = useRouter()
 
-const props = defineProps<{data: ComponentReference}>()
+const props = defineProps<{ data: ComponentReference }>()
 
 /**
  * Derives the base directory name from all components in the data.
@@ -322,7 +322,7 @@ const props = defineProps<{data: ComponentReference}>()
  */
 const deriveBaseDirectory = (): string | undefined => {
   const componentNames = Object.keys(props.data ?? {})
-  return componentNames.length > 0 ? componentNames[0] : undefined
+  return componentNames[0] // First component is the base directory
 }
 
 /**
@@ -331,7 +331,7 @@ const deriveBaseDirectory = (): string | undefined => {
  * Pattern: /<BaseDirectory>/<ComponentName>.vue
  */
 const deriveSourcePath = (componentName: string, baseDirectory: string | undefined): string =>
-  baseDirectory ? `/${baseDirectory}/${componentName}.vue` : `/${componentName}/${componentName}.vue`
+  baseDirectory ? `/${baseDirectory}/${componentName}.vue` : `${componentName}.vue`
 
 const goToLink = (link: string) => router.go(withBase(link))
 const globalData = inject(appInfoKey)
@@ -342,9 +342,9 @@ const globalData = inject(appInfoKey)
  */
 const flattenExposedRecord = (
   exposed: ExposedRecord,
-  level = 0
-): Array<{name: string; type?: string; description?: string; level: number}> => {
-  const result: Array<{name: string; type?: string; description?: string; level: number}> = []
+  level = 0,
+): Array<{ name: string; type?: string; description?: string; level: number }> => {
+  const result: Array<{ name: string; type?: string; description?: string; level: number }> = []
 
   Object.entries(exposed)
     .sort(([a], [b]) => a.localeCompare(b))
@@ -368,22 +368,21 @@ const flattenExposedRecord = (
  * Sorts the items inside so they're uniform structure
  */
 const sortData = computed(() => {
-  if (!props.data) return []
   const baseDirectory = deriveBaseDirectory()
 
-  return Object.entries(props.data).map(
-    ([component, {props: localProps, sourcePath, emits, slots, exposed, styleSpec}]) => {
+  return Object.entries(props.data ?? {}).map(
+    ([component, { props: localProps, sourcePath, emits, slots, exposed, styleSpec }]) => {
       const mapProps = () => {
         const isMultiplePropRecord = (
-          val: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections
+          val: PropRecordWithOptions | PropRecord | PropRecordWithMultipleSections,
         ): val is PropRecordWithMultipleSections => defaultPropSectionSymbol in val
         const isPropRecordWithOptions = (
-          val: PropRecord | PropRecordWithOptions
+          val: PropRecord | PropRecordWithOptions,
         ): val is PropRecordWithOptions => '_data' in val
 
         // Convert it to a multiple section record for simplicity
         const convertPropRecordToMultiple = (
-          val: PropRecord | PropRecordWithOptions
+          val: PropRecord | PropRecordWithOptions,
         ): PropRecordWithMultipleSections => ({
           [defaultPropSectionSymbol]: val,
         })
@@ -399,7 +398,7 @@ const sortData = computed(() => {
             (acc, [key, value]) => {
               const current = isPropRecordWithOptions(value)
                 ? value
-                : ({_data: value} as PropRecordWithOptions)
+                : ({ _data: value } as PropRecordWithOptions)
               const arrayedAndSorted = Object.entries(current._data)
                 .map(([key, value]) => [kebabCase(key), value] as [string, PropReference])
                 .sort(([a], [b]) => a.localeCompare(b))
@@ -416,11 +415,11 @@ const sortData = computed(() => {
               Omit<PropRecordWithOptions, '_data'> & {
                 _data: [propName: string, propReference: PropReference][]
               }
-            >
+            >,
           )
 
         return simplifyMultiple(
-          isMultiplePropRecord(localProps) ? localProps : convertPropRecordToMultiple(localProps)
+          isMultiplePropRecord(localProps) ? localProps : convertPropRecordToMultiple(localProps),
         )
       }
 
@@ -461,7 +460,7 @@ const sortData = computed(() => {
       }
 
       return data
-    }
+    },
   )
 })
 
@@ -474,7 +473,7 @@ const tableFieldDefinitions = {
   emits: ['event', 'args', 'description'],
   slots: ['name', 'scope', 'description'],
   exposed: ['name', 'type', 'description'],
-} as const satisfies {[P in ComponentItemFree]: TableFieldRaw[]}
+} as const satisfies { [P in ComponentItemFree]: TableFieldRaw[] }
 
 const normalizeDefault = (val: unknown) =>
   val === undefined || val === null ? `${val}` : typeof val === 'string' ? `'${val}'` : val

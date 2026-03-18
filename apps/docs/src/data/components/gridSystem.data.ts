@@ -1,19 +1,13 @@
-import type {
-  BColProps,
-  BColSlots,
-  BContainerProps,
-  BContainerSlots,
-  BRowProps,
-  BRowSlots,
-} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
-import {pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
+import type { BColSlots, BRowSlots } from 'bootstrap-vue-next'
+import { type ComponentReference, type PropRecord, type SlotRecord, StyleKind } from '../../types'
+import { pick } from '../../utils/objectUtils'
+import { buildCommonProps } from '../../utils/commonProps'
+import type { BColProps, BContainerProps, BContainerSlots, BRowProps } from 'bootstrap-vue-next'
 
 export default {
   load: (): ComponentReference => ({
     BContainer: {
-      styleSpec: {kind: StyleKind.OverrideClass, value: '.container[-*]'},
+      styleSpec: { kind: StyleKind.OverrideClass, value: '.container[-*]' },
       props: {
         ...pick(buildCommonProps(), ['tag']),
         fluid: {
@@ -114,7 +108,7 @@ export default {
       } satisfies SlotRecord<keyof BRowSlots>,
     },
     BCol: {
-      styleSpec: {kind: StyleKind.OverrideClass, value: '.col[-*]'},
+      styleSpec: { kind: StyleKind.OverrideClass, value: '.col[-*]' },
       props: {
         ...pick(buildCommonProps(), ['tag']),
         alignSelf: {
