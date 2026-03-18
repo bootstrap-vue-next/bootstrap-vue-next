@@ -70,6 +70,12 @@ export const useFormInput = (
     })
   })
 
+  const syncDisplayedValue = (nextValue: string) => {
+    if (input.value && input.value.value !== nextValue) {
+      input.value.value = nextValue
+    }
+  }
+
   const onInput = (evt: Readonly<Event>) => {
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt)
@@ -81,12 +87,12 @@ export const useFormInput = (
     const nextModel = formattedValue
 
     updateModelValue(nextModel)
-     // If the formatter changed the value, directly update the input's visual value
+    // If the formatter changed the value, directly update the input's visual value
     // to keep the displayed text in sync with the model. Without this, if the
     // formatted value equals the previous model value, Vue's reactivity won't
     // re-render the input and the raw (unformatted) text remains visible.
-    if (formattedValue !== value && input.value) {
-      ;(input.value as HTMLInputElement | HTMLTextAreaElement).value = formattedValue
+    if (formattedValue !== value) {
+      syncDisplayedValue(formattedValue)
     }
   }
 
@@ -117,16 +123,18 @@ export const useFormInput = (
     const formattedValue = _formatValue(value, evt, true)
 
     const nextModel = modelModifiers.trim ? formattedValue.trim() : formattedValue
-    const needsForceUpdate = nextModel.length !== formattedValue.length
+
     // Cancel before modelValue.value comparison and update
     internalUpdateModelValue.cancel()
     if (modelValue.value !== nextModel) {
       updateModelValue(nextModel, true, true)
     }
-    // When trim removes whitespace, directly update the input's visual value
-    // to match the trimmed model value without recreating the element
-    if (modelModifiers.trim && needsForceUpdate && input.value) {
-      ;(input.value as HTMLInputElement | HTMLTextAreaElement).value = nextModel
+
+    // If the formatter or trim changed the displayed text, directly sync the DOM.
+    // This handles the case where lazyFormatter defers formatting to blur and the
+    // formatted value equals the current model (so Vue's reactivity won't re-render).
+    if (nextModel !== value) {
+      syncDisplayedValue(nextModel)
     }
   }
 
