@@ -565,11 +565,6 @@ export const useTableProvider = <Item>({
 
   watch(filterResolved, (filter, oldFilter) => {
     providerPropsWatch('filter', filter, oldFilter)
-
-    if (filter === oldFilter || usesProvider.value) return
-    if (!filter) {
-      events.onFiltered()
-    }
   })
   watch(currentPageResolved, (val, oldVal) => {
     providerPropsWatch('currentPage', val, oldVal)
