@@ -87,9 +87,9 @@ const filter = ref('')
 const perPage = ref(5)
 const currentPage = ref(1)
 
-// Use template ref to access BTable's displayItems
+// Use template ref to access BTable's items (filtered, pre-pagination)
 const tableRef = useTemplateRef<ComponentExposed<typeof BTable<Person>>>('tableRef')
 
-// Compute total rows from displayItems (accounts for filtering)
-const totalRows = computed(() => tableRef.value?.displayItems.length ?? items.length)
+// Compute total rows from items (accounts for filtering, excludes pagination)
+const totalRows = computed(() => tableRef.value?.items.length ?? items.length)
 </script>
