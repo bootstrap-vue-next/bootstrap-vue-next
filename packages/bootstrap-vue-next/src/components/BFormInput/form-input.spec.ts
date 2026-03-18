@@ -446,7 +446,7 @@ describe('form-input', () => {
       await wrapper.trigger('input')
       expect(formatter).toHaveBeenCalledWith('test', expect.any(Event))
     })
-    
+
     it('keeps input display value in sync with formatted value when formatted equals previous model', async () => {
       // Reproduces: typing disallowed chars when formatter strips them and formatted == previous model
       // e.g. model is "1", user types "a" making raw value "1a", formatter returns "1"
@@ -469,6 +469,32 @@ describe('form-input', () => {
       wrapper.element.value = 'a'
       await wrapper.trigger('input')
       expect(wrapper.element.value).toBe('')
+    })
+
+    it('syncs display value on blur when lazyFormatter + lazy model leave formatted value equal to current model', async () => {
+      // Regression: with modelModifiers.lazy + lazyFormatter, onInput leaves raw text in the element.
+      // On blur, if the formatted value equals the current model, updateModelValue is skipped and
+      // Vue's reactivity won't re-render, leaving the unformatted text visible.
+      const digitsOnly = (val: string) => val.replace(/\D/g, '')
+      // Model starts at "1"; lazy modifier means onInput won't update the model
+      const wrapper = mount(BFormInput, {
+        props: {
+          modelValue: '1',
+          formatter: digitsOnly,
+          lazyFormatter: true,
+          modelModifiers: {lazy: true},
+        },
+      })
+      // Simulate user typing "1a" — raw text is in the element but model is still "1"
+      wrapper.element.value = '1a'
+      await wrapper.trigger('input')
+      // Model is still "1" (lazy), but element shows "1a"
+      expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+      expect(wrapper.element.value).toBe('1a')
+      // On blur, formatter turns "1a" -> "1" which equals the current model "1",
+      // so updateModelValue is skipped. The DOM must still be updated directly.
+      await wrapper.trigger('blur')
+      expect(wrapper.element.value).toBe('1')
     })
   })
 
