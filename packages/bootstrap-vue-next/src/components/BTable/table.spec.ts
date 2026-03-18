@@ -1798,6 +1798,35 @@ describe('event emissions', () => {
     expect(filteredItems[0].first_name).toBe('John')
   })
 
+  it('emits filtered event exactly once per filter change when toggling filter', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, filter: 'John', filterable: ['first_name']},
+    })
+
+    // Clear the initial filtered emission from mount
+    wrapper.emitted('filtered')?.splice(0)
+
+    // Toggle filter off (set to empty string)
+    await wrapper.setProps({filter: ''})
+    await nextTick()
+    expect(wrapper.emitted('filtered')).toHaveLength(1)
+
+    // Toggle filter on again
+    await wrapper.setProps({filter: 'John'})
+    await nextTick()
+    expect(wrapper.emitted('filtered')).toHaveLength(2)
+
+    // Toggle filter off again
+    await wrapper.setProps({filter: ''})
+    await nextTick()
+    expect(wrapper.emitted('filtered')).toHaveLength(3)
+
+    // Toggle filter on once more
+    await wrapper.setProps({filter: 'John'})
+    await nextTick()
+    expect(wrapper.emitted('filtered')).toHaveLength(4)
+  })
+
   it('emits row-selected event when row is selected', async () => {
     const wrapper = mount(BTable, {
       props: {
