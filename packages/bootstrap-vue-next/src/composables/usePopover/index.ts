@@ -48,9 +48,7 @@ export const usePopover = () => {
     PopoverOrchestratorParam | TooltipOrchestratorParam
   > => {
     if (!_isOrchestratorInstalled.value) {
-      throw new Error(
-        'The BPopoverOrchestrator component must be mounted to use the popover controller'
-      )
+      throw new Error('The BApp component must be mounted to use the popover controller')
     }
 
     const resolvedProps = isRef(obj) ? obj : shallowRef(obj)
