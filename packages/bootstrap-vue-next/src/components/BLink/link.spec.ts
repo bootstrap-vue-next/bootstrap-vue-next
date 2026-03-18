@@ -179,6 +179,46 @@ describe('link', () => {
     expect(wrapper.classes()).toContain('active')
   })
 
+  it('does not apply router active classes when only href is provided', async () => {
+    await router.push('/')
+    await router.isReady()
+    const wrapper = mount(BLink, {
+      props: {href: 'https://example.com'},
+      global: {plugins: [router]},
+    })
+    expect(wrapper.classes()).not.toContain('router-link-active')
+    expect(wrapper.classes()).not.toContain('router-link-exact-active')
+    expect(wrapper.classes()).not.toContain('active')
+  })
+
+  it('does not apply router active classes on href link when navigating between routes', async () => {
+    await router.push('/')
+    await router.isReady()
+    const wrapper = mount(BLink, {
+      props: {href: '/external'},
+      global: {plugins: [router]},
+    })
+    expect(wrapper.classes()).not.toContain('active')
+    expect(wrapper.classes()).not.toContain('router-link-active')
+    await router.push('/about')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.classes()).not.toContain('active')
+    expect(wrapper.classes()).not.toContain('router-link-active')
+  })
+
+  it('does not call router navigate on click when only href is provided', async () => {
+    await router.push('/')
+    await router.isReady()
+    const wrapper = mount(BLink, {
+      props: {href: 'https://example.com'},
+      global: {plugins: [router]},
+    })
+    const pushSpy = vi.spyOn(router, 'push')
+    await wrapper.trigger('click')
+    expect(pushSpy).not.toHaveBeenCalled()
+    pushSpy.mockRestore()
+  })
+
   // --- stretched-link ---
 
   it('has class stretched-link when stretched prop is true', () => {
