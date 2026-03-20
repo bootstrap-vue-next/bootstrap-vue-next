@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.44.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.9...bootstrapvuenext-v0.44.0) (2026-03-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove deprecated BModalOrchestrator, BToastOrchestrator, and BPopoverOrchestrator components, use BApp instead ([#3118](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3118))
+
+### Bug Fixes
+
+* **BFormInput:** sync DOM on blur with lazyFormatter + lazy modifier ([#3122](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3122)) ([402596f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/402596f6c645c07b90ddffff44ac217eb895217d))
+* **BLink:** prevent router active classes and navigation on href-only links ([#3117](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3117)) ([18705de](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/18705deac6ccedd3feef9396ba62ce64989b1725))
+* **BPopover:** Allow focus=false popovers to hide when target is focused ([#3113](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3113)) ([#3114](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3114)) ([f445f91](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f445f91b9e8e2cd86d89c7a058a368d6e68e07f3))
+* prevent duplicate filtered event firing in BTable ([#3124](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3124)) ([639b9bf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/639b9bf0705c4377c151fbc92f12d908824918ed))
+* remove deprecated BModalOrchestrator, BToastOrchestrator, and BPopoverOrchestrator components, use BApp instead ([#3118](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3118)) ([8d6b128](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8d6b128d399de4477f5d4bb53143f18de6408dcb))
+* synchronize input visual value with formatted model value ([402596f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/402596f6c645c07b90ddffff44ac217eb895217d))
+
 ## [0.43.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.8...bootstrapvuenext-v0.43.9) (2026-03-10)
 
 
