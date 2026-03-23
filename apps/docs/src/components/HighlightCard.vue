@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import { computed, ref } from 'vue'
 
 // Import template files as raw text from the original Vite template
 import indexHtml from '../../../../templates/vite/index.html?raw'
@@ -69,7 +69,7 @@ const decodeFullFile = (encoded: string) => {
   }
 
   const nodeBuffer = (
-    globalThis as typeof globalThis & {Buffer?: typeof import('node:buffer').Buffer}
+    globalThis as typeof globalThis & { Buffer?: typeof import('node:buffer').Buffer }
   ).Buffer
   if (nodeBuffer) {
     try {
@@ -106,7 +106,7 @@ const openInStackBlitz = async () => {
 
   try {
     // Dynamically import StackBlitz SDK
-    const {default: sdk} = await import('@stackblitz/sdk')
+    const { default: sdk } = await import('@stackblitz/sdk')
 
     // Create a complete Vue project with BootstrapVueNext using node template
     // This gives us full control over the file structure
@@ -123,7 +123,6 @@ const openInStackBlitz = async () => {
       openFile: 'src/components/Comp.vue',
     })
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Failed to open StackBlitz project:', error)
     // Fallback to basic StackBlitz
     window.open('https://stackblitz.com/fork/vue-ts', '_blank')

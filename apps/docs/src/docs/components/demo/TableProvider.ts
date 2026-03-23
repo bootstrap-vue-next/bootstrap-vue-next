@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import type {BTableSortBy, MaybePromise} from 'bootstrap-vue-next'
+import type { BTableSortBy, MaybePromise } from 'bootstrap-vue-next'
 // #region snippet
 type BTableProviderContext<T = unknown> = {
   sortBy: BTableSortBy[] | undefined
@@ -9,6 +8,6 @@ type BTableProviderContext<T = unknown> = {
 }
 
 type BTableProvider<T> = (
-  context: Readonly<BTableProviderContext<T>>
+  context: Readonly<BTableProviderContext<T>>,
 ) => MaybePromise<T[] | undefined>
 // #endregion snippet

@@ -63,7 +63,7 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     const path = rawPath.replace(/\\/g, '/')
     // Match docs/*.md files OR root-level .md files (with or without src/ prefix, with or without leading slash)
     const docsMatch = path.match(/(?:src\/)?docs\/(.+)\.md$/)
-    const rootMatch = path.match(/(?:src\/)?([^\/]+)\.md$/)
+    const rootMatch = path.match(/(?:src\/)?([^/]+)\.md$/)
 
     if (!docsMatch && !rootMatch) {
       return defaultRender(src, env)

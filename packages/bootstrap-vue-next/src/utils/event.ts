@@ -23,7 +23,7 @@ export const parseEventOptions = (
           // attempts to access the passive property
           get passive() {
             passiveEventSupported = true
-            // eslint-disable-next-line no-useless-return
+
             return
           },
         }

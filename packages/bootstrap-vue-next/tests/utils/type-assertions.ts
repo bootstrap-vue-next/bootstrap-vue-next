@@ -21,7 +21,7 @@
  * })
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 export const expectCorrectModelType = <T>(_value: T): void => {
   // This is a type-only test - no runtime behavior needed
   // TypeScript will error if the types don't match

@@ -428,7 +428,6 @@ const bind = () => {
     if (elem) {
       triggerElement.value = elem
     } else {
-      // eslint-disable-next-line no-console
       console.warn('Target element not found', props.target)
     }
   } else {
@@ -439,7 +438,6 @@ const bind = () => {
     if (elem) {
       referenceElement.value = elem
     } else {
-      // eslint-disable-next-line no-console
       console.warn('Reference element not found', props.reference)
     }
   } else {

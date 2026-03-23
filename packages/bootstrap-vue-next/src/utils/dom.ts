@@ -18,7 +18,6 @@ export const attemptFocus = (
   try {
     el.focus(options)
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e)
   }
   return isActiveElement(el)

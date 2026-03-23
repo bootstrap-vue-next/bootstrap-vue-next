@@ -442,15 +442,15 @@ describe('overlay', () => {
   })
 
   // Does not work?
-  it.skip('child BTransition child div first child div has style backdrop-filter: blur(2px); by default', () => {
-    const wrapper = mount(BOverlay, {
-      props: {show: true},
-    })
-    const $transition = wrapper.getComponent(BTransition)
-    const $div = $transition.get('div')
-    const $second = $div.get('div')
-    expect($second.attributes('style')).toContain('backdrop-filter: blur(2px);')
-  })
+  // it.skip('child BTransition child div first child div has style backdrop-filter: blur(2px); by default', () => {
+  //   const wrapper = mount(BOverlay, {
+  //     props: {show: true},
+  //   })
+  //   const $transition = wrapper.getComponent(BTransition)
+  //   const $div = $transition.get('div')
+  //   const $second = $div.get('div')
+  //   expect($second.attributes('style')).toContain('backdrop-filter: blur(2px);')
+  // })
 
   it('child BTransition child div first child div does not have style backdrop-filter when blur is empty string', () => {
     const wrapper = mount(BOverlay, {
@@ -654,7 +654,7 @@ describe('overlay', () => {
     // Transition after-enter hooks are not triggered in the test environment without CSS animations,
     // so we invoke the onAfterEnter prop directly via the internal vnode to simulate transition completion
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onAfterEnter = ($t.vm as any).$.vnode?.props?.onAfterEnter as (() => void) | undefined
+    const onAfterEnter = ($t as any).vm.$.vnode?.props?.onAfterEnter as (() => void) | undefined
     onAfterEnter?.()
     await nextTick()
     expect(wrapper.emitted('shown')).toHaveLength(1)
@@ -668,7 +668,7 @@ describe('overlay', () => {
     // Transition after-leave hooks are not triggered in the test environment without CSS animations,
     // so we invoke the onAfterLeave prop directly via the internal vnode to simulate transition completion
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onAfterLeave = ($t.vm as any).$.vnode?.props?.onAfterLeave as (() => void) | undefined
+    const onAfterLeave = ($t as any).vm.$.vnode?.props?.onAfterLeave as (() => void) | undefined
     onAfterLeave?.()
     await nextTick()
     expect(wrapper.emitted('hidden')).toHaveLength(1)

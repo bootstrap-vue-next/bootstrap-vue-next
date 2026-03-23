@@ -83,7 +83,6 @@ const handleUpdate = (
         }
         // Only warn if element is still mounted after all attempts
         if ((el as HTMLElement).dataset.bvtoggle) {
-          // eslint-disable-next-line no-console
           console.warn(
             `[v-b-toggle] Target with ID ${targetId} not found after ${maxAttempts * delayMs}ms`
           )

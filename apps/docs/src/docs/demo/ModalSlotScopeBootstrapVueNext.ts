@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // #region snippet
 interface BModalSlotsData {
   id: string

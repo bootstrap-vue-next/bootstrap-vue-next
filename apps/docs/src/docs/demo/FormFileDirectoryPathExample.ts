@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 // #region snippet
 // Each File object includes webkitRelativePath property
 // Note: 'files' would come from a file input event

@@ -759,7 +759,6 @@ function TestInvariants(wrapper: any): boolean {
   let succeeded = true
   //if (actual !== limit) { -- this is what we're aiming for, but until we get there, we'll just check that it's close
   if (actual < limit - 1 || actual > limit + 1) {
-    // eslint-disable-next-line no-console
     console.log(
       `BTN#: ${limit}\t${actual}\t${modelValue}\t${pageButtons}\t${ellipses}\t${firstNumber}\t${lastNumber}\t${pages}`
     )
@@ -770,7 +769,6 @@ function TestInvariants(wrapper: any): boolean {
     const allButtons = wrapper.findAll('.page-item')
     const hasFirstEllipsis = allButtons[2].attributes('role') === 'separator'
     if (!hasFirstEllipsis && !wrapper.find('[aria-posinset="2"]').exists()) {
-      // eslint-disable-next-line no-console
       console.log(
         `BTN2: ${limit}\t${actual}\t${modelValue}\t${pageButtons}\t${ellipses}\t${firstNumber}\t${lastNumber}\t${pages}`
       )
@@ -779,7 +777,6 @@ function TestInvariants(wrapper: any): boolean {
 
     const hasLastEllipsis = allButtons[allButtons.length - 3].attributes('role') === 'separator'
     if (!hasLastEllipsis && !wrapper.find(`[aria-posinset="${pages - 1}"]`).exists()) {
-      // eslint-disable-next-line no-console
       console.log(
         `BE-1: ${limit}\t${actual}\t${modelValue}\t${pageButtons}\t${ellipses}\t${firstNumber}\t${lastNumber}`
       )

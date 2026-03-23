@@ -176,7 +176,6 @@ export function findComponentParent(
     return false
   }
   if (!walk([root.subTree])) {
-    // eslint-disable-next-line no-console
     console.error('Could not find original vnode,  will not inherit provides')
     return root
   }

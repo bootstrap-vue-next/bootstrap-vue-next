@@ -908,10 +908,9 @@ describe('form-tags', () => {
       // But the button only shows when disableAddButton is true
       // When input is empty, the button has 'disabled invisible' class
       const addButton = wrapper.find('.b-form-tags-button')
-      if (addButton.exists()) {
-        expect(addButton.classes()).toContain('disabled')
-        expect(addButton.classes()).toContain('invisible')
-      }
+      if (!addButton.exists()) throw new Error('addButton does not exist')
+      expect(addButton.classes()).toContain('disabled')
+      expect(addButton.classes()).toContain('invisible')
     })
   })
 
@@ -925,8 +924,8 @@ describe('form-tags', () => {
       })
       const customTags = wrapper.findAll('.custom-tag')
       expect(customTags.length).toBe(2)
-      expect(customTags[0].text()).toBe('apple')
-      expect(customTags[1].text()).toBe('orange')
+      expect(customTags[0]?.text()).toBe('apple')
+      expect(customTags[1]?.text()).toBe('orange')
     })
   })
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 const routes = [
   {
     path: '/some/route',
@@ -10,9 +9,9 @@ const routes = [
     children: [
       // Note we provide the above parent route name on the default child tab
       // route to ensure this tab is rendered by default when using named routes
-      {path: '', component: DefaultTabComponent, name: 'some-route'},
-      {path: 'foo', component: FooTabComponent},
-      {path: 'bar', component: BarTabComponent},
+      { path: '', component: DefaultTabComponent, name: 'some-route' },
+      { path: 'foo', component: FooTabComponent },
+      { path: 'bar', component: BarTabComponent },
     ],
   },
 ]

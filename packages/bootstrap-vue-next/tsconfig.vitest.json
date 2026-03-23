@@ -11,9 +11,9 @@
   ],
   "exclude": [],
   "compilerOptions": {
-    "lib": [],
+    "lib": ["ESNEXT", "DOM"],
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
-
+    "noUncheckedIndexedAccess": false,
     "types": ["node", "happy-dom"]
   }
 }
