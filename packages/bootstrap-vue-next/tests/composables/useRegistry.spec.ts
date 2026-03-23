@@ -412,6 +412,11 @@ describe('useRegistry - _newShowHideRegistry', () => {
       const cleanupOrder = [3, 7, 1, 9, 2, 5, 10, 4, 6, 8]
       for (const index of cleanupOrder) {
         unregisterFns[index - 1]?.()
+
+        const holder = registry.values.value.get('rapid-component')
+        // Active should be last element in array
+        const lastUid = holder?.instances[holder?.instances.length - 1]?.component.uid
+        expect(holder?.getActive()?.component.uid).toBe(lastUid)
       }
 
       expect(registry.values.value.has('rapid-component')).toBe(false)
