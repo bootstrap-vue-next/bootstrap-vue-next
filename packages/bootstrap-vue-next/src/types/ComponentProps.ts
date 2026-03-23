@@ -743,10 +743,6 @@ export interface BListGroupItemProps extends Omit<BLinkProps, 'routerTag'> {
   tag?: string
 }
 
-// export interface BModalOrchestratorProps extends TeleporterProps {}
-export type BModalOrchestratorProps = TeleporterProps
-export type BPopoverOrchestratorProps = TeleporterProps
-
 export interface BNavProps {
   align?: AlignmentJustifyContent
   cardHeader?: boolean
@@ -1000,10 +996,6 @@ export interface BTabsProps {
   tabClass?: ClassValue
   underline?: boolean
   vertical?: boolean
-}
-
-export interface BToastOrchestratorProps extends TeleporterProps {
-  appendToast?: boolean
 }
 
 export interface BCollapseProps extends ShowHideProps {

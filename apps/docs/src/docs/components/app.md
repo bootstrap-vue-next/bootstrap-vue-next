@@ -84,7 +84,17 @@ When using `BApp`, the following composables work without requiring plugin insta
 - [`useModal()`](/docs/composables/useModal) - Create and manage modals programmatically
 - [`usePopover()`](/docs/composables/usePopover) - Create and manage popovers programmatically
 
+::: warning Vue Provide/Inject Limitation
+
+Due to how Vue's provide/inject system works, composables like `useToast()`, `useModal()`, and `usePopover()` **cannot** be called in the same component that declares `<BApp>`. They rely on values provided by `BApp`, and Vue's inject only works in child components — not in the component that calls provide itself.
+
+To use these composables, place `<BApp>` at least one component level above where the composables are called:
+
+:::
+
 <<< FRAGMENT ./demo/AppComposables.vue
+
+<<< FRAGMENT ./demo/AppComposablesChild.vue
 
 ## Backward Compatibility
 

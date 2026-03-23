@@ -82,7 +82,6 @@ export const componentsWithExternalPath = {
   BListGroup: '/components/BListGroup',
   BListGroupItem: '/components/BListGroup',
   BModal: '/components/BModal',
-  BModalOrchestrator: '/components/BModal',
   BNav: '/components/BNav',
   BNavForm: '/components/BNav',
   BNavItem: '/components/BNav',
@@ -108,7 +107,6 @@ export const componentsWithExternalPath = {
   BTab: '/components/BTabs',
   BTabs: '/components/BTabs',
   BToast: '/components/BToast',
-  BToastOrchestrator: '/components/BToast',
   BTooltip: '/components/BTooltip',
   BLink: '/components/BLink',
   BProgressBar: '/components/BProgress',
@@ -123,7 +121,6 @@ export const componentsWithExternalPath = {
   BTr: '/components/BTable',
   BTimeField: '/components/BTimeField',
   BTimeRangeField: '/components/BDateField',
-  BPopoverOrchestrator: '/components/BPopover',
 } as const satisfies Record<ComponentType, string>
 export const componentNames = Object.freeze(
   Object.keys(componentsWithExternalPath) as ComponentType[]
@@ -232,7 +229,6 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BInputGroupText: ComponentProps.BInputGroupTextProps
   BListGroup: ComponentProps.BListGroupProps
   BListGroupItem: ComponentProps.BListGroupItemProps
-  BModalOrchestrator: ComponentProps.BModalOrchestratorProps
   BNav: ComponentProps.BNavProps
   BNavForm: ComponentProps.BNavFormProps
   BNavItem: ComponentProps.BNavItemProps
@@ -253,7 +249,6 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BProgress: ComponentProps.BProgressProps
   BTab: ComponentProps.BTabProps
   BTabs: ComponentProps.BTabsProps
-  BToastOrchestrator: ComponentProps.BToastOrchestratorProps
   BCollapse: ComponentProps.BCollapseProps
   BContainer: ComponentProps.BContainerProps
   BSpinner: ComponentProps.BSpinnerProps
@@ -312,8 +307,6 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BDateRangeField: ComponentProps.BDateRangeFieldProps
   BDateRangePicker: ComponentProps.BDateRangePickerProps
   BTimeRangeField: ComponentProps.BTimeRangeFieldProps
-  BTooltipOrchestrator: never
-  BPopoverOrchestrator: never
   showHide: ComponentProps.ShowHideProps
 }
 
