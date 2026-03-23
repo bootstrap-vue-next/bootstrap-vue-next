@@ -1304,6 +1304,56 @@ describe('btablelite', () => {
       expect($trs[0].attributes('data-id')).toBe('1')
       expect($trs[1].attributes('data-id')).toBe('2')
     })
+
+    it('adds --bs-table-bg transparent when style has background-color string', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          tbodyTrAttrs: {style: 'background-color: red'},
+        },
+      })
+      const tr = wrapper.get('tbody tr')
+      expect(tr.attributes('style')).toContain('background-color: red')
+      expect(tr.attributes('style')).toContain('--bs-table-bg: transparent')
+    })
+
+    it('adds --bs-table-bg transparent when style has backgroundColor object', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          tbodyTrAttrs: {style: {backgroundColor: 'blue'}},
+        },
+      })
+      const tr = wrapper.get('tbody tr')
+      expect(tr.attributes('style')).toContain('background-color: blue')
+      expect(tr.attributes('style')).toContain('--bs-table-bg: transparent')
+    })
+
+    it('adds --bs-table-bg transparent when function returns style with background-color', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}, {a: 2}],
+          tbodyTrAttrs: (item: {a: number} | null) =>
+            item?.a === 1 ? {style: 'background-color: green'} : {},
+        },
+      })
+      const $trs = wrapper.findAll('tbody tr')
+      expect($trs[0].attributes('style')).toContain('background-color: green')
+      expect($trs[0].attributes('style')).toContain('--bs-table-bg: transparent')
+      expect($trs[1].attributes('style')).toBeUndefined()
+    })
+
+    it('does not add --bs-table-bg when style has no background', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          tbodyTrAttrs: {style: 'color: red'},
+        },
+      })
+      const tr = wrapper.get('tbody tr')
+      expect(tr.attributes('style')).toContain('color: red')
+      expect(tr.attributes('style')).not.toContain('--bs-table-bg')
+    })
   })
 
   describe('align prop', () => {
