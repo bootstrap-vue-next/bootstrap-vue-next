@@ -121,7 +121,7 @@ export const componentsWithExternalPath = {
   BThead: '/components/BTable',
   BTfoot: '/components/BTable',
   BTr: '/components/BTable',
-  BTimeField: '/components/TimeField',
+  BTimeField: '/components/BTimeField',
   BTimeRangeField: '/components/BDateField',
   BPopoverOrchestrator: '/components/BPopover',
 } as const satisfies Record<ComponentType, string>
