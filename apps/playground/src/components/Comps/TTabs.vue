@@ -219,7 +219,7 @@ setTimeout(() => {
   test.value = 'test 2'
 }, 2000)
 setTimeout(() => {
-  if(tabs.value[0] === undefined) throw new Error('tabs.value[0] is undefined when it should be')
+  if(tabs.value[0] === undefined) throw new Error('tabs.value[0] is undefined when it should not be')
   tabs.value[0].title = '1'
   // console.log('remove')
   tabs.value.splice(1, 1)
