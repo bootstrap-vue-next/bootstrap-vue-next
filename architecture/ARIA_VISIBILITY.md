@@ -250,10 +250,10 @@ const visible = ref(false)
 ```vue
 <template>
   <BCollapse v-model="visible">
-    <template #default="{hide}">
+    <template #default="scope">
       <BCard>
         Content
-        <BButton @click="hide">Close</BButton>
+        <BButton @click="scope.hide">Close</BButton>
       </BCard>
     </template>
   </BCollapse>

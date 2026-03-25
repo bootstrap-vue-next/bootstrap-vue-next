@@ -243,7 +243,9 @@ export const useTableMapper = <Item>({
       // Multi-sort
       return mappedItems.sort((a, b) => {
         for (let i = 0; i < sortByItems.length; i++) {
-          const {key, order} = sortByItems[i]
+          const value = sortByItems[i]
+          if (value === undefined) continue
+          const {key, order} = value
           const field = fieldByKey.value.get(key)
           const comparer = field?.sortCompare || sortCompareValue
           const comparison = comparer
@@ -563,34 +565,36 @@ export const useTableProvider = <Item>({
     }
   }
 
-  watch(filterResolved, (filter, oldFilter) => {
-    providerPropsWatch('filter', filter, oldFilter)
+  watch(filterResolved, async (filter, oldFilter) => {
+    await providerPropsWatch('filter', filter, oldFilter)
   })
-  watch(currentPageResolved, (val, oldVal) => {
-    providerPropsWatch('currentPage', val, oldVal)
+  watch(currentPageResolved, async (val, oldVal) => {
+    await providerPropsWatch('currentPage', val, oldVal)
   })
-  watch(perPageResolved, (val, oldVal) => {
-    providerPropsWatch('perPage', val, oldVal)
+  watch(perPageResolved, async (val, oldVal) => {
+    await providerPropsWatch('perPage', val, oldVal)
   })
   watch(
     sortByResolved,
-    (val, oldVal) => {
-      providerPropsWatch('sortBy', val, oldVal)
+    async (val, oldVal) => {
+      await providerPropsWatch('sortBy', val, oldVal)
     },
     {deep: true}
   )
 
-  watch(providerResolved, (newValue) => {
+  watch(providerResolved, async (newValue) => {
     // Reset the internal values if the provider stops getting used
     if (newValue === undefined) {
       items.value = []
       return
     }
     // Otherwise we should refresh the table on such a change
-    callItemsProvider()
+    await callItemsProvider()
   })
 
-  onMounted(callItemsProvider)
+  onMounted(async () => {
+    await callItemsProvider()
+  })
 
   return {
     usesProvider,

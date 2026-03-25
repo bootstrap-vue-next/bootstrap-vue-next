@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import {BButton, useModal, useToast} from 'bootstrap-vue-next'
+import { BButton, useModal, useToast } from 'bootstrap-vue-next'
 
 const toast = useToast()
 const modal = useModal()

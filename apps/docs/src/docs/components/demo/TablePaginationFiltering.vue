@@ -2,10 +2,7 @@
   <div>
     <BRow class="mb-3">
       <BCol md="6">
-        <BFormGroup
-          label="Filter"
-          label-for="filter-input"
-        >
+        <BFormGroup label="Filter" label-for="filter-input">
           <BFormInput
             id="filter-input"
             v-model="filter"
@@ -15,17 +12,14 @@
         </BFormGroup>
       </BCol>
       <BCol md="6">
-        <BFormGroup
-          label="Per page"
-          label-for="per-page-select"
-        >
+        <BFormGroup label="Per page" label-for="per-page-select">
           <BFormSelect
             id="per-page-select"
             v-model="perPage"
             :options="[
-              {value: 5, text: '5'},
-              {value: 10, text: '10'},
-              {value: 15, text: '15'},
+              { value: 5, text: '5' },
+              { value: 10, text: '10' },
+              { value: 15, text: '15' },
             ]"
           />
         </BFormGroup>
@@ -41,22 +35,17 @@
       :current-page="currentPage"
     />
 
-    <BPagination
-      v-model="currentPage"
-      :total-rows="totalRows"
-      :per-page="perPage"
-      align="center"
-    />
+    <BPagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" align="center" />
 
     <p class="mt-3">Total filtered items: {{ totalRows }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, ref, useTemplateRef} from 'vue'
-import {BTable} from 'bootstrap-vue-next/components/BTable'
-import type {TableFieldRaw, TableItem} from 'bootstrap-vue-next'
-import type {ComponentExposed} from 'vue-component-type-helpers'
+import { computed, ref, useTemplateRef } from 'vue'
+import { BTable } from 'bootstrap-vue-next/components/BTable'
+import type { TableFieldRaw, TableItem } from 'bootstrap-vue-next'
+import type { ComponentExposed } from 'vue-component-type-helpers'
 
 interface Person {
   first_name: string
@@ -65,22 +54,22 @@ interface Person {
 }
 
 const items: TableItem<Person>[] = [
-  {first_name: 'John', last_name: 'Doe', age: 42},
-  {first_name: 'Jane', last_name: 'Doe', age: 36},
-  {first_name: 'Bob', last_name: 'Smith', age: 29},
-  {first_name: 'Alice', last_name: 'Smith', age: 31},
-  {first_name: 'Charlie', last_name: 'Brown', age: 45},
-  {first_name: 'Diana', last_name: 'Prince', age: 28},
-  {first_name: 'Edward', last_name: 'Norton', age: 52},
-  {first_name: 'Fiona', last_name: 'Apple', age: 38},
-  {first_name: 'George', last_name: 'Martin', age: 61},
-  {first_name: 'Helen', last_name: 'Mirren', age: 55},
+  { first_name: 'John', last_name: 'Doe', age: 42 },
+  { first_name: 'Jane', last_name: 'Doe', age: 36 },
+  { first_name: 'Bob', last_name: 'Smith', age: 29 },
+  { first_name: 'Alice', last_name: 'Smith', age: 31 },
+  { first_name: 'Charlie', last_name: 'Brown', age: 45 },
+  { first_name: 'Diana', last_name: 'Prince', age: 28 },
+  { first_name: 'Edward', last_name: 'Norton', age: 52 },
+  { first_name: 'Fiona', last_name: 'Apple', age: 38 },
+  { first_name: 'George', last_name: 'Martin', age: 61 },
+  { first_name: 'Helen', last_name: 'Mirren', age: 55 },
 ]
 
 const fields: Exclude<TableFieldRaw<Person>, string>[] = [
-  {key: 'first_name', label: 'First Name', sortable: true},
-  {key: 'last_name', label: 'Last Name', sortable: true},
-  {key: 'age', label: 'Age', sortable: true},
+  { key: 'first_name', label: 'First Name', sortable: true },
+  { key: 'last_name', label: 'Last Name', sortable: true },
+  { key: 'age', label: 'Age', sortable: true },
 ]
 
 const filter = ref('')

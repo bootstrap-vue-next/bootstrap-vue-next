@@ -162,8 +162,12 @@ const switchActive = (name: string): void => {
   if (comp === undefined || comp.disabled === true) return
   const value = comp.name
   const index = active.value.findIndex((el) => el === value)
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  index !== -1 ? active.value.splice(index, 1) : active.value.push(value)
+
+  if(index !== -1) {
+
+  active.value.splice(index, 1)
+  }
+  else active.value.push(value)
 }
 
 const clearActiveList = () => {

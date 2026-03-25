@@ -140,12 +140,11 @@
 <script setup lang="ts">
 import {useDropZone, useFileDialog} from '@vueuse/core'
 import {computed, nextTick, onMounted, ref, type Ref, useAttrs, useTemplateRef, watch} from 'vue'
-import type {BFormFileProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
 import {isEmptySlot} from '../../utils/dom'
-import type {BFormFileSlots} from '../../types'
+import type {BFormFileSlots, BFormFileProps} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
@@ -303,7 +302,7 @@ const ariaLiveMessage = computed(() => {
   if (!hasFiles.value) return ''
   const count = selectedFiles.value.length
   if (count === 1) {
-    return `File selected: ${selectedFiles.value[0].name}`
+    return `File selected: ${selectedFiles.value[0]?.name}`
   }
   return `${count} files selected`
 })
@@ -373,7 +372,9 @@ const handleFiles = (files: File[] | FileList, nativeEvent?: Event) => {
     modelValue.value = fileArray
   } else {
     const [firstFile] = fileArray
-    modelValue.value = firstFile
+    if (firstFile) {
+      modelValue.value = firstFile
+    }
   }
 
   // Emit change event in nextTick to ensure DOM updates

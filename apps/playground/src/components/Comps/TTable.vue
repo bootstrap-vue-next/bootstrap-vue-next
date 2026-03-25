@@ -393,7 +393,7 @@ const selection = ref<TableItem[]>([])
 const showSelectBox = ref(false)
 const selectionMode = ref<'single' | 'range' | 'multi'>('single')
 const selectClick = (selected: TableItem[]) => {
-  // eslint-disable-next-line no-console
+   
   console.log(selected)
   selection.value = selected
 }
@@ -535,10 +535,7 @@ function onFiltered(filteredItems: readonly TableItem<Person>[]) {
   currentPage.value = 1
 
   // The following lines are just to prove that typing is working
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  false &&
     filteredItems.forEach((item) => {
-      // eslint-disable-next-line no-console
       console.log(
         `${item.name.first} ${item.name.last} is ${item.age} years old and is active = ${item.isActive}`
       )
@@ -549,17 +546,17 @@ function onRowClicked({
   index,
   item,
 }: TableRowEventObject<TableItem<Person>, Readonly<MouseEvent> | Readonly<KeyboardEvent>>) {
-  // eslint-disable-next-line no-console
+   
   console.log(`clicked on row ${index}: ${item.name.first} ${item.name.last}`)
 }
 
 function onSorted(sortby: BTableSortBy) {
-  // eslint-disable-next-line no-console
+   
   console.log(`sorted: ${JSON.stringify(sortby)}`)
 }
 
 function onSortUpdate(sortby: readonly BTableSortBy[] | undefined) {
-  // eslint-disable-next-line no-console
+   
   console.log(`sort-by:update: ${JSON.stringify(sortby)}`)
 }
 

@@ -21,11 +21,10 @@ import {
 import {accordionInjectionKey} from '../../utils/keys'
 import {useId} from '../../composables/useId'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BAccordionProps} from '../../types/ComponentProps'
 import {flattenFragments} from '../../utils/flattenFragments'
 import BAccordionItem from './BAccordionItem.vue'
 import {sortSlotElementsByPosition} from '../../utils/dom'
-import type {BAccordionSlots} from '../../types'
+import type {BAccordionSlots, BAccordionProps} from '../../types'
 import {isReadOnlyArray} from '../../utils/object'
 
 const _props = withDefaults(defineProps<Omit<BAccordionProps, 'modelValue' | 'index'>>(), {
@@ -75,7 +74,7 @@ interface AccordionItem {
 const accordionItems = shallowRef<AccordionItem[]>([])
 
 const sortAccordionItems = () => {
-  accordionItems.value = accordionItems.value.sort((a, b) =>
+  accordionItems.value = [...accordionItems.value].sort((a, b) =>
     sortSlotElementsByPosition(unref(a.el), unref(b.el))
   )
   if (modelValue.value) {
@@ -86,7 +85,6 @@ const sortAccordionItems = () => {
 
       if (next.length !== modelValue.value.length) {
         if (process.env.NODE_ENV === 'development') {
-          // eslint-disable-next-line no-console
           console.warn('[BAccordion] Unknown item id in v-model:', modelValue.value)
         }
       }
@@ -97,7 +95,7 @@ const sortAccordionItems = () => {
     }
   } else if (index.value !== undefined) {
     modelValue.value = isReadOnlyArray(index.value)
-      ? index.value.map((idx) => accordionItems.value[idx]?.id)
+      ? index.value.map((idx) => accordionItems.value[idx]?.id).filter((el) => el !== undefined)
       : accordionItems.value[index.value]?.id
   }
 }
@@ -124,7 +122,7 @@ watch(index, (newValue, oldValue) => {
 
   if (!props.free) {
     const idx = !isReadOnlyArray(index.value) ? index.value : index.value?.[0]
-    if (accordionItems.value[idx]?.id) {
+    if (idx !== undefined && accordionItems.value[idx]?.id) {
       if (modelValue.value !== accordionItems.value[idx]?.id) {
         modelValue.value = accordionItems.value[idx]?.id
       }
@@ -136,7 +134,9 @@ watch(index, (newValue, oldValue) => {
   } else {
     // free mode
     if (isReadOnlyArray(index.value)) {
-      const newValue = index.value.map((item) => accordionItems.value[item]?.id)
+      const newValue = index.value
+        .map((item) => accordionItems.value[item]?.id)
+        .filter((el) => el !== undefined)
       if (!areEqual(newValue, modelValue.value)) {
         modelValue.value = newValue
       }
@@ -210,7 +210,6 @@ watch(
   (free) => {
     if (modelValue.value) {
       if (!free && isReadOnlyArray(modelValue.value)) {
-        // eslint-disable-next-line prefer-destructuring
         modelValue.value = modelValue.value[0]
       } else if (free && !isReadOnlyArray(modelValue.value)) {
         modelValue.value = [modelValue.value]

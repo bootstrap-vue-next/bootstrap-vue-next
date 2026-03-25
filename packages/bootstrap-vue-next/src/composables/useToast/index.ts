@@ -141,7 +141,7 @@ export const useToast = () => {
   const show = (
     obj: ToastOrchestratorCreateParam = {}
   ): PromiseWithComponent<typeof BToast, ToastOrchestratorParam> => {
-    // eslint-disable-next-line no-console
+     
     console.warn(
       '[BootstrapVueNext] useToast: The `show` method is deprecated. Use the `create` method instead.'
     )

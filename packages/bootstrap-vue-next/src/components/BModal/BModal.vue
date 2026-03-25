@@ -146,16 +146,14 @@ import {
   useTemplateRef,
   watch,
 } from 'vue'
-import type {BModalProps} from '../../types/ComponentProps'
-import type {BModalEmits} from '../../types/ComponentEmits'
-import type {BModalSlots, BModalSlotsData} from '../../types/ComponentSlots'
+import type {BModalSlots, BModalSlotsData, BModalEmits, BModalProps} from '../../types'
 
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useSafeScrollLock} from '../../composables/useSafeScrollLock'
-import {getModalZIndex, isEmptySlot} from '../../utils/dom'
+import {getModalZIndex, getSafeDocument, isEmptySlot} from '../../utils/dom'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useModalManager} from '../../composables/useModalManager'
 import {useShowHide} from '../../composables/useShowHide'
@@ -261,8 +259,10 @@ const pickFocusItem = () => {
 
 let activeElement: HTMLElement | null = null
 const onAfterEnter = () => {
-  if (props.noTrap && props.focus !== false) {
-    activeElement = document.activeElement as HTMLElement
+  const doc = getSafeDocument()
+  if (props.noTrap && props.focus !== false && doc) {
+    // Hypothetically this could be an issue
+    activeElement = doc.activeElement as HTMLElement
     if (activeElement === element.value) {
       activeElement = null
     }
@@ -394,13 +394,10 @@ const sharedClasses = computed(() => ({
 }))
 
 watch(stackWithoutSelf, (newValue, oldValue) => {
-  if (newValue.length > oldValue.length && showRef.value === true && props.noStacking === true)
-    hide()
+  if (newValue.length > oldValue.length && showRef.value === true && props.noStacking) hide()
 })
 
-const defaultModalDialogZIndex = ref(
-  getModalZIndex(element.value ?? (typeof document !== 'undefined' ? document.body : undefined))
-)
+const defaultModalDialogZIndex = ref(getModalZIndex(element.value ?? getSafeDocument()?.body))
 
 onMounted(() => {
   watch(

@@ -1,5 +1,3 @@
-/// <reference types="vitest" />
-
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
@@ -135,7 +133,6 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler',
         charset: false,
         silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import'],
       },
@@ -155,7 +152,7 @@ export default defineConfig({
       outDir: './dist',
       afterBuild: async () => {
         await Promise.all(
-          readFilesInDirectory('./dist/src/')
+          readFilesInDirectory('./dist/')
             .filter((file) => file.endsWith('.d.ts'))
             .map((file) => copyFile(file, file.replace('.d.ts', '.d.mts')))
         )
@@ -165,13 +162,5 @@ export default defineConfig({
 
   server: {
     host: true,
-  },
-
-  test: {
-    environment: 'happy-dom',
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'html'],
-    },
   },
 })

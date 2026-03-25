@@ -1,86 +1,65 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-dist
-.eslintcache
-
 # dependencies
 node_modules
 .pnp
 .pnp.js
 
-# testing
-coverage
-
-# misc
-.DS_Store
-*.pem
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-stats.html
-
-# local env files
-.env.local
-.env.*.local
-
-# turbo
+# build outputs and caches
+dist
+dist-ssr
 .turbo
-
-# Vuepress files
 .temp
 .cache
-/coverage/
-
-# Editor directories and files
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Tarballs
-*.tgz
-
-# Logs
-*.log*
-
-# Temp directories
-.tmp
-
-# Nuxt
 .nuxt
 .output
 .vercel_build_output
 .build-*
 .netlify
 .nitro
-.output
-
-# Env
-.env
-
-# Testing
-reports
 coverage
-*.lcov
+/coverage/
+reports
 .nyc_output
+*.lcov
+.eslintcache
+*.tsbuildinfo
 
-# VSCode
+# logs
+logs
+*.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+stats.html
+
+# local env files
+.env
+.env.local
+.env.*.local
+*.local
+
+# archives and temp directories
+*.tgz
+.tmp
+
+# editor directories and files
 .vscode/*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
-
-# Intellij idea
-*.iml
 .idea
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# OSX
+# OS and misc files
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -89,12 +68,19 @@ coverage
 Network Trash Folder
 Temporary Items
 .apdisk
+*.pem
 
-TODO.md
+# testing artifacts
+/cypress/videos/
+/cypress/screenshots/
+__screenshots__/
 
-packages/bootstrap-vue-next/src/App.vue
-
+# Vite generated files
+*.timestamp-*-*.mjs
 vite.config.mts.timestamp*
 *.timestamp-*
 
+# project-specific local files
+TODO.md
+packages/bootstrap-vue-next/src/App.vue
 components.d.ts

@@ -3,6 +3,7 @@ import {
   type ComponentPublicInstance,
   computed,
   getCurrentInstance,
+  type MaybeRef,
   type MaybeRefOrGetter,
   nextTick,
   onMounted,
@@ -10,9 +11,11 @@ import {
   type Ref,
   ref,
   toRef,
+  unref,
   watch,
 } from 'vue'
 import {getElement} from '../../utils/getElement'
+import {getSafeDocument} from '../../utils/dom'
 
 type ScrollspyList = {
   id: string | null
@@ -35,7 +38,7 @@ interface ScrollspyOptions {
   contentQuery: string
   targetQuery: string
   manual: boolean
-  root: string | ComponentPublicInstance | HTMLElement | null
+  root: MaybeRef<string | ComponentPublicInstance | HTMLElement | null>
   rootMargin: string
   threshold: number | number[]
   watchChanges: boolean
@@ -114,10 +117,13 @@ export const useScrollspy = (
       : resolvedContent.value
   )
 
-  const iobs = useIntersectionObserver(
+  const jobs = useIntersectionObserver(
     nodeList,
     (entries) => {
-      const scrollTop = (scrollRoot.value || document?.documentElement)?.scrollTop
+      const doc = getSafeDocument()
+      const scrollTop =
+        (scrollRoot.value ? scrollRoot.value : doc !== null ? doc.documentElement : undefined)
+          ?.scrollTop || 0
       isScrollingDown = scrollTop > previousScrollTop
       previousScrollTop = scrollTop
       entries.forEach((entry) => {
@@ -149,7 +155,7 @@ export const useScrollspy = (
       }
     },
     {
-      root: root ? getElement(root) : scrollRoot,
+      root: computed(() => (root ? getElement(unref(root)) : scrollRoot.value)),
       rootMargin,
       threshold,
     }
@@ -210,7 +216,8 @@ export const useScrollspy = (
   const scrollIntoView = (event: Readonly<MouseEvent>, smooth: boolean = false) => {
     event.preventDefault()
     const href = (event.target as HTMLElement)?.getAttribute?.('href')
-    const el: HTMLElement | null = href ? document?.querySelector(href) : null
+    const doc = getSafeDocument()
+    const el: HTMLElement | null = href ? (doc?.querySelector(href) ?? null) : null
     // console.log('scrollIntoView', event, el, content.value.$el)
     if (el && resolvedContent.value) {
       if (resolvedContent.value.scrollTo) {
@@ -221,7 +228,7 @@ export const useScrollspy = (
     }
   }
   const cleanup = () => {
-    iobs.stop()
+    jobs.stop()
     mobs.stop()
   }
   return {

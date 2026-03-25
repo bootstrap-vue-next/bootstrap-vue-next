@@ -56,8 +56,8 @@
             :width="computedSize"
             :height="computedSize"
             fill="currentColor"
-            :class="[iconColors[index].class]"
-            :style="iconColors[index].style"
+            :class="[iconColors[index]?.class]"
+            :style="iconColors[index]?.style"
             class="star-spacing"
             viewBox="0 0 16 16"
           >
@@ -91,10 +91,9 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BFormRatingProps} from '../../types/ComponentProps'
 import {useId} from '../../composables/useId'
 import {useRtl} from '../../composables/useRtl'
-import type {BFormRatingSlots} from '../../types'
+import type {BFormRatingProps, BFormRatingSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(), {
   color: '',
@@ -252,8 +251,7 @@ function onKeydown(e: KeyboardEvent) {
 
 function selectRating(starIndex: number) {
   if (props.readonly || props.disabled) return
-  const selectedRating = hoverValue.value !== null ? hoverValue.value : starIndex
-  modelValue.value = selectedRating
+  modelValue.value = hoverValue.value !== null ? hoverValue.value : starIndex
 }
 
 // clear

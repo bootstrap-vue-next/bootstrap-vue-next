@@ -86,13 +86,13 @@ import {
 import {useDefaults} from '../../composables/useDefaults'
 import {useMouse} from '../../composables/useMouse'
 import {useId} from '../../composables/useId'
-import type {BPopoverProps} from '../../types/ComponentProps'
-import type {BPopoverEmits} from '../../types/ComponentEmits'
-import type {BPopoverSlots, ShowHideSlotsData} from '../../types/ComponentSlots'
+import type {} from '../../types/ComponentProps'
+import type {BPopoverSlots, ShowHideSlotsData, BPopoverProps, BPopoverEmits} from '../../types'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useShowHide} from '../../composables/useShowHide'
+import {getSafeDocument, getSafeWindow} from '../../utils/dom'
 
 defineOptions({
   inheritAttrs: false,
@@ -338,8 +338,8 @@ const isElementAndTriggerOutside = () => {
   const triggerRect = triggerElement.value?.getBoundingClientRect()
   const elementRect = floatingElement.value?.getBoundingClientRect()
   const margin = Number.parseInt(props.hideMargin as unknown as string, 10) || 0
-  const offsetX = window?.scrollX || 0
-  const offsetY = window?.scrollY || 0
+  const offsetX = getSafeWindow()?.scrollX || 0
+  const offsetY = getSafeWindow()?.scrollY || 0
   const triggerIsOutside =
     !triggerRect ||
     x.value < triggerRect.left + offsetX - margin ||
@@ -360,13 +360,14 @@ const isElementAndTriggerOutside = () => {
 let looptimeout: ReturnType<typeof setTimeout> | undefined
 const tryHide = (e?: Readonly<Event>) => {
   const {triggerIsOutside, isOutside} = isElementAndTriggerOutside()
+  const doc = getSafeDocument()
   if (
     (!props.noninteractive &&
       isOutside &&
       triggerIsOutside &&
-      !floatingElement.value?.contains(document?.activeElement) &&
-      (!computedTriggers.value.focus ||
-        !triggerElement.value?.contains(document?.activeElement))) ||
+      doc &&
+      !floatingElement.value?.contains(doc.activeElement) &&
+      (!computedTriggers.value.focus || !triggerElement.value?.contains(doc.activeElement))) ||
     (props.noninteractive && triggerIsOutside)
   ) {
     hide(e?.type)
@@ -428,7 +429,6 @@ const bind = () => {
     if (elem) {
       triggerElement.value = elem
     } else {
-      // eslint-disable-next-line no-console
       console.warn('Target element not found', props.target)
     }
   } else {
@@ -439,7 +439,6 @@ const bind = () => {
     if (elem) {
       referenceElement.value = elem
     } else {
-      // eslint-disable-next-line no-console
       console.warn('Reference element not found', props.reference)
     }
   } else {

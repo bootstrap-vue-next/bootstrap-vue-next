@@ -1,5 +1,6 @@
 import {inject, onMounted, watch} from 'vue'
 import {rtlRegistryKey} from '../utils/keys'
+import {getSafeDocument} from '../utils/dom'
 
 export const useRtl = () => {
   const rtlPlugin = inject(rtlRegistryKey, null)
@@ -9,8 +10,7 @@ export const useRtl = () => {
     watch(
       () => rtlPlugin?.locale.value,
       (newValue) => {
-        const html = document.documentElement
-        html.setAttribute('lang', newValue ?? '')
+        getSafeDocument()?.documentElement.setAttribute('lang', newValue ?? '')
       },
       {immediate: true}
     )
@@ -18,8 +18,7 @@ export const useRtl = () => {
     watch(
       () => rtlPlugin?.isRtl.value,
       (newValue) => {
-        const html = document.documentElement
-        html.setAttribute('dir', (newValue ?? false) ? 'rtl' : 'ltr')
+        getSafeDocument()?.documentElement.setAttribute('dir', (newValue ?? false) ? 'rtl' : 'ltr')
       },
       {immediate: true}
     )

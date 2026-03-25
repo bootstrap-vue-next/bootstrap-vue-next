@@ -11,12 +11,12 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import { computed, ref } from 'vue'
 
 const files = ref<File[] | null>(null)
 
 const formatNames = (files: readonly File[]): string => {
-  if (files.length === 1) {
+  if (files.length === 1 && files[0] !== undefined) {
     return files[0].name
   }
   return `${files.length} files selected (${files.map((f) => f.name).join(', ')})`

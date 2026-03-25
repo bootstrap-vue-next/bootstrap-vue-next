@@ -18,7 +18,7 @@ describe('utils/BvEvent class', () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       event = new BvEvent()
-    } catch (e) {
+    } catch {
       failed = true
     }
     expect(event).not.toBeInstanceOf(BvEvent)

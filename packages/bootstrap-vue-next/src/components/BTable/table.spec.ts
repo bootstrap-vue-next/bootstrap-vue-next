@@ -46,12 +46,7 @@ class Person {
     public firstName: string,
     public lastName: string,
     public age: number
-  ) {
-    this.id = id
-    this.firstName = firstName
-    this.lastName = lastName
-    this.age = age
-  }
+  ) {}
 }
 
 const nestableItemsTest = {

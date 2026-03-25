@@ -1,4 +1,3 @@
-/* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Utilities
 import {
@@ -118,8 +117,8 @@ function internalUseDefaults(props: Record<string, any> = {}, name?: string) {
   const _subcomponentDefaults = shallowRef()
   watchEffect(() => {
     if (componentDefaults.value) {
-      const subComponents = Object.entries(componentDefaults.value).filter(([key]) =>
-        key.startsWith(key[0].toUpperCase())
+      const subComponents = Object.entries(componentDefaults.value).filter(
+        ([key]) => key[0] !== undefined && key.startsWith(key[0].toUpperCase())
       )
       _subcomponentDefaults.value = subComponents.length
         ? Object.fromEntries(subComponents)
