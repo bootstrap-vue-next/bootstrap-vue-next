@@ -1,4 +1,4 @@
-import {getSafeDocument} from './dom.ts'
+import {getSafeDocument} from './dom'
 
 const TABLE_TAG_NAMES = ['TD', 'TH', 'TR']
 

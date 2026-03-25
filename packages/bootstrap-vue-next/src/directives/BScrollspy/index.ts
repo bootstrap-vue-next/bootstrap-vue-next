@@ -2,7 +2,7 @@ import {type Directive, type DirectiveBinding} from 'vue'
 import {useScrollspy} from '../../composables/useScrollspy'
 import {omit} from '../../utils/object'
 import {getDirectiveUid} from '../utils'
-import {getSafeDocument} from '../../utils/dom.ts'
+import {getSafeDocument} from '../../utils/dom'
 
 export interface ElementWithScrollspy extends HTMLElement {
   $__scrollspy?: Record<number, ReturnType<typeof useScrollspy>>

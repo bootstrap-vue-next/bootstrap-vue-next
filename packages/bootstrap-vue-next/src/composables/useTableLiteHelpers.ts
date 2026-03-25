@@ -26,7 +26,7 @@ import {CODE_DOWN, CODE_END, CODE_HOME, CODE_UP} from '../utils/constants'
 import {tableKeyboardNavigationKey} from '../utils/keys'
 import {filterEvent} from '../utils/filterEvent'
 import type {AttrsValue} from '../types/AnyValuedAttributes'
-import {getSafeDocument} from '../utils/dom.ts'
+import {getSafeDocument} from '../utils/dom'
 
 export const useTableFieldsMapper = <Item>({
   fields,

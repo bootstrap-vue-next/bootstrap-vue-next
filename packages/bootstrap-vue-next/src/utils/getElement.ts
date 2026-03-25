@@ -1,5 +1,5 @@
 import type {ComponentPublicInstance} from 'vue'
-import {getSafeDocument} from './dom.ts'
+import {getSafeDocument} from './dom'
 
 export const getElement = (
   element: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null,

@@ -4,7 +4,7 @@ export {autoUpdate} from '@floating-ui/vue'
 import {type DirectiveBinding, h, render} from 'vue'
 import BPopover from '../components/BPopover/BPopover.vue'
 import type {BPopoverProps} from '../types'
-import {getSafeDocument} from './dom.ts'
+import {getSafeDocument} from './dom'
 
 export const resolveBootstrapPlacement = (placement: Placement): string => {
   const [_placement] = placement.split('-')

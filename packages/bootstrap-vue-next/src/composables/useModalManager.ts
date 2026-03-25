@@ -9,7 +9,7 @@ import {
   watch,
 } from 'vue'
 import {modalManagerKey} from '../utils/keys'
-import {getSafeDocument} from '../utils/dom.ts'
+import {getSafeDocument} from '../utils/dom'
 
 const modalOpenClassName = 'modal-open'
 

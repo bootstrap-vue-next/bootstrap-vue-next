@@ -1,6 +1,6 @@
 import {inject, onMounted, watch} from 'vue'
 import {rtlRegistryKey} from '../utils/keys'
-import {getSafeDocument} from '../utils/dom.ts'
+import {getSafeDocument} from '../utils/dom'
 
 export const useRtl = () => {
   const rtlPlugin = inject(rtlRegistryKey, null)

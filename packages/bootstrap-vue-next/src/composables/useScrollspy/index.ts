@@ -15,7 +15,7 @@ import {
   watch,
 } from 'vue'
 import {getElement} from '../../utils/getElement'
-import {getSafeDocument} from '../../utils/dom.ts'
+import {getSafeDocument} from '../../utils/dom'
 
 type ScrollspyList = {
   id: string | null

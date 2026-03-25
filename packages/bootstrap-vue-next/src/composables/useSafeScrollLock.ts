@@ -10,7 +10,7 @@ import {
   watch,
 } from 'vue'
 import {useScrollLock} from './useScrollLock'
-import {getSafeDocument, getSafeWindow} from '../utils/dom.ts'
+import {getSafeDocument, getSafeWindow} from '../utils/dom'
 
 let prevousRightPadding = ''
 const lockRegistry = new Map()

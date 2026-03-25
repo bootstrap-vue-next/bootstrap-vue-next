@@ -86,14 +86,13 @@ import {
 import {useDefaults} from '../../composables/useDefaults'
 import {useMouse} from '../../composables/useMouse'
 import {useId} from '../../composables/useId'
-import type {BPopoverProps} from '../../types/ComponentProps'
-import type {BPopoverEmits} from '../../types/ComponentEmits'
-import type {BPopoverSlots, ShowHideSlotsData} from '../../types/ComponentSlots'
+import type {} from '../../types/ComponentProps'
+import type {BPopoverSlots, ShowHideSlotsData, BPopoverProps, BPopoverEmits} from '../../types'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useShowHide} from '../../composables/useShowHide'
-import {getSafeDocument, getSafeWindow} from '../../utils/dom.ts'
+import {getSafeDocument, getSafeWindow} from '../../utils/dom'
 
 defineOptions({
   inheritAttrs: false,

@@ -89,7 +89,7 @@ import type {
   BFormSpinbuttonProps,
   ButtonType,
 } from '../../types'
-import {getSafeDocument} from '../../utils/dom.ts'
+import {getSafeDocument} from '../../utils/dom'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
@@ -413,9 +413,16 @@ const onMouseup: EventListener = (event: Readonly<Event>) => {
 }
 
 const setMouseup = (operation: 'addEventListener' | 'removeEventListener') => {
-  const fn = getSafeDocument()?.body[operation]
-  fn?.('mouseup', onMouseup)
-  fn?.('touchend', onMouseup)
+  const doc = getSafeDocument()
+  if (doc === null) return
+
+  if (operation === 'addEventListener') {
+    doc.body.addEventListener('mouseup', onMouseup)
+    doc.body.addEventListener('touchend', onMouseup, {passive: false})
+  } else {
+    doc.body.removeEventListener('mouseup', onMouseup)
+    doc.body.removeEventListener('touchend', onMouseup)
+  }
 }
 const resetTimers = () => {
   clearTimeout($_autoDelayTimer)

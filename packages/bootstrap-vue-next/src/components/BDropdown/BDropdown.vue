@@ -107,8 +107,6 @@ import {
 } from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BDropdownProps} from '../../types/ComponentProps'
-import type {BDropdownEmits} from '../../types/ComponentEmits'
 import BButton from '../BButton/BButton.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
@@ -116,8 +114,8 @@ import {isBoundary, isRootBoundary, resolveBootstrapCaret} from '../../utils/flo
 import {getElement} from '../../utils/getElement'
 import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 import {useShowHide} from '../../composables/useShowHide'
-import type {BDropdownSlots} from '../../types'
-import {getSafeDocument} from '../../utils/dom.ts'
+import type {BDropdownSlots, BDropdownEmits, BDropdownProps} from '../../types'
+import {getSafeDocument} from '../../utils/dom'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,

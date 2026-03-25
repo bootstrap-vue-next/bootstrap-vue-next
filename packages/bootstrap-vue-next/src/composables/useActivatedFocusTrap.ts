@@ -1,7 +1,7 @@
 import {type MaybeRefOrGetter, onMounted, readonly, ref, type Ref, toRef, watch} from 'vue'
 import {useFocusTrap, type UseFocusTrapOptions} from '@vueuse/integrations/useFocusTrap'
 import {useMutationObserver} from '@vueuse/core'
-import {getSafeDocument} from '../utils/dom.ts'
+import {getSafeDocument} from '../utils/dom'
 
 export const useActivatedFocusTrap = (
   {

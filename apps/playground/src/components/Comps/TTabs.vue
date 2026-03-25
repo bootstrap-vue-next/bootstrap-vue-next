@@ -144,9 +144,7 @@
 <script setup lang="ts">
 import {defineComponent, h, ref} from 'vue'
 import {BTab, BTabs} from 'bootstrap-vue-next/components/BTabs'
-// import {BTab, BTabs} from './BootstrapVue.ts'
 
- 
 const ChildComp = defineComponent({
   name: 'ChildComp',
   components: {},
