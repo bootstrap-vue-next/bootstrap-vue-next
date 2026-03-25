@@ -43,6 +43,8 @@ Private files should exist in the root of the domain they are related to. For ex
 
 **Consuming imports for tree-shaking**: When importing components, composables, or directives from bootstrap-vue-next in demo files, documentation, or user code, always use the specific paths for optimal tree-shaking:
 
+**Exception** for types, which can be imported from the root path without tree-shaking issues since they are removed at compile time. For example, `import type {BButtonProps} from 'bootstrap-vue-next'` is acceptable
+
 - Components:
   <<< FRAGMENT ./demo/ImportExamples.ts#components{typescript}
 - Type-only imports:
@@ -304,3 +306,7 @@ DEMO syntax should be used for:
 Follow the established code style
 
 - When a Vue component event takes three or more arguments, use an object to pass the arguments instead of multiple positional parameters. For example: `emit('event-name', {arg1, arg2, arg3})` instead of `emit('event-name', arg1, arg2, arg3)`. Fewer than three arguments may use positional parameters.
+
+## SSR compatability in the core bootstrap-vue-next library
+
+Whenever you access `window` or `document` in the core library, you should always use the utility functions `getSafeWindow()` and `getSafeDocument()` to ensure that the code is safe to run in server-side rendering environments. These functions check if the code is running in a browser environment before accessing `window` or `document`, preventing errors during SSR. Always import these functions and use them instead of directly accessing `window` or `document` in the core library.

@@ -10,6 +10,7 @@ import {
   watch,
 } from 'vue'
 import {useScrollLock} from './useScrollLock'
+import {getSafeDocument, getSafeWindow} from '../utils/dom.ts'
 
 let prevousRightPadding = ''
 const lockRegistry = new Map()
@@ -27,17 +28,20 @@ export const useSafeScrollLock = (
   const inverseBodyScrollingValue = computed(() => !toValue(bodyScroll))
 
   const isLocked = useScrollLock(
-    typeof document !== 'undefined' ? document.body : null,
+    getSafeDocument()?.body ?? null,
     resolvedIsOpen.value && inverseBodyScrollingValue.value
   )
   onMounted(() => {
-    if (typeof document === 'undefined') return
+    if (getSafeDocument() === null) return
     lockRegistry.set(id, false)
 
     watch(
       [resolvedIsOpen, inverseBodyScrollingValue],
       ([modelVal, bodyVal]) => {
-        const scrollBarGap = window.innerWidth - document.documentElement.clientWidth
+        const doc = getSafeDocument()
+        const windowInnerWidth = getSafeWindow()?.innerWidth ?? 0
+        const documentClientWidth = doc?.documentElement.clientWidth ?? 0
+        const scrollBarGap = windowInnerWidth - documentClientWidth
         const hasLocked = Array.from(lockRegistry.values()).some((val) => val === true)
 
         const myLocked = modelVal && bodyVal
@@ -45,17 +49,17 @@ export const useSafeScrollLock = (
 
         if (myLocked && !hasLocked && !isLocked.value) {
           isLocked.value = true
-          if (scrollBarGap > 0) {
-            prevousRightPadding = document.body.style.paddingRight
-            document.body.style.paddingRight = `${scrollBarGap + prevousRightPadding}px`
+          if (scrollBarGap > 0 && doc) {
+            prevousRightPadding = doc.body.style.paddingRight
+            doc.body.style.paddingRight = `${scrollBarGap + prevousRightPadding}px`
           }
         }
         const hasLockedAfter = Array.from(lockRegistry.values()).some((val) => val === true)
 
-        if (hasLocked && !hasLockedAfter) {
+        if (hasLocked && !hasLockedAfter && doc) {
           lockRegistry.set(id, false)
           isLocked.value = false
-          document.body.style.paddingRight = prevousRightPadding
+          doc.body.style.paddingRight = prevousRightPadding
         }
       },
       {immediate: true}
@@ -65,8 +69,9 @@ export const useSafeScrollLock = (
     lockRegistry.delete(id)
 
     const hasLockedAfter = Array.from(lockRegistry.values()).some((val) => val === true)
-    if (!hasLockedAfter) {
-      document.body.style.paddingRight = prevousRightPadding
+    const doc = getSafeDocument()
+    if (!hasLockedAfter && doc) {
+      doc.body.style.paddingRight = prevousRightPadding
       isLocked.value = false
     }
   })

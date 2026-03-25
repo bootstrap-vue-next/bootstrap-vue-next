@@ -1,3 +1,5 @@
+import {getSafeDocument} from './dom.ts'
+
 const TABLE_TAG_NAMES = ['TD', 'TH', 'TR']
 
 // Filter CSS selector for click/dblclick/etc. events
@@ -37,9 +39,10 @@ export const filterEvent = (event: Readonly<Event>) => {
   // Modern browsers have `label.control` that references the associated input, but IE 11
   // does not have this property on the label element, so we resort to DOM lookups
   if (label) {
+    const doc = getSafeDocument()
     const labelFor = label.getAttribute('for')
     const input = labelFor
-      ? document.getElementById(labelFor)
+      ? doc?.getElementById(labelFor)
       : label.querySelector('input, select, textarea')
     if (input && !(input as HTMLInputElement).disabled) {
       return true

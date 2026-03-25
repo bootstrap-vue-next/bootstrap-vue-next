@@ -9,6 +9,7 @@ import {
   watch,
 } from 'vue'
 import {modalManagerKey} from '../utils/keys'
+import {getSafeDocument} from '../utils/dom.ts'
 
 const modalOpenClassName = 'modal-open'
 
@@ -25,9 +26,11 @@ export const useSharedModalStack = () => {
 
   const updateHTMLAttrs = getSSRHandler('updateHTMLAttrs', (selector, attribute, value) => {
     const el =
-      typeof selector === 'string'
-        ? window?.document.querySelector(selector)
-        : unrefElement(selector)
+      typeof selector !== 'string'
+        ? unrefElement(selector)
+        : selector
+          ? getSafeDocument()?.querySelector(selector)
+          : undefined
     if (!el) return
 
     if (attribute === 'class') {

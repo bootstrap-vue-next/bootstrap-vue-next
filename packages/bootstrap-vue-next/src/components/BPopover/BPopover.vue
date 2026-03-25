@@ -93,6 +93,7 @@ import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils
 import {getElement} from '../../utils/getElement'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useShowHide} from '../../composables/useShowHide'
+import {getSafeDocument, getSafeWindow} from '../../utils/dom.ts'
 
 defineOptions({
   inheritAttrs: false,
@@ -338,8 +339,8 @@ const isElementAndTriggerOutside = () => {
   const triggerRect = triggerElement.value?.getBoundingClientRect()
   const elementRect = floatingElement.value?.getBoundingClientRect()
   const margin = Number.parseInt(props.hideMargin as unknown as string, 10) || 0
-  const offsetX = window?.scrollX || 0
-  const offsetY = window?.scrollY || 0
+  const offsetX = getSafeWindow()?.scrollX || 0
+  const offsetY = getSafeWindow()?.scrollY || 0
   const triggerIsOutside =
     !triggerRect ||
     x.value < triggerRect.left + offsetX - margin ||
@@ -360,13 +361,14 @@ const isElementAndTriggerOutside = () => {
 let looptimeout: ReturnType<typeof setTimeout> | undefined
 const tryHide = (e?: Readonly<Event>) => {
   const {triggerIsOutside, isOutside} = isElementAndTriggerOutside()
+  const doc = getSafeDocument()
   if (
     (!props.noninteractive &&
       isOutside &&
       triggerIsOutside &&
-      !floatingElement.value?.contains(document?.activeElement) &&
-      (!computedTriggers.value.focus ||
-        !triggerElement.value?.contains(document?.activeElement))) ||
+      doc &&
+      !floatingElement.value?.contains(doc.activeElement) &&
+      (!computedTriggers.value.focus || !triggerElement.value?.contains(doc.activeElement))) ||
     (props.noninteractive && triggerIsOutside)
   ) {
     hide(e?.type)

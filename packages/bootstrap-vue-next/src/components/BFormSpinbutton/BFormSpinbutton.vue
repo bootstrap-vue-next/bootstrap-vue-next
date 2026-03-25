@@ -70,9 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, useTemplateRef} from 'vue'
-import type {BFormSpinbuttonProps} from '../../types/ComponentProps'
-import {eventOnOff, stopEvent} from '../../utils/event'
+import {computed, onUnmounted, useTemplateRef} from 'vue'
 import {
   CODE_DOWN,
   CODE_END,
@@ -85,8 +83,13 @@ import {onKeyStroke, useFocus, useToNumber} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useRtl} from '../../composables/useRtl'
-import type {ButtonType} from '../../types/ButtonType'
-import type {BFormSpinbuttonEmits, BFormSpinbuttonSlots} from '../../types'
+import type {
+  BFormSpinbuttonEmits,
+  BFormSpinbuttonSlots,
+  BFormSpinbuttonProps,
+  ButtonType,
+} from '../../types'
+import {getSafeDocument} from '../../utils/dom.ts'
 
 const KEY_CODES = [CODE_UP, CODE_DOWN, CODE_HOME, CODE_END, CODE_PAGEUP, CODE_PAGEDOWN]
 
@@ -287,6 +290,11 @@ const stepDown = (multiplier = 1) => {
   stepValue(-1 * multiplier)
 }
 
+const stopEvent = (event: Readonly<Event>) => {
+  event.preventDefault()
+  event.stopImmediatePropagation()
+}
+
 onKeyStroke(
   KEY_CODES,
   (event) => {
@@ -295,7 +303,7 @@ onKeyStroke(
     if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) return
 
     // https://w3c.github.io/aria-practices/#spinbutton
-    stopEvent(event, {immediatePropagation: true})
+    stopEvent(event)
     if ($_keyIsDown) {
       // Keypress is already in progress
       return
@@ -344,7 +352,7 @@ onKeyStroke(
 
     if (props.disabled || props.readonly || altKey || ctrlKey || metaKey) return
 
-    stopEvent(event, {immediatePropagation: true})
+    stopEvent(event)
     resetTimers()
     $_keyIsDown = false
     emit('change', modelValue.value)
@@ -397,22 +405,17 @@ const onMouseup: EventListener = (event: Readonly<Event>) => {
     }
   }
 
-  stopEvent(event, {immediatePropagation: true})
+  stopEvent(event)
   resetTimers()
-  setMouseup(false)
+  setMouseup('removeEventListener')
   // Trigger the change event
   emit('change', modelValue.value)
 }
 
-const setMouseup = (on: boolean) => {
-  // Enable or disabled the body mouseup/touchend handlers
-  // Use try/catch to handle case when called server side
-  try {
-    eventOnOff(on, [document.body, 'mouseup', onMouseup, false])
-    eventOnOff(on, [document.body, 'touchend', onMouseup, false])
-  } catch {
-    /* empty */
-  }
+const setMouseup = (operation: 'addEventListener' | 'removeEventListener') => {
+  const fn = getSafeDocument()?.body[operation]
+  fn?.('mouseup', onMouseup)
+  fn?.('touchend', onMouseup)
 }
 const resetTimers = () => {
   clearTimeout($_autoDelayTimer)
@@ -464,8 +467,8 @@ const buttons = computed(() => {
 
   const handler = (event: Readonly<Event>, stepper: (multiplier?: number) => void) => {
     if (!props.disabled && !props.readonly) {
-      stopEvent(event, {immediatePropagation: true})
-      setMouseup(true)
+      stopEvent(event)
+      setMouseup('addEventListener')
       // Since we `preventDefault()`, we must manually focus the button
       // Though it's likely captured from the element click focus
       focused.value = true
@@ -519,6 +522,11 @@ const buttons = computed(() => {
       ...(!props.vertical ? incrementAttrs : decrementAttrs),
     },
   }
+})
+
+onUnmounted(() => {
+  // Cleanup event listeners
+  setMouseup('removeEventListener')
 })
 </script>
 

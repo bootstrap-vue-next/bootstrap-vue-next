@@ -51,7 +51,6 @@ import {useToNumber} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import type {ClassValue} from '../../types/AnyValuedAttributes'
 import {CODE_DOWN, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
-import {stopEvent} from '../../utils/event'
 import {getActiveElement} from '../../utils/dom'
 import {type BPaginationEmits, type BPaginationSlots, type BPaginationProps} from '../../types'
 
@@ -399,14 +398,14 @@ const focusNext = () => {
 const handleKeyNav = (event: KeyboardEvent) => {
   const {code, shiftKey} = event
   if (code === CODE_LEFT || code === CODE_UP) {
-    stopEvent(event)
+    event.preventDefault()
     if (shiftKey) {
       focusFirst()
     } else {
       focusPrev()
     }
   } else if (code === CODE_RIGHT || code === CODE_DOWN) {
-    stopEvent(event)
+    event.preventDefault()
     if (shiftKey) {
       focusLast()
     } else {

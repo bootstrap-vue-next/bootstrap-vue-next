@@ -4,6 +4,7 @@ export {autoUpdate} from '@floating-ui/vue'
 import {type DirectiveBinding, h, render} from 'vue'
 import BPopover from '../components/BPopover/BPopover.vue'
 import type {BPopoverProps} from '../types'
+import {getSafeDocument} from './dom.ts'
 
 export const resolveBootstrapPlacement = (placement: Placement): string => {
   const [_placement] = placement.split('-')
@@ -47,7 +48,8 @@ export const resolveContent = (
     (typeof values === 'object' && !values.title && !values.content && !values.body)
 
   // SSR guard: skip DOM attribute access on server
-  if (typeof document !== 'undefined') {
+  const doc = getSafeDocument()
+  if (doc !== null) {
     const titleAttr = el.getAttribute('title') || el.getAttribute('data-original-title')
 
     // Always remove title attribute to prevent native tooltip conflicts
@@ -145,11 +147,12 @@ export const bind = (
   binding: Readonly<DirectiveBinding>,
   props: BPopoverProps
 ) => {
+  const doc = getSafeDocument()
   // SSR guard: skip DOM manipulation on server
-  if (typeof document === 'undefined') return
+  if (doc === null) return
 
-  const div = document.createElement('span')
-  if (binding.modifiers.body) document.body.appendChild(div)
+  const div = doc.createElement('span')
+  if (binding.modifiers.body) doc.body.appendChild(div)
   else if (binding.modifiers.child) el.appendChild(div)
   else el.parentNode?.insertBefore(div, el.nextSibling)
   render(h(BPopover, props), div)
@@ -164,7 +167,7 @@ export const unbind = (el: ElementWithPopper) => {
   render(null, div)
 
   // SSR guard: skip DOM cleanup on server
-  if (typeof document === 'undefined') {
+  if (getSafeDocument() !== null) {
     delete el.$__element
     return
   }

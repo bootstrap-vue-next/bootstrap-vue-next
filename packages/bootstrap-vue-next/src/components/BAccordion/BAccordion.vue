@@ -74,7 +74,7 @@ interface AccordionItem {
 const accordionItems = shallowRef<AccordionItem[]>([])
 
 const sortAccordionItems = () => {
-  accordionItems.value = accordionItems.value.sort((a, b) =>
+  accordionItems.value = [...accordionItems.value].sort((a, b) =>
     sortSlotElementsByPosition(unref(a.el), unref(b.el))
   )
   if (modelValue.value) {

@@ -16,8 +16,7 @@ import type {BButtonToolbarSlots, BButtonToolbarProps} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import {computed, nextTick, useTemplateRef} from 'vue'
 import {CODE_DOWN, CODE_END, CODE_HOME, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
-import {stopEvent} from '../../utils/event'
-import {getActiveElement} from '../../utils/dom'
+import {getActiveElement, getSafeWindow} from '../../utils/dom'
 
 const _props = withDefaults(defineProps<BButtonToolbarProps>(), {
   ariaLabel: 'Group',
@@ -44,8 +43,8 @@ const getFocusableElements = (): HTMLElement[] => {
 
   // Filter out elements that are not visible or have display:none
   return elements.filter((el) => {
-    const style = window.getComputedStyle(el)
-    return style.display !== 'none' && style.visibility !== 'hidden'
+    const style = getSafeWindow()?.getComputedStyle(el)
+    return style && style.display !== 'none' && style.visibility !== 'hidden'
   })
 }
 
@@ -112,24 +111,24 @@ const handleKeyNav = (event: KeyboardEvent) => {
   const {code, shiftKey} = event
 
   if (code === CODE_LEFT || code === CODE_UP) {
-    stopEvent(event)
+    event.preventDefault()
     if (shiftKey) {
       focusFirst()
     } else {
       focusPrev()
     }
   } else if (code === CODE_RIGHT || code === CODE_DOWN) {
-    stopEvent(event)
+    event.preventDefault()
     if (shiftKey) {
       focusLast()
     } else {
       focusNext()
     }
   } else if (code === CODE_HOME) {
-    stopEvent(event)
+    event.preventDefault()
     focusFirst()
   } else if (code === CODE_END) {
-    stopEvent(event)
+    event.preventDefault()
     focusLast()
   }
 }

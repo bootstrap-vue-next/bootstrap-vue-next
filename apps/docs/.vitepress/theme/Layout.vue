@@ -294,11 +294,7 @@ onMounted(() => {
   watch(
     colorMode,
     (newValue) => {
-      if (newValue === 'dark') {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
+      document.documentElement.classList.toggle('dark', newValue === 'dark')
     },
     { immediate: true },
   )

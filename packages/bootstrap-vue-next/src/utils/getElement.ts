@@ -1,13 +1,14 @@
 import type {ComponentPublicInstance} from 'vue'
+import {getSafeDocument} from './dom.ts'
 
 export const getElement = (
   element: string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null,
-  root: HTMLElement | Document | undefined = typeof document !== 'undefined' ? document : undefined
+  root: HTMLElement | Document | null = getSafeDocument()
 ): HTMLElement | undefined => {
   if (!element) return undefined
   if (typeof element === 'string') {
-    if (typeof root === 'undefined' || typeof document === 'undefined') return undefined
-    const idElement = document.getElementById(element)
+    if (root === null) return undefined
+    const idElement = getSafeDocument()?.getElementById(element)
     return idElement ?? (root.querySelector(element) as HTMLElement) ?? undefined
   }
   return (element as ComponentPublicInstance).$el ?? element

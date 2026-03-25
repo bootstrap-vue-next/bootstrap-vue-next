@@ -93,7 +93,7 @@ import {createReusableTemplate} from '@vueuse/core'
 import type {TabType, BTabsProps, BTabsEmits, BTabsSlots} from '../../types'
 import {tabsInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
-import {sortSlotElementsByPosition} from '../../utils/dom'
+import {getSafeDocument, sortSlotElementsByPosition} from '../../utils/dom'
 import {flattenFragments} from '../../utils/flattenFragments'
 import BTab from './BTab.vue'
 
@@ -336,7 +336,7 @@ const handleClick = (event: Readonly<MouseEvent>, index: number) => {
   ) {
     tabs.value[index].onClick?.(event)
     if (event.defaultPrevented) {
-      document.getElementById(tabs.value[index].buttonId)?.blur()
+      getSafeDocument()?.getElementById(tabs.value[index].buttonId)?.blur()
       return
     }
   }
@@ -350,7 +350,7 @@ const keynav = (e: Event, direction: number) => {
   activeIndex.value = nextIndex(activeIndex.value + direction, direction)
   nextTick(() => {
     if (activeIndex.value >= 0) {
-      document.getElementById(tabs.value[activeIndex.value]?.buttonId)?.focus()
+      getSafeDocument()?.getElementById(tabs.value[activeIndex.value]?.buttonId)?.focus()
     }
   })
 }
@@ -420,7 +420,7 @@ watch(activeIndex, (newValue, oldValue) => {
     }
     nextTick(() => {
       if (prev >= 0) {
-        document.getElementById(tabs.value[prev]?.buttonId)?.focus()
+        getSafeDocument()?.getElementById(tabs.value[prev]?.buttonId)?.focus()
       }
     })
     return

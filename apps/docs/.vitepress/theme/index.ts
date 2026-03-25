@@ -1,8 +1,8 @@
 // https://vitepress.dev/guide/custom-theme
 import Layout from './Layout.vue'
-import type {EnhanceAppContext, Theme} from 'vitepress'
+import type { EnhanceAppContext, Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme-without-fonts'
-import {appInfoKey} from './keys'
+import { appInfoKey } from './keys'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
@@ -12,7 +12,7 @@ let scrollTimer: ReturnType<typeof setTimeout> | undefined
 export default {
   extends: DefaultTheme,
   Layout,
-  enhanceApp({app, router}: EnhanceAppContext) {
+  enhanceApp({ app, router }: EnhanceAppContext) {
     // After client-side route changes, re-scroll to the hash anchor once the
     // page content has finished rendering. VitePress's SPA router scrolls
     // before layout shifts settle, causing anchors to land off-screen.
@@ -20,13 +20,13 @@ export default {
     router.onAfterRouteChange = (...args) => {
       if (originalOnAfterRouteChange) {
         originalOnAfterRouteChange(
-          ...(args as Parameters<NonNullable<typeof originalOnAfterRouteChange>>)
+          ...(args as Parameters<NonNullable<typeof originalOnAfterRouteChange>>),
         )
       }
       if (typeof window === 'undefined') return
       clearTimeout(scrollTimer)
       scrollTimer = setTimeout(() => {
-        const {hash} = window.location
+        const hash = (typeof window !== 'undefined' ? window.location : undefined)?.hash
         if (!hash) return
         const decodedId = decodeURIComponent(hash.slice(1))
         if (!decodedId) return
