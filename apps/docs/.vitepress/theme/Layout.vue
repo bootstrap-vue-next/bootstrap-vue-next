@@ -339,7 +339,7 @@ const contents = computed(() => {
   headers.value.forEach((header) => {
     const item = { ...header, children: [] as ContentsItem[] } as ContentsItem
 
-    while ((stack.length && stack[stack.length - 1]?.level) || 0 >= item.level) {
+    while (stack.length > 0 && (stack[stack.length - 1]?.level ?? 0) >= item.level) {
       stack.pop()
     }
 

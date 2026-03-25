@@ -244,7 +244,7 @@ export const useTableMapper = <Item>({
       return mappedItems.sort((a, b) => {
         for (let i = 0; i < sortByItems.length; i++) {
           const value = sortByItems[i]
-          if (value === undefined) return 0
+          if (value === undefined) continue
           const {key, order} = value
           const field = fieldByKey.value.get(key)
           const comparer = field?.sortCompare || sortCompareValue

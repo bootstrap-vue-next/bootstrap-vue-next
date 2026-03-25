@@ -90,7 +90,7 @@ function validatePageStructure(html: string): { valid: boolean; error?: unknown 
     headers.forEach((header) => {
       const item = { ...header, children: [] }
 
-      while ((stack.length && stack[stack.length - 1]?.level) || -1 >= item.level) {
+      while ((stack[stack.length - 1]?.level ?? -1) >= item.level) {
         stack.pop()
       }
 

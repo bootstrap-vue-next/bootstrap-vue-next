@@ -103,7 +103,7 @@ export function autoInjectDocComponents(md: MarkdownIt) {
       if (frontmatterMatch[1] !== undefined) {
         frontmatter = parse(frontmatterMatch[1])
       } else {
-        frontmatter = undefined
+        return defaultRender(src, env)
       }
     } catch {
       return defaultRender(src, env)

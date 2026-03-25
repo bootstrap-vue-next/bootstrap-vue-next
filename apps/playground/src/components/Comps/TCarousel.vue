@@ -103,6 +103,6 @@ const newValue = [
 ]
 
 setTimeout(() => {
-  images.value = [...(images.value[0] ? images.value[0] : []), ...newValue]
+  images.value = [...(images.value[0] ? [images.value[0]] : []), ...newValue]
 }, 1000)
 </script>

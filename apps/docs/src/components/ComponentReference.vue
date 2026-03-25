@@ -331,7 +331,7 @@ const deriveBaseDirectory = (): string | undefined => {
  * Pattern: /<BaseDirectory>/<ComponentName>.vue
  */
 const deriveSourcePath = (componentName: string, baseDirectory: string | undefined): string =>
-  baseDirectory ? `/${baseDirectory}/${componentName}.vue` : `${componentName}.vue`
+  baseDirectory ? `/${baseDirectory}/${componentName}.vue` : `/${componentName}.vue`
 
 const goToLink = (link: string) => router.go(withBase(link))
 const globalData = inject(appInfoKey)
