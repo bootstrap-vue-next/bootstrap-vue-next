@@ -114,7 +114,7 @@ templates/
 - `package.json` - Root workspace configuration
 - `pnpm-workspace.yaml` - Workspace package definitions
 - `turbo.json` - Task pipeline configuration
-- `vitest.workspace.mjs` - Test workspace setup
+- `vitest.config.ts` - Test workspace setup
 - `.github/workflows/ci.yaml` - CI pipeline
 
 ### Architecture Documentation
