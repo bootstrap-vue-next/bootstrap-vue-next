@@ -198,12 +198,12 @@
     "@internationalized/date": "^3.12.0",
     "@vueuse/core": "^14.2.1",
     "@vueuse/integrations": "^14.2.1",
-    "bootstrap": "^5.3.8",
     "focus-trap": "^8.0.0",
-    "reka-ui": "^2.9.2",
-    "unplugin-vue-components": "^31.0.0"
+    "reka-ui": "^2.9.2"
   },
   "devDependencies": {
+    "unplugin-vue-components": "^31.0.0",
+    "bootstrap": "^5.3.8",
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^24.12.0",
     "@vitejs/plugin-vue": "^6.0.5",

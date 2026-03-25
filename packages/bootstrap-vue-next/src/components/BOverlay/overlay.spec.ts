@@ -441,17 +441,6 @@ describe('overlay', () => {
     expect($second.attributes('style')).not.toContain('background-color')
   })
 
-  // Does not work?
-  // it.skip('child BTransition child div first child div has style backdrop-filter: blur(2px); by default', () => {
-  //   const wrapper = mount(BOverlay, {
-  //     props: {show: true},
-  //   })
-  //   const $transition = wrapper.getComponent(BTransition)
-  //   const $div = $transition.get('div')
-  //   const $second = $div.get('div')
-  //   expect($second.attributes('style')).toContain('backdrop-filter: blur(2px);')
-  // })
-
   it('child BTransition child div first child div does not have style backdrop-filter when blur is empty string', () => {
     const wrapper = mount(BOverlay, {
       props: {show: true, blur: ''},
