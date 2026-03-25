@@ -43,14 +43,14 @@
         </BNavbarNav>
         <BNavbarNav class="ms-auto">
           <div class="d-flex align-items-center gap-2">
-            <VPNavBarSearch :class="{dark: colorMode === 'dark'}" />
+            <VPNavBarSearch :class="{ dark: colorMode === 'dark' }" />
             <div class="d-flex gap-2 flex-wrap socials">
               <BNav class="d-flex">
                 <BNavItem
                   v-for="link in headerExternalLinks"
                   :key="link.url"
                   :href="link.url"
-                  :link-attrs="{'aria-label': link.label}"
+                  :link-attrs="{ 'aria-label': link.label }"
                   target="_blank"
                   rel="noopener"
                   link-classes="py-1 px-0"
@@ -172,10 +172,10 @@
 </template>
 
 <script setup lang="ts">
-import {useColorMode} from 'bootstrap-vue-next/composables/useColorMode'
-import {useScrollspy} from 'bootstrap-vue-next/composables/useScrollspy'
-import {vBColorMode} from 'bootstrap-vue-next/directives/BColorMode'
-import {vBToggle} from 'bootstrap-vue-next/directives/BToggle'
+import { useColorMode } from 'bootstrap-vue-next/composables/useColorMode'
+import { useScrollspy } from 'bootstrap-vue-next/composables/useScrollspy'
+import { vBColorMode } from 'bootstrap-vue-next/directives/BColorMode'
+import { vBToggle } from 'bootstrap-vue-next/directives/BToggle'
 import {
   type ComponentPublicInstance,
   computed,
@@ -193,21 +193,21 @@ import SunFill from '~icons/bi/sun-fill'
 import ChevronRight from '~icons/bi/chevron-right'
 import CircleHalf from '~icons/bi/circle-half'
 import List from '~icons/bi/list'
-import {useData, useRoute, withBase} from 'vitepress'
-import {VPNavBarSearch} from 'vitepress/theme'
-import {appInfoKey} from './keys'
-import {useMediaQuery} from '@vueuse/core'
+import { useData, useRoute, withBase } from 'vitepress'
+import { VPNavBarSearch } from 'vitepress/theme'
+import { appInfoKey } from './keys'
+import { useMediaQuery } from '@vueuse/core'
 import PageContents from '../../src/components/PageContents.vue'
-import {type ContentsItem, type HeaderItem} from '../../src/types'
+import { type ContentsItem, type HeaderItem } from '../../src/types'
 
 // https://vitepress.dev/reference/runtime-api#usedata
-const {page} = useData()
+const { page } = useData()
 const route = useRoute()
 
 const content = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_content')
 const target = useTemplateRef<ComponentPublicInstance<HTMLElement>>('_target')
 
-const {current: activeId, list: items} = useScrollspy(content, target, {
+const { current: activeId, list: items } = useScrollspy(content, target, {
   // Select headings and elements for the table of contents:
   // - h1-h6 headings (excluding those inside demo examples or card bodies)
   // - div elements with IDs (for component reference sections)
@@ -241,7 +241,7 @@ const globalData = inject(appInfoKey, {
   githubDocsDirectory: '',
 })
 
-const isLargeScreen = useMediaQuery('(min-width: 992px)', {ssrWidth: 1024})
+const isLargeScreen = useMediaQuery('(min-width: 992px)', { ssrWidth: 1024 })
 const sidebar = ref(false)
 const onThisPage = ref(false)
 
@@ -294,13 +294,9 @@ onMounted(() => {
   watch(
     colorMode,
     (newValue) => {
-      if (newValue === 'dark') {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
+      document.documentElement.classList.toggle('dark', newValue === 'dark')
     },
-    {immediate: true}
+    { immediate: true },
   )
 })
 
@@ -329,7 +325,7 @@ const headers = computed(() =>
       tag,
       level,
     } as HeaderItem
-  })
+  }),
 )
 
 const contents = computed(() => {
@@ -337,16 +333,16 @@ const contents = computed(() => {
   const stack: ContentsItem[] = []
 
   headers.value.forEach((header) => {
-    const item = {...header, children: [] as ContentsItem[]} as ContentsItem
+    const item = { ...header, children: [] as ContentsItem[] } as ContentsItem
 
-    while (stack.length && stack[stack.length - 1].level >= item.level) {
+    while (stack.length > 0 && (stack[stack.length - 1]?.level ?? 0) >= item.level) {
       stack.pop()
     }
 
     if (stack.length === 0) {
       root.push(item)
     } else {
-      stack[stack.length - 1].children.push(item)
+      stack[stack.length - 1]?.children.push(item)
     }
 
     stack.push(item)
@@ -354,7 +350,7 @@ const contents = computed(() => {
 
   if (root.length !== 1) {
     // Something isn't right if we have no root items or more than one root item
-    // eslint-disable-next-line no-console
+
     console.warn('Unexpected header structure:', headers, 'Root items:', root)
   }
 
@@ -367,7 +363,7 @@ watch(
     if (isLargeScreen.value === false) {
       sidebar.value = false
     }
-  }
+  },
 )
 </script>
 
@@ -722,7 +718,6 @@ watch(
     .bd-sidebar,
     .otp-sidebar {
       grid-area: sidebar;
-      position: -webkit-sticky;
       position: sticky;
       top: 5rem;
       display: block !important;
@@ -733,7 +728,7 @@ watch(
 
       .offcanvas {
         transition: none !important;
-        transform: 0;
+        transform: none;
         position: relative !important;
 
         .offcanvas-header {

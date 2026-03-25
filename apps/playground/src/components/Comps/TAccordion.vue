@@ -62,7 +62,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 const open = ref(0)
-const openX = ref(true)
 const openId = ref('id1')
 const isFree = ref(true)
 

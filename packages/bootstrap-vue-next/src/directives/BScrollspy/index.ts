@@ -2,6 +2,7 @@ import {type Directive, type DirectiveBinding} from 'vue'
 import {useScrollspy} from '../../composables/useScrollspy'
 import {omit} from '../../utils/object'
 import {getDirectiveUid} from '../utils'
+import {getSafeDocument} from '../../utils/dom'
 
 export interface ElementWithScrollspy extends HTMLElement {
   $__scrollspy?: Record<number, ReturnType<typeof useScrollspy>>
@@ -9,7 +10,8 @@ export interface ElementWithScrollspy extends HTMLElement {
 
 const bind = (el: ElementWithScrollspy, binding: Readonly<DirectiveBinding>) => {
   // SSR guard: skip on server
-  if (typeof document === 'undefined') return
+  const doc = getSafeDocument()
+  if (doc === null) return
 
   const uid = getDirectiveUid(binding)
 

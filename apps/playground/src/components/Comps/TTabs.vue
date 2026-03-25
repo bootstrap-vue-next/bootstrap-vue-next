@@ -77,7 +77,7 @@
               :content="tab.content"
               v-bind="tab.attrs"
             />
-            <ChildComp :title="tabs[0].title" :content="tabs[0].content" />
+            <ChildComp :title="tabs[0]?.title" :content="tabs[0]?.content" />
             <b-tab :title="test" @click="log"> test </b-tab>
             <b-tab v-model:active="activeBool" title="ac" button-id="ac-button"> ac </b-tab>
             <b-tab title="test1" lazy-once title-link-class="bg-danger" class="bg-danger">
@@ -144,9 +144,7 @@
 <script setup lang="ts">
 import {defineComponent, h, ref} from 'vue'
 import {BTab, BTabs} from 'bootstrap-vue-next/components/BTabs'
-// import {BTab, BTabs} from './BootstrapVue.ts'
 
-// eslint-disable-next-line vue/one-component-per-file
 const ChildComp = defineComponent({
   name: 'ChildComp',
   components: {},
@@ -165,7 +163,7 @@ const ChildComp = defineComponent({
   },
 })
 
-// eslint-disable-next-line vue/one-component-per-file
+ 
 const ParentComp = defineComponent({
   name: 'ParentComp',
   render() {
@@ -173,12 +171,12 @@ const ParentComp = defineComponent({
   },
 })
 
-// eslint-disable-next-line vue/one-component-per-file
+ 
 const LoggerComp = defineComponent({
   name: 'ParentComp',
   components: {},
   mounted() {
-    // eslint-disable-next-line no-console
+     
     console.log('logger component mounted')
   },
   render() {
@@ -207,17 +205,19 @@ const tab3 = ref([
 ])
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function log(e: any) {
-  // eslint-disable-next-line no-console
+   
   console.log('click', e)
 }
 
 setTimeout(() => {
   // console.log('add')
   tabs.value.push({uuid: 3, title: '3', content: '3', attrs: {}})
+  if(tabs.value[0] === undefined) throw new Error('tabs.value[0] is undefined when it should not be')
   tabs.value[0].title = '11'
   test.value = 'test 2'
 }, 2000)
 setTimeout(() => {
+  if(tabs.value[0] === undefined) throw new Error('tabs.value[0] is undefined when it should not be')
   tabs.value[0].title = '1'
   // console.log('remove')
   tabs.value.splice(1, 1)

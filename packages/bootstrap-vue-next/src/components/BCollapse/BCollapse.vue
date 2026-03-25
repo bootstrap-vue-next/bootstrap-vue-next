@@ -81,7 +81,8 @@ const onBeforeLeave = (el: Element) => {
   } else {
     ;(el as HTMLElement).style.height = `${el.scrollHeight}px`
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+
+  // oxlint-disable-next-line no-unused-expressions
   ;(el as HTMLElement).offsetHeight // force reflow
 }
 const onLeave = (el: Element) => {

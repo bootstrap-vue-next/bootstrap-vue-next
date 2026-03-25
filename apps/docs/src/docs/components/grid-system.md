@@ -438,12 +438,6 @@ When toggling `display` isn’t needed, you can toggle the `visibility` of an el
 [visibility utility classes](https://getbootstrap.com/docs/5.3/utilities/visibility).
 Invisible elements will still affect the layout of the page, but are visually hidden from visitors.
 
-<ComponentReference :data="data" />
-
-<script setup lang="ts">
-import {data} from '../../data/components/gridSystem.data'
-</script>
-
 <style lang="scss">
   .bv-example-row {
   .row {

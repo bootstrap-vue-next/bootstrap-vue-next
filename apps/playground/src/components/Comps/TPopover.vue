@@ -266,6 +266,6 @@ const vari = ref({
   },
 })
 
-// eslint-disable-next-line no-console
+ 
 const consoleLog = (...args: unknown[]) => console.log(...args)
 </script>

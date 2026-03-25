@@ -6,15 +6,16 @@
     "cypress.config.*",
     "nightwatch.conf.*",
     "playwright.config.*",
-    "eslint.*"
+    "eslint.config.*"
   ],
   "compilerOptions": {
-    "composite": true,
-    "noEmit": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "module": "preserve",
+    "moduleResolution": "bundler",
 
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "types": ["node"]
+    "types": ["node"],
+
+    "noEmit": true,
+
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
   }
 }

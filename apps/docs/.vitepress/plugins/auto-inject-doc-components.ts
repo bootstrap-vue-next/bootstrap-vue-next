@@ -1,6 +1,6 @@
 import type MarkdownIt from 'markdown-it'
-import {parse} from 'yaml'
-import {kebabToTitleCase} from '../../src/utils/dataLoaderUtils'
+import { parse } from 'yaml'
+import { kebabToTitleCase } from '../../src/utils/dataLoaderUtils'
 
 /**
  * Convert kebab-case filename to Title Case.
@@ -54,8 +54,8 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     env: {
       relativePath?: string
       path?: string
-      frontmatter?: {description?: string; title?: string}
-    }
+      frontmatter?: { description?: string; title?: string }
+    },
   ) {
     // Check if this is a documentation file that should get auto-injection
     const rawPath = env?.relativePath || env?.path || ''
@@ -63,7 +63,7 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     const path = rawPath.replace(/\\/g, '/')
     // Match docs/*.md files OR root-level .md files (with or without src/ prefix, with or without leading slash)
     const docsMatch = path.match(/(?:src\/)?docs\/(.+)\.md$/)
-    const rootMatch = path.match(/(?:src\/)?([^\/]+)\.md$/)
+    const rootMatch = path.match(/(?:src\/)?([^/]+)\.md$/)
 
     if (!docsMatch && !rootMatch) {
       return defaultRender(src, env)
@@ -75,13 +75,13 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     let filename: string
 
     if (docsMatch) {
-      fullPath = docsMatch[1]
+      fullPath = docsMatch[1] || ''
       const lastSlashIndex = fullPath.lastIndexOf('/')
       directory = lastSlashIndex >= 0 ? fullPath.substring(0, lastSlashIndex) : ''
       filename = lastSlashIndex >= 0 ? fullPath.substring(lastSlashIndex + 1) : fullPath
     } else if (rootMatch) {
       // Root-level file
-      fullPath = rootMatch[1]
+      fullPath = rootMatch[1] || ''
       directory = ''
       filename = fullPath
     } else {
@@ -98,9 +98,13 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     }
 
     // Parse frontmatter to check for description
-    let frontmatter: {description?: string; title?: string}
+    let frontmatter: { description?: string; title?: string } | undefined = undefined
     try {
-      frontmatter = parse(frontmatterMatch[1])
+      if (frontmatterMatch[1] !== undefined) {
+        frontmatter = parse(frontmatterMatch[1])
+      } else {
+        return defaultRender(src, env)
+      }
     } catch {
       return defaultRender(src, env)
     }
@@ -162,7 +166,7 @@ export function autoInjectDocComponents(md: MarkdownIt) {
           const dataImport = `import {data} from '../../data/components/${dataFilename}.data'\n`
           afterFrontmatter = afterFrontmatter.replace(
             scriptSetupPattern,
-            `<script setup lang="ts">\n${dataImport}`
+            `<script setup lang="ts">\n${dataImport}`,
           )
         }
       }

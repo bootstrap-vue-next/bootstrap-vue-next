@@ -107,8 +107,6 @@ import {
 } from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BDropdownProps} from '../../types/ComponentProps'
-import type {BDropdownEmits} from '../../types/ComponentEmits'
 import BButton from '../BButton/BButton.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
@@ -116,7 +114,8 @@ import {isBoundary, isRootBoundary, resolveBootstrapCaret} from '../../utils/flo
 import {getElement} from '../../utils/getElement'
 import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 import {useShowHide} from '../../composables/useShowHide'
-import type {BDropdownSlots} from '../../types'
+import type {BDropdownSlots, BDropdownEmits, BDropdownProps} from '../../types'
+import {getSafeDocument} from '../../utils/dom'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
@@ -264,8 +263,9 @@ const keynav = (e: Readonly<Event>, v: number) => {
   const list = floatingElement.value?.querySelectorAll(
     '.dropdown-item:not(.disabled):not(:disabled)'
   )
-  if (!list) return
-  if (floatingElement.value?.contains(document.activeElement)) {
+  const doc = getSafeDocument()
+  if (!list || !doc) return
+  if (floatingElement.value?.contains(doc.activeElement)) {
     const active = floatingElement.value.querySelector('.dropdown-item:focus')
     const index = Array.prototype.indexOf.call(list, active) + v
     if (index >= 0 && index < list?.length) (list[index] as HTMLElement)?.focus()

@@ -1,8 +1,13 @@
 import type {Slot} from 'vue'
 
+export const getSafeDocument = () => (typeof document !== 'undefined' ? document : null)
+export const getSafeWindow = () => (typeof window !== 'undefined' ? window : null)
+
 // Get the currently active HTML element
 export const getActiveElement = (excludes: readonly HTMLElement[] = []): Element | null => {
-  const {activeElement} = document
+  const doc = getSafeDocument()
+  if (doc === null) return null
+  const {activeElement} = doc
   return activeElement && !excludes?.some((el) => el === activeElement) ? activeElement : null
 }
 
@@ -18,7 +23,6 @@ export const attemptFocus = (
   try {
     el.focus(options)
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e)
   }
   return isActiveElement(el)
@@ -43,14 +47,14 @@ export const isVisible = (el: Readonly<Element>): boolean => {
   // So any tests that need isVisible will fail in JSDOM
   // Except when we override the getBCR prototype in some tests
   const bcr = el.getBoundingClientRect()
-  return !!(bcr && bcr.height > 0 && bcr.width > 0)
+  return bcr && bcr.height > 0 && bcr.width > 0
 }
 
 export const getTransitionDelay = (element: Readonly<HTMLElement>) => {
-  const style = window.getComputedStyle(element)
+  const style = getSafeWindow()?.getComputedStyle(element)
   // if multiple durations are defined, we take the first
-  const transitionDelay = style.transitionDelay.split(',')[0] || ''
-  const transitionDuration = style.transitionDuration.split(',')[0] || ''
+  const transitionDelay = style?.transitionDelay.split(',')[0] || ''
+  const transitionDuration = style?.transitionDuration.split(',')[0] || ''
   const transitionDelayMs = Number(transitionDelay.slice(0, -1)) * 1000
   const transitionDurationMs = Number(transitionDuration.slice(0, -1)) * 1000
   return transitionDelayMs + transitionDurationMs
@@ -67,10 +71,13 @@ export const sortSlotElementsByPosition = (
   return 0
 }
 
+const defaultZModelIndex = 1055
 export const getModalZIndex = (element?: Readonly<HTMLElement | null>): number => {
-  if (typeof window === 'undefined') return 1055
-  const target = element ?? document.body
-  const raw = window.getComputedStyle(target).getPropertyValue('--bs-modal-zindex').trim()
+  const win = getSafeWindow()
+  const doc = getSafeDocument()
+  if (win === null || doc === null) return defaultZModelIndex
+  const target = element ?? doc.body
+  const raw = win.getComputedStyle(target).getPropertyValue('--bs-modal-zindex').trim()
   const parsed = Number.parseInt(raw, 10)
-  return Number.isFinite(parsed) ? parsed : 1055
+  return Number.isFinite(parsed) ? parsed : defaultZModelIndex
 }

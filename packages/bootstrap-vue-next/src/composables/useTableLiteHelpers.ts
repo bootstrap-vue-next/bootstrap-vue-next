@@ -23,10 +23,10 @@ import {
 import {getDataLabelAttr, getWithGetter, type StackedProps} from '../utils/tableUtils'
 import {startCase} from '../utils/stringUtils'
 import {CODE_DOWN, CODE_END, CODE_HOME, CODE_UP} from '../utils/constants'
-import {stopEvent} from '../utils/event'
 import {tableKeyboardNavigationKey} from '../utils/keys'
 import {filterEvent} from '../utils/filterEvent'
 import type {AttrsValue} from '../types/AnyValuedAttributes'
+import {getSafeDocument} from '../utils/dom'
 
 export const useTableFieldsMapper = <Item>({
   fields,
@@ -267,10 +267,15 @@ export const useTableKeyboardNavigation = <Item>(
   const handleHeaderKeydown = (field: TableField, event: KeyboardEvent, isFooter = false) => {
     const {target, code} = event
 
-    if (target && (target as Element).tagName !== 'TH' && document.activeElement === target) return
+    if (
+      target &&
+      (target as Element).tagName !== 'TH' &&
+      getSafeDocument()?.activeElement === target
+    )
+      return
 
     if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
-      stopEvent(event)
+      event.preventDefault()
       headerClicked(field, event, isFooter)
     }
   }
@@ -278,24 +283,33 @@ export const useTableKeyboardNavigation = <Item>(
   const handleRowKeydown = (item: Item, itemIndex: number, event: KeyboardEvent) => {
     const {target, code, shiftKey} = event
 
-    if (target && (target as Element).tagName !== 'TR' && document.activeElement === target) return
+    if (
+      target &&
+      (target as Element).tagName !== 'TR' &&
+      getSafeDocument()?.activeElement === target
+    )
+      return
 
     if (code === 'Enter' || code === 'NumpadEnter' || code === 'Space') {
-      stopEvent(event)
+      event.preventDefault()
       events.onRowClicked({item, index: itemIndex, event})
       return
     }
 
     if (code === CODE_DOWN || code === CODE_UP || code === CODE_HOME || code === CODE_END) {
-      stopEvent(event)
+      event.preventDefault()
       handleRowNavigation(code, shiftKey, itemIndex)
     }
   }
 
   const handleRowNavigation = (code: string, shiftKey: boolean, currentIndex: number) => {
-    const rows = Array.from(
-      document.querySelectorAll(`#${toValue(id)} tbody tr[tabindex]`)
-    ) as HTMLTableRowElement[]
+    const doc = getSafeDocument()
+    const rows =
+      doc === null
+        ? []
+        : (Array.from(
+            doc.querySelectorAll(`#${toValue(id)} tbody tr[tabindex]`)
+          ) as HTMLTableRowElement[])
 
     if (rows.length === 0) return
 
@@ -320,7 +334,7 @@ export const useTableKeyboardNavigation = <Item>(
     }
 
     if (targetIndex !== currentIndex && rows[targetIndex]) {
-      rows[targetIndex].focus()
+      rows[targetIndex]?.focus()
     }
   }
 
