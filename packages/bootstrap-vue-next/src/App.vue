@@ -1,7 +1,7 @@
 <template>
   <BContainer>
     <BRow>
-      <BCol> <BFormSpinbutton /> </BCol>
+      <BCol> Hello World! </BCol>
     </BRow>
   </BContainer>
 </template>
