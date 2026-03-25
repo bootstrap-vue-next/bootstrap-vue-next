@@ -86,7 +86,6 @@ import {
 import {useDefaults} from '../../composables/useDefaults'
 import {useMouse} from '../../composables/useMouse'
 import {useId} from '../../composables/useId'
-import type {} from '../../types/ComponentProps'
 import type {BPopoverSlots, ShowHideSlotsData, BPopoverProps, BPopoverEmits} from '../../types'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
