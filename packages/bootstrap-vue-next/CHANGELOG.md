@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.44.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.0...bootstrapvuenext-v0.44.1) (2026-03-25)
+
+
+### Bug Fixes
+
+* SSR issues when accessing window or document, standardize access ([f2e46d6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f2e46d620360f4623da0857801b85f73bfc0a256))
+
 ## [0.44.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.9...bootstrapvuenext-v0.44.0) (2026-03-18)
 
 
