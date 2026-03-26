@@ -355,4 +355,36 @@ describe('list-group-item', () => {
       expect(wrapper.classes()).toContain('list-group-item-info')
     })
   })
+
+  it('passes exactActiveClass to BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar', exactActiveClass: 'my-exact-active'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('exactActiveClass')).toBe('my-exact-active')
+  })
+
+  it('passes activeClass to BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar', activeClass: 'my-active'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('activeClass')).toBe('my-active')
+  })
+
+  it('passes rel to BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar', rel: 'noopener'},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('rel')).toBe('noopener')
+  })
+
+  it('passes replace to BLink when href is set', () => {
+    const wrapper = mount(BListGroupItem, {
+      props: {href: '/foobar', replace: true},
+    })
+    const $blink = wrapper.findComponent(BLink)
+    expect($blink.props('replace')).toBe(true)
+  })
 })
