@@ -395,12 +395,34 @@ const callThAttr = (item: Item | null, field: TableField<Item>, type: TableRowTh
   field.thAttr && typeof field.thAttr === 'function'
     ? field.thAttr({value: getByFieldKey(item, field), key: field.key, item, type})
     : field.thAttr
-const callTbodyTrAttrs = (item: Item | null, type: TableRowType) =>
-  props.tbodyTrAttrs
+const hasBackgroundStyle = (style: unknown): boolean => {
+  if (typeof style === 'string') {
+    return /\bbackground(-color)?\s*:/i.test(style)
+  }
+  if (Array.isArray(style)) {
+    return style.some(hasBackgroundStyle)
+  }
+  if (style && typeof style === 'object') {
+    return Object.keys(style as Record<string, unknown>).some(
+      (k) => k === 'backgroundColor' || k === 'background-color' || k === 'background'
+    )
+  }
+  return false
+}
+const callTbodyTrAttrs = (item: Item | null, type: TableRowType) => {
+  const attrs = props.tbodyTrAttrs
     ? typeof props.tbodyTrAttrs === 'function'
       ? props.tbodyTrAttrs(item, type)
       : props.tbodyTrAttrs
     : null
+  if (attrs && typeof attrs === 'object' && 'style' in attrs && hasBackgroundStyle(attrs.style)) {
+    return {
+      ...attrs,
+      style: [attrs.style, {'--bs-table-bg': 'transparent'}],
+    }
+  }
+  return attrs
+}
 
 const generateTableRowId = (primaryKeyValue: string) =>
   `${computedId.value}__row_${primaryKeyValue}`
