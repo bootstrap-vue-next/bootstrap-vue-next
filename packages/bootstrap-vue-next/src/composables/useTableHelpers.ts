@@ -53,7 +53,7 @@ export const useTableMapper = <Item>({
   }
   pagination: {
     perPage: MaybeRefOrGetter<number>
-    currentPage: MaybeRefOrGetter<number>
+    currentPage: Ref<number>
     sort: {
       iconLeft: MaybeRefOrGetter<boolean>
       isSortable: MaybeRefOrGetter<boolean>
@@ -281,6 +281,9 @@ export const useTableMapper = <Item>({
     )
   })
 
+  watch(filterResolved, () => {
+    pagination.currentPage.value = 1
+  })
   watch(computedDisplayItems, (v) => {
     events.onChange([...v])
   })

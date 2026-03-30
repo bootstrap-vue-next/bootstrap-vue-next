@@ -118,10 +118,10 @@ import {
   type TableFieldRaw,
   type TableRowType,
   type TableStrictClassValue,
-} from '../../types/TableTypes'
+} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BTableProps} from '../../types/ComponentProps'
-import type {BTableEmits, BTableLiteEmits} from '../../types/ComponentEmits'
+import type {BTableProps} from '../../types'
+import type {BTableEmits, BTableLiteEmits} from '../../types'
 import {pick} from '../../utils/object'
 import {bTableLiteProps, bTableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
 import {useId} from '../../composables/useId'
@@ -136,7 +136,9 @@ import {
 import {useItemExpansion} from '../../composables/useTableLiteHelpers'
 
 const _props = withDefaults(
-  defineProps<Omit<BTableProps<Item>, 'sortBy' | 'busy' | 'selectedItems' | 'items'>>(),
+  defineProps<
+    Omit<BTableProps<Item>, 'sortBy' | 'busy' | 'selectedItems' | 'items' | 'currentPage'>
+  >(),
   {
     noSortableIcon: false,
     sortIconLeft: false,
@@ -159,7 +161,6 @@ const _props = withDefaults(
     selectHead: true,
     selectMode: 'multi',
     selectionVariant: 'primary',
-    currentPage: 1,
     sortCompare: undefined,
     debounce: 0,
     debounceMaxWait: Number.NaN,
@@ -241,12 +242,25 @@ const expandedItems = defineModel<Exclude<BTableProps<Item>['expandedItems'], un
 const itemsModel = defineModel<Exclude<BTableProps<Item>['items'], undefined>>('items', {
   default: () => [],
 })
+const currentPage = defineModel<Exclude<BTableProps<Item>['currentPage'], undefined>>(
+  'currentPage',
+  {
+    default: 1,
+  }
+)
 
 const computedId = useId(() => props.id)
 const perPageNumber = useToNumber(() => props.perPage, {method: 'parseInt'})
-const currentPageNumber = useToNumber(() => props.currentPage, {method: 'parseInt'})
 const debounceNumber = useToNumber(() => props.debounce ?? 0, {nanToZero: true})
 const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? Number.NaN)
+
+const currentPageNumber = useToNumber(currentPage, {method: 'parseInt'})
+const writableCurrentPageNumber = computed({
+  get: () => currentPageNumber.value,
+  set: (v) => {
+    currentPage.value = v
+  },
+})
 
 const sortController = useTableSort({
   fields: () => props.fields,
@@ -273,7 +287,7 @@ const providerController = useTableProvider({
     maxWait: debounceMaxWaitNumber,
     wait: debounceNumber,
   },
-  currentPage: currentPageNumber,
+  currentPage: readonly(writableCurrentPageNumber),
   perPage: perPageNumber,
   filter: () => props.filter,
   noProvider: () => props.noProvider,
@@ -309,7 +323,7 @@ const {
   items: itemsModel,
   pagination: {
     perPage: perPageNumber,
-    currentPage: currentPageNumber,
+    currentPage: writableCurrentPageNumber,
     filter: {
       filter: () => props.filter,
       filterFunction: toRef(() => props.filterFunction),
