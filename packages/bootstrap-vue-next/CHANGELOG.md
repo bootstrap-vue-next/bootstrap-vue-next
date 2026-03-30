@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.44.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.0...bootstrapvuenext-v0.44.1) (2026-03-30)
+
+
+### Features
+
+* **BTable:** make currentPage a model and reset to 1 on filter chang… ([#3136](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3136)) ([0446aa3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0446aa380cd13c2c902645d4243e47fb24eaf99d))
+
+
+### Bug Fixes
+
+* SSR issues when accessing window or document, standardize access ([f2e46d6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/f2e46d620360f4623da0857801b85f73bfc0a256))
+
 ## [0.44.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.43.9...bootstrapvuenext-v0.44.0) (2026-03-18)
 
 
