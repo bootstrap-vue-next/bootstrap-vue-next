@@ -31,8 +31,8 @@ import {
   type SlotScopeReference,
   StyleKind,
 } from '../../types'
-import {pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
+import { pick } from '../../utils/objectUtils'
+import { buildCommonProps } from '../../utils/commonProps'
 
 export default {
   load: (): ComponentReference => {
@@ -518,7 +518,7 @@ export default {
     const BTable = {
       emits: {
         ...BTableLite.emits,
-        'filtered': {
+        filtered: {
           description: 'Emitted when local filtering causes a change in the number of items',
           args: {
             value: {
@@ -555,7 +555,7 @@ export default {
             },
           },
         },
-        'sorted': {
+        sorted: {
           description:
             'Updated when the user clicks a sortable column heading and represents the column click and the sort state (`asc`, `desc`, or undefined)',
           args: {
@@ -565,7 +565,7 @@ export default {
             },
           },
         },
-        'change': {
+        change: {
           args: undefined,
           description: undefined,
         },
@@ -577,8 +577,16 @@ export default {
           args: undefined,
           description: undefined,
         },
+        'update:current-page': {
+          args: undefined,
+          description: 'When bound this will reset the current page to 1 on filter changes',
+        },
       } satisfies EmitRecord<
-        keyof BTableEmits<unknown> | 'update:sort-by' | 'update:busy' | 'update:selected-items'
+        | keyof BTableEmits<unknown>
+        | 'update:sort-by'
+        | 'update:busy'
+        | 'update:selected-items'
+        | 'update:current-page'
       >,
       props: {
         busy: {
@@ -591,7 +599,7 @@ export default {
           type: 'Numberish',
           default: 1,
           description:
-            'The current page number to display when the table is paginated. Starting from 1 and up',
+            'The current page number to display when the table is paginated. Starting from 1 and up. If bound to a v-model, filter changes will automatically set this to 1',
         },
         debounce: {
           type: 'Numberish',
@@ -760,7 +768,7 @@ export default {
         'foot({key})': {},
         'cell({key})': {},
         //
-        'empty': {
+        empty: {
           description:
             'Content to display when no items are present in the `items` array. Optionally scoped',
           scope: {
@@ -1024,7 +1032,7 @@ export default {
         slots: BTableSimple.slots,
       },
       BTbody: {
-        styleSpec: {kind: StyleKind.Tag, value: 'tbody'},
+        styleSpec: { kind: StyleKind.Tag, value: 'tbody' },
         props: pick(buildCommonProps(), ['variant']) satisfies PropRecord<keyof BTbodyProps>,
         slots: {
           default: {
@@ -1033,7 +1041,7 @@ export default {
         } satisfies SlotRecord<keyof BTbodySlots>,
       },
       BTd: {
-        styleSpec: {kind: StyleKind.Tag, value: 'td'},
+        styleSpec: { kind: StyleKind.Tag, value: 'td' },
         props: {
           ...pick(buildCommonProps(), ['variant']),
           colspan: {
@@ -1066,7 +1074,7 @@ export default {
         } satisfies SlotRecord<keyof BTdSlots>,
       },
       BTfoot: {
-        styleSpec: {kind: StyleKind.Tag, value: 'tfoot'},
+        styleSpec: { kind: StyleKind.Tag, value: 'tfoot' },
         props: pick(buildCommonProps(), ['variant']) satisfies PropRecord<keyof BTfootProps>,
         slots: {
           default: {
@@ -1075,7 +1083,7 @@ export default {
         } satisfies SlotRecord<keyof BTfootSlots>,
       },
       BTh: {
-        styleSpec: {kind: StyleKind.Tag, value: 'th'},
+        styleSpec: { kind: StyleKind.Tag, value: 'th' },
         props: {
           ...pick(buildCommonProps(), ['variant']),
           colspan: {
@@ -1111,7 +1119,7 @@ export default {
         } satisfies SlotRecord<keyof BThSlots>,
       },
       BThead: {
-        styleSpec: {kind: StyleKind.Tag, value: 'thead'},
+        styleSpec: { kind: StyleKind.Tag, value: 'thead' },
         props: {
           variant: {
             type: 'ColorVariant',
@@ -1127,7 +1135,7 @@ export default {
         } satisfies SlotRecord<keyof BTheadSlots>,
       },
       BTr: {
-        styleSpec: {kind: StyleKind.Tag, value: 'tr'},
+        styleSpec: { kind: StyleKind.Tag, value: 'tr' },
         props: {
           variant: {
             type: 'ColorVariant',
