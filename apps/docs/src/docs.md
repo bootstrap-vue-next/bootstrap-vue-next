@@ -109,22 +109,6 @@ app.mount('#app')
 
 </HighlightCard>
 
-And you must put BOrchestrator in your app:
-<HighlightCard>
-
-```vue
-<!-- App.vue -->
-<template>
-  <BOrchestrator />
-  <router-view />
-</template>
-<script setup lang="ts">
-import {BOrchestrator} from 'bootstrap-vue-next'
-</script>
-```
-
-</HighlightCard>
-
 Now, you can begin importing and using components
 
 ::: warning
