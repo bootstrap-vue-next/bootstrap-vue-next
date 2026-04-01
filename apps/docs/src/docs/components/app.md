@@ -118,6 +118,59 @@ Please replace references to these with a reference to `orchestratorPlugin`.
 
 :::
 
+## Testing Components
+
+When testing components that use composables like `useToast()`, `useModal()`, or `usePopover()`, you need to install the `createBootstrap` plugin so that the required context is provided. Without it, these composables will throw an error because they rely on Vue's provide/inject system.
+
+### Per-Test Plugin Setup
+
+Install the plugin directly on the component you are testing:
+
+<<< FRAGMENT ./demo/AppTestingExample.ts{typescript}
+
+### Global Test Setup
+
+To avoid repeating the plugin setup in every test, configure it globally in your test setup file:
+
+<<< FRAGMENT ./demo/AppTestingSetup.ts{typescript}
+
+Then reference this file in your Vitest configuration:
+
+```typescript
+// vitest.config.ts
+import {defineConfig} from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    setupFiles: ['./vitest.setup.ts'],
+  },
+})
+```
+
+::: tip
+The `createBootstrap()` plugin registers the orchestrator, registry, and RTL services — the same services `BApp` provides. This is sufficient for mounting and rendering components that call `useToast()` and similar composables. You do not need to wrap your component in `BApp` during tests.
+:::
+
+::: info Mocking Composables
+If you want to avoid executing real toast logic entirely, you can also mock the composable in your test:
+
+```typescript
+import {vi} from 'vitest'
+
+vi.mock('bootstrap-vue-next', async () => {
+  const actual = await vi.importActual('bootstrap-vue-next')
+  return {
+    ...actual,
+    useToast: () => ({
+      create: vi.fn(),
+      show: vi.fn(),
+    }),
+  }
+})
+```
+
+:::
+
 ## Internal Features
 
 The `BApp` component automatically provides several internal services:
