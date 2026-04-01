@@ -699,9 +699,10 @@ Rows can also be programmatically selected and unselected via the `selection` AP
 
 **Row select notes:**
 
-- [Sorting](#sorting), [filtering](#filtering), or [paginating](#pagination) the table will **clear
-  the active selection**. The `update:selected-items` event will be emitted with an empty array (`[]`) if
-  needed.
+- [Sorting](#sorting), [filtering](#filtering), or [paginating](#pagination) the table will **not**
+  automatically clear the active selection. If you want the selection to be cleared when these
+  operations occur, you must clear it manually (for example, by watching for changes to the current
+  page, filter, or sort and resetting your `selected-items` binding to `[]`).
 - When the table is in `selectable` mode, all data item `<tr>` elements will be in the document tab
   sequence (`tabindex="0"`) for [accessibility](#accessibility) reasons, and will have the attribute
   `aria-selected` set to either `'true'` or `'false'` depending on the selected state of the row.
