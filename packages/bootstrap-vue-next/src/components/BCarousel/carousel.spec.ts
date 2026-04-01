@@ -606,6 +606,50 @@ describe('carousel', () => {
       expect(slides[0].classes()).not.toContain('active')
       expect(slides[1].classes()).toContain('active')
     })
+
+    it('updates direction forward when modelValue increases externally', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {modelValue: 0, controls: true},
+        slots: {
+          default: () => [h(BCarouselSlide), h(BCarouselSlide), h(BCarouselSlide)],
+        },
+      })
+      // Externally set modelValue to a higher value
+      await wrapper.setProps({modelValue: 2})
+      await nextTick()
+      // After external forward change, clicking prev should still work correctly
+      await wrapper.get('.carousel-control-prev').trigger('click')
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([1])
+    })
+
+    it('updates direction backward when modelValue decreases externally', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {modelValue: 2, controls: true},
+        slots: {
+          default: () => [h(BCarouselSlide), h(BCarouselSlide), h(BCarouselSlide)],
+        },
+      })
+      // Externally set modelValue to a lower value
+      await wrapper.setProps({modelValue: 0})
+      await nextTick()
+      // After external backward change, clicking next should still work correctly
+      await wrapper.get('.carousel-control-next').trigger('click')
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([1])
+    })
+
+    it('updates previousModelValue on external change', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {modelValue: 0, controls: true},
+        slots: {
+          default: () => [h(BCarouselSlide), h(BCarouselSlide), h(BCarouselSlide)],
+        },
+      })
+      // Externally set modelValue
+      await wrapper.setProps({modelValue: 2})
+      await nextTick()
+      const slides = wrapper.get('.carousel-inner').findAll('.carousel-item')
+      expect(slides[2].isVisible()).toBe(true)
+    })
   })
 
   describe('noAnimation', () => {
@@ -875,6 +919,38 @@ describe('carousel', () => {
       })
       const div = wrapper.get('.carousel-indicators')
       expect(div.attributes('aria-label')).toBe('Select a slide to display')
+    })
+  })
+
+  describe('shared model-value', () => {
+    it('both carousels navigate to the same slide when sharing a model', async () => {
+      const {defineComponent, ref: vRef} = await import('vue')
+      const Parent = defineComponent({
+        components: {BCarousel, BCarouselSlide},
+        setup() {
+          const slide = vRef(0)
+          return {slide}
+        },
+        template: `
+          <BCarousel v-model="slide" controls>
+            <BCarouselSlide /><BCarouselSlide /><BCarouselSlide />
+          </BCarousel>
+          <BCarousel v-model="slide" controls>
+            <BCarouselSlide /><BCarouselSlide /><BCarouselSlide />
+          </BCarousel>
+        `,
+      })
+      const wrapper = mount(Parent)
+      // Click next on the first carousel
+      const carousels = wrapper.findAllComponents(BCarousel)
+      await carousels[0].get('.carousel-control-next').trigger('click')
+      await nextTick()
+      // Both carousels should now show slide 1
+      expect(wrapper.vm.slide).toBe(1)
+      const slides1 = carousels[0].get('.carousel-inner').findAll('.carousel-item')
+      const slides2 = carousels[1].get('.carousel-inner').findAll('.carousel-item')
+      expect(slides1[1].isVisible()).toBe(true)
+      expect(slides2[1].isVisible()).toBe(true)
     })
   })
 })

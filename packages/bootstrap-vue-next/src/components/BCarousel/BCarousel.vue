@@ -121,6 +121,7 @@ const intervalNumber = useToNumber(() => slideInterval.value ?? props.interval)
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
 const direction = ref(true)
+const isInternalChange = ref(false)
 const relatedTarget = useTemplateRef('_relatedTarget')
 const element = useTemplateRef('_element')
 const previousModelValue = ref(modelValue.value)
@@ -183,15 +184,18 @@ const goToValue = (value: number): void => {
   direction.value = value < modelValue.value ? false : true
   if (value >= slides.value.length) {
     if (props.noWrap) return
+    isInternalChange.value = true
     modelValue.value = 0
     return
   }
   if (value < 0) {
     if (props.noWrap) return
+    isInternalChange.value = true
     modelValue.value = slides.value.length - 1
     return
   }
   previousModelValue.value = modelValue.value
+  isInternalChange.value = true
   modelValue.value = value
 }
 
@@ -288,6 +292,15 @@ watch(isHovering, (newValue) => {
     return
   }
   onMouseLeave()
+})
+
+watch(modelValue, (newVal, oldVal) => {
+  if (isInternalChange.value) {
+    isInternalChange.value = false
+    return
+  }
+  direction.value = newVal > oldVal
+  previousModelValue.value = oldVal
 })
 
 const onClickPrev = (event: MouseEvent) => {
