@@ -319,7 +319,20 @@ const {needsFallback} = useActivatedFocusTrap({
     ref: fallbackFocusElement,
     classSelector: fallbackClassSelector,
   },
-  focus: () => (props.focus === false ? false : (unrefElement(pickFocusItem()) ?? undefined)),
+  focus: () => {
+    if (props.focus === false) {
+      return false
+    }
+
+    if (props.focus === undefined) {
+      const active = getSafeDocument()?.activeElement
+      if (active instanceof HTMLElement && element.value?.contains(active)) {
+        return false
+      }
+    }
+
+    return unrefElement(pickFocusItem()) ?? undefined
+  },
   // () => (typeof focus === 'boolean' ? focus : (unrefElement(focus) ?? undefined)),
 })
 

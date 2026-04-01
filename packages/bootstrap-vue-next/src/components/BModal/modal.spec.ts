@@ -454,6 +454,35 @@ describe('modal', () => {
     wrapper.unmount()
   })
 
+  it('keeps focus on an input focused from the shown event', async () => {
+    const wrapper = mount(BModal, {
+      attachTo: document.body,
+      global: {
+        stubs: {teleport: true, transition: false},
+      },
+      props: {
+        modelValue: true,
+        noHeader: true,
+        noFooter: true,
+      },
+      attrs: {
+        onShown: () => {
+          ;(document.getElementById('shown-focus-input') as HTMLInputElement | null)?.focus()
+        },
+      },
+      slots: {
+        default: '<input id="shown-focus-input" />',
+      },
+    })
+
+    await nextTick()
+    await new Promise((resolve) => setTimeout(resolve, 10))
+
+    expect((document.activeElement as HTMLElement | null)?.id).toBe('shown-focus-input')
+
+    wrapper.unmount()
+  })
+
   describe('button and event functionality', () => {
     it('header close button triggers modal close and is preventable', async () => {
       let cancelHide = true
