@@ -610,6 +610,13 @@ scoped fields slot variable `expansionShowing` to determine the visibility of th
 When using the `primary-key` prop, row expansion state will persist even when items are replaced with new object references, as long as the primary key value remains the same. This allows row expansion to stay open in scenarios like "Load more" or pagination.
 :::
 
+::: info NOTE
+[Sorting](#sorting), [filtering](#filtering), or [paginating](#pagination) the table will **not**
+automatically clear the expanded rows. If you want the expansion state to be cleared when these
+operations occur, you must clear it manually (for example, by watching for changes to the current
+page, filter, or sort and resetting your `expanded-items` binding to `[]`).
+:::
+
 ::: warning IMPORTANT: Default Expansion with Primary Key
 When using a `primary-key` and you want to set default expanded rows by including items in the initial `v-model:expanded-items` array, you **must** use the exposed `expansion.get()` function to retrieve the actual item reference from the table's template ref.
 
