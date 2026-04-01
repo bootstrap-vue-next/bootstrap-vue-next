@@ -877,12 +877,12 @@ Please read the [`useModal`](/docs/composables/useModal) documentation and then 
 for `msgBoxOk` and `msgBoxConfirm`.
 
 Example using `useModal.create` to replace `msgBoxOk`:
-Note: If you use `<BApp>`, the modal orchestrator is included by default. If you’re not using `BApp`, include `<BOrchestrator />` at your app root.
+Note: If you use `<BApp>`, the modal orchestrator is included by default.
 
 <<< DEMO ./demo/ModalMessageBox.vue
 
 Example using `useModal.create` to replace `msgBoxConfirm`:
-Note: If you use `<BApp>`, the modal orchestrator is included by default. If you’re not using `BApp`, include `<BOrchestrator />` at your app root.
+Note: If you use `<BApp>`, the modal orchestrator is included by default.
 
 <<< DEMO ./demo/ModalConfirm.vue
 
@@ -1443,7 +1443,7 @@ Please see [useToast](/docs/composables/useToast) for the modern method of progr
 
 - `href` and `to` - Use `useToast` with BLink props or see [BLink Integration](/docs/components/toast#blink-integration) in the toast documentation
 - `toaster` - Use `Teleport` or `useToast` positioning instead
-- `append-toast` - Available on `BOrchestrator` and `useToast` instead
+- `append-toast` - Available on `useToast` instead
 - `b-toaster-*` related props - Use modern positioning with `Teleport`
 - `static` - BToast renders in place by default (no teleporting behavior)
 
@@ -1514,7 +1514,7 @@ See [Show and Hide](#show-and-hide) shared properties.
 
 The `BToaster` component has been deprecated. Its functionality has been replaced by the
 [`useToast`](/docs/composables/useToast) composable working in concert with the
-[`BOrchestrator`](/docs/components/orchestrator) component. See the documentation for
+[`BApp`](/docs/components/app) component. See the documentation for
 details.
 
 ### BTooltip

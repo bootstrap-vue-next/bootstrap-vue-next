@@ -1,5 +1,5 @@
 ---
-description: 'Push notifications to your visitors with `BToast`, `useToast` and `BOrchestrator`. These are easily customizable for generating alert messages.'
+description: 'Push notifications to your visitors with `BToast` and `useToast`. These are easily customizable for generating alert messages.'
 ---
 
 Toasts are lightweight notifications designed to mimic the push notifications that have been popularized by mobile and desktop operating systems.
