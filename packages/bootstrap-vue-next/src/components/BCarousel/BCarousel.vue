@@ -299,6 +299,7 @@ watch(modelValue, (newVal, oldVal) => {
     isInternalChange.value = false
     return
   }
+  if (newVal === oldVal) return
   direction.value = newVal > oldVal
   previousModelValue.value = oldVal
 })

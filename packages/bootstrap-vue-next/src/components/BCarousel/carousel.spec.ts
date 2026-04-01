@@ -637,7 +637,7 @@ describe('carousel', () => {
       expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([1])
     })
 
-    it('updates previousModelValue on external change', async () => {
+    it('shows the correct slide when modelValue changes externally', async () => {
       const wrapper = mount(BCarousel, {
         props: {modelValue: 0, controls: true},
         slots: {
