@@ -7,6 +7,7 @@ import {
   type Ref,
   shallowRef,
   toValue,
+  unref,
   watch,
 } from 'vue'
 import {orchestratorRegistryKey} from '../../utils/keys'
@@ -88,11 +89,9 @@ export const useToast = () => {
           } else if (key === 'slots' && newValue.slots) {
             v.slots = markRaw(newValue.slots)
           } else {
-            // Don't call toValue on functions as they should be passed as-is (not as getters)
-            const val = newValue[key as keyof ToastOrchestratorCreateParam]
-            v[key as keyof ToastOrchestratorCreateParam] = (
-              typeof val === 'function' ? val : toValue(val)
-            ) as never
+            v[key as keyof ToastOrchestratorCreateParam] = unref(
+              newValue[key as keyof ToastOrchestratorCreateParam]
+            )
           }
         }
         v.position = v.position || posDefault

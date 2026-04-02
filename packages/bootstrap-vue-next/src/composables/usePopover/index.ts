@@ -7,6 +7,7 @@ import {
   type Ref,
   shallowRef,
   toValue,
+  unref,
   watch,
 } from 'vue'
 import {orchestratorRegistryKey} from '../../utils/keys'
@@ -99,11 +100,9 @@ export const usePopover = () => {
           } else if (key === 'slots' && newValue.slots) {
             v.slots = markRaw(newValue.slots)
           } else {
-            // Don't call toValue on functions as they should be passed as-is (not as getters)
-            const val = newValue[key as keyof PopoverOrchestratorCreateParam]
-            v[key as keyof PopoverOrchestratorCreateParam] = (
-              typeof val === 'function' ? val : toValue(val)
-            ) as never
+            v[key as keyof PopoverOrchestratorCreateParam] = unref(
+              newValue[key as keyof PopoverOrchestratorCreateParam]
+            )
           }
         }
 
