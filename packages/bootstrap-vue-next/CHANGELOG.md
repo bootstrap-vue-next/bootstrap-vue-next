@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.44.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.1...bootstrapvuenext-v0.44.2) (2026-04-02)
+
+
+### Bug Fixes
+
+* prevent dropdown scrollbar flash on close ([#3126](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3126)) ([60ace7e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/60ace7ee4d6d8741d47379dc8286bae040795e9d))
+
 ## [0.44.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.0...bootstrapvuenext-v0.44.1) (2026-03-30)
 
 
