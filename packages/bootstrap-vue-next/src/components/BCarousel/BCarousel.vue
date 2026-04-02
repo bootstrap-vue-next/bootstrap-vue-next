@@ -301,7 +301,7 @@ watch(modelValue, (newVal, oldVal) => {
     direction.value = newVal > oldVal
   }
   previousModelValue.value = oldVal
-})
+}, {flush: 'sync'})
 
 const onClickPrev = (event: MouseEvent) => {
   emit('prev-click', event)
