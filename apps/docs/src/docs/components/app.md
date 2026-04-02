@@ -126,13 +126,13 @@ When testing components that use composables like `useToast()`, `useModal()`, or
 
 Install the plugin directly on the component you are testing:
 
-<<< FRAGMENT ./demo/AppTestingExample.ts{typescript}
+<<< FRAGMENT ./demo/AppTestingExample.ts#snippet{typescript}
 
 ### Global Test Setup
 
 To avoid repeating the plugin setup in every test, configure it globally in your test setup file:
 
-<<< FRAGMENT ./demo/AppTestingSetup.ts{typescript}
+<<< FRAGMENT ./demo/AppTestingSetup.ts#snippet{typescript}
 
 Then reference this file in your Vitest configuration:
 

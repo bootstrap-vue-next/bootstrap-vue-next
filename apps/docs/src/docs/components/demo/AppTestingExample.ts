@@ -1,3 +1,5 @@
+// @ts-nocheck
+// #region snippet
 // MyComponent.spec.ts
 import {mount} from '@vue/test-utils'
 import {createBootstrap} from 'bootstrap-vue-next'
@@ -11,3 +13,4 @@ test('mounts a component that uses useToast()', () => {
   })
   expect(wrapper.text()).toContain('Show Toast')
 })
+// #endregion snippet
