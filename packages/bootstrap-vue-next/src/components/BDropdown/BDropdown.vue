@@ -54,7 +54,7 @@
           v-show="showRef"
           :id="computedId + '-menu'"
           ref="_floating"
-          :style="[floatingStyles, sizeStyles, {display: showRef ? 'block' : 'none'}]"
+          :style="[floatingStyles, sizeStyles, {display: showRef || isActive ? 'block' : 'none'}]"
           class="dropdown-menu overflow-auto b-floating-size"
           :class="[props.menuClass, computedMenuClasses]"
           :aria-labelledby="computedId"
@@ -200,6 +200,7 @@ const {
   transitionProps,
   contentShowing,
   isVisible,
+  isActive,
 } = useShowHide(modelValue, props, emit as EmitFn, referenceElement, computedId, {
   showFn: () => {
     update()
