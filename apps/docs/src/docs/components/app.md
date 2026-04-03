@@ -126,46 +126,17 @@ When testing components that use composables like `useToast()`, `useModal()`, or
 
 Install the plugin directly on the component you are testing:
 
-```typescript
-// MyComponent.spec.ts
-import {mount} from '@vue/test-utils'
-import {createBootstrap} from 'bootstrap-vue-next'
-import MyComponent from './MyComponent.vue'
-
-test('mounts a component that uses useToast()', () => {
-  const wrapper = mount(MyComponent, {
-    global: {
-      plugins: [createBootstrap()],
-    },
-  })
-  expect(wrapper.text()).toContain('Show Toast')
-})
-```
+<<< FRAGMENT ./demo/AppTestingPerTest.js{typescript}
 
 ### Global Test Setup
 
 To avoid repeating the plugin setup in every test, configure it globally in your test setup file:
 
-```typescript
-// vitest.setup.ts (or in your test config)
-import {config} from '@vue/test-utils'
-import {createBootstrap} from 'bootstrap-vue-next'
-
-config.global.plugins = [createBootstrap()]
-```
+<<< FRAGMENT ./demo/AppTestingGlobalSetup.js{typescript}
 
 Then reference this file in your Vitest configuration:
 
-```typescript
-// vitest.config.ts
-import {defineConfig} from 'vitest/config'
-
-export default defineConfig({
-  test: {
-    setupFiles: ['./vitest.setup.ts'],
-  },
-})
-```
+<<< FRAGMENT ./demo/AppTestingVitestConfig.js{typescript}
 
 ::: tip
 The `createBootstrap()` plugin registers the orchestrator, registry, and RTL services — the same services `BApp` provides. This is sufficient for mounting and rendering components that call `useToast()` and similar composables. You do not need to wrap your component in `BApp` during tests.
@@ -174,20 +145,7 @@ The `createBootstrap()` plugin registers the orchestrator, registry, and RTL ser
 ::: info Mocking Composables
 If you want to avoid executing real toast logic entirely, you can also mock the composable in your test:
 
-```typescript
-import {vi} from 'vitest'
-
-vi.mock('bootstrap-vue-next', async () => {
-  const actual = await vi.importActual('bootstrap-vue-next')
-  return {
-    ...actual,
-    useToast: () => ({
-      create: vi.fn(),
-      show: vi.fn(),
-    }),
-  }
-})
-```
+<<< FRAGMENT ./demo/AppTestingMocking.js{typescript}
 
 :::
 
