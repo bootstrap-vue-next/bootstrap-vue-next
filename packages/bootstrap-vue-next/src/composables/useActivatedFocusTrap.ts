@@ -34,6 +34,7 @@ export const useActivatedFocusTrap = (
     escapeDeactivates: false,
     clickOutsideDeactivates: false,
     initialFocus: focus,
+    delayInitialFocus: false,
   }
 ) => {
   const resolvedIsActive = readonly(toRef(isActive))
