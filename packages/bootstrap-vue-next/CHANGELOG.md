@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.44.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.1...bootstrapvuenext-v0.44.2) (2026-04-07)
+
+
+### Bug Fixes
+
+* **BModal:** focus() called from [@shown](https://github.com/shown) event is overridden by focus-trap's deferred initial focus ([#3143](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3143)) ([e86b81d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e86b81d65e56fb87cf7e36f51d040059c4095822))
+* prevent dropdown scrollbar flash on close ([#3126](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3126)) ([60ace7e](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/60ace7ee4d6d8741d47379dc8286bae040795e9d))
+
 ## [0.44.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.0...bootstrapvuenext-v0.44.1) (2026-03-30)
 
 
