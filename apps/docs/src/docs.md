@@ -179,10 +179,6 @@ export default defineConfig({
 
 </HighlightCard>
 
-<NoteAlert>
-The resolver import is from `bootstrap-vue-next`, not `unplugin-vue-components`
-</NoteAlert>
-
 #### Aliasing
 
 With the `BootstrapVueNextResolver` we also have an option for aliasing components like so:
