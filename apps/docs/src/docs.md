@@ -48,7 +48,11 @@ npm i bootstrap bootstrap-vue-next
 
 ## Setup
 
-Bootstrap-vue-next offers two ways to configure your application. The new **BApp component approach** is recommended for new projects, while the plugin approach is still supported for backward compatibility.
+Bootstrap-vue-next **requires** one of the following setup methods for the library to function properly. The new **BApp component approach** is recommended for new projects, while the **plugin approach** is still supported for backward compatibility. Both approaches work for application mounting and unit testing.
+
+::: info Required Step
+You **must** use either the `BApp` component or the `createBootstrap` plugin. Without one of these, the library's internal services (orchestrators, registries, RTL support, etc.) will not be available and components that depend on them will not work correctly.
+:::
 
 ### BApp Component (Recommended)
 
@@ -87,6 +91,12 @@ app.mount('#app')
 
 </HighlightCard>
 
+::: warning Vue Provide/Inject Limitation
+Composables like `useToast()`, `useModal()`, and `usePopover()` **cannot** be called in the same component that declares `<BApp>`. They rely on values provided by `BApp`, and Vue's `inject` only works in child components — not in the component that calls `provide` itself.
+
+To use these composables, place `<BApp>` at least one component level above where the composables are called. See the [BApp documentation](/docs/components/app#working-with-composables) for more details.
+:::
+
 ### Plugin Approach (Legacy)
 
 The traditional plugin-based setup is still supported:
@@ -120,7 +130,11 @@ If you are using individual plugins such as `modalControllerPlugin`, `toastContr
 
 ### Automatic Registering of Components
 
-To have components automatically registered **and** tree-shaken, we recommend [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components). Read their docs for additional details. This is in addition to the above installation steps. We supply a resolver
+::: info In Addition to Setup
+This step is **optional** and is used **in addition to** the [BApp](#bapp-component-recommended) or [Plugin](#plugin-approach-legacy) setup above. Its sole purpose is to allow automatic importing of components — you still need the BApp or plugin setup for the library to function.
+:::
+
+To have components automatically registered **and** tree-shaken, we recommend [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components). Read their docs for additional details. We supply a resolver
 
 ::: code-group
 
@@ -189,6 +203,10 @@ Components({
 ```
 
 ### Installation - Nuxt.js 3
+
+::: info In Addition to Setup
+The Nuxt module handles **component auto-registration** and **tree-shaking** automatically, so you do **not** need the [Automatic Registering of Components](#automatic-registering-of-components) step. However, you still need to set up the library using [BApp](#bapp-component-recommended) or the [Plugin approach](#plugin-approach-legacy) in your Nuxt application for the library's internal services to work.
+:::
 
 In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`.
 
@@ -271,6 +289,10 @@ export default defineNuxtConfig({
 This is mainly for the purpose of naming conflicts with other imports. It should not affect tree-shaking
 
 ### Installation - TypeScript
+
+::: info In Addition to Setup
+This step is **optional** and is used **in addition to** the setup above. These peer dependencies add proper type definitions to the package. Without them, the affected types default to `any`. If you are not using the components or features that rely on these packages, you are unlikely to encounter any issues.
+:::
 
 This package uses optional peer dependencies to generate type definitions for enhanced functionality. These dependencies are not installed by default to avoid unnecessary bloat in projects that don't require these features. However, if you want full type support, you need to manually install the required packages.
 
