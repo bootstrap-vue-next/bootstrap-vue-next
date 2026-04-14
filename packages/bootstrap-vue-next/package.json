@@ -129,6 +129,14 @@
         "default": "./dist/src/types/index.umd.js"
       }
     },
+    "./types/*": {
+      "import": {
+        "types": "./dist/types/*.d.mts"
+      },
+      "require": {
+        "types": "./dist/types/*.d.ts"
+      }
+    },
     "./dist/bootstrap-vue-next.css": "./dist/bootstrap-vue-next.css",
     "./src/styles/styles.scss": "./src/styles/styles.scss"
   },
