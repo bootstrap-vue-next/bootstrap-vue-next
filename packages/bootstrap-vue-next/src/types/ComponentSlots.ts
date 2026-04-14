@@ -21,6 +21,10 @@ export interface ShowHideSlotsData {
   visible: boolean
 }
 
+export type BAspectSlots = {
+  default?: (props: Record<string, never>) => any
+}
+
 export interface BCollapseSlots {
   default?: (props: ShowHideSlotsData) => any
   footer?: (props: ShowHideSlotsData) => any

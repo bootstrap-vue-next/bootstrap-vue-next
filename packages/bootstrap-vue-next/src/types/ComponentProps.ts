@@ -120,6 +120,11 @@ export interface BAppProps {
       }
 }
 
+export interface BAspectProps {
+  tag?: string
+  aspect?: string | number
+}
+
 export interface BOrchestratorProps {
   noPopovers?: boolean
   noToasts?: boolean
