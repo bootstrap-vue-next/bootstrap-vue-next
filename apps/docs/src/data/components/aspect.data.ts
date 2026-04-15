@@ -18,7 +18,7 @@ export default {
         ),
         aspect: {
           type: 'string | number',
-          default: undefined,
+          default: '1:1',
           description: 'Aspect ratio of the container, eg: 16/9, 16:9, 16x9, 1.77',
         },
       } satisfies PropRecord<keyof BAspectProps>,
