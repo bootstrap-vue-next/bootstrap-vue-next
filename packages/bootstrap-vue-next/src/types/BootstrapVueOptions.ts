@@ -14,6 +14,7 @@ export type BvnComponents = {
 }
 
 export const componentsWithExternalPath = {
+  BAspect: '/components/BAspect',
   BAccordion: '/components/BAccordion',
   BAccordionItem: '/components/BAccordion',
   BAlert: '/components/BAlert',
@@ -199,6 +200,7 @@ export interface BootstrapVueOptions {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = any> = {
+  BAspect: ComponentProps.BAspectProps
   BLink: ComponentProps.BLinkProps
   BAccordion: ComponentProps.BAccordionProps
   BApp: ComponentProps.BAppProps
