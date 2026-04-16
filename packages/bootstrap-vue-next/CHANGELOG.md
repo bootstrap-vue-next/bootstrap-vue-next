@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.44.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.2...bootstrapvuenext-v0.44.3) (2026-04-16)
+
+
+### Features
+
+* **BAspect:** Create BAspect component ([#3154](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3154)) ([cec7105](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/cec7105cca25ae45a23dbf003ee8cbd6d9212e6a))
+* export all types ([#3153](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3153)) ([83502ee](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/83502eefd8323b59f5230b065869b0b30f816a7b))
+
 ## [0.44.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.1...bootstrapvuenext-v0.44.2) (2026-04-07)
 
 
