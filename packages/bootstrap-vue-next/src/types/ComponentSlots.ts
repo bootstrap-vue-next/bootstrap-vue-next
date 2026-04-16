@@ -99,6 +99,16 @@ export type BAccordionItemSlots = {
   title?: (props: Record<string, never>) => any
 }
 
+export type BAutocompleteSlots = {
+  'default'?: (props: Record<string, never>) => any
+  'empty'?: (props: Record<string, never>) => any
+  'option'?: (props: SelectOption) => any
+  'option-indicator'?: (props: Record<string, never>) => any
+  'prepend'?: (props: Record<string, never>) => any
+  'append'?: (props: Record<string, never>) => any
+  'tags'?: (props: {selected: SelectOption[]; remove: (option: SelectOption) => void}) => any
+}
+
 export type BAccordionSlots = {
   default?: (props: Record<string, never>) => any
 }

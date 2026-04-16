@@ -143,9 +143,14 @@ export const useShowHide = (
     }
   )
   // todo: remove
-  useEventListener(element, 'bv-toggle', () => {
-    modelValue.value = !modelValue.value
-  })
+  useEventListener(
+    element,
+    'bv-toggle',
+    () => {
+      modelValue.value = !modelValue.value
+    },
+    {passive: true}
+  )
 
   const buildTriggerableEvent = (
     type: string,

@@ -233,7 +233,7 @@ onKeyStroke(
   () => {
     hide('esc')
   },
-  {target: element}
+  {target: element, passive: true}
 )
 
 const fallbackClassSelector = 'offcanvas-fallback-focus'

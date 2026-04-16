@@ -362,7 +362,7 @@ const onKeydown = (e: Readonly<KeyboardEvent>): void => {
   }
 }
 
-onKeyStroke(onKeydown, {target: input})
+onKeyStroke(onKeydown, {target: input, passive: true})
 
 const separator = computed(() => {
   if (!props.separator) {
