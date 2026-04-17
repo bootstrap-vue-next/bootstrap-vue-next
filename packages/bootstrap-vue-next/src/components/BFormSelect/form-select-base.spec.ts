@@ -423,6 +423,36 @@ describe('form-select-base', () => {
     expect(options).toHaveLength(3)
   })
 
+  it('does not treat options with label field as option groups', () => {
+    const wrapper = mount(BFormSelectBase, {
+      props: {
+        options: [
+          {value: 'a', text: 'Option A', label: 'Label A'},
+          {value: 'b', text: 'Option B', label: 'Label B'},
+        ],
+      },
+    })
+    const optgroups = wrapper.findAll('optgroup')
+    expect(optgroups).toHaveLength(0)
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(2)
+  })
+
+  it('does not treat option with non-array options field as a group', () => {
+    const wrapper = mount(BFormSelectBase, {
+      props: {
+        options: [
+          {value: 'a', text: 'Option A', options: 'not an array'},
+          {value: 'b', text: 'Option B'},
+        ],
+      },
+    })
+    const optgroups = wrapper.findAll('optgroup')
+    expect(optgroups).toHaveLength(0)
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(2)
+  })
+
   it('renders empty when options is empty array', () => {
     const wrapper = mount(BFormSelectBase, {
       props: {options: []},
