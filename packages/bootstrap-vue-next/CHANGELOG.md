@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.44.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.3...bootstrapvuenext-v0.44.4) (2026-04-17)
+
+
+### Features
+
+* add BAutocomplete and BOtpInput  ([#3156](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3156)) ([af08241](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/af08241167571977b8dc00a5acd19a8efe9f782e))
+
 ## [0.44.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.2...bootstrapvuenext-v0.44.3) (2026-04-16)
 
 
