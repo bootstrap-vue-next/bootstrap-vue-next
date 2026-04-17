@@ -1,8 +1,8 @@
-.b-otp-input {
+.b-form-otp {
   display: inline-flex;
 }
 
-.b-otp-input-field {
+.b-form-otp-field {
   text-align: center;
   width: 2.5rem;
   padding-left: 0;
@@ -20,10 +20,10 @@
   }
 }
 
-.b-otp-input-sm .b-otp-input-field {
+.b-form-otp-sm .b-form-otp-field {
   width: 2rem;
 }
 
-.b-otp-input-lg .b-otp-input-field {
+.b-form-otp-lg .b-form-otp-field {
   width: 3rem;
 }

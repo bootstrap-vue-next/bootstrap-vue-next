@@ -1,5 +1,5 @@
 <template>
-  <BOtpInput v-model="value" mask />
+  <BFormOtp v-model="value" mask />
   <p class="mt-2">Value: {{ value }}</p>
 </template>
 

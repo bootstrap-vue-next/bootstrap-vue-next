@@ -21,7 +21,7 @@
       as-child
     >
       <BFormInput
-        class="b-otp-input-field"
+        class="b-form-otp-field"
         :aria-label="`${props.ariaLabel || 'Pin'} ${i + 1} of ${computedLength}`"
         :aria-invalid="props.ariaInvalid"
         :autofocus="props.autofocus && i === 0"
@@ -40,13 +40,13 @@
 import {computed} from 'vue'
 import {useToNumber} from '@vueuse/core'
 import {PinInputInput, PinInputRoot} from 'reka-ui'
-import type {BOtpInputProps} from '../../types'
+import type {BFormOtpProps} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import BFormInput from '../BFormInput/BFormInput.vue'
 
 const lengthDefault = 6
-const _props = withDefaults(defineProps<Omit<BOtpInputProps, 'modelValue'>>(), {
+const _props = withDefaults(defineProps<Omit<BFormOtpProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   ariaLabel: undefined,
   autofocus: false,
@@ -66,24 +66,24 @@ const _props = withDefaults(defineProps<Omit<BOtpInputProps, 'modelValue'>>(), {
   state: null,
   type: 'text',
 })
-const props = useDefaults(_props, 'BOtpInput')
+const props = useDefaults(_props, 'BFormOtp')
 const emit = defineEmits<{
   complete: [value: string[]]
 }>()
 
-const modelValue = defineModel<BOtpInputProps['modelValue']>({default: () => []})
+const modelValue = defineModel<BFormOtpProps['modelValue']>({default: () => []})
 
 const computedId = useId(() => props.id)
 const lengthNumber = useToNumber(() => props.length, {nanToZero: true, method: 'parseInt'})
 const computedLength = computed(() => (lengthNumber.value > 0 ? lengthNumber.value : lengthDefault))
 
 const rootClasses = computed(() => [
-  'b-otp-input',
+  'b-form-otp',
   'd-flex',
   'gap-2',
   'align-items-center',
   {
-    [`b-otp-input-${props.size}`]: !!props.size,
+    [`b-form-otp-${props.size}`]: !!props.size,
   },
 ])
 </script>
