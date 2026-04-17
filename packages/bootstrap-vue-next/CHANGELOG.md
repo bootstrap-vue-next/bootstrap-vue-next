@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.44.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.4...bootstrapvuenext-v0.44.5) (2026-04-17)
+
+
+### Features
+
+* rename BOtpInput component to BFormOtp ([#98](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/98)) ([#3158](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3158)) ([0fba315](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0fba315d7ce2c763a5babb6c78df018cb24c46ab))
+
 ## [0.44.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.3...bootstrapvuenext-v0.44.4) (2026-04-17)
 
 
