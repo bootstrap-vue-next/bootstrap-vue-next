@@ -185,13 +185,6 @@ export default {
           description:
             'Custom rendering for the check indicator shown on selected options. Defaults to a checkmark SVG',
         },
-        prepend: {
-          description: 'Content to prepend before the input (via BInputGroup prepend slot)',
-        },
-        append: {
-          description:
-            'Content to append after the input (via BInputGroup append slot). When not provided, a dropdown toggle button is rendered by default',
-        },
         tags: {
           description:
             'Custom rendering for tags in multiple+tags mode. Receives the selected options, a remove function, and whether backspace-to-delete is pending',
