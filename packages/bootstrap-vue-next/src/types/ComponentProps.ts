@@ -218,7 +218,7 @@ export interface BAutocompleteProps {
   valueField?: string
 }
 
-export interface BOtpInputProps {
+export interface BFormOtpProps {
   ariaInvalid?: AriaInvalid
   ariaLabel?: string
   autofocus?: boolean

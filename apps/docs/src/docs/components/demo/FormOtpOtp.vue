@@ -1,5 +1,5 @@
 <template>
   <!-- #region template -->
-  <BOtpInput type="number" />
+  <BFormOtp otp type="number" />
   <!-- #endregion template -->
 </template>

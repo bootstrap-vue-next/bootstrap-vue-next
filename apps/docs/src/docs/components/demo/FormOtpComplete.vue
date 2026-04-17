@@ -1,5 +1,5 @@
 <template>
-  <BOtpInput v-model="value" :length="4" @complete="onComplete" />
+  <BFormOtp v-model="value" :length="4" @complete="onComplete" />
   <p class="mt-2">Value: {{ value }}</p>
   <p class="mt-2">Completed: {{ completed ?? 'null' }}</p>
 </template>

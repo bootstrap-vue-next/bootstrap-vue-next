@@ -1,11 +1,11 @@
-import type { BOtpInputProps } from 'bootstrap-vue-next'
+import type { BFormOtpProps } from 'bootstrap-vue-next'
 import { type ComponentReference, type EmitRecord, type PropRecord, StyleKind } from '../../types'
 import { pick } from '../../utils/objectUtils'
 import { buildCommonProps } from '../../utils/commonProps'
 
 export default {
   load: (): ComponentReference => ({
-    BOtpInput: {
+    BFormOtp: {
       styleSpec: { kind: StyleKind.BsvnClass },
       props: {
         ...pick(buildCommonProps(), [
@@ -64,7 +64,7 @@ export default {
           description:
             'The input type for each field. Set to `number` to restrict input to numeric characters only',
         },
-      } satisfies PropRecord<keyof BOtpInputProps>,
+      } satisfies PropRecord<keyof BFormOtpProps>,
       emits: {
         complete: {
           description: 'Emitted when all OTP input fields have been filled',
