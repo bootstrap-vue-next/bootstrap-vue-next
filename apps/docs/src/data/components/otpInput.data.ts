@@ -1,12 +1,12 @@
-import type {BOtpInputProps} from 'bootstrap-vue-next'
-import {type ComponentReference, type EmitRecord, type PropRecord, StyleKind} from '../../types'
-import {pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
+import type { BOtpInputProps } from 'bootstrap-vue-next'
+import { type ComponentReference, type EmitRecord, type PropRecord, StyleKind } from '../../types'
+import { pick } from '../../utils/objectUtils'
+import { buildCommonProps } from '../../utils/commonProps'
 
 export default {
   load: (): ComponentReference => ({
     BOtpInput: {
-      styleSpec: {kind: StyleKind.BsvnClass},
+      styleSpec: { kind: StyleKind.BsvnClass },
       props: {
         ...pick(buildCommonProps(), [
           'ariaInvalid',
@@ -44,8 +44,7 @@ export default {
         modelValue: {
           type: 'string[] | null',
           default: '() => []',
-          description:
-            'The current value of the OTP input as an array of strings. Can be bound using `v-model`',
+          description: 'The current value of the OTP input as an array of per-field strings',
         },
         otp: {
           type: 'boolean',
@@ -56,7 +55,8 @@ export default {
         separator: {
           type: 'string',
           default: undefined,
-          description: 'A character or string to display between each input field as a visual separator',
+          description:
+            'Optional character or string to render between each input field as a visual separator',
         },
         type: {
           type: "'text' | 'number'",
@@ -66,21 +66,21 @@ export default {
         },
       } satisfies PropRecord<keyof BOtpInputProps>,
       emits: {
-        'complete': {
-          description: 'Emitted when all input fields have been filled',
+        complete: {
+          description: 'Emitted when all OTP input fields have been filled',
           args: {
             value: {
               type: 'string[]',
-              description: 'The completed array of input values',
+              description: 'The completed array of per-field input values',
             },
           },
         },
         'update:model-value': {
-          description: 'Emitted when the input value changes. Used to update the `v-model`',
+          description: 'Emitted when the OTP value changes',
           args: {
             value: {
               type: 'string[]',
-              description: 'The current array of input values',
+              description: 'The current array of per-field input values',
             },
           },
         },

@@ -42,14 +42,7 @@ The filter function receives the normalized options array and the current search
 
 ## Async fetching with debounce
 
-`BAutocomplete` is well-suited for async search scenarios. Use `v-model:search` to react to the user's input, the `debounce` prop to limit API calls, and an `AbortController` to cancel stale requests.
-
-Key points for async usage:
-
-- **`v-model:search`** — Bind to the raw search text so you can watch it and trigger fetches
-- **`debounce`** — Set to a number of milliseconds (e.g. `300`) to delay emitting search updates until the user stops typing
-- **`filter-function`** — Provide a pass-through function (returning all options) to bypass the built-in client-side filter, since the server handles filtering
-- **`AbortController`** — Create a new controller for each request and abort the previous one to avoid race conditions
+`BAutocomplete` is well-suited for async search scenarios. Use `v-model:search` to bind to the raw search text, then watch it to trigger fetches — you may want to debounce the handler and use an `AbortController` to cancel stale requests.
 
 The following example simulates an async lookup with a local list and a 500ms delay. In a real application, replace the simulated `searchUsers` function with an actual API call.
 

@@ -1,23 +1,21 @@
-import type {BAutocompleteProps, BAutocompleteSlots} from 'bootstrap-vue-next'
-import {type ComponentReference, type PropRecord, type SlotRecord, StyleKind} from '../../types'
-import {pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
+import type { BAutocompleteProps, BAutocompleteSlots } from 'bootstrap-vue-next'
+import { type ComponentReference, type PropRecord, type SlotRecord, StyleKind } from '../../types'
+import { pick } from '../../utils/objectUtils'
+import { buildCommonProps } from '../../utils/commonProps'
 
 export default {
   load: (): ComponentReference => ({
     BAutocomplete: {
-      styleSpec: {kind: StyleKind.BsvnClass},
+      styleSpec: { kind: StyleKind.BsvnClass },
       props: {
         ...pick(
           buildCommonProps({
-            options: {type: "readonly (object | string | number | boolean)[]"},
+            options: { type: 'readonly (object | string | number | boolean)[]' },
           }),
           [
             'ariaInvalid',
             'autocomplete',
             'autofocus',
-            'debounce',
-            'debounceMaxWait',
             'disabled',
             'disabledField',
             'form',
@@ -34,7 +32,7 @@ export default {
             'options',
             'textField',
             'valueField',
-          ]
+          ],
         ),
         by: {
           type: 'string | ((a: unknown, b: unknown) => boolean)',
@@ -70,6 +68,12 @@ export default {
           default: false,
           description: 'When set, hides the dropdown toggle button',
         },
+        open: {
+          type: 'boolean',
+          default: false,
+          description:
+            'The controlled open state of the dropdown. Can be used with `v-model:open` to open or close the menu programmatically',
+        },
         openOnFocus: {
           type: 'boolean',
           default: false,
@@ -89,7 +93,7 @@ export default {
           type: 'string',
           default: "''",
           description:
-            "The current search text entered by the user. Can be bound with `v-model:search`. Use this to react to user input for features like async fetching",
+            'The current search text entered by the user. Can be bound with `v-model:search`. Use this to react to user input for features like async fetching',
         },
         tags: {
           type: 'boolean',
@@ -105,7 +109,7 @@ export default {
         },
       } satisfies PropRecord<keyof BAutocompleteProps>,
       emits: {
-        'blur': {
+        blur: {
           description: 'Emitted when the autocomplete input loses focus',
           args: {
             event: {
@@ -114,7 +118,7 @@ export default {
             },
           },
         },
-        'focus': {
+        focus: {
           description: 'Emitted when the autocomplete input gains focus',
           args: {
             event: {
@@ -153,14 +157,14 @@ export default {
         },
       },
       slots: {
-        'default': {
+        default: {
           description: 'Default slot for custom content inside the autocomplete',
         },
-        'empty': {
+        empty: {
           description:
             'Content to display when no options match the current search. Defaults to "No results found"',
         },
-        'option': {
+        option: {
           description: 'Custom rendering for each option item in the dropdown list',
           scope: {
             value: {
@@ -181,16 +185,16 @@ export default {
           description:
             'Custom rendering for the check indicator shown on selected options. Defaults to a checkmark SVG',
         },
-        'prepend': {
+        prepend: {
           description: 'Content to prepend before the input (via BInputGroup prepend slot)',
         },
-        'append': {
+        append: {
           description:
             'Content to append after the input (via BInputGroup append slot). When not provided, a dropdown toggle button is rendered by default',
         },
-        'tags': {
+        tags: {
           description:
-            'Custom rendering for tags in multiple+tags mode. Receives the selected options and a remove function',
+            'Custom rendering for tags in multiple+tags mode. Receives the selected options, a remove function, and whether backspace-to-delete is pending',
           scope: {
             selected: {
               type: 'SelectOption[]',
@@ -199,6 +203,21 @@ export default {
             remove: {
               type: '(option: SelectOption) => void',
               description: 'Function to remove a selected option',
+            },
+            pendingDelete: {
+              type: 'boolean',
+              description:
+                'Whether pressing backspace again will remove the last selected option when the search input is empty',
+            },
+          },
+        },
+        'toggle-icon': {
+          description:
+            'Custom content for the default dropdown toggle button icon. This slot is only used when the toggle button is rendered',
+          scope: {
+            isOpen: {
+              type: 'boolean',
+              description: 'Whether the autocomplete dropdown is currently open',
             },
           },
         },

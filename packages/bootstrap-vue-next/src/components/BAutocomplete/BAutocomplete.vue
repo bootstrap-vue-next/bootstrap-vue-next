@@ -16,10 +16,6 @@
   >
     <ComboboxAnchor as-child>
       <BInputGroup :size="props.size">
-        <template #prepend>
-          <slot name="prepend" />
-        </template>
-
         <!-- Selected values display (multiple mode only, hidden when empty) -->
         <div
           v-if="props.multiple && hasSelection"
@@ -29,25 +25,28 @@
             'b-autocomplete-selection-pending-delete': pendingDelete,
           }"
         >
-          <template v-if="props.tags">
-            <slot name="tags" :selected="selectedOptions" :remove="removeSelected">
-              <BFormTag
-                v-for="(opt, i) in selectedOptions"
-                :key="optionKey(opt, i)"
-                :title="String(opt.text)"
-                :disabled="props.disabled"
-                :variant="'secondary'"
-                :class="{
-                  'b-autocomplete-tag-muted': pendingDelete && !isLastSelectedOption(opt, i),
-                  'b-autocomplete-tag-pending-delete':
-                    pendingDelete && isLastSelectedOption(opt, i),
-                }"
-                @remove="removeSelected(opt)"
-              >
-                {{ opt.text }}
-              </BFormTag>
-            </slot>
-          </template>
+          <slot
+            v-if="props.tags"
+            name="tags"
+            :pending-delete
+            :selected="selectedOptions"
+            :remove="removeSelected"
+          >
+            <BFormTag
+              v-for="(opt, i) in selectedOptions"
+              :key="optionKey(opt, i)"
+              :title="String(opt.text)"
+              :disabled="props.disabled"
+              :variant="'secondary'"
+              :class="{
+                'b-autocomplete-tag-muted': pendingDelete && !isLastSelectedOption(opt, i),
+                'b-autocomplete-tag-pending-delete': pendingDelete && isLastSelectedOption(opt, i),
+              }"
+              @remove="removeSelected(opt)"
+            >
+              {{ opt.text }}
+            </BFormTag>
+          </slot>
           <template v-else>
             <span
               v-for="(opt, i) in selectedOptions"
@@ -80,9 +79,9 @@
         </ComboboxInput>
 
         <template #append>
-          <slot name="append">
-            <ComboboxTrigger v-if="!props.noToggle" as-child :disabled="props.disabled">
-              <BButton class="b-autocomplete-trigger" :disabled="props.disabled">
+          <ComboboxTrigger v-if="!props.noToggle" as-child :disabled="props.disabled">
+            <BButton class="b-autocomplete-trigger" :disabled="props.disabled">
+              <slot name="toggle-icon" :is-open>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -97,9 +96,9 @@
                     d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
                   />
                 </svg>
-              </BButton>
-            </ComboboxTrigger>
-          </slot>
+              </slot>
+            </BButton>
+          </ComboboxTrigger>
         </template>
       </BInputGroup>
     </ComboboxAnchor>
@@ -109,7 +108,7 @@
         position="popper"
         :side-offset="4"
         :align="'start'"
-        :class="contentClasses"
+        :class="['b-autocomplete-content', 'dropdown-menu', 'show']"
         :body-lock="false"
         :style="{width: 'var(--reka-combobox-trigger-width)'}"
       >
@@ -118,32 +117,32 @@
             <slot name="empty"> No results found </slot>
           </ComboboxEmpty>
 
-          <template v-for="(option, index) in filteredOptions" :key="optionKey(option, index)">
-            <ComboboxItem
-              :value="option.value as AcceptableValue"
-              :disabled="option.disabled"
-              :class="itemClasses"
-            >
-              <slot name="option" v-bind="option">
-                {{ option.text }}
+          <ComboboxItem
+            v-for="(option, index) in filteredOptions"
+            :key="optionKey(option, index)"
+            :value="option.value as AcceptableValue"
+            :disabled="option.disabled"
+            :class="['b-autocomplete-item', 'dropdown-item']"
+          >
+            <slot name="option" v-bind="option">
+              {{ option.text }}
+            </slot>
+            <ComboboxItemIndicator class="b-autocomplete-item-indicator">
+              <slot name="option-indicator">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+                  />
+                </svg>
               </slot>
-              <ComboboxItemIndicator class="b-autocomplete-item-indicator">
-                <slot name="option-indicator">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
-                    />
-                  </svg>
-                </slot>
-              </ComboboxItemIndicator>
-            </ComboboxItem>
-          </template>
+            </ComboboxItemIndicator>
+          </ComboboxItem>
         </ComboboxViewport>
       </ComboboxContent>
     </ComboboxPortal>
@@ -151,7 +150,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, type ComputedRef, ref} from 'vue'
 import type {AcceptableValue} from 'reka-ui'
 import {
   ComboboxAnchor,
@@ -165,23 +164,20 @@ import {
   ComboboxTrigger,
   ComboboxViewport,
 } from 'reka-ui'
-import type {BAutocompleteProps} from '../../types/ComponentProps'
-import type {BAutocompleteSlots} from '../../types/ComponentSlots'
 import {useDefaults} from '../../composables/useDefaults'
-import type {SelectOption} from '../../types/SelectTypes'
+import type {BAutocompleteProps, BAutocompleteSlots, SelectOption} from '../../types'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import BInputGroup from '../BInputGroup/BInputGroup.vue'
 import BButton from '../BButton/BButton.vue'
 import BFormTag from '../BFormTags/BFormTag.vue'
+import {useFormSelect} from '../../composables/useFormSelect.ts'
 
 const _props = withDefaults(defineProps<Omit<BAutocompleteProps, 'modelValue' | 'search'>>(), {
   ariaInvalid: undefined,
   autocomplete: undefined,
   autofocus: false,
-  debounce: 0,
-  debounceMaxWait: Number.NaN,
   disabled: false,
   form: undefined,
   formatter: undefined,
@@ -216,11 +212,13 @@ const emit = defineEmits<{
 }>()
 defineSlots<BAutocompleteSlots>()
 
-const modelValue = defineModel<AcceptableValue | AcceptableValue[] | undefined>({
+const modelValue = defineModel<BAutocompleteProps['modelValue']>({
   default: undefined,
 })
-const isOpen = defineModel<boolean>('open', {default: false})
-const searchTerm = defineModel<string>('search', {default: ''})
+const isOpen = defineModel<Exclude<BAutocompleteProps['open'], undefined>>('open', {default: false})
+const searchTerm = defineModel<Exclude<BAutocompleteProps['search'], undefined>>('search', {
+  default: '',
+})
 
 // Backspace-to-delete state for multiple mode
 const pendingDelete = ref(false)
@@ -240,25 +238,10 @@ const inputClasses = computed(() => [
     [`form-control-${props.size}`]: !!props.size,
   },
 ])
-const contentClasses = computed(() => ['b-autocomplete-content', 'dropdown-menu', 'show'])
-const itemClasses = computed(() => ['b-autocomplete-item', 'dropdown-item'])
 
-// Normalize options to a standard format
-const normalizedOptions = computed<SelectOption[]>(() => {
-  const opts = props.options ?? []
-  return opts.map((el: string | number | boolean | object) => {
-    if (typeof el === 'string' || typeof el === 'number' || typeof el === 'boolean') {
-      return {value: el, text: String(el), disabled: false} as SelectOption
-    }
-    const obj = el as Record<string, unknown>
-    return {
-      ...obj,
-      value: obj[props.valueField as string],
-      text: (obj[props.textField as string] as string | undefined) ?? '',
-      disabled: (obj[props.disabledField as string] as boolean | undefined) ?? false,
-    } as SelectOption
-  })
-})
+const {normalizedOptions} = useFormSelect(() => props.options, props) as {
+  normalizedOptions: ComputedRef<SelectOption[]>
+}
 
 const findOptionText = (val: AcceptableValue): string => {
   const match = normalizedOptions.value.find((opt) => {

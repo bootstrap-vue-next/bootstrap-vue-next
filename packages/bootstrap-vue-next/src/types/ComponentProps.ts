@@ -1,8 +1,8 @@
 import type {
   Boundary,
-  Placement as FloatingPlacement,
   Middleware,
   Padding,
+  Placement as FloatingPlacement,
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
@@ -86,7 +86,7 @@ import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
 import type {BvnComponentProps} from './BootstrapVueOptions'
 import type {OrchestratorArrayValue} from './ComponentOrchestratorTypes'
-import type {DateRange, DateValue, TimeValue} from 'reka-ui'
+import type {AcceptableValue, DateRange, DateValue, TimeValue} from 'reka-ui'
 
 type Matcher = (date: DateValue) => boolean
 type TimeRange = {start: TimeValue | undefined; end: TimeValue | undefined}
@@ -188,8 +188,6 @@ export interface BAutocompleteProps {
   autocomplete?: string
   autofocus?: boolean
   by?: string | ((a: unknown, b: unknown) => boolean)
-  debounce?: Numberish
-  debounceMaxWait?: Numberish
   dir?: 'ltr' | 'rtl'
   disabled?: boolean
   disabledField?: string
@@ -198,10 +196,11 @@ export interface BAutocompleteProps {
   formatter?: (val: string, evt: Event) => string
   id?: string
   lazyFormatter?: boolean
-  modelValue?: unknown | unknown[] | null
+  modelValue?: AcceptableValue | AcceptableValue[]
   multiple?: boolean
   name?: string
   noToggle?: boolean
+  open?: boolean
   openOnFocus?: boolean
   options?: readonly (object | string | number | boolean)[]
   placeholder?: string

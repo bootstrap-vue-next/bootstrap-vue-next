@@ -1,10 +1,16 @@
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
 import {get} from '../utils/object'
-import type {ComplexSelectOptionRaw, SelectOption} from '../types/SelectTypes'
+import type {ComplexSelectOptionRaw, SelectOption} from '../types'
 
 export const useFormSelect = (
   options: MaybeRefOrGetter<ReadonlyArray<unknown>>,
-  props: MaybeRefOrGetter<Record<string, unknown>>
+  props: MaybeRefOrGetter<{
+    valueField: string
+    textField: string
+    disabledField: string
+    optionsField?: string
+    labelField?: string
+  }>
 ) => {
   const isComplex = (option: unknown): option is ComplexSelectOptionRaw =>
     typeof option === 'object' && option !== null && 'options' in option
@@ -13,26 +19,28 @@ export const useFormSelect = (
     const propsValue = toValue(props)
 
     if (typeof option === 'string') {
-      return {value: option, text: option}
+      return {value: option, text: option} satisfies SelectOption
     }
-    if (typeof option === 'number') {
-      return {value: option, text: `${option}`}
+    if (typeof option === 'number' || typeof option === 'boolean') {
+      return {value: option, text: `${option}`} satisfies SelectOption
     }
     if (option instanceof Date) {
-      return {value: option, text: option.toLocaleString()}
+      return {value: option, text: option.toLocaleString()} satisfies SelectOption
     }
 
-    const value: unknown = get(option, propsValue.valueField as string)
-    const text: string = get(option, propsValue.textField as string)
-    const disabled: boolean = get(option, propsValue.disabledField as string)
+    const value: unknown = get(option, propsValue.valueField)
+    const text: string = get(option, propsValue.textField)
+    const disabled: boolean = get(option, propsValue.disabledField)
 
     const opts: undefined | unknown[] = propsValue.optionsField
-      ? get(option, propsValue.optionsField as string)
+      ? get(option, propsValue.optionsField)
       : undefined
+    const label: string | undefined =
+      (propsValue.labelField ? get(option, propsValue.labelField) : undefined) || text
 
     if (opts !== undefined) {
       return {
-        label: get(option, propsValue.labelField as string) || text,
+        label,
         options: opts,
       } as ComplexSelectOptionRaw
     }
@@ -42,7 +50,7 @@ export const useFormSelect = (
       value,
       text,
       disabled,
-    } as SelectOption
+    } satisfies SelectOption
   }
 
   const normalizeOptions = (

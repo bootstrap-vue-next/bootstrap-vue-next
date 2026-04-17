@@ -45,6 +45,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import BFormInput from '../BFormInput/BFormInput.vue'
 
+const lengthDefault = 6
 const _props = withDefaults(defineProps<Omit<BOtpInputProps, 'modelValue'>>(), {
   ariaInvalid: undefined,
   ariaLabel: undefined,
@@ -53,7 +54,7 @@ const _props = withDefaults(defineProps<Omit<BOtpInputProps, 'modelValue'>>(), {
   disabled: false,
   form: undefined,
   id: undefined,
-  length: 6,
+  length: lengthDefault,
   mask: false,
   name: undefined,
   otp: false,
@@ -74,7 +75,7 @@ const modelValue = defineModel<BOtpInputProps['modelValue']>({default: () => []}
 
 const computedId = useId(() => props.id)
 const lengthNumber = useToNumber(() => props.length, {nanToZero: true, method: 'parseInt'})
-const computedLength = computed(() => (lengthNumber.value > 0 ? lengthNumber.value : 6))
+const computedLength = computed(() => (lengthNumber.value > 0 ? lengthNumber.value : lengthDefault))
 
 const rootClasses = computed(() => [
   'b-otp-input',

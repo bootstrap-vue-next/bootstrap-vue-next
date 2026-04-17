@@ -613,34 +613,6 @@ describe('BAutocomplete', () => {
   // --- Slots ---
 
   describe('slots', () => {
-    it('renders prepend slot content', () => {
-      const wrapper = mount(BAutocomplete, {
-        props: {
-          options: ['a'],
-        },
-        slots: {
-          prepend: () => h('span', {class: 'custom-prepend'}, 'Before'),
-        },
-      })
-      expect(wrapper.find('.custom-prepend').exists()).toBe(true)
-      expect(wrapper.find('.custom-prepend').text()).toBe('Before')
-    })
-
-    it('renders append slot content instead of toggle button', () => {
-      const wrapper = mount(BAutocomplete, {
-        props: {
-          options: ['a'],
-        },
-        slots: {
-          append: () => h('span', {class: 'custom-append'}, 'After'),
-        },
-      })
-      expect(wrapper.find('.custom-append').exists()).toBe(true)
-      expect(wrapper.find('.custom-append').text()).toBe('After')
-      // The default toggle button should be replaced
-      expect(wrapper.find('.b-autocomplete-trigger').exists()).toBe(false)
-    })
-
     it('renders empty slot content', async () => {
       const wrapper = mount(BAutocomplete, {
         props: {
@@ -796,7 +768,7 @@ describe('BAutocomplete', () => {
           'options': ['apple', 'banana', 'cherry'],
           'modelValue': ['apple', 'banana'],
           'search': '',
-          'onUpdate:modelValue': (val: unknown[]) => wrapper.setProps({modelValue: val}),
+          'onUpdate:modelValue': (val) => wrapper.setProps({modelValue: val}),
         },
       })
       const input = wrapper.find('input')
@@ -829,16 +801,16 @@ describe('BAutocomplete', () => {
       // First backspace: set pending
       await input.trigger('keydown', {key: 'Backspace'})
       await nextTick()
-      expect(
-        wrapper.find('.b-autocomplete-selection').classes()
-      ).toContain('b-autocomplete-selection-pending-delete')
+      expect(wrapper.find('.b-autocomplete-selection').classes()).toContain(
+        'b-autocomplete-selection-pending-delete'
+      )
 
       // Another key: resets pending
       await input.trigger('keydown', {key: 'a'})
       await nextTick()
-      expect(
-        wrapper.find('.b-autocomplete-selection').classes()
-      ).not.toContain('b-autocomplete-selection-pending-delete')
+      expect(wrapper.find('.b-autocomplete-selection').classes()).not.toContain(
+        'b-autocomplete-selection-pending-delete'
+      )
     })
   })
 
