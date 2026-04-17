@@ -146,7 +146,7 @@ import {
   useTemplateRef,
   watch,
 } from 'vue'
-import type {BModalSlots, BModalSlotsData, BModalEmits, BModalProps} from '../../types'
+import type {BModalEmits, BModalProps, BModalSlots, BModalSlotsData} from '../../types'
 
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -328,7 +328,7 @@ onKeyStroke(
   () => {
     hide('esc')
   },
-  {target: element}
+  {target: element, passive: true}
 )
 useSafeScrollLock(showRef, () => props.bodyScrolling)
 

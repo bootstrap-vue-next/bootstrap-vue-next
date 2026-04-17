@@ -1,0 +1,29 @@
+.b-otp-input {
+  display: inline-flex;
+}
+
+.b-otp-input-field {
+  text-align: center;
+  width: 2.5rem;
+  padding-left: 0;
+  padding-right: 0;
+
+  // Remove spinner buttons for number type
+  &[type="number"] {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+.b-otp-input-sm .b-otp-input-field {
+  width: 2rem;
+}
+
+.b-otp-input-lg .b-otp-input-field {
+  width: 3rem;
+}

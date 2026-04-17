@@ -114,7 +114,7 @@ import {isBoundary, isRootBoundary, resolveBootstrapCaret} from '../../utils/flo
 import {getElement} from '../../utils/getElement'
 import {buttonGroupKey, dropdownInjectionKey, inputGroupKey} from '../../utils/keys'
 import {useShowHide} from '../../composables/useShowHide'
-import type {BDropdownSlots, BDropdownEmits, BDropdownProps} from '../../types'
+import type {BDropdownEmits, BDropdownProps, BDropdownSlots} from '../../types'
 import {getSafeDocument} from '../../utils/dom'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
@@ -244,7 +244,7 @@ onKeyStroke(
     hide()
     getElement(referenceElement.value)?.focus()
   },
-  {target: floatingElement}
+  {target: floatingElement, passive: true}
 )
 
 const keynav = (e: Readonly<Event>, v: number) => {

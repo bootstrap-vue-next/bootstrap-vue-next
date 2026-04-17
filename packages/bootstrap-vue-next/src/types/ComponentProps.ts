@@ -1,8 +1,8 @@
 import type {
   Boundary,
-  Placement as FloatingPlacement,
   Middleware,
   Padding,
+  Placement as FloatingPlacement,
   RootBoundary,
   Strategy,
 } from '@floating-ui/vue'
@@ -30,7 +30,12 @@ import type {AriaInvalid} from './AriaInvalid'
 import type {Numberish, TeleporterProps, ValidationState, ValueOrCallBack} from './CommonTypes'
 import type {CommonInputProps, FormDebounceOptions} from './FormCommonInputProps'
 import type {RadioOption, RadioValue} from './RadioTypes'
-import type {ComplexSelectOptionRaw, SelectOptionRaw, SelectValue} from './SelectTypes'
+import type {
+  ComplexSelectOptionRaw,
+  SelectOption,
+  SelectOptionRaw,
+  SelectValue,
+} from './SelectTypes'
 import type {
   Breakpoint,
   ColBreakpointProps,
@@ -81,7 +86,7 @@ import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
 import type {BvnComponentProps} from './BootstrapVueOptions'
 import type {OrchestratorArrayValue} from './ComponentOrchestratorTypes'
-import type {DateRange, DateValue, TimeValue} from 'reka-ui'
+import type {AcceptableValue, DateRange, DateValue, TimeValue} from 'reka-ui'
 
 type Matcher = (date: DateValue) => boolean
 type TimeRange = {start: TimeValue | undefined; end: TimeValue | undefined}
@@ -177,6 +182,64 @@ export type LinkUnderlineProps = Pick<
 export type LinkOpacityProps = Pick<BLinkProps, 'opacity' | 'opacityHover'>
 export type LinkIconProps = Pick<BLinkProps, 'icon'>
 export type LinkVariantProps = Pick<BLinkProps, 'variant'>
+
+export interface BAutocompleteProps {
+  ariaInvalid?: AriaInvalid
+  autocomplete?: string
+  autofocus?: boolean
+  by?: string | ((a: unknown, b: unknown) => boolean)
+  dir?: 'ltr' | 'rtl'
+  disabled?: boolean
+  disabledField?: string
+  filterFunction?: (options: SelectOption[], searchTerm: string) => SelectOption[]
+  form?: string
+  formatter?: (val: string, evt: Event) => string
+  id?: string
+  lazyFormatter?: boolean
+  modelValue?: AcceptableValue | AcceptableValue[]
+  multiple?: boolean
+  name?: string
+  noToggle?: boolean
+  open?: boolean
+  openOnFocus?: boolean
+  options?: readonly (object | string | number | boolean)[]
+  placeholder?: string
+  plaintext?: boolean
+  readonly?: boolean
+  required?: boolean
+  resetSearchTermOnBlur?: boolean
+  resetSearchTermOnSelect?: boolean
+  search?: string
+  size?: Size
+  state?: ValidationState
+  tags?: boolean
+  teleportTo?: string | HTMLElement
+  textField?: string
+  valueField?: string
+}
+
+export interface BOtpInputProps {
+  ariaInvalid?: AriaInvalid
+  ariaLabel?: string
+  autofocus?: boolean
+  dir?: 'ltr' | 'rtl'
+  disabled?: boolean
+  form?: string
+  id?: string
+  length?: Numberish
+  mask?: boolean
+  modelValue?: string[] | null
+  name?: string
+  otp?: boolean
+  placeholder?: string
+  plaintext?: boolean
+  readonly?: boolean
+  required?: boolean
+  separator?: string
+  size?: Size
+  state?: ValidationState
+  type?: 'text' | 'number'
+}
 
 export interface BAccordionProps {
   flush?: boolean

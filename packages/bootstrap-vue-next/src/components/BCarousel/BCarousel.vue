@@ -272,7 +272,7 @@ onKeyStroke(
   () => {
     onKeydown(next)
   },
-  {target: element}
+  {target: element, passive: true}
 )
 
 watch(

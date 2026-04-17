@@ -19,6 +19,7 @@ export const componentsWithExternalPath = {
   BAccordionItem: '/components/BAccordion',
   BAlert: '/components/BAlert',
   BApp: '/components/BApp',
+  BAutocomplete: '/components/BAutocomplete',
   BAvatar: '/components/BAvatar',
   BAvatarGroup: '/components/BAvatar',
   BBadge: '/components/BBadge',
@@ -93,6 +94,7 @@ export const componentsWithExternalPath = {
   BNavbarNav: '/components/BNavbar',
   BNavbarToggle: '/components/BNavbar',
   BOffcanvas: '/components/BOffcanvas',
+  BOtpInput: '/components/BOtpInput',
   BOverlay: '/components/BOverlay',
   BOrchestrator: '/components/BApp',
   BPagination: '/components/BPagination',
@@ -201,6 +203,7 @@ export interface BootstrapVueOptions {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = any> = {
   BAspect: ComponentProps.BAspectProps
+  BAutocomplete: ComponentProps.BAutocompleteProps
   BLink: ComponentProps.BLinkProps
   BAccordion: ComponentProps.BAccordionProps
   BApp: ComponentProps.BAppProps
@@ -304,6 +307,7 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BRow: ComponentProps.BRowProps
   BInput: ComponentProps.BFormInputProps
   BTimeField: ComponentProps.BTimeFieldProps
+  BOtpInput: ComponentProps.BOtpInputProps
   BDateField: ComponentProps.BDateFieldProps
   BDatePicker: ComponentProps.BDatePickerProps
   BDateRangeField: ComponentProps.BDateRangeFieldProps
