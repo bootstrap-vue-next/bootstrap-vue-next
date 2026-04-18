@@ -446,6 +446,35 @@ describe('form-group', () => {
       await nextTick()
       expect(textArea.get('label').attributes('for')).toBe('foobar')
     })
+    it('label should automatically inherit BFormSelect id', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo'},
+        slots: {
+          default: h(BFormSelect, {id: 'select-id'}),
+        },
+      })
+      await nextTick()
+      expect(wrapper.find('label').exists()).toBe(true)
+      expect(wrapper.get('label').attributes('for')).toBe('select-id')
+    })
+
+    it('label inherits auto-generated BFormSelect id when no id prop', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'foo'},
+        slots: {
+          default: h(BFormSelect),
+        },
+      })
+      await nextTick()
+      const select = wrapper.find('select')
+      expect(select.exists()).toBe(true)
+      const selectId = select.attributes('id')
+      expect(selectId).toBeDefined()
+      // Label should use label tag (not legend) and have for attribute matching the select
+      expect(wrapper.find('label').exists()).toBe(true)
+      expect(wrapper.get('label').attributes('for')).toBe(selectId)
+    })
+
     it('uses prop labelFor over input id', async () => {
       const wrapper = mount(BFormGroup, {
         props: {label: 'foo', labelFor: 'spam and eggs'},
