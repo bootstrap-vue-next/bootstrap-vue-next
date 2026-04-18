@@ -316,6 +316,28 @@ watch(smallerOrEqualToBreakpoint, (newValue) => {
   }
 })
 
+watch(
+  () => props.responsive,
+  (newValue) => {
+    if (newValue === undefined) {
+      isOpenByBreakpoint.value = false
+      return
+    }
+    const opened = !smallerOrEqualToBreakpoint.value
+    if (opened === isOpenByBreakpoint.value) return
+    setLocalNoAnimation(true)
+    requestAnimationFrame(() => {
+      isOpenByBreakpoint.value = opened
+    })
+    emit('breakpoint', buildTriggerableEvent('breakpoint'), opened)
+    if (opened) {
+      emit('show', buildTriggerableEvent('show'))
+    } else {
+      emit('hide', buildTriggerableEvent('hide'))
+    }
+  }
+)
+
 defineExpose({
   hide,
   show,
