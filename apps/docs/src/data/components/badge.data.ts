@@ -1,13 +1,13 @@
-import type {BBadgeProps, BBadgeSlots} from 'bootstrap-vue-next'
+import type { BBadgeProps, BBadgeSlots } from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
   type PropRecord,
   type SlotRecord,
 } from '../../types'
-import {linkedBLinkSection, linkProps} from '../../utils/linkProps'
-import {pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
+import { linkedBLinkSection, linkProps } from '../../utils/linkProps'
+import { pick } from '../../utils/objectUtils'
+import { buildCommonProps } from '../../utils/commonProps'
 
 export default {
   load: (): ComponentReference => ({
@@ -20,7 +20,7 @@ export default {
                 default: 'secondary',
               },
             }),
-            ['bgVariant', 'variant', 'textVariant']
+            ['bgVariant', 'variant', 'textVariant'],
           ),
           dotIndicator: {
             type: 'boolean',
@@ -49,7 +49,7 @@ export default {
       emits: {},
       slots: {
         default: {
-          description: '', // TODO missing description
+          description: 'Content to place in the badge',
           scope: {},
         },
       } satisfies SlotRecord<keyof BBadgeSlots>,
