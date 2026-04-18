@@ -35,6 +35,14 @@ set the `initial-animation` prop on `<BCollapse>` and leave the `visible` prop a
 
 <<< DEMO ./demo/CollapseModel.vue
 
+## Horizontal collapse
+
+Set the `horizontal` prop on `BCollapse` to collapse along the horizontal axis instead of the
+default vertical axis. The element still animates between collapsed and expanded states, but its
+width is what transitions rather than its height.
+
+<<< DEMO ./demo/CollapseHorizontal.vue#template{vue-html}
+
 ## Trigger multiple collapse elements
 
 You can even collapse multiple `BCollapse` components via a single `v-b-toggle` by providing
