@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.44.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.5...bootstrapvuenext-v0.44.6) (2026-04-18)
+
+
+### Bug Fixes
+
+* prevent BFormSelect from treating non-array options as groups ([#3161](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3161)) ([e2978e0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/e2978e0a9473cf426b5a4fda89fddbd045fc1756))
+
 ## [0.44.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.4...bootstrapvuenext-v0.44.5) (2026-04-17)
 
 
