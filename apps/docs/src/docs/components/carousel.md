@@ -119,6 +119,10 @@ You can change the default starting slide by binding the v-model to the index of
 controls. These are useful for analytics, logging, or triggering side effects without reading the
 current slide index. Both events pass the native `MouseEvent`.
 
+Note: these events fire only from the prev/next arrow controls — clicking the indicators or
+programmatic navigation (via `v-model` or the exposed `next()`/`prev()` methods) will not
+trigger them.
+
 <<< DEMO ./demo/CarouselClickEvents.vue
 
 ## Exposed Methods

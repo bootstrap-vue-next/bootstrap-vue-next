@@ -1,5 +1,5 @@
 <template>
-  <BCarousel controls indicators :interval="0" @prev-click="onPrev" @next-click="onNext">
+  <BCarousel controls :interval="0" @prev-click="onPrev" @next-click="onNext">
     <BCarouselSlide caption="First slide" img-src="https://picsum.photos/1024/480/?image=50" />
     <BCarouselSlide caption="Second slide" img-src="https://picsum.photos/1024/480/?image=51" />
     <BCarouselSlide caption="Third slide" img-src="https://picsum.photos/1024/480/?image=52" />
