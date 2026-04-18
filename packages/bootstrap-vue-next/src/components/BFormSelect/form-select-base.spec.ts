@@ -423,6 +423,84 @@ describe('form-select-base', () => {
     expect(options).toHaveLength(3)
   })
 
+  it('does not treat options with label field as option groups', () => {
+    const wrapper = mount(BFormSelectBase, {
+      props: {
+        options: [
+          {value: 'a', text: 'Option A', label: 'Label A'},
+          {value: 'b', text: 'Option B', label: 'Label B'},
+        ],
+      },
+    })
+    const optgroups = wrapper.findAll('optgroup')
+    expect(optgroups).toHaveLength(0)
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(2)
+  })
+
+  it('does not treat option with non-array options field as a group', () => {
+    const wrapper = mount(BFormSelectBase, {
+      props: {
+        options: [
+          {value: 'a', text: 'Option A', options: 'not an array'},
+          {value: 'b', text: 'Option B'},
+        ],
+      },
+    })
+    const optgroups = wrapper.findAll('optgroup')
+    expect(optgroups).toHaveLength(0)
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(2)
+  })
+
+  it('does not treat option with null options field as a group', () => {
+    const wrapper = mount(BFormSelectBase, {
+      props: {
+        options: [
+          {value: 'a', text: 'Option A', options: null},
+          {value: 'b', text: 'Option B'},
+        ],
+      },
+    })
+    const optgroups = wrapper.findAll('optgroup')
+    expect(optgroups).toHaveLength(0)
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(2)
+  })
+
+  it('does not treat option with empty object options field as a group', () => {
+    const wrapper = mount(BFormSelectBase, {
+      props: {
+        options: [
+          {value: 'a', text: 'Option A', options: {}},
+        ],
+      },
+    })
+    const optgroups = wrapper.findAll('optgroup')
+    expect(optgroups).toHaveLength(0)
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(1)
+  })
+
+  it('still renders valid option groups with array options', () => {
+    const wrapper = mount(BFormSelectBase, {
+      props: {
+        options: [
+          {value: 'solo', text: 'Solo option'},
+          {
+            label: 'Group',
+            options: [{value: 'a', text: 'A'}, {value: 'b', text: 'B'}],
+          },
+        ],
+      },
+    })
+    const optgroups = wrapper.findAll('optgroup')
+    expect(optgroups).toHaveLength(1)
+    expect(optgroups[0].attributes('label')).toBe('Group')
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(3) // 1 solo + 2 in group
+  })
+
   it('renders empty when options is empty array', () => {
     const wrapper = mount(BFormSelectBase, {
       props: {options: []},

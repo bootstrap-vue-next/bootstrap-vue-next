@@ -13,7 +13,10 @@ export const useFormSelect = (
   }>
 ) => {
   const isComplex = (option: unknown): option is ComplexSelectOptionRaw =>
-    typeof option === 'object' && option !== null && 'options' in option
+    typeof option === 'object' &&
+    option !== null &&
+    'options' in option &&
+    Array.isArray((option as Record<string, unknown>).options)
 
   const normalizeOption = (option: unknown): ComplexSelectOptionRaw | SelectOption => {
     const propsValue = toValue(props)
@@ -38,7 +41,7 @@ export const useFormSelect = (
     const label: string | undefined =
       (propsValue.labelField ? get(option, propsValue.labelField) : undefined) || text
 
-    if (opts !== undefined) {
+    if (opts !== undefined && Array.isArray(opts)) {
       return {
         label,
         options: opts,
