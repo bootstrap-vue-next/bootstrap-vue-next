@@ -113,6 +113,14 @@ You can change the default starting slide by binding the v-model to the index of
 
 <<< DEMO ./demo/CarouselStartingSlide.vue
 
+## Handling navigation events
+
+`BCarousel` emits `prev-click` and `next-click` events when the user clicks the previous/next
+controls. These are useful for analytics, logging, or triggering side effects without reading the
+current slide index. Both events pass the native `MouseEvent`.
+
+<<< DEMO ./demo/CarouselClickEvents.vue
+
 ## Exposed Methods
 
 You can control the carousel programmatically using template ref methods. See the [Component Reference Exposed section](#comp-reference-bcarousel-exposed) for available methods.
