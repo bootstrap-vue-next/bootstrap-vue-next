@@ -13,8 +13,8 @@ import {
   type SlotRecord,
   StyleKind,
 } from '../../types'
-import {pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
+import { pick } from '../../utils/objectUtils'
+import { buildCommonProps } from '../../utils/commonProps'
 
 export default {
   load: (): ComponentReference => ({
@@ -136,7 +136,7 @@ export default {
             },
           },
         },
-        'slide': {
+        slide: {
           description: 'Fires immediately when the carousel starts its slide transition.',
           args: {
             value: {
@@ -145,7 +145,7 @@ export default {
             },
           },
         },
-        'slid': {
+        slid: {
           description: 'Fired when the carousel has completed its slide transition.',
           args: {
             value: {
@@ -155,7 +155,7 @@ export default {
           },
         },
         'prev-click': {
-          description: '', // TODO missing description
+          description: 'Emitted when the previous slide control is clicked',
           args: {
             click: {
               description: 'Native click event',
@@ -164,7 +164,7 @@ export default {
           },
         },
         'next-click': {
-          description: '', // TODO missing description
+          description: 'Emitted when the next slide control is clicked',
           args: {
             click: {
               description: 'Native click event',
@@ -198,7 +198,7 @@ export default {
       } satisfies ExposedRecord,
     },
     BCarouselSlide: {
-      styleSpec: {kind: StyleKind.OverrideClass, value: '.carousel-item'},
+      styleSpec: { kind: StyleKind.OverrideClass, value: '.carousel-item' },
       props: {
         ...pick(buildCommonProps(), ['id']),
         background: {
