@@ -27,6 +27,14 @@ of its parent container.
 Internally, `<BCarouselSlide>` uses the [`<BImg>`](/docs/components/image) component to render
 the images. The `img-*` props map to the corresponding props available to `<BImg>`.
 
+### Responsive images
+
+Use the `img-srcset` prop on `<BCarouselSlide>` to provide a comma-separated list of candidate
+image sources, letting the browser pick the best fit for the current viewport and pixel density.
+This pairs naturally with `img-src` (which acts as the fallback).
+
+<<< DEMO ./demo/CarouselResponsiveImages.vue#template{vue-html}
+
 ### Indicators
 
 With the `indicators` prop, can add indicators to the Carousel, along side the previous/next controls. The indicators let users jump to a particular slide.
