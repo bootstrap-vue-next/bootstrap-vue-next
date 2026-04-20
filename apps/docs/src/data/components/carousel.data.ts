@@ -155,7 +155,7 @@ export default {
           },
         },
         'prev-click': {
-          description: '', // TODO missing description
+          description: 'Emitted when the previous slide control is clicked',
           args: {
             click: {
               description: 'Native click event',
@@ -164,7 +164,7 @@ export default {
           },
         },
         'next-click': {
-          description: '', // TODO missing description
+          description: 'Emitted when the next slide control is clicked',
           args: {
             click: {
               description: 'Native click event',
