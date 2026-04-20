@@ -43,7 +43,7 @@ export default {
         horizontal: {
           type: 'boolean',
           default: false, // TODO item not in string format
-          // description: 'When set, collapses horizontally instead of vertically' // TODO missing description
+          description: 'When set, collapses horizontally instead of vertically',
         },
         isNav: {
           type: 'boolean',
