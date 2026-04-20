@@ -35,6 +35,14 @@ Use the `.alert-link` utility CSS class to quickly provide matching colored link
 
 <<< DEMO ./demo/AlertLinkColors.vue#template{vue-html}
 
+### Custom title
+
+Use the `title` slot to render custom markup (icons, badges, styled text) in the alert heading.
+When provided, the slot overrides the `title` prop. If neither the `title` slot nor the `title`
+prop is set, the heading element is not rendered.
+
+<<< DEMO ./demo/AlertTitleSlot.vue#template{vue-html}
+
 ## Dismissible Alerts
 
 Using the `dismissible` prop it is possible to dismiss any `BAlert` inline. The alert must be v-modeled to a reactive value. This will add a close `X` button. Use the `dismiss-label` prop to change the hidden aria-label text associated with the dismiss button.
