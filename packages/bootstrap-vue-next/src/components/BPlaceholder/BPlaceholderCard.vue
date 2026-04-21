@@ -57,11 +57,11 @@ import type {BPlaceholderCardSlots} from '../../types/ComponentSlots'
 const _props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   animation: undefined,
   footerAnimation: undefined,
-  footerSize: 'md',
+  footerSize: undefined,
   footerVariant: undefined,
   footerWidth: 100,
   headerAnimation: undefined,
-  headerSize: 'md',
+  headerSize: undefined,
   headerVariant: undefined,
   headerWidth: 100,
   imgBlankColor: '#868e96',
@@ -72,7 +72,7 @@ const _props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   noFooter: false,
   noHeader: false,
   noImg: false,
-  size: 'md',
+  size: undefined,
   variant: undefined,
 })
 const props = useDefaults(_props, 'BPlaceholderCard')

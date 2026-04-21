@@ -140,7 +140,7 @@ describe('placeholder-table', () => {
     const $tr = $thead.get('tr')
     const $th = $tr.get('th')
     const $placeholder = $th.getComponent(BPlaceholder)
-    expect($placeholder.props('size')).toBe('md')
+    expect($placeholder.props('size')).toBeUndefined()
   })
 
   it('child thead child tr has child th child BPlaceholder has prop variant to be prop headerVariant', () => {
@@ -330,7 +330,7 @@ describe('placeholder-table', () => {
     const $tr = $tbody.get('tr')
     const $td = $tr.get('td')
     const $placeholder = $td.getComponent(BPlaceholder)
-    expect($placeholder.props('size')).toBe('md')
+    expect($placeholder.props('size')).toBeUndefined()
   })
 
   it('child tbody child tr child td child BPlaceholder has prop size to be prop size', () => {
@@ -642,7 +642,7 @@ describe('placeholder-table', () => {
     const $tr = $tfoot.get('tr')
     const $th = $tr.get('th')
     const $placeholder = $th.getComponent(BPlaceholder)
-    expect($placeholder.props('size')).toBe('md')
+    expect($placeholder.props('size')).toBeUndefined()
   })
 
   it('child tfoot child tr child th child BPlaceholder has prop variant to be prop footerVariant', () => {

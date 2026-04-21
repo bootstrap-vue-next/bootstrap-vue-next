@@ -42,7 +42,7 @@ const _props = withDefaults(defineProps<Omit<BFormCheckboxGroupBaseProps, 'model
   plain: false,
   required: false,
   reverse: false,
-  size: 'md',
+  size: undefined,
   stacked: false,
   state: null,
   switches: false,

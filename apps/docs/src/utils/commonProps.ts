@@ -367,8 +367,8 @@ const commonProps = () =>
     },
     size: {
       type: 'Size',
-      default: 'md',
-      description: "Set the size of the component's appearance. 'sm', 'md' (default), or 'lg'",
+      default: undefined,
+      description: "Set the size of the component's appearance. 'sm' or 'lg'",
     },
     src: {
       type: 'string',

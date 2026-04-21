@@ -699,11 +699,11 @@ describe('form-checkbox-group-base', () => {
   })
 
   describe('size classes', () => {
-    it('adds btn-group-md class for size md', () => {
-      const wrapper = mount(BFormCheckboxGroupBase, {
-        props: {size: 'md'},
-      })
-      expect(wrapper.classes()).toContain('btn-group-md')
+    it('does not add a btn-group size class when size is undefined (default)', () => {
+      const wrapper = mount(BFormCheckboxGroupBase)
+      expect(wrapper.classes()).not.toContain('btn-group-md')
+      expect(wrapper.classes()).not.toContain('btn-group-sm')
+      expect(wrapper.classes()).not.toContain('btn-group-lg')
     })
 
     it('adds btn-group-sm class for size sm', () => {

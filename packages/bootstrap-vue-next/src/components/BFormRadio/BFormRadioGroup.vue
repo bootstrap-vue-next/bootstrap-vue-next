@@ -57,7 +57,7 @@ const props = withDefaults(defineProps<Omit<BFormRadioGroupProps<Options>, 'mode
   plain: false,
   required: false,
   reverse: false,
-  size: 'md',
+  size: undefined,
   stacked: false,
   state: null,
   textField: 'text',
