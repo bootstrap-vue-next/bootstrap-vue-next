@@ -188,7 +188,12 @@ const slideTo = (value: number): void => {
   // next() always animates forward and prev() always animates backward, regardless
   // of how many slides there are. This fixes the 2-slide case where wrap-detection
   // heuristics in the watcher would otherwise produce the wrong direction.
+  // Note: `value` is the raw index passed by the caller (e.g. modelValue+1 for next()),
+  // while `nextValue` is the resolved/wrapped index that becomes the new modelValue.
   direction.value = value > modelValue.value ? 'start' : 'end'
+  // Mark as internal so the modelValue watcher skips its direction heuristics.
+  // A race condition here is not possible because the isTransitioning guard above
+  // ensures slideTo cannot be called again until the current transition completes.
   isInternalChange = true
   isTransitioning.value = true
   previousModelValue = modelValue.value
