@@ -1,4 +1,4 @@
-import type {BAlertEmits, BAlertProps, BAlertSlots} from 'bootstrap-vue-next'
+import type { BAlertEmits, BAlertProps, BAlertSlots } from 'bootstrap-vue-next'
 import {
   type ComponentReference,
   defaultPropSectionSymbol,
@@ -7,10 +7,10 @@ import {
   type PropRecord,
   type SlotRecord,
 } from '../../types'
-import {linkedBLinkSection, type linkProps} from '../../utils/linkProps'
-import {buildDismissibleEmits, showHideProps} from '../../utils/showHideData'
-import {buildCommonProps} from '../../utils/commonProps'
-import {omit, pick} from '../../utils/objectUtils'
+import { linkedBLinkSection, type linkProps } from '../../utils/linkProps'
+import { buildDismissibleEmits, showHideProps } from '../../utils/showHideData'
+import { buildCommonProps } from '../../utils/commonProps'
+import { omit, pick } from '../../utils/objectUtils'
 
 export default {
   load: (): ComponentReference => ({
@@ -66,8 +66,8 @@ export default {
           description: 'Content to place in the close button',
         },
         title: {
-          description: '',
-          scope: {}, // TODO
+          description:
+            'Custom heading content for the alert. When provided, overrides the `title` prop.',
         },
       } satisfies SlotRecord<keyof BAlertSlots>,
       emits: {
