@@ -1,0 +1,14 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - img [ref=e9]
+      - button "Previous" [ref=e10] [cursor=pointer]:
+        - generic [ref=e12]: Previous
+      - button "Next" [ref=e13] [cursor=pointer]:
+        - generic [ref=e15]: Next
+    - text: "0"
+  - generic [ref=e16]:
+    - generic "Toggle devtools panel" [ref=e17] [cursor=pointer]:
+      - img [ref=e18]
+    - generic "Toggle Component Inspector" [ref=e23] [cursor=pointer]:
+      - img [ref=e24]
