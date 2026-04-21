@@ -118,7 +118,7 @@ describe('useModal', () => {
           component: CustomModal,
           title: 'Standard Title',
           myCustomField: 'custom value',
-          size: 'md',
+          size: undefined,
         })
 
         return () =>

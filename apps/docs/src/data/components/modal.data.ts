@@ -48,7 +48,7 @@ export default {
           buildCommonProps({
             size: {
               type: "Size | 'xl'",
-              description: "Sets the modal's width. Options: 'sm', 'md' (default), 'lg', or 'xl'",
+              description: "Sets the modal's width. Options: 'sm', 'lg', or 'xl'",
             },
             titleTag: {
               default: 'h5',
@@ -100,8 +100,8 @@ export default {
         },
         buttonSize: {
           type: 'Size',
-          default: 'md',
-          description: "Size of the built in footer buttons: 'sm', 'md' (default), or 'lg'",
+          default: undefined,
+          description: "Size of the built in footer buttons: 'sm' or 'lg'",
         },
         cancelClass: {
           type: 'ClassValue',

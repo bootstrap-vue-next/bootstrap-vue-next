@@ -227,10 +227,8 @@ describe('BFormSelect', () => {
     expect(wrapper.classes()).toContain('form-select-lg')
   })
 
-  it('does not have size class when size is md', () => {
-    const wrapper = mount(BFormSelect, {
-      props: {size: 'md'},
-    })
+  it('does not have size class when size is undefined (default)', () => {
+    const wrapper = mount(BFormSelect)
     expect(wrapper.classes()).toContain('form-select')
     expect(wrapper.classes()).not.toContain('form-select-md')
   })

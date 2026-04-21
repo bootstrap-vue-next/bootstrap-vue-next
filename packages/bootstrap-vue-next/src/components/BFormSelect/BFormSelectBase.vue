@@ -66,7 +66,7 @@ const _props = withDefaults(defineProps<Omit<BFormSelectBaseProps, 'modelValue'>
   plain: false,
   required: false,
   selectSize: 0,
-  size: 'md',
+  size: undefined,
   state: null,
   textField: 'text',
   valueField: 'value',
@@ -96,9 +96,9 @@ const computedClasses = computed(() => [
   stateClass.value,
   {
     'form-control': props.plain,
-    [`form-control-${props.size}`]: props.size !== 'md' && props.plain,
+    [`form-control-${props.size}`]: props.size !== undefined && props.plain,
     'form-select': !props.plain,
-    [`form-select-${props.size}`]: props.size !== 'md' && !props.plain,
+    [`form-select-${props.size}`]: props.size !== undefined && !props.plain,
   },
 ])
 

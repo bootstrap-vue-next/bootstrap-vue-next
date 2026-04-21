@@ -131,7 +131,7 @@ export default {
           type: 'string',
           default: 'undefined',
           description:
-            "Sets the text size of the label: 'sm', 'md' (default) or 'lg'. Use this prop to have the label size match the form control size",
+            "Sets the text size of the label: 'sm' or 'lg'. Use this prop to have the label size match the form control size",
         },
         labelVisuallyHidden: {
           type: 'boolean',

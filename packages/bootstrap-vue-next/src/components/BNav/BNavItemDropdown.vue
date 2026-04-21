@@ -58,7 +58,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   noSize: false,
   offset: 0,
   role: 'menu',
-  size: 'md',
+  size: undefined,
   split: false,
   splitButtonType: 'button',
   splitClass: undefined,

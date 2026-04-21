@@ -100,7 +100,7 @@ export const checkboxGroupKey: InjectionKey<{
   name: Readonly<Ref<string>>
   state: Readonly<Ref<ValidationState | undefined>>
   plain: Readonly<Ref<boolean>>
-  size: Readonly<Ref<Size>>
+  size: Readonly<Ref<Size | undefined>>
   inline: Readonly<Ref<boolean>>
   reverse: Readonly<Ref<boolean>>
   required: Readonly<Ref<boolean>>
@@ -116,7 +116,7 @@ export const radioGroupKey: InjectionKey<{
   buttons: Readonly<Ref<boolean>>
   state: Readonly<Ref<ValidationState | undefined>>
   plain: Readonly<Ref<boolean>>
-  size: Readonly<Ref<Size>>
+  size: Readonly<Ref<Size | undefined>>
   inline: Readonly<Ref<boolean>>
   reverse: Readonly<Ref<boolean>>
   required: Readonly<Ref<boolean>>

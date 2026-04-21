@@ -59,7 +59,7 @@ const props = withDefaults(defineProps<Omit<BFormSelectProps<Options>, 'modelVal
   plain: false,
   required: false,
   selectSize: 0,
-  size: 'md',
+  size: undefined,
   state: null,
   textField: 'text',
   valueField: 'value',

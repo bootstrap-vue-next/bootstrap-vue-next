@@ -140,7 +140,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   offset: 0,
   unmountLazy: false,
   role: 'menu',
-  size: 'md',
+  size: undefined,
   noWrapper: false,
   split: false,
   splitButtonType: 'button',

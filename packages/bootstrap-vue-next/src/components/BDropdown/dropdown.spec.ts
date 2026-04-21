@@ -949,10 +949,10 @@ describe('dropdown', () => {
   })
 
   describe('default size', () => {
-    it('first child BButton has default size md', () => {
+    it('first child BButton has default size undefined', () => {
       const wrapper = mount(BDropdown)
       const $bbutton = wrapper.getComponent(BButton)
-      expect($bbutton.props('size')).toBe('md')
+      expect($bbutton.props('size')).toBeUndefined()
     })
   })
 })

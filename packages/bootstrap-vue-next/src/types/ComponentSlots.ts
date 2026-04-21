@@ -5,6 +5,7 @@ import type {ButtonVariant, ColorVariant} from './ColorTypes'
 import type {ValidationState} from './CommonTypes'
 import type {LiteralUnion} from './LiteralUnion'
 import type {SelectOption} from './SelectTypes'
+import type {Size} from './Size'
 import type {SpinnerType} from './SpinnerType'
 import type {InputType} from './InputType'
 import type {TableField} from './TableTypes'
@@ -477,7 +478,7 @@ export type BFormTagsSlots = {
     removeTag: (tag?: string) => void
     required: boolean
     separator: string | readonly string[] | undefined
-    size: string
+    size: Size | undefined
     state: ValidationState
     tagClass: ClassValue
     tagPills: boolean

@@ -53,10 +53,12 @@ describe('avatar', () => {
     expect(wrapper.classes()).toContain('b-avatar-sm')
   })
 
-  it('does not include default class `b-avatar-md` when prop size is `md`', () => {
-    const wrapper = mount(BAvatar, {props: {size: 'md'}})
+  it('does not include a b-avatar size class when size is undefined (default)', () => {
+    const wrapper = mount(BAvatar)
     expect(wrapper.attributes('style')).toBeUndefined()
     expect(wrapper.classes()).not.toContain('b-avatar-md')
+    expect(wrapper.classes()).not.toContain('b-avatar-sm')
+    expect(wrapper.classes()).not.toContain('b-avatar-lg')
   })
 
   it('has class `b-avatar-lg` when prop size is `lg`', () => {
