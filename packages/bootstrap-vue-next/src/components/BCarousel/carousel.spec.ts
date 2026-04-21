@@ -3,7 +3,7 @@ import {afterEach, describe, expect, it, vi} from 'vitest'
 import BCarousel from './BCarousel.vue'
 import BCarouselSlide from './BCarouselSlide.vue'
 import BImg from '../BImg/BImg.vue'
-import {h, nextTick} from 'vue'
+import {TransitionGroup, h, nextTick} from 'vue'
 
 describe('carousel', () => {
   enableAutoUnmount(afterEach)
@@ -565,6 +565,74 @@ describe('carousel', () => {
       })
       await wrapper.get('.carousel-control-prev').trigger('click')
       expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([0])
+    })
+  })
+
+  describe('direction', () => {
+    it('uses forward (next) direction when navigating from first to second slide with 2 slides', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {controls: true, modelValue: 0},
+        slots: {default: () => [h(BCarouselSlide), h(BCarouselSlide)]},
+      })
+      await wrapper.get('.carousel-control-next').trigger('click')
+      await nextTick()
+      const tg = wrapper.findComponent(TransitionGroup)
+      expect(tg.props('enterFromClass')).toContain('carousel-item-next')
+    })
+
+    it('uses forward (next) direction when wrapping from last to first slide with 2 slides', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {controls: true, modelValue: 1},
+        slots: {default: () => [h(BCarouselSlide), h(BCarouselSlide)]},
+      })
+      await wrapper.get('.carousel-control-next').trigger('click')
+      await nextTick()
+      const tg = wrapper.findComponent(TransitionGroup)
+      expect(tg.props('enterFromClass')).toContain('carousel-item-next')
+    })
+
+    it('uses backward (prev) direction when navigating from second to first slide with 2 slides', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {controls: true, modelValue: 1},
+        slots: {default: () => [h(BCarouselSlide), h(BCarouselSlide)]},
+      })
+      await wrapper.get('.carousel-control-prev').trigger('click')
+      await nextTick()
+      const tg = wrapper.findComponent(TransitionGroup)
+      expect(tg.props('enterFromClass')).toContain('carousel-item-prev')
+    })
+
+    it('uses backward (prev) direction when wrapping from first to last slide with 2 slides', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {controls: true, modelValue: 0},
+        slots: {default: () => [h(BCarouselSlide), h(BCarouselSlide)]},
+      })
+      await wrapper.get('.carousel-control-prev').trigger('click')
+      await nextTick()
+      const tg = wrapper.findComponent(TransitionGroup)
+      expect(tg.props('enterFromClass')).toContain('carousel-item-prev')
+    })
+
+    it('uses forward direction when navigating next with 3 or more slides', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {controls: true, modelValue: 0},
+        slots: {default: () => [h(BCarouselSlide), h(BCarouselSlide), h(BCarouselSlide)]},
+      })
+      await wrapper.get('.carousel-control-next').trigger('click')
+      await nextTick()
+      const tg = wrapper.findComponent(TransitionGroup)
+      expect(tg.props('enterFromClass')).toContain('carousel-item-next')
+    })
+
+    it('uses backward direction when navigating prev with 3 or more slides', async () => {
+      const wrapper = mount(BCarousel, {
+        props: {controls: true, modelValue: 2},
+        slots: {default: () => [h(BCarouselSlide), h(BCarouselSlide), h(BCarouselSlide)]},
+      })
+      await wrapper.get('.carousel-control-prev').trigger('click')
+      await nextTick()
+      const tg = wrapper.findComponent(TransitionGroup)
+      expect(tg.props('enterFromClass')).toContain('carousel-item-prev')
     })
   })
 
