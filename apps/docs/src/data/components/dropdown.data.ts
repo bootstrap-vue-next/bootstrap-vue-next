@@ -23,10 +23,10 @@ import {
   type PropRecord,
   type SlotRecord,
 } from '../../types'
-import {linkProps, linkTo} from '../../utils/linkProps'
-import {dropdownEmits, dropdownProps, dropdownSlots} from '../../utils/dropdownCommon'
-import {omit, pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
+import { linkProps, linkTo } from '../../utils/linkProps'
+import { dropdownEmits, dropdownProps, dropdownSlots } from '../../utils/dropdownCommon'
+import { omit, pick } from '../../utils/objectUtils'
+import { buildCommonProps } from '../../utils/commonProps'
 
 export default {
   load: (): ComponentReference => ({
@@ -57,7 +57,7 @@ export default {
               default: 'hr',
             },
           }),
-          ['tag', 'variant', 'wrapperAttrs']
+          ['tag', 'variant', 'wrapperAttrs'],
         ),
         dividerClass: {
           type: 'ClassValue',
@@ -89,12 +89,12 @@ export default {
               default: 'header',
             },
           }),
-          ['ariaDescribedby', 'headerClass', 'headerTag', 'headerVariant', 'id']
+          ['ariaDescribedby', 'headerClass', 'headerTag', 'headerVariant', 'id'],
         ),
         header: {
           type: 'string',
           default: undefined,
-          // description: 'Text content for the dropdown group header' // TODO missing description
+          description: 'Text content for the dropdown group header',
         },
       } satisfies PropRecord<keyof BDropdownGroupProps>,
       emits: {},
@@ -193,7 +193,7 @@ export default {
               default: 'span',
             },
           }),
-          ['tag', 'variant', 'wrapperAttrs']
+          ['tag', 'variant', 'wrapperAttrs'],
         ),
         text: {
           type: 'string',
