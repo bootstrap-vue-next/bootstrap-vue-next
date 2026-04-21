@@ -22,23 +22,12 @@
         :aria-label="`${props.indicatorsButtonLabel} ${i}`"
         :aria-controls="buttonOwnership"
         :aria-describedby="slideValues?.[i]?._id"
-        @click="goToValue(i)"
+        @click="slideTo(i)"
       />
     </div>
 
     <div ref="_relatedTarget" class="carousel-inner">
-      <TransitionGroup
-        :enter-from-class="enterClasses"
-        :enter-active-class="enterClasses"
-        :enter-to-class="enterClasses"
-        :leave-from-class="leaveClasses"
-        :leave-active-class="leaveClasses"
-        :leave-to-class="leaveClasses"
-        @before-leave="onBeforeLeave"
-        @after-leave="onAfterLeave"
-        @after-enter="onAfterEnter"
-        @enter="onEnter"
-      >
+      <TransitionGroup v-bind="transitionGroupProps">
         <component
           :is="slide"
           v-for="(slide, i) in slides"
@@ -68,14 +57,13 @@
 import {BvCarouselEvent} from '../../utils'
 import {computed, onMounted, provide, ref, toRef, useTemplateRef, watch} from 'vue'
 import {useId} from '../../composables/useId'
-import type {BCarouselProps} from '../../types/ComponentProps'
 import {onKeyStroke, useElementHover, useIntervalFn, useSwipe, useToNumber} from '@vueuse/core'
 import type BCarouselSlide from './BCarouselSlide.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import type {Numberish} from '../../types/CommonTypes'
 import {getSlotElements} from '../../utils/getSlotElements'
 import {carouselInjectionKey} from '../../utils/keys'
-import type {BCarouselEmits, BCarouselSlots} from '../../types'
+import type {BCarouselEmits, BCarouselProps, BCarouselSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BCarouselProps, 'modelValue'>>(), {
   background: undefined,
@@ -120,27 +108,13 @@ const intervalNumber = useToNumber(() => slideInterval.value ?? props.interval)
 
 const isTransitioning = ref(false)
 const rideStarted = ref(false)
-const direction = ref(true)
+const direction = ref<'start' | 'end'>('start')
 const relatedTarget = useTemplateRef('_relatedTarget')
 const element = useTemplateRef('_element')
-const previousModelValue = ref(modelValue.value)
+
+let previousModelValue = modelValue.value
 
 const isHovering = useElementHover(element)
-
-// Class carousel-item is a static property
-// If you make it static, the direction can be reversed -- properly (atm it does the carousel-item-${} logic backwards for entering, a weird hack)
-// So all that would be great. However, when you do this, it will break the transition flow. Something about it breaks and I'm not sure why!
-// Try it by removing carousel-item from below and making `!direction.value` => `direction.value` for enter
-// Then reviewing the behavior
-const enterClasses = computed(
-  () =>
-    `carousel-item carousel-item-${!direction.value ? 'next' : 'prev'} carousel-item-${
-      !direction.value ? 'start' : 'end'
-    }`
-)
-const leaveClasses = computed(
-  () => `carousel-item active carousel-item-${direction.value ? 'start' : 'end'}`
-)
 
 const {pause, resume} = useIntervalFn(
   () => {
@@ -166,12 +140,27 @@ const buildBvCarouselEvent = (event: 'slid' | 'slide') =>
     cancelable: false,
     target: element.value,
     direction: direction.value ? 'right' : 'left',
-    from: previousModelValue.value,
+    from: previousModelValue,
     to: modelValue.value,
     relatedTarget: relatedTarget.value?.children[modelValue.value] ?? null,
   })
 
-const goToValue = (value: number): void => {
+watch(modelValue, (newValue, oldValue) => {
+  const lastIndex = slides.value.length - 1
+  const wrappedForward = oldValue === lastIndex && newValue === 0
+  const wrappedBackward = oldValue === 0 && newValue === lastIndex
+  if (wrappedForward) {
+    direction.value = 'start'
+  } else if (wrappedBackward) {
+    direction.value = 'end'
+  } else {
+    direction.value = newValue > oldValue ? 'start' : 'end'
+  }
+  // If one ever thinks to change the transitions dependence on modelValue and thinks it is appropriate to remove this isTransitioning line, be careful
+  // This directly effects how transitions are applied. The watch is for if you have an external change to modelValue, and doesn't directly call slideTo
+  isTransitioning.value = true
+})
+const slideTo = (value: number): void => {
   if (isTransitioning.value === true) return
 
   if (props.ride === true) {
@@ -180,50 +169,36 @@ const goToValue = (value: number): void => {
   if (isRiding.value === true) {
     resume()
   }
-  direction.value = value < modelValue.value ? false : true
-  if (value >= slides.value.length) {
+  let nextValue = value
+  if (nextValue >= slides.value.length) {
     if (props.noWrap) return
-    modelValue.value = 0
-    return
+    nextValue = 0
   }
-  if (value < 0) {
+  if (nextValue < 0) {
     if (props.noWrap) return
-    modelValue.value = slides.value.length - 1
-    return
+    nextValue = slides.value.length - 1
   }
-  previousModelValue.value = modelValue.value
-  modelValue.value = value
+  if (nextValue === modelValue.value) return
+  isTransitioning.value = true
+  previousModelValue = modelValue.value
+  modelValue.value = nextValue
 }
 
 const prev = (): void => {
-  goToValue(modelValue.value - 1)
+  slideTo(modelValue.value - 1)
 }
 const next = (): void => {
-  goToValue(modelValue.value + 1)
-}
-
-const onKeydown = (fn: () => void) => {
-  if (props.keyboard === false) return
-  fn()
-}
-
-const onMouseEnter = () => {
-  if (props.noHoverPause) return
-  pause()
-}
-const onMouseLeave = () => {
-  if (!isRiding.value) return
-  resume()
+  slideTo(modelValue.value + 1)
 }
 
 const {lengthX} = useSwipe(element, {
   passive: true,
   onSwipeStart() {
-    if (props.noTouch === true) return
+    if (props.noTouch) return
     pause()
   },
   onSwipeEnd() {
-    if (props.noTouch === true) return
+    if (props.noTouch) return
     const resumeRiding = () => {
       if (isRiding.value === false) return
       resume()
@@ -240,56 +215,6 @@ const {lengthX} = useSwipe(element, {
   },
 })
 
-const onBeforeLeave = () => {
-  emit('slide', buildBvCarouselEvent('slide'))
-  isTransitioning.value = true
-}
-const onAfterLeave = () => {
-  emit('slid', buildBvCarouselEvent('slid'))
-  isTransitioning.value = false
-}
-// carousel-item class is removed from the slide during the transition,
-// as is included within enter classes.
-// The first slide recovers carousel-item class,
-const onAfterEnter = (el: Readonly<Element>) => {
-  if (modelValue.value !== 0) {
-    el.classList.add('carousel-item')
-  }
-}
-const onEnter = (el: Readonly<Element>) => {
-  slideInterval.value = slideValues.value?.find((slid) => slid.$el === el)?._interval ?? null
-}
-
-onKeyStroke(
-  'ArrowLeft',
-  () => {
-    onKeydown(prev)
-  },
-  {target: element}
-)
-onKeyStroke(
-  'ArrowRight',
-  () => {
-    onKeydown(next)
-  },
-  {target: element, passive: true}
-)
-
-watch(
-  () => props.ride,
-  () => {
-    rideStarted.value = false
-  }
-)
-
-watch(isHovering, (newValue) => {
-  if (newValue) {
-    onMouseEnter()
-    return
-  }
-  onMouseLeave()
-})
-
 const onClickPrev = (event: MouseEvent) => {
   emit('prev-click', event)
   if (event.defaultPrevented) return
@@ -301,11 +226,78 @@ const onClickNext = (event: MouseEvent) => {
   next()
 }
 
+const onMouseEnter = () => {
+  if (props.noHoverPause) return
+  pause()
+}
+const onMouseLeave = () => {
+  if (!isRiding.value) return
+  resume()
+}
+watch(isHovering, (newValue) => {
+  if (newValue) {
+    onMouseEnter()
+    return
+  }
+  onMouseLeave()
+})
+onKeyStroke(
+  ['ArrowLeft', 'ArrowRight'],
+  (event) => {
+    if (!props.keyboard) return
+    if (event.key === 'ArrowLeft') {
+      prev()
+    } else {
+      next()
+    }
+  },
+  {target: element, passive: true}
+)
+
+watch(
+  () => props.ride,
+  () => {
+    rideStarted.value = false
+  }
+)
+
+const enterDirectionClass = computed(
+  () => `carousel-item-${direction.value === 'start' ? 'next' : 'prev'}`
+)
+const orderDirectionClass = computed(() => `carousel-item-${direction.value}`)
+const transitionGroupProps = computed(() => ({
+  enterFromClass: `carousel-item ${enterDirectionClass.value}`,
+  enterActiveClass: `carousel-item ${enterDirectionClass.value}`,
+  enterToClass: `carousel-item ${enterDirectionClass.value} ${orderDirectionClass.value}`,
+  leaveFromClass: 'carousel-item active',
+  leaveActiveClass: 'carousel-item active',
+  leaveToClass: `carousel-item active ${orderDirectionClass.value}`,
+  onBeforeLeave: () => {
+    emit('slide', buildBvCarouselEvent('slide'))
+  },
+  onAfterLeave: () => {
+    emit('slid', buildBvCarouselEvent('slid'))
+    isTransitioning.value = false
+  },
+  // carousel-item class is removed from the slide during the transition,
+  // as is included within enter classes.
+  // The first slide recovers carousel-item class,
+  onAfterEnter: (el: Readonly<Element>) => {
+    if (modelValue.value !== 0) {
+      el.classList.add('carousel-item')
+    }
+  },
+  onEnter: (el: Readonly<Element>) => {
+    slideInterval.value = slideValues.value?.find((slid) => slid.$el === el)?._interval ?? null
+  },
+}))
+
 defineExpose({
-  next,
-  pause,
-  prev,
   resume,
+  pause,
+  next,
+  prev,
+  slideTo,
 })
 
 provide(carouselInjectionKey, {
