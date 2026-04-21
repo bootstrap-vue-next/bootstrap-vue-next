@@ -31,7 +31,10 @@ options specified by the `options` prop, use the named slot `first`.
 
 ### Options groups
 
-To define option groups, just add an object with a `label` prop as the groups name and a `options` property with the array of options of the group.
+To define option groups, add an object with a `label` prop as the group's name and an `options`
+property set to an **array** of options for that group. An entry is only treated as a group when
+its `options` field is an array — entries whose `options` field is missing, `null`, a string, or
+any other non-array value are rendered as normal options.
 
 <<< FRAGMENT ./demo/OptionsGroups.ts#snippet{ts}
 
