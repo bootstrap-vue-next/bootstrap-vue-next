@@ -113,6 +113,7 @@ const relatedTarget = useTemplateRef('_relatedTarget')
 const element = useTemplateRef('_element')
 
 let previousModelValue = modelValue.value
+let isInternalChange = false
 
 const isHovering = useElementHover(element)
 
@@ -139,23 +140,27 @@ const buildBvCarouselEvent = (event: 'slid' | 'slide') =>
     componentId: computedId.value,
     cancelable: false,
     target: element.value,
-    direction: direction.value ? 'right' : 'left',
+    direction: direction.value === 'start' ? 'right' : 'left',
     from: previousModelValue,
     to: modelValue.value,
     relatedTarget: relatedTarget.value?.children[modelValue.value] ?? null,
   })
 
 watch(modelValue, (newValue, oldValue) => {
-  const lastIndex = slides.value.length - 1
-  const wrappedForward = oldValue === lastIndex && newValue === 0
-  const wrappedBackward = oldValue === 0 && newValue === lastIndex
-  if (wrappedForward) {
-    direction.value = 'start'
-  } else if (wrappedBackward) {
-    direction.value = 'end'
-  } else {
-    direction.value = newValue > oldValue ? 'start' : 'end'
+  if (!isInternalChange) {
+    // External v-model change: determine direction from the new/old values
+    const lastIndex = slides.value.length - 1
+    const wrappedForward = oldValue === lastIndex && newValue === 0
+    const wrappedBackward = oldValue === 0 && newValue === lastIndex
+    if (wrappedForward) {
+      direction.value = 'start'
+    } else if (wrappedBackward) {
+      direction.value = 'end'
+    } else {
+      direction.value = newValue > oldValue ? 'start' : 'end'
+    }
   }
+  isInternalChange = false
   // If one ever thinks to change the transitions dependence on modelValue and thinks it is appropriate to remove this isTransitioning line, be careful
   // This directly effects how transitions are applied. The watch is for if you have an external change to modelValue, and doesn't directly call slideTo
   isTransitioning.value = true
@@ -179,6 +184,12 @@ const slideTo = (value: number): void => {
     nextValue = slides.value.length - 1
   }
   if (nextValue === modelValue.value) return
+  // Set direction based on the original requested value (before wrapping) so that
+  // next() always animates forward and prev() always animates backward, regardless
+  // of how many slides there are. This fixes the 2-slide case where wrap-detection
+  // heuristics in the watcher would otherwise produce the wrong direction.
+  direction.value = value > modelValue.value ? 'start' : 'end'
+  isInternalChange = true
   isTransitioning.value = true
   previousModelValue = modelValue.value
   modelValue.value = nextValue
