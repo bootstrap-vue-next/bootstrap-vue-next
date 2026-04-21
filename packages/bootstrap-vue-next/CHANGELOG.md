@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.44.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.6...bootstrapvuenext-v0.44.7) (2026-04-21)
+
+
+### Features
+
+* **BCarousel:** add slideTo in defineExpose which is the same as prev/next but you can select the index you want ([92f20f9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/92f20f9d24958543b3bc1f7f8b0eb7863bc35030))
+
+
+### Bug Fixes
+
+* **BCarousel:** changing modelValue externally doesn't apply transitions correctly fixes [#1141](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/1141) ([#3174](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3174)) ([92f20f9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/92f20f9d24958543b3bc1f7f8b0eb7863bc35030))
+* **BCarousel:** correct transition direction for 2-slide carousel ([#3177](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3177)) ([249ce9f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/249ce9fc914a5f409f72bc5a904b35b85123200f))
+* **BCarousel:** inverted transition classes consistency with native bootstrap ([92f20f9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/92f20f9d24958543b3bc1f7f8b0eb7863bc35030))
+
 ## [0.44.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.5...bootstrapvuenext-v0.44.6) (2026-04-20)
 
 
