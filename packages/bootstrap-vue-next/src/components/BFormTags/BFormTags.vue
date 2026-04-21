@@ -203,7 +203,7 @@ const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   removeOnDelete: false,
   required: false,
   separator: undefined,
-  size: 'md',
+  size: undefined,
   state: null,
   tagClass: undefined,
   tagPills: false,
@@ -251,7 +251,7 @@ syncRef(modelValue, tags, {
 const computedClasses = computed(() => [
   stateClass.value,
   {
-    [`form-control-${props.size}`]: props.size !== 'md',
+    [`form-control-${props.size}`]: props.size !== undefined,
     disabled: props.disabled,
     focus: focused.value,
   },

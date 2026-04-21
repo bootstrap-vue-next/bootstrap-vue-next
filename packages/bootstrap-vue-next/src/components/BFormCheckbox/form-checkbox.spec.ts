@@ -100,11 +100,11 @@ describe('form-checkbox', () => {
       expect(wrapper.classes()).not.toContain('form-control-lg')
     })
 
-    it('has class form-control-{type} when prop size is md', () => {
-      const wrapper = mount(BFormCheckbox, {
-        props: {size: 'md'},
-      })
+    it('does not have a form-control size class when size is undefined (default)', () => {
+      const wrapper = mount(BFormCheckbox)
       expect(wrapper.classes()).not.toContain('form-control-md')
+      expect(wrapper.classes()).not.toContain('form-control-sm')
+      expect(wrapper.classes()).not.toContain('form-control-lg')
     })
   })
 
@@ -554,12 +554,14 @@ describe('form-checkbox', () => {
       expect($label.classes()).not.toContain('btn-undefined')
     })
 
-    it('child label does not have class btn-md when prop button true and prop size md', () => {
+    it('child label does not have a btn size class when prop button true and size is undefined (default)', () => {
       const wrapper = mount(BFormCheckbox, {
-        props: {button: true, size: 'md', plain: false},
+        props: {button: true, plain: false},
       })
       const $label = wrapper.get('label')
       expect($label.classes()).not.toContain('btn-md')
+      expect($label.classes()).not.toContain('btn-sm')
+      expect($label.classes()).not.toContain('btn-lg')
     })
 
     it('child label has class active when value and modelValue are not the same', () => {
@@ -926,7 +928,7 @@ describe('form-checkbox', () => {
       const $label = $checkbox.get('label')
       // Default buttonVariant should be 'secondary'
       expect($label.classes()).toContain('btn-secondary')
-      // Default size should be 'md' which doesn't add a class
+      // Default size is undefined which doesn't add a class
       expect($checkbox.classes()).not.toContain('form-control-sm')
       expect($checkbox.classes()).not.toContain('form-control-lg')
     })
@@ -1072,7 +1074,7 @@ describe('form-checkbox', () => {
               name: ref('test-group'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1100,7 +1102,7 @@ describe('form-checkbox', () => {
               name: ref('parent-name'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1128,7 +1130,7 @@ describe('form-checkbox', () => {
               name: ref('test-group'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1156,7 +1158,7 @@ describe('form-checkbox', () => {
               name: ref('test-group'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(true),
@@ -1184,7 +1186,7 @@ describe('form-checkbox', () => {
               name: ref('parent-name'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1212,7 +1214,7 @@ describe('form-checkbox', () => {
               name: ref('test-group'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1241,7 +1243,7 @@ describe('form-checkbox', () => {
               name: ref('test-group'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1270,7 +1272,7 @@ describe('form-checkbox', () => {
               name: ref('test-group'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1372,7 +1374,7 @@ describe('form-checkbox', () => {
               name: ref('test-group'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1411,7 +1413,7 @@ describe('form-checkbox', () => {
               name: ref('test-group'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1601,7 +1603,7 @@ describe('form-checkbox', () => {
               name: ref('test-group'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1631,7 +1633,7 @@ describe('form-checkbox', () => {
               name: ref('test-group'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(false),
@@ -1661,7 +1663,7 @@ describe('form-checkbox', () => {
               name: ref('group-name'),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(true),
@@ -1690,7 +1692,7 @@ describe('form-checkbox', () => {
               name: ref(''),
               state: ref(undefined),
               plain: ref(false),
-              size: ref('md'),
+              size: ref(undefined),
               inline: ref(false),
               reverse: ref(false),
               required: ref(true),

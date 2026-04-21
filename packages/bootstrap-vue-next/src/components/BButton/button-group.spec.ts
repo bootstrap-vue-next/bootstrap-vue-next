@@ -100,11 +100,11 @@ describe('button-group', () => {
     expect(wrapper.classes()).toContain('btn-group-sm')
   })
 
-  it('does not have class btn-group-md when prop size is md', () => {
-    const wrapper = mount(BButtonGroup, {
-      props: {size: 'md'},
-    })
+  it('does not have a btn-group size class when size is undefined (default)', () => {
+    const wrapper = mount(BButtonGroup)
     expect(wrapper.classes()).not.toContain('btn-group-md')
+    expect(wrapper.classes()).not.toContain('btn-group-sm')
+    expect(wrapper.classes()).not.toContain('btn-group-lg')
   })
 
   it('does not have class btn-group-{type} when prop size is undefined', () => {

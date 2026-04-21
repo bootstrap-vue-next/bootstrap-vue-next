@@ -15,7 +15,7 @@ provide(buttonGroupKey, true)
 
 const _props = withDefaults(defineProps<BButtonGroupProps>(), {
   ariaLabel: 'Group',
-  size: 'md',
+  size: undefined,
   tag: 'div',
   vertical: false,
 })
@@ -24,7 +24,7 @@ defineSlots<BButtonGroupSlots>()
 
 const computedClasses = computed(() => ({
   'btn-group': !props.vertical,
-  [`btn-group-${props.size}`]: props.size !== 'md',
+  [`btn-group-${props.size}`]: props.size !== undefined,
   'btn-group-vertical': props.vertical,
 }))
 </script>

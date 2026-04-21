@@ -24,7 +24,7 @@ export default {
         },
         size: {
           type: 'PlaceholderSize',
-          default: 'md',
+          default: undefined,
         },
         tag: {
           type: 'string',
@@ -59,7 +59,7 @@ export default {
         },
         footerSize: {
           type: 'PlaceholderSize',
-          default: 'md',
+          default: undefined,
         },
         footerVariant: {
           type: 'ColorVariant | null',
@@ -75,7 +75,7 @@ export default {
         },
         headerSize: {
           type: 'PlaceholderSize',
-          default: 'md',
+          default: undefined,
         },
         headerVariant: {
           type: 'ColorVariant | null',
@@ -119,7 +119,7 @@ export default {
         },
         size: {
           type: 'PlaceholderSize',
-          default: 'md',
+          default: undefined,
         },
         variant: {
           type: 'ColorVariant | null',
@@ -196,7 +196,7 @@ export default {
         },
         footerSize: {
           type: 'PlaceholderSize',
-          default: 'md',
+          default: undefined,
         },
         footerVariant: {
           type: 'ColorVariant | null',
@@ -216,7 +216,7 @@ export default {
         },
         headerSize: {
           type: 'PlaceholderSize',
-          default: 'md',
+          default: undefined,
         },
         headerVariant: {
           type: 'ColorVariant | null',
@@ -236,7 +236,7 @@ export default {
         },
         size: {
           type: 'PlaceholderSize',
-          default: 'md',
+          default: undefined,
         },
         variant: {
           type: 'ColorVariant | null',

@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<Omit<BFormCheckboxGroupProps<Options>, 'm
   plain: false,
   required: false,
   reverse: false,
-  size: 'md',
+  size: undefined,
   stacked: false,
   state: null,
   switches: false,

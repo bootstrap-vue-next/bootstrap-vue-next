@@ -33,14 +33,14 @@ const _props = withDefaults(defineProps<BInputGroupProps>(), {
   append: undefined,
   id: undefined,
   prepend: undefined,
-  size: 'md',
+  size: undefined,
   tag: 'div',
 })
 const props = useDefaults(_props, 'BInputGroup')
 defineSlots<BInputGroupSlots>()
 
 const computedClasses = computed(() => ({
-  [`input-group-${props.size}`]: props.size !== 'md',
+  [`input-group-${props.size}`]: props.size !== undefined,
 }))
 const hasAppend = computed(() => !!props.append)
 const hasPrepend = computed(() => !!props.prepend)

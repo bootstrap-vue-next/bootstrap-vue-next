@@ -22,9 +22,11 @@ describe('button', () => {
     expect(wrapper.classes()).toContain('btn-secondary')
   })
 
-  it('has default size class btn-md', () => {
+  it('does not have a size class by default', () => {
     const wrapper = mount(BButton)
-    expect(wrapper.classes()).toContain('btn-md')
+    expect(wrapper.classes()).not.toContain('btn-md')
+    expect(wrapper.classes()).not.toContain('btn-sm')
+    expect(wrapper.classes()).not.toContain('btn-lg')
   })
 
   it('is blink if prop to', () => {

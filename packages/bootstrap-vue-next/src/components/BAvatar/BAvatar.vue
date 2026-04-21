@@ -131,7 +131,6 @@ const SIZES = Object.freeze([
   null,
   ...Object.keys({
     lg: null,
-    md: null,
     sm: null,
   } satisfies Record<Size, null>),
 ] as (string | null)[])

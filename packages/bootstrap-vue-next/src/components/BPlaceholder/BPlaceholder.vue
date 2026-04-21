@@ -23,7 +23,7 @@ defineOptions({
 const _props = withDefaults(defineProps<BPlaceholderProps>(), {
   animation: undefined,
   cols: 12,
-  size: 'md',
+  size: undefined,
   tag: 'span',
   variant: null,
   width: undefined,
@@ -56,7 +56,7 @@ const computedClasses = computed(() => [
   colorClasses.value,
   {
     [`col-${colsString.value}`]: colsString.value !== undefined && widthString.value === undefined,
-    [`placeholder-${props.size}`]: props.size !== 'md',
+    [`placeholder-${props.size}`]: props.size !== undefined,
   },
 ])
 

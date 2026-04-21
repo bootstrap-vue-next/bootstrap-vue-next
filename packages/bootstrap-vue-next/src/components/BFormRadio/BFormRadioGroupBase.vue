@@ -48,7 +48,7 @@ const _props = withDefaults(defineProps<Omit<BFormRadioGroupBaseProps, 'modelVal
   plain: false,
   required: false,
   reverse: false,
-  size: 'md',
+  size: undefined,
   stacked: false,
   state: null,
   validated: false,

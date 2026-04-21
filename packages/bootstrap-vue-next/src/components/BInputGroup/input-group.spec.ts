@@ -184,10 +184,8 @@ describe('input-group', () => {
     expect(wrapper.element.tagName).toBe('SPAN')
   })
 
-  it('does not have size class when size is md', () => {
-    const wrapper = mount(BInputGroup, {
-      props: {size: 'md'},
-    })
+  it('does not have size class when size is undefined (default)', () => {
+    const wrapper = mount(BInputGroup)
     expect(wrapper.classes()).not.toContain('input-group-md')
   })
 

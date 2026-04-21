@@ -111,7 +111,7 @@ const propDefaults = {
   inline: false,
   reverse: false,
   switch: false,
-  size: 'md' as const,
+  size: undefined,
   buttonVariant: 'secondary' as const,
   state: null,
 }

@@ -25,7 +25,7 @@ const getClasses = (items: MaybeRefOrGetter<ClassesItemsInput>) =>
       'form-check-inline': resolvedItems.inline === true,
       'form-switch': resolvedItems.switch === true,
       [`form-control-${resolvedItems.size}`]:
-        resolvedItems.size !== undefined && resolvedItems.size !== 'md' && !resolvedItems.button,
+        resolvedItems.size !== undefined && !resolvedItems.button,
     }
   })
 
@@ -67,7 +67,7 @@ const getLabelClasses = (items: MaybeRefOrGetter<LabelClasesItemsInput>) =>
         resolvedItems.buttonVariant !== undefined &&
         resolvedItems.buttonVariant !== null,
       [`btn-${resolvedItems.size}`]:
-        resolvedItems.button && resolvedItems.size && resolvedItems.size !== 'md',
+        resolvedItems.button && resolvedItems.size !== undefined,
     }
   })
 
