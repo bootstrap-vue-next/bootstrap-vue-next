@@ -410,10 +410,13 @@ const callTbodyTrAttrs = (item: Item | null, type: TableRowType) =>
 const generateTableRowId = (primaryKeyValue: string) =>
   `${computedId.value}__row_${primaryKeyValue}`
 
-const getItemKey = (item: Item, itemIndex: number): string | number =>
-  props.primaryKey && isTableItem(item) && getWithGetter(item, props.primaryKey) != null
-    ? (getWithGetter(item, props.primaryKey) as string | number)
-    : itemIndex
+const getItemKey = (item: Item, itemIndex: number): string | number => {
+  if (props.primaryKey && isTableItem(item)) {
+    const keyValue = getWithGetter(item, props.primaryKey)
+    if (keyValue != null) return keyValue as string | number
+  }
+  return itemIndex
+}
 
 const getCellComponent = (field: Readonly<TableField>) => {
   if (field?.isRowHeader) {
