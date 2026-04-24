@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.44.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.7...bootstrapvuenext-v0.44.8) (2026-04-24)
+
+
+### Features
+
+* remove unnecessary "md" size from Size, default to undefined to remove unused class ([#3178](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3178)) ([3ef6f67](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3ef6f67f51e3445812f5b2ea346be5188f62ff62))
+
+
+### Bug Fixes
+
+* keep directive tooltips/popovers visible when reactive content updates ([#3182](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3182)) ([c362d0d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/c362d0dcf40d9241265c8b0bf2441174461a211b))
+
 ## [0.44.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.6...bootstrapvuenext-v0.44.7) (2026-04-21)
 
 
