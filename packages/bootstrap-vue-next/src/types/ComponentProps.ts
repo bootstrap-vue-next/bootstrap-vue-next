@@ -1388,9 +1388,9 @@ export interface BTableLiteProps<Item> extends BTableSimpleProps {
   // primaryKey?: Item extends object ? TablePrimaryKey<Item> : string
   primaryKey?: TablePrimaryKey<Item>
   tbodyClass?: ClassValue
+  tbodyTransitionHandlers?: AttrsValue
+  tbodyTransitionProps?: AttrsValue
   tbodyTrAttrs?: ((item: Item | null, type: TableRowType) => AttrsValue) | AttrsValue
-  // tbodyTransitionHandlers
-  // tbodyTransitionProps
   tbodyTrClass?:
     | ((item: Item | null, type: TableRowType) => TableStrictClassValue)
     | TableStrictClassValue

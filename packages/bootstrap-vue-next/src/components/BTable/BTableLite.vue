@@ -47,7 +47,12 @@
         </BTd>
       </BTr>
     </BThead>
-    <BTbody :class="props.tbodyClass">
+    <component
+      :is="props.tbodyTransitionProps ? TransitionGroup : BTbody"
+      :tag="props.tbodyTransitionProps ? 'tbody' : undefined"
+      :class="props.tbodyClass"
+      v-bind="{...props.tbodyTransitionProps, ...props.tbodyTransitionHandlers}"
+    >
       <slot
         name="custom-body"
         :fields="computedFields"
@@ -56,6 +61,7 @@
       >
         <BTr
           v-if="!props.stacked && slots['top-row']"
+          :key="'__b-table-top-row__'"
           :class="getRowClasses(null, 'row-top')"
           v-bind="callTbodyTrAttrs(null, 'row-top')"
         >
@@ -64,11 +70,7 @@
 
         <template
           v-for="(item, itemIndex) in props.items"
-          :key="
-            props.primaryKey && isTableItem(item) && getWithGetter(item, props.primaryKey)
-              ? getWithGetter(item, props.primaryKey)
-              : itemIndex
-          "
+          :key="getItemKey(item, itemIndex)"
         >
           <BTr
             :id="
@@ -153,6 +155,7 @@
         <!-- This class is for specific targetting of this slot element -->
         <BTr
           v-if="!props.stacked && slots['bottom-row']"
+          :key="'__b-table-bottom-row__'"
           class="bottom-row"
           :class="getRowClasses(null, 'row-bottom')"
           v-bind="callTbodyTrAttrs(null, 'row-bottom')"
@@ -160,7 +163,7 @@
           <slot name="bottom-row" :columns="computedFieldsTotal" :fields="computedFields" />
         </BTr>
       </slot>
-    </BTbody>
+    </component>
     <BTfoot v-if="props.footClone" v-bind="footerProps">
       <BTr
         :variant="props.footRowVariant ?? props.headRowVariant"
@@ -216,7 +219,7 @@
 </template>
 
 <script setup lang="ts" generic="Item">
-import {computed, readonly, toRef} from 'vue'
+import {computed, readonly, toRef, TransitionGroup} from 'vue'
 import type {BTableLiteProps} from '../../types/ComponentProps'
 import {
   isTableItem,
@@ -268,6 +271,8 @@ const _props = withDefaults(defineProps<Omit<BTableLiteProps<Item>, 'expandedIte
   modelValue: undefined,
   primaryKey: undefined,
   tbodyClass: undefined,
+  tbodyTransitionHandlers: undefined,
+  tbodyTransitionProps: undefined,
   tbodyTrAttrs: undefined,
   tfootClass: undefined,
   tfootTrClass: undefined,
@@ -404,6 +409,11 @@ const callTbodyTrAttrs = (item: Item | null, type: TableRowType) =>
 
 const generateTableRowId = (primaryKeyValue: string) =>
   `${computedId.value}__row_${primaryKeyValue}`
+
+const getItemKey = (item: Item, itemIndex: number): string | number =>
+  props.primaryKey && isTableItem(item) && getWithGetter(item, props.primaryKey) != null
+    ? (getWithGetter(item, props.primaryKey) as string | number)
+    : itemIndex
 
 const getCellComponent = (field: Readonly<TableField>) => {
   if (field?.isRowHeader) {

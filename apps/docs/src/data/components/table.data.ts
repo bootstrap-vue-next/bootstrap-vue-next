@@ -252,6 +252,18 @@ export default {
           type: 'ClassValue',
           default: undefined,
         },
+        tbodyTransitionHandlers: {
+          type: 'AttrsValue',
+          default: undefined,
+          description:
+            "Vue 'transition-group' event handlers. When provided alongside tbody-transition-props, will be bound to the tbody 'transition-group' component",
+        },
+        tbodyTransitionProps: {
+          type: 'AttrsValue',
+          default: undefined,
+          description:
+            "Vue 'transition-group' properties. When provided will make the tbody a Vue 'transition-group' component. Requires primary-key to be set for proper transition support",
+        },
         tbodyTrAttrs: {
           type: '((item: Item | null, type: TableRowType) => AttrsValue) | AttrsValue',
           default: undefined,
