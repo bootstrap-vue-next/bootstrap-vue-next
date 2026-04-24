@@ -7,6 +7,7 @@ import {
   resolveContent,
   resolveDirectiveProps,
   unbind,
+  updateBind,
 } from '../utils/floatingUi'
 import {defaultsKey} from '../utils/keys'
 
@@ -285,8 +286,6 @@ export function createFloatingDirective(
       // Prevent race conditions during update
       if (instance.destroying) return
 
-      unbind(el)
-
       const props = buildProps
         ? buildProps(text, defaultsMap?.[componentDefaultsKey], binding, el)
         : {
@@ -295,7 +294,8 @@ export function createFloatingDirective(
             ...text,
           }
 
-      bind(el, binding, props)
+      // Update props in-place so the tooltip stays visible if it was open
+      updateBind(el, binding, props)
 
       // Update THIS instance's cache
       updateBindingCache(instance, binding)

@@ -159,6 +159,21 @@ export const bind = (
   el.$__element = div
 }
 
+export const updateBind = (
+  el: ElementWithPopper,
+  binding: Readonly<DirectiveBinding>,
+  props: BPopoverProps
+) => {
+  const div = el.$__element
+  if (!div) {
+    bind(el, binding, props)
+    return
+  }
+  // Re-render in the same container so Vue can diff/patch the component props
+  // without unmounting it — this keeps the tooltip visible if it was open
+  render(h(BPopover, props), div)
+}
+
 export const unbind = (el: ElementWithPopper) => {
   const div = el.$__element
   if (!div) return

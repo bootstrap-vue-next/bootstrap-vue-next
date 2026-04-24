@@ -125,6 +125,50 @@ describe('v-b-popover directive', () => {
     wrapper.unmount()
   })
 
+  it('keeps popover visible when reactive content updates while shown', async () => {
+    const wrapper = mount(
+      {
+        directives: {bPopover: vBPopover},
+        template: '<button v-b-popover="popoverText">Button</button>',
+        data() {
+          return {popoverText: 'Initial popover'}
+        },
+      },
+      {
+        attachTo: document.body,
+      }
+    )
+
+    await flushPromises()
+    await nextTick()
+
+    const button = wrapper.find('button')
+
+    // Show the popover
+    await button.trigger('pointerenter')
+    await flushPromises()
+    await nextTick()
+
+    // Popover component should be in the DOM
+    let popover = document.querySelector('.popover')
+    expect(popover).toBeTruthy()
+
+    // Capture the element reference to verify it is not replaced
+    const originalElement = wrapper.element.nextElementSibling
+
+    // Update the reactive content
+    await wrapper.setData({popoverText: 'Updated popover'})
+    await flushPromises()
+    await nextTick()
+
+    // The popover container should be the same element (not destroyed and recreated)
+    popover = document.querySelector('.popover')
+    expect(popover).toBeTruthy()
+    expect(wrapper.element.nextElementSibling).toBe(originalElement)
+
+    wrapper.unmount()
+  })
+
   it('handles elements without title attribute', async () => {
     const wrapper = mount(
       {
