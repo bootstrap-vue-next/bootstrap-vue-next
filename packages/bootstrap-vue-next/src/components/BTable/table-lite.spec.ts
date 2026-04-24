@@ -1,5 +1,5 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import BTableLite from './BTableLite.vue'
 
 class Person {
@@ -1632,6 +1632,82 @@ describe('btablelite', () => {
       })
       expect(wrapper.vm.expansion).toBeDefined()
       expect(wrapper.vm.expansion.expandedItems).toBeDefined()
+    })
+  })
+
+  describe('tbodyTransitionProps', () => {
+    it('renders tbody as TransitionGroup when tbodyTransitionProps is provided', async () => {
+      const {TransitionGroup} = await import('vue')
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          tbodyTransitionProps: {name: 'fade'},
+        },
+      })
+      const tg = wrapper.findComponent(TransitionGroup)
+      expect(tg.exists()).toBe(true)
+    })
+
+    it('renders tbody as BTbody when tbodyTransitionProps is not provided', async () => {
+      const {TransitionGroup} = await import('vue')
+      const wrapper = mount(BTableLite, {
+        props: {items: [{a: 1}]},
+      })
+      const tg = wrapper.findComponent(TransitionGroup)
+      expect(tg.exists()).toBe(false)
+      expect(wrapper.find('tbody').exists()).toBe(true)
+    })
+
+    it('passes tbodyTransitionProps to TransitionGroup', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          tbodyTransitionProps: {name: 'my-transition'},
+        },
+      })
+      // @vue/test-utils stubs TransitionGroup as 'transition-group-stub'
+      const tgEl = wrapper.find('transition-group-stub')
+      expect(tgEl.exists()).toBe(true)
+      expect(tgEl.attributes('tag')).toBe('tbody')
+      expect(tgEl.attributes('name')).toBe('my-transition')
+    })
+
+    it('still applies tbodyClass when tbodyTransitionProps is provided', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          tbodyTransitionProps: {name: 'fade'},
+          tbodyClass: 'custom-tbody',
+        },
+      })
+      const tgEl = wrapper.find('transition-group-stub')
+      expect(tgEl.exists()).toBe(true)
+      expect(tgEl.classes()).toContain('custom-tbody')
+    })
+
+    it('passes tbodyTransitionHandlers alongside tbodyTransitionProps', async () => {
+      const onEnter = vi.fn()
+      const {TransitionGroup} = await import('vue')
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}],
+          tbodyTransitionProps: {name: 'fade'},
+          tbodyTransitionHandlers: {onEnter},
+        },
+      })
+      const tg = wrapper.findComponent(TransitionGroup)
+      expect(tg.exists()).toBe(true)
+    })
+
+    it('renders items correctly when using TransitionGroup', () => {
+      const wrapper = mount(BTableLite, {
+        props: {
+          items: [{a: 1}, {a: 2}, {a: 3}],
+          tbodyTransitionProps: {name: 'fade'},
+        },
+      })
+      // Body rows are inside transition-group-stub (how @vue/test-utils stubs TransitionGroup)
+      expect(wrapper.findAll('transition-group-stub tr').length).toBe(3)
     })
   })
 })

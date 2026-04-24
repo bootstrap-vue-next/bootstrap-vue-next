@@ -252,6 +252,18 @@ export default {
           type: 'ClassValue',
           default: undefined,
         },
+        tbodyTransitionHandlers: {
+          type: 'AttrsValue',
+          default: undefined,
+          description:
+            "Vue 'transition-group' event handlers (e.g. onBeforeEnter, onEnter, onAfterEnter, onLeave, etc.). Applied to the tbody 'transition-group' component when tbody-transition-props is also provided",
+        },
+        tbodyTransitionProps: {
+          type: 'AttrsValue',
+          default: undefined,
+          description:
+            "Vue 'transition-group' properties (e.g. name, css, mode). When provided, makes the tbody a Vue 'transition-group' component to animate row additions, removals, and reordering. Requires primary-key to be set for stable key tracking. See Vue TransitionGroup docs for available properties",
+        },
         tbodyTrAttrs: {
           type: '((item: Item | null, type: TableRowType) => AttrsValue) | AttrsValue',
           default: undefined,
