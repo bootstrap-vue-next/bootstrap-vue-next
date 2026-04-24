@@ -126,6 +126,50 @@ describe('v-b-tooltip directive', () => {
     wrapper.unmount()
   })
 
+  it('keeps tooltip visible when reactive content updates while shown', async () => {
+    const wrapper = mount(
+      {
+        directives: {bTooltip: vBTooltip},
+        template: '<button v-b-tooltip="tooltipText">Button</button>',
+        data() {
+          return {tooltipText: 'Initial tooltip'}
+        },
+      },
+      {
+        attachTo: document.body,
+      }
+    )
+
+    await flushPromises()
+    await nextTick()
+
+    const button = wrapper.find('button')
+
+    // Show the tooltip
+    await button.trigger('pointerenter')
+    await flushPromises()
+    await nextTick()
+
+    // Tooltip component should be in the DOM
+    let tooltip = document.querySelector('.tooltip')
+    expect(tooltip).toBeTruthy()
+
+    // Capture the element reference to verify it is not replaced
+    const originalElement = wrapper.element.nextElementSibling
+
+    // Update the reactive content
+    await wrapper.setData({tooltipText: 'Updated tooltip'})
+    await flushPromises()
+    await nextTick()
+
+    // The tooltip container should be the same element (not destroyed and recreated)
+    tooltip = document.querySelector('.tooltip')
+    expect(tooltip).toBeTruthy()
+    expect(wrapper.element.nextElementSibling).toBe(originalElement)
+
+    wrapper.unmount()
+  })
+
   it('handles elements without title attribute', async () => {
     const wrapper = mount(
       {
