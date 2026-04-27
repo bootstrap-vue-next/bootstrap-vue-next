@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type {ComponentPublicInstance} from 'vue'
 import type {Placement} from './Alignment'
 import type {ClassValue} from './AnyValuedAttributes'
 import type {ButtonVariant, ColorVariant} from './ColorTypes'
@@ -54,6 +55,16 @@ export interface BModalSlotsData extends ShowHideSlotsData {
   cancel: () => void
   close: () => void
   ok: () => void
+  /**
+   * Callback ref to register a custom element as the ok button focus target.
+   * Use this with `:ref="okRef"` on your custom ok slot element so that `focus="ok"` works correctly.
+   */
+  okRef: (el: ComponentPublicInstance | Element | null) => void
+  /**
+   * Callback ref to register a custom element as the cancel button focus target.
+   * Use this with `:ref="cancelRef"` on your custom cancel slot element so that `focus="cancel"` works correctly.
+   */
+  cancelRef: (el: ComponentPublicInstance | Element | null) => void
 }
 
 export interface BModalSlots {

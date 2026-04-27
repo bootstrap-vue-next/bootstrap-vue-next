@@ -138,11 +138,13 @@ import {onKeyStroke, unrefElement} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {
   computed,
+  type ComponentPublicInstance,
   type CSSProperties,
   type EmitFn,
   nextTick,
   onMounted,
   ref,
+  shallowRef,
   useTemplateRef,
   watch,
 } from 'vue'
@@ -243,14 +245,25 @@ const okButton = useTemplateRef<HTMLElement | null>('_okButton')
 const cancelButton = useTemplateRef<HTMLElement | null>('_cancelButton')
 const closeButton = useTemplateRef<HTMLElement | null>('_closeButton')
 
+// Custom ref storage for slot-provided elements (used when default buttons are replaced by slot content)
+const customOkButton = shallowRef<HTMLElement | null>(null)
+const customCancelButton = shallowRef<HTMLElement | null>(null)
+
+const resolveSlotElement = (el: ComponentPublicInstance | Element | null): HTMLElement | null => {
+  if (el === null) return null
+  if (el instanceof HTMLElement) return el
+  if ('$el' in el) return (el.$el as HTMLElement | null) ?? null
+  return null
+}
+
 const pickFocusItem = () => {
   if (props.focus && typeof props.focus !== 'boolean') {
     if (props.focus === 'ok') {
-      return okButton
+      return customOkButton.value ? customOkButton : okButton
     } else if (props.focus === 'close') {
       return closeButton
     } else if (props.focus === 'cancel') {
-      return cancelButton
+      return customCancelButton.value ? customCancelButton : cancelButton
     }
     return getElement(props.focus, element.value ?? undefined) ?? element.value
   }
@@ -454,6 +467,12 @@ const sharedSlots = computed<BModalSlotsData>(() => ({
   },
   active: showRef.value,
   visible: showRef.value,
+  okRef: (el) => {
+    customOkButton.value = resolveSlotElement(el)
+  },
+  cancelRef: (el) => {
+    customCancelButton.value = resolveSlotElement(el)
+  },
 }))
 
 defineExpose({

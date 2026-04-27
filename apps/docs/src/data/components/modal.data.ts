@@ -17,6 +17,11 @@ const sharedSlots: SlotScopeReference = {
     description:
       "Closes the modal and fires the 'cancel' and 'hide' events, with `bvModalEvent.trigger = 'cancel'`",
   },
+  cancelRef: {
+    type: '(el: ComponentPublicInstance | Element | null) => void',
+    description:
+      "Callback ref to register a custom element as the cancel button focus target. Use `:ref=\"cancelRef\"` on your custom cancel slot element so that `focus=\"cancel\"` works correctly.",
+  },
   close: {
     type: 'Function',
     description:
@@ -31,6 +36,11 @@ const sharedSlots: SlotScopeReference = {
     type: 'Function',
     description:
       "Closes the modal and fires the 'ok' and 'hide' events, with `bvModalEvent.trigger = 'ok'`",
+  },
+  okRef: {
+    type: '(el: ComponentPublicInstance | Element | null) => void',
+    description:
+      "Callback ref to register a custom element as the ok button focus target. Use `:ref=\"okRef\"` on your custom ok slot element so that `focus=\"ok\"` works correctly.",
   },
   visible: {
     type: 'boolean',
