@@ -252,7 +252,8 @@ const customCancelButton = shallowRef<HTMLElement | null>(null)
 const resolveSlotElement = (el: ComponentPublicInstance | Element | null): HTMLElement | null => {
   if (el === null) return null
   if (el instanceof HTMLElement) return el
-  if ('$el' in el) return (el.$el as HTMLElement | null) ?? null
+  // For Vue component instances (not DOM nodes), access $el
+  if (!(el instanceof Element) && '$el' in el) return (el.$el as HTMLElement | null) ?? null
   return null
 }
 
