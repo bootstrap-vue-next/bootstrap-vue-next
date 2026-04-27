@@ -10,59 +10,13 @@
     :class="[stateClass, {'was-validated': props.validated}]"
     class="b-form-group"
   >
-    <ContentTemplate.define>
-      <BFormInvalidFeedback
-        v-if="slots['invalid-feedback'] || props.invalidFeedback"
-        :id="invalidFeedbackId"
-        :aria-live="props.feedbackAriaLive"
-        :state="computedState"
-        :tooltip="props.tooltip"
-      >
-        <slot name="invalid-feedback">{{ props.invalidFeedback }}</slot>
-      </BFormInvalidFeedback>
-      <BFormValidFeedback
-        v-if="slots['valid-feedback'] || props.validFeedback"
-        :id="validFeedbackId"
-        :aria-live="props.feedbackAriaLive"
-        :state="computedState"
-        :tooltip="props.tooltip"
-      >
-        <slot name="valid-feedback">{{ props.validFeedback }}</slot>
-      </BFormValidFeedback>
-      <BFormText v-if="slots.description || props.description" :id="descriptionId">
-        <slot name="description">{{ props.description }}</slot>
-      </BFormText>
-    </ContentTemplate.define>
-    <LabelContentTemplate.define>
-      <template v-if="slots.label || props.label || isHorizontal">
-        <BCol
-          v-if="isHorizontal"
-          v-bind="labelColProps"
-          :id="labelId"
-          :tag="labelTag"
-          :for="computedLabelFor || null"
-          :tabindex="isFieldset ? '-1' : null"
-          :class="[labelAlignClasses, labelClasses]"
-          @click="isFieldset ? onLegendClick : null"
-        >
-          <slot name="label">{{ props.label }}</slot>
-        </BCol>
-        <component
-          :is="labelTag"
-          v-else
-          :id="labelId"
-          :for="computedLabelFor || null"
-          :tabindex="isFieldset ? '-1' : null"
-          :class="labelClasses"
-          @click="isFieldset ? onLegendClick : null"
-        >
-          <slot name="label">{{ props.label }}</slot>
-        </component>
-      </template>
-    </LabelContentTemplate.define>
     <!-- End of definitions -->
     <BFormRow v-if="isHorizontal">
-      <LabelContentTemplate.reuse />
+      <BFormGroupLabel v-if="labelShowing" v-bind="labelComponentProps" @legend-click="onLegendClick">
+        <template v-if="slots.label" #label>
+          <slot name="label" />
+        </template>
+      </BFormGroupLabel>
       <BCol v-bind="contentColProps" ref="_content">
         <slot
           :id="computedId"
@@ -70,7 +24,17 @@
           :description-id="descriptionId"
           :label-id="labelId"
         />
-        <ContentTemplate.reuse />
+        <BFormGroupContent v-bind="contentComponentProps">
+          <template v-if="slots['invalid-feedback']" #invalid-feedback>
+            <slot name="invalid-feedback" />
+          </template>
+          <template v-if="slots['valid-feedback']" #valid-feedback>
+            <slot name="valid-feedback" />
+          </template>
+          <template v-if="slots.description" #description>
+            <slot name="description" />
+          </template>
+        </BFormGroupContent>
       </BCol>
     </BFormRow>
     <template v-else>
@@ -81,18 +45,46 @@
           :description-id="descriptionId"
           :label-id="labelId"
         />
-        <LabelContentTemplate.reuse />
-        <ContentTemplate.reuse />
+        <BFormGroupLabel v-if="labelShowing" v-bind="labelComponentProps" @legend-click="onLegendClick">
+          <template v-if="slots.label" #label>
+            <slot name="label" />
+          </template>
+        </BFormGroupLabel>
+        <BFormGroupContent v-bind="contentComponentProps">
+          <template v-if="slots['invalid-feedback']" #invalid-feedback>
+            <slot name="invalid-feedback" />
+          </template>
+          <template v-if="slots['valid-feedback']" #valid-feedback>
+            <slot name="valid-feedback" />
+          </template>
+          <template v-if="slots.description" #description>
+            <slot name="description" />
+          </template>
+        </BFormGroupContent>
       </div>
       <template v-else>
-        <LabelContentTemplate.reuse />
+        <BFormGroupLabel v-if="labelShowing" v-bind="labelComponentProps" @legend-click="onLegendClick">
+          <template v-if="slots.label" #label>
+            <slot name="label" />
+          </template>
+        </BFormGroupLabel>
         <slot
           :id="computedId"
           :aria-describedby="null"
           :description-id="descriptionId"
           :label-id="labelId"
         />
-        <ContentTemplate.reuse />
+        <BFormGroupContent v-bind="contentComponentProps">
+          <template v-if="slots['invalid-feedback']" #invalid-feedback>
+            <slot name="invalid-feedback" />
+          </template>
+          <template v-if="slots['valid-feedback']" #valid-feedback>
+            <slot name="valid-feedback" />
+          </template>
+          <template v-if="slots.description" #description>
+            <slot name="description" />
+          </template>
+        </BFormGroupContent>
       </template>
     </template>
   </component>
@@ -103,17 +95,15 @@ import {computed, provide, type Ref, ref, toRef, useTemplateRef} from 'vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {attemptFocus, isVisible} from '../../utils/dom'
 import BCol from '../BContainer/BCol.vue'
-import BFormInvalidFeedback from '../BForm/BFormInvalidFeedback.vue'
 import BFormRow from '../BForm/BFormRow.vue'
-import BFormText from '../BForm/BFormText.vue'
-import BFormValidFeedback from '../BForm/BFormValidFeedback.vue'
 import {suffixPropName} from '../../utils/props'
 import {useStateClass} from '../../composables/useStateClass'
 import {useId} from '../../composables/useId'
-import {createReusableTemplate} from '@vueuse/core'
 import type {BFormGroupProps, BFormGroupSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import {formGroupKey} from '../../utils/keys'
+import BFormGroupContent from '../BFormGroupContent.vue'
+import BFormGroupLabel from '../BFormGroupLabel.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -156,9 +146,6 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
 })
 const props = useDefaults(_props, 'BFormGroup')
 const slots = defineSlots<BFormGroupSlots>()
-
-const LabelContentTemplate = createReusableTemplate()
-const ContentTemplate = createReusableTemplate()
 
 const computedState = toRef(() => props.state)
 const computedDisabled = toRef(() => props.disabled)
@@ -280,4 +267,30 @@ const validFeedbackId = useId(undefined, '_BV_feedback_valid_')
 const descriptionId = useId(undefined, '_BV_description_')
 
 const isFieldset = computed(() => !computedLabelFor.value)
+
+const labelShowing = computed(() => !!slots.label || !!props.label || isHorizontal.value)
+
+const labelComponentProps = computed(() => ({
+  label: props.label,
+  labelTag: labelTag.value,
+  labelId: labelId.value,
+  computedLabelFor: computedLabelFor.value,
+  isFieldset: isFieldset.value,
+  isHorizontal: isHorizontal.value,
+  labelColProps: labelColProps.value,
+  labelAlignClasses: labelAlignClasses.value,
+  labelClasses: labelClasses.value,
+}))
+
+const contentComponentProps = computed(() => ({
+  invalidFeedback: props.invalidFeedback,
+  validFeedback: props.validFeedback,
+  description: props.description,
+  feedbackAriaLive: props.feedbackAriaLive,
+  state: computedState.value,
+  tooltip: props.tooltip,
+  invalidFeedbackId: invalidFeedbackId.value,
+  validFeedbackId: validFeedbackId.value,
+  descriptionId: descriptionId.value,
+}))
 </script>
