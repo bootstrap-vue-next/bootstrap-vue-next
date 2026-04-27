@@ -59,8 +59,7 @@ import {computed} from 'vue'
 import {TimeRangeFieldInput, TimeRangeFieldRoot} from 'reka-ui'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BTimeRangeFieldSlots} from '../../types'
-import type {BTimeRangeFieldProps} from '../../types/ComponentProps'
+import type {BTimeRangeFieldProps, BTimeRangeFieldSlots} from '../../types'
 
 const _props = withDefaults(
   defineProps<Omit<BTimeRangeFieldProps, 'modelValue' | 'placeholder'>>(),

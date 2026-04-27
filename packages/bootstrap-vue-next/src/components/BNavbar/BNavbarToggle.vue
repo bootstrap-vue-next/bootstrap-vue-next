@@ -14,12 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import type {BNavbarToggleProps} from '../../types/ComponentProps'
 import {computed, inject} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {showHideRegistryKey} from '../../utils/keys'
 import {getActiveShowHide, getShowHideValue} from '../../utils/registryAccess'
-import type {BNavbarToggleEmits, BNavbarToggleSlots} from '../../types'
+import type {BNavbarToggleEmits, BNavbarToggleProps, BNavbarToggleSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarToggleProps>(), {
   label: 'Toggle navigation',

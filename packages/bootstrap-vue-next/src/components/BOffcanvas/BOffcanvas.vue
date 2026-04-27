@@ -94,9 +94,12 @@ import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, type EmitFn, nextTick, onMounted, ref, useTemplateRef, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BOffcanvasProps} from '../../types/ComponentProps'
-import type {BOffcanvasEmits} from '../../types/ComponentEmits'
-import type {BOffcanvasSlots, BOffcanvasSlotsData} from '../../types/ComponentSlots'
+import type {
+  BOffcanvasEmits,
+  BOffcanvasProps,
+  BOffcanvasSlots,
+  BOffcanvasSlotsData,
+} from '../../types'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
@@ -255,7 +258,7 @@ const {needsFallback} = useActivatedFocusTrap({
 const showBackdrop = computed(
   () =>
     (props.responsive === undefined || !isOpenByBreakpoint.value) &&
-    props.noBackdrop === false &&
+    !props.noBackdrop &&
     (showRef.value === true ||
       (isLeaving.value && props.backdropFirst && !computedNoAnimation.value))
 )

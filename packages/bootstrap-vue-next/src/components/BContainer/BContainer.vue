@@ -5,9 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import type {BContainerSlots} from '../../types'
+import type {BContainerProps, BContainerSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BContainerProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 
 const _props = withDefaults(defineProps<BContainerProps>(), {

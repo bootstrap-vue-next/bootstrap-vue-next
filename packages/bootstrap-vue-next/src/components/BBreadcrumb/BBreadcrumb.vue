@@ -15,10 +15,8 @@
 import {computed} from 'vue'
 import {useBreadcrumb} from '../../composables/useBreadcrumb'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BBreadcrumbProps} from '../../types/ComponentProps'
 import BBreadcrumbItem from './BBreadcrumbItem.vue'
-import type {BreadcrumbItem} from '../../types/BreadcrumbTypes'
-import type {BBreadcrumbSlots} from '../../types'
+import type {BBreadcrumbProps, BBreadcrumbSlots, BreadcrumbItem} from '../../types'
 
 const _props = withDefaults(defineProps<BBreadcrumbProps>(), {
   items: undefined,
@@ -34,7 +32,7 @@ const breadcrumb = useBreadcrumb(() => props.id || null)
 const breadcrumbItemObjects = computed<BreadcrumbItem[]>(() => {
   const localItems = props.items || breadcrumb.items?.value || []
   let activeDefined = false
-  const items = localItems.map((item, idx) => {
+  return localItems.map((item, idx) => {
     if (typeof item === 'string') {
       item = {text: item}
       if (idx < localItems.length - 1) item.href = '#'
@@ -47,6 +45,5 @@ const breadcrumbItemObjects = computed<BreadcrumbItem[]>(() => {
     }
     return item
   })
-  return items
 })
 </script>

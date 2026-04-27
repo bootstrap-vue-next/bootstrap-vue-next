@@ -5,10 +5,9 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import type {BFormSelectOptionSlots} from '../../types'
+import type {BFormSelectOptionProps, BFormSelectOptionSlots} from '../../types'
 import {computed, inject} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BFormSelectOptionProps} from '../../types/ComponentProps'
 import {formSelectKey} from '../../utils/keys'
 
 const _props = withDefaults(defineProps<BFormSelectOptionProps<T>>(), {

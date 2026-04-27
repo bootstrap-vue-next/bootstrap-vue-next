@@ -6,9 +6,8 @@
 
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
-import type {BTrProps} from '../../types/ComponentProps'
+import type {BTrProps, BTrSlots} from '../../types'
 import {computed} from 'vue'
-import type {BTrSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BTrProps>(), {
   variant: null,

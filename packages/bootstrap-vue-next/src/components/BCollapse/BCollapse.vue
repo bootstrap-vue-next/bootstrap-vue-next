@@ -28,9 +28,7 @@ import {computed, type EmitFn, provide, readonly, toRef, useTemplateRef} from 'v
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {collapseInjectionKey} from '../../utils/keys'
-import type {BCollapseProps} from '../../types/ComponentProps'
-import type {BCollapseEmits} from '../../types/ComponentEmits'
-import type {BCollapseSlots, ShowHideSlotsData} from '../../types/ComponentSlots'
+import type {BCollapseEmits, BCollapseProps, BCollapseSlots, ShowHideSlotsData} from '../../types'
 import {useShowHide} from '../../composables/useShowHide'
 
 defineOptions({

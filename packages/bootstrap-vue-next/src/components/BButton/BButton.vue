@@ -39,10 +39,8 @@ import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import BLink from '../BLink/BLink.vue'
 import {useLinkClasses} from '../../composables/useLinkClasses'
 import {onKeyStroke} from '@vueuse/core'
-import type {BButtonProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {ColorVariant} from '../../types/ColorTypes'
-import {type BButtonEmits, type BButtonSlots} from '../../types'
+import type {BButtonEmits, BButtonProps, BButtonSlots, ColorVariant} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BButtonProps, 'pressed'>>(), {
   loading: false,
@@ -138,9 +136,9 @@ const computedClasses = computed(() => [
   variantIsLinkType.value === true && computedLink.value === false
     ? linkValueClasses.value
     : undefined,
- {
-   [`btn-${props.size}`]: props.size !== undefined,
-   [`btn-${props.variant}`]: props.variant !== null && variantIsLinkTypeSubset.value === false,
+  {
+    [`btn-${props.size}`]: props.size !== undefined,
+    [`btn-${props.variant}`]: props.variant !== null && variantIsLinkTypeSubset.value === false,
     'active': props.active || pressedValue.value,
     'rounded-pill': props.pill,
     'rounded-0': props.squared,

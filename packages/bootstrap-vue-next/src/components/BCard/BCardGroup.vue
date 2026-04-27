@@ -6,8 +6,7 @@
 
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
-import type {BCardGroupProps} from '../../types/ComponentProps'
-import type {BCardGroupSlots} from '../../types'
+import type {BCardGroupProps, BCardGroupSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BCardGroupProps>(), {
   tag: 'div',

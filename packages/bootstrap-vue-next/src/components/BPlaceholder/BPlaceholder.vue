@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import {computed, type CSSProperties} from 'vue'
-import type {BPlaceholderProps} from '../../types/ComponentProps'
+import type {BPlaceholderProps} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 

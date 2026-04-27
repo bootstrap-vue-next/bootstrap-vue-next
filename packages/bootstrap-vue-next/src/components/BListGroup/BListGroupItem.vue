@@ -16,12 +16,11 @@
 
 <script setup lang="ts">
 import {computed, inject, useAttrs} from 'vue'
-import type {BListGroupItemProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import BLink from '../BLink/BLink.vue'
 import {listGroupInjectionKey} from '../../utils/keys'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
-import type {BListGroupItemSlots} from '../../types'
+import type {BListGroupItemProps, BListGroupItemSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BListGroupItemProps>(), {
   action: false,

@@ -59,7 +59,6 @@
 </template>
 
 <script setup lang="ts">
-import type {BCardProps} from '../../types/ComponentProps'
 import {isEmptySlot} from '../../utils/dom'
 import {computed} from 'vue'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
@@ -69,7 +68,7 @@ import BCardHeader from './BCardHeader.vue'
 import BCardBody from './BCardBody.vue'
 import BCardFooter from './BCardFooter.vue'
 import {createReusableTemplate} from '@vueuse/core'
-import type {BCardSlots} from '../../types'
+import type {BCardProps, BCardSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BCardProps>(), {
   align: undefined,

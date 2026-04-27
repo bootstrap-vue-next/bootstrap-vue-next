@@ -166,7 +166,7 @@ const displayValue = computed(() =>
   hoverValue.value !== null ? hoverValue.value : modelValue.value
 )
 
-// Set the minimum amount of star can be render to 3
+// Set the minimum amount of star can be rendered to 3
 const clampedStars = computed(() => Math.max(3, props.stars))
 
 const computedSize = computed(() => {

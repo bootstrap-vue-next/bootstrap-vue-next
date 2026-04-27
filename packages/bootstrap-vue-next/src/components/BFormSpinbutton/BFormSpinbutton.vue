@@ -85,8 +85,8 @@ import {useId} from '../../composables/useId'
 import {useRtl} from '../../composables/useRtl'
 import type {
   BFormSpinbuttonEmits,
-  BFormSpinbuttonSlots,
   BFormSpinbuttonProps,
+  BFormSpinbuttonSlots,
   ButtonType,
 } from '../../types'
 import {getSafeDocument} from '../../utils/dom'
@@ -155,7 +155,7 @@ const computedSpinClasses = computed(() => ({
   'border-end': !props.vertical,
 }))
 
-//non reactive properties
+//non-reactive properties
 let $_autoDelayTimer: ReturnType<typeof setTimeout> | undefined
 let $_autoRepeatTimer: ReturnType<typeof setTimeout> | undefined
 let $_keyIsDown = false

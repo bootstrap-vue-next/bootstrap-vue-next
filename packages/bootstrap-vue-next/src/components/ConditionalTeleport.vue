@@ -18,7 +18,7 @@ export default defineComponent({
     default?: Record<string, never>
   }>,
   setup(props, {slots}) {
-    // use this untill https://github.com/vuejs/core/issues/9782 is resolved
+    // use this until https://github.com/vuejs/core/issues/9782 is resolved
     return () =>
       !props.to
         ? slots.default?.({})

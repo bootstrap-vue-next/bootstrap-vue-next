@@ -104,9 +104,7 @@
 <script setup lang="ts">
 import {computed, type EmitFn, useTemplateRef, watch, watchEffect} from 'vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
-import type {BToastProps} from '../../types/ComponentProps'
-import type {BToastEmits} from '../../types/ComponentEmits'
-import type {BToastSlots, ShowHideSlotsData} from '../../types/ComponentSlots'
+import type {BToastEmits, BToastProps, BToastSlots, ShowHideSlotsData} from '../../types'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import BLink from '../BLink/BLink.vue'
 import BProgress from '../BProgress/BProgress.vue'
@@ -116,6 +114,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useCountdownHover} from '../../composables/useCountdownHover'
 import {useId} from '../../composables/useId'
 import {useShowHide} from '../../composables/useShowHide'
+import BButton from '../BButton/BButton.vue'
 
 const _props = withDefaults(defineProps<Omit<BToastProps, 'modelValue'>>(), {
   bgVariant: null,

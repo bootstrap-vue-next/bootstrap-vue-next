@@ -25,11 +25,9 @@
     )[]
   "
 >
-import type {BFormRadioGroupProps} from '../../types/ComponentProps'
+import type {BFormRadioGroupProps, OptionsValues, RadioOption} from '../../types'
 import {computed} from 'vue'
 import BFormRadioGroupBase from './BFormRadioGroupBase.vue'
-import type {RadioOption} from '../../types/RadioTypes'
-import type {OptionsValues} from '../../types/OptionsTypes'
 
 /**
  * Type-safe wrapper component for BFormRadioGroup.

@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BAspectProps} from '../../types/ComponentProps'
+import type {BAspectProps} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BAspectProps>(), {

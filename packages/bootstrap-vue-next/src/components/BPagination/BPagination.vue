@@ -12,7 +12,7 @@
       :key="`page-${page.id}`"
       v-bind="page.li"
       ref="_pageElements"
-      :displayIndex="index"
+      :[dataDisplayNameCustomAttribute]="index"
     >
       <span
         v-if="page.id === FIRST_ELLIPSIS || page.id === LAST_ELLIPSIS"
@@ -52,7 +52,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import type {ClassValue} from '../../types/AnyValuedAttributes'
 import {CODE_DOWN, CODE_LEFT, CODE_RIGHT, CODE_UP} from '../../utils/constants'
 import {getActiveElement} from '../../utils/dom'
-import {type BPaginationEmits, type BPaginationSlots, type BPaginationProps} from '../../types'
+import {type BPaginationEmits, type BPaginationProps, type BPaginationSlots} from '../../types'
 
 // Threshold of limit size when we start/stop showing ellipsis
 const ELLIPSIS_THRESHOLD = 3
@@ -63,6 +63,8 @@ const NEXT_BUTTON = -3
 const LAST_BUTTON = -4
 const FIRST_ELLIPSIS = -5
 const LAST_ELLIPSIS = -6
+
+const dataDisplayNameCustomAttribute = 'data-display-name'
 
 const _props = withDefaults(defineProps<Omit<BPaginationProps, 'modelValue'>>(), {
   align: 'start',
@@ -341,8 +343,8 @@ const getButtons = (): HTMLButtonElement[] =>
   [...(pageElements.value ?? [])]
     .sort(
       (a, b) =>
-        Number.parseInt(a.getAttribute('displayIndex') || '0') -
-        Number.parseInt(b.getAttribute('displayIndex') || '0')
+        Number.parseInt(a.getAttribute(dataDisplayNameCustomAttribute) || '0') -
+        Number.parseInt(b.getAttribute(dataDisplayNameCustomAttribute) || '0')
     )
     .map((page) => page.children[0])
     .filter((el) => {
@@ -486,7 +488,7 @@ const elements = computed(() => {
   const limit = limitNumber.value
   const noEllipsis = props.noEllipsis || limit <= ELLIPSIS_THRESHOLD
 
-  // The first case is when all of the page buttons fit on the control, this is
+  // The first case is when all the page buttons fit on the control, this is
   //  the simplest case and the only one that will create an array smaller than
   //  Limit + 4 - noEndButtons * 2 (the [first, last,] prev, next buttons)
 
@@ -500,7 +502,7 @@ const elements = computed(() => {
     ].filter((x) => x !== null) as number[]
   }
 
-  // All of the remaining cases result in an array that is exactly limit + 4 - noEndButtons * 2 in length, so create
+  // All the remaining cases result in an array that is exactly limit + 4 - noEndButtons * 2 in length, so create
   //  the array upfront and set up the beginning and end buttons, then fill the rest for each case
 
   const buttons = Array.from({length: limit + 4 - (noFirstButton.value + noLastButton.value)})
@@ -528,7 +530,7 @@ const elements = computed(() => {
     buttons[buttons.length - 1] = NEXT_BUTTON
   }
 
-  // The next case is where the page buttons start at the begginning, with
+  // The next case is where the page buttons start at the beginning, with
   //  no ellipsis at the beginning, but one at the end
 
   if (value <= halfLimit.value + firstPage.value) {
@@ -557,7 +559,7 @@ const elements = computed(() => {
 
   // Finally we have the case where we have ellipsis at both ends
   if (!buttons[2]) {
-    // Is there a more elegant way to ceck that we're in the final case?
+    // Is there a more elegant way to check that we're in the final case?
     const start = value - Math.floor(limit / 2)
     for (let index = 0; index < limit; index++) {
       buttons[index + 2 - noFirstButton.value] = start + index

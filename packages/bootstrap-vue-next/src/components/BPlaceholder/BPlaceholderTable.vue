@@ -46,13 +46,12 @@
 </template>
 
 <script setup lang="ts">
-import type {BPlaceholderTableProps} from '../../types/ComponentProps'
 import BTableSimple from '../BTable/BTableSimple.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import {useToNumber} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
-import type {BPlaceholderTableSlots} from '../../types'
+import type {BPlaceholderTableProps, BPlaceholderTableSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BPlaceholderTableProps>(), {
   animation: undefined,

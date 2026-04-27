@@ -16,9 +16,8 @@
 <script setup lang="ts">
 import {computed, useAttrs} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BDropdownTextProps} from '../../types/ComponentProps'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {BDropdownTextSlots} from '../../types'
+import type {BDropdownTextProps, BDropdownTextSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,

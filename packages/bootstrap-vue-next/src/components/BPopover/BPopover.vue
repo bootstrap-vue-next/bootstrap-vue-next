@@ -56,11 +56,11 @@ import {
   autoUpdate,
   type Boundary,
   flip,
-  type Placement as FloatingPlacement,
   hide as hideMiddleware,
   inline as inlineMiddleware,
   type Middleware,
   offset as offsetMiddleware,
+  type Placement as FloatingPlacement,
   type ReferenceElement,
   type RootBoundary,
   shift,
@@ -86,7 +86,7 @@ import {
 import {useDefaults} from '../../composables/useDefaults'
 import {useMouse} from '../../composables/useMouse'
 import {useId} from '../../composables/useId'
-import type {BPopoverSlots, ShowHideSlotsData, BPopoverProps, BPopoverEmits} from '../../types'
+import type {BPopoverEmits, BPopoverProps, BPopoverSlots, ShowHideSlotsData} from '../../types'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
@@ -174,7 +174,7 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
   }
   const off = props.offset !== null ? offsetNumber.value : props.tooltip ? 6 : 8
   const arr: Middleware[] = [offsetMiddleware(off)]
-  if (props.noFlip === false && !isAutoPlacement.value) {
+  if (!props.noFlip && !isAutoPlacement.value) {
     arr.push(
       flip({
         boundary: boundary.value,
@@ -193,7 +193,7 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
       })
     )
   }
-  if (props.noShift === false) {
+  if (!props.noShift) {
     arr.push(
       shift({
         boundary: boundary.value,
@@ -202,7 +202,7 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
       })
     )
   }
-  if (props.noHide === false) {
+  if (!props.noHide) {
     arr.push(
       hideMiddleware({
         boundary: boundary.value,
@@ -211,11 +211,11 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
       })
     )
   }
-  if (props.inline === true) {
+  if (props.inline) {
     arr.push(inlineMiddleware())
   }
   arr.push(arrowMiddleware({element: arrow, padding: 10}))
-  if (props.noSize === false) {
+  if (!props.noSize) {
     arr.push(
       sizeMiddleware({
         boundary: boundary.value,
@@ -295,7 +295,7 @@ const {
 })
 
 watch(middlewareData, (newValue) => {
-  if (props.noHide === false) {
+  if (!props.noHide) {
     if (newValue.hide?.referenceHidden && !hidden.value && showRef.value) {
       if (props.closeOnHide && !props.noAutoClose && !props.manual) {
         throttleHide('close-on-hide')

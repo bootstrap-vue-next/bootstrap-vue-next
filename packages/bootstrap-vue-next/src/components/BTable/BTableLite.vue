@@ -217,7 +217,6 @@
 
 <script setup lang="ts" generic="Item">
 import {computed, readonly, toRef} from 'vue'
-import type {BTableLiteProps} from '../../types/ComponentProps'
 import {
   isTableItem,
   type TableField,
@@ -243,8 +242,7 @@ import {
 } from '../../utils/tableUtils'
 import {filterEvent} from '../../utils/filterEvent'
 import {useId} from '../../composables/useId'
-import type {BTableLiteEmits} from '../../types/ComponentEmits'
-import type {BTableLiteSlots} from '../../types'
+import type {BTableLiteEmits, BTableLiteProps, BTableLiteSlots} from '../../types'
 import {
   useItemExpansion,
   useTableFieldsMapper,

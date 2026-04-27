@@ -4,8 +4,8 @@
     :class="computedClasses"
     class="b-img"
     :src="!props.blank ? props.src : computedBlankImgSrc"
-    :width="computedDimentions.width || undefined"
-    :height="computedDimentions.height || undefined"
+    :width="computedDimensions.width || undefined"
+    :height="computedDimensions.height || undefined"
     :srcset="!props.blank ? computedSrcset : undefined"
     :sizes="!props.blank ? computedSizes : undefined"
     :loading="props.lazy ? 'lazy' : 'eager'"
@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type {BImgProps} from '../../types/ComponentProps'
+import type {BImgProps} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
 import {useToNumber} from '@vueuse/core'
@@ -78,7 +78,7 @@ const computedSizes = computed(() =>
       : undefined
 )
 
-const computedDimentions = computed<{height: number | undefined; width: number | undefined}>(() => {
+const computedDimensions = computed<{height: number | undefined; width: number | undefined}>(() => {
   const width = Number.isNaN(widthNumber.value) ? undefined : widthNumber.value
   const height = Number.isNaN(heightNumber.value) ? undefined : heightNumber.value
   if (props.blank) {
@@ -93,7 +93,7 @@ const computedDimentions = computed<{height: number | undefined; width: number |
 })
 
 const computedBlankImgSrc = computed(() =>
-  makeBlankImgSrc(computedDimentions.value.width, computedDimentions.value.height, props.blankColor)
+  makeBlankImgSrc(computedDimensions.value.width, computedDimensions.value.height, props.blankColor)
 )
 
 const computedAlignment = computed(() => ({

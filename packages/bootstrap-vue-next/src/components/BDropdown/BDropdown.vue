@@ -290,7 +290,7 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
       ? offsetToNumber.value
       : props.offset
   const arr: Middleware[] = [offsetMiddleware(localOffset)]
-  if (props.noFlip === false) {
+  if (!props.noFlip) {
     arr.push(
       flip({
         boundary: boundary.value,
@@ -299,7 +299,7 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
       })
     )
   }
-  if (props.noShift === false) {
+  if (!props.noShift) {
     arr.push(
       shift({
         boundary: boundary.value,
@@ -308,7 +308,7 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
       })
     )
   }
-  if (props.noSize === false) {
+  if (!props.noSize) {
     arr.push(
       sizeMiddleware({
         boundary: boundary.value,

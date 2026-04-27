@@ -15,9 +15,8 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BFormInvalidFeedbackProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BFormInvalidFeedbackSlots} from '../../types'
+import type {BFormInvalidFeedbackProps, BFormInvalidFeedbackSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BFormInvalidFeedbackProps>(), {
   ariaLive: undefined,
@@ -32,7 +31,7 @@ const _props = withDefaults(defineProps<BFormInvalidFeedbackProps>(), {
 const props = useDefaults(_props, 'BFormInvalidFeedback')
 defineSlots<BFormInvalidFeedbackSlots>()
 
-const computedShow = computed(() => props.forceShow === true || props.state === false)
+const computedShow = computed(() => props.forceShow || props.state === false)
 
 const computedClasses = computed(() => ({
   'd-block': computedShow.value,

@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import {computed, useAttrs} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BDropdownDividerProps} from '../../types/ComponentProps'
+import type {BDropdownDividerProps} from '../../types'
 
 defineOptions({
   inheritAttrs: false,

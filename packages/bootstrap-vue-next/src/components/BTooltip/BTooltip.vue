@@ -32,9 +32,7 @@
 <script setup lang="ts">
 import {computed, useTemplateRef} from 'vue'
 import BPopover from '../BPopover/BPopover.vue'
-import type {BPopoverProps, BTooltipProps} from '../../types/ComponentProps'
-import type {BTooltipSlots} from '../../types/ComponentSlots'
-import type {BTooltipEmits} from '../../types/ComponentEmits'
+import type {BPopoverProps, BTooltipEmits, BTooltipProps, BTooltipSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<Omit<BTooltipProps, 'modelValue'>>(), {

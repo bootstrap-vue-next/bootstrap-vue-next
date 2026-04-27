@@ -5,9 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import type {BTbodySlots} from '../../types'
+import type {BTbodyProps, BTbodySlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BTbodyProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 
 const _props = withDefaults(defineProps<BTbodyProps>(), {
