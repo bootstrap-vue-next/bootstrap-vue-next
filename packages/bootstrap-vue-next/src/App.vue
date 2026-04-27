@@ -1,16 +1,7 @@
 <template>
   <BContainer>
     <BRow>
-      <BCol>
-        <BAccordion free>
-          <BAccordionItem title="Accordion Item 1" visible>
-            First item
-            <BAccordionItem title="Accordion Item 2"> Second item. </BAccordionItem>
-          </BAccordionItem>
-
-          <BAccordionItem title="Accordion Item 3"> Third item. </BAccordionItem>
-        </BAccordion>
-      </BCol>
+      <BCol> Hello World! </BCol>
     </BRow>
   </BContainer>
 </template>
