@@ -37,6 +37,21 @@ const sharedSlots: SlotScopeReference = {
     description:
       "The visibility state of the modal. 'true' if the modal is visible and 'false' if not visible",
   },
+  okRef: {
+    type: 'Function',
+    description:
+      "Ref setter for the OK button in the `ok` slot. Bind via `:ref=\"okRef\"` to the element that should receive focus when `focus=\"ok\"` is set on the modal",
+  },
+  cancelRef: {
+    type: 'Function',
+    description:
+      "Ref setter for the Cancel button in the `cancel` slot. Bind via `:ref=\"cancelRef\"` to the element that should receive focus when `focus=\"cancel\"` is set on the modal",
+  },
+  closeRef: {
+    type: 'Function',
+    description:
+      "Ref setter for the Close button in the `header-close` slot. Bind via `:ref=\"closeRef\"` to the element that should receive focus when `focus=\"close\"` is set on the modal",
+  },
 } as const
 
 export default {

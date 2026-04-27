@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type {ComponentPublicInstance} from 'vue'
 import type {Placement} from './Alignment'
 import type {ClassValue} from './AnyValuedAttributes'
 import type {ButtonVariant, ColorVariant} from './ColorTypes'
@@ -54,6 +55,22 @@ export interface BModalSlotsData extends ShowHideSlotsData {
   cancel: () => void
   close: () => void
   ok: () => void
+  /**
+   * Ref setter for the OK button in the `ok` slot. Bind this to the element
+   * that should receive focus when `focus="ok"` is set on the modal.
+   * @example `<template #ok="{ok, okRef}"><button :ref="okRef" @click="ok()">OK</button></template>`
+   */
+  okRef: (el: Element | ComponentPublicInstance | null) => void
+  /**
+   * Ref setter for the Cancel button in the `cancel` slot. Bind this to the element
+   * that should receive focus when `focus="cancel"` is set on the modal.
+   */
+  cancelRef: (el: Element | ComponentPublicInstance | null) => void
+  /**
+   * Ref setter for the Close button in the `header-close` slot. Bind this to the element
+   * that should receive focus when `focus="close"` is set on the modal.
+   */
+  closeRef: (el: Element | ComponentPublicInstance | null) => void
 }
 
 export interface BModalSlots {

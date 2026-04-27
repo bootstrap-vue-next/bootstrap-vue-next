@@ -134,15 +134,17 @@
 </template>
 
 <script setup lang="ts">
-import {onKeyStroke, unrefElement} from '@vueuse/core'
+import {onKeyStroke} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {
   computed,
+  type ComponentPublicInstance,
   type CSSProperties,
   type EmitFn,
   nextTick,
   onMounted,
   ref,
+  shallowRef,
   useTemplateRef,
   watch,
 } from 'vue'
@@ -243,18 +245,29 @@ const okButton = useTemplateRef<HTMLElement | null>('_okButton')
 const cancelButton = useTemplateRef<HTMLElement | null>('_cancelButton')
 const closeButton = useTemplateRef<HTMLElement | null>('_closeButton')
 
+// Slot-provided button refs — set via ref setter functions exposed in the slot scope
+const slotOkButton = shallowRef<HTMLElement | null>(null)
+const slotCancelButton = shallowRef<HTMLElement | null>(null)
+const slotCloseButton = shallowRef<HTMLElement | null>(null)
+
+const makeSlotRef =
+  (target: ReturnType<typeof shallowRef<HTMLElement | null>>) =>
+  (el: Element | ComponentPublicInstance | null) => {
+    target.value = el instanceof Element ? (el as HTMLElement) : null
+  }
+
 const pickFocusItem = () => {
   if (props.focus && typeof props.focus !== 'boolean') {
     if (props.focus === 'ok') {
-      return okButton
+      return okButton.value ?? slotOkButton.value
     } else if (props.focus === 'close') {
-      return closeButton
+      return closeButton.value ?? slotCloseButton.value
     } else if (props.focus === 'cancel') {
-      return cancelButton
+      return cancelButton.value ?? slotCancelButton.value
     }
     return getElement(props.focus, element.value ?? undefined) ?? element.value
   }
-  return element
+  return element.value
 }
 
 let activeElement: HTMLElement | null = null
@@ -266,9 +279,9 @@ const onAfterEnter = () => {
     if (activeElement === element.value) {
       activeElement = null
     }
-    const el = unrefElement(pickFocusItem())
+    const el = pickFocusItem()
     if (!el) return
-    el?.focus()
+    el.focus()
     if (
       el.tagName &&
       el.tagName.toLowerCase() === 'input' &&
@@ -319,8 +332,7 @@ const {needsFallback} = useActivatedFocusTrap({
     ref: fallbackFocusElement,
     classSelector: fallbackClassSelector,
   },
-  focus: () => (props.focus === false ? false : (unrefElement(pickFocusItem()) ?? undefined)),
-  // () => (typeof focus === 'boolean' ? focus : (unrefElement(focus) ?? undefined)),
+  focus: () => (props.focus === false ? false : (pickFocusItem() ?? undefined)),
 })
 
 onKeyStroke(
@@ -454,6 +466,9 @@ const sharedSlots = computed<BModalSlotsData>(() => ({
   },
   active: showRef.value,
   visible: showRef.value,
+  okRef: makeSlotRef(slotOkButton),
+  cancelRef: makeSlotRef(slotCancelButton),
+  closeRef: makeSlotRef(slotCloseButton),
 }))
 
 defineExpose({
