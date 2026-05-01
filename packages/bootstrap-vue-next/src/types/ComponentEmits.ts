@@ -52,7 +52,7 @@ export interface BTableEmits<Item> extends BTableLiteEmits<Item> {
   'row-unselected': [value: unknown]
   'sorted': [value: BTableSortBy]
   'change': [value: readonly Item[]]
-  'context-changed': [context: BTableProviderContext]
+  'context-changed': [context: Omit<BTableProviderContext, 'signal'>]
 }
 
 export interface BTableLiteEmits<Item> {

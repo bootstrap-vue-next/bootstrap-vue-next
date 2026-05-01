@@ -257,14 +257,14 @@ export const useTableMapper = <Item>({
           // Handle sortNullLast: null/undefined values always sort last, regardless of sort direction
           // Only applies to internal sort (no custom comparer)
           if (sortNullLastValue && !comparer) {
-            const aVal = isTableField(field) && field.accessor && isTableItem(a)
-              ? getWithGetter(a, field.accessor)
-              : isTableItem(a) ? getWithGetter(a, key) : undefined
-            const bVal = isTableField(field) && field.accessor && isTableItem(b)
-              ? getWithGetter(b, field.accessor)
-              : isTableItem(b) ? getWithGetter(b, key) : undefined
-            const aIsNull = aVal === null || aVal === undefined
-            const bIsNull = bVal === null || bVal === undefined
+            const getItemVal = (item: Item): unknown => {
+              if (!isTableItem(item)) return undefined
+              return isTableField(field) && field.accessor
+                ? getWithGetter(item, field.accessor)
+                : getWithGetter(item, key)
+            }
+            const aIsNull = getItemVal(a) == null
+            const bIsNull = getItemVal(b) == null
             if (aIsNull && bIsNull) continue
             if (aIsNull) return 1
             if (bIsNull) return -1

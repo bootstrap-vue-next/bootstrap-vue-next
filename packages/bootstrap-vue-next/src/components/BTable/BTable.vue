@@ -493,13 +493,7 @@ const getSortLabel = (field: TableField<Item>): string => {
 watch(
   [() => props.filter, sortByModel, writableCurrentPageNumber, perPageNumber],
   ([filter, sortBy, currentPage, perPage]) => {
-    emit('context-changed', {
-      filter,
-      sortBy,
-      currentPage,
-      perPage,
-      signal: new AbortController().signal,
-    })
+    emit('context-changed', {filter, sortBy, currentPage, perPage})
   },
   {deep: true}
 )
