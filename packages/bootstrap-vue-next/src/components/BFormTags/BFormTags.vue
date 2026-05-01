@@ -43,6 +43,7 @@
         form: props.form,
         id: _inputId,
         value: inputValue,
+        modelValue: inputValue,
       }"
       :input-class="props.inputClass"
       :input-handlers="{
