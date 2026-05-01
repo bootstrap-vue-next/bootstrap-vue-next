@@ -1,4 +1,5 @@
 import type {ComponentInternalInstance, Directive, DirectiveBinding, Ref, VNode} from 'vue'
+import {markRaw} from 'vue'
 import type {BPopoverProps} from '../types/ComponentProps'
 import {
   bind,
@@ -9,7 +10,9 @@ import {
   unbind,
   updateBind,
 } from '../utils/floatingUi'
-import {defaultsKey} from '../utils/keys'
+import {defaultsKey, orchestratorRegistryKey} from '../utils/keys'
+import type {OrchestratorArrayValue} from '../types/ComponentOrchestratorTypes'
+import BPopover from '../components/BPopover/BPopover.vue'
 
 interface _ComponentInternalInstance extends ComponentInternalInstance {
   provides?: Record<string, unknown>
@@ -28,6 +31,8 @@ interface _VNode extends VNode {
 export interface DirectiveInstanceState {
   binding: string // JSON.stringify cache for change detection
   destroying: boolean // Flag to prevent race conditions during cleanup
+  _self?: symbol // Symbol used as key in orchestrator store (when using orchestrator path)
+  orchestratorStore?: Ref<OrchestratorArrayValue[]> // Ref to orchestrator store (when using orchestrator path)
 }
 
 /**
@@ -191,6 +196,59 @@ export function findComponentParent(
   return root
 }
 
+type OrchestratorRegistryValue = {
+  store: Ref<OrchestratorArrayValue[]>
+  _isOrchestratorInstalled: Ref<boolean>
+  _isToastAppend: Ref<boolean>
+}
+
+/**
+ * Retrieves the orchestrator registry from a provides object, if available.
+ */
+function getOrchestratorRegistry(
+  provides: Record<string, unknown>
+): OrchestratorRegistryValue | undefined {
+  return (provides as Record<symbol, OrchestratorRegistryValue | undefined>)[
+    orchestratorRegistryKey
+  ]
+}
+
+/**
+ * Builds an orchestrator store entry for a tooltip or popover directive instance.
+ * The store is passed so that the modelValue update handler can reactively sync state.
+ */
+function buildOrchestratorEntry(
+  _self: symbol,
+  props: BPopoverProps,
+  store: Ref<OrchestratorArrayValue[]>
+): OrchestratorArrayValue {
+  return {
+    ...props,
+    type: props.tooltip ? ('tooltip' as const) : ('popover' as const),
+    _self,
+    position: 'popover' as const,
+    options: {keep: true},
+    _component: markRaw(BPopover),
+    'onUpdate:modelValue': (val: boolean) => {
+      const item = store.value.find((e) => e._self === _self)
+      if (item) (item as Record<string, unknown>).modelValue = val
+    },
+    promise: {
+      value: {ref: null} as unknown,
+      resolve: () => {},
+      stop: undefined,
+    },
+  } as unknown as OrchestratorArrayValue
+}
+
+/**
+ * Removes an orchestrator store entry by _self symbol.
+ */
+function removeOrchestratorEntry(store: Ref<OrchestratorArrayValue[]>, _self: symbol): void {
+  const idx = store.value.findIndex((e) => e._self === _self)
+  if (idx !== -1) store.value.splice(idx, 1)
+}
+
 /**
  * Creates a floating UI directive (tooltip or popover) with UID-namespaced state management
  * @param propertyName - The property name for storing state (e.g., '$__tooltip', '$__popover')
@@ -211,8 +269,10 @@ export function createFloatingDirective(
   return {
     mounted(el, binding, vnode) {
       const uid = getDirectiveUid(binding)
-      const defaultsMap = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]
-        ?.value as Record<string, unknown> | undefined
+      const provides = findProvides(binding, vnode)
+      const defaultsMap = (provides as Record<symbol, Ref>)[defaultsKey]?.value as
+        | Record<string, unknown>
+        | undefined
       const isActive = resolveActiveStatus(binding.value)
       if (!isActive) return
 
@@ -221,7 +281,7 @@ export function createFloatingDirective(
       if (!text.body && !text.title) return
 
       // Initialize per-instance state with UID namespacing
-      initDirectiveInstance(el, propertyName, uid, binding)
+      const state = initDirectiveInstance(el, propertyName, uid, binding)
 
       const props = buildProps
         ? buildProps(text, defaultsMap?.[componentDefaultsKey], binding, el)
@@ -231,22 +291,37 @@ export function createFloatingDirective(
             ...text,
           }
 
-      bind(el, binding, props)
+      // Use the orchestrator when BOrchestrator is installed (i.e. inside BApp)
+      const orchestratorReg = getOrchestratorRegistry(provides as Record<string, unknown>)
+      if (orchestratorReg?._isOrchestratorInstalled.value) {
+        const _self = Symbol(`directive-${propertyName}`)
+        state._self = _self
+        state.orchestratorStore = orchestratorReg.store
+        orchestratorReg.store.value.push(buildOrchestratorEntry(_self, props, orchestratorReg.store))
+      } else {
+        bind(el, binding, props)
+      }
     },
 
     updated(el, binding, vnode) {
       const uid = getDirectiveUid(binding)
       let instance = getDirectiveInstance(el, propertyName, uid)
 
-      const defaultsMap = (findProvides(binding, vnode) as Record<symbol, Ref>)[defaultsKey]
-        ?.value as Record<string, unknown> | undefined
+      const provides = findProvides(binding, vnode)
+      const defaultsMap = (provides as Record<symbol, Ref>)[defaultsKey]?.value as
+        | Record<string, unknown>
+        | undefined
 
       const isActive = resolveActiveStatus(binding.value)
 
       // If inactive, clean up existing instance if present
       if (!isActive) {
-        if (instance && el.$__element) {
-          unbind(el)
+        if (instance) {
+          if (instance.orchestratorStore && instance._self) {
+            removeOrchestratorEntry(instance.orchestratorStore, instance._self)
+          } else if (el.$__element) {
+            unbind(el)
+          }
           cleanupDirectiveInstance(el, propertyName, uid)
         }
         return
@@ -256,8 +331,12 @@ export function createFloatingDirective(
 
       if (!text.body && !text.title) {
         // Clean up if no content
-        if (instance && el.$__element) {
-          unbind(el)
+        if (instance) {
+          if (instance.orchestratorStore && instance._self) {
+            removeOrchestratorEntry(instance.orchestratorStore, instance._self)
+          } else if (el.$__element) {
+            unbind(el)
+          }
           cleanupDirectiveInstance(el, propertyName, uid)
         }
         return
@@ -276,7 +355,17 @@ export function createFloatingDirective(
               ...text,
             }
 
-        bind(el, binding, props)
+        const orchestratorReg = getOrchestratorRegistry(provides as Record<string, unknown>)
+        if (orchestratorReg?._isOrchestratorInstalled.value) {
+          const _self = Symbol(`directive-${propertyName}`)
+          instance._self = _self
+          instance.orchestratorStore = orchestratorReg.store
+          orchestratorReg.store.value.push(
+            buildOrchestratorEntry(_self, props, orchestratorReg.store)
+          )
+        } else {
+          bind(el, binding, props)
+        }
         return
       }
 
@@ -294,8 +383,17 @@ export function createFloatingDirective(
             ...text,
           }
 
-      // Update props in-place so the tooltip stays visible if it was open
-      updateBind(el, binding, props)
+      if (instance.orchestratorStore && instance._self) {
+        // Replace the store entry in-place (BOrchestrator uses v-for :key="_self" so Vue patches it)
+        const store = instance.orchestratorStore
+        const idx = store.value.findIndex((e) => e._self === instance!._self)
+        if (idx !== -1) {
+          store.value.splice(idx, 1, buildOrchestratorEntry(instance._self, props, store))
+        }
+      } else {
+        // Update props in-place so the tooltip stays visible if it was open
+        updateBind(el, binding, props)
+      }
 
       // Update THIS instance's cache
       updateBindingCache(instance, binding)
@@ -307,7 +405,11 @@ export function createFloatingDirective(
 
       if (!instance) return
 
-      unbind(el)
+      if (instance.orchestratorStore && instance._self) {
+        removeOrchestratorEntry(instance.orchestratorStore, instance._self)
+      } else {
+        unbind(el)
+      }
       cleanupDirectiveInstance(el, propertyName, uid)
     },
   }

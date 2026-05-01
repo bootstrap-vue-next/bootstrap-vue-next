@@ -3,7 +3,8 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {defineComponent, h, inject, nextTick} from 'vue'
 import {vBPopover} from './index'
 import {createBootstrap} from '../../plugins'
-import {showHideRegistryKey} from '../../utils/keys'
+import {orchestratorRegistryKey, showHideRegistryKey} from '../../utils/keys'
+import BApp from '../../components/BApp/BApp.vue'
 
 describe('v-b-popover directive', () => {
   enableAutoUnmount(afterEach)
@@ -393,6 +394,38 @@ describe('v-b-popover directive', () => {
 
     expect(capturedRegistry).not.toBeNull()
     expect(capturedRegistry!.values.value.size).toBeGreaterThan(0)
+
+    wrapper.unmount()
+  })
+
+  it('uses orchestrator store when BOrchestrator is installed (inside BApp)', async () => {
+    let capturedStore: ReturnType<typeof inject<typeof orchestratorRegistryKey>> | null = null
+
+    const StoreCapture = defineComponent({
+      setup() {
+        capturedStore = inject(orchestratorRegistryKey, null)
+        return () => h('span')
+      },
+    })
+
+    const PopoverApp = defineComponent({
+      components: {BApp, StoreCapture},
+      directives: {bPopover: vBPopover},
+      template: `<BApp><button v-b-popover="'Popover content'">Button</button><StoreCapture /></BApp>`,
+    })
+
+    const wrapper = mount(PopoverApp, {
+      attachTo: document.body,
+      global: {
+        plugins: [createBootstrap()],
+      },
+    })
+
+    await flushPromises()
+    await nextTick()
+
+    expect(capturedStore).not.toBeNull()
+    expect(capturedStore!.store.value.some((e) => e.type === 'popover')).toBe(true)
 
     wrapper.unmount()
   })
