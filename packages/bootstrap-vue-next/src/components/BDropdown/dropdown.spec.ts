@@ -235,6 +235,22 @@ describe('dropdown', () => {
     expect($bbutton.classes()).toContain('foo')
   })
 
+  it('first child BButton has attr from toggleAttrs when not prop split', () => {
+    const wrapper = mount(BDropdown, {
+      props: {split: false, toggleAttrs: {'data-foo': 'bar'}},
+    })
+    const $bbutton = wrapper.getComponent(BButton)
+    expect($bbutton.attributes('data-foo')).toBe('bar')
+  })
+
+  it('first child BButton does not have attr from toggleAttrs when prop split', () => {
+    const wrapper = mount(BDropdown, {
+      props: {split: true, toggleAttrs: {'data-foo': 'bar'}},
+    })
+    const $bbutton = wrapper.getComponent(BButton)
+    expect($bbutton.attributes('data-foo')).toBeUndefined()
+  })
+
   it('first child BButton attr aria-expanded is false by default', () => {
     const wrapper = mount(BDropdown)
     const $bbutton = wrapper.getComponent(BButton)
@@ -407,6 +423,14 @@ describe('dropdown', () => {
     })
     const [, $bbutton] = wrapper.findAllComponents(BButton)
     expect($bbutton.classes()).toContain('foo')
+  })
+
+  it('second child BButton has attr from toggleAttrs when prop split', () => {
+    const wrapper = mount(BDropdown, {
+      props: {split: true, toggleAttrs: {'data-foo': 'bar'}},
+    })
+    const [, $bbutton] = wrapper.findAllComponents(BButton)
+    expect($bbutton.attributes('data-foo')).toBe('bar')
   })
 
   it('second child BButton has static attr aria-expanded to be false', () => {

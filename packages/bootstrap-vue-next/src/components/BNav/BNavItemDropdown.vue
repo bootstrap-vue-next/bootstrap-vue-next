@@ -71,6 +71,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   wrapperClass: undefined,
   strategy: 'absolute',
   text: undefined,
+  toggleAttrs: undefined,
   toggleClass: undefined,
   toggleText: 'Toggle dropdown',
   variant: 'link',
