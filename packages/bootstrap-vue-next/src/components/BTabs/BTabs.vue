@@ -38,7 +38,7 @@
           <button
             :id="tab.buttonId"
             class="nav-link"
-            :class="[tab.navItemClasses, tab.titleLinkClass]"
+            :class="[tab.navItemClasses, tab.titleLinkClass, tab.active ? props.activeNavLinkClass : props.inactiveNavLinkClass]"
             role="tab"
             :aria-controls="tab.id"
             :aria-selected="tab.active"
@@ -99,6 +99,7 @@ import BTab from './BTab.vue'
 
 const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeIndex'>>(), {
   activeNavItemClass: undefined,
+  activeNavLinkClass: undefined,
   activeTabClass: undefined,
   align: undefined,
   card: false,
@@ -107,6 +108,7 @@ const _props = withDefaults(defineProps<Omit<BTabsProps, 'modelValue' | 'activeI
   fill: false,
   id: undefined,
   inactiveNavItemClass: undefined,
+  inactiveNavLinkClass: undefined,
   inactiveTabClass: undefined,
   justified: false,
   lazy: false,
