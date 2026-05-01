@@ -1427,17 +1427,13 @@ export interface BTableProps<Item>
   filterable?: readonly string[]
   // TODO
   // apiUrl?: string
-  // filterIgnoredFields?: any[]
-  // filterIncludedFields?: any[]
-  // labelSortAsc?: string
-  // labelSortClear?: string
-  // labelSortDesc?: string
-  // noFooterSorting?: boolean
+  labelSortAsc?: string
+  labelSortClear?: string
+  labelSortDesc?: string
+  noFooterSorting?: boolean
   noLocalSorting?: boolean
   noSelectOnClick?: boolean
-  // selectedVariant?: ColorVariant | null
-  // showEmpty?: boolean
-  // sortNullLast?: boolean
+  sortNullLast?: boolean
   selectedItems?: readonly Item[]
   noSortableIcon?: boolean
   sortIconLeft?: boolean

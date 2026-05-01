@@ -73,6 +73,10 @@
         :clear-selected="selectedItemsController.clear"
       >
         {{ getTableFieldHeadLabel(field) }}
+        <span
+          v-if="sortController.isSortable.value && field.sortable"
+          class="visually-hidden"
+        >{{ getSortLabel(field) }}</span>
       </slot>
     </template>
     <template #custom-body="scope">
@@ -109,7 +113,7 @@
 
 <script setup lang="ts" generic="Item">
 import {useToNumber} from '@vueuse/core'
-import {computed, readonly, toRef} from 'vue'
+import {computed, readonly, toRef, watch} from 'vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
@@ -162,6 +166,11 @@ const _props = withDefaults(
     selectMode: 'multi',
     selectionVariant: 'primary',
     sortCompare: undefined,
+    sortNullLast: false,
+    noFooterSorting: false,
+    labelSortAsc: 'Click to sort ascending',
+    labelSortClear: 'Click to clear sorting',
+    labelSortDesc: 'Click to sort descending',
     debounce: 0,
     debounceMaxWait: Number.NaN,
     // BTableLite props
@@ -335,6 +344,7 @@ const {
       noLocalSorting: () => props.noLocalSorting,
       by: sortByModel,
       sortCompare: toRef(() => props.sortCompare),
+      sortNullLast: () => props.sortNullLast,
     },
   },
   stackedProps: {
@@ -403,7 +413,9 @@ const getRowClasses = (item: Item | null, type: TableRowType): TableStrictClassV
 const boundBTableLiteEmits = {
   onHeadClicked: ({key, field, event, isFooter = false}) => {
     emit('head-clicked', {key, field, event, isFooter})
-    sortController.handleFieldSorting(field)
+    if (!isFooter || !props.noFooterSorting) {
+      sortController.handleFieldSorting(field)
+    }
   },
   onRowClicked: ({item, index, event}) => {
     if (props.noSelectOnClick === false) {
@@ -431,6 +443,8 @@ const computedLiteProps = computed(() => ({
   ...pick(props, [...bTableLiteProps, ...bTableSimpleProps]),
   tableAttrs: {
     ariaBusy: busyModel.value,
+    'aria-multiselectable':
+      props.selectable && props.selectMode !== 'single' ? true : undefined,
   },
   items: computedDisplayItems.value,
   fields: computedFields.value as TableFieldRaw<Item>[],
@@ -452,6 +466,36 @@ const emptySlotScope = computed(() => ({
 // Show empty-filtered only if filter is defined AND not an empty string
 const showEmptyFiltered = computed(
   () => isFilterableTable.value && props.filter !== undefined && props.filter !== ''
+)
+
+// Compute sr-only sort label for each field based on current sort state
+const getSortLabel = (field: TableField<Item>): string => {
+  if (!sortController.isSortable.value || !field.sortable) return ''
+  const currentSort = sortByModel.value?.find((s) => s.key === field.key)
+  if (!currentSort || currentSort.order === undefined) {
+    return props.labelSortAsc
+  }
+  if (currentSort.order === 'asc') {
+    return props.labelSortDesc
+  }
+  // Currently sorted descending
+  const mustSortValue = props.mustSort
+  if (
+    mustSortValue === true ||
+    (Array.isArray(mustSortValue) && mustSortValue.includes(field.key as string))
+  ) {
+    return props.labelSortAsc
+  }
+  return props.labelSortClear
+}
+
+// Emit context-changed event when context (filter, sortBy, currentPage, perPage) changes
+watch(
+  [() => props.filter, sortByModel, writableCurrentPageNumber, perPageNumber],
+  ([filter, sortBy, currentPage, perPage]) => {
+    emit('context-changed', {filter, sortBy, currentPage, perPage})
+  },
+  {deep: true}
 )
 
 defineExpose({

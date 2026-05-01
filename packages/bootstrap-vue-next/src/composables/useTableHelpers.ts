@@ -60,6 +60,7 @@ export const useTableMapper = <Item>({
       sortCompare: MaybeRef<BTableSortByComparerFunction<Item> | undefined>
       by: MaybeRefOrGetter<readonly BTableSortBy[] | undefined>
       noLocalSorting: MaybeRefOrGetter<boolean>
+      sortNullLast: MaybeRefOrGetter<boolean>
     }
     filter: {
       filterFunction: MaybeRef<BTableFilterFunction<Item> | undefined>
@@ -131,6 +132,9 @@ export const useTableMapper = <Item>({
 
   const getFormatter = (value: TableField<Item>): TableFieldFormatter<Item> | undefined =>
     typeof value.sortByFormatted === 'function' ? value.sortByFormatted : value.formatter
+
+  const getFilterFormatter = (value: TableField<Item>): TableFieldFormatter<Item> | undefined =>
+    typeof value.filterByFormatted === 'function' ? value.filterByFormatted : value.formatter
 
   const getStringValue = (ob: Item, key: string): string => {
     if (!isTableItem(ob)) return String(ob)
@@ -207,7 +211,7 @@ export const useTableMapper = <Item>({
             return false
           })
           if (isTableField(filterField) && !!filterField.filterByFormatted) {
-            const formatter = getFormatter(filterField)
+            const formatter = getFilterFormatter(filterField)
             if (formatter) {
               return String(formatter({value: val, key: String(filterField.key), item}))
             }
@@ -240,6 +244,7 @@ export const useTableMapper = <Item>({
           toValue(provider.noProviderSorting)))
     ) {
       const sortCompareValue = unref(pagination.sort.sortCompare)
+      const sortNullLastValue = toValue(pagination.sort.sortNullLast)
       // Multi-sort
       return mappedItems.sort((a, b) => {
         for (let i = 0; i < sortByItems.length; i++) {
@@ -248,6 +253,23 @@ export const useTableMapper = <Item>({
           const {key, order} = value
           const field = fieldByKey.value.get(key)
           const comparer = field?.sortCompare || sortCompareValue
+
+          // Handle sortNullLast: null/undefined values always sort last, regardless of sort direction
+          // Only applies to internal sort (no custom comparer)
+          if (sortNullLastValue && !comparer) {
+            const getItemVal = (item: Item): unknown => {
+              if (!isTableItem(item)) return undefined
+              return isTableField(field) && field.accessor
+                ? getWithGetter(item, field.accessor)
+                : getWithGetter(item, key)
+            }
+            const aIsNull = getItemVal(a) == null
+            const bIsNull = getItemVal(b) == null
+            if (aIsNull && bIsNull) continue
+            if (aIsNull) return 1
+            if (bIsNull) return -1
+          }
+
           const comparison = comparer
             ? comparer(a, b, key)
             : getStringValue(a, key).localeCompare(getStringValue(b, key), undefined, {

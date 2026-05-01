@@ -1,5 +1,5 @@
 import {BvCarouselEvent, BvEvent, BvTriggerableEvent} from '../utils'
-import type {BTableSortBy, TableHeadClickedEventObject, TableRowEvent} from './TableTypes'
+import type {BTableProviderContext, BTableSortBy, TableHeadClickedEventObject, TableRowEvent} from './TableTypes'
 import type {DateValue, TimeValue} from 'reka-ui'
 
 export interface showHideEmits {
@@ -52,6 +52,7 @@ export interface BTableEmits<Item> extends BTableLiteEmits<Item> {
   'row-unselected': [value: unknown]
   'sorted': [value: BTableSortBy]
   'change': [value: readonly Item[]]
+  'context-changed': [context: Omit<BTableProviderContext, 'signal'>]
 }
 
 export interface BTableLiteEmits<Item> {
