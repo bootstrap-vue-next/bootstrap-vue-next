@@ -258,6 +258,15 @@ export default {
             },
           },
         },
+        'tag-added': {
+          description: 'Emitted when one or more tags have been added',
+          args: {
+            value: {
+              type: 'string[]',
+              description: 'Array of tag(s) that were successfully added',
+            },
+          },
+        },
         'tag-state': {
           description: 'Emitted when tags in the user input are parsed',
           args: {

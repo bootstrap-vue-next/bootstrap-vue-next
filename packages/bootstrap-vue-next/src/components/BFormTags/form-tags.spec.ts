@@ -565,6 +565,64 @@ describe('form-tags', () => {
 
       expect(wrapper.emitted('update:modelValue')).toBeUndefined()
     })
+
+    it('emits tag-added event with newly added tag', async () => {
+      const wrapper = mount(BFormTags)
+      const input = wrapper.find('.b-form-tags-input')
+      const inputEl = input.element as HTMLInputElement
+
+      inputEl.value = 'newtag'
+      await input.trigger('input')
+      await input.trigger('keydown', {key: 'Enter'})
+      await nextTick()
+
+      expect(wrapper.emitted('tag-added')).toBeDefined()
+      expect(wrapper.emitted('tag-added')![0][0]).toEqual(['newtag'])
+    })
+
+    it('does not emit tag-added event when tag is empty', async () => {
+      const wrapper = mount(BFormTags)
+      const input = wrapper.find('.b-form-tags-input')
+      const inputEl = input.element as HTMLInputElement
+
+      inputEl.value = ''
+      await input.trigger('input')
+      await input.trigger('keydown', {key: 'Enter'})
+      await nextTick()
+
+      expect(wrapper.emitted('tag-added')).toBeUndefined()
+    })
+
+    it('does not emit tag-added event when tag is duplicate', async () => {
+      const wrapper = mount(BFormTags, {
+        props: {modelValue: ['apple']},
+      })
+      const input = wrapper.find('.b-form-tags-input')
+      const inputEl = input.element as HTMLInputElement
+
+      inputEl.value = 'apple'
+      await input.trigger('input')
+      await input.trigger('keydown', {key: 'Enter'})
+      await nextTick()
+
+      expect(wrapper.emitted('tag-added')).toBeUndefined()
+    })
+
+    it('emits tag-added event with multiple tags when separator is used', async () => {
+      const wrapper = mount(BFormTags, {
+        props: {separator: ','},
+      })
+      const input = wrapper.find('.b-form-tags-input')
+      const inputEl = input.element as HTMLInputElement
+
+      inputEl.value = 'tag1,tag2,tag3'
+      await input.trigger('input')
+      await input.trigger('keydown', {key: 'Enter'})
+      await nextTick()
+
+      expect(wrapper.emitted('tag-added')).toBeDefined()
+      expect(wrapper.emitted('tag-added')![0][0]).toEqual(['tag1', 'tag2', 'tag3'])
+    })
   })
 
   describe('removing tags', () => {

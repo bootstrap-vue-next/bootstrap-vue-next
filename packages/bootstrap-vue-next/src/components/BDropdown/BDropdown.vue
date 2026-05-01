@@ -18,6 +18,7 @@
       :href="props.split ? props.splitHref : undefined"
       :icon="props.icon"
       :to="props.split && props.splitTo ? props.splitTo : undefined"
+      v-bind="!props.split ? props.toggleAttrs : undefined"
       @click="onSplitClick"
     >
       <slot name="button-content"> {{ props.text }} </slot>
@@ -33,6 +34,7 @@
       class="dropdown-toggle-split dropdown-toggle"
       :aria-expanded="showRef"
       aria-haspopup="menu"
+      v-bind="props.toggleAttrs"
       @click="onButtonClick"
     >
       <span class="visually-hidden">
@@ -153,6 +155,7 @@ const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   strategy: 'absolute',
   text: undefined,
   show: false,
+  toggleAttrs: undefined,
   toggleClass: undefined,
   toggleText: 'Toggle dropdown',
   transProps: undefined,

@@ -28,6 +28,11 @@ export default {
           default: undefined,
           description: 'Sets the CSS class(es) for the active nav item tab control.',
         },
+        activeNavLinkClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: 'Sets the CSS class(es) for the active nav link element.',
+        },
         activeTabClass: {
           type: 'ClassValue',
           default: undefined,
@@ -65,6 +70,11 @@ export default {
           type: 'ClassValue',
           default: undefined,
           description: 'Sets the CSS class(es) for inactive nav item tab controls.',
+        },
+        inactiveNavLinkClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: 'Sets the CSS class(es) for inactive nav link elements.',
         },
         inactiveTabClass: {
           type: 'ClassValue',

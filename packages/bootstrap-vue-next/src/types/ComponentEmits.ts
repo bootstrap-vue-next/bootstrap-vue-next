@@ -115,6 +115,7 @@ export type BFormTagsEmits = {
   'focus': [value: FocusEvent]
   'focusin': [value: FocusEvent]
   'focusout': [value: FocusEvent]
+  'tag-added': [value: readonly string[]]
   'tag-state': [...args: readonly string[][]]
 }
 

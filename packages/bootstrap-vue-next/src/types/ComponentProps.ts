@@ -1039,6 +1039,7 @@ export interface BTabProps {
 
 export interface BTabsProps {
   activeNavItemClass?: ClassValue
+  activeNavLinkClass?: ClassValue
   activeTabClass?: ClassValue
   align?: AlignmentJustifyContent
   card?: boolean
@@ -1048,6 +1049,7 @@ export interface BTabsProps {
   id?: string
   index?: number
   inactiveNavItemClass?: ClassValue
+  inactiveNavLinkClass?: ClassValue
   inactiveTabClass?: ClassValue
   justified?: boolean
   lazy?: boolean
@@ -1537,6 +1539,7 @@ export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   splitVariant?: ButtonVariant | null
   strategy?: Strategy
   text?: string
+  toggleAttrs?: Readonly<AttrsValue>
   toggleClass?: ClassValue
   toggleText?: string
   variant?: ButtonVariant | null

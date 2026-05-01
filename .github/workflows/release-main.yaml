@@ -31,26 +31,26 @@ jobs:
 
       - name: Clone Repository
         uses: actions/checkout@v4
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
 
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24.x.x
           registry-url: 'https://registry.npmjs.org'
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
 
       - name: Install PNPM
         uses: pnpm/action-setup@v4
         id: pnpm-install
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
 
       - name: Get PNPM Store Directory
         id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
 
       - name: Setup PNPM Cache
         uses: actions/cache@v3
@@ -59,27 +59,27 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
 
       - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
 
       - name: Build Library
         run: pnpm run build --filter bootstrap-vue-next --filter @bootstrap-vue-next/nuxt
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
 
       - name: Publish Main
         run: pnpm publish --tag latest --filter bootstrap-vue-next --access=public
-        if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/bootstrap-vue-next--release_created'] }}
+        if: ${{ steps.release.outputs.releases_created == 'true' && steps.release.outputs['packages/bootstrap-vue-next--release_created'] == 'true' }}
 
       - name: Publish Nuxt
         run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public
-        if: ${{ steps.release.outputs.releases_created && steps.release.outputs['packages/nuxt--release_created'] }}
+        if: ${{ steps.release.outputs.releases_created == 'true' && steps.release.outputs['packages/nuxt--release_created'] == 'true' }}
 
   deploy-docs:
     needs: release-please
-    if: ${{ needs.release-please.outputs.releases_created && needs.release-please.outputs.bootstrap_vue_next_release_created }}
+    if: ${{ needs.release-please.outputs.releases_created == 'true' && needs.release-please.outputs.bootstrap_vue_next_release_created == 'true' }}
     permissions:
       contents: read
       pages: write

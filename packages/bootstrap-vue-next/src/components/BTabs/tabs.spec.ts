@@ -1012,6 +1012,38 @@ describe('tabs', () => {
     expect(buttons[1].classes()).toContain('all-nav')
   })
 
+  // --- activeNavLinkClass / inactiveNavLinkClass ---
+
+  it('active tab button has activeNavLinkClass', () => {
+    const wrapper = mount(BTabs, {
+      props: {activeNavLinkClass: 'link-active'},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).toContain('link-active')
+    expect(buttons[1].classes()).not.toContain('link-active')
+  })
+
+  it('inactive tab button has inactiveNavLinkClass', () => {
+    const wrapper = mount(BTabs, {
+      props: {inactiveNavLinkClass: 'link-inactive'},
+      slots: {
+        default: () => [
+          h(BTab, {id: 'tab-1', title: 'First'}, () => 'one'),
+          h(BTab, {id: 'tab-2', title: 'Second'}, () => 'two'),
+        ],
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons[0].classes()).not.toContain('link-inactive')
+    expect(buttons[1].classes()).toContain('link-inactive')
+  })
+
   // --- Tab click to activate ---
 
   it('clicking tab button activates the tab', async () => {
