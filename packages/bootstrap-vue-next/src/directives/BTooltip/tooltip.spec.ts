@@ -1,7 +1,9 @@
 import {enableAutoUnmount, flushPromises, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
-import {nextTick} from 'vue'
+import {defineComponent, h, inject, nextTick} from 'vue'
 import {vBTooltip} from './index'
+import {createBootstrap} from '../../plugins'
+import {showHideRegistryKey} from '../../utils/keys'
 
 describe('v-b-tooltip directive', () => {
   enableAutoUnmount(afterEach)
@@ -187,6 +189,39 @@ describe('v-b-tooltip directive', () => {
     const button = wrapper.find('button')
     expect(button.attributes('title')).toBeUndefined()
     expect(button.attributes('data-original-title')).toBeUndefined()
+
+    wrapper.unmount()
+  })
+
+  it('registers with showHide registry when app context is available', async () => {
+    let capturedRegistry: ReturnType<typeof inject<typeof showHideRegistryKey>> | null = null
+
+    const RegistryCapture = defineComponent({
+      setup() {
+        capturedRegistry = inject(showHideRegistryKey, null)
+        return () => h('span')
+      },
+    })
+
+    const wrapper = mount(
+      {
+        directives: {bTooltip: vBTooltip},
+        components: {RegistryCapture},
+        template: `<div><button v-b-tooltip="'Tooltip content'">Button</button><RegistryCapture /></div>`,
+      },
+      {
+        attachTo: document.body,
+        global: {
+          plugins: [createBootstrap()],
+        },
+      }
+    )
+
+    await flushPromises()
+    await nextTick()
+
+    expect(capturedRegistry).not.toBeNull()
+    expect(capturedRegistry!.values.value.size).toBeGreaterThan(0)
 
     wrapper.unmount()
   })

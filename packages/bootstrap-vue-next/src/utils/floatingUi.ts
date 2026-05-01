@@ -155,7 +155,9 @@ export const bind = (
   if (binding.modifiers.body) doc.body.appendChild(div)
   else if (binding.modifiers.child) el.appendChild(div)
   else el.parentNode?.insertBefore(div, el.nextSibling)
-  render(h(BPopover, props), div)
+  const vnode = h(BPopover, props)
+  vnode.appContext = binding.instance?.$.appContext ?? null
+  render(vnode, div)
   el.$__element = div
 }
 
@@ -171,7 +173,9 @@ export const updateBind = (
   }
   // Re-render in the same container so Vue can diff/patch the component props
   // without unmounting it — this keeps the tooltip visible if it was open
-  render(h(BPopover, props), div)
+  const vnode = h(BPopover, props)
+  vnode.appContext = binding.instance?.$.appContext ?? null
+  render(vnode, div)
 }
 
 export const unbind = (el: ElementWithPopper) => {
