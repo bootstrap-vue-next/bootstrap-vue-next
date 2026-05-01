@@ -1537,6 +1537,7 @@ export interface BDropdownProps extends TeleporterProps, ShowHideProps {
   splitVariant?: ButtonVariant | null
   strategy?: Strategy
   text?: string
+  toggleAttrs?: Readonly<AttrsValue>
   toggleClass?: ClassValue
   toggleText?: string
   variant?: ButtonVariant | null
