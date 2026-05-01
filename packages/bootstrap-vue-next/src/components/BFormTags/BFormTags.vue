@@ -404,6 +404,9 @@ const addTag = (tag?: string): void => {
   inputValue.value = ''
   shouldRemoveOnDelete.value = true
   modelValue.value = newValue
+  if (validTags.length > 0) {
+    emit('tag-added', validTags)
+  }
   focused.value = true
 }
 
