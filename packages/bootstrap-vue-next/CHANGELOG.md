@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.45.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.0...bootstrapvuenext-v0.45.1) (2026-05-01)
+
+
+### Features
+
+* add activeNavLinkClass and inactiveNavLinkClass props to BTabs ([#3163](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3163)) ([996908d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/996908d21be056acb00c814bdc3ce656967a280f))
+* **BFormTags:** add `tag-added` event emitting only newly added tags ([#3188](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3188)) ([23a2d95](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/23a2d954cf5ac8e40db82d2e743625bb9fda4f44))
+
 ## [0.45.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.7...bootstrapvuenext-v0.45.0) (2026-05-01)
 
 
