@@ -61,21 +61,9 @@
 
         <!-- Search input (always present) -->
         <ComboboxInput v-model="searchTerm" as-child :display-value="displayValueFn">
-          <input
-            :id="computedId"
-            :class="inputClasses"
-            :disabled="props.disabled"
-            :form="props.form || undefined"
-            :placeholder="props.placeholder"
-            :readonly="props.readonly || props.plaintext"
-            :required="props.required || undefined"
-            :autocomplete="props.autocomplete || undefined"
-            :aria-invalid="computedAriaInvalid"
-            :aria-required="props.required || undefined"
-            @blur="emit('blur', $event)"
-            @focus="emit('focus', $event)"
-            @keydown.passive="onInputKeydown"
-          />
+          <slot name="input" v-bind="comboboxInputProps">
+            <input v-bind="comboboxInputProps" />
+          </slot>
         </ComboboxInput>
 
         <template #append>
@@ -352,4 +340,22 @@ const onInputKeydown = (event: KeyboardEvent) => {
     resetPendingDelete()
   }
 }
+
+const comboboxInputProps = computed<Parameters<Exclude<BAutocompleteSlots['input'], undefined>>[0]>(
+  () => ({
+    'id': computedId.value,
+    'class': inputClasses.value,
+    'disabled': props.disabled,
+    'form': props.form || undefined,
+    'placeholder': props.placeholder,
+    'readonly': props.readonly || props.plaintext,
+    'required': props.required || undefined,
+    'autocomplete': props.autocomplete || undefined,
+    'aria-invalid': computedAriaInvalid.value,
+    'aria-required': props.required || undefined,
+    'onBlur': (event: FocusEvent) => emit('blur', event),
+    'onFocus': (event: FocusEvent) => emit('focus', event),
+    'onKeydown': (event: KeyboardEvent) => onInputKeydown(event),
+  })
+)
 </script>
