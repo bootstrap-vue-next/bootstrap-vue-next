@@ -60,11 +60,24 @@
         </div>
 
         <!-- Search input (always present) -->
-        <ComboboxInput v-model="searchTerm" as-child :display-value="displayValueFn">
-          <slot name="input" v-bind="comboboxInputProps">
-            <BFormInput ref="_input" :model-value="searchTerm" v-bind="comboboxInputProps" />
-          </slot>
-        </ComboboxInput>
+        <div class="b-autocomplete-input-wrapper">
+          <ComboboxInput v-model="searchTerm" as-child :display-value="displayValueFn">
+            <slot name="input" v-bind="comboboxInputProps">
+              <BFormInput
+                ref="_input"
+                :model-value="searchTerm"
+                v-bind="comboboxInputProps"
+                :class="{'b-autocomplete-input-clearable': showClearButton}"
+              />
+            </slot>
+          </ComboboxInput>
+          <BCloseButton
+            v-if="showClearButton"
+            class="b-autocomplete-clear"
+            :aria-label="'Clear selected value'"
+            @click.stop="clearSelection"
+          />
+        </div>
 
         <template #append>
           <ComboboxTrigger v-if="!props.noToggle" as-child :disabled="props.disabled">
@@ -167,6 +180,7 @@ import BInputGroup from '../BInputGroup/BInputGroup.vue'
 import BButton from '../BButton/BButton.vue'
 import BFormInput from '../BFormInput/BFormInput.vue'
 import BFormTag from '../BFormTags/BFormTag.vue'
+import BCloseButton from '../BButton/BCloseButton.vue'
 import {useFormSelect} from '../../composables/useFormSelect.ts'
 
 const _props = withDefaults(defineProps<Omit<BAutocompleteProps, 'modelValue' | 'search'>>(), {
@@ -190,6 +204,7 @@ const _props = withDefaults(defineProps<Omit<BAutocompleteProps, 'modelValue' | 
   filterFunction: undefined,
   multiple: false,
   name: undefined,
+  noClearButton: false,
   noToggle: false,
   openOnFocus: false,
   options: () => [],
@@ -342,6 +357,22 @@ const optionKey = (option: SelectOption, index: number) => {
 
 const isLastSelectedOption = (_opt: SelectOption, index: number): boolean =>
   index === selectedOptions.value.length - 1
+
+const showClearButton = computed(
+  () =>
+    !props.required &&
+    !props.noClearButton &&
+    !props.disabled &&
+    !props.readonly &&
+    hasSelection.value
+)
+
+const clearSelection = () => {
+  modelValue.value = props.multiple ? [] : undefined
+  searchTerm.value = ''
+  singleSelectedLabelCache.value = null
+  _input.value?.focus()
+}
 
 const onOptionSelect = (option: SelectOption) => {
   cacheSingleSelectedLabel(option.value as AcceptableValue, String(option.text))

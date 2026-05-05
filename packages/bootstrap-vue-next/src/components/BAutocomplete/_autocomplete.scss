@@ -51,6 +51,11 @@
 }
 
 // Remove left border on input when selection div is present to avoid double border
+.b-autocomplete
+  .input-group
+  .b-autocomplete-selection
+  ~ .b-autocomplete-input-wrapper
+  .form-control,
 .b-autocomplete .input-group .b-autocomplete-selection ~ .form-control {
   border-left: 0;
 }
@@ -77,6 +82,68 @@
   transition:
     background-color 0.15s ease-in-out,
     color 0.15s ease-in-out;
+}
+
+.b-autocomplete-input-wrapper {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+
+  .form-control {
+    flex: 1 1 auto;
+    min-width: 0;
+    // Remove border adjustments that input-group usually applies; we inherit them from context
+    border-radius: inherit;
+  }
+}
+
+// When the input-wrapper is not the first item (has prefix like selection), remove left border-radius
+.input-group > .b-autocomplete-input-wrapper:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+// When it's the first-child, keep default radius
+.input-group > .b-autocomplete-input-wrapper:first-child .form-control {
+  border-top-left-radius: var(--bs-border-radius);
+  border-bottom-left-radius: var(--bs-border-radius);
+}
+
+// Adjust right radius when followed by append buttons
+.input-group > .b-autocomplete-input-wrapper:not(:last-child) .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group > .b-autocomplete-input-wrapper:last-child .form-control {
+  border-top-right-radius: var(--bs-border-radius);
+  border-bottom-right-radius: var(--bs-border-radius);
+}
+
+.b-autocomplete-clear {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 0.75;
+  }
+
+  &:focus {
+    opacity: 1;
+  }
+}
+
+// Add right padding to the input when clear button is showing so text doesn't overlap it
+.b-autocomplete-input-clearable {
+  padding-right: 2rem !important;
 }
 
 .b-autocomplete-trigger {

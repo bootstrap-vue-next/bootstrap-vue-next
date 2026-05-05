@@ -63,6 +63,12 @@ export default {
           description:
             'When set, enables multiple selection mode. The modelValue becomes an array of selected values',
         },
+        noClearButton: {
+          type: 'boolean',
+          default: false,
+          description:
+            'When set, hides the clear button that appears inside the input when a value is selected and the field is not required',
+        },
         noToggle: {
           type: 'boolean',
           default: false,
@@ -211,6 +217,70 @@ export default {
             isOpen: {
               type: 'boolean',
               description: 'Whether the autocomplete dropdown is currently open',
+            },
+          },
+        },
+        toggle: {
+          description:
+            'Custom rendering for the dropdown toggle button. Replaces the default chevron button',
+          scope: {
+            isOpen: {
+              type: 'boolean',
+              description: 'Whether the autocomplete dropdown is currently open',
+            },
+            disabled: {
+              type: 'boolean',
+              description: 'Whether the toggle button is disabled',
+            },
+          },
+        },
+        input: {
+          description:
+            'Custom rendering for the search input. Receives all props needed to wire up the input to the combobox',
+          scope: {
+            id: {
+              type: 'string',
+              description: 'Computed input id',
+            },
+            disabled: {
+              type: 'boolean',
+              description: 'Whether the input is disabled',
+            },
+            form: {
+              type: 'string | undefined',
+              description: 'Associated form id',
+            },
+            placeholder: {
+              type: 'string | undefined',
+              description: 'Placeholder text',
+            },
+            readonly: {
+              type: 'boolean',
+              description: 'Whether the input is read-only',
+            },
+            required: {
+              type: 'true | undefined',
+              description: 'Whether the input is required',
+            },
+            autocomplete: {
+              type: 'string | undefined',
+              description: 'Autocomplete attribute value',
+            },
+            searchTerm: {
+              type: 'string',
+              description: 'The current search term entered by the user',
+            },
+            plaintext: {
+              type: 'boolean',
+              description: 'Whether the input renders as plaintext',
+            },
+            size: {
+              type: 'Size | undefined',
+              description: 'Input size variant',
+            },
+            state: {
+              type: 'ValidationState | undefined',
+              description: 'Validation state of the input',
             },
           },
         },
