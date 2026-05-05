@@ -26,14 +26,12 @@
 import {useFocus} from '@vueuse/core'
 import {computed, inject, useTemplateRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
-import type {BFormRadioProps} from '../../types/ComponentProps'
 import {isEmptySlot} from '../../utils/dom'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import {useDefaults} from '../../composables/useDefaults'
-import type {RadioValue} from '../../types/RadioTypes'
 import {useId} from '../../composables/useId'
 import {formGroupKey, radioGroupKey} from '../../utils/keys'
-import type {BFormRadioSlots} from '../../types'
+import type {BFormRadioProps, BFormRadioSlots, RadioValue} from '../../types'
 
 defineOptions({
   inheritAttrs: false,

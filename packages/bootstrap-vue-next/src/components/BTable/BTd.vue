@@ -13,9 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import type {BTdSlots} from '../../types'
+import type {BTdProps, BTdSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BTdProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 
 const _props = withDefaults(defineProps<BTdProps>(), {

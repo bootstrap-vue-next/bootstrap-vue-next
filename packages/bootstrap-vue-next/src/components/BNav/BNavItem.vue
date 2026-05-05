@@ -17,10 +17,9 @@
 <script setup lang="ts">
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BNavItemProps} from '../../types/ComponentProps'
 import {pick} from '../../utils/object'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BNavItemEmits, BNavItemSlots} from '../../types'
+import type {BNavItemEmits, BNavItemProps, BNavItemSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavItemProps>(), {
   // Link props

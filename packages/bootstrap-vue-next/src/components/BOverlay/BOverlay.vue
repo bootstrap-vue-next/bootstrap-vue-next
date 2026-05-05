@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BOverlayProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import BSpinner from '../BSpinner/BSpinner.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
@@ -43,7 +42,7 @@ import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import type {BgColorVariant} from '../../types/ColorTypes'
 import {useFadeTransition} from '../../composables/useTransitions'
-import type {BOverlayEmits, BOverlaySlots} from '../../types'
+import type {BOverlayEmits, BOverlayProps, BOverlaySlots} from '../../types'
 
 const _props = withDefaults(defineProps<BOverlayProps>(), {
   bgColor: undefined,

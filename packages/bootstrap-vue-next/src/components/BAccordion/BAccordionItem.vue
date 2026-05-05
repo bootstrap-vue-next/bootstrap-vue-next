@@ -71,9 +71,7 @@ import BCollapse from '../BCollapse/BCollapse.vue'
 import {accordionInjectionKey} from '../../utils/keys'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BAccordionItemProps} from '../../types/ComponentProps'
-import type {BAccordionItemEmits} from '../../types/ComponentEmits'
-import type {BAccordionItemSlots} from '../../types'
+import type {BAccordionItemEmits, BAccordionItemProps, BAccordionItemSlots} from '../../types'
 import {isReadOnlyArray} from '../../utils/object'
 
 defineOptions({

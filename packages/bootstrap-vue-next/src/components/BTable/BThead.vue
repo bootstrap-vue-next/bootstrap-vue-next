@@ -5,9 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import type {BTheadSlots} from '../../types'
+import type {BTheadProps, BTheadSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BTheadProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 
 const _props = withDefaults(defineProps<BTheadProps>(), {

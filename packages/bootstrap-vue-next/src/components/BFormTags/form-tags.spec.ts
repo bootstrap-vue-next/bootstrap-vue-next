@@ -822,10 +822,10 @@ describe('form-tags', () => {
       expect(output.attributes('aria-atomic')).toBe('true')
     })
 
-    it('output has aria-relevant additions text', () => {
+    it('output has aria-relevant additions', () => {
       const wrapper = mount(BFormTags)
       const output = wrapper.find('output')
-      expect(output.attributes('aria-relevant')).toBe('additions text')
+      expect(output.attributes('aria-relevant')).toBe('additions')
     })
 
     it('removed tags div has aria-atomic true', () => {

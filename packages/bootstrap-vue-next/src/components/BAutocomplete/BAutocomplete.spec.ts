@@ -381,6 +381,29 @@ describe('BAutocomplete', () => {
       expect(items).toHaveLength(3)
       expect(items[0].text()).toContain('x')
     })
+
+    it('keeps the selected option label when async-filtered options no longer include that option', async () => {
+      const initialValue = {id: 1, name: 'Leanne Graham'}
+
+      const wrapper = mount(BAutocomplete, {
+        props: {
+          'modelValue': initialValue.id,
+          'onUpdate:modelValue': (value) => wrapper.setProps({modelValue: value}),
+          'search': initialValue.name,
+          'onUpdate:search': (value) => wrapper.setProps({search: value}),
+          'options': [initialValue, {id: 2, name: 'Ervin Howell'}],
+        },
+      })
+
+      const input = wrapper.find('input')
+      expect((input.element as HTMLInputElement).value).toBe('Leanne Graham')
+
+      await wrapper.setProps({
+        options: [{id: 2, name: 'Ervin Howell'}],
+      })
+
+      expect((input.element as HTMLInputElement).value).toBe('Leanne Graham')
+    })
   })
 
   // --- Filtering ---
@@ -598,7 +621,7 @@ describe('BAutocomplete', () => {
       expect(wrapper.find('.b-autocomplete-content').exists()).toBe(true)
     })
 
-    it('supports v-model:search', () => {
+    it('supports v-model:search', async () => {
       const wrapper = mount(BAutocomplete, {
         props: {
           search: 'hello',
@@ -606,7 +629,10 @@ describe('BAutocomplete', () => {
         },
       })
       const input = wrapper.find('input')
-      expect(input.element.value).toBe('hello')
+      await input.setValue('hel')
+      expect(wrapper.emitted('update:search')).toBeTruthy()
+      const emittedValues = wrapper.emitted('update:search')!
+      expect(emittedValues[emittedValues.length - 1][0]).toBe('hel')
     })
   })
 

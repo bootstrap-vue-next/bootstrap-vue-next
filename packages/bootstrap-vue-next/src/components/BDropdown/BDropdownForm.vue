@@ -14,8 +14,7 @@
 <script setup lang="ts">
 import {computed, useAttrs} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BDropdownFormProps} from '../../types/ComponentProps'
-import type {BDropdownFormSlots} from '../../types'
+import type {BDropdownFormProps, BDropdownFormSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,

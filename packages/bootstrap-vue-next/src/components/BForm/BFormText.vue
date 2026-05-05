@@ -8,10 +8,9 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BFormTextProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {BFormTextSlots} from '../../types'
+import type {BFormTextProps, BFormTextSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BFormTextProps>(), {
   id: undefined,

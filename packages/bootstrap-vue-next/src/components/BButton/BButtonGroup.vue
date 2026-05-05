@@ -6,10 +6,9 @@
 
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
-import type {BButtonGroupProps} from '../../types/ComponentProps'
 import {computed, provide} from 'vue'
 import {buttonGroupKey} from '../../utils/keys'
-import type {BButtonGroupSlots} from '../../types'
+import type {BButtonGroupProps, BButtonGroupSlots} from '../../types'
 
 provide(buttonGroupKey, true)
 

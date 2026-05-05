@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import type {BAppProps} from '../../types/ComponentProps'
+import type {BAppProps} from '../../types'
 import BOrchestrator from './BOrchestrator.vue'
 import {useProvideDefaults} from '../../composables/useProvideDefaults'
 import {useRegistry} from '../../composables/useRegistry'

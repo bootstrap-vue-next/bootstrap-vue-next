@@ -28,7 +28,7 @@
 import {computed, inject, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
-import type {BFormInputProps} from '../../types/ComponentProps'
+import type {BFormInputProps} from '../../types'
 import {useFormInput} from '../../composables/useFormInput'
 import {inputGroupKey} from '../../utils/keys'
 

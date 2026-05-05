@@ -40,8 +40,7 @@ import {computed} from 'vue'
 import {TimeFieldInput, TimeFieldRoot} from 'reka-ui'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BTimeFieldSlots} from '../../types'
-import type {BTimeFieldProps} from '../../types/ComponentProps'
+import type {BTimeFieldProps, BTimeFieldSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BTimeFieldProps, 'modelValue' | 'placeholder'>>(), {
   defaultPlaceholder: undefined,

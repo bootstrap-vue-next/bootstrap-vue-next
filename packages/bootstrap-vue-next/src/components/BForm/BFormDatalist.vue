@@ -22,11 +22,9 @@
       Item extends Record<string, unknown> ? keyof Item : never
   "
 >
-import type {BFormDatalistProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 import BFormDatalistBase from './BFormDatalistBase.vue'
-import type {SelectOption} from '../../types/SelectTypes'
-import type {BFormDatalistSlots} from '../../types'
+import type {BFormDatalistProps, BFormDatalistSlots, SelectOption} from '../../types'
 
 /**
  * Type-safe wrapper component for BFormDatalist.

@@ -7,13 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import type {BProgressBarProps} from '../../types/ComponentProps'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import {computed, inject} from 'vue'
 import {progressInjectionKey} from '../../utils/keys'
 import {useToNumber} from '@vueuse/core'
-import type {BProgressBarSlots} from '../../types'
+import type {BProgressBarProps, BProgressBarSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BProgressBarProps>(), {
   animated: false,

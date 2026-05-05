@@ -60,44 +60,47 @@
         </div>
 
         <!-- Search input (always present) -->
-        <ComboboxInput v-model="searchTerm" as-child :display-value="displayValueFn">
-          <input
-            :id="computedId"
-            :class="inputClasses"
-            :disabled="props.disabled"
-            :form="props.form || undefined"
-            :placeholder="props.placeholder"
-            :readonly="props.readonly || props.plaintext"
-            :required="props.required || undefined"
-            :autocomplete="props.autocomplete || undefined"
-            :aria-invalid="computedAriaInvalid"
-            :aria-required="props.required || undefined"
-            @blur="emit('blur', $event)"
-            @focus="emit('focus', $event)"
-            @keydown.passive="onInputKeydown"
+        <div class="b-autocomplete-input-wrapper">
+          <ComboboxInput v-model="searchTerm" as-child :display-value="displayValueFn">
+            <slot name="input" v-bind="comboboxInputProps" :search-term>
+              <BFormInput
+                ref="_input"
+                :model-value="searchTerm"
+                v-bind="comboboxInputProps"
+                :class="{'b-autocomplete-input-clearable': showClearButton}"
+              />
+            </slot>
+          </ComboboxInput>
+          <BCloseButton
+            v-if="showClearButton"
+            class="b-autocomplete-clear"
+            :aria-label="'Clear selected value'"
+            @click.stop="clearSelection"
           />
-        </ComboboxInput>
+        </div>
 
         <template #append>
           <ComboboxTrigger v-if="!props.noToggle" as-child :disabled="props.disabled">
-            <BButton class="b-autocomplete-trigger" :disabled="props.disabled">
-              <slot name="toggle-icon" :is-open>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  viewBox="0 0 16 16"
-                  class="b-autocomplete-chevron"
-                  :class="{'b-autocomplete-chevron-open': isOpen}"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-                  />
-                </svg>
-              </slot>
-            </BButton>
+            <slot name="toggle" :is-open :disabled="props.disabled">
+              <BButton class="b-autocomplete-trigger" :disabled="props.disabled">
+                <slot name="toggle-icon" :is-open>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                    class="b-autocomplete-chevron"
+                    :class="{'b-autocomplete-chevron-open': isOpen}"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                    />
+                  </svg>
+                </slot>
+              </BButton>
+            </slot>
           </ComboboxTrigger>
         </template>
       </BInputGroup>
@@ -123,6 +126,7 @@
             :value="option.value as AcceptableValue"
             :disabled="option.disabled"
             :class="['b-autocomplete-item', 'dropdown-item']"
+            @select="onOptionSelect(option)"
           >
             <slot name="option" v-bind="option">
               {{ option.text }}
@@ -150,7 +154,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type ComputedRef, ref} from 'vue'
+import {computed, type ComputedRef, ref, useTemplateRef} from 'vue'
 import type {AcceptableValue} from 'reka-ui'
 import {
   ComboboxAnchor,
@@ -165,14 +169,20 @@ import {
   ComboboxViewport,
 } from 'reka-ui'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BAutocompleteProps, BAutocompleteSlots, SelectOption} from '../../types'
+import type {
+  BAutocompleteEmits,
+  BAutocompleteProps,
+  BAutocompleteSlots,
+  SelectOption,
+} from '../../types'
 import {useId} from '../../composables/useId'
-import {useStateClass} from '../../composables/useStateClass'
-import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import BInputGroup from '../BInputGroup/BInputGroup.vue'
 import BButton from '../BButton/BButton.vue'
+import BFormInput from '../BFormInput/BFormInput.vue'
 import BFormTag from '../BFormTags/BFormTag.vue'
-import {useFormSelect} from '../../composables/useFormSelect.ts'
+import BCloseButton from '../BButton/BCloseButton.vue'
+import {useFormSelect} from '../../composables/useFormSelect'
+import {useAriaInvalid} from '../../composables/useAriaInvalid'
 
 const _props = withDefaults(defineProps<Omit<BAutocompleteProps, 'modelValue' | 'search'>>(), {
   ariaInvalid: undefined,
@@ -195,6 +205,7 @@ const _props = withDefaults(defineProps<Omit<BAutocompleteProps, 'modelValue' | 
   filterFunction: undefined,
   multiple: false,
   name: undefined,
+  noClearButton: false,
   noToggle: false,
   openOnFocus: false,
   options: () => [],
@@ -206,11 +217,10 @@ const _props = withDefaults(defineProps<Omit<BAutocompleteProps, 'modelValue' | 
   valueField: 'value',
 })
 const props = useDefaults(_props, 'BAutocomplete')
-const emit = defineEmits<{
-  blur: [event: FocusEvent]
-  focus: [event: FocusEvent]
-}>()
+const emit = defineEmits<BAutocompleteEmits>()
 defineSlots<BAutocompleteSlots>()
+
+const _input = useTemplateRef('_input')
 
 const modelValue = defineModel<BAutocompleteProps['modelValue']>({
   default: undefined,
@@ -223,24 +233,40 @@ const searchTerm = defineModel<Exclude<BAutocompleteProps['search'], undefined>>
 // Backspace-to-delete state for multiple mode
 const pendingDelete = ref(false)
 
-const computedId = useId(() => props.id)
-const stateClass = useStateClass(() => props.state ?? null)
-const computedAriaInvalid = useAriaInvalid(
-  () => props.ariaInvalid,
-  () => props.state ?? null
-)
-
-const inputClasses = computed(() => [
-  stateClass.value,
-  {
-    'form-control': !props.plaintext,
-    'form-control-plaintext': props.plaintext,
-    [`form-control-${props.size}`]: !!props.size,
-  },
-])
+const computedId = useId(() => props.id, 'autocomplete')
 
 const {normalizedOptions} = useFormSelect(() => props.options, props) as {
   normalizedOptions: ComputedRef<SelectOption[]>
+}
+
+const singleSelectedLabelCache = ref<{key: string; text: string} | null>(null)
+
+const getLookupKey = (val: AcceptableValue): string | undefined => {
+  if (props.by && typeof props.by === 'string' && val !== null && typeof val === 'object') {
+    const byVal = (val as Record<string, unknown>)?.[props.by]
+    return byVal === undefined ? undefined : `by:${String(byVal)}`
+  }
+
+  if (val !== null && val !== undefined && typeof val !== 'object') {
+    return `value:${String(val)}`
+  }
+
+  return undefined
+}
+
+const cacheSingleSelectedLabel = (val: AcceptableValue, text: string | undefined) => {
+  const key = getLookupKey(val)
+  if (!key) return
+  singleSelectedLabelCache.value = {key, text: String(text ?? '')}
+}
+// Run this immediately
+if (
+  !props.multiple &&
+  modelValue.value !== null &&
+  modelValue.value !== undefined &&
+  searchTerm.value !== ''
+) {
+  cacheSingleSelectedLabel(modelValue.value as AcceptableValue, searchTerm.value)
 }
 
 const findOptionText = (val: AcceptableValue): string => {
@@ -253,7 +279,18 @@ const findOptionText = (val: AcceptableValue): string => {
     }
     return opt.value === val
   })
-  return match ? String(match.text) : String(val)
+  if (match) {
+    const resolvedText = String(match.text)
+    cacheSingleSelectedLabel(val, resolvedText)
+    return resolvedText
+  }
+
+  const lookupKey = getLookupKey(val)
+  if (lookupKey && singleSelectedLabelCache.value?.key === lookupKey) {
+    return singleSelectedLabelCache.value.text
+  }
+
+  return String(val)
 }
 
 // Filter options — for multiple mode, always uses searchTerm which is purely a search query
@@ -277,9 +314,15 @@ const displayValueFn = (val: any) => {
 
 // Whether there are selected values in multiple mode
 const hasSelection = computed(() => {
-  if (!modelValue.value) return false
-  return Array.isArray(modelValue.value) ? modelValue.value.length > 0 : true
+  const currentValue = modelValue.value
+  if (Array.isArray(currentValue)) return currentValue.length > 0
+  return currentValue !== null && currentValue !== undefined
 })
+
+const computedAriaInvalid = useAriaInvalid(
+  () => props.ariaInvalid,
+  () => props.state
+)
 
 // Resolved option objects for tags mode
 const selectedOptions = computed<SelectOption[]>(() => {
@@ -319,8 +362,28 @@ const optionKey = (option: SelectOption, index: number) => {
   return index
 }
 
-const isLastSelectedOption = (_opt: SelectOption, index: number): boolean => {
-  return index === selectedOptions.value.length - 1
+const isLastSelectedOption = (_opt: SelectOption, index: number): boolean =>
+  index === selectedOptions.value.length - 1
+
+const showClearButton = computed(
+  () =>
+    !props.required &&
+    !props.noClearButton &&
+    !props.disabled &&
+    !props.readonly &&
+    hasSelection.value
+)
+
+const clearSelection = () => {
+  modelValue.value = props.multiple ? [] : undefined
+  searchTerm.value = ''
+  singleSelectedLabelCache.value = null
+  _input.value?.focus()
+}
+
+const onOptionSelect = (option: SelectOption) => {
+  cacheSingleSelectedLabel(option.value as AcceptableValue, String(option.text))
+  _input.value?.focus()
 }
 
 const resetPendingDelete = () => {
@@ -352,4 +415,30 @@ const onInputKeydown = (event: KeyboardEvent) => {
     resetPendingDelete()
   }
 }
+
+const comboboxInputProps = computed<
+  Omit<Parameters<Exclude<BAutocompleteSlots['input'], undefined>>[0], 'searchTerm'>
+>(() => ({
+  'id': computedId.value,
+  'disabled': props.disabled,
+  'form': props.form || undefined,
+  'placeholder': props.placeholder,
+  'readonly': props.readonly || props.plaintext,
+  'required': props.required || undefined,
+  'autocomplete': props.autocomplete || undefined,
+  'plaintext': props.plaintext,
+  'size': props.size,
+  'state': props.state,
+  'aria-invalid': computedAriaInvalid.value,
+  'aria-required': props.required || undefined,
+  'onBlur': (event: FocusEvent) => emit('blur', event),
+  'onFocus': (event: FocusEvent) => emit('focus', event),
+  'onKeydown': (event: KeyboardEvent) => onInputKeydown(event),
+}))
+
+defineExpose({
+  blur: () => _input.value?.blur(),
+  element: computed(() => _input.value?.element?.value ?? null),
+  focus: () => _input.value?.focus(),
+})
 </script>

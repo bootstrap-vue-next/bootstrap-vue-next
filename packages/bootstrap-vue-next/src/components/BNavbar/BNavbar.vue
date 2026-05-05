@@ -9,12 +9,11 @@
 
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
-import type {BNavbarProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useContainerClasses} from '../../composables/useContainerClasses'
 import {navbarInjectionKey} from '../../utils/keys'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {BNavbarSlots} from '../../types'
+import type {BNavbarProps, BNavbarSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarProps>(), {
   container: 'fluid',

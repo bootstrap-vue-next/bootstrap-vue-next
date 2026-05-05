@@ -7,9 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import type {BCardHeadFootProps} from '../types/ComponentProps'
 import {useColorVariantClasses} from '../composables/useColorVariantClasses'
-import type {BCardHeadFootSlots} from '../types'
+import type {BCardHeadFootProps, BCardHeadFootSlots} from '../types'
 
 const props = withDefaults(defineProps<BCardHeadFootProps>(), {
   borderVariant: null,

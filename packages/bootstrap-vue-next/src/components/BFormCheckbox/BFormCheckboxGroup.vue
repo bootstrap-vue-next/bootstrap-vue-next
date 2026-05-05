@@ -29,11 +29,14 @@
     )[]
   "
 >
-import type {BFormCheckboxGroupProps, BFormCheckboxGroupSlots} from '../../types'
+import type {
+  BFormCheckboxGroupProps,
+  BFormCheckboxGroupSlots,
+  CheckboxValue,
+  OptionsValues,
+} from '../../types'
 import {computed} from 'vue'
 import BFormCheckboxGroupBase from './BFormCheckboxGroupBase.vue'
-import type {CheckboxValue} from '../../types/CheckboxTypes'
-import type {OptionsValues} from '../../types/OptionsTypes'
 
 /**
  * Type-safe wrapper component for BFormCheckboxGroup.

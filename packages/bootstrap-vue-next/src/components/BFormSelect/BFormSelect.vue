@@ -25,12 +25,15 @@
     )[]
   "
 >
-import type {BFormSelectProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 import BFormSelectBase from './BFormSelectBase.vue'
-import type {ComplexSelectOptionRaw, SelectOption} from '../../types/SelectTypes'
-import type {BFormSelectSlots} from '../../types'
-import type {OptionsValues} from '../../types/OptionsTypes'
+import type {
+  BFormSelectProps,
+  BFormSelectSlots,
+  ComplexSelectOptionRaw,
+  OptionsValues,
+  SelectOption,
+} from '../../types'
 
 /**
  * Type-safe wrapper component for BFormSelect.

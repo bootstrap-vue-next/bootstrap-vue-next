@@ -22,10 +22,9 @@
 
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
-import type {BInputGroupProps} from '../../types/ComponentProps'
 import {computed, provide} from 'vue'
 import {inputGroupKey} from '../../utils/keys'
-import type {BInputGroupSlots} from '../../types'
+import type {BInputGroupProps, BInputGroupSlots} from '../../types'
 
 provide(inputGroupKey, true)
 

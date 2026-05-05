@@ -27,10 +27,9 @@ import {computed} from 'vue'
 import BCardTitle from './BCardTitle.vue'
 import {isEmptySlot} from '../../utils/dom'
 import BCardSubtitle from './BCardSubtitle.vue'
-import type {BCardBodyProps} from '../../types/ComponentProps'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BCardBodySlots} from '../../types'
+import type {BCardBodyProps, BCardBodySlots} from '../../types'
 
 const _props = withDefaults(defineProps<BCardBodyProps>(), {
   borderVariant: null,

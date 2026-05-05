@@ -8,9 +8,8 @@
 import {computed} from 'vue'
 import {getClasses} from '../../utils/getClasses'
 import {useAlignment} from '../../composables/useAlignment'
-import type {BRowProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BRowSlots} from '../../types'
+import type {BRowProps, BRowSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BRowProps>(), {
   tag: 'div',

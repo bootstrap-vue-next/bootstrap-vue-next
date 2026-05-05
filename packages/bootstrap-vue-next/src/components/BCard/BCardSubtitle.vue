@@ -7,10 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import type {BCardSubtitleSlots} from '../../types'
+import type {BCardSubtitleProps, BCardSubtitleSlots} from '../../types'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BCardSubtitleProps} from '../../types/ComponentProps'
 
 const _props = withDefaults(defineProps<BCardSubtitleProps>(), {
   tag: 'h6',

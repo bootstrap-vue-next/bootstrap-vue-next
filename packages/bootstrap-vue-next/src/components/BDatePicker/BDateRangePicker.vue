@@ -201,8 +201,7 @@ import {
 } from 'reka-ui'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BDateRangePickerEmits, BDateRangePickerSlots} from '../../types'
-import type {BDateRangePickerProps} from '../../types/ComponentProps'
+import type {BDateRangePickerEmits, BDateRangePickerProps, BDateRangePickerSlots} from '../../types'
 
 const _props = withDefaults(
   defineProps<Omit<BDateRangePickerProps, 'modelValue' | 'open' | 'placeholder'>>(),

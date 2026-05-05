@@ -35,13 +35,12 @@
 
 <script setup lang="ts">
 import {computed, type CSSProperties, inject, toRef} from 'vue'
-import type {BCarouselSlideProps} from '../../types/ComponentProps'
 import {carouselInjectionKey} from '../../utils/keys'
 import BImg from '../BImg/BImg.vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {isEmptySlot} from '../../utils/dom'
 import {useId} from '../../composables/useId'
-import type {BCarouselSlideSlots} from '../../types/ComponentSlots'
+import type {BCarouselSlideProps, BCarouselSlideSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BCarouselSlideProps>(), {
   background: undefined,

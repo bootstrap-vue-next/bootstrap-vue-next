@@ -15,7 +15,7 @@
 
 <script setup lang="ts" generic="Item">
 import {computed} from 'vue'
-import type {BTableInitialSortDirection, BTableSortBy, TableField} from '../types/TableTypes'
+import type {BTableInitialSortDirection, BTableSortBy, TableField} from '../types'
 
 const props = defineProps<{
   fieldInfo: TableField<Item>

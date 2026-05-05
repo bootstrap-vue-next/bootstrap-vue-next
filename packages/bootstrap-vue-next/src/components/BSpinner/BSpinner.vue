@@ -13,11 +13,10 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BSpinnerProps} from '../../types/ComponentProps'
 import {isEmptySlot} from '../../utils/dom'
 import {useDefaults} from '../../composables/useDefaults'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {BSpinnerSlots} from '../../types'
+import type {BSpinnerProps, BSpinnerSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BSpinnerProps>(), {
   label: undefined,

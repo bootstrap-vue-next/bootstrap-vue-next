@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BAspectProps} from '../../types/ComponentProps'
+import type {BAspectProps, BAspectSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BAspectProps>(), {
@@ -17,6 +17,7 @@ const _props = withDefaults(defineProps<BAspectProps>(), {
   aspect: '1:1',
 })
 const props = useDefaults(_props, 'BAspect')
+defineSlots<BAspectSlots>()
 
 const computedPadding = computed(() => {
   const aspect = String(props.aspect)

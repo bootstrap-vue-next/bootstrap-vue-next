@@ -199,6 +199,7 @@ export interface BAutocompleteProps {
   modelValue?: AcceptableValue | AcceptableValue[]
   multiple?: boolean
   name?: string
+  noClearButton?: boolean
   noToggle?: boolean
   open?: boolean
   openOnFocus?: boolean

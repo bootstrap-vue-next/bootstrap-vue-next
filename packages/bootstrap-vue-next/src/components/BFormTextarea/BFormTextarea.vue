@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormTextareaProps} from '../../types/ComponentProps'
+import type {BFormTextareaProps} from '../../types'
 import {computed, type CSSProperties, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'

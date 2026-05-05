@@ -31,10 +31,8 @@
 <script setup lang="ts">
 import {useTemplateRef} from 'vue'
 import BDropdown from '../BDropdown/BDropdown.vue'
-import type {BDropdownProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BDropdownEmits} from '../../types/ComponentEmits'
-import type {BNavItemDropdownSlots} from '../../types'
+import type {BDropdownEmits, BDropdownProps, BNavItemDropdownSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BDropdownProps, 'modelValue'>>(), {
   ariaLabel: undefined,
