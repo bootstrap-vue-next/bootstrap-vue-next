@@ -94,6 +94,7 @@
   .form-control {
     flex: 1 1 auto;
     min-width: 0;
+
     // Remove border adjustments that input-group usually applies; we inherit them from context
     border-radius: inherit;
   }
