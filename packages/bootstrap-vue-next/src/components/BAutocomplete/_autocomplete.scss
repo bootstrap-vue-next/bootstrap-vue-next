@@ -38,9 +38,9 @@
     var(--bs-focus-ring-color, rgba(13, 110, 253, 0.25));
 }
 
-.b-autocomplete
-  .input-group:has(.b-autocomplete-selection):has(.form-control:focus)
-  .b-autocomplete-selection {
+.b-autocomplete,
+.input-group:has(.b-autocomplete-selection):has(.form-control:focus),
+.b-autocomplete-selection {
   border-color: #86b7fe;
 }
 
@@ -51,11 +51,11 @@
 }
 
 // Remove left border on input when selection div is present to avoid double border
-.b-autocomplete
-  .input-group
-  .b-autocomplete-selection
-  ~ .b-autocomplete-input-wrapper
-  .form-control,
+.b-autocomplete,
+.input-group,
+.b-autocomplete-selection,
+~ .b-autocomplete-input-wrapper,
+.form-control,
 .b-autocomplete .input-group .b-autocomplete-selection ~ .form-control {
   border-left: 0;
 }
