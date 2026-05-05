@@ -181,7 +181,7 @@ import BButton from '../BButton/BButton.vue'
 import BFormInput from '../BFormInput/BFormInput.vue'
 import BFormTag from '../BFormTags/BFormTag.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
-import {useFormSelect} from '../../composables/useFormSelect.ts'
+import {useFormSelect} from '../../composables/useFormSelect'
 
 const _props = withDefaults(defineProps<Omit<BAutocompleteProps, 'modelValue' | 'search'>>(), {
   ariaInvalid: undefined,
