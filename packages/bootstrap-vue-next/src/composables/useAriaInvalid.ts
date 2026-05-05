@@ -1,6 +1,6 @@
 import type {AriaInvalid} from '../types'
 import {computed, type MaybeRefOrGetter, toValue} from 'vue'
-import type {StringAriaInvalid} from '../types/AriaInvalid.ts'
+import type {StringAriaInvalid} from '../types/AriaInvalid'
 
 export const useAriaInvalid = (
   ariaInvalid: MaybeRefOrGetter<AriaInvalid | undefined>,

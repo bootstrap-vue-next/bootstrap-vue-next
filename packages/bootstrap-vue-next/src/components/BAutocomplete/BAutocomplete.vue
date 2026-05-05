@@ -182,6 +182,7 @@ import BFormInput from '../BFormInput/BFormInput.vue'
 import BFormTag from '../BFormTags/BFormTag.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import {useFormSelect} from '../../composables/useFormSelect'
+import {useAriaInvalid} from '../../composables/useAriaInvalid'
 
 const _props = withDefaults(defineProps<Omit<BAutocompleteProps, 'modelValue' | 'search'>>(), {
   ariaInvalid: undefined,
@@ -313,9 +314,15 @@ const displayValueFn = (val: any) => {
 
 // Whether there are selected values in multiple mode
 const hasSelection = computed(() => {
-  if (!modelValue.value) return false
-  return Array.isArray(modelValue.value) ? modelValue.value.length > 0 : true
+  const currentValue = modelValue.value
+  if (Array.isArray(currentValue)) return currentValue.length > 0
+  return currentValue !== null && currentValue !== undefined
 })
+
+const computedAriaInvalid = useAriaInvalid(
+  () => props.ariaInvalid,
+  () => props.state
+)
 
 // Resolved option objects for tags mode
 const selectedOptions = computed<SelectOption[]>(() => {
@@ -422,7 +429,7 @@ const comboboxInputProps = computed<
   'plaintext': props.plaintext,
   'size': props.size,
   'state': props.state,
-  'aria-invalid': props.ariaInvalid,
+  'aria-invalid': computedAriaInvalid.value,
   'aria-required': props.required || undefined,
   'onBlur': (event: FocusEvent) => emit('blur', event),
   'onFocus': (event: FocusEvent) => emit('focus', event),
@@ -431,7 +438,7 @@ const comboboxInputProps = computed<
 
 defineExpose({
   blur: () => _input.value?.blur(),
-  element: computed(() => _input.value?.element || null),
+  element: computed(() => _input.value?.element?.value ?? null),
   focus: () => _input.value?.focus(),
 })
 </script>

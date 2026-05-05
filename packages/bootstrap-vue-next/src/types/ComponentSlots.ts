@@ -10,7 +10,7 @@ import type {SpinnerType} from './SpinnerType'
 import type {InputType} from './InputType'
 import type {TableField} from './TableTypes'
 import type {DateRange, DateValue, SegmentPart, TimeValue} from 'reka-ui'
-import type {AriaInvalid} from './AriaInvalid.ts'
+import type {StringAriaInvalid} from './AriaInvalid'
 
 type TimeRange = {start: TimeValue | undefined; end: TimeValue | undefined}
 
@@ -125,7 +125,7 @@ export type BAutocompleteSlots = {
     'plaintext': boolean
     'size': Size | undefined
     'state': ValidationState | undefined
-    'aria-invalid': AriaInvalid | undefined
+    'aria-invalid': StringAriaInvalid | undefined
     'aria-required': true | undefined
     'onBlur': (event: FocusEvent) => void
     'onFocus': (event: FocusEvent) => void
