@@ -598,7 +598,7 @@ describe('BAutocomplete', () => {
       expect(wrapper.find('.b-autocomplete-content').exists()).toBe(true)
     })
 
-    it('supports v-model:search', () => {
+    it('supports v-model:search', async () => {
       const wrapper = mount(BAutocomplete, {
         props: {
           search: 'hello',
@@ -606,7 +606,10 @@ describe('BAutocomplete', () => {
         },
       })
       const input = wrapper.find('input')
-      expect(input.element.value).toBe('hello')
+      await input.setValue('hel')
+      expect(wrapper.emitted('update:search')).toBeTruthy()
+      const emittedValues = wrapper.emitted('update:search')!
+      expect(emittedValues[emittedValues.length - 1][0]).toBe('hel')
     })
   })
 

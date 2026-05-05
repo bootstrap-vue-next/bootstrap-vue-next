@@ -62,30 +62,32 @@
         <!-- Search input (always present) -->
         <ComboboxInput v-model="searchTerm" as-child :display-value="displayValueFn">
           <slot name="input" v-bind="comboboxInputProps">
-            <input v-bind="comboboxInputProps" />
+            <BFormInput ref="_input" :model-value="searchTerm" v-bind="comboboxInputProps" />
           </slot>
         </ComboboxInput>
 
         <template #append>
           <ComboboxTrigger v-if="!props.noToggle" as-child :disabled="props.disabled">
-            <BButton class="b-autocomplete-trigger" :disabled="props.disabled">
-              <slot name="toggle-icon" :is-open>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  viewBox="0 0 16 16"
-                  class="b-autocomplete-chevron"
-                  :class="{'b-autocomplete-chevron-open': isOpen}"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-                  />
-                </svg>
-              </slot>
-            </BButton>
+            <slot name="toggle" :is-open :disabled="props.disabled">
+              <BButton class="b-autocomplete-trigger" :disabled="props.disabled">
+                <slot name="toggle-icon" :is-open>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                    class="b-autocomplete-chevron"
+                    :class="{'b-autocomplete-chevron-open': isOpen}"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                    />
+                  </svg>
+                </slot>
+              </BButton>
+            </slot>
           </ComboboxTrigger>
         </template>
       </BInputGroup>
@@ -111,6 +113,7 @@
             :value="option.value as AcceptableValue"
             :disabled="option.disabled"
             :class="['b-autocomplete-item', 'dropdown-item']"
+            @select="_input?.focus()"
           >
             <slot name="option" v-bind="option">
               {{ option.text }}
@@ -138,7 +141,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type ComputedRef, ref} from 'vue'
+import {computed, type ComputedRef, ref, useTemplateRef} from 'vue'
 import type {AcceptableValue} from 'reka-ui'
 import {
   ComboboxAnchor,
@@ -153,12 +156,16 @@ import {
   ComboboxViewport,
 } from 'reka-ui'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BAutocompleteProps, BAutocompleteSlots, SelectOption} from '../../types'
+import type {
+  BAutocompleteEmits,
+  BAutocompleteProps,
+  BAutocompleteSlots,
+  SelectOption,
+} from '../../types'
 import {useId} from '../../composables/useId'
-import {useStateClass} from '../../composables/useStateClass'
-import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import BInputGroup from '../BInputGroup/BInputGroup.vue'
 import BButton from '../BButton/BButton.vue'
+import BFormInput from '../BFormInput/BFormInput.vue'
 import BFormTag from '../BFormTags/BFormTag.vue'
 import {useFormSelect} from '../../composables/useFormSelect.ts'
 
@@ -194,11 +201,10 @@ const _props = withDefaults(defineProps<Omit<BAutocompleteProps, 'modelValue' | 
   valueField: 'value',
 })
 const props = useDefaults(_props, 'BAutocomplete')
-const emit = defineEmits<{
-  blur: [event: FocusEvent]
-  focus: [event: FocusEvent]
-}>()
+const emit = defineEmits<BAutocompleteEmits>()
 defineSlots<BAutocompleteSlots>()
+
+const _input = useTemplateRef('_input')
 
 const modelValue = defineModel<BAutocompleteProps['modelValue']>({
   default: undefined,
@@ -211,21 +217,7 @@ const searchTerm = defineModel<Exclude<BAutocompleteProps['search'], undefined>>
 // Backspace-to-delete state for multiple mode
 const pendingDelete = ref(false)
 
-const computedId = useId(() => props.id)
-const stateClass = useStateClass(() => props.state ?? null)
-const computedAriaInvalid = useAriaInvalid(
-  () => props.ariaInvalid,
-  () => props.state ?? null
-)
-
-const inputClasses = computed(() => [
-  stateClass.value,
-  {
-    'form-control': !props.plaintext,
-    'form-control-plaintext': props.plaintext,
-    [`form-control-${props.size}`]: !!props.size,
-  },
-])
+const computedId = useId(() => props.id, 'autocomplete')
 
 const {normalizedOptions} = useFormSelect(() => props.options, props) as {
   normalizedOptions: ComputedRef<SelectOption[]>
@@ -344,18 +336,27 @@ const onInputKeydown = (event: KeyboardEvent) => {
 const comboboxInputProps = computed<Parameters<Exclude<BAutocompleteSlots['input'], undefined>>[0]>(
   () => ({
     'id': computedId.value,
-    'class': inputClasses.value,
     'disabled': props.disabled,
     'form': props.form || undefined,
     'placeholder': props.placeholder,
     'readonly': props.readonly || props.plaintext,
     'required': props.required || undefined,
     'autocomplete': props.autocomplete || undefined,
-    'aria-invalid': computedAriaInvalid.value,
+    'searchTerm': searchTerm.value,
+    'plaintext': props.plaintext,
+    'size': props.size,
+    'state': props.state,
+    'aria-invalid': props.ariaInvalid,
     'aria-required': props.required || undefined,
     'onBlur': (event: FocusEvent) => emit('blur', event),
     'onFocus': (event: FocusEvent) => emit('focus', event),
     'onKeydown': (event: KeyboardEvent) => onInputKeydown(event),
   })
 )
+
+defineExpose({
+  blur: () => _input.value?.blur(),
+  element: computed(() => _input.value?.element || null),
+  focus: () => _input.value?.focus(),
+})
 </script>

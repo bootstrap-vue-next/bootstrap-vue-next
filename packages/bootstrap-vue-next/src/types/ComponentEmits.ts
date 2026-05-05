@@ -15,6 +15,11 @@ export interface showHideEmits {
 
 export type BCollapseEmits = showHideEmits
 
+export interface BAutocompleteEmits {
+  blur: [event: FocusEvent]
+  focus: [event: FocusEvent]
+}
+
 export interface BDropdownEmits extends showHideEmits {
   'split-click': [value: MouseEvent]
 }
