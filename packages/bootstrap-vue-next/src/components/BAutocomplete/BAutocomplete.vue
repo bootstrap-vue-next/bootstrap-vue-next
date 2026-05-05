@@ -113,7 +113,7 @@
             :value="option.value as AcceptableValue"
             :disabled="option.disabled"
             :class="['b-autocomplete-item', 'dropdown-item']"
-            @select="_input?.focus()"
+            @select="onOptionSelect(option)"
           >
             <slot name="option" v-bind="option">
               {{ option.text }}
@@ -223,6 +223,36 @@ const {normalizedOptions} = useFormSelect(() => props.options, props) as {
   normalizedOptions: ComputedRef<SelectOption[]>
 }
 
+const singleSelectedLabelCache = ref<{key: string; text: string} | null>(null)
+
+const getLookupKey = (val: AcceptableValue): string | undefined => {
+  if (props.by && typeof props.by === 'string' && val !== null && typeof val === 'object') {
+    const byVal = (val as Record<string, unknown>)?.[props.by]
+    return byVal === undefined ? undefined : `by:${String(byVal)}`
+  }
+
+  if (val !== null && val !== undefined && typeof val !== 'object') {
+    return `value:${String(val)}`
+  }
+
+  return undefined
+}
+
+const cacheSingleSelectedLabel = (val: AcceptableValue, text: string | undefined) => {
+  const key = getLookupKey(val)
+  if (!key) return
+  singleSelectedLabelCache.value = {key, text: String(text ?? '')}
+}
+// Run this immediately
+if (
+  !props.multiple &&
+  modelValue.value !== null &&
+  modelValue.value !== undefined &&
+  searchTerm.value !== ''
+) {
+  cacheSingleSelectedLabel(modelValue.value as AcceptableValue, searchTerm.value)
+}
+
 const findOptionText = (val: AcceptableValue): string => {
   const match = normalizedOptions.value.find((opt) => {
     if (props.by && typeof props.by === 'string') {
@@ -233,7 +263,18 @@ const findOptionText = (val: AcceptableValue): string => {
     }
     return opt.value === val
   })
-  return match ? String(match.text) : String(val)
+  if (match) {
+    const resolvedText = String(match.text)
+    cacheSingleSelectedLabel(val, resolvedText)
+    return resolvedText
+  }
+
+  const lookupKey = getLookupKey(val)
+  if (lookupKey && singleSelectedLabelCache.value?.key === lookupKey) {
+    return singleSelectedLabelCache.value.text
+  }
+
+  return String(val)
 }
 
 // Filter options — for multiple mode, always uses searchTerm which is purely a search query
@@ -299,8 +340,12 @@ const optionKey = (option: SelectOption, index: number) => {
   return index
 }
 
-const isLastSelectedOption = (_opt: SelectOption, index: number): boolean => {
-  return index === selectedOptions.value.length - 1
+const isLastSelectedOption = (_opt: SelectOption, index: number): boolean =>
+  index === selectedOptions.value.length - 1
+
+const onOptionSelect = (option: SelectOption) => {
+  cacheSingleSelectedLabel(option.value as AcceptableValue, String(option.text))
+  _input.value?.focus()
 }
 
 const resetPendingDelete = () => {
