@@ -236,7 +236,7 @@ export default {
         },
         input: {
           description:
-            'Custom rendering for the search input. Receives all props needed to wire up the input to the combobox',
+            'Custom rendering for the search input. Receives all props needed to wire up the input to the combobox. Note: using this slot replaces the internal fallback input ref, so built-in focus restore (`clearSelection`, option select) and exposed `focus`/`blur`/`element` helpers do not target your slotted input; manage focus yourself from component events.',
           scope: {
             id: {
               type: 'string',
@@ -281,6 +281,31 @@ export default {
             state: {
               type: 'ValidationState | undefined',
               description: 'Validation state of the input',
+            },
+            'aria-invalid': {
+              type: 'AriaInvalid | undefined',
+              description:
+                'ARIA invalid state to forward/spread to the input so accessibility validation state is preserved',
+            },
+            'aria-required': {
+              type: 'true | undefined',
+              description:
+                'ARIA required state to forward/spread to the input so required accessibility state is preserved',
+            },
+            onBlur: {
+              type: '(event: FocusEvent) => void',
+              description:
+                'Blur handler to forward/spread to the input so component blur behavior is preserved',
+            },
+            onFocus: {
+              type: '(event: FocusEvent) => void',
+              description:
+                'Focus handler to forward/spread to the input so component focus behavior is preserved',
+            },
+            onKeydown: {
+              type: '(event: KeyboardEvent) => void',
+              description:
+                'Keydown handler to forward/spread to the input so keyboard behavior (including backspace-delete flow) is preserved',
             },
           },
         },

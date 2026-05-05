@@ -62,7 +62,7 @@
         <!-- Search input (always present) -->
         <div class="b-autocomplete-input-wrapper">
           <ComboboxInput v-model="searchTerm" as-child :display-value="displayValueFn">
-            <slot name="input" v-bind="comboboxInputProps">
+            <slot name="input" v-bind="comboboxInputProps" :search-term>
               <BFormInput
                 ref="_input"
                 :model-value="searchTerm"
@@ -409,26 +409,25 @@ const onInputKeydown = (event: KeyboardEvent) => {
   }
 }
 
-const comboboxInputProps = computed<Parameters<Exclude<BAutocompleteSlots['input'], undefined>>[0]>(
-  () => ({
-    'id': computedId.value,
-    'disabled': props.disabled,
-    'form': props.form || undefined,
-    'placeholder': props.placeholder,
-    'readonly': props.readonly || props.plaintext,
-    'required': props.required || undefined,
-    'autocomplete': props.autocomplete || undefined,
-    'searchTerm': searchTerm.value,
-    'plaintext': props.plaintext,
-    'size': props.size,
-    'state': props.state,
-    'aria-invalid': props.ariaInvalid,
-    'aria-required': props.required || undefined,
-    'onBlur': (event: FocusEvent) => emit('blur', event),
-    'onFocus': (event: FocusEvent) => emit('focus', event),
-    'onKeydown': (event: KeyboardEvent) => onInputKeydown(event),
-  })
-)
+const comboboxInputProps = computed<
+  Omit<Parameters<Exclude<BAutocompleteSlots['input'], undefined>>[0], 'searchTerm'>
+>(() => ({
+  'id': computedId.value,
+  'disabled': props.disabled,
+  'form': props.form || undefined,
+  'placeholder': props.placeholder,
+  'readonly': props.readonly || props.plaintext,
+  'required': props.required || undefined,
+  'autocomplete': props.autocomplete || undefined,
+  'plaintext': props.plaintext,
+  'size': props.size,
+  'state': props.state,
+  'aria-invalid': props.ariaInvalid,
+  'aria-required': props.required || undefined,
+  'onBlur': (event: FocusEvent) => emit('blur', event),
+  'onFocus': (event: FocusEvent) => emit('focus', event),
+  'onKeydown': (event: KeyboardEvent) => onInputKeydown(event),
+}))
 
 defineExpose({
   blur: () => _input.value?.blur(),
