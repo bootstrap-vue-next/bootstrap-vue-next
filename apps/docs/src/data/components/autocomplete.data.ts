@@ -124,6 +124,19 @@ export default {
             },
           },
         },
+        change: {
+          description:
+            'Emitted when the selected value changes due to user interaction (option selected, selection cleared, or tag removed)',
+          args: {
+            value: {
+              type: 'AcceptableValue | AcceptableValue[] | undefined',
+              description: 'The new selected value',
+            },
+          },
+        },
+        clear: {
+          description: 'Emitted when the clear button is clicked and the selection is cleared',
+        },
         focus: {
           description: 'Emitted when the autocomplete input gains focus',
           args: {
