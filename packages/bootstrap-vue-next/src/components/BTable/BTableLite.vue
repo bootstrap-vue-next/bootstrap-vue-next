@@ -104,7 +104,7 @@
               :is="getCellComponent(field)"
               v-for="field in computedFields"
               :key="field.key"
-              :scope="field.isRowHeader ? 'row' : undefined"
+              :scope="field.isRowHeader ? 'row' : null"
               :variant="
                 (isTableItem(item) ? item._cellVariants?.[field.key] : false) ? null : field.variant
               "

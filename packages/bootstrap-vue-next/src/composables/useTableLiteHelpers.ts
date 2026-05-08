@@ -250,23 +250,23 @@ export const useTableKeyboardNavigation = <Item>(
   // Inject keyboard navigation state from parent BTable
   const keyboardNavigation = inject(tableKeyboardNavigationKey, null)
   const instance = getCurrentInstance()
-  const hasHeadClickedListener = computed(
+  const hasHeadClickedHandler = computed(
     () => !!(instance?.vnode.props?.onHeadClicked || instance?.vnode.props?.onHeadClickedOnce)
   )
-  const hasRowClickedListener = computed(
+  const hasRowClickedHandler = computed(
     () => !!(instance?.vnode.props?.onRowClicked || instance?.vnode.props?.onRowClickedOnce)
   )
   // Keyboard navigation support
   const shouldHeaderBeFocusable = (field: TableField) =>
     keyboardNavigation
       ? !!(keyboardNavigation.headerNavigation.value && field.sortable === true)
-      : hasHeadClickedListener.value
+      : hasHeadClickedHandler.value
 
   const shouldRowBeFocusable = computed(
     () =>
       keyboardNavigation
         ? !!(keyboardNavigation.rowNavigation.value && toValue(items).length > 0)
-        : !!(hasRowClickedListener.value && toValue(items).length > 0)
+        : !!(hasRowClickedHandler.value && toValue(items).length > 0)
   )
 
   const headerClicked = (
