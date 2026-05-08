@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.1...bootstrapvuenext-v0.45.2) (2026-05-08)
+
+
+### Features
+
+* **BAutocomplete:** add `clear` and `change` events ([#3203](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3203)) ([eefea33](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/eefea33a40d5ed2f0abe0ed5803fc9e673e2487d))
+
 ## [0.45.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.0...bootstrapvuenext-v0.45.1) (2026-05-05)
 
 
