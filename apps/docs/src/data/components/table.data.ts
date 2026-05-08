@@ -581,6 +581,17 @@ export default {
           args: undefined,
           description: 'When bound this will reset the current page to 1 on filter changes',
         },
+        'context-changed': {
+          description:
+            'Emitted when the table context changes (filter, sortBy, currentPage, or perPage)',
+          args: {
+            value: {
+              type: 'BTableProviderContext',
+              description:
+                'Object containing the current context: filter, sortBy, currentPage, perPage',
+            },
+          },
+        },
       } satisfies EmitRecord<
         | keyof BTableEmits<unknown>
         | 'update:sort-by'
@@ -663,6 +674,12 @@ export default {
         noLocalSorting: {
           type: 'boolean',
           default: false,
+        },
+        noFooterSorting: {
+          type: 'boolean',
+          default: false,
+          description:
+            'When set, disables sorting when clicking the footer of a sortable column. Sorting remains available via the column header',
         },
         noProvider: {
           type: 'NoProviderTypes[]',
@@ -748,6 +765,30 @@ export default {
           type: 'BTableSortBy[]',
           default: undefined,
           description: 'Model representing the current sort state',
+        },
+        sortNullLast: {
+          type: 'boolean',
+          default: false,
+          description:
+            'When set, null and undefined values will always be sorted to the end of the list, regardless of sort direction. Only applies to the internal sort routine (not custom sortCompare functions)',
+        },
+        labelSortAsc: {
+          type: 'string',
+          default: 'Click to sort ascending',
+          description:
+            'Visually hidden label for a sortable column header when clicking will sort ascending',
+        },
+        labelSortClear: {
+          type: 'string',
+          default: 'Click to clear sorting',
+          description:
+            'Visually hidden label for a sortable column header when clicking will clear sorting',
+        },
+        labelSortDesc: {
+          type: 'string',
+          default: 'Click to sort descending',
+          description:
+            'Visually hidden label for a sortable column header when clicking will sort descending',
         },
         stickySelect: {
           type: 'boolean',

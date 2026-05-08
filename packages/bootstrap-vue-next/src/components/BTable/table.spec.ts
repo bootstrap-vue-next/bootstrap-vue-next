@@ -91,8 +91,9 @@ describe('structure', () => {
         props: {items: simpleItems, fields: simpleFields},
       })
       const heads = wrapper.get('table').findAll('th')
-      expect(heads[0].text()).toBe('First Name')
-      expect(heads[1].text()).toBe('Age')
+      // Field labels should be present in the header (may also contain sr-only sort labels)
+      expect(heads[0].text()).toContain('First Name')
+      expect(heads[1].text()).toContain('Age')
     })
 
     it('shows sortable columns when sortable === true', () => {
@@ -3308,5 +3309,310 @@ describe('slot pass-through', () => {
       },
     })
     expect(wrapper.text()).toContain('Top row content')
+  })
+})
+
+describe('sortNullLast', () => {
+  const itemsWithNulls = [
+    {id: 1, name: 'Alice', score: 30},
+    {id: 2, name: null, score: null},
+    {id: 3, name: 'Bob', score: 10},
+    {id: 4, name: undefined, score: undefined},
+    {id: 5, name: 'Charlie', score: 20},
+  ]
+
+  it('sorts null/undefined values first by default (ascending)', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: itemsWithNulls,
+        fields: [{key: 'name', sortable: true}],
+        sortBy: [{key: 'name', order: 'asc'}],
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    // With default behavior (no sortNullLast), nulls appear as empty strings and sort first
+    const names = rows.map((r) => r.findAll('td')[0].text())
+    expect(names[0]).toBe('')
+    expect(names[1]).toBe('')
+    expect(names[2]).toBe('Alice')
+  })
+
+  it('sorts null/undefined values last when sortNullLast is true (ascending)', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: itemsWithNulls,
+        fields: [{key: 'name', sortable: true}],
+        sortBy: [{key: 'name', order: 'asc'}],
+        sortNullLast: true,
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    const names = rows.map((r) => r.findAll('td')[0].text())
+    expect(names[0]).toBe('Alice')
+    expect(names[1]).toBe('Bob')
+    expect(names[2]).toBe('Charlie')
+    // Null values come last
+    expect(names[3]).toBe('')
+    expect(names[4]).toBe('')
+  })
+
+  it('sorts null/undefined values last when sortNullLast is true (descending)', async () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items: itemsWithNulls,
+        fields: [{key: 'name', sortable: true}],
+        sortBy: [{key: 'name', order: 'desc'}],
+        sortNullLast: true,
+      },
+    })
+    const rows = wrapper.findAll('tbody tr')
+    const names = rows.map((r) => r.findAll('td')[0].text())
+    expect(names[0]).toBe('Charlie')
+    expect(names[1]).toBe('Bob')
+    expect(names[2]).toBe('Alice')
+    // Null values still come last even in descending order
+    expect(names[3]).toBe('')
+    expect(names[4]).toBe('')
+  })
+})
+
+describe('noFooterSorting', () => {
+  const items = [
+    {id: 1, name: 'Charlie'},
+    {id: 2, name: 'Alice'},
+    {id: 3, name: 'Bob'},
+  ]
+  const fields: Exclude<TableField<(typeof items)[0]>, string>[] = [
+    {key: 'name', label: 'Name', sortable: true},
+  ]
+
+  it('sorts when clicking the footer by default (footClone enabled)', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, footClone: true},
+    })
+    const footHeaders = wrapper.findAll('tfoot th')
+    await footHeaders[0].trigger('click')
+    const rows = wrapper.findAll('tbody tr')
+    const names = rows.map((r) => r.find('td').text())
+    expect(names).toStrictEqual(['Alice', 'Bob', 'Charlie'])
+  })
+
+  it('does not sort when clicking the footer when noFooterSorting is true', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, footClone: true, noFooterSorting: true},
+    })
+    const footHeaders = wrapper.findAll('tfoot th')
+    await footHeaders[0].trigger('click')
+    const rows = wrapper.findAll('tbody tr')
+    const names = rows.map((r) => r.find('td').text())
+    // Items should remain in original order (no sort triggered)
+    expect(names).toStrictEqual(['Charlie', 'Alice', 'Bob'])
+  })
+
+  it('still sorts when clicking the header when noFooterSorting is true', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, footClone: true, noFooterSorting: true},
+    })
+    const headHeaders = wrapper.findAll('thead th')
+    await headHeaders[0].trigger('click')
+    const rows = wrapper.findAll('tbody tr')
+    const names = rows.map((r) => r.find('td').text())
+    expect(names).toStrictEqual(['Alice', 'Bob', 'Charlie'])
+  })
+})
+
+describe('label-sort props', () => {
+  const items = [{name: 'Alice'}, {name: 'Bob'}]
+  const fields: Exclude<TableField<(typeof items)[0]>, string>[] = [
+    {key: 'name', label: 'Name', sortable: true},
+  ]
+
+  it('shows default sort ascending label for unsorted sortable column', () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields},
+    })
+    const th = wrapper.find('thead th')
+    const srOnly = th.find('.visually-hidden')
+    expect(srOnly.exists()).toBe(true)
+    expect(srOnly.text()).toBe('Click to sort ascending')
+  })
+
+  it('shows custom label-sort-asc for unsorted sortable column', () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, labelSortAsc: 'Sort A-Z'},
+    })
+    const srOnly = wrapper.find('thead th .visually-hidden')
+    expect(srOnly.text()).toBe('Sort A-Z')
+  })
+
+  it('shows label-sort-desc after sorting ascending', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, sortBy: [{key: 'name', order: 'asc'}]},
+    })
+    const srOnly = wrapper.find('thead th .visually-hidden')
+    expect(srOnly.text()).toBe('Click to sort descending')
+  })
+
+  it('shows label-sort-clear after sorting descending', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, sortBy: [{key: 'name', order: 'desc'}]},
+    })
+    const srOnly = wrapper.find('thead th .visually-hidden')
+    expect(srOnly.text()).toBe('Click to clear sorting')
+  })
+
+  it('shows custom label-sort-desc', () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, sortBy: [{key: 'name', order: 'asc'}], labelSortDesc: 'Sort Z-A'},
+    })
+    const srOnly = wrapper.find('thead th .visually-hidden')
+    expect(srOnly.text()).toBe('Sort Z-A')
+  })
+
+  it('shows custom label-sort-clear', () => {
+    const wrapper = mount(BTable, {
+      props: {
+        items,
+        fields,
+        sortBy: [{key: 'name', order: 'desc'}],
+        labelSortClear: 'Remove sort',
+      },
+    })
+    const srOnly = wrapper.find('thead th .visually-hidden')
+    expect(srOnly.text()).toBe('Remove sort')
+  })
+
+  it('does not show sort label for non-sortable columns', () => {
+    const fieldsNoSort: Exclude<TableField<(typeof items)[0]>, string>[] = [
+      {key: 'name', label: 'Name', sortable: false},
+    ]
+    const wrapper = mount(BTable, {
+      props: {items, fields: fieldsNoSort},
+    })
+    const srOnly = wrapper.find('thead th .visually-hidden')
+    expect(srOnly.exists()).toBe(false)
+  })
+})
+
+describe('aria-multiselectable', () => {
+  const items = [{name: 'Alice'}, {name: 'Bob'}]
+
+  it('sets aria-multiselectable=true when selectable and selectMode is multi', () => {
+    const wrapper = mount(BTable, {
+      props: {items, selectable: true, selectMode: 'multi'},
+    })
+    expect(wrapper.find('table').attributes('aria-multiselectable')).toBe('true')
+  })
+
+  it('sets aria-multiselectable=true when selectable and selectMode is range', () => {
+    const wrapper = mount(BTable, {
+      props: {items, selectable: true, selectMode: 'range'},
+    })
+    expect(wrapper.find('table').attributes('aria-multiselectable')).toBe('true')
+  })
+
+  it('does not set aria-multiselectable when selectMode is single', () => {
+    const wrapper = mount(BTable, {
+      props: {items, selectable: true, selectMode: 'single'},
+    })
+    expect(wrapper.find('table').attributes('aria-multiselectable')).toBeUndefined()
+  })
+
+  it('does not set aria-multiselectable when not selectable', () => {
+    const wrapper = mount(BTable, {
+      props: {items, selectable: false},
+    })
+    expect(wrapper.find('table').attributes('aria-multiselectable')).toBeUndefined()
+  })
+})
+
+describe('context-changed event', () => {
+  const items = [{name: 'Alice'}, {name: 'Bob'}]
+  const fields: Exclude<TableField<(typeof items)[0]>, string>[] = [
+    {key: 'name', label: 'Name', sortable: true},
+  ]
+
+  it('emits context-changed when filter changes', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, filter: ''},
+    })
+    await wrapper.setProps({filter: 'Alice'})
+    await nextTick()
+    expect(wrapper.emitted('context-changed')).toBeTruthy()
+    const ctx = wrapper.emitted('context-changed')?.[0]?.[0] as BTableProviderContext
+    expect(ctx.filter).toBe('Alice')
+  })
+
+  it('emits context-changed when sortBy changes', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, sortBy: []},
+    })
+    await wrapper.setProps({sortBy: [{key: 'name', order: 'asc' as const}]})
+    await nextTick()
+    expect(wrapper.emitted('context-changed')).toBeTruthy()
+    const ctx = wrapper.emitted('context-changed')?.[0]?.[0] as BTableProviderContext
+    expect(ctx.sortBy).toEqual([{key: 'name', order: 'asc'}])
+  })
+
+  it('emits context-changed when currentPage changes', async () => {
+    const wrapper = mount(BTable, {
+      props: {items, fields, perPage: 1, currentPage: 1},
+    })
+    await wrapper.setProps({currentPage: 2})
+    await nextTick()
+    expect(wrapper.emitted('context-changed')).toBeTruthy()
+    const ctx = wrapper.emitted('context-changed')?.[0]?.[0] as BTableProviderContext
+    expect(ctx.currentPage).toBe(2)
+  })
+})
+
+describe('filterByFormatted as function', () => {
+  const items = [
+    {id: 1, score: 85},
+    {id: 2, score: 92},
+    {id: 3, score: 73},
+  ]
+
+  it('filters using filterByFormatted as boolean (uses formatter)', async () => {
+    const fields: Exclude<TableField<(typeof items)[0]>, string>[] = [
+      {
+        key: 'score',
+        label: 'Grade',
+        sortable: false,
+        filterByFormatted: true,
+        formatter: ({value}) => {
+          const score = Number(value)
+          return score >= 90 ? 'A' : score >= 80 ? 'B' : 'C'
+        },
+      },
+    ]
+    const wrapper = mount(BTable, {
+      props: {items, fields, filter: 'A'},
+    })
+    await nextTick()
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows).toHaveLength(1)
+    expect(rows[0].find('td').text()).toBe('A') // score 92 -> 'A'
+  })
+
+  it('filters using filterByFormatted as a custom function', async () => {
+    const fields: Exclude<TableField<(typeof items)[0]>, string>[] = [
+      {
+        key: 'score',
+        label: 'Score',
+        sortable: false,
+        filterByFormatted: ({value}) => {
+          const score = Number(value)
+          return score >= 90 ? 'Excellent' : 'Good'
+        },
+      },
+    ]
+    const wrapper = mount(BTable, {
+      props: {items, fields, filter: 'Excellent'},
+    })
+    await nextTick()
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows).toHaveLength(1)
+    expect(rows[0].find('td').text()).toBe('92') // raw value shown since no formatter
   })
 })
