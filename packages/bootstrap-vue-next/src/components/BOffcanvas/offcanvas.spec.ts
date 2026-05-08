@@ -1,6 +1,6 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
-import {nextTick} from 'vue'
+import {defineComponent, nextTick, ref} from 'vue'
 import {BvTriggerableEvent} from '../../utils'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
@@ -577,6 +577,37 @@ describe('offcanvas', () => {
       })
       const $div = wrapper.find('[role="dialog"]')
       expect($div.classes()).toContain('offcanvas-md')
+    })
+
+    it('updates class when responsive prop changes from undefined to md', async () => {
+      const responsive = ref<'md' | undefined>(undefined)
+      const Wrapper = defineComponent({
+        components: {BOffcanvas},
+        setup() {
+          return {responsive}
+        },
+        template: '<BOffcanvas :responsive="responsive" />',
+      })
+      const wrapper = mount(Wrapper, {
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+      expect(wrapper.find('[role="dialog"]').classes()).toContain('offcanvas')
+
+      responsive.value = 'md'
+      await nextTick()
+      expect(wrapper.find('[role="dialog"]').classes()).toContain('offcanvas-md')
+      expect(wrapper.find('[role="dialog"]').classes()).not.toContain('offcanvas')
+    })
+
+    it('resets isOpenByBreakpoint when responsive prop changes to undefined', async () => {
+      const wrapper = mount(BOffcanvas, {
+        props: {responsive: 'md'},
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+      })
+
+      await wrapper.setProps({responsive: undefined})
+      await nextTick()
+      expect(wrapper.vm.isOpenByBreakpoint).toBe(false)
     })
   })
 
