@@ -109,7 +109,7 @@
               "
               :class="getFieldRowClasses(field, item)"
               v-bind="{
-                ...(field.isRowHeader ? {scope: 'row'} : {}),
+                ...(field.isRowHeader ? {scope: 'row'} : undefined),
                 ...itemAttributes(item, field),
               }"
             >
