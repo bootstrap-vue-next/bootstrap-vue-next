@@ -154,7 +154,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, type ComputedRef, ref, useTemplateRef} from 'vue'
+import {computed, type ComputedRef, nextTick, ref, useTemplateRef} from 'vue'
 import type {AcceptableValue} from 'reka-ui'
 import {
   ComboboxAnchor,
@@ -354,6 +354,7 @@ const removeSelected = (option: SelectOption) => {
     }
     return val !== option.value
   })
+  emit('change', modelValue.value)
 }
 
 const optionKey = (option: SelectOption, index: number) => {
@@ -378,11 +379,19 @@ const clearSelection = () => {
   modelValue.value = props.multiple ? [] : undefined
   searchTerm.value = ''
   singleSelectedLabelCache.value = null
+  emit('clear')
+  emit('change', modelValue.value)
   _input.value?.focus()
 }
 
 const onOptionSelect = (option: SelectOption) => {
   cacheSingleSelectedLabel(option.value as AcceptableValue, String(option.text))
+  // nextTick is required here because reka-ui updates the modelValue asynchronously
+  // via its internal state management; in clearSelection and removeSelected we set
+  // modelValue.value directly, so the value is already up-to-date before emitting.
+  nextTick(() => {
+    emit('change', modelValue.value)
+  })
   _input.value?.focus()
 }
 
