@@ -104,12 +104,14 @@
               :is="getCellComponent(field)"
               v-for="field in computedFields"
               :key="field.key"
-              :scope="field.isRowHeader ? 'row' : null"
               :variant="
                 (isTableItem(item) ? item._cellVariants?.[field.key] : false) ? null : field.variant
               "
               :class="getFieldRowClasses(field, item)"
-              v-bind="itemAttributes(item, field)"
+              v-bind="{
+                ...(field.isRowHeader ? {scope: 'row'} : {}),
+                ...itemAttributes(item, field),
+              }"
             >
               <label v-if="props.stacked && props.labelStacked" class="b-table-stacked-label">
                 {{ getTableFieldHeadLabel(field) }}
