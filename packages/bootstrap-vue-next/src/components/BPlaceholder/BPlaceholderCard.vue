@@ -3,7 +3,7 @@
     <template v-if="!props.noImg" #img>
       <slot name="img">
         <BCardImg
-          :blank="!props.imgSrc ? true : false"
+          :blank="!props.imgSrc"
           :blank-color="props.imgBlankColor"
           :height="!props.imgSrc ? props.imgHeight : undefined"
           :src="props.imgSrc"
@@ -49,10 +49,9 @@ import BCard from '../BCard/BCard.vue'
 import BCardImg from '../BCard/BCardImg.vue'
 import BPlaceholder from './BPlaceholder.vue'
 import BPlaceholderButton from './BPlaceholderButton.vue'
-import type {BPlaceholderCardProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BPlaceholderCardSlots} from '../../types/ComponentSlots'
+import type {BPlaceholderCardProps, BPlaceholderCardSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BPlaceholderCardProps>(), {
   animation: undefined,

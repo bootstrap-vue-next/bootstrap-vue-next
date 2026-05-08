@@ -117,6 +117,7 @@ import {computed, readonly, toRef, watch} from 'vue'
 import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
+import type {BTableEmits, BTableLiteEmits, BTableProps, BTableSlots, CamelCase} from '../../types'
 import {
   type TableField,
   type TableFieldRaw,
@@ -124,12 +125,9 @@ import {
   type TableStrictClassValue,
 } from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BTableProps} from '../../types'
-import type {BTableEmits, BTableLiteEmits} from '../../types'
 import {pick} from '../../utils/object'
 import {bTableLiteProps, bTableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
 import {useId} from '../../composables/useId'
-import type {BTableSlots, CamelCase} from '../../types'
 import {
   useTableKeyboardNavigationInjector,
   useTableMapper,
@@ -418,7 +416,7 @@ const boundBTableLiteEmits = {
     }
   },
   onRowClicked: ({item, index, event}) => {
-    if (props.noSelectOnClick === false) {
+    if (!props.noSelectOnClick) {
       selectedItemsController.handleRowSelection({
         item,
         index,

@@ -1,6 +1,6 @@
 import {BvCarouselEvent, BvEvent, BvTriggerableEvent} from '../utils'
 import type {BTableProviderContext, BTableSortBy, TableHeadClickedEventObject, TableRowEvent} from './TableTypes'
-import type {DateValue, TimeValue} from 'reka-ui'
+import type {AcceptableValue, DateValue, TimeValue} from 'reka-ui'
 
 export interface showHideEmits {
   'hide': [value: BvTriggerableEvent]
@@ -14,6 +14,13 @@ export interface showHideEmits {
 }
 
 export type BCollapseEmits = showHideEmits
+
+export interface BAutocompleteEmits {
+  blur: [event: FocusEvent]
+  change: [value: AcceptableValue | AcceptableValue[] | undefined]
+  clear: []
+  focus: [event: FocusEvent]
+}
 
 export interface BDropdownEmits extends showHideEmits {
   'split-click': [value: MouseEvent]

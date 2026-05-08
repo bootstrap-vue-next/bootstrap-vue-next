@@ -5,11 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import type {BNavProps} from '../../types/ComponentProps'
 import {useAlignment} from '../../composables/useAlignment'
 import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
-import type {BNavSlots} from '../../types'
+import type {BNavProps, BNavSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavProps>(), {
   align: undefined,

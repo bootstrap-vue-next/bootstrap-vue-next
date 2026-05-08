@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormDatalistBaseProps} from '../../types/ComponentProps'
+import type {BFormDatalistBaseProps} from '../../types'
 import {computed} from 'vue'
 import BFormSelectOption from '../BFormSelect/BFormSelectOption.vue'
 import {useDefaults} from '../../composables/useDefaults'

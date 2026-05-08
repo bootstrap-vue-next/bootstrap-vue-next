@@ -59,8 +59,7 @@ import {computed} from 'vue'
 import {DateRangeFieldInput, DateRangeFieldRoot} from 'reka-ui'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BDateRangeFieldSlots} from '../../types'
-import type {BDateRangeFieldProps} from '../../types/ComponentProps'
+import type {BDateRangeFieldProps, BDateRangeFieldSlots} from '../../types'
 
 const _props = withDefaults(
   defineProps<Omit<BDateRangeFieldProps, 'modelValue' | 'placeholder'>>(),

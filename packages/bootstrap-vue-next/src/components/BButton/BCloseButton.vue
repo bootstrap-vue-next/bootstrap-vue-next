@@ -9,9 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import type {BCloseButtonEmits} from '../../types'
+import type {BCloseButtonEmits, BCloseButtonProps} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BCloseButtonProps} from '../../types/ComponentProps'
 
 const _props = withDefaults(defineProps<BCloseButtonProps>(), {
   ariaLabel: 'Close',

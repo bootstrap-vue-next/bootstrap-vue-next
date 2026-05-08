@@ -10,9 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormFloatingLabelSlots} from '../../types'
+import type {BFormFloatingLabelProps, BFormFloatingLabelSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BFormFloatingLabelProps} from '../../types/ComponentProps'
 
 const _props = withDefaults(defineProps<BFormFloatingLabelProps>(), {
   label: undefined,

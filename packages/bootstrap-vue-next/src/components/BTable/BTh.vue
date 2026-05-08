@@ -15,9 +15,8 @@
 
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
-import type {BThProps} from '../../types/ComponentProps'
 import {computed} from 'vue'
-import type {BThSlots} from '../../types/ComponentSlots'
+import type {BThProps, BThSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BThProps>(), {
   colspan: undefined,

@@ -823,6 +823,49 @@ describe('form-group', () => {
       expect(document.activeElement).not.toBe(input.element)
       wrapper.unmount()
     })
+
+    it('renders a label (not legend) linked to BFormSelect so clicking it focuses the select', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Select an item'},
+        slots: {
+          default: h(BFormSelect),
+        },
+      })
+
+      await nextTick()
+
+      const select = wrapper.find('select')
+      const label = wrapper.find('label')
+
+      // BFormGroup must render a <label for="..."> (not a <legend>) whose for attribute
+      // points at the select — this is what causes the browser to focus the select on click.
+      expect(label.exists()).toBe(true)
+      expect(wrapper.find('legend').exists()).toBe(false)
+      expect(label.attributes('for')).toBe(select.attributes('id'))
+
+      wrapper.unmount()
+    })
+
+    it('renders a label (not legend) linked to BFormSelect in horizontal layout', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Select an item', labelColsMd: 3},
+        slots: {
+          default: h(BFormSelect),
+        },
+      })
+
+      await nextTick()
+
+      const select = wrapper.find('select')
+      const label = wrapper.find('label')
+
+      // Same assertion holds in horizontal (BCol-based) layout
+      expect(label.exists()).toBe(true)
+      expect(wrapper.find('legend').exists()).toBe(false)
+      expect(label.attributes('for')).toBe(select.attributes('id'))
+
+      wrapper.unmount()
+    })
   })
 
   describe('label rendering', () => {

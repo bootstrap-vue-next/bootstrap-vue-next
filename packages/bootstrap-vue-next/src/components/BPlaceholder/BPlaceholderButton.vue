@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import BPlaceholder from './BPlaceholder.vue'
-import type {BPlaceholderButtonProps} from '../../types/ComponentProps'
+import type {BPlaceholderButtonProps} from '../../types'
 import {computed} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 

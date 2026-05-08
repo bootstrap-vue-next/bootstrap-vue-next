@@ -15,10 +15,9 @@ import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
-import type {BBadgeProps} from '../../types/ComponentProps'
 import BLink from '../BLink/BLink.vue'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
-import type {BBadgeSlots} from '../../types'
+import type {BBadgeProps, BBadgeSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BBadgeProps>(), {
   dotIndicator: false,
@@ -108,7 +107,7 @@ const placementClasses = computed(() => {
 const colorClasses = useColorVariantClasses(props)
 const computedClasses = computed(() => [
   colorClasses.value,
-  props.placement !== undefined || props.dotIndicator === true ? placementClasses.value : undefined,
+  props.placement !== undefined || props.dotIndicator ? placementClasses.value : undefined,
   {
     'active': props.active,
     'disabled': props.disabled,

@@ -17,9 +17,8 @@
 import {pick} from '../../utils/object'
 import {computed} from 'vue'
 import BLink from '../BLink/BLink.vue'
-import type {BBreadcrumbItemProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BBreadcrumbItemEmits, BBreadcrumbItemSlots} from '../../types'
+import type {BBreadcrumbItemEmits, BBreadcrumbItemProps, BBreadcrumbItemSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BBreadcrumbItemProps>(), {
   ariaCurrent: 'location',

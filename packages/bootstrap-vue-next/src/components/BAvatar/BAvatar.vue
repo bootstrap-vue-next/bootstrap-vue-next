@@ -51,7 +51,6 @@
 <script setup lang="ts">
 import {avatarGroupInjectionKey} from '../../utils/keys'
 import {computed, type CSSProperties, inject, ref, type StyleValue, watch} from 'vue'
-import type {BAvatarProps} from '../../types/ComponentProps'
 import BLink from '../BLink/BLink.vue'
 import BBadge from '../BBadge/BBadge.vue'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
@@ -59,7 +58,7 @@ import {isEmptySlot} from '../../utils/dom'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
 import {useRadiusElementClasses} from '../../composables/useRadiusElementClasses'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {BAvatarEmits, BAvatarSlots, Size} from '../../types'
+import type {BAvatarEmits, BAvatarProps, BAvatarSlots, Size} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 
 const _props = withDefaults(defineProps<BAvatarProps>(), {

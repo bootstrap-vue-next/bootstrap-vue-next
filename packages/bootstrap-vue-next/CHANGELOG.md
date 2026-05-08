@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.45.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.1...bootstrapvuenext-v0.45.2) (2026-05-08)
+
+
+### Features
+
+* **BAutocomplete:** add `clear` and `change` events ([#3203](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3203)) ([eefea33](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/eefea33a40d5ed2f0abe0ed5803fc9e673e2487d))
+
+## [0.45.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.0...bootstrapvuenext-v0.45.1) (2026-05-05)
+
+
+### Features
+
+* add activeNavLinkClass and inactiveNavLinkClass props to BTabs ([#3163](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3163)) ([996908d](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/996908d21be056acb00c814bdc3ce656967a280f))
+* **autocomplete:** add a clear button to reset the autocomplet. Added prop noClearButton to remove it. ([da41a94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da41a9430d9e83c1c1978ca52a5ccad1a310d098))
+* **Autocomplete:** add slot around the button, called toggle ([da41a94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da41a9430d9e83c1c1978ca52a5ccad1a310d098))
+* **Autocomplete:** defineExpose added to expose the input element ([da41a94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da41a9430d9e83c1c1978ca52a5ccad1a310d098))
+* **Autocomplete:** make the input element a BFormInput ([da41a94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da41a9430d9e83c1c1978ca52a5ccad1a310d098))
+* **BAutocomplete:** wrap input element in slot named input ([da41a94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da41a9430d9e83c1c1978ca52a5ccad1a310d098))
+* **BFormTags:** add `tag-added` event emitting only newly added tags ([#3188](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3188)) ([23a2d95](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/23a2d954cf5ac8e40db82d2e743625bb9fda4f44))
+
+
+### Bug Fixes
+
+* **Autocomplete:** on selected, return focus to the input element ([da41a94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da41a9430d9e83c1c1978ca52a5ccad1a310d098))
+* **Autocomplete:** search term being set to undetermined value when selected option goes out of scope ([da41a94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da41a9430d9e83c1c1978ca52a5ccad1a310d098))
+* **Autocomplete:** the internal id will prefix with -autocomplete ([da41a94](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/da41a9430d9e83c1c1978ca52a5ccad1a310d098))
+
 ## [0.45.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.44.7...bootstrapvuenext-v0.45.0) (2026-05-01)
 
 

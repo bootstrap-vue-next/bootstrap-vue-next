@@ -79,7 +79,7 @@ import {type ComponentPublicInstance, computed, inject, watch} from 'vue'
 import {orchestratorRegistryKey} from '../../utils/keys'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BvTriggerableEvent} from '../../utils'
-import type {BOrchestratorProps} from '../../types/ComponentProps'
+import type {BOrchestratorProps} from '../../types'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 
 function setEventOk(event: BvTriggerableEvent): void {

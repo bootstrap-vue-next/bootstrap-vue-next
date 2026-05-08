@@ -19,9 +19,8 @@
 <script setup lang="ts">
 import {computed, useAttrs} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BNavFormProps} from '../../types/ComponentProps'
 import BForm from '../BForm/BForm.vue'
-import type {BNavFormEmits, BNavFormSlots} from '../../types'
+import type {BNavFormEmits, BNavFormProps, BNavFormSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,

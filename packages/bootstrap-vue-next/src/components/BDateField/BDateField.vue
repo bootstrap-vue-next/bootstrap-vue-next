@@ -40,8 +40,7 @@ import {computed} from 'vue'
 import {DateFieldInput, DateFieldRoot} from 'reka-ui'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BDateFieldSlots} from '../../types'
-import type {BDateFieldProps} from '../../types/ComponentProps'
+import type {BDateFieldProps, BDateFieldSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BDateFieldProps, 'modelValue' | 'placeholder'>>(), {
   defaultPlaceholder: undefined,

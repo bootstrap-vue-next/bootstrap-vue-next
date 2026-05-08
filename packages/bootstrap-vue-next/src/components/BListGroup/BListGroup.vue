@@ -7,9 +7,8 @@
 <script setup lang="ts">
 import {computed, provide, toRef} from 'vue'
 import {listGroupInjectionKey} from '../../utils/keys'
-import type {BListGroupProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BListGroupSlots} from '../../types'
+import type {BListGroupProps, BListGroupSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BListGroupProps>(), {
   flush: false,

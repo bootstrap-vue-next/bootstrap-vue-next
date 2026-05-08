@@ -63,6 +63,12 @@ export default {
           description:
             'When set, enables multiple selection mode. The modelValue becomes an array of selected values',
         },
+        noClearButton: {
+          type: 'boolean',
+          default: false,
+          description:
+            'When set, hides the clear button that appears inside the input when a value is selected and the field is not required',
+        },
         noToggle: {
           type: 'boolean',
           default: false,
@@ -117,6 +123,19 @@ export default {
               description: 'Native blur event',
             },
           },
+        },
+        change: {
+          description:
+            'Emitted when the selected value changes due to user interaction (option selected, selection cleared, or tag removed)',
+          args: {
+            value: {
+              type: 'AcceptableValue | AcceptableValue[] | undefined',
+              description: 'The new selected value',
+            },
+          },
+        },
+        clear: {
+          description: 'Emitted when the clear button is clicked and the selection is cleared',
         },
         focus: {
           description: 'Emitted when the autocomplete input gains focus',
@@ -211,6 +230,95 @@ export default {
             isOpen: {
               type: 'boolean',
               description: 'Whether the autocomplete dropdown is currently open',
+            },
+          },
+        },
+        toggle: {
+          description:
+            'Custom rendering for the dropdown toggle button. Replaces the default chevron button',
+          scope: {
+            isOpen: {
+              type: 'boolean',
+              description: 'Whether the autocomplete dropdown is currently open',
+            },
+            disabled: {
+              type: 'boolean',
+              description: 'Whether the toggle button is disabled',
+            },
+          },
+        },
+        input: {
+          description:
+            'Custom rendering for the search input. Receives all props needed to wire up the input to the combobox. Note: using this slot replaces the internal fallback input ref, so built-in focus restore (`clearSelection`, option select) and exposed `focus`/`blur`/`element` helpers do not target your slotted input; manage focus yourself from component events.',
+          scope: {
+            id: {
+              type: 'string',
+              description: 'Computed input id',
+            },
+            disabled: {
+              type: 'boolean',
+              description: 'Whether the input is disabled',
+            },
+            form: {
+              type: 'string | undefined',
+              description: 'Associated form id',
+            },
+            placeholder: {
+              type: 'string | undefined',
+              description: 'Placeholder text',
+            },
+            readonly: {
+              type: 'boolean',
+              description: 'Whether the input is read-only',
+            },
+            required: {
+              type: 'true | undefined',
+              description: 'Whether the input is required',
+            },
+            autocomplete: {
+              type: 'string | undefined',
+              description: 'Autocomplete attribute value',
+            },
+            searchTerm: {
+              type: 'string',
+              description: 'The current search term entered by the user',
+            },
+            plaintext: {
+              type: 'boolean',
+              description: 'Whether the input renders as plaintext',
+            },
+            size: {
+              type: 'Size | undefined',
+              description: 'Input size variant',
+            },
+            state: {
+              type: 'ValidationState | undefined',
+              description: 'Validation state of the input',
+            },
+            'aria-invalid': {
+              type: 'AriaInvalid | undefined',
+              description:
+                'ARIA invalid state to forward/spread to the input so accessibility validation state is preserved',
+            },
+            'aria-required': {
+              type: 'true | undefined',
+              description:
+                'ARIA required state to forward/spread to the input so required accessibility state is preserved',
+            },
+            onBlur: {
+              type: '(event: FocusEvent) => void',
+              description:
+                'Blur handler to forward/spread to the input so component blur behavior is preserved',
+            },
+            onFocus: {
+              type: '(event: FocusEvent) => void',
+              description:
+                'Focus handler to forward/spread to the input so component focus behavior is preserved',
+            },
+            onKeydown: {
+              type: '(event: KeyboardEvent) => void',
+              description:
+                'Keydown handler to forward/spread to the input so keyboard behavior (including backspace-delete flow) is preserved',
             },
           },
         },

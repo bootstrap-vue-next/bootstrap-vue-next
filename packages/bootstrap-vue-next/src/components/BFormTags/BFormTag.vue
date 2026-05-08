@@ -26,10 +26,9 @@
 import {computed} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BFormTagProps} from '../../types/ComponentProps'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {BFormTagEmits, BFormTagSlots} from '../../types'
+import type {BFormTagEmits, BFormTagProps, BFormTagSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BFormTagProps>(), {
   disabled: false,

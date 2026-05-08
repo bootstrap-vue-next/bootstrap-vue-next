@@ -6,11 +6,10 @@
 
 <script setup lang="ts">
 import BLink from '../BLink/BLink.vue'
-import type {BNavbarBrandProps} from '../../types/ComponentProps'
 import {useBLinkHelper} from '../../composables/useBLinkHelper'
 import {useDefaults} from '../../composables/useDefaults'
 import {computed} from 'vue'
-import type {BNavbarBrandSlots} from '../../types'
+import type {BNavbarBrandProps, BNavbarBrandSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BNavbarBrandProps>(), {
   tag: 'div',

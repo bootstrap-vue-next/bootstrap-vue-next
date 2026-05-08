@@ -15,9 +15,8 @@
 
 <script setup lang="ts">
 import {computed} from 'vue'
-import type {BFormValidFeedbackProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BFormValidFeedbackSlots} from '../../types'
+import type {BFormValidFeedbackProps, BFormValidFeedbackSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BFormValidFeedbackProps>(), {
   ariaLive: undefined,

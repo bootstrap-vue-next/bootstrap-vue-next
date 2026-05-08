@@ -12,12 +12,11 @@
 
 <script setup lang="ts">
 import {computed, type StyleValue} from 'vue'
-import type {BTableSimpleProps} from '../../types/ComponentProps'
 import {useDefaults} from '../../composables/useDefaults'
 import {useNumberishToStyle} from '../../composables/useNumberishToStyle'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useId} from '../../composables/useId'
-import type {BTableSimpleSlots} from '../../types'
+import type {BTableSimpleProps, BTableSimpleSlots} from '../../types'
 
 const defaultStickyHeaderHeight = '300px'
 

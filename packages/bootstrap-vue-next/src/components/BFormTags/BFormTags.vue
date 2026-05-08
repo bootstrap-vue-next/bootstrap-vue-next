@@ -15,7 +15,7 @@
       :for="_inputId"
       :aria-live="focused ? 'polite' : 'off'"
       aria-atomic="true"
-      aria-relevant="additions text"
+      aria-relevant="additions"
       >{{ tags.join(', ') }}</output
     >
     <div
@@ -113,7 +113,7 @@
               :type="props.inputType"
               :placeholder="props.placeholder"
               class="b-form-tags-input w-100 flex-grow-1 p-0 m-0 bg-transparent border-0"
-              style="outline: currentcolor none 0px; min-width: 5rem"
+              style="outline: currentcolor none 0; min-width: 5rem"
               v-bind="props.inputAttrs"
               :form="props.form"
               :required="props.required || undefined"
@@ -171,12 +171,11 @@
 import {onKeyStroke, syncRef, useFocus, useToNumber} from '@vueuse/core'
 import {computed, ref, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BFormTagsProps} from '../../types/ComponentProps'
 import {escapeRegExpChars} from '../../utils/stringUtils'
 import BFormTag from './BFormTag.vue'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
-import type {BFormTagsEmits, BFormTagsSlots} from '../../types'
+import type {BFormTagsEmits, BFormTagsProps, BFormTagsSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BFormTagsProps, 'modelValue'>>(), {
   addButtonText: 'Add',

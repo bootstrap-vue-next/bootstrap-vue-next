@@ -19,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormRadioGroupBaseProps} from '../../types/ComponentProps'
 import {computed, provide, toRef, useTemplateRef} from 'vue'
 import {radioGroupKey} from '../../utils/keys'
 import BFormRadio from './BFormRadio.vue'
@@ -27,7 +26,7 @@ import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
 import {useFocus} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BFormRadioGroupSlots} from '../../types/ComponentSlots'
+import type {BFormRadioGroupBaseProps, BFormRadioGroupSlots} from '../../types'
 
 /**
  * Internal base component for BFormRadioGroup.
@@ -83,7 +82,7 @@ const normalizedOptions = computed(() =>
     return {
       text: String(option),
       value: option,
-      disabled: props.disabled ? true : false,
+      disabled: props.disabled,
     }
   })
 )

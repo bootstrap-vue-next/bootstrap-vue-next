@@ -33,14 +33,12 @@
 import {useFocus} from '@vueuse/core'
 import {computed, inject, useAttrs, useTemplateRef} from 'vue'
 import {getClasses, getInputClasses, getLabelClasses} from '../../composables/useFormCheck'
-import type {BFormCheckboxProps} from '../../types/ComponentProps'
 import {checkboxGroupKey, formGroupKey} from '../../utils/keys'
 import ConditionalWrapper from '../ConditionalWrapper.vue'
 import {isEmptySlot} from '../../utils/dom'
 import {useDefaults} from '../../composables/useDefaults'
-import type {CheckboxValue} from '../../types/CheckboxTypes'
 import {useId} from '../../composables/useId'
-import type {BFormCheckboxSlots} from '../../types'
+import type {BFormCheckboxProps, BFormCheckboxSlots, CheckboxValue} from '../../types'
 
 defineOptions({
   inheritAttrs: false,

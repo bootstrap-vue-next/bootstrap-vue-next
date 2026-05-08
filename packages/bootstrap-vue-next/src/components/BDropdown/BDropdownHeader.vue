@@ -16,9 +16,8 @@
 <script setup lang="ts">
 import {computed, useAttrs} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BDropdownHeaderProps} from '../../types/ComponentProps'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
-import type {BDropdownHeaderSlots} from '../../types'
+import type {BDropdownHeaderProps, BDropdownHeaderSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,

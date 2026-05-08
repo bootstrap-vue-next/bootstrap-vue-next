@@ -15,10 +15,13 @@
 </template>
 
 <script setup lang="ts">
-import type {BDropdownItemButtonEmits, BDropdownItemButtonSlots} from '../../types'
+import type {
+  BDropdownItemButtonEmits,
+  BDropdownItemButtonProps,
+  BDropdownItemButtonSlots,
+} from '../../types'
 import {useColorVariantClasses} from '../../composables/useColorVariantClasses'
 import {useDefaults} from '../../composables/useDefaults'
-import type {BDropdownItemButtonProps} from '../../types/ComponentProps'
 import {computed, useAttrs} from 'vue'
 
 defineOptions({

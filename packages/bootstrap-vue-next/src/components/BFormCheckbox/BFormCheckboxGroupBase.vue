@@ -20,8 +20,7 @@
 
 <script setup lang="ts">
 import {computed, provide, toRef, useTemplateRef} from 'vue'
-import type {BFormCheckboxGroupBaseProps} from '../../types/ComponentProps'
-import type {CheckboxValue} from '../../types/CheckboxTypes'
+import type {BFormCheckboxGroupBaseProps, CheckboxValue} from '../../types'
 import BFormCheckbox from './BFormCheckbox.vue'
 import {checkboxGroupKey} from '../../utils/keys'
 import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
@@ -98,7 +97,7 @@ const normalizedOptions = computed<Array<{text: string; value: CheckboxValue; di
       return {
         text: String(option),
         value: option,
-        disabled: props.disabled ? true : false,
+        disabled: props.disabled,
       }
     })
 )

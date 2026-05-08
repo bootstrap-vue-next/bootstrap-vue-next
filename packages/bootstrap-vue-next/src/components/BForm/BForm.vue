@@ -6,9 +6,8 @@
 
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
-import type {BFormProps} from '../../types/ComponentProps'
 import {computed, useTemplateRef} from 'vue'
-import type {BFormSlots} from '../../types/ComponentSlots'
+import type {BFormProps, BFormSlots} from '../../types'
 
 const _props = withDefaults(defineProps<BFormProps>(), {
   id: undefined,

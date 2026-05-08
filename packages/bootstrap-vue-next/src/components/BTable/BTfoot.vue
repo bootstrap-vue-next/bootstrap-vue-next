@@ -6,9 +6,8 @@
 
 <script setup lang="ts">
 import {useDefaults} from '../../composables/useDefaults'
-import type {BTfootProps} from '../../types/ComponentProps'
+import type {BTfootProps, BTfootSlots} from '../../types'
 import {computed} from 'vue'
-import type {BTfootSlots} from '../../types/ComponentSlots'
 
 const _props = withDefaults(defineProps<BTfootProps>(), {
   variant: null,

@@ -381,6 +381,29 @@ describe('BAutocomplete', () => {
       expect(items).toHaveLength(3)
       expect(items[0].text()).toContain('x')
     })
+
+    it('keeps the selected option label when async-filtered options no longer include that option', async () => {
+      const initialValue = {id: 1, name: 'Leanne Graham'}
+
+      const wrapper = mount(BAutocomplete, {
+        props: {
+          'modelValue': initialValue.id,
+          'onUpdate:modelValue': (value) => wrapper.setProps({modelValue: value}),
+          'search': initialValue.name,
+          'onUpdate:search': (value) => wrapper.setProps({search: value}),
+          'options': [initialValue, {id: 2, name: 'Ervin Howell'}],
+        },
+      })
+
+      const input = wrapper.find('input')
+      expect((input.element as HTMLInputElement).value).toBe('Leanne Graham')
+
+      await wrapper.setProps({
+        options: [{id: 2, name: 'Ervin Howell'}],
+      })
+
+      expect((input.element as HTMLInputElement).value).toBe('Leanne Graham')
+    })
   })
 
   // --- Filtering ---
@@ -576,6 +599,47 @@ describe('BAutocomplete', () => {
       expect(wrapper.emitted('focus')).toBeTruthy()
       expect(wrapper.emitted('focus')!.length).toBe(1)
     })
+
+    it('emits clear event when clear button is clicked', async () => {
+      const wrapper = mount(BAutocomplete, {
+        props: {
+          modelValue: 'a',
+          options: ['a', 'b'],
+        },
+      })
+      const clearBtn = wrapper.find('.b-autocomplete-clear')
+      expect(clearBtn.exists()).toBe(true)
+      await clearBtn.trigger('click')
+      expect(wrapper.emitted('clear')).toBeTruthy()
+      expect(wrapper.emitted('clear')!.length).toBe(1)
+    })
+
+    it('emits change event with undefined when clear button is clicked in single mode', async () => {
+      const wrapper = mount(BAutocomplete, {
+        props: {
+          modelValue: 'a',
+          options: ['a', 'b'],
+        },
+      })
+      const clearBtn = wrapper.find('.b-autocomplete-clear')
+      await clearBtn.trigger('click')
+      expect(wrapper.emitted('change')).toBeTruthy()
+      expect(wrapper.emitted('change')![0][0]).toBeUndefined()
+    })
+
+    it('emits change event with empty array when clear button is clicked in multiple mode', async () => {
+      const wrapper = mount(BAutocomplete, {
+        props: {
+          multiple: true,
+          modelValue: ['a'],
+          options: ['a', 'b'],
+        },
+      })
+      const clearBtn = wrapper.find('.b-autocomplete-clear')
+      await clearBtn.trigger('click')
+      expect(wrapper.emitted('change')).toBeTruthy()
+      expect(wrapper.emitted('change')![0][0]).toEqual([])
+    })
   })
 
   // --- v-model bindings ---
@@ -598,7 +662,7 @@ describe('BAutocomplete', () => {
       expect(wrapper.find('.b-autocomplete-content').exists()).toBe(true)
     })
 
-    it('supports v-model:search', () => {
+    it('supports v-model:search', async () => {
       const wrapper = mount(BAutocomplete, {
         props: {
           search: 'hello',
@@ -606,7 +670,10 @@ describe('BAutocomplete', () => {
         },
       })
       const input = wrapper.find('input')
-      expect(input.element.value).toBe('hello')
+      await input.setValue('hel')
+      expect(wrapper.emitted('update:search')).toBeTruthy()
+      const emittedValues = wrapper.emitted('update:search')!
+      expect(emittedValues[emittedValues.length - 1][0]).toBe('hel')
     })
   })
 
