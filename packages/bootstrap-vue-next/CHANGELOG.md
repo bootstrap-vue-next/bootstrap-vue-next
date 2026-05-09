@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.45.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.2...bootstrapvuenext-v0.45.3) (2026-05-08)
+
+
+### Features
+
+* **BTable:** implement sortNullLast, noFooterSorting, labelSort*, aria-multiselectable, filterByFormatted fn, context-changed event ([#3192](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3192)) ([4e09a16](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/4e09a16591eb91a0c6ba6e502e07d704002e891b))
+
+
+### Bug Fixes
+
+* **BOffcanvas:** handle responsive prop changing from undefined after mount ([#3151](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3151)) ([1784ce7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/1784ce7ff8e423963755cbce3957816fd3cc28bd))
+* **table:** implement missing BTable/BTableLite accessibility semantics ([#3205](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3205)) ([46f1793](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/46f17933ac1d83d3295468b31f28389f7b27803b))
+
 ## [0.45.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.1...bootstrapvuenext-v0.45.2) (2026-05-08)
 
 
