@@ -437,6 +437,19 @@ describe('tabs', () => {
     const $emptyDiv = $div.findAll('div.tab-pane.active')
     expect($emptyDiv.length).toBe(0)
   })
+
+  it('end div renders slot before before tab content', async () => {
+    const wrapper = mount(BTabs, {
+      props: {tag: 'span'},
+      slots: {
+        before: 'before',
+        default: () => h(BTab, {id: 'tab-1', title: 'First'}, () => 'foobar'),
+      },
+    })
+    await nextTick()
+    const $div = wrapper.get('.tab-content')
+    expect($div.text()).toBe('beforefoobar')
+  })
   // end div
 
   it('renders in correct order when prop end', () => {
@@ -453,6 +466,34 @@ describe('tabs', () => {
       slots: {'empty': 'empty', 'tabs-start': 'start'},
     })
     expect(wrapper.text()).toBe('startempty')
+  })
+
+  it('renders before slot in correct order when prop end', () => {
+    const wrapper = mount(BTabs, {
+      props: {end: true},
+      slots: {
+        before: 'before',
+        'tabs-start': 'start',
+        default: () => h(BTab, {id: 'tab-1', title: 'First'}, () => 'foobar'),
+      },
+    })
+    const text = wrapper.text()
+    expect(text.indexOf('before')).toBeLessThan(text.indexOf('foobar'))
+    expect(text.indexOf('foobar')).toBeLessThan(text.indexOf('start'))
+  })
+
+  it('renders before slot in correct order when not prop end', () => {
+    const wrapper = mount(BTabs, {
+      props: {end: false},
+      slots: {
+        before: 'before',
+        'tabs-start': 'start',
+        default: () => h(BTab, {id: 'tab-1', title: 'First'}, () => 'foobar'),
+      },
+    })
+    const text = wrapper.text()
+    expect(text.indexOf('start')).toBeLessThan(text.indexOf('before'))
+    expect(text.indexOf('before')).toBeLessThan(text.indexOf('foobar'))
   })
 
   it('renders content passed via', async () => {
@@ -1103,6 +1144,14 @@ describe('tabs', () => {
     const $ul = wrapper.get('ul')
     expect($ul.text()).toContain('start')
     expect($ul.text()).toContain('end')
+  })
+
+  it('renders before slot in the tab-content', () => {
+    const wrapper = mount(BTabs, {
+      slots: {before: 'before'},
+    })
+    const $tabContent = wrapper.get('.tab-content')
+    expect($tabContent.text()).toContain('before')
   })
 
   // --- noFade provided to children ---
