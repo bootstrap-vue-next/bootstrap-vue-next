@@ -438,7 +438,7 @@ describe('tabs', () => {
     expect($emptyDiv.length).toBe(0)
   })
 
-  it('end div renders slot before before tab content', async () => {
+  it('end div renders slot before tab content', async () => {
     const wrapper = mount(BTabs, {
       props: {tag: 'span'},
       slots: {
