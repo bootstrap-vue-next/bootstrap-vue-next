@@ -104,12 +104,13 @@ const handleUpdate = (
 }
 const handleUnmount = (
   el: Element,
-  binding: DirectiveBinding<string | readonly string[] | undefined>
+  binding: DirectiveBinding<string | readonly string[] | undefined>,
+  vnode: VNode
 ) => {
   // Determine targets
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
-  const provides = binding.instance?.$.provides ?? {}
+  const provides = findProvides(binding, vnode, true)
   const showHideMap =
     (provides as Record<symbol, RegisterShowHideValue>)[showHideRegistryKey]?.values ?? null
 
