@@ -183,7 +183,7 @@ export function findComponentParent(
   }
   if (!walk([root.subTree])) {
     if (!suppressNotFoundError) {
-      console.error('Could not find original vnode,  will not inherit provides')
+      console.error('Could not find original vnode, will not inherit provides')
     }
     return root
   }
