@@ -94,4 +94,51 @@ describe('toggle directive', () => {
     expect($button.classes()).toContain('collapsed')
     expect($button.classes()).not.toContain('not-collapsed')
   })
+
+  it('does not log findProvides error when unmounted quickly', async () => {
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    try {
+      const App = {
+        directives: {
+          bToggle: VBToggle,
+        },
+        components: {BCollapse},
+        props: {
+          showTrigger: {
+            type: Boolean,
+            default: true,
+          },
+        },
+        template: `
+          <button
+            v-if="showTrigger"
+            v-b-toggle.test-collapse
+          >
+            button
+          </button>
+          <BCollapse id="test-collapse">collapse</BCollapse>
+        `,
+      }
+
+      const wrapper = mount(App, {
+        attachTo: document.body,
+        global: {
+          plugins: [createBootstrap()],
+        },
+      })
+
+      await flushPromises()
+      await nextTick()
+
+      await wrapper.setProps({showTrigger: false})
+      await flushPromises()
+      await nextTick()
+
+      expect(errorSpy).not.toHaveBeenCalledWith(
+        'Could not find original vnode,  will not inherit provides'
+      )
+    } finally {
+      errorSpy.mockRestore()
+    }
+  })
 })
