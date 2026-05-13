@@ -104,8 +104,7 @@ const handleUpdate = (
 }
 const handleUnmount = (
   el: Element,
-  binding: DirectiveBinding<string | readonly string[] | undefined>,
-  _vnode: VNode
+  binding: DirectiveBinding<string | readonly string[] | undefined>
 ) => {
   // Determine targets
   const targets = getTargets(binding, el)

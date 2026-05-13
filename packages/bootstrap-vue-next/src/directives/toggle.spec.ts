@@ -135,7 +135,7 @@ describe('toggle directive', () => {
       await nextTick()
 
       expect(errorSpy).not.toHaveBeenCalledWith(
-        'Could not find original vnode,  will not inherit provides'
+        expect.stringContaining('Could not find original vnode')
       )
     } finally {
       errorSpy.mockRestore()
