@@ -136,10 +136,14 @@ export function cleanupDirectiveInstance(
 
 // taken from vuetify https://github.com/vuetifyjs/vuetify/blob/master/packages/vuetify/src/composables/directiveComponent.ts
 
-export function findProvides(binding: DirectiveBinding, vnode: _VNode): Record<string, unknown> {
+export function findProvides(
+  binding: DirectiveBinding,
+  vnode: _VNode,
+  suppressParentNotFoundError = false
+): Record<string, unknown> {
   const provides =
     (vnode.ctx === binding.instance!.$
-      ? findComponentParent(vnode, binding.instance!.$)?.provides
+      ? findComponentParent(vnode, binding.instance!.$, suppressParentNotFoundError)?.provides
       : vnode.ctx?.provides) ?? binding.instance!.$.provides
 
   return provides
@@ -147,7 +151,8 @@ export function findProvides(binding: DirectiveBinding, vnode: _VNode): Record<s
 
 export function findComponentParent(
   vnode: VNode,
-  root: ComponentInternalInstance
+  root: ComponentInternalInstance,
+  suppressNotFoundError = false
 ): _ComponentInternalInstance | null {
   // Walk the tree from root until we find the child vnode
   const stack = new Set<VNode>()
@@ -177,7 +182,9 @@ export function findComponentParent(
     return false
   }
   if (!walk([root.subTree])) {
-    console.error('Could not find original vnode,  will not inherit provides')
+    if (!suppressNotFoundError) {
+      console.error('Could not find original vnode, will not inherit provides')
+    }
     return root
   }
 
