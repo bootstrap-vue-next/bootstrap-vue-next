@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.45.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.3...bootstrapvuenext-v0.45.4) (2026-05-18)
+
+
+### Bug Fixes
+
+* **BOffcanvas:** prevent flicker during hide transition ([#3211](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3211)) ([bea6833](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/bea6833aad8dd8a26c1ea293807a2730e394f63a))
+* **directives:** suppress v-b-toggle unmount vnode lookup console error ([#3208](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3208)) ([0d7a4ac](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/0d7a4acae7a6959f3ed9cc7293eb8f6ba6b0ece9))
+
 ## [0.45.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.2...bootstrapvuenext-v0.45.3) (2026-05-08)
 
 
