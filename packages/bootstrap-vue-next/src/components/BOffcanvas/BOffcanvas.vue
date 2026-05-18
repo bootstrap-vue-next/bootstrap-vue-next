@@ -279,6 +279,7 @@ const computedClasses = computed(() => [
   `offcanvas-${props.placement}`,
   {
     'show': isVisible.value,
+    'hiding': isLeaving.value && !isVisible.value,
     [`shadow-${props.shadow}`]: !!props.shadow,
     'no-transition': computedNoAnimation.value,
   },
