@@ -10,7 +10,8 @@
     >
       <div
         v-show="
-          (showRef && ((backdropReady && props.backdropFirst) || !props.backdropFirst)) ||
+          (showRef &&
+            (((backdropReady || isLeaving) && props.backdropFirst) || !props.backdropFirst)) ||
           isOpenByBreakpoint
         "
         :id="computedId"
