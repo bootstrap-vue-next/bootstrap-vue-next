@@ -10,8 +10,7 @@
     >
       <div
         v-show="
-          (showRef &&
-            (((backdropReady || isLeaving) && props.backdropFirst) || !props.backdropFirst)) ||
+          (showRef && ((backdropReady && props.backdropFirst) || !props.backdropFirst)) ||
           isOpenByBreakpoint
         "
         :id="computedId"
@@ -280,6 +279,7 @@ const computedClasses = computed(() => [
   `offcanvas-${props.placement}`,
   {
     'show': isVisible.value,
+    'hiding': isLeaving.value && !isVisible.value,
     [`shadow-${props.shadow}`]: !!props.shadow,
     'no-transition': computedNoAnimation.value,
   },
