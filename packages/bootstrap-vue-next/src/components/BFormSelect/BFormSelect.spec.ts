@@ -562,6 +562,21 @@ describe('BFormSelect', () => {
     expect(options[0].attributes('label')).toBeUndefined()
   })
 
+  it('keeps textField precedence when labelField and optionsField are empty strings', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        labelField: '',
+        optionsField: '',
+        options: [{value: 'a', text: 'Option A', label: 'Label A'}],
+      },
+    })
+
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(1)
+    expect(options[0].text()).toBe('Option A')
+    expect(options[0].attributes('label')).toBeUndefined()
+  })
+
   // --- Slots ---
 
   it('renders first slot before options', () => {
