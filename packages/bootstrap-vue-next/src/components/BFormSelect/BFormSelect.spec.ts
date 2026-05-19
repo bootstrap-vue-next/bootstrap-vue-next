@@ -528,6 +528,40 @@ describe('BFormSelect', () => {
     expect(options[1].attributes('disabled')).toBeDefined()
   })
 
+  it('does not apply label attribute for simple options with a label field', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        options: [
+          {value: 'a', text: 'Option A', label: 'Label A'},
+          {value: 'b', text: 'Option B', label: 'Label B'},
+        ],
+      },
+    })
+
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(2)
+    expect(options[0].text()).toBe('Option A')
+    expect(options[1].text()).toBe('Option B')
+    expect(options[0].attributes('label')).toBeUndefined()
+    expect(options[1].attributes('label')).toBeUndefined()
+  })
+
+  it('keeps textField precedence when labelField and optionsField are null', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        // Null can come from runtime bindings even though the prop type is string.
+        labelField: null as unknown as string,
+        optionsField: null as unknown as string,
+        options: [{value: 'a', text: 'Option A', label: 'Label A'}],
+      },
+    })
+
+    const options = wrapper.findAll('option')
+    expect(options).toHaveLength(1)
+    expect(options[0].text()).toBe('Option A')
+    expect(options[0].attributes('label')).toBeUndefined()
+  })
+
   // --- Slots ---
 
   it('renders first slot before options', () => {
