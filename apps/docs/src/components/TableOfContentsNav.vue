@@ -103,7 +103,7 @@ const headerLinks = [
     label: 'Reference',
   },
   {
-    route: withBase('/docs/migration-guide'),
+    route: withBase('/docs/migration-data'),
     label: 'Migrate',
   },
 ]

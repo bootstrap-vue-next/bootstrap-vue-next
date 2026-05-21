@@ -5,7 +5,7 @@ description: >
 
 # Migration Knowledge Base
 
-This page indexes the structured migration entries extracted from the canonical [migration guide](/docs/migration-guide). Each entry keeps the original migration information while adding stable identifiers and machine-readable metadata.
+This is the canonical BootstrapVue to BootstrapVueNext migration knowledge base. Use these structured entries for current migration guidance, quick navigation, and stable identifiers. The legacy [migration guide](/docs/migration-guide) remains available for historical anchor links.
 
 ## Patterns
 

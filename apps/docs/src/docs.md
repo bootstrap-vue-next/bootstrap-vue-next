@@ -9,7 +9,7 @@ BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.
 
 ## Migrating from BootstrapVue
 
-If you are migrating from BootstrapVue, please refer to our [migration guide](/docs/migration-guide)
+If you are migrating from BootstrapVue, please refer to our [migration knowledge base](/docs/migration-data)
 
 ## Contribute and Support 🙌
 
@@ -400,4 +400,4 @@ some features may be missing or changed. If anyone has spotted a missing compati
 submit a GitHub issue or contribute to the
 [parity report](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#help-verify-bootstrapvue-and-bootstrap-v5-parity).
 
-If you are migrating from BootstrapVue, please refer to our [migration guide](/docs/migration-guide)
+If you are migrating from BootstrapVue, please refer to our [migration knowledge base](/docs/migration-data)

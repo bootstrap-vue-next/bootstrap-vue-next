@@ -28,6 +28,7 @@ import {computed, inject} from 'vue'
 import {useData, withBase} from 'vitepress'
 import {useEditThisPageOnGithub} from '../composables/useEditLink'
 import {useMarkdownRenderer} from '../composables/useMarkdownRenderer'
+import {data as migrationData} from '../data/migration.data'
 import {appInfoKey} from '../../.vitepress/theme/keys'
 import {kebabToTitleCase} from '../utils/dataLoaderUtils'
 
@@ -55,6 +56,19 @@ function toPascalCase(str: string): string {
  */
 function toCamelCase(str: string): string {
   return str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
+}
+
+function fileNameToDirectiveMigrationId(str: string): string {
+  if (str.startsWith('B')) {
+    const directiveName = str
+      .slice(1)
+      .replace(/([A-Z])/g, '-$1')
+      .toLowerCase()
+      .replace(/^-/, '')
+    return `v-b-${directiveName}`
+  }
+
+  return `v-${str.toLowerCase()}`
 }
 
 defineSlots<{
@@ -138,9 +152,6 @@ const sourceHref = computed(() =>
 const migrationHref = computed(() => {
   const fmOverride = frontmatter.value?.migrationGuide
   if (fmOverride === false) return null
-  if (typeof fmOverride === 'string' && fmOverride) {
-    return withBase(`/docs/migration-guide#${fmOverride}`)
-  }
 
   const base = inferredBase.value
   if (!base || !page.value?.relativePath) return null
@@ -153,10 +164,12 @@ const migrationHref = computed(() => {
   if (filename.startsWith('_')) return null
 
   let anchor: string | null = null
+  let migrationId: string | null = null
 
   if (base === 'githubComponentsDirectory') {
     // Derive: kebab → PascalCase → prepend B → lowercase
     anchor = `b${toPascalCase(filename)}`.toLowerCase()
+    migrationId = anchor
   } else if (base === 'githubDirectivesDirectory') {
     // Normalize: handle both kebab-case (b-toggle) and PascalCase (BToggle)
     // Strip b-/B prefix, remove hyphens, lowercase
@@ -166,8 +179,18 @@ const migrationHref = computed(() => {
         ? filename.slice(1)
         : filename
     anchor = name.toLowerCase()
+    migrationId = fileNameToDirectiveMigrationId(filename)
   }
 
+  if (typeof fmOverride === 'string' && fmOverride) {
+    const overrideMigration = migrationData.find((item) => item.id === fmOverride)
+    if (overrideMigration) return withBase(overrideMigration.url)
+    return withBase(`/docs/migration-guide#${fmOverride}`)
+  }
+
+  const migration = migrationId ? migrationData.find((item) => item.id === migrationId) : null
+
+  if (migration) return withBase(migration.url)
   return anchor ? withBase(`/docs/migration-guide#${anchor}`) : null
 })
 
