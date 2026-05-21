@@ -50,5 +50,5 @@ Yes. This entry is mostly mechanical, but review the result when surrounding beh
 - None
 
 <script setup lang="ts">
-import {DeprecationReason} from '../../types/deprecation'
+import {DeprecationReason} from '../../../types/deprecation'
 </script>

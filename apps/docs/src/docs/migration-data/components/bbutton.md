@@ -51,5 +51,5 @@ Yes. This entry is mostly mechanical and can usually be rewritten automatically 
 - None
 
 <script setup lang="ts">
-import {DeprecationReason} from '../../types/deprecation'
+import {DeprecationReason} from '../../../types/deprecation'
 </script>

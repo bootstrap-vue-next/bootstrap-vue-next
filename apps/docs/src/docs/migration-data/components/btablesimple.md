@@ -68,5 +68,5 @@ Yes. This entry is mostly mechanical and can usually be rewritten automatically 
 - [v-html-props](/docs/migration-data/patterns/v-html-props)
 
 <script setup lang="ts">
-import {DeprecationReason} from '../../types/deprecation'
+import {DeprecationReason} from '../../../types/deprecation'
 </script>

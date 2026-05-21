@@ -75,5 +75,5 @@ No. This entry includes behavioral or structural changes and should be reviewed 
 - None
 
 <script setup lang="ts">
-import {DeprecationReason} from '../../types/deprecation'
+import {DeprecationReason} from '../../../types/deprecation'
 </script>

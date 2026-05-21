@@ -274,5 +274,5 @@ No. This entry includes behavioral or structural changes and should be reviewed 
 - [show-hide](/docs/migration-data/patterns/show-hide)
 
 <script setup lang="ts">
-import {DeprecationReason} from '../../types/deprecation'
+import {DeprecationReason} from '../../../types/deprecation'
 </script>

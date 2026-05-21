@@ -275,5 +275,5 @@ No. This entry includes behavioral or structural changes and should be reviewed 
 - [v-html-props](/docs/migration-data/patterns/v-html-props)
 
 <script setup lang="ts">
-import {DeprecationReason} from '../../types/deprecation'
+import {DeprecationReason} from '../../../types/deprecation'
 </script>
