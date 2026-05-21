@@ -3,6 +3,8 @@ description: >
   Guide for migrating from BootstrapVue to BootstrapVueNext. Learn about breaking changes, deprecated features, and how to update your components, directives, and configuration for Vue 3 and Bootstrap 5.
 ---
 
+> Looking for the structured migration knowledge base? Browse [/docs/migration-data](/docs/migration-data) for topic-based entries with machine-readable frontmatter and stable identifiers.
+
 ## Overview
 
 `BootstrapVueNext` is an entirely new implementation of [BootstrapVue](https://bootstrap-vue.github.io/bootstrap-vue/) based on [Vue 3](https://vuejs.org/) and [Bootstrap 5](https://getbootstrap.com/). Therefore, you should not expect this to be a drop-in replacement. Where possible compatibility has been maintained, but providing a clean developer experience when working with `Vue 3`, `Bootstrap 5` and this library is a higher priority.
