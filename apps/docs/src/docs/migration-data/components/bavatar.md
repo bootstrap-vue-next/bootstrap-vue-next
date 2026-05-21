@@ -1,6 +1,7 @@
 ---
 id: bavatar
 title: BAvatar Migration
+description: 'Migration notes for BAvatar from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BAvatar

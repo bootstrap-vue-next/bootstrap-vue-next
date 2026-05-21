@@ -1,6 +1,7 @@
 ---
 id: bcardgroup
 title: BCardGroup Migration
+description: 'Migration notes for BCardGroup from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BCardGroup

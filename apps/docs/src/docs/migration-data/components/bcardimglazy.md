@@ -1,6 +1,7 @@
 ---
 id: bcardimglazy
 title: BCardImgLazy Migration
+description: 'Migration notes for BCardImgLazy from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BCardImgLazy

@@ -1,6 +1,7 @@
 ---
 id: v-b-tooltip
 title: v-b-tooltip Migration
+description: 'Migration notes for v-b-tooltip from BootstrapVue to BootstrapVueNext.'
 category: directives
 components: []
 match:

@@ -1,4 +1,5 @@
 ---
+title: Tabs
 description: >
   Create a widget of tabbable panes of _local content_. The tabs component is built upon navs and
   cards internally, and provides full keyboard navigation control of the tabs.

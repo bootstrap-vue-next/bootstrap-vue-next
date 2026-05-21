@@ -1,6 +1,7 @@
 ---
 id: bbadge
 title: BBadge Migration
+description: 'Migration notes for BBadge from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BBadge

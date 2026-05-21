@@ -1,6 +1,7 @@
 ---
 id: grid
 title: Grid Migration
+description: 'Migration notes for Grid from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BCol

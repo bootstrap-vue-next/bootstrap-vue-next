@@ -1,6 +1,7 @@
 ---
 id: bbreadcrumb
 title: BBreadcrumb Migration
+description: 'Migration notes for BBreadcrumb from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BBreadcrumb

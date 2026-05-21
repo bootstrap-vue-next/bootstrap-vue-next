@@ -1,4 +1,5 @@
 ---
+title: usePopover
 description: 'The `usePopover` composable allows you to create and control popovers and tooltips dynamically from anywhere in your application. It provides methods to create, show, hide, and manage both popovers and tooltips programmatically.'
 ---
 

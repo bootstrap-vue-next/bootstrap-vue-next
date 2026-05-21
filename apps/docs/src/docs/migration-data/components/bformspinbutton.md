@@ -1,6 +1,7 @@
 ---
 id: bformspinbutton
 title: BFormSpinButton Migration
+description: 'Migration notes for BFormSpinButton from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BFormSpinButton

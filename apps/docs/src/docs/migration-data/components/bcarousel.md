@@ -1,6 +1,7 @@
 ---
 id: bcarousel
 title: BCarousel Migration
+description: 'Migration notes for BCarousel from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BCarousel

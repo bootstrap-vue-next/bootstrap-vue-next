@@ -1,6 +1,7 @@
 ---
 id: btablelight
 title: BTableLight Migration
+description: 'Migration notes for BTableLight from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BTableLight

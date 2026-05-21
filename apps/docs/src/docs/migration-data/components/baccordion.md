@@ -1,6 +1,7 @@
 ---
 id: baccordion
 title: BAccordion Migration
+description: 'BootstrapVue did not ship a first-class accordion component, so accordion migrations usually start from `BCollapse`-based patterns rather than a direct `BAccordion` replacement.'
 category: components
 components:
   - BAccordion

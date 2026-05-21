@@ -1,6 +1,7 @@
 ---
 id: v-html-props
 title: HTML Prop to Slot Migration
+description: 'Unsafe HTML string props are replaced by explicit slot-based rendering in BootstrapVueNext.'
 category: patterns
 components:
   - BBreadcrumbItem

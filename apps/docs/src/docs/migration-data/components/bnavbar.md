@@ -1,6 +1,7 @@
 ---
 id: bnavbar
 title: BNavbar Migration
+description: 'Migration notes for BNavbar from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BNavbar

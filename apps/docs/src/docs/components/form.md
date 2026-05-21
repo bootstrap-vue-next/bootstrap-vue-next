@@ -1,4 +1,5 @@
 ---
+title: Form
 description: >
   BootstrapVueNext form component and helper components that optionally support inline form styles and
   validation states. Pair them up with other BootstrapVueNext form control components for an easy

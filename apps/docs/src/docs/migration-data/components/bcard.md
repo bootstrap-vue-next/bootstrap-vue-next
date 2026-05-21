@@ -1,6 +1,7 @@
 ---
 id: bcard
 title: BCard Migration
+description: 'Migration notes for BCard from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BCard

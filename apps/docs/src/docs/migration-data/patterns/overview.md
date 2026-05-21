@@ -1,6 +1,7 @@
 ---
 id: migration-overview
 title: BootstrapVue to BootstrapVueNext Migration Overview
+description: 'Overview of the major BootstrapVue to BootstrapVueNext migration themes, prerequisites, and deprecation policy.'
 category: patterns
 components:
   - BootstrapVueNext

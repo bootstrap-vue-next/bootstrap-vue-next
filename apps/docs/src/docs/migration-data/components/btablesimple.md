@@ -1,6 +1,7 @@
 ---
 id: btablesimple
 title: BTableSimple Migration
+description: 'Migration notes for BTableSimple from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BTableSimple

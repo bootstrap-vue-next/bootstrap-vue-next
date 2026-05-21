@@ -1,6 +1,7 @@
 ---
 id: btabs
 title: BTabs Migration
+description: 'Migration notes for BTabs from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BTabs

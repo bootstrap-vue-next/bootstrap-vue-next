@@ -1,6 +1,7 @@
 ---
 id: show-hide
 title: Show and Hide Prop Migration
+description: 'BootstrapVueNext standardizes visibility control around `v-model` and `no*`-prefixed rendering props.'
 category: patterns
 components:
   - BCollapse

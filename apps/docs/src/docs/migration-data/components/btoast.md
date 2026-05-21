@@ -1,6 +1,7 @@
 ---
 id: btoast
 title: BToast Migration
+description: 'Migration notes for BToast from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BToast

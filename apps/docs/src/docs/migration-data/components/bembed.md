@@ -1,6 +1,7 @@
 ---
 id: bembed
 title: BEmbed Migration
+description: 'Migration notes for BEmbed from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BEmbed

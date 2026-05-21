@@ -1,4 +1,5 @@
 ---
+title: Toast
 description: 'Push notifications to your visitors with `BToast` and `useToast`. These are easily customizable for generating alert messages.'
 ---
 

@@ -1,6 +1,7 @@
 ---
 id: binputgroup
 title: BInputGroup Migration
+description: 'Migration notes for BInputGroup from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BInputGroup

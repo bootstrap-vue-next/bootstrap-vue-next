@@ -1,4 +1,5 @@
 ---
+title: Form File
 description: 'File input control that supports single and multiple file modes, drag and drop, file type restrictions, and directory selection with contextual state feedback.'
 ---
 

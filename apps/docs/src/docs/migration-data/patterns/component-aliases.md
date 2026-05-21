@@ -1,6 +1,7 @@
 ---
 id: component-aliases
 title: Component Alias Migration
+description: 'BootstrapVue component aliases are not auto-registered in BootstrapVueNext and must be migrated to canonical names or resolver aliases.'
 category: patterns
 components:
   - BootstrapVueNextResolver

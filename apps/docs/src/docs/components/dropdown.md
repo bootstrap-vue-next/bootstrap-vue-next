@@ -1,4 +1,5 @@
 ---
+title: Dropdown
 description: 'Dropdowns are toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.'
 ---
 

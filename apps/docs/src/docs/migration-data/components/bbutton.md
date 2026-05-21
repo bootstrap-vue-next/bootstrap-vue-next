@@ -1,6 +1,7 @@
 ---
 id: bbutton
 title: BButton Migration
+description: 'Migration notes for BButton from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BButton

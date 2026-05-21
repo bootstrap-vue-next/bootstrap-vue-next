@@ -1,4 +1,5 @@
 ---
+title: Form Rating
 description: 'Custom star rating component for entering or displaying rating values. Fully WAI-ARIA accessible with keyboard control, supporting both interactive and readonly modes with customizable styling and icons.'
 ---
 

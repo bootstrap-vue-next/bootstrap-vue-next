@@ -1,6 +1,7 @@
 ---
 id: bmedia
 title: BMedia Migration
+description: 'Migration notes for BMedia from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BMedia

@@ -1,4 +1,5 @@
 ---
+title: Avatar
 description: >
   Avatars are a custom component, and are typically used to display a user profile as a
   picture or short text. `BAvatar` provides several props for customizing its

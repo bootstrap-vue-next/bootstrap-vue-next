@@ -1,4 +1,5 @@
 ---
+title: Accessibility
 description: A brief overview of BootstrapVueNext's features and limitations for the creation of accessible content.
 ---
 

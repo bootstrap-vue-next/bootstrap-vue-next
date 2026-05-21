@@ -1,6 +1,7 @@
 ---
 id: bformrating
 title: BFormRating Migration
+description: 'Migration notes for BFormRating from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BFormRating

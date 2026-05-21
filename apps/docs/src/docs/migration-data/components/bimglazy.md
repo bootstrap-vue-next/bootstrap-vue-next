@@ -1,6 +1,7 @@
 ---
 id: bimglazy
 title: BImgLazy Migration
+description: 'Migration notes for BImgLazy from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BImgLazy

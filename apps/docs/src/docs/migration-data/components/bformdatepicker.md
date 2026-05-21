@@ -1,6 +1,7 @@
 ---
 id: bformdatepicker
 title: BFormDatePicker Migration
+description: '`BFormDatePicker` is currently experimental and does not yet have stable migration guidance.'
 category: components
 components:
   - BFormDatePicker

@@ -1,4 +1,5 @@
 ---
+title: BModal
 description: 'A light-weight directive for showing modals by ID. It provides a semantically clear way to trigger modals and automatically handles accessibility attributes and trigger registration'
 ---
 

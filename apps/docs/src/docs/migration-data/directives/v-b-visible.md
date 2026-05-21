@@ -1,6 +1,7 @@
 ---
 id: v-b-visible
 title: v-b-visible Migration
+description: 'Migration notes for v-b-visible from BootstrapVue to BootstrapVueNext.'
 category: directives
 components:
   - BLink

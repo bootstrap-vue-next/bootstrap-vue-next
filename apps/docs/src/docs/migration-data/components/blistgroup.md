@@ -1,6 +1,7 @@
 ---
 id: blistgroup
 title: BListGroup Migration
+description: 'Migration notes for BListGroup from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BListGroup

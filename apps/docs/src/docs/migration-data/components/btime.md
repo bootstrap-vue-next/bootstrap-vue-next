@@ -1,6 +1,7 @@
 ---
 id: btime
 title: BTime Migration
+description: '`BTime` is currently experimental and does not yet have stable migration guidance.'
 category: components
 components:
   - BTime

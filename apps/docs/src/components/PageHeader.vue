@@ -71,6 +71,16 @@ function fileNameToDirectiveMigrationId(str: string): string {
   return `v-${str.toLowerCase()}`
 }
 
+function getFallbackMigrationUrl(anchorName?: string | null): string {
+  const baseUrl = '/docs/migration-data/patterns/overview'
+
+  if (anchorName === 'deprecation') {
+    return withBase(`${baseUrl}#deprecation`)
+  }
+
+  return withBase(baseUrl)
+}
+
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: (props: Record<string, never>) => any
@@ -185,13 +195,13 @@ const migrationHref = computed(() => {
   if (typeof fmOverride === 'string' && fmOverride) {
     const overrideMigration = migrationData.find((item) => item.id === fmOverride)
     if (overrideMigration) return withBase(overrideMigration.url)
-    return withBase('/docs/migration-data/')
+    return getFallbackMigrationUrl(fmOverride)
   }
 
   const migration = migrationId ? migrationData.find((item) => item.id === migrationId) : null
 
   if (migration) return withBase(migration.url)
-  return anchor ? withBase('/docs/migration-data/') : null
+  return anchor ? getFallbackMigrationUrl(anchor) : null
 })
 
 const showButtons = computed(

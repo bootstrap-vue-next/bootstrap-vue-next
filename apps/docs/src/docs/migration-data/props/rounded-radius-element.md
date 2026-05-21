@@ -1,6 +1,7 @@
 ---
 id: rounded-radius-element
 title: RadiusElementExtendables Rounding Migration
+description: 'Directional `rounded` prop values from BootstrapVue are replaced by edge-specific RadiusElement props in BootstrapVueNext.'
 category: props
 components:
   - BAvatar

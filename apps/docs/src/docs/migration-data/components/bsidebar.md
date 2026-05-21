@@ -1,6 +1,7 @@
 ---
 id: bsidebar
 title: BSidebar to BOffcanvas Migration
+description: 'Migration notes for BSidebar from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BSidebar

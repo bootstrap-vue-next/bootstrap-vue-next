@@ -1,6 +1,7 @@
 ---
 id: bformtags
 title: BFormTags Migration
+description: 'Migration notes for BFormTags from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BFormTags

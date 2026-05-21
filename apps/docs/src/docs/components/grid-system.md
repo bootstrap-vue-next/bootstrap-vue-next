@@ -1,4 +1,5 @@
 ---
+title: Grid System
 migrationGuide: 'grid'
 description: >
   Use the powerful mobile-first flexbox grid (via the `<BContainer>`, `<BRow>` and

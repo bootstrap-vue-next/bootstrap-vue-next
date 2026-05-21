@@ -1,4 +1,5 @@
 ---
+title: Aspect
 description: >
   The <BAspect> component can be used to maintain a minimum responsive aspect ratio for content. When the content is longer than the available height, then the component will expand vertically to fit all content. If the content is shorter than the computed aspect height, the component will ensure a minimum height is maintained.
 ---

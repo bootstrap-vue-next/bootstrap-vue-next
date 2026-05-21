@@ -1,4 +1,5 @@
 ---
+title: Migration Knowledge Base
 description: >
   Structured BootstrapVue to BootstrapVueNext migration knowledge base with machine-readable frontmatter.
 ---

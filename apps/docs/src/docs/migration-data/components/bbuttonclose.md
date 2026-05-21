@@ -1,6 +1,7 @@
 ---
 id: bbuttonclose
 title: BButtonClose Migration
+description: 'Migration notes for BButtonClose from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BButtonClose

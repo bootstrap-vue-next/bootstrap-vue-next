@@ -1,6 +1,7 @@
 ---
 id: blink
 title: BLink Migration
+description: 'Migration notes for BLink from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BLink

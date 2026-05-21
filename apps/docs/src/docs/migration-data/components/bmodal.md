@@ -1,6 +1,7 @@
 ---
 id: bmodal
 title: BModal Migration
+description: 'Migration notes for BModal from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BModal

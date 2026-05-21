@@ -1,4 +1,5 @@
 ---
+title: Button Toolbar
 description: 'Group a series of button-groups and/or input-groups together on a single line, with support for sizing, justification, and mixing different control types.'
 ---
 
