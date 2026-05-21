@@ -12,7 +12,7 @@
 
 ::: info NOTE
 The BootstrapVue field `html` on the `options` object has been deprecated. See our
-[Migration Guide](/docs/migration-guide#v-html) for details.
+[migration knowledge base](/docs/migration-data/patterns/v-html-props) for details.
 :::
 
 ### Options as an array

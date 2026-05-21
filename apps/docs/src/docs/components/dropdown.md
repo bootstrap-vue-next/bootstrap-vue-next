@@ -189,7 +189,7 @@ _Nested sub-menus are **not** supported._
 :::
 
 ::: tip
-There are small differences in how the sub-components behave, please read our [migration guide](/docs/migration-guide#dropdown-sub-components)
+There are small differences in how the sub-components behave, please read our [migration knowledge base](/docs/migration-data/components/bdropdown#dropdown-sub-components)
 if you are converting from `bootstrap-vue`.
 :::
 

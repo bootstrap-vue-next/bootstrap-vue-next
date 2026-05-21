@@ -111,7 +111,7 @@ You can remove the margin from `<BRow>` and padding from `<BCol>` by setting the
 on `<BRow>`.
 
 ::: info
-`<BFormRow>` is deprecated, see our [migration guide](/docs/migration-guide#bform) for details.
+`<BFormRow>` is deprecated, see our [migration knowledge base](/docs/migration-data/components/bform) for details.
 :::
 
 ## Columns
@@ -316,12 +316,12 @@ container has a `min-height` as shown below.
 
 For vertical alignment of all grid cells in a row, use the `align-v` prop on `<BRow>`. Possible
 values are `'start'`, `'center'`, `'end'`, `'fill`, `'baseline'`, and `'stretch'` from
-[`AlignmentVertical`](/docs/migration-guide#alignment):
+[`AlignmentVertical`](/docs/types#alignment):
 
 <<< DEMO ./demo/ContainerVerticalAlignment.vue#template{vue-html}
 
 For individual grid cell vertical alignment, use the `align-self` prop on `<BCol>`. Possible values
-are the values [`AlignmentVertical`](/docs/migration-guide#alignment) and `auto`:
+are the values [`AlignmentVertical`](/docs/types#alignment) and `auto`:
 
 <<< DEMO ./demo/ContainerCellAlignment.vue#template{vue-html}
 
@@ -329,7 +329,7 @@ are the values [`AlignmentVertical`](/docs/migration-guide#alignment) and `auto`
 
 To horizontally align grid cells within a row, use the `align-h` prop on `<BRow>`. Possible values
 are: `'start'`, `'center'`, `'end'`, `'around'`, `'between'` and `'evenly'` from
-[`AlignmentJustifyContent`](/docs/migration-guide#alignment):
+[`AlignmentJustifyContent`](/docs/types#alignment):
 
 <<< DEMO ./demo/ContainerHorizontalAlignment.vue#template{vue-html}
 

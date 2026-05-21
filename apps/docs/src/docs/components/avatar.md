@@ -106,7 +106,7 @@ Prefer a square avatar? simply set the `square` prop to `true`.
 When set to `true` (or the empty string `''`), it uses the Bootstrap default of medium rounding.
 When set to `circle`, it uses a border radius of 50%, resulting in a circle.
 Rounding specific edges is accomplished via the `rounded-top`, `rounded-bottom`, `rounded-start` and
-`rounded-end` props. See the [migration guide](/docs/migration-guide#BAvatar) for differences
+`rounded-end` props. See the [migration knowledge base](/docs/migration-data/props/rounded-radius-element) for differences
 from `bootstrap-vue`
 
 <<< DEMO ./demo/AvatarRounding.vue#template{vue-html}
@@ -173,7 +173,7 @@ Add textual content to the badge by supplying a string to the `badge` prop, or u
 ### Badge positioning
 
 By default, the badge appears on the bottom right of the avatar. You can use the `badge-placement` props to change the position.
-Badge positioning properties have changed from `bootstrap-vue`. See the [migration guide](/docs/migration-guide#bavatar) for details.
+Badge positioning properties have changed from `bootstrap-vue`. See the [migration knowledge base](/docs/migration-data/components/bavatar#badge-positioning) for details.
 
 <<< DEMO ./demo/AvatarBadgePositioning.vue#template{vue-html}
 

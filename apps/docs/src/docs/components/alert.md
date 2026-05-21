@@ -11,7 +11,7 @@ Alerts are available for any length of text, as well as an optional dismiss butt
 ### `v-model` Support
 
 You can use the `v-model` directive to create two-way data bindings as in `v-model="showDismissibleAlert"`. This is useful when you use dismissible because when the user closes the alert, your variable will be updated. The v-model prop accepts boolean `true` or `false` to show and hide the alert respectively. It can also be set to a positive integer (representing seconds) to create a self-dismissing alert. See the [Auto Dismissing Alerts](#auto-dismissing-alerts) section below for details. `:model-value="true"` can be used to unconditionally show the alert, as the `show` prop did in `bootstrap-vue`. See the
-[migration guide](/docs/migration-guide#balert) for details.
+[migration knowledge base](/docs/migration-data/components/balert) for details.
 
 ## Contextual Variants
 

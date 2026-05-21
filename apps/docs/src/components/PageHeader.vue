@@ -185,13 +185,13 @@ const migrationHref = computed(() => {
   if (typeof fmOverride === 'string' && fmOverride) {
     const overrideMigration = migrationData.find((item) => item.id === fmOverride)
     if (overrideMigration) return withBase(overrideMigration.url)
-    return withBase(`/docs/migration-guide#${fmOverride}`)
+    return withBase('/docs/migration-data/')
   }
 
   const migration = migrationId ? migrationData.find((item) => item.id === migrationId) : null
 
   if (migration) return withBase(migration.url)
-  return anchor ? withBase(`/docs/migration-guide#${anchor}`) : null
+  return anchor ? withBase('/docs/migration-data/') : null
 })
 
 const showButtons = computed(

@@ -292,7 +292,7 @@ To programmatically create modals, refer to the documentation at [useModal](/doc
 ### Modal message boxes
 
 If you're looking for replacements for `$bvModal.msgBoxOk` and `$bvModal.msgBoxConfirm` please see the
-[migration guide](/docs/migration-guide#replacement-for-modal-message-boxes)
+[migration knowledge base](/docs/migration-data/components/bmodal#replacement-for-modal-message-boxes)
 
 ## Accessibility
 

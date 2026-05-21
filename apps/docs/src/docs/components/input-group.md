@@ -27,7 +27,7 @@ Values will be internally wrapped by a `BInputGroupText` to display correctly.
 Use the `BInputGroupText` to add styled text before or after the control.
 
 Do not use `BInputGroupText` to group sub-components as was done in Bootstrap-Vue, see the
-[migration guide](/docs/migration-guide#binputgroup) for details.
+[migration knowledge base](/docs/migration-data/components/binputgroup) for details.
 
 <<< DEMO ./demo/InputGroupText.vue#template{vue-html}
 

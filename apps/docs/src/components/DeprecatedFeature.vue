@@ -92,10 +92,10 @@ const deprecatedLabel = computed(() => {
 })
 
 /**
- * URL to the deprecation section in the migration guide
+ * URL to the deprecation section in the migration knowledge base
  * Uses withBase to ensure the correct path including the base URL
  */
-const learnMoreUrl = withBase('/docs/migration-guide#deprecation')
+const learnMoreUrl = withBase('/docs/migration-data/patterns/overview#deprecation')
 </script>
 
 <style scoped>

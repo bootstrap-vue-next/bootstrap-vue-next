@@ -46,7 +46,7 @@ You can use prop `thumbnail` to give an image a rounded light border appearance.
 When set to `true` (or the empty string `''`), it uses the Bootstrap default of medium rounding.
 When set to `circle`, it uses a border radius of 50%, resulting in a circle.
 Rounding specific edges is accomplished via the `rounded-top`, `rounded-bottom`, `rounded-start` and
-`rounded-end` props. See the [migration guide](/docs/migration-guide#BAvatar) for differences
+`rounded-end` props. See the [migration knowledge base](/docs/migration-data/props/rounded-radius-element) for differences
 from `bootstrap-vue`
 
 <<< DEMO ./demo/ImageRounded.vue
@@ -121,7 +121,7 @@ guide.
 
 ## Lazy loaded images
 
-Lazy loaded images are actived through the `lazy` prop. Eventually, the component will be expanded to include placeholder slots, but are not available at this time. See the [migration guide](/docs/migration-guide#bimg) for details.
+Lazy loaded images are actived through the `lazy` prop. Eventually, the component will be expanded to include placeholder slots, but are not available at this time. See the [migration knowledge base](/docs/migration-data/components/bimg) for details.
 
 We implement this `lazy` prop using the native `loading` attribute. See the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/loading) for details including how this effect how the native [`load` event](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event) works.
 
