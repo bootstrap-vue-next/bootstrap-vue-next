@@ -4,6 +4,7 @@ import markdownItClass from '@toycode/markdown-it-class'
 import llmstxt from 'vitepress-plugin-llms'
 import { demoContainer } from './plugins/demo-container'
 import { autoInjectDocComponents } from './plugins/auto-inject-doc-components'
+import { materializeLLMSSnippets } from './plugins/materialize-llms-snippets'
 import Components from 'unplugin-vue-components/vite'
 import { BootstrapVueNextResolver } from 'bootstrap-vue-next/resolvers'
 
@@ -31,6 +32,7 @@ export default defineConfig({
   vite: {
     plugins: [
       llmstxt(),
+      materializeLLMSSnippets(),
       Icons(),
       Components({
         globs: ['components/*.vue', 'docs/**/demo/*.vue'],
