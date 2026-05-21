@@ -1,10 +1,11 @@
-import {defineConfig} from 'vitepress'
+import { defineConfig } from 'vitepress'
 import Icons from 'unplugin-icons/vite'
 import markdownItClass from '@toycode/markdown-it-class'
-import {demoContainer} from './plugins/demo-container'
-import {autoInjectDocComponents} from './plugins/auto-inject-doc-components'
+import llmstxt from 'vitepress-plugin-llms'
+import { demoContainer } from './plugins/demo-container'
+import { autoInjectDocComponents } from './plugins/auto-inject-doc-components'
 import Components from 'unplugin-vue-components/vite'
-import {BootstrapVueNextResolver} from 'bootstrap-vue-next/resolvers'
+import { BootstrapVueNextResolver } from 'bootstrap-vue-next/resolvers'
 
 const title = 'BootstrapVueNext'
 const description = 'Quickly and Easily Integrate Bootstrap V5 Components With Vue 3'
@@ -17,15 +18,19 @@ export default defineConfig({
   base: baseUrl,
   srcDir: 'src',
   head: [
-    ['link', {rel: 'icon', type: 'image/x-icon', href: `${baseUrl}favicon.ico`}],
-    ['meta', {property: 'og:title', name: 'og:title', content: title}],
-    ['meta', {property: 'og:description', name: 'og:description', content: description}],
-    ['meta', {property: 'twitter:card', name: 'twitter:card', content: 'summary'}],
-    ['meta', {property: 'twitter:title', name: 'twitter:title', content: title}],
-    ['meta', {property: 'twitter:description', name: 'twitter:description', content: description}],
+    ['link', { rel: 'icon', type: 'image/x-icon', href: `${baseUrl}favicon.ico` }],
+    ['meta', { property: 'og:title', name: 'og:title', content: title }],
+    ['meta', { property: 'og:description', name: 'og:description', content: description }],
+    ['meta', { property: 'twitter:card', name: 'twitter:card', content: 'summary' }],
+    ['meta', { property: 'twitter:title', name: 'twitter:title', content: title }],
+    [
+      'meta',
+      { property: 'twitter:description', name: 'twitter:description', content: description },
+    ],
   ],
   vite: {
     plugins: [
+      llmstxt(),
       Icons(),
       Components({
         globs: ['components/*.vue', 'docs/**/demo/*.vue'],
@@ -53,7 +58,7 @@ export default defineConfig({
   },
   markdown: {
     config: (md) => {
-      md.use(markdownItClass, {table: ['table', 'table-striped']})
+      md.use(markdownItClass, { table: ['table', 'table-striped'] })
       md.use(demoContainer, 'src')
       md.use(autoInjectDocComponents)
     },
