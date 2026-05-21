@@ -6,7 +6,7 @@ components:
   - BFormInput
 match:
   - BFormInput
-  - @wheel.prevent
+  - "@wheel.prevent"
   - <BFormInput>
 tags:
   - migration

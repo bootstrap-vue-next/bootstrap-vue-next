@@ -18,10 +18,10 @@ safeRewrite: true
 migrationType: pattern-migration
 introducedIn: bootstrap-vue-next
 replacement:
-  *.sync: "v-model:<prop>"
+  "*.sync": "v-model:<prop>"
 manualReviewRequired: false
 deprecated:
-  - *.sync
+  - "*.sync"
 related:
   - show-hide
 confidence: high

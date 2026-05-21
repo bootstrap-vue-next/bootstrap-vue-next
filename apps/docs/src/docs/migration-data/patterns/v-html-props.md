@@ -15,7 +15,7 @@ components:
   - BTableSimple
 match:
   - html
-  - *-html
+  - "*-html"
   - v-html
   - slot replacement
   - HTML Injection
