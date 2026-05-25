@@ -14,6 +14,7 @@
           <ViewSourceButton v-if="editHref" :href="editHref" target="_blank" class="me-2">
             Edit this page on GitHub
           </ViewSourceButton>
+          <MarkdownActionsDropdown v-if="markdownActionsAvailable" />
           <ViewSourceButton v-if="migrationHref" :href="migrationHref">
             Migration Guide
           </ViewSourceButton>
@@ -24,13 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject} from 'vue'
-import {useData, withBase} from 'vitepress'
-import {useEditThisPageOnGithub} from '../composables/useEditLink'
-import {useMarkdownRenderer} from '../composables/useMarkdownRenderer'
-import {data as migrationData} from '../data/migration.data'
-import {appInfoKey} from '../../.vitepress/theme/keys'
-import {kebabToTitleCase} from '../utils/dataLoaderUtils'
+import { computed, inject } from 'vue'
+import { useData, withBase } from 'vitepress'
+import { useEditThisPageOnGithub } from '../composables/useEditLink'
+import { useMarkdownRenderer } from '../composables/useMarkdownRenderer'
+import { data as migrationData } from '../data/migration.data'
+import { appInfoKey } from '../../.vitepress/theme/keys'
+import { kebabToTitleCase } from '../utils/dataLoaderUtils'
+import MarkdownActionsDropdown from './MarkdownActionsDropdown.vue'
 
 interface AppInfo {
   githubComponentsDirectory: string
@@ -92,10 +94,10 @@ const props = withDefaults(
   }>(),
   {
     withPageHeader: true,
-  }
+  },
 )
 
-const {frontmatter, page} = useData()
+const { frontmatter, page } = useData()
 const description = computed(() => (frontmatter.value?.description as string) || '')
 const renderedDescription = useMarkdownRenderer(description)
 
@@ -145,7 +147,7 @@ const editHref = useEditThisPageOnGithub()
 const sourceHref = computed(() =>
   path.value && inferredBase.value && globalData
     ? `${globalData[inferredBase.value]}/${path.value}`
-    : null
+    : null,
 )
 
 /**
@@ -204,7 +206,11 @@ const migrationHref = computed(() => {
   return anchor ? getFallbackMigrationUrl(anchor) : null
 })
 
+const markdownActionsAvailable = computed(() => Boolean(page.value?.relativePath))
+
 const showButtons = computed(
-  () => props.withPageHeader && (editHref.value || sourceHref.value || migrationHref.value)
+  () =>
+    props.withPageHeader &&
+    (editHref.value || sourceHref.value || migrationHref.value || markdownActionsAvailable.value),
 )
 </script>
