@@ -1,4 +1,5 @@
 {
   "packages/bootstrap-vue-next": "0.45.4",
-  "packages/nuxt": "0.45.4"
+  "packages/nuxt": "0.45.4",
+  "packages/mcp": "0.0.1"
 }
