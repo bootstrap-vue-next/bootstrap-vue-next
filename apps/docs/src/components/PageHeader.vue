@@ -16,7 +16,7 @@
           </ViewSourceButton>
           <MarkdownActionsDropdown v-if="markdownActionsAvailable" />
           <ViewSourceButton v-if="migrationHref" :href="migrationHref">
-            Migration Guide
+            Migration Notes
           </ViewSourceButton>
         </BCol>
       </BRow>
@@ -151,7 +151,7 @@ const sourceHref = computed(() =>
 )
 
 /**
- * Derive the migration guide anchor from the current page path.
+ * Derive the migration docs link from the current page path.
  * - Components: kebab filename → PascalCase → prepend B → lowercase anchor
  *   e.g. "form-checkbox" → "BFormCheckbox" → "bformcheckbox"
  * - Directives: PascalCase filename → strip B → lowercase anchor

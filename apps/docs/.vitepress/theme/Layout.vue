@@ -372,9 +372,7 @@ const contents = computed(() => {
 })
 
 const isMigrationPage = computed(
-  () =>
-    page.value.relativePath === 'docs/migration-guide.md' ||
-    page.value.relativePath.startsWith('docs/migration-data/'),
+  () => page.value.relativePath.startsWith('docs/migration-data/'),
 )
 const isMigrationEntry = computed(
   () =>

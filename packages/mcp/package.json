@@ -30,14 +30,16 @@
     "dev": "tsx watch src/index.ts",
     "lint": "pnpm run lint:eslint",
     "lint:eslint": "eslint . --fix --cache",
-    "test:lint": "eslint src",
+    "test:lint": "eslint src tests",
     "test:lint:ci": "pnpm run test:lint",
+    "test:unit:ci": "node --import tsx --test tests/**/*.test.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "type-check": "pnpm run typecheck",
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0"
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "yaml": "^2.8.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
