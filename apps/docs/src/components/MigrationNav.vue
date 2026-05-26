@@ -3,8 +3,8 @@
     <BListGroup>
       <strong :class="headerClasses">
         <BLink
-          :to="withBase('/docs/migration-data')"
-          :active="isRouteActive('/docs/migration-data')"
+          :to="withBase('/docs/migration-data/')"
+          :active="isRouteActive('/docs/migration-data/')"
           :class="headerInsideClasses"
         >
           <ArrowLeftCircleIcon class="me-2" />
@@ -29,14 +29,14 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
-import {useRoute, withBase} from 'vitepress'
+import { computed } from 'vue'
+import { useRoute, withBase } from 'vitepress'
 import CollectionIcon from '~icons/bi/collection'
 import GridIcon from '~icons/bi/grid'
 import InputCursorTextIcon from '~icons/bi/input-cursor-text'
 import CodeSlashIcon from '~icons/bi/code-slash'
 import ArrowLeftCircleIcon from '~icons/bi/arrow-left-circle'
-import {data as migrationData} from '../data/migration.data'
+import { data as migrationData } from '../data/migration.data'
 
 const route = useRoute()
 

@@ -166,7 +166,7 @@
             <div class="doc-content-wrapper">
               <BButton
                 v-if="isMigrationEntry"
-                :to="withBase('/docs/migration-data')"
+                :to="withBase('/docs/migration-data/')"
                 variant="link"
                 class="migration-back-link ps-0 mb-2"
               >
@@ -205,7 +205,7 @@ import ChevronRight from '~icons/bi/chevron-right'
 import ChevronLeft from '~icons/bi/chevron-left'
 import CircleHalf from '~icons/bi/circle-half'
 import List from '~icons/bi/list'
-import {useData, useRoute, withBase} from 'vitepress'
+import { useData, useRoute, withBase } from 'vitepress'
 import { VPNavBarSearch } from 'vitepress/theme'
 import { appInfoKey } from './keys'
 import { useMediaQuery } from '@vueuse/core'
@@ -277,7 +277,7 @@ const headerLinks = [
     label: 'Reference',
   },
   {
-    route: withBase('/docs/migration-data'),
+    route: withBase('/docs/migration-data/'),
     label: 'Migrate',
   },
 ]
@@ -371,9 +371,7 @@ const contents = computed(() => {
   return root.length > 0 ? root[0] : undefined
 })
 
-const isMigrationPage = computed(
-  () => page.value.relativePath.startsWith('docs/migration-data/'),
-)
+const isMigrationPage = computed(() => page.value.relativePath.startsWith('docs/migration-data/'))
 const isMigrationEntry = computed(
   () =>
     page.value.relativePath.startsWith('docs/migration-data/') &&
