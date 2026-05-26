@@ -310,6 +310,9 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.29.0
         version: 1.29.0(zod@4.4.3)
+      yaml:
+        specifier: ^2.8.3
+        version: 2.8.3
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1

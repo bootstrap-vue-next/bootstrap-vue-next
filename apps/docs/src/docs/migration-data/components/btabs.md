@@ -36,7 +36,7 @@ Migration notes for BTabs from BootstrapVue to BootstrapVueNext.
 
 `align` prop now takes values from [`AlignmentJustifyContent`](/docs/types#alignment): `start`, `center`, `end`, `between`, `around`, and `evenly`
 
-The primary `v-model` now reflects the `id` of the currently selected tag. Use `v-model:index` to syncronize to
+The primary `v-model` now reflects the `id` of the currently selected tag. Use `v-model:index` to synchronize to
 the current tab index. See [programmatically activating and deactivating tabs](/docs/components/tabs#programmatically-activating-and-deactivating-tabs) for details.
 
 The `changed` event on `BTabs` is deprecated.

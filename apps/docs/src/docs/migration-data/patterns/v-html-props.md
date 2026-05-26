@@ -55,7 +55,7 @@ Unsafe HTML string props are replaced by explicit slot-based rendering in Bootst
 
 BootstrapVue provided a number of different props named `html` and `*-html` that passed arbitrary data to Vue's `v-html`.
 While a warning was included with each instance of this use, it is not recommended practice to use `v-html` and obscuring
-that practice further by passing down other props is ill advised in our opinion. We have instead worked to insure
+that practice further by passing down other props is ill advised in our opinion. We have instead worked to ensure
 that you have the ability to access the same functionality via slots. In many cases slots were already available and
 took priority over the `[*-]html` props and we've filled in the gaps where there wasn't a direct replacement.
 We believe the developer experience in these cases is as good or better than when using props.

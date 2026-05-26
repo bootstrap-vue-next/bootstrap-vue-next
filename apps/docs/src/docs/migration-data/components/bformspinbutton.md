@@ -32,7 +32,7 @@ Migration notes for BFormSpinButton from BootstrapVue to BootstrapVueNext.
 
 See [BForm Components](/docs/components/form-spinbutton)
 The locale property in BootstrapVueNext only allows for a single locale, while BSV allows for an array of locales. If this is
-a limitation that affect your scenario, please [file an issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) with an explanation of the expected behavior.
+a limitation that affects your scenario, please [file an issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues) with an explanation of the expected behavior.
 
 ## Migration Notes
 

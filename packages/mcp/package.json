@@ -1,6 +1,7 @@
 {
   "name": "@bootstrap-vue-next/mcp",
-  "version": "0.45.3",
+  "version": "0.0.1",
+  "private": true,
   "description": "BootstrapVueNext MCP server foundation",
   "license": "MIT",
   "author": {
@@ -8,12 +9,15 @@
     "url": "https://github.com/VividLemon"
   },
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "bin": {
+    "bootstrap-vue-next-mcp": "./dist/src/cli.js"
+  },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
     }
   },
   "imports": {
@@ -27,7 +31,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch src/cli.ts",
     "lint": "pnpm run lint:eslint",
     "lint:eslint": "eslint . --fix --cache",
     "test:lint": "eslint src tests",
@@ -35,7 +39,7 @@
     "test:unit:ci": "node --import tsx --test tests/**/*.test.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "type-check": "pnpm run typecheck",
-    "start": "node dist/index.js"
+    "start": "node dist/src/cli.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

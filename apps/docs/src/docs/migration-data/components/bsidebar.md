@@ -12,7 +12,7 @@ match:
   - ":right=\"true\""
   - ":right=\"false\""
   - aria-label
-  - aria-labelby
+  - aria-labelledby
   - bg-variant
   - text-variant
   - body-class
@@ -73,7 +73,7 @@ The `right` prop has been replaced with a more flexible `placement` prop:
 
 ### aria-\* support
 
-`aria-label` and `aria-labelby` aren't explicitly defined as props, but setting them
+`aria-label` and `aria-labelledby` aren't explicitly defined as props, but setting them
 on `<BOffcanvas>` will bind correctly to the main `<div>`.
 
 ### Variant Props Deprecated

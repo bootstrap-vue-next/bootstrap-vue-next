@@ -37,7 +37,7 @@ Migration notes for BTableSimple from BootstrapVue to BootstrapVueNext.
 
 ## Breaking Change
 
-Use `table-attrs` to apply additional attributes to the `<table>` element in reponsive mode.
+Use `table-attrs` to apply additional attributes to the `<table>` element in responsive mode.
 
 See the [v-html](/docs/migration-data/patterns/v-html-props) section for information on deprecation of the `caption-html` prop.
 

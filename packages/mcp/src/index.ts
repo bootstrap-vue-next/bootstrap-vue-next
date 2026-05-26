@@ -1,7 +1,6 @@
 import process from 'node:process'
 
 import {Server} from '#mcp-sdk/server'
-import {StdioServerTransport} from '#mcp-sdk/stdio'
 import {
   CallToolRequestSchema,
   ListResourcesRequestSchema,
@@ -549,14 +548,3 @@ export const createServer = (options: CreateServerOptions = {}): Server => {
   return server
 }
 
-const startServer = async (): Promise<void> => {
-  const server = createServer()
-  const transport = new StdioServerTransport()
-
-  await server.connect(transport)
-}
-
-void startServer().catch((error: unknown) => {
-  console.error('Failed to start BootstrapVueNext MCP server.', error)
-  process.exit(1)
-})
