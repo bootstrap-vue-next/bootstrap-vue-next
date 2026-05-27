@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.4...bootstrapvuenext-v0.45.5) (2026-05-27)
+
+
+### Bug Fixes
+
+* **BFormSelect:** preserve text-field precedence for non-group options with label keys ([#3214](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3214)) ([7854313](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7854313c3579c27a7c66debb9d8d9cc0207a1e7b))
+
 ## [0.45.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.3...bootstrapvuenext-v0.45.4) (2026-05-18)
 
 
