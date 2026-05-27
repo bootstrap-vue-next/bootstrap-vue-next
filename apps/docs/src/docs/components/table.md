@@ -877,7 +877,7 @@ Set the `filter` prop to `null` or an empty string to clear the current filter.
 
 ### Built in filtering options
 
-There are several options for controlling what data the filter is applied against.
+Several options control which data the filter is applied against.
 
 - The `filterable` prop (which replaces BootstrapVue's `filter-included-fields`) accepts an array of field keys to include in filtering. When set, only the specified fields will be searchable. If not set or empty, all fields are included.
 - Note: `filter-ignored-fields` from BootstrapVue is not implemented. Use `filterable` to specify which fields to search instead.

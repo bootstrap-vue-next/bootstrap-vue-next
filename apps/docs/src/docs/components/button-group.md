@@ -17,7 +17,7 @@ In addition, groups should be given an explicit label, as most assistive technol
 
 ## Sizing
 
-Set the `size` prop to `lg` or `sm` to render larger or smaller buttons. There is no need to specify the size on the individual buttons.
+Set the `size` prop to `lg` or `sm` to render larger or smaller buttons. You do not need to specify the size on the individual buttons.
 
 <<< DEMO ./demo/ButtonGroupSizing.vue#template{vue-html}
 

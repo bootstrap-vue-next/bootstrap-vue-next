@@ -207,7 +207,7 @@ You can make a floating label by setting the property `floating` to true and spe
 
 ### Restrictions
 
-There are restrictions on the use of floating labels.
+Floating labels have a few restrictions.
 
 - Floating labels do not work in horizontal layout. Horizontal layout precedes the `floating` property. Do not set any of the `content-cols-` or `label-cols-` properties if you want floating labels.
 - The `BFormInput` must have a placeholder property set.

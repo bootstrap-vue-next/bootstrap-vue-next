@@ -214,7 +214,7 @@ See how aspects of the Bootstrap grid system work across multiple devices with a
 
 **Notes:**
 
-- There is no `xs` prop. The `cols` prop refers to the `xs` (smallest) breakpoint.
+- The `xs` (smallest) breakpoint does not have a dedicated prop; use the `cols` prop instead.
 - The above breakpoint values are Bootstrap defaults. They can be customized via
   [SCSS variables](https://getbootstrap.com/docs/5.3/layout/grid#customizing-the-grid).
 

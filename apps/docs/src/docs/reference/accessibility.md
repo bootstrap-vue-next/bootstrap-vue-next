@@ -156,7 +156,7 @@ Steps you should do for testing:
 
 -Try using the keyboard only to see if all interactive components can be reached and controlled. Ensure that controls have focus styling so that the user knows which interactive element they are on. Remember, keyboard user cannot trigger an element's `hover` state.
 
-- Use a screen reader (combined with keyboard only) to navigate and interact with your app. There are several free screen readers available for various operating systems and browsers. Remember that screen reader users can only "see" what they hear.
+- Use a screen reader (combined with keyboard only) to navigate and interact with your app. Several free screen readers are available for various operating systems and browsers. Remember that screen reader users can only "see" what they hear.
 - See how your app looks and works when increasing the zoom level (and/or font size) of your browser.
 
 ## Additional resources

@@ -5,7 +5,7 @@ description: Learn how to customize Bootstrap and component styles.
 
 ## Bootstrap Customization
 
-There are many ways to customize the underlying [Bootstrap](https://getbootstrap.com/) styles. See
+You can customize the underlying [Bootstrap](https://getbootstrap.com/) styles in many ways. See
 [their documentation](https://getbootstrap.com/docs/5.3/customize/sass/#importing)
 for how to import customized styles
 

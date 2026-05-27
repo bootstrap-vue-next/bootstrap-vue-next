@@ -100,7 +100,7 @@ accessing modals globally.
 
 The event system has been significantly updated in BootstrapVueNext:
 
-There is no concept of listening to modal changes via `$root` events.
+BootstrapVueNext does not support listening to modal changes via `$root` events.
 
 **New Events**: BootstrapVueNext adds several new events not present in BootstrapVue:
 

@@ -35,7 +35,7 @@ You can render modals in-place by setting the `teleportDisabled` prop to `true`.
 
 ## Toggle modal visibility
 
-There are several methods that you can employ to toggle the visibility of `<BModal>`.
+You can toggle the visibility of `<BModal>` in several ways.
 
 ### Using the `v-model` property
 
