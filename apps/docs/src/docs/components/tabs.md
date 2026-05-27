@@ -76,6 +76,13 @@ Visually move the tab controls to the bottom by setting the prop `end`.
 
 <<< DEMO ./demo/TabsBottom.vue#template{vue-html}
 
+## Shared content before the active pane
+
+Use the `before` slot to render shared content inside the `tab-content` wrapper before the active
+tab pane.
+
+<<< DEMO ./demo/TabsBefore.vue#template{vue-html}
+
 ::: warning
 
 - Bottom placement visually works best with the `pills` variant. When using the default `tabs`

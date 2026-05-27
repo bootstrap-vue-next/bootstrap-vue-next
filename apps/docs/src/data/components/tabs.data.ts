@@ -184,6 +184,9 @@ export default {
         },
       } satisfies EmitRecord<keyof BTabsEmits | 'update:index' | 'update:model-value'>,
       slots: {
+        'before': {
+          description: 'Shared content rendered inside the tab-content wrapper before the active tab pane.',
+        },
         'default': {
           description: 'Content (tabs) for the tabs element.',
         },

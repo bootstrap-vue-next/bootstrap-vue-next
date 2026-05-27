@@ -1,6 +1,7 @@
 <template>
   <component :is="props.tag" :id="props.id" class="tabs" :class="computedClasses">
     <BTabsTabContent v-if="props.end" v-bind="tabContentProps">
+      <slot name="before" />
       <slot />
       <template #empty>
         <slot name="empty" />
@@ -61,6 +62,7 @@
       </ul>
     </div>
     <BTabsTabContent v-if="!props.end" v-bind="tabContentProps">
+      <slot name="before" />
       <slot />
       <template #empty>
         <slot name="empty" />

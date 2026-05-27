@@ -708,6 +708,8 @@ export type BCardFooterSlots = BCardHeadFootSlots
 export type BCardHeaderSlots = BCardHeadFootSlots
 
 export type BTabsSlots = {
+  'before'?: (props: Record<string, never>) => any
+
   'default'?: (props: Record<string, never>) => any
 
   'empty'?: (props: Record<string, never>) => any
