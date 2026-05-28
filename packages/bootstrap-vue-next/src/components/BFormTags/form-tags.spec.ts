@@ -442,6 +442,44 @@ describe('form-tags', () => {
     })
   })
 
+  describe('inputAttrs slot prop', () => {
+    it('includes modelValue matching the current input value', async () => {
+      let slotInputAttrs: Record<string, unknown> = {}
+      const wrapper = mount(BFormTags, {
+        props: {modelValue: []},
+        slots: {
+          default: (slotProps: Record<string, unknown>) => {
+            slotInputAttrs = slotProps.inputAttrs as Record<string, unknown>
+            return ''
+          },
+        },
+      })
+      expect(slotInputAttrs).toHaveProperty('modelValue', '')
+      expect(slotInputAttrs).toHaveProperty('value', '')
+      wrapper.unmount()
+    })
+
+    it('resets modelValue to empty after addTag is called', async () => {
+      let slotInputAttrs: Record<string, unknown> = {}
+      let slotAddTag: (tag?: string) => void = () => {}
+      const wrapper = mount(BFormTags, {
+        props: {modelValue: []},
+        slots: {
+          default: (slotProps: Record<string, unknown>) => {
+            slotInputAttrs = slotProps.inputAttrs as Record<string, unknown>
+            slotAddTag = slotProps.addTag as (tag?: string) => void
+            return ''
+          },
+        },
+      })
+      slotAddTag('Apple')
+      await wrapper.vm.$nextTick()
+      expect(slotInputAttrs).toHaveProperty('modelValue', '')
+      expect(slotInputAttrs).toHaveProperty('value', '')
+      wrapper.unmount()
+    })
+  })
+
   describe('ignoreInputFocusSelector behavior', () => {
     it('focuses the input when clicking on the wrapper area', async () => {
       const wrapper = mount(BFormTags, {
