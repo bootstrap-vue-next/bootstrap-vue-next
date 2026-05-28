@@ -11,6 +11,7 @@ import {
   type Ref,
   shallowRef,
   toValue,
+  unref,
   watch,
 } from 'vue'
 import {useSharedModalStack} from '../useModalManager'
@@ -82,7 +83,7 @@ export const useModal = () => {
           } else if (key === 'slots' && newValue.slots) {
             v.slots = markRaw(newValue.slots) as never
           } else {
-            v[key as keyof ModalOrchestratorArrayValue] = toValue(newValue[key]) as never
+            v[key as keyof ModalOrchestratorArrayValue] = unref(newValue[key]) as never
           }
         }
         v.modelValue = v.modelValue ?? false

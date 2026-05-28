@@ -7,6 +7,7 @@ import {
   type Ref,
   shallowRef,
   toValue,
+  unref,
   watch,
 } from 'vue'
 import {orchestratorRegistryKey} from '../../utils/keys'
@@ -97,7 +98,7 @@ export const usePopover = () => {
           } else if (key === 'slots' && newValue.slots) {
             v.slots = markRaw(newValue.slots)
           } else {
-            v[key as keyof PopoverOrchestratorCreateParam] = toValue(
+            v[key as keyof PopoverOrchestratorCreateParam] = unref(
               newValue[key as keyof PopoverOrchestratorCreateParam]
             )
           }

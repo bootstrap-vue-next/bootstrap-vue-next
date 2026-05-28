@@ -7,6 +7,7 @@ import {
   type Ref,
   shallowRef,
   toValue,
+  unref,
   watch,
 } from 'vue'
 import {orchestratorRegistryKey} from '../../utils/keys'
@@ -86,7 +87,7 @@ export const useToast = () => {
           } else if (key === 'slots' && newValue.slots) {
             v.slots = markRaw(newValue.slots)
           } else {
-            v[key as keyof ToastOrchestratorCreateParam] = toValue(
+            v[key as keyof ToastOrchestratorCreateParam] = unref(
               newValue[key as keyof ToastOrchestratorCreateParam]
             )
           }
