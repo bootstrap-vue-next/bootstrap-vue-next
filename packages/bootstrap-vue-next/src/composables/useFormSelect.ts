@@ -48,8 +48,20 @@ export const useFormSelect = (
       } as ComplexSelectOptionRaw
     }
 
+    const simpleOption =
+      typeof option === 'object'
+        ? {...(option as Record<string, unknown>)}
+        : ({} as Record<string, unknown>)
+
+    const fieldsToOmit = new Set(['label', 'options'])
+    if (propsValue.labelField) fieldsToOmit.add(propsValue.labelField)
+    if (propsValue.optionsField) fieldsToOmit.add(propsValue.optionsField)
+    fieldsToOmit.forEach((field) => {
+      delete simpleOption[field]
+    })
+
     return {
-      ...(typeof option === 'object' ? option : undefined),
+      ...simpleOption,
       value,
       text,
       disabled,
