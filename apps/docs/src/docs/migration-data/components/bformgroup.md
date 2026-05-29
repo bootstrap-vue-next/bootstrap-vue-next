@@ -1,6 +1,7 @@
 ---
 id: bformgroup
 title: BFormGroup Migration
+description: 'Migration notes for BFormGroup from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BFormGroup

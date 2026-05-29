@@ -1,6 +1,7 @@
 ---
 id: bdropdown
 title: BDropdown Migration
+description: 'Migration notes for BDropdown from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BDropdown

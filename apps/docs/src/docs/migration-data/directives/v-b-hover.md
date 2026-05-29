@@ -1,6 +1,7 @@
 ---
 id: v-b-hover
 title: v-b-hover Migration
+description: 'Migration notes for v-b-hover from BootstrapVue to BootstrapVueNext.'
 category: directives
 components:
   - BLink

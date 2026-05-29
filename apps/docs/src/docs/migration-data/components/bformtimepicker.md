@@ -1,6 +1,7 @@
 ---
 id: bformtimepicker
 title: BFormTimePicker Migration
+description: '`BFormTimePicker` is currently experimental and does not yet have stable migration guidance.'
 category: components
 components:
   - BFormTimePicker

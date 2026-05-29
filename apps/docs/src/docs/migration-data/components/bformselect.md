@@ -1,6 +1,7 @@
 ---
 id: bformselect
 title: BFormSelect Migration
+description: 'Migration notes for BFormSelect from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BFormSelect

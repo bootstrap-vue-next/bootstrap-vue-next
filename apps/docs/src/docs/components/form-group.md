@@ -1,4 +1,5 @@
 ---
+title: Form Group
 description: 'The `BFormGroup` component is the easiest way to add some structure to forms. Its purpose is to pair form controls with a legend or label, and to provide help text and invalid/valid feedback text, as well as visual (color) contextual state feedback.'
 ---
 
@@ -206,7 +207,7 @@ You can make a floating label by setting the property `floating` to true and spe
 
 ### Restrictions
 
-There are restrictions on the use of floating labels.
+Floating labels have a few restrictions.
 
 - Floating labels do not work in horizontal layout. Horizontal layout precedes the `floating` property. Do not set any of the `content-cols-` or `label-cols-` properties if you want floating labels.
 - The `BFormInput` must have a placeholder property set.

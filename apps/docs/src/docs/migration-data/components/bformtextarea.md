@@ -1,6 +1,7 @@
 ---
 id: bformtextarea
 title: BFormTextarea Migration
+description: 'Migration notes for BFormTextarea from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BFormTextarea

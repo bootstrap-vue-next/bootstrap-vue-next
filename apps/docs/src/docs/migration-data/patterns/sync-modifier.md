@@ -1,6 +1,7 @@
 ---
 id: sync-modifier
 title: Sync Modifier Migration
+description: 'Replace BootstrapVue `.sync` bindings with Vue 3 model bindings in BootstrapVueNext.'
 category: patterns
 components:
   - BFormCheckbox

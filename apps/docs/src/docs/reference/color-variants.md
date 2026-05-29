@@ -1,4 +1,5 @@
 ---
+title: Color Variants
 description: >
   Color variants are available when using the default Bootstrap v5 CSS and their mappings to CSS classes.
   Below are the variants available when using the default Bootstrap v5 CSS. When using BootstrapVueNext components,

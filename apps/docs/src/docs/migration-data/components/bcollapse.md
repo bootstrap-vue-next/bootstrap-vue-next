@@ -1,6 +1,7 @@
 ---
 id: bcollapse
 title: BCollapse Migration
+description: 'Migration notes for BCollapse from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BCollapse

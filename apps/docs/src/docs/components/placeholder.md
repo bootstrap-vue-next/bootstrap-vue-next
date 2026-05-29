@@ -1,4 +1,5 @@
 ---
+title: Placeholder
 migrationGuide: 'bskeleton'
 description: >
   Placeholders are components that allows you to display a loading state for

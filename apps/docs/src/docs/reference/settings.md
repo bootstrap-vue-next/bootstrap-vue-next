@@ -1,3 +1,4 @@
 ---
+title: Settings
 description: BootstrapVue provides a few options for customizing component default values, and more.
 ---

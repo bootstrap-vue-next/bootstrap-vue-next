@@ -1,6 +1,7 @@
 ---
 id: bformradio
 title: BFormRadio Migration
+description: 'Migration notes for BFormRadio from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BFormRadio

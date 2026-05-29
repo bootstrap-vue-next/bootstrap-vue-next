@@ -1,6 +1,7 @@
 ---
 id: bforminput
 title: BFormInput Migration
+description: 'Migration notes for BFormInput from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BFormInput

@@ -1,6 +1,7 @@
 ---
 id: bcalendar
 title: BCalendar Migration
+description: '`BCalendar` is currently experimental and does not yet have stable migration guidance.'
 category: components
 components:
   - BCalendar

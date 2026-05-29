@@ -1,4 +1,5 @@
 ---
+title: Router Links
 description: >
   Several BootstrapVue components support rendering RouterLink components compatible with Vue Router and Nuxt.js.
   For more information, see the official Vue Router docs and official Nuxt.js docs.

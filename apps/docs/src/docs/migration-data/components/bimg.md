@@ -1,6 +1,7 @@
 ---
 id: bimg
 title: BImg Migration
+description: 'Migration notes for BImg from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BImg

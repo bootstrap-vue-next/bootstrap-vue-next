@@ -1,6 +1,7 @@
 ---
 id: btoaster
 title: BToaster Migration
+description: 'Migration notes for BToaster from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BToaster

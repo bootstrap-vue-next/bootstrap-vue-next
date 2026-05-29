@@ -1,6 +1,7 @@
 ---
 id: bformcheckbox
 title: BFormCheckbox Migration
+description: '`BFormCheckbox` mostly follows the shared Vue 3 form-model migration pattern.'
 category: components
 components:
   - BFormCheckbox

@@ -1,6 +1,7 @@
 ---
 id: v-b-popover
 title: v-b-popover Migration
+description: 'Migration notes for v-b-popover from BootstrapVue to BootstrapVueNext.'
 category: directives
 components:
   - BPopover

@@ -1,6 +1,7 @@
 ---
 id: bjumbotron
 title: BJumbotron Migration
+description: 'Migration notes for BJumbotron from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BJumbotron

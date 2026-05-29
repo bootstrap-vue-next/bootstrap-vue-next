@@ -1,6 +1,7 @@
 ---
 id: native-events
 title: Native Event Documentation Migration
+description: 'BootstrapVueNext no longer documents bubbled native DOM events as component API events, even though native Vue event bubbling may still make those events observable at the component boundary.'
 category: patterns
 components: []
 match:

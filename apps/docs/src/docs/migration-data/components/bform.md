@@ -1,6 +1,7 @@
 ---
 id: bform
 title: BForm Migration
+description: 'Migration notes for BForm from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BForm

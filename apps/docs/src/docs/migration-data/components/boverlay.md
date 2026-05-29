@@ -1,6 +1,7 @@
 ---
 id: boverlay
 title: BOverlay Migration
+description: 'Migration notes for BOverlay from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BOverlay

@@ -1,6 +1,7 @@
 ---
 id: btooltip
 title: BTooltip Migration
+description: 'Migration notes for BTooltip from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BTooltip

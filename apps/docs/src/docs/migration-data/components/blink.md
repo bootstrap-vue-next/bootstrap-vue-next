@@ -1,6 +1,7 @@
 ---
 id: blink
 title: BLink Migration
+description: 'Migration notes for BLink from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BLink
@@ -39,7 +40,7 @@ Migration notes for BLink from BootstrapVue to BootstrapVueNext.
 Bootstrap Vue used `Vue Router 3`, BootstrapVueNext uses [`Vue Router 4`](https://router.vuejs.org/) please read the
 [Vue Router migration guide](https://router.vuejs.org/guide/migration/) if using the router features of `BLink`.
 
-`BLink` no longer supresses the scroll to top default behavior when `href='#'`.
+`BLink` no longer suppresses the scroll to top default behavior when `href='#'`.
 
 ::: tip Handling href="#" Links in Documentation
 In our documentation site, we addressed the scroll-to-top behavior by cleaning up unnecessary `href="#"` attributes:

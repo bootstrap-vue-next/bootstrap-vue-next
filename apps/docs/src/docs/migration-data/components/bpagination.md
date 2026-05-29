@@ -1,6 +1,7 @@
 ---
 id: bpagination
 title: BPagination Migration
+description: 'Migration notes for BPagination from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BPagination

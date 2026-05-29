@@ -1,6 +1,7 @@
 ---
 id: bprogressbar
 title: BProgressBar Migration
+description: 'Migration notes for BProgressBar from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BProgressBar

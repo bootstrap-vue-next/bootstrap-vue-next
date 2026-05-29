@@ -1,6 +1,7 @@
 ---
 id: v-b-modal
 title: v-b-modal Migration
+description: 'Migration notes for v-b-modal from BootstrapVue to BootstrapVueNext.'
 category: directives
 components: []
 match:

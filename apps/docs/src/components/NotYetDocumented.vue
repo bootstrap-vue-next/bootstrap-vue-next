@@ -3,7 +3,7 @@
     <span v-if="!helpOnly">
       This {{ type }} is either not documented or has not been through full parity review. Please
       use with caution and refer to the code to find differences in behavior. We are working to
-      bring the migration guide and documenation up-to-date with the code.
+      bring the migration knowledge base and documentation up-to-date with the code.
     </span>
     If you would like to help, please refer to the
     <a

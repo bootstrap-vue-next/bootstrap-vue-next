@@ -1,4 +1,5 @@
 ---
+title: Form Spinbutton
 description: 'The Form SpinButton allows the user to adjusting a numeric range with finite control'
 ---
 

@@ -1,4 +1,5 @@
 ---
+title: useScrollspy
 description: 'The `useScrollspy` composable provides automatic navigation highlighting based on scroll position. It tracks the visibility of content elements and automatically updates the active state of corresponding navigation items, making it perfect for table of contents, documentation navigation, and section-based layouts.'
 ---
 

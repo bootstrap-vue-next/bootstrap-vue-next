@@ -1,6 +1,7 @@
 ---
 id: bskeleton
 title: BSkeleton to BPlaceholder Migration
+description: 'Migration notes for BSkeleton from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BSkeleton

@@ -1,6 +1,7 @@
 ---
 id: balert
 title: BAlert Migration
+description: 'Migration notes for BAlert from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BAlert

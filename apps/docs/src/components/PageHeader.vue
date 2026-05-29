@@ -14,8 +14,9 @@
           <ViewSourceButton v-if="editHref" :href="editHref" target="_blank" class="me-2">
             Edit this page on GitHub
           </ViewSourceButton>
+          <MarkdownActionsDropdown v-if="markdownActionsAvailable" />
           <ViewSourceButton v-if="migrationHref" :href="migrationHref">
-            Migration Guide
+            Migration Notes
           </ViewSourceButton>
         </BCol>
       </BRow>
@@ -24,13 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject} from 'vue'
-import {useData, withBase} from 'vitepress'
-import {useEditThisPageOnGithub} from '../composables/useEditLink'
-import {useMarkdownRenderer} from '../composables/useMarkdownRenderer'
-import {data as migrationData} from '../data/migration.data'
-import {appInfoKey} from '../../.vitepress/theme/keys'
-import {kebabToTitleCase} from '../utils/dataLoaderUtils'
+import { computed, inject } from 'vue'
+import { useData, withBase } from 'vitepress'
+import { useEditThisPageOnGithub } from '../composables/useEditLink'
+import { useMarkdownRenderer } from '../composables/useMarkdownRenderer'
+import { data as migrationData } from '../data/migration.data'
+import { appInfoKey } from '../../.vitepress/theme/keys'
+import { kebabToTitleCase } from '../utils/dataLoaderUtils'
+import MarkdownActionsDropdown from './MarkdownActionsDropdown.vue'
 
 interface AppInfo {
   githubComponentsDirectory: string
@@ -71,6 +73,16 @@ function fileNameToDirectiveMigrationId(str: string): string {
   return `v-${str.toLowerCase()}`
 }
 
+function getFallbackMigrationUrl(anchorName?: string | null): string {
+  const baseUrl = '/docs/migration-data/patterns/overview'
+
+  if (anchorName === 'deprecation') {
+    return withBase(`${baseUrl}#deprecation`)
+  }
+
+  return withBase(baseUrl)
+}
+
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: (props: Record<string, never>) => any
@@ -82,10 +94,10 @@ const props = withDefaults(
   }>(),
   {
     withPageHeader: true,
-  }
+  },
 )
 
-const {frontmatter, page} = useData()
+const { frontmatter, page } = useData()
 const description = computed(() => (frontmatter.value?.description as string) || '')
 const renderedDescription = useMarkdownRenderer(description)
 
@@ -135,11 +147,11 @@ const editHref = useEditThisPageOnGithub()
 const sourceHref = computed(() =>
   path.value && inferredBase.value && globalData
     ? `${globalData[inferredBase.value]}/${path.value}`
-    : null
+    : null,
 )
 
 /**
- * Derive the migration guide anchor from the current page path.
+ * Derive the migration docs link from the current page path.
  * - Components: kebab filename → PascalCase → prepend B → lowercase anchor
  *   e.g. "form-checkbox" → "BFormCheckbox" → "bformcheckbox"
  * - Directives: PascalCase filename → strip B → lowercase anchor
@@ -185,16 +197,20 @@ const migrationHref = computed(() => {
   if (typeof fmOverride === 'string' && fmOverride) {
     const overrideMigration = migrationData.find((item) => item.id === fmOverride)
     if (overrideMigration) return withBase(overrideMigration.url)
-    return withBase(`/docs/migration-guide#${fmOverride}`)
+    return getFallbackMigrationUrl(fmOverride)
   }
 
   const migration = migrationId ? migrationData.find((item) => item.id === migrationId) : null
 
   if (migration) return withBase(migration.url)
-  return anchor ? withBase(`/docs/migration-guide#${anchor}`) : null
+  return anchor ? getFallbackMigrationUrl(anchor) : null
 })
 
+const markdownActionsAvailable = computed(() => Boolean(page.value?.relativePath))
+
 const showButtons = computed(
-  () => props.withPageHeader && (editHref.value || sourceHref.value || migrationHref.value)
+  () =>
+    props.withPageHeader &&
+    (editHref.value || sourceHref.value || migrationHref.value || markdownActionsAvailable.value),
 )
 </script>

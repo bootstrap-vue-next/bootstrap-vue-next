@@ -16,7 +16,7 @@ jobs:
       pull-requests: write
       id-token: write
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
 
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
@@ -87,7 +87,7 @@ jobs:
 
     concurrency: ci-${{ github.ref }}
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
 
     environment:
       name: github-pages

@@ -1,6 +1,7 @@
 ---
 id: bpopover
 title: BPopover Migration
+description: 'Migration notes for BPopover from BootstrapVue to BootstrapVueNext.'
 category: components
 components:
   - BPopover
