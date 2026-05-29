@@ -1,4 +1,5 @@
 ---
+title: Autocomplete
 description: 'An input with a dropdown suggestions list. Users can type freely to filter options, and the value is set when an item is selected from the list. Supports single and multiple selection, async fetching, and tags mode.'
 ---
 

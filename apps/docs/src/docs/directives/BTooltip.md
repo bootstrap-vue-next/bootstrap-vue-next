@@ -1,4 +1,5 @@
 ---
+title: BTooltip
 description: 'Add tooltips to any element using the v-b-tooltip directive. Tooltips can be triggered by hovering, focusing, or clicking an element'
 ---
 

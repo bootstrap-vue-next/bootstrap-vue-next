@@ -1,4 +1,5 @@
 ---
+title: Nav
 description: >
   Navigation available in Bootstrap share general markup and styles, from the base `<BNav>` class
   to the `active` and `disabled` states. Swap modifier props to switch between each style.

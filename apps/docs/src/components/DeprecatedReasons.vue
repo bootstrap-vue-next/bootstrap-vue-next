@@ -13,7 +13,7 @@
         </li>
         <li>
           There is a more modern way of solving the same problem - in this case we are trying to
-          point out the parity feature in the migration guide
+          point out the parity feature in the migration knowledge base
         </li>
       </ol>
     </li>

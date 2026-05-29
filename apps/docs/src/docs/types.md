@@ -1,7 +1,10 @@
 ---
+title: Types
 description: >
   BootstrapVueNext is a complete rewrite that strives for full TypeScript compatibility. This is a list of types we use in this library and that you can use too.
 ---
+
+Use this page as a quick reference for shared TypeScript types exposed throughout BootstrapVueNext.
 
 ## Alignment
 
