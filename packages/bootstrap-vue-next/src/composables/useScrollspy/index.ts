@@ -10,6 +10,7 @@ import {
   readonly,
   type Ref,
   ref,
+  shallowRef,
   toRef,
   unref,
   watch,
@@ -52,8 +53,8 @@ export const useScrollspy = (
   const cont = toRef(content)
   const tar = toRef(target)
 
-  const resolvedContent = ref(getElement(cont.value))
-  const resolvedTarget = ref(getElement(tar.value))
+  const resolvedContent = shallowRef(getElement(cont.value))
+  const resolvedTarget = shallowRef(getElement(tar.value))
 
   watch([cont, tar], () => {
     updateList()
@@ -68,8 +69,8 @@ export const useScrollspy = (
     watchChanges = true,
   } = options
   const current = ref<string | null>(null)
-  const list = ref<ScrollspyList>([])
-  const nodeList = ref<HTMLElement[]>([])
+  const list = shallowRef<ScrollspyList>([])
+  const nodeList = shallowRef<HTMLElement[]>([])
 
   // are we called in directive?
   const ctx = getCurrentInstance()
