@@ -67,7 +67,7 @@ This is the canonical BootstrapVue to BootstrapVueNext migration knowledge base.
 - [BPopover Migration](/docs/migration-data/components/bpopover) — `bpopover`
 - [BProgressBar Migration](/docs/migration-data/components/bprogressbar) — `bprogressbar`
 - [BSidebar to BOffcanvas Migration](/docs/migration-data/components/bsidebar) — `bsidebar`
-- [BSkeleton to BPlaceholder Migration](/docs/migration-data/components/bskeleton) — `bskeleton`
+- [BSkeleton Migration](/docs/migration-data/components/bskeleton) — `bskeleton`
 - [BTable Migration](/docs/migration-data/components/btable) — `btable`
 - [BTableLight Migration](/docs/migration-data/components/btablelight) — `btablelight`
 - [BTableSimple Migration](/docs/migration-data/components/btablesimple) — `btablesimple`
