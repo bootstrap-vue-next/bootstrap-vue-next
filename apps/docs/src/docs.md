@@ -363,6 +363,10 @@ additional CSS ourselves. So, using a method such as
 Bootstrap documentation is likely the best way to achieve the tiniest possible application size.
 Though it is not automatic, it should prove the safest bet for minifying your application.
 
+BootstrapVueNext also marks JavaScript modules as side-effect-free at the package level while explicitly
+preserving style assets (`*.css`, `*.scss`) through package metadata. This allows bundlers to aggressively
+remove unused JavaScript while keeping required stylesheet imports intact.
+
 ### Tree-shaking with BApp
 
 When using the **BApp component approach**, you automatically get optimal tree-shaking as only the

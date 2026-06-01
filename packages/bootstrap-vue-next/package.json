@@ -144,6 +144,10 @@
     "dist",
     "src/**/*.scss"
   ],
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "private": false,
   "scripts": {
     "dev": "vite --port 5174",
