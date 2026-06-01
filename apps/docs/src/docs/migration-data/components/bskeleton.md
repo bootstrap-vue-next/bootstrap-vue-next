@@ -1,7 +1,7 @@
 ---
 id: bskeleton
-title: BSkeleton to BPlaceholder Migration
-description: 'Migration notes for BSkeleton from BootstrapVue to BootstrapVueNext.'
+title: BSkeleton Migration
+description: 'BootstrapVueNext removes BSkeleton in favor of Bootstrap 5 placeholder components and manual review.'
 category: components
 components:
   - BSkeleton
@@ -18,18 +18,18 @@ tags:
   - migration
   - components
   - bskeleton
-safeRewrite: true
+safeRewrite: false
 migrationType: component-migration
 introducedIn: bootstrap-vue-next
 manualReviewRequired: true
 confidence: high
 ---
 
-# BSkeleton to BPlaceholder Migration
+# BSkeleton Migration
 
 ## Summary
 
-Migration notes for BSkeleton from BootstrapVue to BootstrapVueNext.
+BootstrapVueNext removes the `BSkeleton` family in favor of Bootstrap 5 placeholder components, so migrations require manual review.
 
 ## Affected APIs
 
@@ -42,7 +42,8 @@ Migration notes for BSkeleton from BootstrapVue to BootstrapVueNext.
 
 ## Breaking Change
 
-`<BSkeleton*>` components have been replaced by the more appropriately named `<BPlaceholder*>` components.
+`<BSkeleton*>` components are removed in favor of the Bootstrap 5 placeholder model exposed by
+`<BPlaceholder*>` and `<BPlaceholderWrapper>`.
 
 `<BSkeletonIcon>` is deprecated along with the rest of the BootstrapVue icon support. See our
 [icon documentation](/docs/icons) for details. This functionality can be replicated by using
@@ -56,13 +57,20 @@ and `undefined` to reflect the [Bootstrap 5 animations](https://getbootstrap.com
 `type` has been deprecated. [`BPlaceholderButton`](/docs/components/placeholder#placeholder-buttons) is a replacement for the button type. Because Bootstrap 5 placeholder styling differs from the BootstrapVue skeleton styling, review the visual result even when the API mapping is straightforward.
 If you find a need for the other types (Avatar or Input), please open an issue or propose a pull request.
 
+In practice, teams that are already comfortable with Bootstrap 5 placeholder design can script parts
+of this migration, but the resulting layout, spacing, and loading behavior should still be reviewed
+by hand.
+
 ## Migration Notes
 
 - Extracted from the canonical BootstrapVue → BootstrapVueNext migration guide.
+- Manual review is required because Bootstrap 5 placeholders are not a drop-in visual replacement for
+  BootstrapVue skeletons.
 
 ## Safe Automatic Rewrite
 
-Yes. This entry is mostly mechanical, but review the result when surrounding behavior or adjacent props may affect the final markup.
+No. You may choose to automate some tag and prop rewrites if you are intentionally adopting the
+Bootstrap 5 placeholder design, but there is no generally safe automatic rewrite.
 
 ## Related Migrations
 
