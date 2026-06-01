@@ -1389,6 +1389,39 @@ describe('form-group', () => {
       expect(slotProps).toBeDefined()
       expect(slotProps!.ariaDescribedby).toBeNull()
     })
+
+    it('passes descriptionId as ariaDescribedby when description exists', () => {
+      let slotProps: Record<string, unknown> | undefined
+      mount(BFormGroup, {
+        props: {description: 'Help text'},
+        slots: {
+          default: (props: Record<string, unknown>) => {
+            slotProps = props
+            return h('div')
+          },
+        },
+      })
+
+      expect(slotProps).toBeDefined()
+      expect(slotProps!.ariaDescribedby).toBe(slotProps!.descriptionId)
+    })
+
+    it('includes invalid feedback id in ariaDescribedby when state is invalid', () => {
+      let slotProps: Record<string, unknown> | undefined
+      const wrapper = mount(BFormGroup, {
+        props: {description: 'Help text', invalidFeedback: 'Invalid', state: false},
+        slots: {
+          default: (props: Record<string, unknown>) => {
+            slotProps = props
+            return h('div')
+          },
+        },
+      })
+
+      const describedBy = slotProps!.ariaDescribedby as string
+      expect(describedBy).toContain(slotProps!.descriptionId as string)
+      expect(describedBy).toContain(wrapper.find('.invalid-feedback').attributes('id'))
+    })
   })
 
   describe('disabled reactivity', () => {
