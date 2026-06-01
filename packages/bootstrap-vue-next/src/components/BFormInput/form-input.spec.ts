@@ -404,7 +404,7 @@ describe('form-input', () => {
 
   describe('formatter', () => {
     it('applies formatter on input', async () => {
-      const formatter = vi.fn((val: string) => val.toUpperCase())
+      const formatter = vi.fn<(val: string) => string>((val: string) => val.toUpperCase())
       const wrapper = mount(BFormInput, {props: {modelValue: '', formatter}})
       wrapper.element.value = 'hello'
       await wrapper.trigger('input')
@@ -413,7 +413,7 @@ describe('form-input', () => {
     })
 
     it('does not apply formatter on input when lazyFormatter is true', async () => {
-      const formatter = vi.fn((val: string) => val.toUpperCase())
+      const formatter = vi.fn<(val: string) => string>((val: string) => val.toUpperCase())
       const wrapper = mount(BFormInput, {props: {modelValue: '', formatter, lazyFormatter: true}})
       wrapper.element.value = 'hello'
       await wrapper.trigger('input')
@@ -422,7 +422,7 @@ describe('form-input', () => {
     })
 
     it('applies formatter on change', async () => {
-      const formatter = vi.fn((val: string) => val.toUpperCase())
+      const formatter = vi.fn<(val: string) => string>((val: string) => val.toUpperCase())
       const wrapper = mount(BFormInput, {props: {modelValue: '', formatter}})
       wrapper.element.value = 'hello'
       await wrapper.trigger('change')
@@ -431,7 +431,7 @@ describe('form-input', () => {
     })
 
     it('applies lazy formatter on blur', async () => {
-      const formatter = vi.fn((val: string) => val.toUpperCase())
+      const formatter = vi.fn<(val: string) => string>((val: string) => val.toUpperCase())
       const wrapper = mount(BFormInput, {props: {modelValue: '', formatter, lazyFormatter: true}})
       wrapper.element.value = 'hello'
       await wrapper.trigger('blur')
@@ -440,7 +440,7 @@ describe('form-input', () => {
     })
 
     it('formatter receives value and event', async () => {
-      const formatter = vi.fn((val: string) => val)
+      const formatter = vi.fn<(val: string) => string>((val: string) => val)
       const wrapper = mount(BFormInput, {props: {modelValue: '', formatter}})
       wrapper.element.value = 'test'
       await wrapper.trigger('input')

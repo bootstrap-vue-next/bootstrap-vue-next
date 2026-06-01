@@ -365,7 +365,7 @@ onKeyStroke(onKeydown, {target: input, passive: true})
 
 const separator = computed(() => {
   if (!props.separator) {
-    return
+    return undefined
   }
 
   return typeof props.separator === 'string' ? props.separator : props.separator.join('')
@@ -373,7 +373,7 @@ const separator = computed(() => {
 
 const separatorRegExp = computed(() => {
   if (!separator.value) {
-    return
+    return undefined
   }
 
   return new RegExp(`[${escapeRegExpChars(separator.value)}]+`)
