@@ -78,6 +78,7 @@
 import {type ComponentPublicInstance, computed, inject, watch} from 'vue'
 import {orchestratorRegistryKey} from '../../utils/keys'
 import {positionClasses} from '../../utils/positionClasses'
+import {warn} from '../../utils/console'
 import type {BvTriggerableEvent} from '../../utils'
 import type {BOrchestratorProps} from '../../types'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
@@ -101,11 +102,10 @@ if (orchestratorRegistry) {
     orchestratorRegistry._isOrchestratorInstalled.value = true
   }
 } else {
-  if (process.env.NODE_ENV === 'development') {
-    console.warn(
-      '[BOrchestrator] The orchestrator registry not found. Please use BApp, useRegistry or provide the plugin.'
-    )
-  }
+  warn(
+    'BOrchestrator',
+    'The orchestrator registry not found. Please use BApp, useRegistry or provide the plugin.'
+  )
 }
 
 watch(
