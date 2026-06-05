@@ -1,5 +1,6 @@
 import type {ComponentInternalInstance, Directive, DirectiveBinding, Ref, VNode} from 'vue'
 import type {BPopoverProps} from '../types/ComponentProps'
+import {error} from '../utils/console'
 import {
   bind,
   type ElementWithPopper,
@@ -183,7 +184,7 @@ export function findComponentParent(
   }
   if (!walk([root.subTree])) {
     if (!suppressNotFoundError) {
-      console.error('Could not find original vnode, will not inherit provides')
+      error('directive-utils', 'Could not find original vnode, will not inherit provides')
     }
     return root
   }

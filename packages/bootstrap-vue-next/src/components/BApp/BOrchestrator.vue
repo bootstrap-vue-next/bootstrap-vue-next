@@ -70,6 +70,7 @@
 
 <script setup lang="ts">
 import {type ComponentPublicInstance, computed, inject, watch} from 'vue'
+import {warn} from '../../utils/console'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 import type {BvTriggerableEvent} from '../../utils'
 import type {BOrchestratorProps, ContainerPosition} from '../../types'
@@ -94,11 +95,10 @@ if (orchestratorRegistry) {
     orchestratorRegistry._setOrchestratorInstalled(true)
   }
 } else {
-  if (process.env.NODE_ENV === 'development') {
-    console.warn(
-      '[BOrchestrator] The orchestrator registry not found. Please use BApp, useRegistry or provide the plugin.'
-    )
-  }
+  warn(
+    'BOrchestrator',
+    'The orchestrator registry not found. Please use BApp, useRegistry or provide the plugin.'
+  )
 }
 
 watch(

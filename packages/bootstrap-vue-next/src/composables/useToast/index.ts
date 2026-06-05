@@ -20,6 +20,7 @@ import type {
 } from '../../types/ComponentOrchestratorTypes'
 import {buildPromise} from '../orchestratorShared'
 import {BToast} from '../../components'
+import {warn} from '../../utils/console'
 
 const posDefault: ContainerPosition = 'top-end'
 
@@ -141,10 +142,7 @@ export const useToast = () => {
   const show = (
     obj: ToastOrchestratorCreateParam = {}
   ): PromiseWithComponent<typeof BToast, ToastOrchestratorParam> => {
-     
-    console.warn(
-      '[BootstrapVueNext] useToast: The `show` method is deprecated. Use the `create` method instead.'
-    )
+    warn('useToast', 'The `show` method is deprecated. Use the `create` method instead.')
     return create(obj)
   }
 

@@ -22,6 +22,7 @@ import {accordionInjectionKey} from '../../utils/keys'
 import {useId} from '../../composables/useId'
 import {useDefaults} from '../../composables/useDefaults'
 import {flattenFragments} from '../../utils/flattenFragments'
+import {warn} from '../../utils/console'
 import BAccordionItem from './BAccordionItem.vue'
 import {sortSlotElementsByPosition} from '../../utils/dom'
 import type {BAccordionSlots, BAccordionProps} from '../../types'
@@ -84,9 +85,7 @@ const sortAccordionItems = () => {
         .filter((i) => i !== -1)
 
       if (next.length !== modelValue.value.length) {
-        if (process.env.NODE_ENV === 'development') {
-          console.warn('[BAccordion] Unknown item id in v-model:', modelValue.value)
-        }
+        warn('BAccordion', 'Unknown item id in v-model:', modelValue.value)
       }
       index.value = next
     } else {
