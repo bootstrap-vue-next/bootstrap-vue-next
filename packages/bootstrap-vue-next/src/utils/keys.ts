@@ -5,12 +5,7 @@ import type {Numberish, ValidationState} from '../types/CommonTypes'
 import type {LiteralUnion} from '../types/LiteralUnion'
 import type {Size} from '../types/Size'
 import type {RadiusElement} from '../types/RadiusElement'
-import type {
-  BgColorVariant,
-  ButtonVariant,
-  ColorVariant,
-  TextColorVariant,
-} from '../types/ColorTypes'
+import type {BgColorVariant, ButtonVariant, ColorVariant, TextColorVariant} from '../types/ColorTypes'
 import type {CheckboxValue} from '../types/CheckboxTypes'
 import type {RadioValue} from '../types/RadioTypes'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
@@ -224,12 +219,12 @@ export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('butt
 
 export type OrchestratorStoreObject = {
   toast: ToastOrchestratorArrayValue[]
-  modal: ModalOrchestratorArrayValue[]
+  modal: Ref<ModalOrchestratorArrayValue>[]
   popover: PopoverOrchestratorArrayValue[]
   tooltip: TooltipOrchestratorArrayValue[]
 }
 export const orchestratorRegistryKey: InjectionKey<{
-  store: Readonly<Ref<OrchestratorStoreObject>>
+  store: Ref<OrchestratorStoreObject>
   _isToastAppend: Readonly<Ref<boolean>>
   _setToastAppend: (value: boolean) => void
   _isOrchestratorInstalled: Readonly<Ref<boolean>>

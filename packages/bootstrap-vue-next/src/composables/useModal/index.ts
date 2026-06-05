@@ -1,17 +1,12 @@
 import {
-  type Component,
   type ComponentInternalInstance,
   computed,
   getCurrentInstance,
   inject,
-  isReadonly,
-  isRef,
-  markRaw,
   onScopeDispose,
   type Ref,
-  shallowRef,
+  ref,
   toValue,
-  watch,
 } from 'vue'
 import {useSharedModalStack} from '../useModalManager'
 
@@ -21,7 +16,6 @@ import type {
   ModalOrchestratorArrayValue,
   ModalOrchestratorCreateParam,
   ModalOrchestratorParam,
-  OrchestratorCreateOptions,
   PromiseWithComponent,
 } from '../../types/ComponentOrchestratorTypes'
 import {buildPromise} from '../orchestratorShared'
@@ -41,82 +35,60 @@ export const useModal = () => {
    */
   const create = <ComponentProps = Record<string, unknown>>(
     obj: ModalOrchestratorCreateParam<ComponentProps> = {} as ModalOrchestratorCreateParam<ComponentProps>,
-    options: OrchestratorCreateOptions = {}
-  ): PromiseWithComponent<typeof BModal, ModalOrchestratorParam<ComponentProps>> => {
+  ): PromiseWithComponent<typeof BModal, Ref<ModalOrchestratorParam<ComponentProps>>> => {
     if (!_isOrchestratorInstalled.value) {
       throw new Error('BApp component must be mounted to use the modal controller')
     }
 
-    const resolvedProps = (isRef(obj) ? obj : shallowRef(obj)) as Ref<
-      ModalOrchestratorParam<ComponentProps>
-    >
-    const _self = resolvedProps.value?.id || Symbol('Modals controller')
+    const resolvedProps = ref(obj)
+    const modalStore = computed({
+      get: () => store.value.modal,
+      set: (v) => {
+        store.value.modal = v
+      }
+    })
 
+    const _self = resolvedProps.value?.id || Symbol('Modals controller')
+    // TODO we should be able to decouple the buildPromise from the store, as
+    // With our writable ref, we should be capable of mutating the ref directly
     const promise = buildPromise<
       typeof BModal,
-      ModalOrchestratorParam<ComponentProps>,
-      ModalOrchestratorArrayValue
-    >(_self, store as Ref<ModalOrchestratorArrayValue[]>)
+      Ref<ModalOrchestratorParam<ComponentProps>>
+    >(_self, modalStore)
 
-    promise.stop = watch(
-      resolvedProps,
-      (_newValue) => {
-        const newValue = {...toValue(_newValue)} as Record<string, unknown>
-        const previousIndex = store.value.findIndex((el) => el._self === _self)
-        const previous =
-          previousIndex === -1 ? {_component: markRaw(BModal)} : store.value[previousIndex]
-        const v = {
-          type: 'modal',
-          _self,
-          position: 'modal',
-          ...previous,
+    // Proxy to be able to write to the resolvedProps modelValue, and also provide default for BModal
+    const myObject = computed<ModalOrchestratorArrayValue>({
+      get: () => {
+        const {
+          _component = BModal,
           options,
+          slots,
+          ...props
+        } = resolvedProps.value
+
+        return {
+          component: _component,
+          options,
+          slots,
+          _self,
           promise,
+          props
         } as ModalOrchestratorArrayValue
-
-        for (const key in newValue) {
-          if (key.startsWith('on')) {
-            v[key as keyof ModalOrchestratorArrayValue] = newValue[key] as never
-          } else if (key === 'component' && newValue.component) {
-            v._component = markRaw(newValue.component as Component)
-          } else if (key === 'slots' && newValue.slots) {
-            v.slots = markRaw(newValue.slots) as never
-          } else {
-            v[key as keyof ModalOrchestratorArrayValue] = toValue(newValue[key]) as never
-          }
-        }
-        v.modelValue = v.modelValue ?? false
-        v['onUpdate:modelValue'] = (val: boolean) => {
-          const onUpdateModelValue = newValue['onUpdate:modelValue'] as
-            | ((val: boolean) => void)
-            | undefined
-          onUpdateModelValue?.(val)
-          const {modelValue} = toValue(obj)
-          if (isRef(obj) && !isRef(modelValue)) obj.value.modelValue = val
-          if (isRef(modelValue) && !isReadonly(modelValue)) {
-            ;(modelValue as Ref<ModalOrchestratorArrayValue['modelValue']>).value = val
-          }
-          const modal = store.value.find((el) => el._self === _self)
-          if (modal) {
-            modal.modelValue = val
-          }
-        }
-
-        if (previousIndex === -1) {
-          store.value.push(v)
-        } else {
-          store.value.splice(previousIndex, 1, v)
-        }
       },
-      {
-        immediate: true,
-        deep: true,
+      set: (v) => {
+        resolvedProps.value = {
+          ...resolvedProps.value,
+          modelValue: v.props.modelValue,
+        }
       }
-    )
+    })
+
+    store.value.modal.push(myObject)
+
     onScopeDispose(() => {
-      const modal = store.value.find((el) => el._self === _self)
-      if (modal) {
-        modal.promise.value.destroy?.()
+      const modal = store.value.modal.find((el) => el.value._self === _self)
+      if (modal?.value) {
+        modal.value.promise.value.destroy?.()
       }
     }, true)
     return promise.value
@@ -138,10 +110,15 @@ export const useModal = () => {
         stackModal.exposed?.show()
         return
       }
-      const modal = store.value.find((el) => el._self === id)
-      if (modal) {
-        modal.modelValue = true
-        modal['onUpdate:modelValue']?.(true)
+      const modal = store.value.modal.find((el) => el.value._self === id)
+      if (modal?.value) {
+        modal.value = {
+          ...modal.value,
+          props: {
+            ...modal.value.props,
+            modelValue: true
+          }
+        }
       } else {
         stack?.value.forEach((modal) => {
           if (modal.exposed?.id === id) {
@@ -168,10 +145,15 @@ export const useModal = () => {
         stackModal.exposed?.hide(trigger)
         return
       }
-      const modal = store.value.find((el) => el._self === id)
-      if (modal) {
-        modal.modelValue = false
-        modal['onUpdate:modelValue']?.(false)
+      const modal = store.value.modal.find((el) => el.value._self === id)
+      if (modal?.value) {
+        modal.value = {
+          ...modal.value,
+          props: {
+            ...modal.value.props,
+            modelValue: false
+          }
+        }
       } else {
         stack?.value.forEach((modal) => {
           if (modal.exposed?.id === id) {
@@ -193,15 +175,15 @@ export const useModal = () => {
   }
 
   const get = (id: ControllerKey) => {
-    const modal = store.value.find((el) => el._self === id)
+    const modal = store.value.modal.find((el) => el.value._self === id)
     if (modal) {
       return {
         modal,
         show() {
-          modal?.promise.value.show()
+          modal?.value.promise.value.show()
         },
         hide(trigger?: string) {
-          modal?.promise.value.hide(trigger)
+          modal?.value.promise.value.hide(trigger)
         },
       }
     }

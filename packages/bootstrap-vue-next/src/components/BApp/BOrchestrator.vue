@@ -123,7 +123,7 @@ const items = computed(() => {
   if (props.filter) {
     filteredStore = {
       tooltip: filteredStore.tooltip.filter(props.filter),
-      modal: filteredStore.modal.filter(props.filter),
+      modal: filteredStore.modal.filter((e) => props.filter?.(e.value)),
       popover: filteredStore.popover.filter(props.filter),
       toast: filteredStore.toast.filter(props.filter),
     }
