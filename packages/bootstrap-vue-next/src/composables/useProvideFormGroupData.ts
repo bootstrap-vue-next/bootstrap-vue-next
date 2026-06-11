@@ -1,4 +1,4 @@
-import {computed, onUnmounted, provide, type Ref, ref, watch} from 'vue'
+import {computed, onUnmounted, provide, type Ref, shallowRef} from 'vue'
 import type {ValidationState} from '../types/CommonTypes'
 import {formGroupKey} from '../utils/keys'
 
@@ -9,44 +9,36 @@ import {formGroupKey} from '../utils/keys'
  * passed-through state/disabled, acting as a boundary — their registry exists but is unused,
  * so descendant claims never reach an outer BFormGroup.
  */
-export const useProvideFormGroupData = (opts: {
+export const useProvideFormGroupData = ({
+  state,
+  disabled,
+}: {
   state: Readonly<Ref<ValidationState | undefined>>
   disabled: Readonly<Ref<boolean>>
 }) => {
-  const {state, disabled} = opts
-  const labelTargetIds = ref<string[]>([])
-  const registerLabelTarget = (id: string) => {
-    labelTargetIds.value.push(id)
-  }
-  const unregisterLabelTarget = (id: string) => {
-    const idx = labelTargetIds.value.indexOf(id)
-    if (idx !== -1) labelTargetIds.value.splice(idx, 1)
-  }
+  const labelTargetIds = shallowRef<Readonly<Ref<string | null>>[]>([])
 
-  // The callback runs in the descendant's setup, so watch/onUnmounted bind to the descendant.
+  // The callback runs in the descendant's setup, so onUnmounted binds to the descendant.
   provide(formGroupKey, (idRef) => {
     if (idRef) {
-      watch(
-        idRef,
-        (curr, prev) => {
-          if (prev) unregisterLabelTarget(prev)
-          if (curr) registerLabelTarget(curr)
-        },
-        {immediate: true}
-      )
+      labelTargetIds.value = [...labelTargetIds.value, idRef]
       onUnmounted(() => {
-        if (idRef.value) unregisterLabelTarget(idRef.value)
+        labelTargetIds.value = labelTargetIds.value.filter((r) => r !== idRef)
       })
     }
     return {state, disabled}
   })
 
-  // null unless exactly one distinct id is registered.
+  // null unless exactly one distinct non-empty id is currently registered.
   const singleLabelTargetId = computed<string | null>(() => {
-    const ids = labelTargetIds.value
-    if (!ids.length) return null
-    const first = ids[0]
-    return ids.every((id) => id === first) ? first || null : null
+    let single: string | null = null
+    for (const r of labelTargetIds.value) {
+      const v = r.value
+      if (!v) continue
+      if (single !== null && single !== v) return null
+      single = v
+    }
+    return single
   })
 
   return {singleLabelTargetId}

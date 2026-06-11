@@ -21,8 +21,9 @@ contained within the `BFormGroup`. When specifying the id, **do not** prepend it
 component. Do not set the `label-for` prop when using `BFormRadioGroup`, `BFormCheckboxGroup`,
 `BFormRadio`, `BFormCheckbox` or `BFormFile` components (or when placing multiple inputs in
 the same form group) — these inputs include integrated label element(s) and the `<legend>`
-element is more suitable. When `label-for` is not set, `BFormGroup` automatically falls back
-to `<legend>` for these cases.
+element is more suitable. With `label-for` unset, auto-detection only claims `<label for>`
+when there is exactly one slot input without its own integrated label, so these cases render
+as `<fieldset>` + `<legend>`.
 
 You can also apply additional classes to the label via the `label-class` prop, such as responsive
 padding and text alignment utility classes. The `label-class` prop accepts either a string or array
