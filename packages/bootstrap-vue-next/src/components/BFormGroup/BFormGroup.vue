@@ -1,11 +1,9 @@
 <template>
-  <component
-    :is="isFieldset ? 'fieldset' : 'div'"
+  <fieldset
     :id="computedId"
-    :disabled="isFieldset ? props.disabled : null"
-    :role="isFieldset ? null : 'group'"
+    :disabled="props.disabled"
     :aria-invalid="computedAriaInvalid"
-    :aria-labelledby="isFieldset && isHorizontal ? labelId : null"
+    :aria-labelledby="isFieldset && isHorizontal ? labelId : undefined"
     v-bind="$attrs"
     :class="[stateClass, {'was-validated': props.validated}]"
     class="b-form-group"
@@ -99,11 +97,11 @@
         </BFormGroupContent>
       </template>
     </template>
-  </component>
+  </fieldset>
 </template>
 
 <script setup lang="ts">
-import {computed, provide, type Ref, ref, toRef, useTemplateRef} from 'vue'
+import {computed, toRef, useTemplateRef} from 'vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {attemptFocus, isVisible} from '../../utils/dom'
 import BCol from '../BContainer/BCol.vue'
@@ -113,7 +111,7 @@ import {useStateClass} from '../../composables/useStateClass'
 import {useId} from '../../composables/useId'
 import type {BFormGroupProps, BFormGroupSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import {formGroupKey} from '../../utils/keys'
+import {useProvideFormGroupData} from '../../composables/useProvideFormGroupData'
 import BFormGroupContent from '../BFormGroupContent.vue'
 import BFormGroupLabel from '../BFormGroupLabel.vue'
 
@@ -161,20 +159,11 @@ const slots = defineSlots<BFormGroupSlots>()
 
 const computedState = toRef(() => props.state)
 const computedDisabled = toRef(() => props.disabled)
-const childId = ref<Ref<string>[]>([])
-provide(formGroupKey, (id) => {
-  childId.value = [id]
-
-  return {
-    state: computedState,
-    disabled: computedDisabled,
-  }
+const {singleLabelTargetId} = useProvideFormGroupData({
+  state: computedState,
+  disabled: computedDisabled,
 })
-const computedLabelFor = computed(() => {
-  if (props.labelFor !== undefined) return props.labelFor
-  if (childId.value[0] && childId.value[0].value) return childId.value[0].value
-  return null
-})
+const computedLabelFor = computed(() => props.labelFor ?? singleLabelTargetId.value)
 
 const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
 

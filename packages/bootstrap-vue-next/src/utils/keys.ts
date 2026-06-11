@@ -224,7 +224,7 @@ export const orchestratorRegistryKey: InjectionKey<{
 }> = createBvnRegistryInjectionKey('orchestrator')
 
 export const formGroupKey: InjectionKey<
-  (id: Ref<string>) => {
+  (idRef?: Readonly<Ref<string | null>>) => {
     state: Readonly<Ref<ValidationState | undefined>>
     disabled: Readonly<Ref<boolean>>
   }

@@ -23,7 +23,7 @@
       :indeterminate="indeterminate || undefined"
       v-bind="processedAttrs.inputAttrs"
     />
-    <label v-if="hasDefaultSlot || !resolvedPlain" :for="computedId" :class="labelClasses">
+    <label v-if="hasOwnLabel" :for="computedId" :class="labelClasses">
       <slot />
     </label>
   </ConditionalWrapper>
@@ -92,7 +92,6 @@ const processedAttrs = computed(() => {
 const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(checkboxGroupKey, null)
-const formGroupData = inject(formGroupKey, null)?.(computedId)
 
 const input = useTemplateRef('_input')
 
@@ -129,6 +128,10 @@ const resolvedProps = computed(() => ({
 
 // Shorthand for template usage
 const resolvedPlain = computed(() => resolvedProps.value.plain)
+const hasOwnLabel = computed(() => hasDefaultSlot.value || !resolvedPlain.value)
+
+const labelTargetId = computed(() => (hasOwnLabel.value ? null : computedId.value))
+const formGroupData = inject(formGroupKey, null)?.(labelTargetId)
 
 const localValue = computed({
   get: () => (parentData ? parentData.modelValue.value : modelValue.value),
