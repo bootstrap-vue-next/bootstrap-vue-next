@@ -3,7 +3,8 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {ref} from 'vue'
 import BFormCheckbox from './BFormCheckbox.vue'
 import BFormCheckboxGroup from './BFormCheckboxGroup.vue'
-import {checkboxGroupKey, formGroupKey} from '../../utils/keys'
+import {checkboxGroupKey} from '../../utils/keys'
+import {provideFormGroupStub} from '../../../tests/utils'
 import type {CheckboxValue} from '../../types/CheckboxTypes'
 
 describe('form-checkbox', () => {
@@ -1431,10 +1432,7 @@ describe('form-checkbox', () => {
       const disabled = ref(true)
       const state = ref<boolean | undefined>(undefined)
       const wrapper = mount(BFormCheckbox, {
-        global: {
-          provide: {
-            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-          },
+        global: {provide: provideFormGroupStub(state, disabled),
         },
       })
       const $input = wrapper.get('input')
@@ -1447,9 +1445,7 @@ describe('form-checkbox', () => {
       const wrapper = mount(BFormCheckbox, {
         props: {disabled: false},
         global: {
-          provide: {
-            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-          },
+          provide: provideFormGroupStub(state, disabled),
         },
       })
       const $input = wrapper.get('input')

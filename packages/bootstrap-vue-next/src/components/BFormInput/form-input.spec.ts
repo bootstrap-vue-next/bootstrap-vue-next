@@ -2,7 +2,8 @@ import {afterEach, describe, expect, it, vi} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {nextTick, ref} from 'vue'
 import BFormInput from './BFormInput.vue'
-import {formGroupKey, inputGroupKey} from '../../utils/keys'
+import {inputGroupKey} from '../../utils/keys'
+import {provideFormGroupStub} from '../../../tests/utils'
 
 describe('form-input', () => {
   enableAutoUnmount(afterEach)
@@ -504,9 +505,7 @@ describe('form-input', () => {
       const state = ref<boolean | undefined>(undefined)
       const wrapper = mount(BFormInput, {
         global: {
-          provide: {
-            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-          },
+          provide: provideFormGroupStub(state, disabled),
         },
       })
       expect(wrapper.attributes('disabled')).toBeDefined()
@@ -517,9 +516,7 @@ describe('form-input', () => {
       const state = ref<boolean | undefined>(false)
       const wrapper = mount(BFormInput, {
         global: {
-          provide: {
-            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-          },
+          provide: provideFormGroupStub(state, disabled),
         },
       })
       expect(wrapper.classes()).toContain('is-invalid')
@@ -531,9 +528,7 @@ describe('form-input', () => {
       const wrapper = mount(BFormInput, {
         props: {state: true},
         global: {
-          provide: {
-            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-          },
+          provide: provideFormGroupStub(state, disabled),
         },
       })
       expect(wrapper.classes()).toContain('is-valid')
@@ -546,9 +541,7 @@ describe('form-input', () => {
       const wrapper = mount(BFormInput, {
         props: {disabled: false},
         global: {
-          provide: {
-            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-          },
+          provide: provideFormGroupStub(state, disabled),
         },
       })
       expect(wrapper.attributes('disabled')).toBeDefined()

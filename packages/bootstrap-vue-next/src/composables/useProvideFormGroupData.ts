@@ -2,6 +2,20 @@ import {computed, onUnmounted, provide, type Ref, shallowRef} from 'vue'
 import type {ValidationState} from '../types/CommonTypes'
 import {formGroupKey} from '../utils/keys'
 
+const useLabelTargetRegistry = () => {
+  const labelTargetIds = shallowRef<Readonly<Ref<string | null>>[]>([])
+
+  // Track runs in the descendant's setup, so onUnmounted binds to the descendant.
+  const track = (idRef: Readonly<Ref<string | null>>) => {
+    labelTargetIds.value = [...labelTargetIds.value, idRef]
+    onUnmounted(() => {
+      labelTargetIds.value = labelTargetIds.value.filter((r: Readonly<Ref<string | null>>) => r !== idRef)
+    })
+  }
+
+  return {labelTargetIds, track}
+}
+
 /**
  * Provides formGroupKey for descendant form controls. Each provider has its own isolated
  * label-target registry: BFormGroup uses the resulting `singleLabelTargetId` to drive its
@@ -16,18 +30,9 @@ export const useProvideFormGroupData = ({
   state: Readonly<Ref<ValidationState | undefined>>
   disabled: Readonly<Ref<boolean>>
 }) => {
-  const labelTargetIds = shallowRef<Readonly<Ref<string | null>>[]>([])
+  const {labelTargetIds, track} = useLabelTargetRegistry()
 
-  // The callback runs in the descendant's setup, so onUnmounted binds to the descendant.
-  provide(formGroupKey, (idRef) => {
-    if (idRef) {
-      labelTargetIds.value = [...labelTargetIds.value, idRef]
-      onUnmounted(() => {
-        labelTargetIds.value = labelTargetIds.value.filter((r) => r !== idRef)
-      })
-    }
-    return {state, disabled}
-  })
+  provide(formGroupKey, () => ({state, disabled, track}))
 
   // null unless exactly one distinct non-empty id is currently registered.
   const singleLabelTargetId = computed<string | null>(() => {

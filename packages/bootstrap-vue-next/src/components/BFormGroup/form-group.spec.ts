@@ -7,6 +7,7 @@ import BFormTextarea from '../BFormTextarea/BFormTextarea.vue'
 import BFormSelect from '../BFormSelect/BFormSelect.vue'
 import BFormCheckbox from '../BFormCheckbox/BFormCheckbox.vue'
 import BFormRadio from '../BFormRadio/BFormRadio.vue'
+import BFormFloatingLabel from '../BForm/BFormFloatingLabel.vue'
 
 describe('form-group', () => {
   enableAutoUnmount(afterEach)
@@ -652,6 +653,21 @@ describe('form-group', () => {
         expect(wrapper.find('label.form-label').exists()).toBe(false)
         expect(wrapper.find('label.form-check-label').exists()).toBe(true)
       })
+    })
+
+    it('falls back to legend when BFormFloatingLabel intervenes between group and input', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Email'},
+        slots: {
+          default: () =>
+            h(BFormFloatingLabel, {label: 'Address', labelFor: 'email'}, () =>
+              h(BFormInput, {id: 'email'})
+            ),
+        },
+      })
+      await nextTick()
+      expect(wrapper.find('legend').exists()).toBe(true)
+      expect(wrapper.find('label.form-label').exists()).toBe(false)
     })
   })
 

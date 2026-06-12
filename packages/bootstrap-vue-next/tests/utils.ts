@@ -1,5 +1,7 @@
-import {defineComponent, h} from 'vue'
+import {defineComponent, h, type Ref} from 'vue'
 import {mount} from '@vue/test-utils'
+import {formGroupKey} from '../src/utils/keys'
+import type {ValidationState} from '../src/types/CommonTypes'
 
 export const createContainer = (tag = 'div'): HTMLElement => {
   const container = document.createElement(tag)
@@ -20,3 +22,10 @@ export const useSetup = <V>(setup: () => V) => {
 
   return mount(Comp)
 }
+
+export const provideFormGroupStub = (
+  state: Ref<ValidationState | undefined>,
+  disabled: Ref<boolean>
+) => ({
+  [formGroupKey as unknown as symbol]: () => ({state, disabled, track: () => {}}),
+})
