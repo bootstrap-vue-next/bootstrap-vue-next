@@ -7,6 +7,7 @@ import BFormTextarea from '../BFormTextarea/BFormTextarea.vue'
 import BFormSelect from '../BFormSelect/BFormSelect.vue'
 import BFormCheckbox from '../BFormCheckbox/BFormCheckbox.vue'
 import BFormRadio from '../BFormRadio/BFormRadio.vue'
+import BFormFloatingLabel from '../BForm/BFormFloatingLabel.vue'
 
 describe('form-group', () => {
   enableAutoUnmount(afterEach)
@@ -28,11 +29,11 @@ describe('form-group', () => {
     expect(wrapper.element.tagName).toBe('FIELDSET')
   })
 
-  it('tag is default div', () => {
+  it('tag is fieldset even when labelFor is set', () => {
     const wrapper = mount(BFormGroup, {
       props: {labelFor: 'foobar'},
     })
-    expect(wrapper.element.tagName).toBe('DIV')
+    expect(wrapper.element.tagName).toBe('FIELDSET')
   })
 
   it('has class is-valid when prop state is true', () => {
@@ -138,30 +139,19 @@ describe('form-group', () => {
     expect(wrapper.attributes('disabled')).toBe('')
   })
 
-  it('attr disabled is undefined when disabled true but prop labelFor exists', () => {
+  it('attr disabled is true when prop disabled and labelFor is set', () => {
+    // Root is always <fieldset>, so disabled cascades to all descendants regardless of mode.
     const wrapper = mount(BFormGroup, {
       props: {disabled: true, labelFor: 'foo'},
     })
-    expect(wrapper.attributes('disabled')).toBeUndefined()
+    expect(wrapper.attributes('disabled')).toBe('')
   })
 
-  it('attr disabled is undefined when disabled false but prop labelFor exists', () => {
+  it('attr disabled is undefined when disabled false and labelFor is set', () => {
     const wrapper = mount(BFormGroup, {
       props: {disabled: false, labelFor: 'foo'},
     })
     expect(wrapper.attributes('disabled')).toBeUndefined()
-  })
-
-  it('attr role is undefined by default', () => {
-    const wrapper = mount(BFormGroup)
-    expect(wrapper.attributes('role')).toBeUndefined()
-  })
-
-  it('attr role is group when prop labelFor', () => {
-    const wrapper = mount(BFormGroup, {
-      props: {labelFor: 'foo'},
-    })
-    expect(wrapper.attributes('role')).toBe('group')
   })
 
   it('attr aria-invalid is undefined by default', () => {
@@ -588,6 +578,97 @@ describe('form-group', () => {
         expect(wrapper.get('#foobar').attributes('disabled')).toBeDefined()
       })
     })
+
+    describe('labelFor is not hijacked by descendant form controls', () => {
+      // Pre-fix bug: register-callback overwrote on every call, so multiple inputs collapsed
+      // to "last id wins" and the group rendered <label for="lastId">. We now bind label[for]
+      // only when exactly one input registers; anything else stays <legend>.
+      it('falls back to legend when multiple inputs register (e.g. inside a BInputGroup)', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'Range'},
+          slots: {
+            default: () => [
+              h(BFormInput, {id: 'range-start'}),
+              h(BFormInput, {id: 'range-end'}),
+            ],
+          },
+        })
+        await nextTick()
+
+        expect(wrapper.find('legend').exists()).toBe(true)
+        expect(wrapper.find('label.form-label').exists()).toBe(false)
+      })
+    })
+
+    // BFormCheckbox renders its own <label v-if="hasDefaultSlot || !resolvedPlain">. The
+    // claim on BFormGroup's label[for] only happens in the negative case (plain + no slot
+    // content), where no own label is rendered.
+    describe('BFormCheckbox label-for claim depends on own label', () => {
+      it('claims label-for when plain and no slot (no own label)', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'Agreement'},
+          slots: {default: () => h(BFormCheckbox, {id: 'agree', plain: true})},
+        })
+        await nextTick()
+        const label = wrapper.find('label.form-label')
+        expect(label.exists()).toBe(true)
+        expect(label.attributes('for')).toBe('agree')
+        expect(wrapper.find('label.form-check-label').exists()).toBe(false)
+      })
+
+      it('does not claim when checkbox has a default slot (own label rendered)', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'Agreement'},
+          slots: {default: () => h(BFormCheckbox, {id: 'agree'}, () => 'I accept the terms')},
+        })
+        await nextTick()
+        expect(wrapper.find('legend').exists()).toBe(true)
+        expect(wrapper.find('label.form-label').exists()).toBe(false)
+        expect(wrapper.find('label.form-check-label').exists()).toBe(true)
+      })
+    })
+
+    // Mirror of the BFormCheckbox tests: BFormRadio uses the same own-label template
+    // condition (`hasDefaultSlot || !resolvedPlain`), so the claim logic is identical.
+    describe('BFormRadio label-for claim depends on own label', () => {
+      it('claims label-for when plain and no slot (no own label)', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'Pick one'},
+          slots: {default: () => h(BFormRadio, {id: 'opt', plain: true})},
+        })
+        await nextTick()
+        const label = wrapper.find('label.form-label')
+        expect(label.exists()).toBe(true)
+        expect(label.attributes('for')).toBe('opt')
+        expect(wrapper.find('label.form-check-label').exists()).toBe(false)
+      })
+
+      it('does not claim when radio has a default slot (own label rendered)', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'Pick one'},
+          slots: {default: () => h(BFormRadio, {id: 'opt'}, () => 'Option A')},
+        })
+        await nextTick()
+        expect(wrapper.find('legend').exists()).toBe(true)
+        expect(wrapper.find('label.form-label').exists()).toBe(false)
+        expect(wrapper.find('label.form-check-label').exists()).toBe(true)
+      })
+    })
+
+    it('falls back to legend when BFormFloatingLabel intervenes between group and input', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {label: 'Email'},
+        slots: {
+          default: () =>
+            h(BFormFloatingLabel, {label: 'Address', labelFor: 'email'}, () =>
+              h(BFormInput, {id: 'email'})
+            ),
+        },
+      })
+      await nextTick()
+      expect(wrapper.find('legend').exists()).toBe(true)
+      expect(wrapper.find('label.form-label').exists()).toBe(false)
+    })
   })
 
   describe('horizontal layout', () => {
@@ -752,9 +833,7 @@ describe('form-group', () => {
       expect(label.exists()).toBe(true)
       expect(wrapper.find('legend').exists()).toBe(false)
 
-      // Should be a div with role="group", not a fieldset
-      expect(wrapper.element.tagName).toBe('DIV')
-      expect(wrapper.attributes('role')).toBe('group')
+      expect(wrapper.element.tagName).toBe('FIELDSET')
 
       wrapper.unmount()
     })

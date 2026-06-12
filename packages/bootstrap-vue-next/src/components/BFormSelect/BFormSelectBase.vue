@@ -79,7 +79,8 @@ const modelValue = defineModel<unknown>({
 
 const computedId = useId(() => props.id, 'input')
 
-const formGroupData = inject(formGroupKey, null)?.(computedId)
+const formGroupData = inject(formGroupKey, null)?.()
+formGroupData?.track(computedId)
 const isDisabled = computed(() => props.disabled || (formGroupData?.disabled.value ?? false))
 
 const selectSizeNumber = useToNumber(() => props.selectSize)

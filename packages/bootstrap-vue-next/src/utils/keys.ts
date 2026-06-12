@@ -223,10 +223,20 @@ export const orchestratorRegistryKey: InjectionKey<{
   _isOrchestratorInstalled: Ref<boolean>
 }> = createBvnRegistryInjectionKey('orchestrator')
 
+/**
+ * Provided by an ancestor BFormGroup (or boundary like BFormFloatingLabel). Called once at
+ * descendant setup to obtain state/disabled and a `track` callback. Call `track(idRef)` to
+ * claim the group's `<label for="...">` target — used by form controls without their own
+ * label (BFormInput, BFormTextarea, BFormSelect, or a plain BFormCheckbox/BFormRadio with
+ * no slot). Skip `track` entirely when the consumer only needs state/disabled and must not
+ * claim label-for (BFormCheckbox/BFormRadio that render their own label, BFormFloatingLabel
+ * acting as a boundary, ARIA-role custom widgets).
+ */
 export const formGroupKey: InjectionKey<
-  (id: Ref<string>) => {
+  () => {
     state: Readonly<Ref<ValidationState | undefined>>
     disabled: Readonly<Ref<boolean>>
+    track: (idRef: Readonly<Ref<string | null>>) => void
   }
 > = createBvnInjectionKey('formGroupPlugin')
 

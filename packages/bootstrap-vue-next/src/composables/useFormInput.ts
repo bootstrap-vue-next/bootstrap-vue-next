@@ -21,7 +21,8 @@ export const useFormInput = (
   const debounceMaxWaitNumber = useToNumber(() => props.debounceMaxWait ?? Number.NaN)
 
   // This automatically adds the appropriate "for" attribute to a BFormGroup label
-  const formGroupData = inject(formGroupKey, null)?.(computedId)
+  const formGroupData = inject(formGroupKey, null)?.()
+  formGroupData?.track(computedId)
   const computedState = computed(() =>
     props.state !== undefined ? props.state : (formGroupData?.state.value ?? null)
   )
