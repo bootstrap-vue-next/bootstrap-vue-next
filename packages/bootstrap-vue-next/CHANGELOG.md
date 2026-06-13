@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.5...bootstrapvuenext-v0.45.6) (2026-06-12)
+
+
+### Bug Fixes
+
+* **BFormGroup:** correct auto label-for behaviour, always render &lt;fieldset&gt; fixes [#3221](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3221) ([d4d98f0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d4d98f0f376c761d3c6d85c414fd563a88c3a792))
+
 ## [0.45.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.4...bootstrapvuenext-v0.45.5) (2026-05-27)
 
 
