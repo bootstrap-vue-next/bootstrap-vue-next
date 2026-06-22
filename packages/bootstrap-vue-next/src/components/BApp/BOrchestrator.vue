@@ -19,13 +19,13 @@
               options,
               _component,
               ...val
-            } in value.items"
+            } in value.items.values()"
             :key="_self"
           >
             <component
               :is="_component"
               v-bind="val"
-              :ref="(ref: ComponentPublicInstance) => (promise.value.ref = ref)"
+              :ref="(ref: ComponentPublicInstance) => (promise.controller.ref = ref)"
               initial-animation
               :teleport-disabled="true"
               @hide="
@@ -52,7 +52,7 @@
                     promise.resolve(e)
                   }
                   if (!options?.keep) {
-                    promise.value.destroy?.()
+                    promise.controller.destroy?.()
                   }
                 }
               "
@@ -114,10 +114,10 @@ watch(
 const items = computed(() => {
   const store = orchestratorRegistry?.store.value
   let filteredStore = {
-    tooltip: (!props.noPopovers ? store?.tooltip : undefined) ?? [],
-    modal: (!props.noModals ? store?.modal : undefined) ?? [],
-    popover: (!props.noPopovers ? store?.popover : undefined) ?? [],
-    toast: (!props.noToasts ? store?.toast : undefined) ?? [],
+    tooltip: (!props.noPopovers ? [...store?.tooltip.values() ?? []] : []),
+    modal: (!props.noModals ? [...store?.modal.values() ?? []] : []),
+    popover: (!props.noPopovers ? [...store?.popover.values() ?? []] : []),
+    toast: (!props.noToasts ? [...store?.toast.values() ?? []] : []),
   } satisfies Record<keyof OrchestratorStoreObject, unknown>
 
   if (props.filter) {
@@ -147,11 +147,11 @@ const positionedItems = computed<[string, ItemObject][]>(() => {
   })
   const groupedToastItems = items.value.toast.reduce(
     (acc, item) => {
-      const pos = item.position ?? toastDefaultPosition
+      const pos = item.value.props.position ?? toastDefaultPosition
       ;(acc[pos] ??= {
         ...toastDefaults(pos),
         items: [],
-      }).items.push(item)
+      }).items.push(item.value)
 
       return acc
     },

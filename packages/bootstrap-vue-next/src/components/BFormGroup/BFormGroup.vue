@@ -103,7 +103,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, provide, type Ref, ref, toRef, useTemplateRef} from 'vue'
+import {computed, provide, type Ref, ref, useTemplateRef} from 'vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {attemptFocus, isVisible} from '../../utils/dom'
 import BCol from '../BContainer/BCol.vue'
@@ -159,8 +159,8 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
 const props = useDefaults(_props, 'BFormGroup')
 const slots = defineSlots<BFormGroupSlots>()
 
-const computedState = toRef(() => props.state)
-const computedDisabled = toRef(() => props.disabled)
+const computedState = computed(() => props.state)
+const computedDisabled = computed(() => props.disabled)
 const childId = ref<Ref<string>[]>([])
 provide(formGroupKey, (id) => {
   childId.value = [id]
@@ -206,11 +206,10 @@ const content = useTemplateRef<HTMLDivElement | InstanceType<typeof BCol> | null
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>
-  ((props: BFormGroupProps, prefix: string) =>
     breakPoints.reduce((result: string[], breakpoint) => {
       const suffix = suffixPropName(
         breakpoint === 'xs' ? '' : breakpoint,
-        `${prefix}Align`
+        'labelAlign'
       ) as keyof BFormGroupProps
       const propValue: string = props[suffix] || null
       if (propValue) {
@@ -221,7 +220,7 @@ const labelAlignClasses = computed(() =>
         }
       }
       return result
-    }, []))(props, 'label')
+    }, [])
 )
 const labelColProps = computed(() => getColProps(props, 'label'))
 const isHorizontal = computed(

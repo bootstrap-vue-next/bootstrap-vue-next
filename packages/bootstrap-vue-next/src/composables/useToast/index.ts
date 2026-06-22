@@ -1,26 +1,9 @@
-import {
-  inject,
-  isReadonly,
-  isRef,
-  markRaw,
-  onScopeDispose,
-  type Ref,
-  shallowRef,
-  toValue,
-  watch,
-} from 'vue'
-import {orchestratorRegistryKey} from '../../utils/keys'
+import {computed, type ComputedRef, inject, markRaw, onScopeDispose, ref, type Ref} from 'vue'
+import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 import type {ContainerPosition} from '../../types/Alignment'
-import type {
-  OrchestratorCreateOptions,
-  PromiseWithComponent,
-  ToastOrchestratorArrayValue,
-  ToastOrchestratorCreateParam,
-  ToastOrchestratorParam,
-} from '../../types/ComponentOrchestratorTypes'
+import type {ComponentController, ToastOrchestratorArrayValue, ToastOrchestratorCreateParam} from '../../types'
 import {buildPromise} from '../orchestratorShared'
 import {BToast} from '../../components'
-import {warn} from '../../utils/console'
 
 const posDefault: ContainerPosition = 'top-end'
 
@@ -35,115 +18,59 @@ export const useToast = () => {
   const {store, _isToastAppend, _isOrchestratorInstalled} = orchestratorRegistry
 
   /**
-   * @returns {PromiseWithComponent<typeof BToast, ToastOrchestratorParam>} Returns a promise object with methods to control the toast (show, hide, toggle, get, set, destroy)
+   * @returns {ComponentController<typeof BToast, ToastOrchestratorParam>}
    */
-  const create = (
-    obj: ToastOrchestratorCreateParam = {},
-    options: OrchestratorCreateOptions = {}
-  ): PromiseWithComponent<typeof BToast, ToastOrchestratorParam> => {
+  const create = <ComponentProps extends Record<string, unknown> = Record<string, unknown>>(
+    obj: ToastOrchestratorCreateParam<ComponentProps> = {} as ToastOrchestratorCreateParam<ComponentProps>
+  ): ComponentController<typeof BToast, Ref<ToastOrchestratorArrayValue>> => {
     if (!_isOrchestratorInstalled.value) {
       throw new Error('The BApp component must be mounted to use the toast composable')
     }
 
-    const resolvedProps = isRef(obj) ? obj : shallowRef(obj)
+    const resolvedProps = ref(obj)
+    const id = resolvedProps.value?.id || Symbol('Modals controller')
 
-    const _self = resolvedProps.value?.id || Symbol('Toast controller')
-    const promise = buildPromise<
+    const {resolve, controller} = buildPromise<
       typeof BToast,
-      ToastOrchestratorParam,
-      ToastOrchestratorArrayValue
-    >(_self, store as Ref<ToastOrchestratorArrayValue[]>)
+      ComputedRef<OrchestratorStoreObject['toast']>
+    >(id, computed(() => store.value.toast))
 
-    promise.stop = watch(
-      resolvedProps,
-      (_newValue) => {
-        const newValue = {...toValue(_newValue)}
-        const previousIndex = store.value.findIndex((el) => el._self === _self)
-        const previous =
-          previousIndex === -1
-            ? {_component: markRaw(BToast)}
-            : (store.value[previousIndex] as ToastOrchestratorArrayValue)
-        const v: ToastOrchestratorArrayValue = {
-          ...previous,
-          type: 'toast',
-          _self,
-          promise,
+    const value = computed<ToastOrchestratorArrayValue, ToastOrchestratorArrayValue['props']>({
+      get: () => {
+        const {
+          component = markRaw(BToast),
           options,
-        }
-        if (newValue.props) {
-          Object.assign(v, newValue.props)
-          newValue.props = undefined
-        }
-        if (newValue.pos) {
-          v.position = newValue.pos
-          newValue.pos = undefined
-        }
-        for (const key in newValue) {
-          if (key.startsWith('on')) {
-            v[key as keyof ToastOrchestratorCreateParam] =
-              newValue[key as keyof ToastOrchestratorCreateParam]
-          } else if (key === 'component' && newValue.component) {
-            v._component = markRaw(newValue.component)
-          } else if (key === 'slots' && newValue.slots) {
-            v.slots = markRaw(newValue.slots)
-          } else {
-            v[key as keyof ToastOrchestratorCreateParam] = toValue(
-              newValue[key as keyof ToastOrchestratorCreateParam]
-            )
+          slots,
+          ...props
+        } = resolvedProps.value
+
+        return {
+          component,
+          options,
+          slots,
+          id,
+          resolve,
+          props: {
+            ...props,
+            position: props.position || posDefault
           }
-        }
-        v.position = v.position || posDefault
-        v.modelValue = v.modelValue ?? 5000
-        v['onUpdate:modelValue'] = (val: boolean) => {
-          newValue['onUpdate:modelValue']?.(val)
-          const {modelValue} = toValue(obj)
-          if (isRef(obj) && !isRef(modelValue)) obj.value.modelValue = val
-          if (isRef(modelValue) && !isReadonly(modelValue)) {
-            ;(modelValue as Ref<ToastOrchestratorArrayValue['modelValue']>).value = val
-          }
-          if (v.modelValue !== val) {
-            const toast = store.value.find((el) => el._self === _self)
-            if (toast) {
-              toast.modelValue = val
-            }
-          }
-        }
-        if (previousIndex === -1) {
-          if (
-            resolvedProps.value?.appendToast !== undefined
-              ? resolvedProps.value.appendToast
-              : _isToastAppend.value
-          ) {
-            store.value.push(v)
-          } else {
-            store.value.unshift(v)
-          }
-        } else {
-          store.value.splice(previousIndex, 1, v)
         }
       },
-      {
-        deep: true,
-        immediate: true,
+      set: (v) => {
+        resolvedProps.value = {
+          ...resolvedProps.value,
+          ...v,
+        }
       }
-    )
-    onScopeDispose(() => {
-      const toast = store.value.find((el) => el._self === _self)
-      if (toast) {
-        toast.promise.value.destroy?.()
-      }
-    }, true)
-    return promise.value
-  }
+    })
 
-  /*
-   * @deprecated The `show` method is deprecated. Use the `create` method instead.
-   */
-  const show = (
-    obj: ToastOrchestratorCreateParam = {}
-  ): PromiseWithComponent<typeof BToast, ToastOrchestratorParam> => {
-    warn('useToast', 'The `show` method is deprecated. Use the `create` method instead.')
-    return create(obj)
+    store.value.toast.set(id, value)
+
+    onScopeDispose(async () => {
+      await controller.destroy()
+    }, true)
+
+    return controller
   }
 
   return {
@@ -151,12 +78,5 @@ export const useToast = () => {
     _isOrchestratorInstalled,
     store,
     create,
-    show,
   }
 }
-
-/**
- * @deprecated use useToast() instead.
- * @returns {ReturnType<typeof useToast>} The toast controller
- */
-export const useToastController = useToast

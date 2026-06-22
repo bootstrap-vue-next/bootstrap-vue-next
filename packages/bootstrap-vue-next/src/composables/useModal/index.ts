@@ -1,8 +1,10 @@
 import {
   type ComponentInternalInstance,
   computed,
+  type ComputedRef,
   getCurrentInstance,
   inject,
+  markRaw,
   onScopeDispose,
   type Ref,
   ref,
@@ -10,14 +12,13 @@ import {
 } from 'vue'
 import {useSharedModalStack} from '../useModalManager'
 
-import {orchestratorRegistryKey} from '../../utils/keys'
+import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 import type {
+  ComponentController,
   ControllerKey,
   ModalOrchestratorArrayValue,
   ModalOrchestratorCreateParam,
-  ModalOrchestratorParam,
-  PromiseWithComponent,
-} from '../../types/ComponentOrchestratorTypes'
+} from '../../types'
 import {buildPromise} from '../orchestratorShared'
 import {BModal} from '../../components'
 
@@ -31,67 +32,55 @@ export const useModal = () => {
   const {store, _isOrchestratorInstalled} = orchestratorRegistry
 
   /**
-   * @returns {PromiseWithComponent}  Returns a promise object with methods to control the modal (show, hide, toggle, get, set, destroy)
+   * @returns {ComponentController<typeof BModal, Ref<ModalOrchestratorArrayValue>>}
    */
-  const create = <ComponentProps = Record<string, unknown>>(
+  const create = <ComponentProps extends Record<string, unknown> = Record<string, unknown>>(
     obj: ModalOrchestratorCreateParam<ComponentProps> = {} as ModalOrchestratorCreateParam<ComponentProps>,
-  ): PromiseWithComponent<typeof BModal, Ref<ModalOrchestratorParam<ComponentProps>>> => {
+  ): ComponentController<typeof BModal, Ref<ModalOrchestratorArrayValue>> => {
     if (!_isOrchestratorInstalled.value) {
       throw new Error('BApp component must be mounted to use the modal controller')
     }
 
     const resolvedProps = ref(obj)
-    const modalStore = computed({
-      get: () => store.value.modal,
-      set: (v) => {
-        store.value.modal = v
-      }
-    })
 
-    const _self = resolvedProps.value?.id || Symbol('Modals controller')
-    // TODO we should be able to decouple the buildPromise from the store, as
-    // With our writable ref, we should be capable of mutating the ref directly
-    const promise = buildPromise<
+    const id = resolvedProps.value?.id || Symbol('Modals controller')
+    const {resolve, controller} = buildPromise<
       typeof BModal,
-      Ref<ModalOrchestratorParam<ComponentProps>>
-    >(_self, modalStore)
+      ComputedRef<OrchestratorStoreObject['modal']>
+    >(id, computed(() => store.value.modal))
 
-    // Proxy to be able to write to the resolvedProps modelValue, and also provide default for BModal
-    const myObject = computed<ModalOrchestratorArrayValue>({
+    const value = computed<ModalOrchestratorArrayValue, ModalOrchestratorArrayValue['props']>({
       get: () => {
         const {
-          _component = BModal,
+          component = markRaw(BModal),
           options,
           slots,
           ...props
         } = resolvedProps.value
 
         return {
-          component: _component,
+          component,
           options,
           slots,
-          _self,
-          promise,
-          props
-        } as ModalOrchestratorArrayValue
+          id,
+          resolve,
+          props,
+        }
       },
       set: (v) => {
         resolvedProps.value = {
           ...resolvedProps.value,
-          modelValue: v.props.modelValue,
+          ...v,
         }
       }
     })
 
-    store.value.modal.push(myObject)
+    store.value.modal.set(id, value)
 
-    onScopeDispose(() => {
-      const modal = store.value.modal.find((el) => el.value._self === _self)
-      if (modal?.value) {
-        modal.value.promise.value.destroy?.()
-      }
+    onScopeDispose(async () => {
+      await controller.destroy()
     }, true)
-    return promise.value
+    return controller
   }
 
   const {lastStack, stack, registry} = useSharedModalStack()
@@ -110,7 +99,7 @@ export const useModal = () => {
         stackModal.exposed?.show()
         return
       }
-      const modal = store.value.modal.find((el) => el.value._self === id)
+      const modal = store.value.modal.get(id)
       if (modal?.value) {
         modal.value = {
           ...modal.value,
@@ -145,7 +134,7 @@ export const useModal = () => {
         stackModal.exposed?.hide(trigger)
         return
       }
-      const modal = store.value.modal.find((el) => el.value._self === id)
+      const modal = store.value.modal.get(id)
       if (modal?.value) {
         modal.value = {
           ...modal.value,
@@ -175,15 +164,15 @@ export const useModal = () => {
   }
 
   const get = (id: ControllerKey) => {
-    const modal = store.value.modal.find((el) => el.value._self === id)
+    const modal = store.value.modal.get(id)
     if (modal) {
       return {
         modal,
         show() {
-          modal?.value.promise.value.show()
+          show(id)
         },
         hide(trigger?: string) {
-          modal?.value.promise.value.hide(trigger)
+          hide(trigger, id)
         },
       }
     }
@@ -244,9 +233,3 @@ export const useModal = () => {
     // Todo: Supports listening events globally in the future
   }
 }
-
-/**
- * @deprecated use useModal() instead.
- * @returns {ReturnType<typeof useModal>} The modal controller
- */
-export const useModalController = useModal

@@ -10,6 +10,7 @@ import type {CheckboxValue} from '../types/CheckboxTypes'
 import type {RadioValue} from '../types/RadioTypes'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
 import type {
+  ControllerKey,
   ModalOrchestratorArrayValue,
   PopoverOrchestratorArrayValue,
   ToastOrchestratorArrayValue,
@@ -218,10 +219,10 @@ export const inputGroupKey: InjectionKey<boolean> = createBvnInjectionKey('input
 export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('buttonGroup')
 
 export type OrchestratorStoreObject = {
-  toast: ToastOrchestratorArrayValue[]
-  modal: Ref<ModalOrchestratorArrayValue>[]
-  popover: PopoverOrchestratorArrayValue[]
-  tooltip: TooltipOrchestratorArrayValue[]
+  toast: Map<ControllerKey, Ref<ToastOrchestratorArrayValue>>
+  modal: Map<ControllerKey, Ref<ModalOrchestratorArrayValue>>
+  popover: Map<ControllerKey, Ref<PopoverOrchestratorArrayValue>>
+  tooltip: Map<ControllerKey, Ref<TooltipOrchestratorArrayValue>>
 }
 export const orchestratorRegistryKey: InjectionKey<{
   store: Ref<OrchestratorStoreObject>

@@ -1,25 +1,15 @@
-import {
-  inject,
-  isReadonly,
-  isRef,
-  markRaw,
-  onScopeDispose,
-  type Ref,
-  shallowRef,
-  toValue,
-  watch,
-} from 'vue'
+import {computed, inject, isReadonly, isRef, markRaw, onScopeDispose, type Ref, shallowRef, toValue, watch} from 'vue'
 import {orchestratorRegistryKey} from '../../utils/keys'
 import type {
   OrchestratorCreateOptions,
   PopoverOrchestratorArrayValue,
   PopoverOrchestratorCreateParam,
   PopoverOrchestratorParam,
-  PromiseWithComponent,
+  PromiseWithController,
   TooltipOrchestratorArrayValue,
   TooltipOrchestratorCreateParam,
   TooltipOrchestratorParam,
-} from '../../types/ComponentOrchestratorTypes'
+} from '../../types'
 import {BPopover, BTooltip} from '../../components'
 import {buildPromise} from '../orchestratorShared'
 
@@ -37,13 +27,13 @@ export const usePopover = () => {
    * Create a popover or tooltip
    * @param obj The popover or tooltip props
    * @param tooltip If true, create a tooltip, otherwise create a popover
-   * @returns {PromiseWithComponent<typeof BPopover | typeof BTooltip, PopoverOrchestratorParam>} A promise object with methods to control the popover (show, hide, toggle, get, set, destroy)
+   * @returns {PromiseWithController<typeof BPopover | typeof BTooltip, PopoverOrchestratorParam>} A split promise/controller object
    */
   const create = (
     obj: PopoverOrchestratorCreateParam | TooltipOrchestratorCreateParam,
     tooltip?: boolean,
     options: OrchestratorCreateOptions = {keep: true}
-  ): PromiseWithComponent<
+  ): PromiseWithController<
     typeof BPopover | typeof BTooltip,
     PopoverOrchestratorParam | TooltipOrchestratorParam
   > => {
@@ -52,40 +42,39 @@ export const usePopover = () => {
     }
 
     const resolvedProps = isRef(obj) ? obj : shallowRef(obj)
-    const _self = resolvedProps.value?.id || Symbol('Popover controller')
+    const id = resolvedProps.value?.id || Symbol('Popover controller')
+    const type = tooltip ? 'tooltip' : 'popover'
 
     const promise = buildPromise<
       typeof BPopover | typeof BTooltip,
       PopoverOrchestratorParam | TooltipOrchestratorParam,
       PopoverOrchestratorArrayValue | TooltipOrchestratorArrayValue
-    >(_self, store as Ref<PopoverOrchestratorArrayValue[] | TooltipOrchestratorArrayValue[]>)
+    >(id, computed(() => store.value[type]))
 
     promise.stop = watch(
       resolvedProps,
       (_newValue) => {
         const newValue = {...toValue(_newValue)}
-        const previousIndex = store.value.findIndex((el) => el._self === _self)
-        const previous =
-          previousIndex === -1
-            ? {_component: tooltip ? markRaw(BTooltip) : markRaw(BPopover)}
-            : store.value[previousIndex]
+        const previous = store.value[type].get(id) ?? {
+          _component: tooltip ? markRaw(BTooltip) : markRaw(BPopover)
+        }
         // if (!previous) return
         const v: PopoverOrchestratorArrayValue | TooltipOrchestratorArrayValue = tooltip
           ? ({
-              ...previous,
-              type: 'tooltip',
-              _self,
-              position: 'popover',
-              promise,
-              options,
-            } as TooltipOrchestratorArrayValue)
+               ...previous,
+               type: 'tooltip',
+               id,
+               position: 'popover',
+               promise,
+               options,
+             } as TooltipOrchestratorArrayValue)
           : ({
-              ...previous,
-              type: 'popover',
-              _self,
-              position: 'popover',
-              promise,
-              options,
+               ...previous,
+               type: 'popover',
+               id,
+               position: 'popover',
+               promise,
+               options,
             } as PopoverOrchestratorArrayValue)
 
         for (const key in newValue) {
@@ -112,17 +101,13 @@ export const usePopover = () => {
             ;(modelValue as Ref<PopoverOrchestratorParam['modelValue']>).value = val
           }
           if (v.modelValue !== val) {
-            const popover = store.value.find((el) => el._self === _self)
+            const popover = store.value[type].get(id)
             if (popover) {
               popover.modelValue = val
             }
           }
         }
-        if (previousIndex === -1) {
-          store.value.push(v)
-        } else {
-          store.value.splice(previousIndex, 1, v)
-        }
+        store.value[type].set(id, v)
       },
       {
         immediate: true,
@@ -131,13 +116,13 @@ export const usePopover = () => {
     )
 
     onScopeDispose(() => {
-      const popover = store.value.find((el) => el._self === _self)
+      const popover = store.value[type].get(id)
       if (popover) {
-        popover.promise.value.destroy?.()
+        popover.promise.controller.destroy?.()
       }
     }, true)
 
-    return promise.value
+    return promise
   }
 
   const tooltip = (
@@ -158,9 +143,3 @@ export const usePopover = () => {
     store,
   }
 }
-
-/**
- * @deprecated use usePopover() instead.
- * @returns {ReturnType<typeof usePopover>} The popover controller
- */
-export const usePopoverController = usePopover

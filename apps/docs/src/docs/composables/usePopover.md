@@ -41,14 +41,16 @@ For more control, you can use the `component` property to render a custom compon
 
 ### Return Value
 
-The `popover` and `tooltip` methods return an awaitable controller `PromiseWithComponent`. You can call its methods immediately to control the instance, and you can also `await` it to resolve when the popover/tooltip is hidden. The controller exposes:
+The `popover` and `tooltip` methods return a split API object:
 
-- `show: () => PromiseWithComponent` - Shows the popover.
-- `hide: (trigger?: string) => PromiseWithComponent` - Hides the popover, optionally passing a trigger.
-- `toggle: () => PromiseWithComponent` - Toggles the visibility of the popover.
-- `get: () => PopoverOrchestratorParam | undefined` - Returns the current properties of the popover, or undefined if none.
-- `set: (props: Partial<PopoverOrchestratorParam>) => PromiseWithComponent` - Updates the popover's properties.
-- `destroy: () => void` - Destroys the popover and cleans up resources.
+- `promise: Promise<BvTriggerableEvent>` - Resolves when the popover/tooltip is hidden.
+- `controller` - Methods for instance control:
+  - `show: () => Promise<BvTriggerableEvent & AsyncDisposable>`
+  - `hide: (trigger?: string) => controller`
+  - `toggle: () => controller`
+  - `get: () => PopoverOrchestratorParam | undefined`
+  - `set: (props: Partial<PopoverOrchestratorParam>) => controller`
+  - `destroy: () => Promise<void>`
 
 ### Lifecycle
 

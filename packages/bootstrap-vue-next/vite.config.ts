@@ -1,7 +1,7 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
-import dts from 'vite-plugin-dts'
+import dts from 'unplugin-dts/vite'
 import Components from 'unplugin-vue-components/vite'
 
 import {readdirSync} from 'node:fs'
@@ -149,7 +149,7 @@ export default defineConfig({
     }),
     dts({
       tsconfigPath: './tsconfig.app.json',
-      outDir: './dist',
+      outDirs: './dist',
       afterBuild: async () => {
         await Promise.all(
           readFilesInDirectory('./dist/')
