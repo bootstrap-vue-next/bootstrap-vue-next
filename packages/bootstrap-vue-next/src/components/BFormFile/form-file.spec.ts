@@ -1951,4 +1951,53 @@ describe('form-file', () => {
       expect(wrapper.find('.b-form-file-root').element.tagName).toBe('DIV')
     })
   })
+
+  describe('aria live formatter', () => {
+    it('uses ariaLiveFormatter when provided', async () => {
+      const file = new File(['content'], 'report.pdf', {
+        type: 'application/pdf',
+      })
+
+      const wrapper = mount(BFormFile, {
+        props: {
+          ariaLiveFormatter: (files: readonly File[]) =>
+            files.length === 1 ? `Uploaded: ${files[0]?.name}` : `${files.length} files uploaded`,
+        },
+      })
+
+      await wrapper.setProps({modelValue: file})
+      await nextTick()
+
+      const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
+
+      expect($liveRegion.exists()).toBe(true)
+      expect($liveRegion.text()).toBe('Uploaded: report.pdf')
+    })
+
+    it('falls back to default aria live message when formatter is not provided', async () => {
+      const file = new File(['content'], 'report.pdf', {
+        type: 'application/pdf',
+      })
+
+      const wrapper = mount(BFormFile)
+
+      await wrapper.setProps({modelValue: file})
+      await nextTick()
+
+      const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
+
+      expect($liveRegion.text()).toBe('File selected: report.pdf')
+    })
+
+    it('returns empty aria live message when no files are selected', async () => {
+      const wrapper = mount(BFormFile)
+
+      await wrapper.setProps({modelValue: null})
+      await nextTick()
+
+      const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
+
+      expect($liveRegion.text()).toBe('')
+    })
+  })
 })

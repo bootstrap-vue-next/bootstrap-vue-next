@@ -1,7 +1,7 @@
-import type {BFormFileProps, BFormFileSlots} from 'bootstrap-vue-next'
-import type {ComponentReference, ExposedRecord, PropRecord, SlotRecord} from '../../types'
-import {pick} from '../../utils/objectUtils'
-import {buildCommonProps} from '../../utils/commonProps'
+import type { BFormFileProps, BFormFileSlots } from 'bootstrap-vue-next'
+import type { ComponentReference, ExposedRecord, PropRecord, SlotRecord } from '../../types'
+import { pick } from '../../utils/objectUtils'
+import { buildCommonProps } from '../../utils/commonProps'
 
 export default {
   load: (): ComponentReference => ({
@@ -25,7 +25,7 @@ export default {
             'required',
             'size',
             'state',
-          ]
+          ],
         ),
         accept: {
           type: 'string | readonly string[]',
@@ -59,7 +59,13 @@ export default {
           type: '(files: readonly File[]) => string',
           default: undefined,
           description:
-            'Custom formatter function for displaying selected file names (custom mode only)',
+            'Custom formatter function for displaying selected file names (custom mode only). Useful for i18n',
+        },
+        ariaLiveFormatter: {
+          type: '(files: readonly File[]) => string',
+          default: undefined,
+          description:
+            'Custom formatter function for displaying a custom aria-live message when files are selected. Useful for i18n',
         },
         label: {
           type: 'string',
@@ -105,7 +111,7 @@ export default {
         },
       } satisfies PropRecord<keyof BFormFileProps>,
       emits: {
-        'change': {
+        change: {
           description:
             'Emitted when the file selection changes. In plain mode, receives the native Event from the file input. In custom mode, receives a CustomEvent with `detail.files` (File[]), `detail.target.files` (FileList-like), and a `files` property for convenience.',
           args: {
@@ -127,7 +133,7 @@ export default {
         },
       },
       slots: {
-        'label': {
+        label: {
           description: 'Slot to customize the label content',
           scope: {},
         },
@@ -144,7 +150,7 @@ export default {
             },
           },
         },
-        'placeholder': {
+        placeholder: {
           description: 'Slot to customize the placeholder text shown when no files are selected',
           scope: {},
         },

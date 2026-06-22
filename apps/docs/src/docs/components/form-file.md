@@ -69,6 +69,8 @@ Use the `fileNameFormatter` prop to customize how selected file names are displa
 
 <<< DEMO ./demo/FormFileFormatter.vue
 
+You can also customize the screen reader announcement that is emitted when files are selected by using the ariaLiveFormatter prop. This is useful for internationalization (i18n) and custom accessibility messaging, as the default announcements are provided in English.
+
 ## Plain Mode
 
 Use the `plain` prop to render a native HTML file input without custom styling. This provides 100% backward compatibility with the original implementation:

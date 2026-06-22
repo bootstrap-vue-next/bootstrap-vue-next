@@ -471,6 +471,10 @@ export interface BFormDatalistProps<
 export interface BFormFileProps {
   ariaLabel?: string
   ariaLabelledby?: string
+  /**
+   * Serves the purpose of adding a custom message, as well as i18n support
+   */
+  ariaLiveFormatter?: (files: readonly File[]) => string
   accept?: string | readonly string[]
   autofocus?: boolean
   browseText?: string
@@ -478,6 +482,9 @@ export interface BFormFileProps {
   directory?: boolean
   disabled?: boolean
   dropPlaceholder?: string
+  /**
+   * Serves the purpose of adding a custom message, as well as i18n support
+   */
   fileNameFormatter?: (files: readonly File[]) => string
   form?: string
   id?: string
