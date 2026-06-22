@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.6...bootstrapvuenext-v0.45.7) (2026-06-22)
+
+
+### Features
+
+* **BFormFile:** add ariaLiveFormatter prop fixes [#3223](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3223) ([#3225](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3225)) ([6647903](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/66479034094d9bfc04c8d31be2012dda61e6f468))
+
 ## [0.45.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.5...bootstrapvuenext-v0.45.6) (2026-06-12)
 
 
