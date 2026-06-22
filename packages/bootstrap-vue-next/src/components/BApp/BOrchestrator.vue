@@ -114,10 +114,10 @@ watch(
 const items = computed(() => {
   const store = orchestratorRegistry?.store.value
   let filteredStore = {
-    tooltip: (!props.noPopovers ? [...store?.tooltip.values() ?? []] : []),
-    modal: (!props.noModals ? [...store?.modal.values() ?? []] : []),
-    popover: (!props.noPopovers ? [...store?.popover.values() ?? []] : []),
-    toast: (!props.noToasts ? [...store?.toast.values() ?? []] : []),
+    tooltip: !props.noPopovers ? [...(store?.tooltip.values() ?? [])] : [],
+    modal: !props.noModals ? [...(store?.modal.values() ?? [])] : [],
+    popover: !props.noPopovers ? [...(store?.popover.values() ?? [])] : [],
+    toast: !props.noToasts ? [...(store?.toast.values() ?? [])] : [],
   } satisfies Record<keyof OrchestratorStoreObject, unknown>
 
   if (props.filter) {

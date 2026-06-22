@@ -1,5 +1,9 @@
 import {type ComponentPublicInstance, inject, nextTick, provide, readonly, type Ref, ref} from 'vue'
-import type {ComponentController, ControllerKey, PromiseWithController} from '../../types/ComponentOrchestratorTypes'
+import type {
+  ComponentController,
+  ControllerKey,
+  PromiseWithController,
+} from '../../types/ComponentOrchestratorTypes'
 import type {BvTriggerableEvent} from '../../utils'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 
@@ -32,7 +36,11 @@ export const buildPromise = <
     ref: null as RefWithMethods | null,
     async show() {
       const refWithMethods = controller.ref
-      if (refWithMethods !== null && 'show' in refWithMethods && typeof refWithMethods.show === 'function') {
+      if (
+        refWithMethods !== null &&
+        'show' in refWithMethods &&
+        typeof refWithMethods.show === 'function'
+      ) {
         refWithMethods.show()
       } else {
         controller.set({modelValue: true})
@@ -44,7 +52,11 @@ export const buildPromise = <
     },
     hide(trigger?: string) {
       const refWithMethods = controller.ref
-      if (refWithMethods !== null && 'hide' in refWithMethods && typeof refWithMethods.hide === 'function') {
+      if (
+        refWithMethods !== null &&
+        'hide' in refWithMethods &&
+        typeof refWithMethods.hide === 'function'
+      ) {
         refWithMethods.hide(trigger, true)
       } else {
         controller.set({modelValue: false})
@@ -53,7 +65,11 @@ export const buildPromise = <
     toggle() {
       const currentItem = controller.get()
       const refWithMethods = controller.ref
-      if (refWithMethods !== null && 'toggle' in refWithMethods && typeof refWithMethods.toggle === 'function') {
+      if (
+        refWithMethods !== null &&
+        'toggle' in refWithMethods &&
+        typeof refWithMethods.toggle === 'function'
+      ) {
         refWithMethods.toggle()
       } else {
         controller.set({modelValue: !currentItem?.value.props.modelValue})
@@ -67,10 +83,10 @@ export const buildPromise = <
           ...current.value,
           props: {
             ...current.value.props,
-            ...val
+            ...val,
             /* oxlint-disable no-explicit-any */
             /* eslint-disable @typescript-eslint/no-explicit-any */
-          } as any
+          } as any,
         }
       }
     },
@@ -81,7 +97,7 @@ export const buildPromise = <
         await new Promise<BvTriggerableEvent>((resolve) => {
           const prev = item.value.props['onHidden'] as unknown
           item.value.props['onHidden'] = (e: BvTriggerableEvent) => {
-            if(typeof prev === 'function') {
+            if (typeof prev === 'function') {
               prev(e)
             }
             resolve(e)
@@ -100,7 +116,7 @@ export const buildPromise = <
 
   return {
     controller,
-    resolve: resolveFunc
+    resolve: resolveFunc,
   }
 }
 

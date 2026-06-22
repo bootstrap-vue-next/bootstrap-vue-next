@@ -35,7 +35,7 @@ export const useModal = () => {
    * @returns {ComponentController<typeof BModal, Ref<ModalOrchestratorArrayValue>>}
    */
   const create = <ComponentProps extends Record<string, unknown> = Record<string, unknown>>(
-    obj: ModalOrchestratorCreateParam<ComponentProps> = {} as ModalOrchestratorCreateParam<ComponentProps>,
+    obj: ModalOrchestratorCreateParam<ComponentProps> = {} as ModalOrchestratorCreateParam<ComponentProps>
   ): ComponentController<typeof BModal, Ref<ModalOrchestratorArrayValue>> => {
     if (!_isOrchestratorInstalled.value) {
       throw new Error('BApp component must be mounted to use the modal controller')
@@ -47,16 +47,14 @@ export const useModal = () => {
     const {resolve, controller} = buildPromise<
       typeof BModal,
       ComputedRef<OrchestratorStoreObject['modal']>
-    >(id, computed(() => store.value.modal))
+    >(
+      id,
+      computed(() => store.value.modal)
+    )
 
     const value = computed<ModalOrchestratorArrayValue, ModalOrchestratorArrayValue['props']>({
       get: () => {
-        const {
-          component = markRaw(BModal),
-          options,
-          slots,
-          ...props
-        } = resolvedProps.value
+        const {component = markRaw(BModal), options, slots, ...props} = resolvedProps.value
 
         return {
           component,
@@ -72,7 +70,7 @@ export const useModal = () => {
           ...resolvedProps.value,
           ...v,
         }
-      }
+      },
     })
 
     store.value.modal.set(id, value)
@@ -105,8 +103,8 @@ export const useModal = () => {
           ...modal.value,
           props: {
             ...modal.value.props,
-            modelValue: true
-          }
+            modelValue: true,
+          },
         }
       } else {
         stack?.value.forEach((modal) => {
@@ -140,8 +138,8 @@ export const useModal = () => {
           ...modal.value,
           props: {
             ...modal.value.props,
-            modelValue: false
-          }
+            modelValue: false,
+          },
         }
       } else {
         stack?.value.forEach((modal) => {

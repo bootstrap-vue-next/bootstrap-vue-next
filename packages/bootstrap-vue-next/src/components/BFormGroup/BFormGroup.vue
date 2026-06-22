@@ -206,21 +206,21 @@ const content = useTemplateRef<HTMLDivElement | InstanceType<typeof BCol> | null
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>
-    breakPoints.reduce((result: string[], breakpoint) => {
-      const suffix = suffixPropName(
-        breakpoint === 'xs' ? '' : breakpoint,
-        'labelAlign'
-      ) as keyof BFormGroupProps
-      const propValue: string = props[suffix] || null
-      if (propValue) {
-        if (breakpoint === 'xs') {
-          result.push(`text-${propValue}`)
-        } else {
-          result.push(`text-${breakpoint}-${propValue}`)
-        }
+  breakPoints.reduce((result: string[], breakpoint) => {
+    const suffix = suffixPropName(
+      breakpoint === 'xs' ? '' : breakpoint,
+      'labelAlign'
+    ) as keyof BFormGroupProps
+    const propValue: string = props[suffix] || null
+    if (propValue) {
+      if (breakpoint === 'xs') {
+        result.push(`text-${propValue}`)
+      } else {
+        result.push(`text-${breakpoint}-${propValue}`)
       }
-      return result
-    }, [])
+    }
+    return result
+  }, [])
 )
 const labelColProps = computed(() => getColProps(props, 'label'))
 const isHorizontal = computed(

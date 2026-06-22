@@ -1,7 +1,11 @@
 import {computed, type ComputedRef, inject, markRaw, onScopeDispose, ref, type Ref} from 'vue'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 import type {ContainerPosition} from '../../types/Alignment'
-import type {ComponentController, ToastOrchestratorArrayValue, ToastOrchestratorCreateParam} from '../../types'
+import type {
+  ComponentController,
+  ToastOrchestratorArrayValue,
+  ToastOrchestratorCreateParam,
+} from '../../types'
 import {buildPromise} from '../orchestratorShared'
 import {BToast} from '../../components'
 
@@ -33,16 +37,14 @@ export const useToast = () => {
     const {resolve, controller} = buildPromise<
       typeof BToast,
       ComputedRef<OrchestratorStoreObject['toast']>
-    >(id, computed(() => store.value.toast))
+    >(
+      id,
+      computed(() => store.value.toast)
+    )
 
     const value = computed<ToastOrchestratorArrayValue, ToastOrchestratorArrayValue['props']>({
       get: () => {
-        const {
-          component = markRaw(BToast),
-          options,
-          slots,
-          ...props
-        } = resolvedProps.value
+        const {component = markRaw(BToast), options, slots, ...props} = resolvedProps.value
 
         return {
           component,
@@ -52,8 +54,8 @@ export const useToast = () => {
           resolve,
           props: {
             ...props,
-            position: props.position || posDefault
-          }
+            position: props.position || posDefault,
+          },
         }
       },
       set: (v) => {
@@ -61,7 +63,7 @@ export const useToast = () => {
           ...resolvedProps.value,
           ...v,
         }
-      }
+      },
     })
 
     store.value.toast.set(id, value)

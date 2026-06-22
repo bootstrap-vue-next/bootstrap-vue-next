@@ -1,4 +1,15 @@
-import {computed, inject, isReadonly, isRef, markRaw, onScopeDispose, type Ref, shallowRef, toValue, watch} from 'vue'
+import {
+  computed,
+  inject,
+  isReadonly,
+  isRef,
+  markRaw,
+  onScopeDispose,
+  type Ref,
+  shallowRef,
+  toValue,
+  watch,
+} from 'vue'
 import {orchestratorRegistryKey} from '../../utils/keys'
 import type {
   OrchestratorCreateOptions,
@@ -49,32 +60,35 @@ export const usePopover = () => {
       typeof BPopover | typeof BTooltip,
       PopoverOrchestratorParam | TooltipOrchestratorParam,
       PopoverOrchestratorArrayValue | TooltipOrchestratorArrayValue
-    >(id, computed(() => store.value[type]))
+    >(
+      id,
+      computed(() => store.value[type])
+    )
 
     promise.stop = watch(
       resolvedProps,
       (_newValue) => {
         const newValue = {...toValue(_newValue)}
         const previous = store.value[type].get(id) ?? {
-          _component: tooltip ? markRaw(BTooltip) : markRaw(BPopover)
+          _component: tooltip ? markRaw(BTooltip) : markRaw(BPopover),
         }
         // if (!previous) return
         const v: PopoverOrchestratorArrayValue | TooltipOrchestratorArrayValue = tooltip
           ? ({
-               ...previous,
-               type: 'tooltip',
-               id,
-               position: 'popover',
-               promise,
-               options,
-             } as TooltipOrchestratorArrayValue)
+              ...previous,
+              type: 'tooltip',
+              id,
+              position: 'popover',
+              promise,
+              options,
+            } as TooltipOrchestratorArrayValue)
           : ({
-               ...previous,
-               type: 'popover',
-               id,
-               position: 'popover',
-               promise,
-               options,
+              ...previous,
+              type: 'popover',
+              id,
+              position: 'popover',
+              promise,
+              options,
             } as PopoverOrchestratorArrayValue)
 
         for (const key in newValue) {
