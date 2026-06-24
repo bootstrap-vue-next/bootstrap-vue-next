@@ -1,12 +1,17 @@
-import {computed, type ComputedRef, inject, markRaw, onScopeDispose, ref, type Ref} from 'vue'
+import {
+  type ComponentPublicInstance,
+  computed,
+  type ComputedRef,
+  inject,
+  markRaw,
+  onScopeDispose,
+  ref,
+  type Ref,
+} from 'vue'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 import type {ContainerPosition} from '../../types/Alignment'
-import type {
-  ComponentController,
-  ToastOrchestratorArrayValue,
-  ToastOrchestratorCreateParam,
-} from '../../types'
-import {buildPromise} from '../orchestratorShared'
+import type {ComponentController, ToastOrchestratorArrayValue, ToastOrchestratorCreateParam} from '../../types'
+import {buildController} from '../orchestratorShared'
 import {BToast} from '../../components'
 
 const posDefault: ContainerPosition = 'top-end'
@@ -34,7 +39,7 @@ export const useToast = () => {
     const resolvedProps = ref(obj)
     const id = resolvedProps.value?.id || Symbol('Modals controller')
 
-    const {resolve, controller} = buildPromise<
+    const {resolve, controller} = buildController<
       typeof BToast,
       ComputedRef<OrchestratorStoreObject['toast']>
     >(
@@ -51,7 +56,13 @@ export const useToast = () => {
           options,
           slots,
           id,
-          resolve,
+          fns: {
+            resolve,
+            setRef: (v: ComponentPublicInstance) => {
+              controller.ref = v
+            },
+            destroy: controller.destroy
+          },
           props: {
             ...props,
             position: props.position || posDefault,
@@ -69,7 +80,7 @@ export const useToast = () => {
     store.value.toast.set(id, value)
 
     onScopeDispose(async () => {
-      await controller.destroy()
+      await controller[Symbol.asyncDispose]()
     }, true)
 
     return controller

@@ -1,17 +1,13 @@
 import {type ComponentPublicInstance, inject, nextTick, provide, readonly, type Ref, ref} from 'vue'
-import type {
-  ComponentController,
-  ControllerKey,
-  PromiseWithController,
-} from '../../types/ComponentOrchestratorTypes'
+import type {ComponentController, ControllerKey, PromiseWithController} from '../../types/ComponentOrchestratorTypes'
 import type {BvTriggerableEvent} from '../../utils'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 
 /* oxlint-disable-next-line no-explicit-any */
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-type ValueInMapRecord<MapRecord> = MapRecord extends Map<any, infer I> ? I : never
+export type ValueInMapRecord<MapRecord> = MapRecord extends Map<any, infer I> ? I : never
 
-export const buildPromise = <
+export const buildController = <
   TComponent,
   TStore extends Readonly<Ref<OrchestratorStoreObject[keyof OrchestratorStoreObject]>>,
 >(

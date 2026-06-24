@@ -3,24 +3,29 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref} from 'vue'
-import {BButton, usePopover} from 'bootstrap-vue-next'
+import {type ComponentPublicInstance, onMounted, onUnmounted, reactive, ref, useTemplateRef} from 'vue'
+import {BButton, type TooltipOrchestratorCreateParam, usePopover} from 'bootstrap-vue-next'
 
 const {tooltip} = usePopover()
 
 const title = ref('Hello')
-const reactiveExample = ref<HTMLElement>()
+const reactiveExample = useTemplateRef('reactiveExample')
 let intervalId: NodeJS.Timeout | undefined
 
-onMounted(() => {
+const myTooltip: TooltipOrchestratorCreateParam = reactive({
+  // The value passed in should have at least a writable modelValue. So you'll want to use reactive.
+  // Any reactive struct should, but reactives are easiest to forward dynamic inputs, while also being writable
+  title: title,
+  target: reactiveExample as unknown as ComponentPublicInstance,
+  modelValue: false,
+})
+
+onMounted(async () => {
   intervalId = setInterval(() => {
     title.value = title.value === 'Hello' ? 'World' : 'Hello'
   }, 2500)
 
-  tooltip({
-    title,
-    target: reactiveExample.value,
-  })
+  await using _ = await tooltip(myTooltip).show()
 })
 
 onUnmounted(() => {

@@ -1,5 +1,6 @@
 import {
   type ComponentInternalInstance,
+  type ComponentPublicInstance,
   computed,
   type ComputedRef,
   getCurrentInstance,
@@ -19,7 +20,7 @@ import type {
   ModalOrchestratorArrayValue,
   ModalOrchestratorCreateParam,
 } from '../../types'
-import {buildPromise} from '../orchestratorShared'
+import {buildController} from '../orchestratorShared'
 import {BModal} from '../../components'
 
 export const useModal = () => {
@@ -44,7 +45,7 @@ export const useModal = () => {
     const resolvedProps = ref(obj)
 
     const id = resolvedProps.value?.id || Symbol('Modals controller')
-    const {resolve, controller} = buildPromise<
+    const {resolve, controller} = buildController<
       typeof BModal,
       ComputedRef<OrchestratorStoreObject['modal']>
     >(
@@ -60,8 +61,14 @@ export const useModal = () => {
           component,
           options,
           slots,
+          fns: {
+            resolve,
+            setRef: (v: ComponentPublicInstance) => {
+              controller.ref = v
+            },
+            destroy: controller.destroy
+          },
           id,
-          resolve,
           props,
         }
       },
@@ -76,7 +83,7 @@ export const useModal = () => {
     store.value.modal.set(id, value)
 
     onScopeDispose(async () => {
-      await controller.destroy()
+      await controller[Symbol.asyncDispose]()
     }, true)
     return controller
   }

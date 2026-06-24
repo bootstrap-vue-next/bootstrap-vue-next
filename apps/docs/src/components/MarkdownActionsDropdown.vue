@@ -32,12 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import {
-  defaultAiProviders,
-  useCopyOrDownloadAsMarkdownButtons,
-  type MarkdownAiProvider,
-} from 'vitepress-plugin-llms/vitepress-components'
+import {computed, onMounted, ref} from 'vue'
+import {defaultAiProviders, useCopyOrDownloadAsMarkdownButtons} from 'vitepress-plugin-llms/vitepress-components'
 
 const supportedAiProviderNames = new Set(['ChatGPT', 'Claude'])
 
@@ -67,7 +63,7 @@ const onViewClick = () => {
   viewAsMarkdown()
 }
 
-const onOpenInAI = (provider: MarkdownAiProvider) => {
+const onOpenInAI = (provider: Parameters<typeof openInAI>[0]) => {
   if (!actionsReady.value) return
   openInAI(provider)
 }

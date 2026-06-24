@@ -4,13 +4,13 @@
 </template>
 
 <script setup lang="ts">
-import { BButton, useModal, useToast } from 'bootstrap-vue-next'
+import {BButton, useModal, useToast} from 'bootstrap-vue-next'
 
 const toast = useToast()
 const modal = useModal()
 
-const showToast = () => {
-  toast
+const showToast = async () => {
+  await using _ = await toast
     .create({
       title: 'Hello',
       body: 'This is a toast message!',
@@ -18,8 +18,8 @@ const showToast = () => {
     .show()
 }
 
-const showModal = () => {
-  modal
+const showModal = async () => {
+  await using _ = await modal
     .create({
       title: 'Confirm Action',
       body: 'Are you sure you want to continue?',

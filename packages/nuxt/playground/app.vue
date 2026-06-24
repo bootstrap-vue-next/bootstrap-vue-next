@@ -23,7 +23,11 @@
     />
     {{ f }}
     {{ toast }}
-    <BButton @click="toast.create({ title: 'Hello World!' })">
+    <BButton
+      @click="async () => {
+        await using _ = await toast.create({ title: 'Hello World!' }).show()
+      }"
+    >
       Show Global Toast
     </BButton>
     <BFormSelect

@@ -25,8 +25,8 @@ onUnmounted(() => {
   }
 })
 
-const showMeAdvancedExample = () => {
-  create({
+const showMeAdvancedExample = async () => {
+  await using _ = await create({
     slots: {
       default: (scope) => h('div', null, `custom ${firstRef.value.body} - ${scope.visible}`),
     },

@@ -69,7 +69,11 @@ type ArrayValue<
     [K in keyof BaseComponentSlots]?: BaseComponentSlots[K] | Readonly<Component>
   }
   id: ControllerKey
-  resolve: (value: BvTriggerableEvent) => void
+  fns: {
+    resolve: (value: BvTriggerableEvent) => void
+    setRef: (v: ComponentPublicInstance) => void
+    destroy: () => Promise<void>
+  }
   props: BaseComponentProps & {
     [K in keyof BaseComponentEmits as CamelCase<Prefix<'on-', Extract<K, string>>>]?: (
       e: BaseComponentEmits[K][0]
