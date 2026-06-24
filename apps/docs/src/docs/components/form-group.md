@@ -11,17 +11,20 @@ Use the prop `label` to set the content of the generated `<legend>` or `<label>`
 using the named slot `label`, You may optionally visually hide the label text while still making it
 available to screen readers by setting the prop `label-visually-hidden`.
 
-`BFormGroup` will render a `<fieldset>` with `<legend>` if the `label-for` prop is not set. If
-an input Id is provided to the `label-for` prop, then a `<div>` with `<label>` will be rendered.
+`BFormGroup` always renders a `<fieldset>` element. By default the label is placed inside a
+`<legend>`; when a label target is known (either via the `label-for` prop, or auto-detected
+from a single child input — see [Automatic Inheriting of id](#automatic-inheriting-of-id)), a
+`<label>` element with the `for` attribute is rendered instead.
 
-If you provide an input `id` value to the `label-for` prop (the `id` must exist on the input
-contained within the `BFormGroup`), a `<label>` element will be rendered instead of a `<legend>`
-element, and will have the `for` attribute set to the `id` specified. When specifying the id, **do
-not** prepend it with `#`. The `label-for` prop should only be used when you have a single form
-input inside the `BFormGroup` component. Do not set the `label-for` prop when using
-`BFormRadioGroup`, `BFormCheckboxGroup`, `BFormRadio`, `BFormCheckbox` or
-`BFormFile` components (or when placing multiple inputs in the same form group), as these inputs
-include integrated label element(s) and the `<legend>` element is more suitable.
+If you provide an input `id` value to the `label-for` prop, the `id` must exist on the input
+contained within the `BFormGroup`. When specifying the id, **do not** prepend it with `#`. The
+`label-for` prop should only be used when you have a single form input inside the `BFormGroup`
+component. Do not set the `label-for` prop when using `BFormRadioGroup`, `BFormCheckboxGroup`,
+`BFormRadio`, `BFormCheckbox` or `BFormFile` components (or when placing multiple inputs in
+the same form group) — these inputs include integrated label element(s) and the `<legend>`
+element is more suitable. With `label-for` unset, auto-detection only claims `<label for>`
+when there is exactly one slot input without its own integrated label, so these cases render
+as `<fieldset>` + `<legend>`.
 
 You can also apply additional classes to the label via the `label-class` prop, such as responsive
 padding and text alignment utility classes. The `label-class` prop accepts either a string or array
@@ -32,6 +35,15 @@ of strings.
 The `BFormGroup` component automatically inherits the id of its child input components, such as BFormInput and BFormTextarea. This functionality ensures that the label element's for attribute is correctly set to match the id of the input component, providing proper association between the label and the input field.
 
 <<< DEMO ./demo/FormGroupId.vue#template{vue-html}
+
+### Multiple inputs in one form group
+
+When more than one input registers inside a `BFormGroup` (for example, a `BInputGroup` with
+two `BFormInput`s), the label `for` association is ambiguous, so `BFormGroup` keeps the
+label as a `<legend>` instead of auto-binding it to one input. Give each child input its own
+accessible name via `aria-label` (or a visually hidden `<label>`).
+
+<<< DEMO ./demo/FormGroupMultipleInputs.vue#template{vue-html}
 
 ### Horizontal layout
 
@@ -122,9 +134,8 @@ of related form controls:
 ## Disabled form group
 
 Setting the `disabled` prop will disable the rendered `<fieldset>` and, on most browsers, will
-disable all the input elements contained within the fieldset.
-
-`disabled` has no effect when `label-for` is set (as a `<fieldset>` element is not rendered).
+disable all the input elements contained within the fieldset, regardless of whether `label-for`
+is set.
 
 ## Validation state feedback
 
@@ -214,10 +225,10 @@ Floating labels have a few restrictions.
 
 ## Accessibility
 
-By default, when no `label-for` value is provided, `BFormGroup` renders the input control(s)
-inside an HTML `<fieldset>` element with the label content placed inside the fieldset's `<legend>`
-element. By nature of this markup, the legend content is automatically associated to the containing
-input control(s).
+`BFormGroup` always renders the input control(s) inside an HTML `<fieldset>` element. When no
+label target is known (no `label-for`, and not auto-detected from a single child input), the
+label content is placed inside the fieldset's `<legend>` element. By nature of this markup,
+the legend content is automatically associated to the containing input control(s).
 
 It is **highly recommended** that you provide a unique `id` prop on your input element and set the
 `label-for` prop to this Id, when you have only a single input in the `BFormGroup`.

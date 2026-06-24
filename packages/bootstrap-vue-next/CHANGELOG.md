@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.45.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.6...bootstrapvuenext-v0.45.7) (2026-06-22)
+
+
+### Features
+
+* **BFormFile:** add ariaLiveFormatter prop fixes [#3223](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3223) ([#3225](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3225)) ([6647903](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/66479034094d9bfc04c8d31be2012dda61e6f468))
+
+## [0.45.6](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.5...bootstrapvuenext-v0.45.6) (2026-06-12)
+
+
+### Bug Fixes
+
+* **BFormGroup:** correct auto label-for behaviour, always render &lt;fieldset&gt; fixes [#3221](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3221) ([d4d98f0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d4d98f0f376c761d3c6d85c414fd563a88c3a792))
+
+## [0.45.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.4...bootstrapvuenext-v0.45.5) (2026-05-27)
+
+
+### Bug Fixes
+
+* **BFormSelect:** preserve text-field precedence for non-group options with label keys ([#3214](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3214)) ([7854313](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7854313c3579c27a7c66debb9d8d9cc0207a1e7b))
+
 ## [0.45.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.3...bootstrapvuenext-v0.45.4) (2026-05-18)
 
 

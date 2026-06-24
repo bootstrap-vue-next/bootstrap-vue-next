@@ -1,11 +1,9 @@
 <template>
-  <component
-    :is="isFieldset ? 'fieldset' : 'div'"
+  <fieldset
     :id="computedId"
-    :disabled="isFieldset ? props.disabled : null"
-    :role="isFieldset ? null : 'group'"
+    :disabled="props.disabled"
     :aria-invalid="computedAriaInvalid"
-    :aria-labelledby="isFieldset && isHorizontal ? labelId : null"
+    :aria-labelledby="isFieldset && isHorizontal ? labelId : undefined"
     v-bind="$attrs"
     :class="[stateClass, {'was-validated': props.validated}]"
     class="b-form-group"
@@ -24,7 +22,7 @@
       <BCol v-bind="contentColProps" ref="_content">
         <slot
           :id="computedId"
-          :aria-describedby="computedAriaDescribedby"
+          :aria-describedby="null"
           :description-id="descriptionId"
           :label-id="labelId"
         />
@@ -45,7 +43,7 @@
       <div v-if="props.floating && !isHorizontal" ref="_content" class="form-floating">
         <slot
           :id="computedId"
-          :aria-describedby="computedAriaDescribedby"
+          :aria-describedby="null"
           :description-id="descriptionId"
           :label-id="labelId"
         />
@@ -82,7 +80,7 @@
         </BFormGroupLabel>
         <slot
           :id="computedId"
-          :aria-describedby="computedAriaDescribedby"
+          :aria-describedby="null"
           :description-id="descriptionId"
           :label-id="labelId"
         />
@@ -99,11 +97,11 @@
         </BFormGroupContent>
       </template>
     </template>
-  </component>
+  </fieldset>
 </template>
 
 <script setup lang="ts">
-import {computed, provide, type Ref, ref, useTemplateRef} from 'vue'
+import {computed, toRef, useTemplateRef} from 'vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {attemptFocus, isVisible} from '../../utils/dom'
 import BCol from '../BContainer/BCol.vue'
@@ -113,7 +111,7 @@ import {useStateClass} from '../../composables/useStateClass'
 import {useId} from '../../composables/useId'
 import type {BFormGroupProps, BFormGroupSlots} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
-import {formGroupKey} from '../../utils/keys'
+import {useProvideFormGroupData} from '../../composables/useProvideFormGroupData'
 import BFormGroupContent from '../BFormGroupContent.vue'
 import BFormGroupLabel from '../BFormGroupLabel.vue'
 
@@ -159,22 +157,13 @@ const _props = withDefaults(defineProps<BFormGroupProps>(), {
 const props = useDefaults(_props, 'BFormGroup')
 const slots = defineSlots<BFormGroupSlots>()
 
-const computedState = computed(() => props.state)
-const computedDisabled = computed(() => props.disabled)
-const childId = ref<Ref<string>[]>([])
-provide(formGroupKey, (id) => {
-  childId.value = [id]
-
-  return {
-    state: computedState,
-    disabled: computedDisabled,
-  }
+const computedState = toRef(() => props.state)
+const computedDisabled = toRef(() => props.disabled)
+const {singleLabelTargetId} = useProvideFormGroupData({
+  state: computedState,
+  disabled: computedDisabled,
 })
-const computedLabelFor = computed(() => {
-  if (props.labelFor !== undefined) return props.labelFor
-  if (childId.value[0] && childId.value[0].value) return childId.value[0].value
-  return null
-})
+const computedLabelFor = computed(() => props.labelFor ?? singleLabelTargetId.value)
 
 const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
 
@@ -206,21 +195,22 @@ const content = useTemplateRef<HTMLDivElement | InstanceType<typeof BCol> | null
 
 const contentColProps = computed(() => getColProps(props, 'content'))
 const labelAlignClasses = computed(() =>
-  breakPoints.reduce((result: string[], breakpoint) => {
-    const suffix = suffixPropName(
-      breakpoint === 'xs' ? '' : breakpoint,
-      'labelAlign'
-    ) as keyof BFormGroupProps
-    const propValue: string = props[suffix] || null
-    if (propValue) {
-      if (breakpoint === 'xs') {
-        result.push(`text-${propValue}`)
-      } else {
-        result.push(`text-${breakpoint}-${propValue}`)
+  ((props: BFormGroupProps, prefix: string) =>
+    breakPoints.reduce((result: string[], breakpoint) => {
+      const suffix = suffixPropName(
+        breakpoint === 'xs' ? '' : breakpoint,
+        `${prefix}Align`
+      ) as keyof BFormGroupProps
+      const propValue: string = props[suffix] || null
+      if (propValue) {
+        if (breakpoint === 'xs') {
+          result.push(`text-${propValue}`)
+        } else {
+          result.push(`text-${breakpoint}-${propValue}`)
+        }
       }
-    }
-    return result
-  }, [])
+      return result
+    }, []))(props, 'label')
 )
 const labelColProps = computed(() => getColProps(props, 'label'))
 const isHorizontal = computed(
@@ -276,28 +266,6 @@ const invalidFeedbackId = useId(undefined, '_BV_feedback_invalid_')
 
 const validFeedbackId = useId(undefined, '_BV_feedback_valid_')
 const descriptionId = useId(undefined, '_BV_description_')
-
-const hasInvalidFeedback = computed(() => !!slots['invalid-feedback'] || !!props.invalidFeedback)
-const hasValidFeedback = computed(() => !!slots['valid-feedback'] || !!props.validFeedback)
-const hasDescription = computed(() => !!slots.description || !!props.description)
-
-const computedAriaDescribedby = computed(() => {
-  const ids: string[] = []
-
-  if (hasDescription.value) {
-    ids.push(descriptionId.value)
-  }
-
-  if (computedState.value === false && hasInvalidFeedback.value) {
-    ids.push(invalidFeedbackId.value)
-  }
-
-  if (computedState.value === true && hasValidFeedback.value) {
-    ids.push(validFeedbackId.value)
-  }
-
-  return ids.join(' ').trim() || null
-})
 
 const isFieldset = computed(() => !computedLabelFor.value)
 

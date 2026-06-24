@@ -2,7 +2,7 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {h, ref} from 'vue'
 import BFormSelectBase from './BFormSelectBase.vue'
-import {formGroupKey} from '../../utils/keys'
+import {provideFormGroupStub} from '../../../tests/utils'
 
 describe('form-select-base', () => {
   enableAutoUnmount(afterEach)
@@ -616,9 +616,7 @@ describe('form-select-base', () => {
     const state = ref<boolean | undefined>(undefined)
     const wrapper = mount(BFormSelectBase, {
       global: {
-        provide: {
-          [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-        },
+        provide: provideFormGroupStub(state, disabled),
       },
     })
     expect(wrapper.attributes('disabled')).toBeDefined()
@@ -630,9 +628,7 @@ describe('form-select-base', () => {
     const wrapper = mount(BFormSelectBase, {
       props: {disabled: false},
       global: {
-        provide: {
-          [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-        },
+        provide: provideFormGroupStub(state, disabled),
       },
     })
     expect(wrapper.attributes('disabled')).toBeDefined()
@@ -644,9 +640,7 @@ describe('form-select-base', () => {
     const wrapper = mount(BFormSelectBase, {
       props: {disabled: false},
       global: {
-        provide: {
-          [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-        },
+        provide: provideFormGroupStub(state, disabled),
       },
     })
     expect(wrapper.attributes('disabled')).toBeUndefined()

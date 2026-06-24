@@ -144,7 +144,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
 import {isEmptySlot} from '../../utils/dom'
-import type {BFormFileSlots, BFormFileProps} from '../../types'
+import type {BFormFileProps, BFormFileSlots} from '../../types'
 
 defineOptions({
   inheritAttrs: false,
@@ -161,6 +161,7 @@ const _props = withDefaults(defineProps<Omit<BFormFileProps, 'modelValue'>>(), {
   disabled: false,
   dropPlaceholder: undefined,
   fileNameFormatter: undefined,
+  ariaLiveFormatter: undefined,
   form: undefined,
   id: undefined,
   label: '',
@@ -300,6 +301,9 @@ const showExternalDisplay = computed(
 // ARIA live region message for accessibility
 const ariaLiveMessage = computed(() => {
   if (!hasFiles.value) return ''
+  if (props.ariaLiveFormatter) {
+    return props.ariaLiveFormatter(selectedFiles.value)
+  }
   const count = selectedFiles.value.length
   if (count === 1) {
     return `File selected: ${selectedFiles.value[0]?.name}`

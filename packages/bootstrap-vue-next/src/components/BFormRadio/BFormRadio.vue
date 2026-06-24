@@ -16,7 +16,7 @@
       :value="props.value"
       :aria-required="computedRequired || undefined"
     />
-    <label v-if="hasDefaultSlot || !resolvedPlain" :for="computedId" :class="labelClasses">
+    <label v-if="hasOwnLabel" :for="computedId" :class="labelClasses">
       <slot />
     </label>
   </ConditionalWrapper>
@@ -66,7 +66,6 @@ const modelValue = defineModel<BFormRadioProps['modelValue']>({
 const computedId = useId(() => props.id, 'form-check')
 
 const parentData = inject(radioGroupKey, null)
-const formGroupData = inject(formGroupKey, null)?.(computedId)
 
 const input = useTemplateRef('_input')
 
@@ -101,6 +100,11 @@ const resolvedProps = computed(() => ({
 
 // Shorthand for template usage
 const resolvedPlain = computed(() => resolvedProps.value.plain)
+const hasOwnLabel = computed(() => hasDefaultSlot.value || !resolvedPlain.value)
+
+const labelTargetId = computed(() => (hasOwnLabel.value ? null : computedId.value))
+const formGroupData = inject(formGroupKey, null)?.()
+formGroupData?.track(labelTargetId)
 
 const localValue = computed({
   get: () => (parentData ? parentData.modelValue.value : modelValue.value),

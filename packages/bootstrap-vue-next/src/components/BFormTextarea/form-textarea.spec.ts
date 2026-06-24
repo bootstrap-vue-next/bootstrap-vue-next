@@ -2,7 +2,7 @@ import {afterEach, describe, expect, it, vi} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {nextTick, ref} from 'vue'
 import BFormTextarea from './BFormTextarea.vue'
-import {formGroupKey} from '../../utils/keys'
+import {provideFormGroupStub} from '../../../tests/utils'
 
 describe('form-textarea', () => {
   enableAutoUnmount(afterEach)
@@ -415,9 +415,7 @@ describe('form-textarea', () => {
       const state = ref<boolean | undefined>(undefined)
       const wrapper = mount(BFormTextarea, {
         global: {
-          provide: {
-            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-          },
+          provide: provideFormGroupStub(state, disabled),
         },
       })
       expect(wrapper.attributes('disabled')).toBeDefined()
@@ -428,9 +426,7 @@ describe('form-textarea', () => {
       const state = ref<boolean | undefined>(false)
       const wrapper = mount(BFormTextarea, {
         global: {
-          provide: {
-            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-          },
+          provide: provideFormGroupStub(state, disabled),
         },
       })
       expect(wrapper.classes()).toContain('is-invalid')
@@ -442,9 +438,7 @@ describe('form-textarea', () => {
       const wrapper = mount(BFormTextarea, {
         props: {state: true},
         global: {
-          provide: {
-            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-          },
+          provide: provideFormGroupStub(state, disabled),
         },
       })
       expect(wrapper.classes()).toContain('is-valid')
@@ -457,9 +451,7 @@ describe('form-textarea', () => {
       const wrapper = mount(BFormTextarea, {
         props: {disabled: false},
         global: {
-          provide: {
-            [formGroupKey as unknown as symbol]: () => ({state, disabled}),
-          },
+          provide: provideFormGroupStub(state, disabled),
         },
       })
       expect(wrapper.attributes('disabled')).toBeDefined()

@@ -1,6 +1,9 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
+import {h, nextTick, ref} from 'vue'
 import BFormFloatingLabel from './BFormFloatingLabel.vue'
+import BFormInput from '../BFormInput/BFormInput.vue'
+import {provideFormGroupStub} from '../../../tests/utils'
 
 describe('form-floating-label', () => {
   enableAutoUnmount(afterEach)
@@ -106,5 +109,21 @@ describe('form-floating-label', () => {
       slots: {default: 'default', label: 'label'},
     })
     expect(wrapper.text()).toBe('defaultlabel')
+  })
+
+  it('forwards outer formGroup state/disabled to descendants through the boundary', async () => {
+    const state = ref<boolean | undefined>(false)
+    const disabled = ref(true)
+    const wrapper = mount(BFormFloatingLabel, {
+      props: {label: 'Email', labelFor: 'email'},
+      slots: {default: () => h(BFormInput, {id: 'email'})},
+      global: {
+        provide: provideFormGroupStub(state, disabled),
+      },
+    })
+    await nextTick()
+    const input = wrapper.get('input')
+    expect(input.attributes('disabled')).toBeDefined()
+    expect(input.classes()).toContain('is-invalid')
   })
 })
