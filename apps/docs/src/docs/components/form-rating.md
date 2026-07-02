@@ -181,3 +181,7 @@ Keyboard navigation is employed to select the rating value, and mimics the keybo
 - <kbd>Right</kbd> or <kbd>Up</kbd> will increment the rating value by `1`
 - When the [`locale`](#internationalization) resolves to a right-to-left language, the
   <kbd>Left</kbd> and <kbd>Right</kbd> behaviour is reversed.
+
+## Internationalization
+
+<Internationalization />

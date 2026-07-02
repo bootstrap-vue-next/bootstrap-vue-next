@@ -33,3 +33,7 @@ Make the toolbar span the maximum available width, by increasing spacing between
 input groups and dropdowns, by setting the prop `justify`.
 
 <<< DEMO ./demo/ButtonToolbarJustify.vue#template{vue-html}
+
+## Internationalization
+
+<Internationalization />

@@ -602,9 +602,11 @@ export interface BFormRadioGroupProps<
   valueField?: string
 }
 export interface BFormRatingProps {
+  clearLabel?: string
   color?: string
   id?: string
   inline?: boolean
+  labelValueCurrent?: (current: number, max: number) => string
   locale?: string
   modelValue?: number
   noBorder?: boolean

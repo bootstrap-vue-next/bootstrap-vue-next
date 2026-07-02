@@ -8,7 +8,7 @@
     :aria-valuemin="0"
     :aria-valuemax="clampedStars"
     :aria-valuenow="displayValue"
-    :aria-valuetext="`${displayValue} of ${clampedStars}`"
+    :aria-valuetext="props.labelValueCurrent(displayValue, clampedStars)"
     :aria-disabled="props.disabled ? true : undefined"
     :aria-readonly="props.readonly ? true : undefined"
     :tabindex="props.disabled ? undefined : '0'"
@@ -31,7 +31,7 @@
         <svg
           viewBox="0 0 16 16"
           role="img"
-          aria-label="x"
+          :aria-label="props.clearLabel"
           xmlns="http://www.w3.org/2000/svg"
           class="clear-icon"
         >
@@ -96,9 +96,11 @@ import {useRtl} from '../../composables/useRtl'
 import type {BFormRatingProps, BFormRatingSlots} from '../../types'
 
 const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(), {
+  clearLabel: 'Clear rating',
   color: '',
   id: undefined,
   inline: false,
+  labelValueCurrent: (current: number, max: number) => `${current} of ${max}`,
   locale: undefined,
   noBorder: false,
   precision: 0,

@@ -138,3 +138,7 @@ With inputs that are of type `file`, the value is strictly `uni-directional`. Me
 ## Exposed functions
 
 `BFormFile` exposes functions through template refs. See the [Component Reference Exposed section](#comp-reference-bformfile-exposed) for details.
+
+## Internationalization
+
+<Internationalization />

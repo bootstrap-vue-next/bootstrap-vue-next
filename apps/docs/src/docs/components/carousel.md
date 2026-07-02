@@ -143,3 +143,7 @@ You can control the carousel programmatically using template ref methods. See th
 ## Full Example
 
 <<< DEMO ./demo/CarouselFull.vue#template{vue-html}
+
+## Internationalization
+
+<Internationalization />

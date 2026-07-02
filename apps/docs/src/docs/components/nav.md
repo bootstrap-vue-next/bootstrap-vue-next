@@ -198,3 +198,7 @@ For more details see:
 
 - [Vue Router `<router-view>`](https://router.vuejs.org/api/#router-view)
 - [Nuxt.JS `<nuxt-child>`](https://nuxtjs.org/api/components-nuxt-child)
+
+## Internationalization
+
+<Internationalization />

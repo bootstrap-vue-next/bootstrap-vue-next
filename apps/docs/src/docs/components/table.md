@@ -1168,3 +1168,7 @@ your app handles the various inconsistencies with events.
 ## Complete Example
 
 <<< DEMO ./demo/TableComplete.vue
+
+## Internationalization
+
+<Internationalization />

@@ -157,3 +157,7 @@ pattern.
 - <kbd>Enter</kbd> or <kbd>Space</kbd> keys will select (click) the currently focused page button
 - Pressing <kbd>Tab</kbd> will move to the next control or link on the page, while pressing
   <kbd>Shift</kbd>+<kbd>Tab</kbd> will move to the previous control or link on the page.
+
+## Internationalization
+
+<Internationalization />

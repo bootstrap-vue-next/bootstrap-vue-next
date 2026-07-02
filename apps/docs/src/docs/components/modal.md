@@ -373,3 +373,7 @@ BootstrapVueNext uses the `focus` prop to control initial focus behavior when th
 - Leave `focus` undefined to use the default focus behavior (focuses the modal container)
 
 <!-- Component reference added automatically from component package.json -->
+
+## Internationalization
+
+<Internationalization />

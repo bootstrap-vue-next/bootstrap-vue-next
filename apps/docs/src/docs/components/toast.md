@@ -118,3 +118,7 @@ provides general guidelines when using toasts.
   best practice would be to implement a location where users can refer to a list of past toast
   messages which have been shown. Preferably this list should be sortable, with the default being
   chronological.
+
+## Internationalization
+
+<Internationalization />

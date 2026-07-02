@@ -165,3 +165,7 @@ Navbars are hidden by default when printing. Force them to be printed by setting
 - v-b-toggle directive
 - `BNav` documentation for additional components and sub-component aliases
   Refer to the Router support reference page for router-link specific props.
+
+## Internationalization
+
+<Internationalization />

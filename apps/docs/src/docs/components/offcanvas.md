@@ -225,3 +225,7 @@ controlling the background and font color via the `body-class` and `header-class
 - [`v-b-toggle` directive](/docs/directives/BToggle)
 - [`<BCollapse>` component](/docs/components/collapse)
 - [`<BCloseButton>` component](/docs/components/button#comp-ref-b-close-button)
+
+## Internationalization
+
+<Internationalization />
