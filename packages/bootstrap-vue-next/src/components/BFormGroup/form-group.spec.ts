@@ -2,12 +2,15 @@ import {afterEach, describe, expect, it} from 'vitest'
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import BFormGroup from './BFormGroup.vue'
 import {h, nextTick} from 'vue'
+import {createBootstrap} from '../../plugins'
+import BButton from '../BButton/BButton.vue'
 import BFormInput from '../BFormInput/BFormInput.vue'
 import BFormTextarea from '../BFormTextarea/BFormTextarea.vue'
 import BFormSelect from '../BFormSelect/BFormSelect.vue'
 import BFormCheckbox from '../BFormCheckbox/BFormCheckbox.vue'
 import BFormRadio from '../BFormRadio/BFormRadio.vue'
 import BFormFloatingLabel from '../BForm/BFormFloatingLabel.vue'
+import BModal from '../BModal/BModal.vue'
 
 describe('form-group', () => {
   enableAutoUnmount(afterEach)
@@ -591,6 +594,27 @@ describe('form-group', () => {
               h(BFormInput, {id: 'range-start'}),
               h(BFormInput, {id: 'range-end'}),
             ],
+          },
+        })
+        await nextTick()
+
+        expect(wrapper.find('legend').exists()).toBe(true)
+        expect(wrapper.find('label.form-label').exists()).toBe(false)
+      })
+
+      it('falls back to legend when a form control has non-form siblings such as a button and modal', async () => {
+        const wrapper = mount(BFormGroup, {
+          props: {label: 'Choice'},
+          slots: {
+            default: () => [
+              h(BFormSelect, {id: 'choice-select'}),
+              h(BButton, {variant: 'primary'}, () => 'Open modal'),
+              h(BModal, {title: 'Example modal'}, () => 'Modal content'),
+            ],
+          },
+          global: {
+            plugins: [createBootstrap()],
+            stubs: {teleport: true},
           },
         })
         await nextTick()
