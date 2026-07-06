@@ -255,13 +255,13 @@ const meaningfulDefaultSlotChildren = computed(() =>
   flattenFragments(
     (slots.default?.({
       id: computedId.value,
-      'aria-describedby': null,
-      'description-id': descriptionId.value,
-      'label-id': labelId.value,
-    }) ?? []).filter((node): node is VNode => {
+      ariaDescribedby: null,
+      descriptionId: descriptionId.value,
+      labelId: labelId.value,
+    }) ?? []).filter((node: VNode | null | undefined | boolean): node is VNode => {
       return node !== null && node !== undefined && typeof node !== 'boolean'
     })
-  ).filter((node) => {
+  ).filter((node: VNode) => {
     if (node.type === Comment) return false
     if (node.type === Text) {
       return typeof node.children !== 'string' || node.children.trim().length > 0
