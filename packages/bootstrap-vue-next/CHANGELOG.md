@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.7...bootstrapvuenext-v0.45.8) (2026-07-09)
+
+
+### Bug Fixes
+
+* BOffcanvas responsive properties off-by-one issue ([d7414cf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d7414cf6a7c71208fdfd979a7bc0b8ec372fc380))
+
 ## [0.45.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.6...bootstrapvuenext-v0.45.7) (2026-06-22)
 
 
