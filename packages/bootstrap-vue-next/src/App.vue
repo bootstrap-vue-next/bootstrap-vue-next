@@ -1,7 +1,19 @@
 <template>
   <BContainer>
     <BRow>
-      <BCol> Hello World! </BCol>
+      <BCol>
+        <div>
+          <BButton
+            v-b-toggle.offcanvas
+            class="d-md-none m-1 shadow-lg position-fixed top-0 left-0"
+          >
+            Open Canvas
+          </BButton>
+          <BOffcanvas id="offcanvas" responsive="md">
+            This content is not visible on a viewport that is exactly 768px wide.
+          </BOffcanvas>
+        </div>
+      </BCol>
     </BRow>
   </BContainer>
 </template>
