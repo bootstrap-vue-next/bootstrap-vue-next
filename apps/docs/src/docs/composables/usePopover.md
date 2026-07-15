@@ -8,17 +8,11 @@ To use `usePopover`, you need one of the following setup approaches:
 
 ### BApp Component (Recommended)
 
-The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
+<UseBAppSetup>
 
 <<< FRAGMENT ./demo/UsePopoverSetup.vue
 
-::: warning Vue Provide/Inject Limitation
-
-Due to how Vue's provide/inject system works, `usePopover()` **cannot** be called in the same component that declares `<BApp>`. It relies on values provided by `BApp`, and Vue's inject only works in child components — not in the component that calls provide itself.
-
-Place `<BApp>` at least one component level above where `usePopover()` is called.
-
-:::
+</UseBAppSetup>
 
 ### Plugin Setup (Legacy)
 
