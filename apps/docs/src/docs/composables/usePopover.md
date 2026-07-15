@@ -10,7 +10,7 @@ To use `usePopover`, you need one of the following setup approaches:
 
 <UseBAppSetup>
 
-<<< FRAGMENT ./demo/UsePopoverSetup.vue
+<<< FRAGMENT ./demo/OrchestratorSetup.vue
 
 </UseBAppSetup>
 

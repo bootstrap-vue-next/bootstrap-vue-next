@@ -10,7 +10,7 @@ To use `useModal`, you need one of the following setup approaches:
 
 <UseBAppSetup>
 
-<<< FRAGMENT ./demo/UseModalSetup.vue
+<<< FRAGMENT ./demo/OrchestratorSetup.vue
 
 </UseBAppSetup>
 

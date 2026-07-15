@@ -10,7 +10,7 @@ To use `useToast`, you need one of the following setup approaches:
 
 <UseBAppSetup>
 
-<<< FRAGMENT ./demo/UseToastSetup.vue#template{vue-html}
+<<< FRAGMENT ./demo/OrchestratorSetup.vue
 
 </UseBAppSetup>
 
