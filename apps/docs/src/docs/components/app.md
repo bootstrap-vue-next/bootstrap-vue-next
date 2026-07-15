@@ -96,12 +96,6 @@ To use these composables, place `<BApp>` at least one component level above wher
 
 <<< FRAGMENT ./demo/AppComposablesChild.vue
 
-### Options API
-
-If you prefer the Options API, composables like `useModal()`, `useToast()`, and `usePopover()` can still be called from the `setup()` function in a child component. The same rule applies: `<BApp>` must be declared in a parent component, not in the same component that calls these composables.
-
-<<< FRAGMENT ./demo/AppComposablesChildOptionsApi.vue
-
 ## Backward Compatibility
 
 The `BApp` component is fully backward compatible with existing plugin-based setups. You can gradually migrate by:
