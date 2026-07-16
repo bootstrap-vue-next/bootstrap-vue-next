@@ -8,9 +8,11 @@ To use `useModal`, you need one of the following setup approaches:
 
 ### BApp Component (Recommended)
 
-The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
+<UseBAppSetup>
 
-<<< FRAGMENT ./demo/UseModalSetup.vue
+<<< FRAGMENT ./demo/OrchestratorSetup.vue
+
+</UseBAppSetup>
 
 ### Plugin Setup (Legacy)
 
