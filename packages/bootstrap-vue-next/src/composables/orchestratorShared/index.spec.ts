@@ -1,6 +1,6 @@
 import {describe, expect, it} from 'vitest'
 import {ref} from 'vue'
-import {buildPromise} from '.'
+import {buildController} from '.'
 import type {ModalOrchestratorArrayValue} from '../../types/ComponentOrchestratorTypes'
 import {BvTriggerableEvent} from '../../utils'
 
@@ -9,7 +9,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -42,7 +42,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -72,7 +72,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -103,7 +103,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -116,7 +116,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise, resolve} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise, resolve} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -145,7 +145,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -172,7 +172,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -199,7 +199,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise, resolve} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise, resolve} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -231,7 +231,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -257,7 +257,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -285,7 +285,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -310,7 +310,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -336,7 +336,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise, resolve} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise, resolve} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -373,7 +373,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise, resolve} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise, resolve} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )
@@ -412,7 +412,7 @@ describe('buildPromise', () => {
     const store = ref<ModalOrchestratorArrayValue[]>([])
     const _self = Symbol('test-modal')
 
-    const {value: promise} = buildPromise<unknown, unknown, ModalOrchestratorArrayValue>(
+    const {value: promise} = buildController<unknown, unknown, ModalOrchestratorArrayValue>(
       _self,
       store
     )

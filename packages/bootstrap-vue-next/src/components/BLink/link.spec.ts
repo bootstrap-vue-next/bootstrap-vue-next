@@ -485,7 +485,7 @@ describe('link', () => {
   // --- collapse/navbar injection ---
 
   it('calls collapse hide when inside a nav collapse without navbar', async () => {
-    const hideFn = vi.fn()
+    const hideFn = vi.fn<() => void>()
     const wrapper = mount(BLink, {
       props: {href: '/foo'},
       global: {
@@ -503,7 +503,7 @@ describe('link', () => {
   })
 
   it('does not call collapse hide when not in a nav collapse', async () => {
-    const hideFn = vi.fn()
+    const hideFn = vi.fn<() => void>()
     const wrapper = mount(BLink, {
       props: {href: '/foo'},
       global: {
@@ -521,7 +521,7 @@ describe('link', () => {
   })
 
   it('calls collapse hide when inside navbar with noAutoClose false', async () => {
-    const hideFn = vi.fn()
+    const hideFn = vi.fn<() => void>()
     const wrapper = mount(BLink, {
       props: {href: '/foo'},
       global: {
@@ -542,7 +542,7 @@ describe('link', () => {
   })
 
   it('does not call collapse hide when inside navbar with noAutoClose true', async () => {
-    const hideFn = vi.fn()
+    const hideFn = vi.fn<() => void>()
     const wrapper = mount(BLink, {
       props: {href: '/foo'},
       global: {
@@ -563,7 +563,7 @@ describe('link', () => {
   })
 
   it('does not call collapse hide when disabled', async () => {
-    const hideFn = vi.fn()
+    const hideFn = vi.fn<() => void>()
     const wrapper = mount(BLink, {
       props: {href: '/foo', disabled: true},
       global: {

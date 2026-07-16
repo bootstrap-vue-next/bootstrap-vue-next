@@ -14,7 +14,13 @@ import type {
 import type {CheckboxValue} from '../types/CheckboxTypes'
 import type {RadioValue} from '../types/RadioTypes'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
-import type {OrchestratorArrayValue} from '../types/ComponentOrchestratorTypes'
+import type {
+  ControllerKey,
+  ModalOrchestratorArrayValue,
+  PopoverOrchestratorArrayValue,
+  ToastOrchestratorArrayValue,
+  TooltipOrchestratorArrayValue,
+} from '../types/ComponentOrchestratorTypes'
 import type {BvnComponentProps} from '../types/BootstrapVueOptions'
 
 export const genericBvnPrefix = 'BootstrapVueNext__'
@@ -217,10 +223,18 @@ export const defaultsKey: InjectionKey<Ref<Partial<BvnComponentProps>>> =
 export const inputGroupKey: InjectionKey<boolean> = createBvnInjectionKey('inputGroup')
 export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('buttonGroup')
 
+export type OrchestratorStoreObject = {
+  toast: Map<ControllerKey, Ref<ToastOrchestratorArrayValue>>
+  modal: Map<ControllerKey, Ref<ModalOrchestratorArrayValue>>
+  popover: Map<ControllerKey, Ref<PopoverOrchestratorArrayValue>>
+  tooltip: Map<ControllerKey, Ref<TooltipOrchestratorArrayValue>>
+}
 export const orchestratorRegistryKey: InjectionKey<{
-  store: Ref<OrchestratorArrayValue[]>
-  _isToastAppend: Ref<boolean>
-  _isOrchestratorInstalled: Ref<boolean>
+  store: Ref<OrchestratorStoreObject>
+  _isToastAppend: Readonly<Ref<boolean>>
+  _setToastAppend: (value: boolean) => void
+  _isOrchestratorInstalled: Readonly<Ref<boolean>>
+  _setOrchestratorInstalled: (value: boolean) => void
 }> = createBvnRegistryInjectionKey('orchestrator')
 
 /**

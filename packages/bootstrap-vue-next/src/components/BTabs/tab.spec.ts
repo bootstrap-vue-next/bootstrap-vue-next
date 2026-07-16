@@ -225,7 +225,7 @@ describe('tab', () => {
   })
 
   it('does not pass onClick through to the element', () => {
-    const onClick = vi.fn()
+    const onClick = vi.fn<() => void>()
     const wrapper = mount(BTab, {
       attrs: {onClick},
     })

@@ -1,4 +1,5 @@
 ---
+title: Modal
 description: 'Modals are streamlined, but flexible dialog prompts. They support a number of use cases from user notification to completely custom content and feature a handful of helpful sub-components, sizes, variants, accessibility, and more.'
 ---
 
@@ -34,7 +35,7 @@ You can render modals in-place by setting the `teleportDisabled` prop to `true`.
 
 ## Toggle modal visibility
 
-There are several methods that you can employ to toggle the visibility of `<BModal>`.
+You can toggle the visibility of `<BModal>` in several ways.
 
 ### Using the `v-model` property
 
@@ -292,7 +293,7 @@ To programmatically create modals, refer to the documentation at [useModal](/doc
 ### Modal message boxes
 
 If you're looking for replacements for `$bvModal.msgBoxOk` and `$bvModal.msgBoxConfirm` please see the
-[migration guide](/docs/migration-guide#replacement-for-modal-message-boxes)
+[migration knowledge base](/docs/migration-data/components/bmodal#replacement-for-modal-message-boxes)
 
 ## Accessibility
 
@@ -372,3 +373,7 @@ BootstrapVueNext uses the `focus` prop to control initial focus behavior when th
 - Leave `focus` undefined to use the default focus behavior (focuses the modal container)
 
 <!-- Component reference added automatically from component package.json -->
+
+## Internationalization
+
+<Internationalization />

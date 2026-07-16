@@ -89,6 +89,7 @@ import {useId} from '../../composables/useId'
 import type {BPopoverEmits, BPopoverProps, BPopoverSlots, ShowHideSlotsData} from '../../types'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
+import {warn} from '../../utils/console'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useShowHide} from '../../composables/useShowHide'
 import {getSafeDocument, getSafeWindow} from '../../utils/dom'
@@ -428,7 +429,7 @@ const bind = () => {
     if (elem) {
       triggerElement.value = elem
     } else {
-      console.warn('Target element not found', props.target)
+      warn('BPopover', 'Target element not found', props.target)
     }
   } else {
     triggerElement.value = placeholder.value?.nextElementSibling as HTMLElement
@@ -438,7 +439,7 @@ const bind = () => {
     if (elem) {
       referenceElement.value = elem
     } else {
-      console.warn('Reference element not found', props.reference)
+      warn('BPopover', 'Reference element not found', props.reference)
     }
   } else {
     referenceElement.value = triggerElement.value

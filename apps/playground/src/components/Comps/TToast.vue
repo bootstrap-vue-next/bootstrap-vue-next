@@ -8,7 +8,7 @@
     </BRow>
     <BRow>
       <BCol>
-        {{ store.filter((el) => el.type === 'toast') }}
+        {{ store.toast }}
       </BCol>
     </BRow>
   </BContainer>

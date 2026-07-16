@@ -2,63 +2,58 @@
   <ConditionalTeleport :to="teleportTo" :disabled="!teleportTo">
     <div class="orchestrator-container" v-bind="$attrs">
       <div
-        v-for="(value, key) in ComputedPositionClasses"
+        v-for="(value, key) in positionedItems"
         :key="key"
         :class="value.class"
         :style="value.style"
       >
-        <TransitionGroup
-          :name="
-            items?.filter((el) => el.position === key)?.some((el) => el.type === 'toast')
-              ? 'b-list'
-              : undefined
-          "
-        >
+        <TransitionGroup :name="value.transitionGroupName">
           <!-- eslint-disable vue/no-unused-vars -->
           <span
             v-for="{
-              _self,
-              type,
-              position,
-              slots,
-              promise,
-              options,
-              _component,
-              ...val
-            } in items?.filter((el) => el.position === key) || []"
-            :key="_self"
+            component,
+            fns: {
+              setRef,
+              resolve: resolvePromise,
+              destroy
+            },
+            props: componentProps,
+            id,
+            slots,
+            options,
+            } in value.items"
+            :key="id"
           >
             <component
-              :is="_component"
-              v-bind="val"
-              :ref="(ref: ComponentPublicInstance) => (promise.value.ref = ref)"
+              :is="component"
+              v-bind="componentProps"
+              :ref="setRef"
               initial-animation
               :teleport-disabled="true"
               @hide="
                 (e: BvTriggerableEvent) => {
                   setEventOk(e)
-                  val.onHide?.(e)
+                  componentProps.onHide?.(e)
                   if (e.defaultPrevented) {
                     return
                   }
-                  promise.stop?.()
                   if (options?.resolveOnHide) {
-                    promise.resolve(e)
+                    resolvePromise(e)
                   }
                 }
               "
               @hidden="
                 (e: BvTriggerableEvent) => {
                   setEventOk(e)
-                  val.onHidden?.(e)
+                  componentProps.onHidden?.(e)
                   if (e.defaultPrevented) {
                     return
                   }
                   if (!options?.resolveOnHide) {
-                    promise.resolve(e)
+                    resolvePromise(e)
                   }
                   if (!options?.keep) {
-                    promise.value.destroy?.()
+                    destroy?.()
                   }
                 }
               "
@@ -75,14 +70,15 @@
 </template>
 
 <script setup lang="ts">
-import {type ComponentPublicInstance, computed, inject, watch} from 'vue'
-import {orchestratorRegistryKey} from '../../utils/keys'
-import {positionClasses} from '../../utils/positionClasses'
+import {computed, inject, watch} from 'vue'
+import {warn} from '../../utils/console'
+import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 import type {BvTriggerableEvent} from '../../utils'
-import type {BOrchestratorProps} from '../../types'
+import type {BOrchestratorProps, ContainerPosition} from '../../types'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
+import type {ValueInMapRecord} from '../../composables/orchestratorShared'
 
-function setEventOk(event: BvTriggerableEvent): void {
+const setEventOk = (event: BvTriggerableEvent): void => {
   event.ok = event.trigger === 'ok' ? true : event.trigger === 'cancel' ? false : null
 }
 
@@ -91,76 +87,89 @@ const props = withDefaults(defineProps<BOrchestratorProps>(), {
   noToasts: false,
   noModals: false,
   appendToast: false,
-  filter: () => true,
+  filter: undefined,
 })
 
 const orchestratorRegistry = inject(orchestratorRegistryKey, null)
 
 if (orchestratorRegistry) {
   if (!orchestratorRegistry._isOrchestratorInstalled.value) {
-    orchestratorRegistry._isOrchestratorInstalled.value = true
+    orchestratorRegistry._setOrchestratorInstalled(true)
   }
 } else {
-  if (process.env.NODE_ENV === 'development') {
-    console.warn(
-      '[BOrchestrator] The orchestrator registry not found. Please use BApp, useRegistry or provide the plugin.'
-    )
-  }
+  warn(
+    'BOrchestrator',
+    'The orchestrator registry not found. Please use BApp, useRegistry or provide the plugin.'
+  )
 }
 
 watch(
   () => props.appendToast,
   (value) => {
-    if (orchestratorRegistry && value !== undefined) {
-      orchestratorRegistry._isToastAppend.value = value
-    }
+    orchestratorRegistry?._setToastAppend(value)
   },
   {immediate: true}
 )
 
-const ComputedPositionClasses = computed(() => {
-  const positionsActive = items.value?.reduce(
-    (acc, item) => {
-      if (item.position) {
-        acc[item.position] = true
-      }
-      return acc
-    },
-    {} as Record<string, boolean>
-  )
-  const classes: Record<string, {class: string; style: string}> = {}
-  for (const position in positionClasses) {
-    if (positionsActive?.[position]) {
-      classes[position] = {
-        class: `${
-          positionClasses[position as keyof typeof positionClasses]
-        } toast-container position-fixed p-3`,
-        style:
-          'width: calc(var(--bs-toast-max-width, 350px) + var(--bs-toast-padding-x, 1rem) * 2)',
-      }
+const items = computed(() => {
+  const store = orchestratorRegistry?.store.value
+  let filteredStore = {
+    tooltip: !props.noPopovers && store?.tooltip ?
+      [...store.tooltip.values()].map((e) => e.value) : [],
+    modal: !props.noModals && store?.modal ?
+      [...store.modal.values()].map((e) => e.value) : [],
+    popover: !props.noPopovers && store?.popover ?
+      [...store.popover.values()].map((e) => e.value) : [],
+    toast: !props.noToasts && store?.toast ?
+      [...store.toast.values()].map((e) => e.value) : [],
+  } satisfies Record<keyof OrchestratorStoreObject, unknown>
+
+  if (props.filter) {
+    filteredStore = {
+      tooltip: filteredStore.tooltip.filter(props.filter),
+      modal: filteredStore.modal.filter(props.filter),
+      popover: filteredStore.popover.filter(props.filter),
+      toast: filteredStore.toast.filter(props.filter),
     }
   }
-  if (positionsActive?.['modal']) {
-    classes['modal'] = {
-      class: '',
-      style: '',
-    }
-  }
-  if (positionsActive?.['popover']) {
-    classes['popover'] = {
-      class: '',
-      style: '',
-    }
-  }
-  return classes
+
+  return filteredStore
 })
 
-const items = computed(() => {
-  const store = orchestratorRegistry?.store.value ?? []
-  return store
-    .filter((el) => !props.noPopovers || el.type !== 'popover')
-    .filter((el) => !props.noToasts || el.type !== 'toast')
-    .filter((el) => !props.noModals || el.type !== 'modal')
-    .filter(props.filter)
+type ItemObject = {
+  class?: string
+  style?: string
+  transitionGroupName?: string
+  items: ValueInMapRecord<OrchestratorStoreObject[keyof OrchestratorStoreObject]>['value'][]
+}
+const positionedItems = computed<Record<
+  ContainerPosition | keyof Omit<OrchestratorStoreObject, 'toast'>,
+  ItemObject
+>>(() => {
+  const toastDefaultPosition: ContainerPosition = 'bottom-start'
+  const toastDefaults = (cls: ContainerPosition) => ({
+    class: `${cls} toast-container position-fixed p-3`,
+    style: 'width: calc(var(--bs-toast-max-width, 350px) + var(--bs-toast-padding-x, 1rem) * 2)',
+    transitionGroupName: 'b-list',
+  } satisfies Partial<ItemObject>)
+  const groupedToastItems = items.value.toast.reduce(
+    (acc, item) => {
+      const pos = item.props.position ?? toastDefaultPosition
+      ;(acc[pos] ??= {
+        ...toastDefaults(pos),
+        items: [],
+      }).items.push(item)
+
+      return acc
+    },
+    {} as Record<ContainerPosition, ItemObject>
+  )
+
+  return {
+    ...groupedToastItems,
+    modal: {items: items.value.modal},
+    popover: {items: items.value.popover},
+    tooltip: {items: items.value.tooltip},
+  }
 })
 </script>

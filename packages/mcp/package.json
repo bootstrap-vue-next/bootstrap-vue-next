@@ -1,0 +1,77 @@
+{
+  "name": "@bootstrap-vue-next/mcp",
+  "version": "0.0.1",
+  "private": true,
+  "description": "BootstrapVueNext MCP server foundation",
+  "license": "MIT",
+  "author": {
+    "name": "Issayah",
+    "url": "https://github.com/VividLemon"
+  },
+  "type": "module",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "bin": {
+    "bootstrap-vue-next-mcp": "./dist/src/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    }
+  },
+  "imports": {
+    "#mcp-sdk/server": "@modelcontextprotocol/sdk/server/index.js",
+    "#mcp-sdk/stdio": "@modelcontextprotocol/sdk/server/stdio.js",
+    "#mcp-sdk/types": "@modelcontextprotocol/sdk/types.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/cli.ts",
+    "lint": "pnpm run lint:eslint",
+    "lint:eslint": "eslint . --fix --cache",
+    "test:lint": "eslint src tests",
+    "test:lint:ci": "pnpm run test:lint",
+    "test:unit:ci": "node --import tsx --test tests/**/*.test.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "type-check": "pnpm run typecheck",
+    "start": "node dist/src/cli.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.13.3",
+    "eslint": "^10.6.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.7.0",
+    "tsx": "^4.23.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.63.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bootstrap-vue-next/bootstrap-vue-next.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/bootstrap-vue-next"
+  },
+  "homepage": "https://github.com/bootstrap-vue-next/bootstrap-vue-next",
+  "keywords": [
+    "bootstrap-vue-next",
+    "mcp",
+    "model-context-protocol",
+    "typescript"
+  ]
+}

@@ -1,4 +1,5 @@
 ---
+title: Form Rating
 description: 'Custom star rating component for entering or displaying rating values. Fully WAI-ARIA accessible with keyboard control, supporting both interactive and readonly modes with customizable styling and icons.'
 ---
 
@@ -6,7 +7,7 @@ description: 'Custom star rating component for entering or displaying rating val
 
 Rating values range from 1 to the number of stars allowed (default stars is `5`, minimum stars is `3`). Since `BFormRating` uses the Bootstrap class `form-control`, it can easily be placed inside [input groups](/docs/components/input-group.html).
 
-There are two main modes for `BFormRating`: interactive and readonly.
+`BFormRating` supports two main modes: interactive and readonly.
 
 Interactive mode allows the user to choose a rating from 1 to the number of stars (default 5) in whole number increments.
 
@@ -180,3 +181,7 @@ Keyboard navigation is employed to select the rating value, and mimics the keybo
 - <kbd>Right</kbd> or <kbd>Up</kbd> will increment the rating value by `1`
 - When the [`locale`](#internationalization) resolves to a right-to-left language, the
   <kbd>Left</kbd> and <kbd>Right</kbd> behaviour is reversed.
+
+## Internationalization
+
+<Internationalization />

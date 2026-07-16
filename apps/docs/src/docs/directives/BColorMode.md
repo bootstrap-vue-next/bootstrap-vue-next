@@ -1,4 +1,5 @@
 ---
+title: BColorMode
 migrationGuide: false
 description: 'The BColorMode directive has a similar result to the useColorMode utility, but provides more low level access than the composable'
 ---

@@ -361,7 +361,7 @@ describe('form-textarea', () => {
 
   describe('formatter', () => {
     it('applies formatter on input', async () => {
-      const formatter = vi.fn((val: string) => val.toUpperCase())
+      const formatter = vi.fn<(val: string) => string>((val: string) => val.toUpperCase())
       const wrapper = mount(BFormTextarea, {props: {modelValue: '', formatter}})
       wrapper.element.value = 'hello'
       await wrapper.trigger('input')
@@ -370,7 +370,7 @@ describe('form-textarea', () => {
     })
 
     it('does not apply formatter on input when lazyFormatter is true', async () => {
-      const formatter = vi.fn((val: string) => val.toUpperCase())
+      const formatter = vi.fn<(val: string) => string>((val: string) => val.toUpperCase())
       const wrapper = mount(BFormTextarea, {
         props: {modelValue: '', formatter, lazyFormatter: true},
       })
@@ -381,7 +381,7 @@ describe('form-textarea', () => {
     })
 
     it('applies formatter on change', async () => {
-      const formatter = vi.fn((val: string) => val.toUpperCase())
+      const formatter = vi.fn<(val: string) => string>((val: string) => val.toUpperCase())
       const wrapper = mount(BFormTextarea, {props: {modelValue: '', formatter}})
       wrapper.element.value = 'hello'
       await wrapper.trigger('change')
@@ -390,7 +390,7 @@ describe('form-textarea', () => {
     })
 
     it('applies lazy formatter on blur', async () => {
-      const formatter = vi.fn((val: string) => val.toUpperCase())
+      const formatter = vi.fn<(val: string) => string>((val: string) => val.toUpperCase())
       const wrapper = mount(BFormTextarea, {
         props: {modelValue: '', formatter, lazyFormatter: true},
       })
@@ -401,7 +401,7 @@ describe('form-textarea', () => {
     })
 
     it('formatter receives value and event', async () => {
-      const formatter = vi.fn((val: string) => val)
+      const formatter = vi.fn<(val: string) => string>((val: string) => val)
       const wrapper = mount(BFormTextarea, {props: {modelValue: '', formatter}})
       wrapper.element.value = 'test'
       await wrapper.trigger('input')

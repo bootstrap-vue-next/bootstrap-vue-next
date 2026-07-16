@@ -1,4 +1,5 @@
 ---
+title: Progress
 migrationGuide: 'bprogressbar'
 description: >
   Use our custom progress component for displaying simple or complex progress bars, featuring

@@ -1,4 +1,5 @@
 ---
+title: Pagination
 description: >
   Quick first, previous, next, last, and page buttons for pagination control of another component
   (such as `BTable` or lists).
@@ -156,3 +157,7 @@ pattern.
 - <kbd>Enter</kbd> or <kbd>Space</kbd> keys will select (click) the currently focused page button
 - Pressing <kbd>Tab</kbd> will move to the next control or link on the page, while pressing
   <kbd>Shift</kbd>+<kbd>Tab</kbd> will move to the previous control or link on the page.
+
+## Internationalization
+
+<Internationalization />

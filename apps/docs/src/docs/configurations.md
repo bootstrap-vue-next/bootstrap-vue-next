@@ -1,6 +1,11 @@
 ---
-description: BootstrapVueNext provides several configuration options that you can use to customize the behavior of your components.
+title: Configurations
+description: Discover global BootstrapVueNext configuration options for customizing component behavior across your app.
 ---
+
+Use these guides to configure shared BootstrapVueNext behavior before you start tuning individual components.
+
+See also [Reference](/docs/reference) for shared behavior notes and supporting guides.
 
 <TableOfContentsCard v-for="configuration in data" :key="configuration.name" class="my-3" :name="configuration.name" :description="configuration.description" :route="configuration.url" />
 

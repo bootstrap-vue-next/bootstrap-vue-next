@@ -9,7 +9,7 @@ BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.
 
 ## Migrating from BootstrapVue
 
-If you are migrating from BootstrapVue, please refer to our [migration guide](/docs/migration-guide)
+If you are migrating from BootstrapVue, please refer to our [migration knowledge base](/docs/migration-data/)
 
 ## Contribute and Support 🙌
 
@@ -363,6 +363,10 @@ additional CSS ourselves. So, using a method such as
 Bootstrap documentation is likely the best way to achieve the tiniest possible application size.
 Though it is not automatic, it should prove the safest bet for minifying your application.
 
+BootstrapVueNext also marks JavaScript modules as side-effect-free at the package level while explicitly
+preserving style assets (`*.css`, `*.scss`) through package metadata. This allows bundlers to aggressively
+remove unused JavaScript while keeping required stylesheet imports intact.
+
 ### Tree-shaking with BApp
 
 When using the **BApp component approach**, you automatically get optimal tree-shaking as only the
@@ -400,4 +404,4 @@ some features may be missing or changed. If anyone has spotted a missing compati
 submit a GitHub issue or contribute to the
 [parity report](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#help-verify-bootstrapvue-and-bootstrap-v5-parity).
 
-If you are migrating from BootstrapVue, please refer to our [migration guide](/docs/migration-guide)
+If you are migrating from BootstrapVue, please refer to our [migration knowledge base](/docs/migration-data/)

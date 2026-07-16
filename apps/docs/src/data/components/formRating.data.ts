@@ -8,6 +8,12 @@ export default {
     BFormRating: {
       props: {
         ...pick(buildCommonProps(), ['id', 'variant']),
+        clearLabel: {
+          type: 'string',
+          default: "Clear rating",
+          description:
+            'The `aria-label` for the clear button icon. Override this for non-English applications',
+        },
         color: {
           type: 'string',
           default: undefined,
@@ -36,6 +42,12 @@ export default {
           default: 'undefined',
           description:
             'Locale (or locales) to use when showing the value when prop `show-value` is set. Defaults to the browser default locale. Also affects the left-to-right or right-to-left orientation of the component',
+        },
+        labelValueCurrent: {
+          type: '(current: number, max: number) => string',
+          default: '(current, max) => `${current} of ${max}`',
+          description:
+            'A function that returns the `aria-valuetext` for the rating slider. Receives the current rating value and the maximum number of stars. Override for non-English applications',
         },
         modelValue: {
           type: 'number',

@@ -1,4 +1,5 @@
 ---
+title: Type Safe Options
 description: >
   Type-safe `options` prop patterns for BFormSelect, BFormRadioGroup, BFormCheckboxGroup, and
   BFormDatalist. Learn how TypeScript generics provide compile-time safety for option values and

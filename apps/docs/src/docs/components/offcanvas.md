@@ -1,4 +1,5 @@
 ---
+title: Offcanvas
 migrationGuide: 'bsidebar'
 description: >
   The `<BOffcanvas>` component is a fixed-position toggleable slide out box, which can be used for navigation, menus, details, etc. It can be positioned on any side of the viewport (top, bottom, start, or end), with optional backdrop support.
@@ -224,3 +225,7 @@ controlling the background and font color via the `body-class` and `header-class
 - [`v-b-toggle` directive](/docs/directives/BToggle)
 - [`<BCollapse>` component](/docs/components/collapse)
 - [`<BCloseButton>` component](/docs/components/button#comp-ref-b-close-button)
+
+## Internationalization
+
+<Internationalization />

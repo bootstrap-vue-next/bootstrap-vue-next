@@ -1,157 +1,148 @@
-import {
-  type ComponentPublicInstance,
-  inject,
-  nextTick,
-  provide,
-  type Ref,
-  ref,
-  toValue,
-  type WatchHandle,
-} from 'vue'
-import type {
-  ControllerKey,
-  OrchestratorArrayValue,
-  PromiseWithComponent,
-  PromiseWithComponentInternal,
-  ShowPromiseWithComponent,
-} from '../../types/ComponentOrchestratorTypes'
+import {type ComponentPublicInstance, inject, nextTick, provide, readonly, type Ref, ref} from 'vue'
+import type {ComponentController, ControllerKey, PromiseWithController} from '../../types/ComponentOrchestratorTypes'
 import type {BvTriggerableEvent} from '../../utils'
-import {orchestratorRegistryKey} from '../../utils/keys'
+import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 
-export function buildPromise<TComponent, TParam, TArrayValue extends OrchestratorArrayValue>(
-  _id: ControllerKey,
-  store: Ref<TArrayValue[]>
-): {
-  value: PromiseWithComponent<TComponent, TParam>
-  resolve: (value: BvTriggerableEvent) => void
-  stop: WatchHandle | undefined
-} {
+/* oxlint-disable-next-line no-explicit-any */
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+export type ValueInMapRecord<MapRecord> = MapRecord extends Map<any, infer I> ? I : never
+
+export const buildController = <
+  TComponent,
+  TStore extends Readonly<Ref<OrchestratorStoreObject[keyof OrchestratorStoreObject]>>,
+>(
+  id: ControllerKey,
+  store: TStore
+): PromiseWithController<TComponent, ValueInMapRecord<TStore['value']>> => {
   let resolveFunc: (value: BvTriggerableEvent) => void = () => {}
 
-  const promise = new Promise<BvTriggerableEvent>((resolve) => {
+  const basePromise = new Promise<BvTriggerableEvent>((resolve) => {
     resolveFunc = resolve
-  }) as PromiseWithComponent<TComponent, TParam>
+  })
 
   type RefWithMethods = ComponentPublicInstance<TComponent> & {
     show?: () => void
     hide?: (trigger?: string, noEmit?: boolean) => void
     toggle?: () => void
   }
-  Object.assign(promise, {
-    id: _id,
-    ref: null as ComponentPublicInstance<TComponent> | null,
-    show() {
-      const refWithMethods = this.ref as RefWithMethods | null
-      if (refWithMethods?.show) {
+  const findItem = () => store.value.get(id)
+
+  const controller = {
+    id,
+    ref: null as RefWithMethods | null,
+    async show() {
+      const refWithMethods = controller.ref
+      if (
+        refWithMethods !== null &&
+        'show' in refWithMethods &&
+        typeof refWithMethods.show === 'function'
+      ) {
         refWithMethods.show()
       } else {
-        this.set({modelValue: true} as unknown as Partial<TParam>)
+        controller.set({modelValue: true})
       }
-      const self = this as PromiseWithComponentInternal<TComponent, TParam>
-      const asyncDispose = async () => {
-        await self.destroy()
-      }
-      const showPromise = promise.then((event) =>
-        Object.assign(Object.create(event), {
-          [Symbol.asyncDispose]: asyncDispose,
-        })
-      )
-      return Object.assign(showPromise, {
-        id: self.id,
-        ref: self.ref,
-        show: () => self.show(),
-        hide: (trigger?: string) => self.hide(trigger),
-        toggle: () => self.toggle(),
-        set: (val: Partial<TParam>) => self.set(val),
-        get: () => self.get(),
-        destroy: () => self.destroy(),
-        [Symbol.asyncDispose]: asyncDispose,
-      }) as ShowPromiseWithComponent<TComponent, TParam>
+      const event = await basePromise
+      return Object.assign(Object.create(event), {
+        [Symbol.asyncDispose]: controller.destroy,
+      })
     },
     hide(trigger?: string) {
-      const refWithMethods = this.ref as RefWithMethods | null
-      if (refWithMethods?.hide) {
+      const refWithMethods = controller.ref
+      if (
+        refWithMethods !== null &&
+        'hide' in refWithMethods &&
+        typeof refWithMethods.hide === 'function'
+      ) {
         refWithMethods.hide(trigger, true)
-      } else return this.set({modelValue: false} as unknown as Partial<TParam>)
-      return promise
+      } else {
+        controller.set({modelValue: false})
+      }
     },
     toggle() {
-      const currentItem = this.get() as TParam & {modelValue?: unknown}
-      const refWithMethods = this.ref as RefWithMethods | null
-      if (refWithMethods?.toggle) {
+      const currentItem = controller.get()
+      const refWithMethods = controller.ref
+      if (
+        refWithMethods !== null &&
+        'toggle' in refWithMethods &&
+        typeof refWithMethods.toggle === 'function'
+      ) {
         refWithMethods.toggle()
-      } else return this.set({modelValue: !currentItem?.modelValue} as unknown as Partial<TParam>)
-      return promise
-    },
-    get(): TParam | undefined {
-      return store.value.find((el) => el._self === _id) as TParam | undefined
-    },
-    set(val: Partial<TParam>) {
-      const itemIndex = store.value.findIndex((el) => el._self === _id)
-      const item = store.value[itemIndex]
-      if (item) {
-        const v = {...toValue(item), ...toValue(val)}
-        if (item.modelValue !== v.modelValue) {
-          item['onUpdate:modelValue']?.(v.modelValue as boolean)
-        }
-        const updatedItem = {
-          ...v,
-          modelValue: toValue(v.modelValue),
-        } as TArrayValue
-        // Only set title and body if they are defined in v
-        const vRecord = v as Record<string, unknown>
-        if ('title' in vRecord && vRecord.title !== undefined) {
-          ;(updatedItem as Record<string, unknown>).title = toValue(vRecord.title)
-        }
-        if ('body' in vRecord && vRecord.body !== undefined) {
-          ;(updatedItem as Record<string, unknown>).body = toValue(vRecord.body)
-        }
-        store.value.splice(itemIndex, 1, updatedItem)
+      } else {
+        controller.set({modelValue: !currentItem?.value.props.modelValue})
       }
-      return promise
+    },
+    get: findItem,
+    set(val: Partial<ValueInMapRecord<TStore['value']>['value']['props']>) {
+      const current = findItem()
+      if (current?.value) {
+        current.value = {
+          ...current.value,
+          props: {
+            ...current.value.props,
+            ...val,
+            /* oxlint-disable no-explicit-any */
+            /* eslint-disable @typescript-eslint/no-explicit-any */
+          } as any,
+        }
+      }
     },
     async destroy() {
-      const item = store.value.find((el) => el._self === _id)
+      const item = findItem()
       if (!item) return
-      item.promise.stop?.()
-      if (item.modelValue) {
-        await new Promise((resolve) => {
-          const prev = item['onHidden']
-          item['onHidden'] = (e) => {
-            prev?.(e)
+      if (item.value.props.modelValue) {
+        await new Promise<BvTriggerableEvent>((resolve) => {
+          const prev = item.value.props['onHidden'] as unknown
+          item.value.props['onHidden'] = (e: BvTriggerableEvent) => {
+            if (typeof prev === 'function') {
+              prev(e)
+            }
             resolve(e)
           }
           nextTick(() => {
-            this.hide('destroy')
+            controller.hide('destroy')
           })
         })
       }
-      store.value.splice(
-        store.value.findIndex((el) => el._self === _id),
-        1
-      )
+      store.value.delete(id)
     },
-    async [Symbol.asyncDispose]() {
-      await this.destroy()
+    [Symbol.asyncDispose]() {
+      return controller.destroy()
     },
-  } as PromiseWithComponentInternal<TComponent, TParam>)
+  } as ComponentController<TComponent, ValueInMapRecord<TStore['value']>>
 
   return {
-    value: promise,
+    controller,
     resolve: resolveFunc,
-    stop: undefined as WatchHandle | undefined,
   }
 }
 
 export const _newOrchestratorRegistry = (): {
-  store: Ref<OrchestratorArrayValue[]>
-  _isOrchestratorInstalled: Ref<boolean>
-  _isToastAppend: Ref<boolean>
-} => ({
-  store: ref<OrchestratorArrayValue[]>([]),
-  _isOrchestratorInstalled: ref(false),
-  _isToastAppend: ref(false),
-})
+  store: Readonly<Ref<OrchestratorStoreObject>>
+  _isToastAppend: Readonly<Ref<boolean>>
+  _setToastAppend: (value: boolean) => void
+  _isOrchestratorInstalled: Readonly<Ref<boolean>>
+  _setOrchestratorInstalled: (value: boolean) => void
+} => {
+  const _isOrchestratorInstalled = ref(false)
+  const _isToastAppend = ref(false)
+
+  return {
+    store: ref({
+      modal: new Map(),
+      tooltip: new Map(),
+      popover: new Map(),
+      toast: new Map(),
+    }),
+    _isOrchestratorInstalled: readonly(_isOrchestratorInstalled),
+    _setOrchestratorInstalled: (v) => {
+      _isOrchestratorInstalled.value = v
+    },
+    _isToastAppend: readonly(_isToastAppend),
+    _setToastAppend: (v) => {
+      _isToastAppend.value = v
+    },
+  }
+}
 
 export const useOrchestratorRegistry = () => {
   const orchestratorRegistry = inject(orchestratorRegistryKey, null)

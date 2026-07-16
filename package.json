@@ -48,8 +48,8 @@
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^16.4.0",
-    "turbo": "^2.8.20"
+    "lint-staged": "^17.0.8",
+    "turbo": "^2.10.4"
   },
   "engines": {
     "npm": ">=11.0.0",

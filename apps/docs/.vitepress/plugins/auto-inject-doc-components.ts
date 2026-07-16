@@ -1,4 +1,4 @@
-import type MarkdownIt from 'markdown-it'
+import type { MarkdownRenderer } from 'vitepress'
 import { parse } from 'yaml'
 import { kebabToTitleCase } from '../../src/utils/dataLoaderUtils'
 
@@ -46,17 +46,21 @@ function filenameToCamelCase(filename: string): string {
  * Only applies to files in /components/, /composables/, /directives/, or /configurations/ directories
  * that have a `description` in their frontmatter.
  */
-export function autoInjectDocComponents(md: MarkdownIt) {
-  const defaultRender = md.render.bind(md)
+export function autoInjectDocComponents(md: MarkdownRenderer) {
+  const defaultRenderAsync = md.renderAsync.bind(md)
 
-  md.render = function (
+  /**
+   * Transform source markdown before rendering by injecting
+   * page header, footer, and component references.
+   */
+  function transformSource(
     src: string,
     env: {
       relativePath?: string
       path?: string
       frontmatter?: { description?: string; title?: string }
     },
-  ) {
+  ): string | undefined {
     // Check if this is a documentation file that should get auto-injection
     const rawPath = env?.relativePath || env?.path || ''
     // Normalize path separators for cross-platform compatibility
@@ -66,7 +70,7 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     const rootMatch = path.match(/(?:src\/)?([^/]+)\.md$/)
 
     if (!docsMatch && !rootMatch) {
-      return defaultRender(src, env)
+      return undefined
     }
 
     // Extract the filename and directory from the path
@@ -85,8 +89,8 @@ export function autoInjectDocComponents(md: MarkdownIt) {
       directory = ''
       filename = fullPath
     } else {
-      // This should never happen due to the check on line 68
-      return defaultRender(src, env)
+      // This should never happen due to the check above
+      return undefined
     }
 
     // Extract frontmatter using simple regex and parse with YAML
@@ -94,7 +98,7 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     const frontmatterMatch = trimmedSrc.match(/^---\r?\n([\s\S]*?)\r?\n---/)
 
     if (!frontmatterMatch) {
-      return defaultRender(src, env)
+      return undefined
     }
 
     // Parse frontmatter to check for description
@@ -103,14 +107,14 @@ export function autoInjectDocComponents(md: MarkdownIt) {
       if (frontmatterMatch[1] !== undefined) {
         frontmatter = parse(frontmatterMatch[1])
       } else {
-        return defaultRender(src, env)
+        return undefined
       }
     } catch {
-      return defaultRender(src, env)
+      return undefined
     }
 
     if (!frontmatter?.description) {
-      return defaultRender(src, env)
+      return undefined
     }
 
     // Use frontmatter title if available, otherwise generate from filename
@@ -173,8 +177,12 @@ export function autoInjectDocComponents(md: MarkdownIt) {
     }
 
     // Combine frontmatter with processed content
-    src = `${frontmatterMatch[0]}\n\n${afterFrontmatter}`
+    return `${frontmatterMatch[0]}\n\n${afterFrontmatter}`
+  }
 
-    return defaultRender(src, env)
+  // VitePress v2 uses markdown-it-async and calls md.renderAsync internally.
+  md.renderAsync = function (src: string, env?: Record<string, unknown>) {
+    const transformed = transformSource(src, env || {})
+    return defaultRenderAsync(transformed ?? src, env)
   }
 }

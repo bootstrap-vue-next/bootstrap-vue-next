@@ -1,4 +1,5 @@
 ---
+title: Toast
 description: 'Push notifications to your visitors with `BToast` and `useToast`. These are easily customizable for generating alert messages.'
 ---
 
@@ -117,3 +118,7 @@ provides general guidelines when using toasts.
   best practice would be to implement a location where users can refer to a list of past toast
   messages which have been shown. Preferably this list should be sortable, with the default being
   chronological.
+
+## Internationalization
+
+<Internationalization />
