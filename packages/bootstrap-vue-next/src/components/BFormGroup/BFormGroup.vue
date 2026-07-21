@@ -101,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, toRef, useTemplateRef} from 'vue'
+import {Comment, computed, Text, toRef, useTemplateRef, type VNode} from 'vue'
 import {useAriaInvalid} from '../../composables/useAriaInvalid'
 import {attemptFocus, isVisible} from '../../utils/dom'
 import BCol from '../BContainer/BCol.vue'
@@ -114,6 +114,7 @@ import {useDefaults} from '../../composables/useDefaults'
 import {useProvideFormGroupData} from '../../composables/useProvideFormGroupData'
 import BFormGroupContent from '../BFormGroupContent.vue'
 import BFormGroupLabel from '../BFormGroupLabel.vue'
+import {flattenFragments} from '../../utils/flattenFragments'
 
 defineOptions({
   inheritAttrs: false,
@@ -163,7 +164,6 @@ const {singleLabelTargetId} = useProvideFormGroupData({
   state: computedState,
   disabled: computedDisabled,
 })
-const computedLabelFor = computed(() => props.labelFor ?? singleLabelTargetId.value)
 
 const breakPoints = ['xs', 'sm', 'md', 'lg', 'xl']
 
@@ -247,6 +247,33 @@ const onLegendClick = (event: Readonly<MouseEvent>) => {
 
 const computedId = useId(() => props.id)
 const labelId = useId(undefined, '_BV_label_')
+const invalidFeedbackId = useId(undefined, '_BV_feedback_invalid_')
+const validFeedbackId = useId(undefined, '_BV_feedback_valid_')
+const descriptionId = useId(undefined, '_BV_description_')
+
+const meaningfulDefaultSlotChildren = computed(() =>
+  flattenFragments(
+    (slots.default?.({
+      id: computedId.value,
+      ariaDescribedby: null,
+      descriptionId: descriptionId.value,
+      labelId: labelId.value,
+    }) ?? []).filter((node: VNode | null | undefined | boolean): node is VNode => {
+      return node !== null && node !== undefined && typeof node !== 'boolean'
+    })
+  ).filter((node: VNode) => {
+    if (node.type === Comment) return false
+    if (node.type === Text) {
+      return typeof node.children !== 'string' || node.children.trim().length > 0
+    }
+    return true
+  })
+)
+
+const computedLabelFor = computed(() =>
+  props.labelFor ??
+  (meaningfulDefaultSlotChildren.value.length === 1 ? singleLabelTargetId.value : null)
+)
 const labelTag = computed(() => (!computedLabelFor.value ? 'legend' : 'label'))
 const labelClasses = computed(() => [
   isHorizontal.value ? 'col-form-label' : 'form-label',
@@ -261,11 +288,6 @@ const labelClasses = computed(() => [
   isHorizontal.value ? null : labelAlignClasses.value,
   props.labelClass,
 ])
-
-const invalidFeedbackId = useId(undefined, '_BV_feedback_invalid_')
-
-const validFeedbackId = useId(undefined, '_BV_feedback_valid_')
-const descriptionId = useId(undefined, '_BV_description_')
 
 const isFieldset = computed(() => !computedLabelFor.value)
 
