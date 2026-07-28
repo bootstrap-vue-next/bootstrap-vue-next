@@ -441,8 +441,6 @@ const computedLiteProps = computed(() => ({
   ...pick(props, [...bTableLiteProps, ...bTableSimpleProps]),
   tableAttrs: {
     ariaBusy: busyModel.value,
-    'aria-multiselectable':
-      props.selectable && props.selectMode !== 'single' ? true : undefined,
   },
   items: computedDisplayItems.value,
   fields: computedFields.value as TableFieldRaw<Item>[],
