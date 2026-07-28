@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.8...bootstrapvuenext-v0.45.9) (2026-07-28)
+
+
+### Bug Fixes
+
+* remove invalid aria-multiselectable attribute from BTable table element ([#3235](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3235)) ([82218a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/82218a36e8545e0b30521283b6a08d9c5a7a9dab))
+
 ## [0.45.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.7...bootstrapvuenext-v0.45.8) (2026-07-09)
 
 
