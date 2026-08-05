@@ -1,7 +1,7 @@
 <template>
-  <ul class="navbar-nav" :class="computedClasses">
+  <component :is="props.tag" class="navbar-nav" :class="computedClasses">
     <slot />
-  </ul>
+  </component>
 </template>
 
 <script setup lang="ts">
