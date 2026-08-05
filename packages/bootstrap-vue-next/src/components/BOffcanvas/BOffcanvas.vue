@@ -94,7 +94,12 @@ import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, type EmitFn, nextTick, onMounted, ref, useTemplateRef, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BOffcanvasEmits, BOffcanvasProps, BOffcanvasSlots, BOffcanvasSlotsData} from '../../types'
+import type {
+  BOffcanvasEmits,
+  BOffcanvasProps,
+  BOffcanvasSlots,
+  BOffcanvasSlotsData,
+} from '../../types'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
@@ -198,17 +203,20 @@ const {
   isLeaving,
   trapActive,
   setLocalNoAnimation,
-} = useShowHide({modelValue, props, emit: emit as EmitFn, element, id: computedId}, {
-  transitionProps: {
-    onAfterEnter,
-    enterToClass: 'showing',
-    leaveToClass: 'hiding',
-    enterActiveClass: '',
-    leaveActiveClass: '',
-    enterFromClass: '',
-    leaveFromClass: '',
-  },
-})
+} = useShowHide(
+  {modelValue, props, emit: emit as EmitFn, element, id: computedId},
+  {
+    transitionProps: {
+      onAfterEnter,
+      enterToClass: 'showing',
+      leaveToClass: 'hiding',
+      enterActiveClass: '',
+      leaveActiveClass: '',
+      enterFromClass: '',
+      leaveFromClass: '',
+    },
+  }
+)
 
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
 const smallerThanBreakpoint = breakpoints.smaller(() => props.responsive ?? 'xs')

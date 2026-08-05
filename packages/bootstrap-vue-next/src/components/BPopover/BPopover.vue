@@ -272,25 +272,28 @@ const {
   renderRef,
   localTemporaryHide,
   setLocalTemporaryHide,
-} = useShowHide({modelValue, props, emit: emit as EmitFn, element: floatingElement, id: computedId}, {
-  showFn: () => {
-    update()
-    nextTick(() => {
-      cleanup = autoUpdate(
-        referenceElement.value as ReferenceElement,
-        floatingElement.value as HTMLElement,
-        update,
-        {animationFrame: props.realtime}
-      )
-    })
-  },
-  hideFn: () => {
-    if (cleanup) {
-      cleanup()
-      cleanup = undefined
-    }
-  },
-})
+} = useShowHide(
+  {modelValue, props, emit: emit as EmitFn, element: floatingElement, id: computedId},
+  {
+    showFn: () => {
+      update()
+      nextTick(() => {
+        cleanup = autoUpdate(
+          referenceElement.value as ReferenceElement,
+          floatingElement.value as HTMLElement,
+          update,
+          {animationFrame: props.realtime}
+        )
+      })
+    },
+    hideFn: () => {
+      if (cleanup) {
+        cleanup()
+        cleanup = undefined
+      }
+    },
+  }
+)
 
 watch(middlewareData, (newValue) => {
   if (!props.noHide) {

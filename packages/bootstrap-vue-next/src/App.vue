@@ -3,7 +3,7 @@
   <BContainer>
     <BRow>
       <BCol>
-        {{iid}}
+        {{ iid }}
         <BButton @click="showoModal">MOdal button</BButton>
       </BCol>
     </BRow>
@@ -29,11 +29,10 @@ const input = ref({
   modelValue: false,
 })
 
-
 const msg = ref('Hello World!')
 const a = ref({
   msg,
-  msgfff: computed(() => `${msg.value} pluys `)
+  msgfff: computed(() => `${msg.value} pluys `),
 })
 setInterval(() => {
   id.value = id.value + 1
@@ -41,23 +40,26 @@ setInterval(() => {
 
 const c = ref(a)
 const mod = ref(false)
-const d = computed({get(){
+const d = computed({
+  get() {
     const {msg: myMessage, ...rest} = c.value
 
     return {
-      body: myMessage, id: rest.msgfff,
-      modelValue: mod.value
+      body: myMessage,
+      id: rest.msgfff,
+      modelValue: mod.value,
     }
-  }, set: (v) => {
+  },
+  set: (v) => {
     msg.value = v.body
     mod.value = v.modelValue
-  }})
+  },
+})
 
 const rrr = modal.create(input)
 
 const showoModal = async () => {
-  await using __= await modal.create(input).show()
+  await using __ = await modal.create(input).show()
   await using _ = await rrr.show()
 }
-
 </script>

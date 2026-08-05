@@ -90,13 +90,12 @@ export const buildController = <
       const item = findItem()
       if (!item) return
       try {
-        if(item.value.props.modelValue) {
+        if (item.value.props.modelValue) {
           await basePromise
           await nextTick()
           controller.hide('destroy')
         }
-      }
-      finally {
+      } finally {
         store.value.delete(id)
       }
     },
@@ -150,9 +149,7 @@ export const useOrchestratorRegistry = () => {
   return newOrchestratorRegistry
 }
 
-export const getOrchestratorControllerId = (
-  propId: string | undefined,
-) => {
+export const getOrchestratorControllerId = (propId: string | undefined) => {
   const id: ControllerKey = propId || Symbol('OrchestratorItem')
 
   return {

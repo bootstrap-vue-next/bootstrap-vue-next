@@ -31,8 +31,14 @@ export const fadeBaseTransitionProps = {
 } as const satisfies TransitionProps
 
 export const useShowHide = (
-  {modelValue, element, props, emit, id}: {
-    modelValue: Ref<boolean | number>,
+  {
+    modelValue,
+    element,
+    props,
+    emit,
+    id,
+  }: {
+    modelValue: Ref<boolean | number>
     props: {
       visible?: boolean
       show?: boolean
@@ -49,9 +55,9 @@ export const useShowHide = (
             show: number
             hide: number
           }
-    } & Record<string, unknown>,
-    emit: EmitFn,
-    element: Ref<HTMLElement | null>,
+    } & Record<string, unknown>
+    emit: EmitFn
+    element: Ref<HTMLElement | null>
     id: Ref<string>
   },
   options: {

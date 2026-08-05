@@ -136,7 +136,16 @@
 <script setup lang="ts">
 import {onKeyStroke, unrefElement} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {computed, type CSSProperties, type EmitFn, nextTick, onMounted, ref, useTemplateRef, watch} from 'vue'
+import {
+  computed,
+  type CSSProperties,
+  type EmitFn,
+  nextTick,
+  onMounted,
+  ref,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import type {BModalEmits, BModalProps, BModalSlots, BModalSlotsData} from '../../types'
 
 import BButton from '../BButton/BButton.vue'
@@ -291,13 +300,16 @@ const {
   contentShowing,
   backdropReady,
   backdropVisible,
-} = useShowHide({modelValue, props, emit: emit as EmitFn, element, id: computedId}, {
-  // addShowClass: false,
-  transitionProps: {
-    onAfterEnter,
-    onAfterLeave,
-  },
-})
+} = useShowHide(
+  {modelValue, props, emit: emit as EmitFn, element, id: computedId},
+  {
+    // addShowClass: false,
+    transitionProps: {
+      onAfterEnter,
+      onAfterLeave,
+    },
+  }
+)
 
 const fallbackClassSelector = 'modal-fallback-focus'
 const {needsFallback} = useActivatedFocusTrap({

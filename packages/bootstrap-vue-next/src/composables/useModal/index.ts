@@ -43,17 +43,12 @@ export const useModal = () => {
     const modalComp = markRaw(BModal)
     const resolvedProps = ref(obj)
     const modalStore = computed(() => store.value.modal)
-    const {
-      htmlAttributeId, storeId
-    } = getOrchestratorControllerId(resolvedProps.value.id)
+    const {htmlAttributeId, storeId} = getOrchestratorControllerId(resolvedProps.value.id)
 
     const {resolve, controller} = buildController<
       typeof BModal,
       ComputedRef<OrchestratorStoreObject['modal']>
-    >(
-      storeId,
-      modalStore
-    )
+    >(storeId, modalStore)
 
     const value = computed<ModalOrchestratorArrayValue>({
       get: () => {
@@ -68,7 +63,7 @@ export const useModal = () => {
             setRef: (v: ComponentPublicInstance) => {
               controller.ref = v
             },
-            destroy: controller.destroy
+            destroy: controller.destroy,
           },
           id: storeId,
           props: {

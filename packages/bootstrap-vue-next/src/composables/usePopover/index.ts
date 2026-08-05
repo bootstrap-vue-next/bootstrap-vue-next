@@ -36,15 +36,15 @@ export const usePopover = () => {
    */
   function create(
     obj: PopoverOrchestratorCreateParam,
-    tooltip?: false,
-  ): ComponentController<typeof BPopover, Ref<PopoverOrchestratorArrayValue>>;
+    tooltip?: false
+  ): ComponentController<typeof BPopover, Ref<PopoverOrchestratorArrayValue>>
   function create(
     obj: TooltipOrchestratorCreateParam,
-    tooltip: true,
-  ): ComponentController<typeof BTooltip, Ref<TooltipOrchestratorArrayValue>>;
+    tooltip: true
+  ): ComponentController<typeof BTooltip, Ref<TooltipOrchestratorArrayValue>>
   function create(
     obj: PopoverOrchestratorCreateParam | TooltipOrchestratorCreateParam,
-    tooltip = false,
+    tooltip = false
   ) {
     if (!_isOrchestratorInstalled.value)
       throw new Error('The BApp component must be mounted to use the popover controller')
@@ -53,26 +53,16 @@ export const usePopover = () => {
     const resolvedProps = ref(obj)
     const type = tooltip ? 'tooltip' : 'popover'
     const pickedStore = computed(() => store.value[type])
-    const {
-      htmlAttributeId, storeId
-    } = getOrchestratorControllerId(resolvedProps.value.id)
+    const {htmlAttributeId, storeId} = getOrchestratorControllerId(resolvedProps.value.id)
 
     const {controller, resolve} = buildController<
       typeof BPopover | typeof BTooltip,
       ComputedRef<OrchestratorStoreObject['popover'] | OrchestratorStoreObject['tooltip']>
-    >(
-      storeId,
-      pickedStore
-    )
+    >(storeId, pickedStore)
 
     const value = computed<PopoverOrchestratorArrayValue, PopoverOrchestratorArrayValue['props']>({
       get: () => {
-        const {
-          component = comp,
-          options,
-          slots,
-          ...props
-        } = resolvedProps.value
+        const {component = comp, options, slots, ...props} = resolvedProps.value
 
         return {
           component,
@@ -87,7 +77,7 @@ export const usePopover = () => {
             setRef: (v: ComponentPublicInstance) => {
               controller.ref = v
             },
-            destroy: controller.destroy
+            destroy: controller.destroy,
           },
           props: {
             ...props,
@@ -100,7 +90,7 @@ export const usePopover = () => {
           ...resolvedProps.value,
           ...v,
         }
-      }
+      },
     })
 
     pickedStore.value.set(storeId, value)
@@ -112,13 +102,9 @@ export const usePopover = () => {
     return controller
   }
 
-  const tooltip = (
-    obj: TooltipOrchestratorCreateParam,
-  ) => create(obj, true)
+  const tooltip = (obj: TooltipOrchestratorCreateParam) => create(obj, true)
 
-  const popover = (
-    obj: PopoverOrchestratorCreateParam,
-  ) => create(obj, false)
+  const popover = (obj: PopoverOrchestratorCreateParam) => create(obj, false)
 
   return {
     _isOrchestratorInstalled,

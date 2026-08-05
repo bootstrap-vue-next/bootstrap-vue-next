@@ -6,10 +6,10 @@
 </template>
 
 <script setup lang="ts">
-import {useModal} from 'bootstrap-vue-next/composables/useModal'
-import {ref} from 'vue'
+import { useModal } from 'bootstrap-vue-next/composables/useModal'
+import { ref } from 'vue'
 
-const {create} = useModal()
+const { create } = useModal()
 
 const okResult = ref<boolean | null | undefined>(null)
 

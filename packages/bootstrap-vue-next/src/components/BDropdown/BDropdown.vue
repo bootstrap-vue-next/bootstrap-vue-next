@@ -204,27 +204,30 @@ const {
   contentShowing,
   isVisible,
   isActive,
-} = useShowHide({modelValue, props, emit: emit as EmitFn, element: referenceElement, id: computedId}, {
-  showFn: () => {
-    update()
-    nextTick(() => {
-      cleanup = autoUpdate(
-        referenceElement.value as ReferenceElement,
-        floatingElement.value as HTMLElement,
-        update,
-        {
-          animationFrame: false,
-        }
-      )
-    })
-  },
-  hideFn: () => {
-    if (cleanup) {
-      cleanup()
-      cleanup = undefined
-    }
-  },
-})
+} = useShowHide(
+  {modelValue, props, emit: emit as EmitFn, element: referenceElement, id: computedId},
+  {
+    showFn: () => {
+      update()
+      nextTick(() => {
+        cleanup = autoUpdate(
+          referenceElement.value as ReferenceElement,
+          floatingElement.value as HTMLElement,
+          update,
+          {
+            animationFrame: false,
+          }
+        )
+      })
+    },
+    hideFn: () => {
+      if (cleanup) {
+        cleanup()
+        cleanup = undefined
+      }
+    },
+  }
+)
 
 const computedMenuClasses = computed(() => [
   {

@@ -9,24 +9,20 @@
       >
         <TransitionGroup :name="value.transitionGroupName">
           <span
-v-for="{
-            component,
-            fns: {
-              setRef,
-              resolve: resolvePromise,
-              destroy
-            },
-            props: componentProps,
-            id,
-            slots,
-            options,
+            v-for="{
+              component,
+              fns: {setRef, resolve: resolvePromise, destroy},
+              props: componentProps,
+              id,
+              slots,
+              options,
             } in value.items"
-                              :key="id">
-            {{componentProps}}
-          <!-- eslint-disable vue/no-unused-vars -->
+            :key="id"
+          >
+            {{ componentProps }}
+            <!-- eslint-disable vue/no-unused-vars -->
             <component
               :is="component"
-
               v-bind="componentProps"
               :ref="setRef"
               initial-animation
@@ -113,14 +109,12 @@ watch(
 const items = computed(() => {
   const store = orchestratorRegistry?.store.value
   let filteredStore = {
-    tooltip: !props.noPopovers && store?.tooltip ?
-      [...store.tooltip.values()].map((e) => e.value) : [],
-    modal: !props.noModals && store?.modal ?
-      [...store.modal.values()].map((e) => e.value) : [],
-    popover: !props.noPopovers && store?.popover ?
-      [...store.popover.values()].map((e) => e.value) : [],
-    toast: !props.noToasts && store?.toast ?
-      [...store.toast.values()].map((e) => e.value) : [],
+    tooltip:
+      !props.noPopovers && store?.tooltip ? [...store.tooltip.values()].map((e) => e.value) : [],
+    modal: !props.noModals && store?.modal ? [...store.modal.values()].map((e) => e.value) : [],
+    popover:
+      !props.noPopovers && store?.popover ? [...store.popover.values()].map((e) => e.value) : [],
+    toast: !props.noToasts && store?.toast ? [...store.toast.values()].map((e) => e.value) : [],
   } satisfies Record<keyof OrchestratorStoreObject, unknown>
 
   if (props.filter) {
@@ -141,16 +135,16 @@ type ItemObject = {
   transitionGroupName?: string
   items: ValueInMapRecord<OrchestratorStoreObject[keyof OrchestratorStoreObject]>['value'][]
 }
-const positionedItems = computed<Record<
-  ContainerPosition | keyof Omit<OrchestratorStoreObject, 'toast'>,
-  ItemObject
->>(() => {
+const positionedItems = computed<
+  Record<ContainerPosition | keyof Omit<OrchestratorStoreObject, 'toast'>, ItemObject>
+>(() => {
   const toastDefaultPosition: ContainerPosition = 'bottom-start'
-  const toastDefaults = (cls: ContainerPosition) => ({
-    class: `${cls} toast-container position-fixed p-3`,
-    style: 'width: calc(var(--bs-toast-max-width, 350px) + var(--bs-toast-padding-x, 1rem) * 2)',
-    transitionGroupName: 'b-list',
-  } satisfies Partial<ItemObject>)
+  const toastDefaults = (cls: ContainerPosition) =>
+    ({
+      class: `${cls} toast-container position-fixed p-3`,
+      style: 'width: calc(var(--bs-toast-max-width, 350px) + var(--bs-toast-padding-x, 1rem) * 2)',
+      transitionGroupName: 'b-list',
+    }) satisfies Partial<ItemObject>
   const groupedToastItems = items.value.toast.reduce(
     (acc, item) => {
       const pos = item.props.position ?? toastDefaultPosition

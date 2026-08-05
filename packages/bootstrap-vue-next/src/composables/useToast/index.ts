@@ -10,7 +10,11 @@ import {
 } from 'vue'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 import type {ContainerPosition} from '../../types/Alignment'
-import type {ComponentController, ToastOrchestratorArrayValue, ToastOrchestratorCreateParam} from '../../types'
+import type {
+  ComponentController,
+  ToastOrchestratorArrayValue,
+  ToastOrchestratorCreateParam,
+} from '../../types'
 import {buildController, getOrchestratorControllerId} from '../orchestratorShared'
 import {BToast} from '../../components'
 
@@ -36,17 +40,12 @@ export const useToast = () => {
     const toastComp = markRaw(BToast)
     const resolvedProps = ref(obj)
     const toastStore = computed(() => store.value.toast)
-    const {
-      htmlAttributeId, storeId
-    } = getOrchestratorControllerId(resolvedProps.value.id)
+    const {htmlAttributeId, storeId} = getOrchestratorControllerId(resolvedProps.value.id)
 
     const {resolve, controller} = buildController<
       typeof BToast,
       ComputedRef<OrchestratorStoreObject['toast']>
-    >(
-      storeId,
-      toastStore
-    )
+    >(storeId, toastStore)
 
     const value = computed<ToastOrchestratorArrayValue, ToastOrchestratorArrayValue['props']>({
       get: () => {
@@ -62,7 +61,7 @@ export const useToast = () => {
             setRef: (v: ComponentPublicInstance) => {
               controller.ref = v
             },
-            destroy: controller.destroy
+            destroy: controller.destroy,
           },
           props: {
             ...props,
