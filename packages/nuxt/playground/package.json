@@ -1,8 +1,15 @@
 {
   "private": true,
-  "name": "my-module-playground",
+  "name": "@bootstrap-vue-next/nuxt-playground",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate"
+  },
   "devDependencies": {
     "bootstrap": "^5.3.8",
-    "bootstrap-vue-next": "workspace:^"
+    "bootstrap-vue-next": "workspace:^",
+    "nuxt": "^4.4.2"
   }
 }

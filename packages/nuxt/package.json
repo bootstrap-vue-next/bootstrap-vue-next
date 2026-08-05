@@ -8,11 +8,18 @@
     "url": "https://github.com/VividLemon"
   },
   "type": "module",
-  "main": "./dist/module.mjs",
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
       "import": "./dist/module.mjs"
+    }
+  },
+  "main": "./dist/module.mjs",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/types.d.mts"
+      ]
     }
   },
   "files": [
@@ -43,18 +50,13 @@
     "@nuxt/module-builder": "^1.0.2",
     "@nuxt/schema": "^4.4.2",
     "@nuxt/test-utils": "^3.23.0",
-    "@rushstack/eslint-patch": "^1.16.1",
     "@types/node": "^24.12.0",
-    "@vue/eslint-config-prettier": "^10.2.0",
     "bootstrap-vue-next": "workspace:^",
     "eslint": "^9.39.4",
-    "eslint-define-config": "^2.1.0",
     "nuxt": "^4.4.2",
-    "prettier": "^3.8.1",
     "publint": "^0.3.18",
     "typescript": "^5.9.3",
-    "unimport": "^5.7.0",
-    "vue": "^3.5.31"
+    "vue-tsc": "^3.3.9"
   },
   "repository": {
     "type": "git",
@@ -76,10 +78,5 @@
     "bootstrap",
     "typescript",
     "bootstrap-vue-next"
-  ],
-  "lint-staged": {
-    "*.{js,ts,vue}": "eslint --cache --fix",
-    "!(CHANGELOG)*.md": "prettier --write --ignore-unknown",
-    "!(*md)": "prettier --write --ignore-unknown"
-  }
+  ]
 }
