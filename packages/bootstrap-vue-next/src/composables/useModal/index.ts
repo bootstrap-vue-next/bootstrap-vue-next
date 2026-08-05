@@ -20,16 +20,15 @@ import type {
   ModalOrchestratorArrayValue,
   ModalOrchestratorCreateParam,
 } from '../../types'
-import {buildController} from '../orchestratorShared'
+import {buildController, getOrchestratorControllerId} from '../orchestratorShared'
 import {BModal} from '../../components'
 
 export const useModal = () => {
   const orchestratorRegistry = inject(orchestratorRegistryKey, null)
-  if (!orchestratorRegistry) {
+  if (!orchestratorRegistry)
     throw Error(
       'useModal() must be called within setup(), and BApp, useRegistry or plugin must be installed/provided.'
     )
-  }
   const {store, _isOrchestratorInstalled} = orchestratorRegistry
 
   /**
@@ -38,24 +37,27 @@ export const useModal = () => {
   const create = <ComponentProps extends Record<string, unknown> = Record<string, unknown>>(
     obj: ModalOrchestratorCreateParam<ComponentProps> = {} as ModalOrchestratorCreateParam<ComponentProps>
   ): ComponentController<typeof BModal, Ref<ModalOrchestratorArrayValue>> => {
-    if (!_isOrchestratorInstalled.value) {
+    if (!_isOrchestratorInstalled.value)
       throw new Error('BApp component must be mounted to use the modal controller')
-    }
 
+    const modalComp = markRaw(BModal)
     const resolvedProps = ref(obj)
+    const modalStore = computed(() => store.value.modal)
+    const {
+      htmlAttributeId, storeId
+    } = getOrchestratorControllerId(resolvedProps.value.id)
 
-    const id = resolvedProps.value?.id || Symbol('Modals controller')
     const {resolve, controller} = buildController<
       typeof BModal,
       ComputedRef<OrchestratorStoreObject['modal']>
     >(
-      id,
-      computed(() => store.value.modal)
+      storeId,
+      modalStore
     )
 
-    const value = computed<ModalOrchestratorArrayValue, ModalOrchestratorArrayValue['props']>({
+    const value = computed<ModalOrchestratorArrayValue>({
       get: () => {
-        const {component = markRaw(BModal), options, slots, ...props} = resolvedProps.value
+        const {component = modalComp, options, slots, ...props} = resolvedProps.value
 
         return {
           component,
@@ -68,19 +70,22 @@ export const useModal = () => {
             },
             destroy: controller.destroy
           },
-          id,
-          props,
+          id: storeId,
+          props: {
+            ...props,
+            id: htmlAttributeId,
+          },
         }
       },
       set: (v) => {
         resolvedProps.value = {
           ...resolvedProps.value,
-          ...v,
+          ...v.props,
         }
       },
     })
 
-    store.value.modal.set(id, value)
+    modalStore.value.set(storeId, value)
 
     onScopeDispose(async () => {
       await controller[Symbol.asyncDispose]()

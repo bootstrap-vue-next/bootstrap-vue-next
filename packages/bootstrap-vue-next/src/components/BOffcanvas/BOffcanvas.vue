@@ -94,12 +94,7 @@ import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
 import {computed, type EmitFn, nextTick, onMounted, ref, useTemplateRef, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {
-  BOffcanvasEmits,
-  BOffcanvasProps,
-  BOffcanvasSlots,
-  BOffcanvasSlotsData,
-} from '../../types'
+import type {BOffcanvasEmits, BOffcanvasProps, BOffcanvasSlots, BOffcanvasSlotsData} from '../../types'
 import BButton from '../BButton/BButton.vue'
 import BCloseButton from '../BButton/BCloseButton.vue'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
@@ -203,7 +198,7 @@ const {
   isLeaving,
   trapActive,
   setLocalNoAnimation,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
+} = useShowHide({modelValue, props, emit: emit as EmitFn, element, id: computedId}, {
   transitionProps: {
     onAfterEnter,
     enterToClass: 'showing',

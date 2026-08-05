@@ -77,7 +77,6 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
-  toRef,
   toValue,
   useAttrs,
   useTemplateRef,
@@ -244,17 +243,15 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
   return arr
 })
 
-const placementRef = computed(() =>
-  isAutoPlacement.value ? undefined : (props.placement as FloatingPlacement)
-)
-
 const {floatingStyles, middlewareData, placement, update} = useFloating(
   referenceElement,
   floatingElement,
   {
-    placement: placementRef,
+    placement: computed(() =>
+      isAutoPlacement.value ? undefined : (props.placement as FloatingPlacement)
+    ),
     middleware: floatingMiddleware as ComputedRef<Middleware[]>,
-    strategy: toRef(() => props.strategy),
+    strategy: () => props.strategy,
   }
 )
 
@@ -275,7 +272,7 @@ const {
   renderRef,
   localTemporaryHide,
   setLocalTemporaryHide,
-} = useShowHide(modelValue, props, emit as EmitFn, floatingElement, computedId, {
+} = useShowHide({modelValue, props, emit: emit as EmitFn, element: floatingElement, id: computedId}, {
   showFn: () => {
     update()
     nextTick(() => {

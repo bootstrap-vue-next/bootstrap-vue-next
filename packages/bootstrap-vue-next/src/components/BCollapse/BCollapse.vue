@@ -115,7 +115,7 @@ const {
   computedNoAnimation,
   contentShowing,
   transitionProps,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
+} = useShowHide({modelValue, props, emit: emit as EmitFn, element, id: computedId}, {
   // addShowClass: false,
   transitionProps: {
     onBeforeLeave,

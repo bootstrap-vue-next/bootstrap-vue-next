@@ -136,16 +136,7 @@
 <script setup lang="ts">
 import {onKeyStroke, unrefElement} from '@vueuse/core'
 import {useActivatedFocusTrap} from '../../composables/useActivatedFocusTrap'
-import {
-  computed,
-  type CSSProperties,
-  type EmitFn,
-  nextTick,
-  onMounted,
-  ref,
-  useTemplateRef,
-  watch,
-} from 'vue'
+import {computed, type CSSProperties, type EmitFn, nextTick, onMounted, ref, useTemplateRef, watch} from 'vue'
 import type {BModalEmits, BModalProps, BModalSlots, BModalSlotsData} from '../../types'
 
 import BButton from '../BButton/BButton.vue'
@@ -233,8 +224,6 @@ const emit = defineEmits<BModalEmits>()
 const slots = defineSlots<BModalSlots>()
 
 const computedId = useId(() => props.id, 'modal')
-// Note: passive: true will sync an internal ref... This is required for useModalManager to exit,
-// Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
 const modelValue = defineModel<Exclude<BModalProps['modelValue'], undefined>>({default: false})
 
 const element = useTemplateRef<HTMLElement | null>('_element')
@@ -302,7 +291,7 @@ const {
   contentShowing,
   backdropReady,
   backdropVisible,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
+} = useShowHide({modelValue, props, emit: emit as EmitFn, element, id: computedId}, {
   // addShowClass: false,
   transitionProps: {
     onAfterEnter,

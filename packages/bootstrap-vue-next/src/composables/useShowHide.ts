@@ -31,27 +31,29 @@ export const fadeBaseTransitionProps = {
 } as const satisfies TransitionProps
 
 export const useShowHide = (
-  modelValue: Ref<boolean | number>,
-  props: {
-    visible?: boolean
-    show?: boolean
-    noAnimation?: boolean
-    noFade?: boolean
-    noCloseOnBackdrop?: boolean
-    noCloseOnEsc?: boolean
-    transitionProps?: TransitionProps
-    lazy?: boolean
-    initialAnimation?: boolean
-    delay?:
-      | number
-      | {
-          show: number
-          hide: number
-        }
-  } & Record<string, unknown>,
-  emit: EmitFn,
-  element: Ref<HTMLElement | null>,
-  computedId: Ref<string>,
+  {modelValue, element, props, emit, id}: {
+    modelValue: Ref<boolean | number>,
+    props: {
+      visible?: boolean
+      show?: boolean
+      noAnimation?: boolean
+      noFade?: boolean
+      noCloseOnBackdrop?: boolean
+      noCloseOnEsc?: boolean
+      transitionProps?: TransitionProps
+      lazy?: boolean
+      initialAnimation?: boolean
+      delay?:
+        | number
+        | {
+            show: number
+            hide: number
+          }
+    } & Record<string, unknown>,
+    emit: EmitFn,
+    element: Ref<HTMLElement | null>,
+    id: Ref<string>
+  },
   options: {
     transitionProps?: TransitionProps
     showFn?: () => void
@@ -119,12 +121,12 @@ export const useShowHide = (
 
   watch(
     () => props.visible,
-    (newval) => {
+    (newVal) => {
       localNoAnimation.value = true
 
       nextTick(() => {
-        if (newval) isVisible.value = true
-        if (newval) {
+        if (newVal) isVisible.value = true
+        if (newVal) {
           show()
         } else {
           hide('visible-prop', true)
@@ -134,8 +136,8 @@ export const useShowHide = (
   )
   watch(
     () => props.show,
-    (newval) => {
-      if (newval) {
+    (newVal) => {
+      if (newVal) {
         show()
       } else {
         hide('show-prop', true)
@@ -162,7 +164,7 @@ export const useShowHide = (
       relatedTarget: null,
       trigger: null,
       ...opts,
-      componentId: computedId?.value,
+      componentId: id?.value,
     })
 
   let showTimeout: ReturnType<typeof setTimeout> | undefined
@@ -349,7 +351,7 @@ export const useShowHide = (
   }
 
   const appRegistry = inject(showHideRegistryKey, null)?.register({
-    id: computedId.value,
+    id: id.value,
     toggle,
     show,
     hide,
@@ -370,7 +372,7 @@ export const useShowHide = (
     })
   })
 
-  watch(computedId, (newId, oldId) => {
+  watch(id, (newId, oldId) => {
     appRegistry?.updateId(newId, oldId)
   })
 

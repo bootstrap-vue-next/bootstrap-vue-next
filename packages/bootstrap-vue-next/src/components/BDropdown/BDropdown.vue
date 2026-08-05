@@ -204,7 +204,7 @@ const {
   contentShowing,
   isVisible,
   isActive,
-} = useShowHide(modelValue, props, emit as EmitFn, referenceElement, computedId, {
+} = useShowHide({modelValue, props, emit: emit as EmitFn, element: referenceElement, id: computedId}, {
   showFn: () => {
     update()
     nextTick(() => {
@@ -341,7 +341,7 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
 const {update, floatingStyles} = useFloating(referenceElement, floatingElement, {
   placement: () => props.placement,
   middleware: floatingMiddleware as ComputedRef<Middleware[]>,
-  strategy: toRef(() => props.strategy),
+  strategy: () => props.strategy,
 })
 
 const inButtonGroupAttributes = inButtonGroup

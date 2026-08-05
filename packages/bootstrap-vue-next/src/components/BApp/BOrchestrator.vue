@@ -8,9 +8,8 @@
         :style="value.style"
       >
         <TransitionGroup :name="value.transitionGroupName">
-          <!-- eslint-disable vue/no-unused-vars -->
           <span
-            v-for="{
+v-for="{
             component,
             fns: {
               setRef,
@@ -22,10 +21,12 @@
             slots,
             options,
             } in value.items"
-            :key="id"
-          >
+                              :key="id">
+            {{componentProps}}
+          <!-- eslint-disable vue/no-unused-vars -->
             <component
               :is="component"
+
               v-bind="componentProps"
               :ref="setRef"
               initial-animation
@@ -44,6 +45,7 @@
               "
               @hidden="
                 (e: BvTriggerableEvent) => {
+                  console.log('foobar')
                   setEventOk(e)
                   componentProps.onHidden?.(e)
                   if (e.defaultPrevented) {
@@ -51,9 +53,6 @@
                   }
                   if (!options?.resolveOnHide) {
                     resolvePromise(e)
-                  }
-                  if (!options?.keep) {
-                    destroy?.()
                   }
                 }
               "

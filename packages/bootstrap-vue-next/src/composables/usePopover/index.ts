@@ -18,23 +18,21 @@ import type {
   TooltipOrchestratorCreateParam,
 } from '../../types'
 import {BPopover, BTooltip} from '../../components'
-import {buildController} from '../orchestratorShared'
+import {buildController, getOrchestratorControllerId} from '../orchestratorShared'
 
 export const usePopover = () => {
   const orchestratorRegistry = inject(orchestratorRegistryKey, null)
-  if (!orchestratorRegistry) {
+  if (!orchestratorRegistry)
     throw new Error(
       'usePopover() must be called within setup(), and BApp, useRegistry or plugin must be installed/provided.'
     )
-  }
-
   const {store, _isOrchestratorInstalled} = orchestratorRegistry
 
   /**
    * Create a popover or tooltip
    * @param obj The popover or tooltip props
    * @param tooltip If true, create a tooltip, otherwise create a popover
-   * @returns {PromiseWithController<typeof BPopover | typeof BTooltip, PopoverOrchestratorParam>} A split promise/controller object
+   * @returns {PromiseWithController<typeof BPopover | typeof BTooltip, PopoverOrchestratorCreateParam>} A split promise/controller object
    */
   function create(
     obj: PopoverOrchestratorCreateParam,
@@ -48,26 +46,29 @@ export const usePopover = () => {
     obj: PopoverOrchestratorCreateParam | TooltipOrchestratorCreateParam,
     tooltip = false,
   ) {
-    if (!_isOrchestratorInstalled.value) {
+    if (!_isOrchestratorInstalled.value)
       throw new Error('The BApp component must be mounted to use the popover controller')
-    }
 
+    const comp = markRaw(tooltip ? BTooltip : BPopover)
     const resolvedProps = ref(obj)
-
-    const id = resolvedProps.value?.id || Symbol('Popover controller')
     const type = tooltip ? 'tooltip' : 'popover'
+    const pickedStore = computed(() => store.value[type])
+    const {
+      htmlAttributeId, storeId
+    } = getOrchestratorControllerId(resolvedProps.value.id)
+
     const {controller, resolve} = buildController<
       typeof BPopover | typeof BTooltip,
       ComputedRef<OrchestratorStoreObject['popover'] | OrchestratorStoreObject['tooltip']>
     >(
-      id,
-      computed(() => store.value[type])
+      storeId,
+      pickedStore
     )
 
     const value = computed<PopoverOrchestratorArrayValue, PopoverOrchestratorArrayValue['props']>({
       get: () => {
         const {
-          component = markRaw(tooltip ? BTooltip : BPopover),
+          component = comp,
           options,
           slots,
           ...props
@@ -80,7 +81,7 @@ export const usePopover = () => {
             keep: options?.keep ?? true,
           } satisfies OrchestratorCreateOptions,
           slots,
-          id,
+          id: storeId,
           fns: {
             resolve,
             setRef: (v: ComponentPublicInstance) => {
@@ -88,7 +89,10 @@ export const usePopover = () => {
             },
             destroy: controller.destroy
           },
-          props,
+          props: {
+            ...props,
+            id: htmlAttributeId,
+          },
         }
       },
       set: (v) => {
@@ -99,7 +103,7 @@ export const usePopover = () => {
       }
     })
 
-    store.value[type].set(id, value)
+    pickedStore.value.set(storeId, value)
 
     onScopeDispose(async () => {
       await controller[Symbol.asyncDispose]()

@@ -68,7 +68,11 @@ type ArrayValue<
   slots?: {
     [K in keyof BaseComponentSlots]?: BaseComponentSlots[K] | Readonly<Component>
   }
-  id: ControllerKey
+  /**
+   * If this is the prop that is passed in, it will be that
+   * If the input is undefined, it will be a symbol stored in the Map<>
+   */
+  id: string | symbol
   fns: {
     resolve: (value: BvTriggerableEvent) => void
     setRef: (v: ComponentPublicInstance) => void

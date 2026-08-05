@@ -14,7 +14,7 @@ const {create} = useModal()
 const okResult = ref<boolean | null | undefined>(null)
 
 const okBox = async () => {
-  const value = await create({
+  await using value = await create({
     body: 'This is an informational message',
     title: 'Message',
     okOnly: true,

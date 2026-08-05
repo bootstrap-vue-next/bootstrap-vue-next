@@ -5,17 +5,11 @@ import type {Numberish, ValidationState} from '../types/CommonTypes'
 import type {LiteralUnion} from '../types/LiteralUnion'
 import type {Size} from '../types/Size'
 import type {RadiusElement} from '../types/RadiusElement'
-import type {
-  BgColorVariant,
-  ButtonVariant,
-  ColorVariant,
-  TextColorVariant,
-} from '../types/ColorTypes'
+import type {BgColorVariant, ButtonVariant, ColorVariant, TextColorVariant} from '../types/ColorTypes'
 import type {CheckboxValue} from '../types/CheckboxTypes'
 import type {RadioValue} from '../types/RadioTypes'
 import type {BreadcrumbItemRaw} from '../types/BreadcrumbTypes'
 import type {
-  ControllerKey,
   ModalOrchestratorArrayValue,
   PopoverOrchestratorArrayValue,
   ToastOrchestratorArrayValue,
@@ -224,10 +218,10 @@ export const inputGroupKey: InjectionKey<boolean> = createBvnInjectionKey('input
 export const buttonGroupKey: InjectionKey<boolean> = createBvnInjectionKey('buttonGroup')
 
 export type OrchestratorStoreObject = {
-  toast: Map<ControllerKey, Ref<ToastOrchestratorArrayValue>>
-  modal: Map<ControllerKey, Ref<ModalOrchestratorArrayValue>>
-  popover: Map<ControllerKey, Ref<PopoverOrchestratorArrayValue>>
-  tooltip: Map<ControllerKey, Ref<TooltipOrchestratorArrayValue>>
+  toast: Map<string | symbol, Ref<ToastOrchestratorArrayValue>>
+  modal: Map<string | symbol, Ref<ModalOrchestratorArrayValue>>
+  popover: Map<string | symbol, Ref<PopoverOrchestratorArrayValue>>
+  tooltip: Map<string | symbol, Ref<TooltipOrchestratorArrayValue>>
 }
 export const orchestratorRegistryKey: InjectionKey<{
   store: Ref<OrchestratorStoreObject>

@@ -1,5 +1,5 @@
 import {type ComponentPublicInstance, inject, nextTick, provide, readonly, type Ref, ref} from 'vue'
-import type {ComponentController, ControllerKey, PromiseWithController} from '../../types/ComponentOrchestratorTypes'
+import type {ComponentController, ControllerKey, PromiseWithController} from '../../types'
 import type {BvTriggerableEvent} from '../../utils'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 
@@ -89,21 +89,16 @@ export const buildController = <
     async destroy() {
       const item = findItem()
       if (!item) return
-      if (item.value.props.modelValue) {
-        await new Promise<BvTriggerableEvent>((resolve) => {
-          const prev = item.value.props['onHidden'] as unknown
-          item.value.props['onHidden'] = (e: BvTriggerableEvent) => {
-            if (typeof prev === 'function') {
-              prev(e)
-            }
-            resolve(e)
-          }
-          nextTick(() => {
-            controller.hide('destroy')
-          })
-        })
+      try {
+        if(item.value.props.modelValue) {
+          await basePromise
+          await nextTick()
+          controller.hide('destroy')
+        }
       }
-      store.value.delete(id)
+      finally {
+        store.value.delete(id)
+      }
     },
     [Symbol.asyncDispose]() {
       return controller.destroy()
@@ -153,4 +148,21 @@ export const useOrchestratorRegistry = () => {
   const newOrchestratorRegistry = _newOrchestratorRegistry()
   provide(orchestratorRegistryKey, newOrchestratorRegistry)
   return newOrchestratorRegistry
+}
+
+export const getOrchestratorControllerId = (
+  propId: string | undefined,
+) => {
+  const id: ControllerKey = propId || Symbol('OrchestratorItem')
+
+  return {
+    /**
+     * This id is used for stability in the store, using the createIdWatcher will update the store if the id ever changes
+     */
+    storeId: id,
+    /**
+     * Do not pass in the symbol as a prop. Html attribute cannot be a symbol. Thus it's internal
+     */
+    htmlAttributeId: typeof id === 'string' ? id : undefined,
+  }
 }
