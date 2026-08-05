@@ -23,6 +23,13 @@ export interface ModuleOptions {
    */
   css: boolean
   /**
+   * When enabled, if the `@nuxt/image` module is detected, `BImg` (and any component using `BImg` internally,
+   * such as `BCardImg` or `BCarouselSlide`) will automatically render using `NuxtImg` instead of a plain `img` tag.
+   *
+   * @default true
+   */
+  autoUseNuxtImage: boolean
+  /**
    * @default {}
    */
   plugin: Omit<Exclude<BootstrapVueOptions, undefined>, 'id'>

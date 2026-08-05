@@ -1,4 +1,4 @@
-import { defineNuxtModule, createResolver, addImports, addPlugin } from '@nuxt/kit'
+import { defineNuxtModule, createResolver, addImports, addPlugin, hasNuxtModule } from '@nuxt/kit'
 import { composableNames, directiveNames, composablesWithExternalPath } from 'bootstrap-vue-next'
 import { useComponents } from './composables/useComponents'
 import type { ModuleOptions } from './types/ModuleOptions'
@@ -17,6 +17,7 @@ export default defineNuxtModule<ModuleOptions>({
     composables: true,
     directives: true,
     css: true,
+    autoUseNuxtImage: true,
     plugin: {},
   },
   setup(options, nuxt) {
@@ -63,16 +64,38 @@ export default defineNuxtModule<ModuleOptions>({
     // Add components
     useComponents()
 
-    // Add directives
-    if (Object.values(normalizedDirectiveOptions).includes(true)) {
-      const activeDirectives = parseActiveImports(normalizedDirectiveOptions, directiveNames)
-
-      // Expose the values for the runtime to use in useDirectives
-      nuxt.options.runtimeConfig.public.bootstrapVueNext = {
-        directives: activeDirectives,
-        plugin: options.plugin,
+    // Auto-detect @nuxt/image and configure BImg to use NuxtImg
+    if (options.autoUseNuxtImage && hasNuxtModule('@nuxt/image')) {
+      options.plugin = {
+        ...options.plugin,
+        components: {
+          ...options.plugin?.components,
+          BImg: {
+            tag: 'NuxtImg',
+            ...options.plugin?.components?.BImg,
+          },
+        },
       }
 
+      // `NuxtImg` is only auto-registered by `@nuxt/image` as a locally scoped auto-import,
+      // not as a globally registered component. Since `BImg` swaps its underlying element via
+      // a dynamic `:is="tag"` binding, `NuxtImg` must be globally registered for that
+      // resolution to work, so we register it globally ourselves here.
+      addPlugin(resolve('./runtime/registerNuxtImage'))
+    }
+
+    // Add directives
+    const activeDirectives = Object.values(normalizedDirectiveOptions).includes(true)
+      ? parseActiveImports(normalizedDirectiveOptions, directiveNames)
+      : []
+
+    // Expose the values for the runtime to use in useDirectives / createBootstrap
+    nuxt.options.runtimeConfig.public.bootstrapVueNext = {
+      directives: activeDirectives,
+      plugin: options.plugin,
+    }
+
+    if (activeDirectives.length > 0) {
       addPlugin(resolve('./runtime/useDirectives'))
     }
 
