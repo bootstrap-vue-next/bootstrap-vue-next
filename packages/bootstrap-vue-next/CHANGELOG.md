@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.9...bootstrapvuenext-v0.45.10) (2026-08-05)
+
+
+### Bug Fixes
+
+* BNavbarNav not respecting `tag` prop ([#3242](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3242)) ([51c19e4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/51c19e458d71c0afa564edef4d62f8c3f77c27ec))
+
 ## [0.45.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.8...bootstrapvuenext-v0.45.9) (2026-07-28)
 
 
