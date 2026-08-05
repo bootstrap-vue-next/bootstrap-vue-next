@@ -23,6 +23,12 @@ export interface ModuleOptions {
    */
   css: boolean
   /**
+   * Automatically use NuxtImg as the default tag for BImg when @nuxt/image module is detected.
+   *
+   * @default true
+   */
+  autoUseNuxtImage: boolean
+  /**
    * @default {}
    */
   plugin: Omit<Exclude<BootstrapVueOptions, undefined>, 'id'>
