@@ -15,6 +15,13 @@ describe('navbar-nav', () => {
     expect(wrapper.element.tagName).toBe('UL')
   })
 
+  it('respects a custom tag prop', () => {
+    const wrapper = mount(BNavbarNav, {
+      props: {tag: 'ol'},
+    })
+    expect(wrapper.element.tagName).toBe('OL')
+  })
+
   it('renders default slot', () => {
     const wrapper = mount(BNavbarNav, {
       slots: {default: 'foobar'},

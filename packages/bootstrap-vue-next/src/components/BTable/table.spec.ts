@@ -3497,18 +3497,18 @@ describe('label-sort props', () => {
 describe('aria-multiselectable', () => {
   const items = [{name: 'Alice'}, {name: 'Bob'}]
 
-  it('sets aria-multiselectable=true when selectable and selectMode is multi', () => {
+  it('does not set aria-multiselectable when selectable and selectMode is multi', () => {
     const wrapper = mount(BTable, {
       props: {items, selectable: true, selectMode: 'multi'},
     })
-    expect(wrapper.find('table').attributes('aria-multiselectable')).toBe('true')
+    expect(wrapper.find('table').attributes('aria-multiselectable')).toBeUndefined()
   })
 
-  it('sets aria-multiselectable=true when selectable and selectMode is range', () => {
+  it('does not set aria-multiselectable when selectable and selectMode is range', () => {
     const wrapper = mount(BTable, {
       props: {items, selectable: true, selectMode: 'range'},
     })
-    expect(wrapper.find('table').attributes('aria-multiselectable')).toBe('true')
+    expect(wrapper.find('table').attributes('aria-multiselectable')).toBeUndefined()
   })
 
   it('does not set aria-multiselectable when selectMode is single', () => {
