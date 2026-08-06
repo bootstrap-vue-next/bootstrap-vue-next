@@ -23,6 +23,18 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
     nuxt.options.build.transpile.push(resolve('./runtime'))
+    nuxt.hook('components:extend', (components) => {
+      for (const component of components) {
+        if (
+          component.pascalName === 'NuxtLink'
+          || component.kebabName === 'nuxt-link'
+          || component.export === 'NuxtLink'
+          || component.name === 'NuxtLink'
+        ) {
+          component.global = true
+        }
+      }
+    })
 
     if (options.css === true) {
       nuxt.options.css.push('bootstrap-vue-next/dist/bootstrap-vue-next.css')
