@@ -18,6 +18,7 @@ describe('composables auto-imports', async () => {
     const html = await $fetch('/toggle')
     expect(html).toContain('toggle-page')
     expect(html).toContain('toggle-value')
+    expect(html).toContain('shown')
   })
 
   it('useColorMode SSR: renders without error and does not throw on server', async () => {
