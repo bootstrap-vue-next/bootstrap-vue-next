@@ -14,6 +14,6 @@ defineOptions({
 })
 
 const props = defineProps<{
-  to: string | {path?: string}
+  to: string | { path?: string }
 }>()
 </script>

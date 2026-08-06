@@ -16,7 +16,7 @@
 
     <BNavItem
       to="/nav-item"
-      :link-attrs="{id: 'nav-item-link'}"
+      :link-attrs="{ id: 'nav-item-link' }"
     >
       NavItem
     </BNavItem>

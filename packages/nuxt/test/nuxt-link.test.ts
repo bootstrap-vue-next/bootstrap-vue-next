@@ -10,11 +10,17 @@ describe('nuxt-link integration', async () => {
   it('renders BLink and BLink-consuming components using NuxtLink by default', async () => {
     const html = await $fetch('/')
 
-    expect(html).toMatch(/<a(?=[^>]*id="direct-link")(?=[^>]*data-router-component="NuxtLink")[^>]*>/)
-    expect(html).toMatch(/<a(?=[^>]*id="button-link")(?=[^>]*data-router-component="NuxtLink")[^>]*>/)
-    expect(html).toMatch(/<a(?=[^>]*id="nav-item-link")(?=[^>]*data-router-component="NuxtLink")[^>]*>/)
-    expect(
-      html,
-    ).toMatch(/<a(?=[^>]*id="dropdown-item-link")(?=[^>]*data-router-component="NuxtLink")[^>]*>/)
+    expect(html).toMatch(
+      /<a(?=[^>]*id="direct-link")(?=[^>]*data-router-component="NuxtLink")[^>]+>/,
+    )
+    expect(html).toMatch(
+      /<a(?=[^>]*id="button-link")(?=[^>]*data-router-component="NuxtLink")[^>]+>/,
+    )
+    expect(html).toMatch(
+      /<a(?=[^>]*id="nav-item-link")(?=[^>]*data-router-component="NuxtLink")[^>]+>/,
+    )
+    expect(html).toMatch(
+      /<a(?=[^>]*id="dropdown-item-link")(?=[^>]*data-router-component="NuxtLink")[^>]+>/,
+    )
   })
 })
