@@ -28,6 +28,8 @@
     "lint": "eslint --fix",
     "test:lint": "eslint",
     "test": "pnpm run test:lint",
+    "test:unit": "vitest run",
+    "test:unit:ci": "pnpm run dev:prepare && vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
