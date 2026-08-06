@@ -4,6 +4,7 @@ export {autoUpdate} from '@floating-ui/vue'
 import {type DirectiveBinding, h, render} from 'vue'
 import BPopover from '../components/BPopover/BPopover.vue'
 import type {BPopoverProps} from '../types'
+import {warn} from './console'
 import {getSafeDocument} from './dom'
 
 export const resolveBootstrapPlacement = (placement: Placement): string => {
@@ -87,7 +88,7 @@ export const resolveContent = (
 
   // TODO: deprication remove warning in 2025-07
   if (values?.content)
-    console.warn('v-b-popover/v-b-tooltip: `content` is deprecated, use `body` instead')
+    warn('v-b-popover/v-b-tooltip', '`content` is deprecated, use `body` instead')
 
   return {
     title: values?.title ? values?.title : undefined,

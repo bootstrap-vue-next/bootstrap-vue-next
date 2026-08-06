@@ -1,4 +1,5 @@
 ---
+title: BPopover
 description: 'Add popovers to any element using the v-b-popover directive. Popovers can be triggered by hovering, focusing, or clicking an element'
 ---
 

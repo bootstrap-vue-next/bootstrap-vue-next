@@ -1,4 +1,5 @@
 ---
+title: Form Radio
 description: "For cross browser consistency, `BFormRadioGroup` and `BFormRadio` uses Bootstrap's custom radio input to replace the browser default radio input. It is built on top of semantic and accessible markup, so it is a solid replacement for the default radio input."
 ---
 

@@ -56,14 +56,14 @@
     </BRow>
     <BRow>
       <BCol>
-        {{ store.filter((el) => el.type === 'modal') }}
+        {{ store.modal }}
       </BCol>
     </BRow>
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import {computed, h, onMounted, ref, toValue} from 'vue'
+import {computed, h, onMounted, ref} from 'vue'
 import type {ColorVariant, OrchestratedModal} from 'bootstrap-vue-next'
 import {BModal} from 'bootstrap-vue-next/components/BModal'
 import {useModal} from 'bootstrap-vue-next/composables/useModal'
@@ -89,31 +89,40 @@ onMounted(() => {
 const {create, store} = useModal()
 
 const showFns = {
-  basicNoReactive: () => {
-    create({
+  basicNoReactive: async () => {
+    await using _ = await create({
       title: 'foobar',
       okVariant: 'danger',
-    })
+    }).show()
   },
-  basicCustomComponent: () => {
-    create({
+  basicCustomComponent: async () => {
+    await using _ = await create({
       slots: {default: h('div', null, {default: () => 'foobar!'})},
 
       okVariant: 'info',
-    })
+    }).show()
   },
-  simpleRefProps: () => {
-    create(firstRef)
+  simpleRefProps: async () => {
+    await using _ = await create(firstRef).show()
   },
-  dynamicRefProps: () => {
-    create(
-      computed(() => ({
-        ...firstRef.value,
-        okVariant: (Number.parseInt((toValue(firstRef.value.body) ?? '').charAt(2) ?? '0') % 2 === 0
-          ? 'danger'
-          : 'info') as ColorVariant,
-      }))
-    )
+  dynamicRefProps: async () => {
+    const modelValue = ref(false)
+      await using _ = await create(
+      // You would need to use a writable computed to be able to set modelValue
+      // Any v-modelable values would require a similar way to set the value. Refer to the component reference for which v-models it has
+      // You don't need to bind them all, if you don't care about the two-way communication. But modelValue is required for showing and hiding, naturally
+        computed({
+          get: () => ({
+            ...firstRef.value,
+            modelValue: modelValue.value,
+            okVariant: (Number.parseInt((firstRef.value.body ?? '').charAt(2) ?? '0') % 2 === 0
+              ? 'danger'
+              : 'info') as ColorVariant,
+          }),
+          set(v) {
+            modelValue.value = !!v.modelValue
+          }
+        })).show()
   },
   // Demonstration psuedocode, you can import a component and use it
   // importedComponent: () => {

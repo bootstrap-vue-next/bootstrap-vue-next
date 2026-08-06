@@ -1,7 +1,9 @@
 ---
-description: >
-  The icon components from BootstrapVue are deprecated. While migrating to BootstrapVueNext the icon components will not be supported as there are better, more modern solutions to incorporating icon packages into your application. Continue reading BootstrapVueNext's suggestion on how to incorporate Bootstrap-icons into your application!
+title: Icons
+description: Learn the recommended icon integration approaches for BootstrapVueNext after BootstrapVue icon component deprecation.
 ---
+
+This page covers the preferred replacement path for icon usage in BootstrapVueNext applications.
 
 <DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="Icon components from BootstrapVue" :plural="true">
   While migrating to BootstrapVueNext, the icon components will not be supported as there are better, more modern solutions

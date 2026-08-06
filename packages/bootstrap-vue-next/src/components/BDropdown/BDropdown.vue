@@ -204,27 +204,30 @@ const {
   contentShowing,
   isVisible,
   isActive,
-} = useShowHide(modelValue, props, emit as EmitFn, referenceElement, computedId, {
-  showFn: () => {
-    update()
-    nextTick(() => {
-      cleanup = autoUpdate(
-        referenceElement.value as ReferenceElement,
-        floatingElement.value as HTMLElement,
-        update,
-        {
-          animationFrame: false,
-        }
-      )
-    })
-  },
-  hideFn: () => {
-    if (cleanup) {
-      cleanup()
-      cleanup = undefined
-    }
-  },
-})
+} = useShowHide(
+  {modelValue, props, emit: emit as EmitFn, element: referenceElement, id: computedId},
+  {
+    showFn: () => {
+      update()
+      nextTick(() => {
+        cleanup = autoUpdate(
+          referenceElement.value as ReferenceElement,
+          floatingElement.value as HTMLElement,
+          update,
+          {
+            animationFrame: false,
+          }
+        )
+      })
+    },
+    hideFn: () => {
+      if (cleanup) {
+        cleanup()
+        cleanup = undefined
+      }
+    },
+  }
+)
 
 const computedMenuClasses = computed(() => [
   {
@@ -341,7 +344,7 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
 const {update, floatingStyles} = useFloating(referenceElement, floatingElement, {
   placement: () => props.placement,
   middleware: floatingMiddleware as ComputedRef<Middleware[]>,
-  strategy: toRef(() => props.strategy),
+  strategy: () => props.strategy,
 })
 
 const inButtonGroupAttributes = inButtonGroup

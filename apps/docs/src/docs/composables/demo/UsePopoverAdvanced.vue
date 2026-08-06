@@ -9,13 +9,13 @@ import {BButton, usePopover} from 'bootstrap-vue-next'
 const {popover} = usePopover()
 const advancedExample = ref<HTMLElement>()
 
-onMounted(() => {
-  popover({
+onMounted(async () => {
+  await using _ = await popover({
     slots: {
       default: (scope) => h('div', null, `Custom content - Visible: ${scope.visible}`),
     },
     target: advancedExample.value,
     title: 'Advanced Popover',
-  })
+  }).show()
 })
 </script>

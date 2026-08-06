@@ -334,7 +334,7 @@ export type BFormSelectSlots<T> = {
 
   first?: (props: Record<string, never>) => any
 
-  option: (props: SelectOption<T>) => any
+  option?: (props: SelectOption<T>) => any
 }
 
 export type BFormSelectOptionSlots = {

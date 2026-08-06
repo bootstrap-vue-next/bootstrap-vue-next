@@ -77,7 +77,6 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
-  toRef,
   toValue,
   useAttrs,
   useTemplateRef,
@@ -89,6 +88,7 @@ import {useId} from '../../composables/useId'
 import type {BPopoverEmits, BPopoverProps, BPopoverSlots, ShowHideSlotsData} from '../../types'
 import {isBoundary, isRootBoundary, resolveBootstrapPlacement} from '../../utils/floatingUi'
 import {getElement} from '../../utils/getElement'
+import {warn} from '../../utils/console'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import {useShowHide} from '../../composables/useShowHide'
 import {getSafeDocument, getSafeWindow} from '../../utils/dom'
@@ -243,17 +243,15 @@ const floatingMiddleware = computed<readonly Middleware[]>(() => {
   return arr
 })
 
-const placementRef = computed(() =>
-  isAutoPlacement.value ? undefined : (props.placement as FloatingPlacement)
-)
-
 const {floatingStyles, middlewareData, placement, update} = useFloating(
   referenceElement,
   floatingElement,
   {
-    placement: placementRef,
+    placement: computed(() =>
+      isAutoPlacement.value ? undefined : (props.placement as FloatingPlacement)
+    ),
     middleware: floatingMiddleware as ComputedRef<Middleware[]>,
-    strategy: toRef(() => props.strategy),
+    strategy: () => props.strategy,
   }
 )
 
@@ -274,25 +272,28 @@ const {
   renderRef,
   localTemporaryHide,
   setLocalTemporaryHide,
-} = useShowHide(modelValue, props, emit as EmitFn, floatingElement, computedId, {
-  showFn: () => {
-    update()
-    nextTick(() => {
-      cleanup = autoUpdate(
-        referenceElement.value as ReferenceElement,
-        floatingElement.value as HTMLElement,
-        update,
-        {animationFrame: props.realtime}
-      )
-    })
-  },
-  hideFn: () => {
-    if (cleanup) {
-      cleanup()
-      cleanup = undefined
-    }
-  },
-})
+} = useShowHide(
+  {modelValue, props, emit: emit as EmitFn, element: floatingElement, id: computedId},
+  {
+    showFn: () => {
+      update()
+      nextTick(() => {
+        cleanup = autoUpdate(
+          referenceElement.value as ReferenceElement,
+          floatingElement.value as HTMLElement,
+          update,
+          {animationFrame: props.realtime}
+        )
+      })
+    },
+    hideFn: () => {
+      if (cleanup) {
+        cleanup()
+        cleanup = undefined
+      }
+    },
+  }
+)
 
 watch(middlewareData, (newValue) => {
   if (!props.noHide) {
@@ -428,7 +429,7 @@ const bind = () => {
     if (elem) {
       triggerElement.value = elem
     } else {
-      console.warn('Target element not found', props.target)
+      warn('BPopover', 'Target element not found', props.target)
     }
   } else {
     triggerElement.value = placeholder.value?.nextElementSibling as HTMLElement
@@ -438,7 +439,7 @@ const bind = () => {
     if (elem) {
       referenceElement.value = elem
     } else {
-      console.warn('Reference element not found', props.reference)
+      warn('BPopover', 'Reference element not found', props.reference)
     }
   } else {
     referenceElement.value = triggerElement.value

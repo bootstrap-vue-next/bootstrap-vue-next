@@ -1,4 +1,5 @@
 ---
+title: Form Select
 description: 'Bootstrap custom `<select>` using custom styles. Optionally specify options based on an array, array of objects, or an object.'
 ---
 

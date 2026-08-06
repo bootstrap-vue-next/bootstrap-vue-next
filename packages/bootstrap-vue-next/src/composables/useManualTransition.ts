@@ -1,4 +1,4 @@
-import {type MaybeRef, type MaybeRefOrGetter, onUnmounted, ref, toValue} from 'vue'
+import {type MaybeRef, type MaybeRefOrGetter, onUnmounted, shallowRef, toValue} from 'vue'
 
 // I've made something wild here
 export const useManualTransition = (
@@ -6,9 +6,9 @@ export const useManualTransition = (
   classEnter: MaybeRefOrGetter<string | string[]>,
   classLeave: MaybeRefOrGetter<string | string[]>
 ) => {
-  const element = ref(el)
+  const element = shallowRef(el)
 
-  const transitionListener = ref<() => void>()
+  const transitionListener = shallowRef<() => void>()
 
   const closeActiveListener = () => {
     if (transitionListener.value) {

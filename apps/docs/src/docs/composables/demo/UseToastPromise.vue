@@ -15,8 +15,8 @@ import {BButton, BButtonGroup, useToast} from 'bootstrap-vue-next'
 
 const {create} = useToast()
 
-const promiseToast = () => {
-  create(
+const promiseToast = async () => {
+  await using r = await create(
     {
       variant: 'primary',
       position: 'middle-center',
@@ -31,12 +31,14 @@ const promiseToast = () => {
           ]),
         ],
       },
+      options: {
+        resolveOnHide: true,
+      }
     },
-    {resolveOnHide: true}
-  ).then((r) => {
-    if (r && typeof r === 'object' && 'ok' in r) {
-      create({title: `you pressed: ${r.ok ? 'yes' : 'no'}`})
-    }
-  })
+  ).show()
+
+  if (r && typeof r === 'object' && 'ok' in r) {
+    create({title: `you pressed: ${r.ok ? 'yes' : 'no'}`})
+  }
 }
 </script>

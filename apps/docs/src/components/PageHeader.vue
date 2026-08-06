@@ -14,8 +14,9 @@
           <ViewSourceButton v-if="editHref" :href="editHref" target="_blank" class="me-2">
             Edit this page on GitHub
           </ViewSourceButton>
+          <MarkdownActionsDropdown v-if="markdownActionsAvailable" />
           <ViewSourceButton v-if="migrationHref" :href="migrationHref">
-            Migration Guide
+            Migration Notes
           </ViewSourceButton>
         </BCol>
       </BRow>
@@ -24,12 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject} from 'vue'
-import {useData, withBase} from 'vitepress'
-import {useEditThisPageOnGithub} from '../composables/useEditLink'
-import {useMarkdownRenderer} from '../composables/useMarkdownRenderer'
-import {appInfoKey} from '../../.vitepress/theme/keys'
-import {kebabToTitleCase} from '../utils/dataLoaderUtils'
+import { computed, inject } from 'vue'
+import { useData, withBase } from 'vitepress'
+import { useEditThisPageOnGithub } from '../composables/useEditLink'
+import { useMarkdownRenderer } from '../composables/useMarkdownRenderer'
+import { data as migrationData } from '../data/migration.data'
+import { appInfoKey } from '../../.vitepress/theme/keys'
+import { kebabToTitleCase } from '../utils/dataLoaderUtils'
+import MarkdownActionsDropdown from './MarkdownActionsDropdown.vue'
 
 interface AppInfo {
   githubComponentsDirectory: string
@@ -57,6 +60,29 @@ function toCamelCase(str: string): string {
   return str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
 }
 
+function fileNameToDirectiveMigrationId(str: string): string {
+  if (str.startsWith('B')) {
+    const directiveName = str
+      .slice(1)
+      .replace(/([A-Z])/g, '-$1')
+      .toLowerCase()
+      .replace(/^-/, '')
+    return `v-b-${directiveName}`
+  }
+
+  return `v-${str.toLowerCase()}`
+}
+
+function getFallbackMigrationUrl(anchorName?: string | null): string {
+  const baseUrl = '/docs/migration-data/patterns/overview'
+
+  if (anchorName === 'deprecation') {
+    return withBase(`${baseUrl}#deprecation`)
+  }
+
+  return withBase(baseUrl)
+}
+
 defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: (props: Record<string, never>) => any
@@ -68,10 +94,10 @@ const props = withDefaults(
   }>(),
   {
     withPageHeader: true,
-  }
+  },
 )
 
-const {frontmatter, page} = useData()
+const { frontmatter, page } = useData()
 const description = computed(() => (frontmatter.value?.description as string) || '')
 const renderedDescription = useMarkdownRenderer(description)
 
@@ -121,11 +147,11 @@ const editHref = useEditThisPageOnGithub()
 const sourceHref = computed(() =>
   path.value && inferredBase.value && globalData
     ? `${globalData[inferredBase.value]}/${path.value}`
-    : null
+    : null,
 )
 
 /**
- * Derive the migration guide anchor from the current page path.
+ * Derive the migration docs link from the current page path.
  * - Components: kebab filename → PascalCase → prepend B → lowercase anchor
  *   e.g. "form-checkbox" → "BFormCheckbox" → "bformcheckbox"
  * - Directives: PascalCase filename → strip B → lowercase anchor
@@ -138,9 +164,6 @@ const sourceHref = computed(() =>
 const migrationHref = computed(() => {
   const fmOverride = frontmatter.value?.migrationGuide
   if (fmOverride === false) return null
-  if (typeof fmOverride === 'string' && fmOverride) {
-    return withBase(`/docs/migration-guide#${fmOverride}`)
-  }
 
   const base = inferredBase.value
   if (!base || !page.value?.relativePath) return null
@@ -153,10 +176,12 @@ const migrationHref = computed(() => {
   if (filename.startsWith('_')) return null
 
   let anchor: string | null = null
+  let migrationId: string | null = null
 
   if (base === 'githubComponentsDirectory') {
     // Derive: kebab → PascalCase → prepend B → lowercase
     anchor = `b${toPascalCase(filename)}`.toLowerCase()
+    migrationId = anchor
   } else if (base === 'githubDirectivesDirectory') {
     // Normalize: handle both kebab-case (b-toggle) and PascalCase (BToggle)
     // Strip b-/B prefix, remove hyphens, lowercase
@@ -166,12 +191,26 @@ const migrationHref = computed(() => {
         ? filename.slice(1)
         : filename
     anchor = name.toLowerCase()
+    migrationId = fileNameToDirectiveMigrationId(filename)
   }
 
-  return anchor ? withBase(`/docs/migration-guide#${anchor}`) : null
+  if (typeof fmOverride === 'string' && fmOverride) {
+    const overrideMigration = migrationData.find((item) => item.id === fmOverride)
+    if (overrideMigration) return withBase(overrideMigration.url)
+    return getFallbackMigrationUrl(fmOverride)
+  }
+
+  const migration = migrationId ? migrationData.find((item) => item.id === migrationId) : null
+
+  if (migration) return withBase(migration.url)
+  return anchor ? getFallbackMigrationUrl(anchor) : null
 })
 
+const markdownActionsAvailable = computed(() => Boolean(page.value?.relativePath))
+
 const showButtons = computed(
-  () => props.withPageHeader && (editHref.value || sourceHref.value || migrationHref.value)
+  () =>
+    props.withPageHeader &&
+    (editHref.value || sourceHref.value || migrationHref.value || markdownActionsAvailable.value),
 )
 </script>
