@@ -91,6 +91,10 @@ const headerLinks = [
     label: 'Getting Started',
   },
   {
+    route: withBase('/docs/nuxt'),
+    label: 'Nuxt',
+  },
+  {
     route: withBase('/docs/icons'),
     label: 'Icons',
   },

@@ -1,4 +1,4 @@
-import {type UseColorModeOptions, useColorMode as useVueuseColorMode} from '@vueuse/core'
+import {useColorMode as useVueuseColorMode, type UseColorModeOptions} from '@vueuse/core'
 
 export interface ColorModeOptions extends UseColorModeOptions {
   /**
@@ -16,7 +16,7 @@ export const useColorMode = (opts: Readonly<ColorModeOptions> = {}) => {
     attribute,
     selector,
     storageKey:
-      persist === true
+      persist
         ? `bv-color-${opts.attribute ?? attribute}-${opts.selector ?? selector}`
         : null,
     ...opts,
