@@ -52,6 +52,7 @@
     "@nuxt/devtools": "^3.4.1",
     "@nuxt/eslint-config": "^1.16.0",
     "@nuxt/image": "^2.1.0",
+    "@nuxtjs/color-mode": "^3.5.2",
     "@nuxt/module-builder": "^1.0.3",
     "@nuxt/schema": "^4.5.2",
     "@nuxt/test-utils": "^4.1.0",

@@ -30,6 +30,13 @@ export interface ModuleOptions {
    */
   autoUseNuxtImage: boolean
   /**
+   * When enabled and `@nuxtjs/color-mode` is installed, bootstrap-vue-next provides module defaults
+   * for that module so Bootstrap color mode attributes work out of the box.
+   *
+   * @default true
+   */
+  autoConfigureNuxtColorMode: boolean
+  /**
    * @default {}
    */
   plugin: Omit<Exclude<BootstrapVueOptions, undefined>, 'id'>

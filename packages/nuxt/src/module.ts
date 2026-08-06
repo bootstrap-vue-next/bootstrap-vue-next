@@ -1,9 +1,15 @@
 import { defineNuxtModule, createResolver, addImports, addPlugin, hasNuxtModule } from '@nuxt/kit'
 import { composableNames, directiveNames, composablesWithExternalPath } from 'bootstrap-vue-next'
 import { useComponents } from './composables/useComponents'
+import type { ModuleDependencies } from '@nuxt/schema'
 import type { ModuleOptions } from './types/ModuleOptions'
+import type { ModuleOptions as NuxtColorModeConfigOptions } from '@nuxtjs/color-mode'
 import { parseActiveImports } from './utils/parseActiveImports'
 import { normalizeConfigurationValue } from './utils/normalizeConfigurationValue'
+
+const nuxtColorModeDefaults = {
+  dataValue: 'bs-theme',
+} satisfies Partial<NuxtColorModeConfigOptions>
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -18,10 +24,26 @@ export default defineNuxtModule<ModuleOptions>({
     directives: true,
     css: true,
     autoUseNuxtImage: true,
+    autoConfigureNuxtColorMode: true,
     plugin: {},
+  },
+  moduleDependencies: (nuxt): ModuleDependencies => {
+    const moduleOptions = (nuxt.options.bootstrapVueNext ?? {}) as Partial<ModuleOptions>
+    const shouldConfigureColorMode = moduleOptions.autoConfigureNuxtColorMode ?? true
+
+    return {
+      '@nuxtjs/color-mode': {
+        optional: true,
+        defaults: shouldConfigureColorMode
+          ? nuxtColorModeDefaults
+          : ({} satisfies Partial<NuxtColorModeConfigOptions>),
+      },
+    }
   },
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
+    const hasNuxtColorMode = hasNuxtModule('@nuxtjs/color-mode')
+
     nuxt.options.build.transpile.push(resolve('./runtime'))
     nuxt.hook('components:extend', (components) => {
       for (const component of components) {
@@ -29,7 +51,6 @@ export default defineNuxtModule<ModuleOptions>({
           component.pascalName === 'NuxtLink'
           || component.kebabName === 'nuxt-link'
           || component.export === 'NuxtLink'
-          || component.name === 'NuxtLink'
         ) {
           component.global = true
         }
@@ -113,7 +134,11 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add composables
     if (Object.values(normalizedComposableOptions).includes(true)) {
-      parseActiveImports(normalizedComposableOptions, composableNames).forEach((name) => {
+      const activeComposables = parseActiveImports(normalizedComposableOptions, composableNames).filter(
+        name => !(hasNuxtColorMode && name === 'useColorMode'),
+      )
+
+      activeComposables.forEach((name) => {
         const from = `bootstrap-vue-next${composablesWithExternalPath[name]}`
         addImports({
           from,

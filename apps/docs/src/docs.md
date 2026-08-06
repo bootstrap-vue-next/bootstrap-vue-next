@@ -273,6 +273,7 @@ export default defineNuxtConfig({
     // composables: {useBreadcrumb: false, useColorMode: false, all: true} // Will include everything except useBreadcrumb & useColorMode
     directives: {all: true}, // Will include all directives
     css: true, // Will include the module's CSS. If set to false, you can add the CSS manually in the 'css' property below
+    autoConfigureNuxtColorMode: true, // If @nuxtjs/color-mode exists, set Bootstrap-friendly defaults (can be disabled)
   },
   css: [
     // 'bootstrap/dist/css/bootstrap.min.css' // Not necessary if `css: true`
