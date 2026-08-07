@@ -4,6 +4,7 @@ import {
   type ComputedRef,
   inject,
   markRaw,
+  type MaybeRef,
   onScopeDispose,
   ref,
   type Ref,
@@ -13,9 +14,9 @@ import type {
   ComponentController,
   OrchestratorCreateOptions,
   PopoverOrchestratorArrayValue,
-  PopoverOrchestratorCreateParam,
+  PopoverOrchestratorCreateParamBase,
   TooltipOrchestratorArrayValue,
-  TooltipOrchestratorCreateParam,
+  TooltipOrchestratorCreateParamBase,
 } from '../../types'
 import {BPopover, BTooltip} from '../../components'
 import {buildController, getOrchestratorControllerId} from '../orchestratorShared'
@@ -34,16 +35,23 @@ export const usePopover = () => {
    * @param tooltip If true, create a tooltip, otherwise create a popover
    * @returns {PromiseWithController<typeof BPopover | typeof BTooltip, PopoverOrchestratorCreateParam>} A split promise/controller object
    */
-  function create(
-    obj: PopoverOrchestratorCreateParam,
+  // Uses `function` declarations (rather than generic arrow functions assigned to consts) so
+  // that TypeScript preserves per-call generic inference when these are returned as part of
+  // `usePopover()`'s inferred return object.
+  function create<
+    T extends PopoverOrchestratorCreateParamBase = PopoverOrchestratorCreateParamBase,
+  >(
+    obj: MaybeRef<T>,
     tooltip?: false
   ): ComponentController<typeof BPopover, Ref<PopoverOrchestratorArrayValue>>
-  function create(
-    obj: TooltipOrchestratorCreateParam,
+  function create<
+    T extends TooltipOrchestratorCreateParamBase = TooltipOrchestratorCreateParamBase,
+  >(
+    obj: MaybeRef<T>,
     tooltip: true
   ): ComponentController<typeof BTooltip, Ref<TooltipOrchestratorArrayValue>>
   function create(
-    obj: PopoverOrchestratorCreateParam | TooltipOrchestratorCreateParam,
+    obj: MaybeRef<PopoverOrchestratorCreateParamBase | TooltipOrchestratorCreateParamBase>,
     tooltip = false
   ) {
     if (!_isOrchestratorInstalled.value)
@@ -60,7 +68,7 @@ export const usePopover = () => {
       ComputedRef<OrchestratorStoreObject['popover'] | OrchestratorStoreObject['tooltip']>
     >(storeId, pickedStore)
 
-    const value = computed<PopoverOrchestratorArrayValue, PopoverOrchestratorArrayValue['props']>({
+    const value = computed<PopoverOrchestratorArrayValue>({
       get: () => {
         const {component = comp, options, slots, ...props} = resolvedProps.value
 
@@ -88,7 +96,7 @@ export const usePopover = () => {
       set: (v) => {
         resolvedProps.value = {
           ...resolvedProps.value,
-          ...v,
+          ...v.props,
         }
       },
     })
@@ -102,9 +110,17 @@ export const usePopover = () => {
     return controller
   }
 
-  const tooltip = (obj: TooltipOrchestratorCreateParam) => create(obj, true)
+  function tooltip<
+    T extends TooltipOrchestratorCreateParamBase = TooltipOrchestratorCreateParamBase,
+  >(obj: MaybeRef<T>) {
+    return create(obj, true)
+  }
 
-  const popover = (obj: PopoverOrchestratorCreateParam) => create(obj, false)
+  function popover<
+    T extends PopoverOrchestratorCreateParamBase = PopoverOrchestratorCreateParamBase,
+  >(obj: MaybeRef<T>) {
+    return create(obj, false)
+  }
 
   return {
     _isOrchestratorInstalled,

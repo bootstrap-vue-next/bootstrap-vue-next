@@ -4,6 +4,7 @@ import {
   type ComputedRef,
   inject,
   markRaw,
+  type MaybeRef,
   onScopeDispose,
   ref,
   type Ref,
@@ -13,7 +14,7 @@ import type {ContainerPosition} from '../../types/Alignment'
 import type {
   ComponentController,
   ToastOrchestratorArrayValue,
-  ToastOrchestratorCreateParam,
+  ToastOrchestratorCreateParamBase,
 } from '../../types'
 import {buildController, getOrchestratorControllerId} from '../orchestratorShared'
 import {BToast} from '../../components'
@@ -31,9 +32,15 @@ export const useToast = () => {
   /**
    * @returns {ComponentController<typeof BToast, ToastOrchestratorParam>}
    */
-  const create = <ComponentProps extends Record<string, unknown> = Record<string, unknown>>(
-    obj: ToastOrchestratorCreateParam<ComponentProps> = {} as ToastOrchestratorCreateParam<ComponentProps>
-  ): ComponentController<typeof BToast, Ref<ToastOrchestratorArrayValue>> => {
+  // Uses a `function` declaration (rather than a generic arrow function assigned to a const) so
+  // that TypeScript preserves per-call generic inference when `create` is returned as part of
+  // `useToast()`'s inferred return object.
+  function create<
+    ComponentProps extends Record<string, unknown> = Record<string, unknown>,
+    T extends ToastOrchestratorCreateParamBase<ComponentProps> = ToastOrchestratorCreateParamBase<ComponentProps>,
+  >(
+    obj: MaybeRef<T> = {} as T
+  ): ComponentController<typeof BToast, Ref<ToastOrchestratorArrayValue>> {
     if (!_isOrchestratorInstalled.value)
       throw new Error('The BApp component must be mounted to use the toast composable')
 
@@ -47,7 +54,7 @@ export const useToast = () => {
       ComputedRef<OrchestratorStoreObject['toast']>
     >(storeId, toastStore)
 
-    const value = computed<ToastOrchestratorArrayValue, ToastOrchestratorArrayValue['props']>({
+    const value = computed<ToastOrchestratorArrayValue>({
       get: () => {
         const {component = toastComp, options, slots, ...props} = resolvedProps.value
 
@@ -73,7 +80,7 @@ export const useToast = () => {
       set: (v) => {
         resolvedProps.value = {
           ...resolvedProps.value,
-          ...v,
+          ...v.props,
         }
       },
     })

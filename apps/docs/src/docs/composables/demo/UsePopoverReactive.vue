@@ -3,7 +3,15 @@
 </template>
 
 <script setup lang="ts">
-import {type ComponentPublicInstance, onMounted, onUnmounted, reactive, ref, useTemplateRef} from 'vue'
+import {
+  type ComponentPublicInstance,
+  computed,
+  onMounted,
+  onUnmounted,
+  ref,
+  useTemplateRef,
+  watchEffect,
+} from 'vue'
 import {BButton, type TooltipOrchestratorCreateParam, usePopover} from 'bootstrap-vue-next'
 
 const {tooltip} = usePopover()
@@ -12,12 +20,18 @@ const title = ref('Hello')
 const reactiveExample = useTemplateRef('reactiveExample')
 let intervalId: NodeJS.Timeout | undefined
 
-const myTooltip: TooltipOrchestratorCreateParam = reactive({
-  // The value passed in should have at least a writable modelValue. So you'll want to use reactive.
-  // Any reactive struct should, but reactives are easiest to forward dynamic inputs, while also being writable
-  title: title,
-  target: reactiveExample as unknown as ComponentPublicInstance,
+// `tooltip()`/`popover()` need a writable ref/plain object (they need to control `modelValue`
+// themselves), so `reactive()` is not used here. Instead, derive the reactive pieces with
+// `computed()`, then sync them onto a plain ref via `watchEffect()`.
+const derivedTitle = computed(() => title.value)
+const myTooltip = ref<TooltipOrchestratorCreateParam>({
+  title: derivedTitle.value,
+  target: reactiveExample.value as unknown as ComponentPublicInstance,
   modelValue: false,
+})
+watchEffect(() => {
+  myTooltip.value.title = derivedTitle.value
+  myTooltip.value.target = reactiveExample.value as unknown as ComponentPublicInstance
 })
 
 onMounted(async () => {

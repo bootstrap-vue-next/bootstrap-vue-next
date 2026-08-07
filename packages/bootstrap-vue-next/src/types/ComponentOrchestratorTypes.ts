@@ -40,24 +40,22 @@ export type PromiseWithController<Component, Props extends Ref<OrchestratorArray
   controller: ComponentController<Component, Props>
 }
 
-type OrchestratorCreate<
+type OrchestratorCreateBase<
   BaseComponentProps extends Record<string, any>,
   SuppliedComponentProps extends Record<string, any>,
   BaseComponentSlots extends Record<string, any>,
   BaseComponentEmits extends Record<string, any>,
-> = MaybeRef<
-  BaseComponentProps & {
-    options?: OrchestratorCreateOptions
-    component?: Readonly<Component>
-    slots?: {
-      [K in keyof BaseComponentSlots]?: BaseComponentSlots[K] | Readonly<Component>
-    }
-  } & {
-    [K in Extract<keyof BaseComponentEmits, string> as CamelCase<Prefix<'on-', K>>]?: (
-      e: BaseComponentEmits[K][0]
-    ) => void
-  } & SuppliedComponentProps
->
+> = BaseComponentProps & {
+  options?: OrchestratorCreateOptions
+  component?: Readonly<Component>
+  slots?: {
+    [K in keyof BaseComponentSlots]?: BaseComponentSlots[K] | Readonly<Component>
+  }
+} & {
+  [K in Extract<keyof BaseComponentEmits, string> as CamelCase<Prefix<'on-', K>>]?: (
+    e: BaseComponentEmits[K][0]
+  ) => void
+} & SuppliedComponentProps
 type ArrayValue<
   BaseComponentProps extends Record<string, any>,
   BaseComponentSlots extends Record<string, any>,
@@ -86,9 +84,9 @@ type ArrayValue<
 }
 
 // Toast
-export type ToastOrchestratorCreateParam<
+export type ToastOrchestratorCreateParamBase<
   ComponentProps extends Record<string, any> = Record<string, any>,
-> = OrchestratorCreate<
+> = OrchestratorCreateBase<
   BToastProps & {
     // These are props that are specific to how toast renders.
     // They aren't toast props, rather props for the orchestrator(s)
@@ -107,6 +105,9 @@ export type ToastOrchestratorCreateParam<
   BToastSlots,
   BToastEmits
 >
+export type ToastOrchestratorCreateParam<
+  ComponentProps extends Record<string, any> = Record<string, any>,
+> = MaybeRef<ToastOrchestratorCreateParamBase<ComponentProps>>
 type ToastArrayProps = BToastProps & {
   position?: ContainerPosition
   appendToast?: boolean
@@ -114,9 +115,17 @@ type ToastArrayProps = BToastProps & {
 export type ToastOrchestratorArrayValue = ArrayValue<ToastArrayProps, BToastSlots, BToastEmits>
 
 // Tooltip
+export type TooltipOrchestratorCreateParamBase<
+  ComponentProps extends Record<string, any> = Record<string, any>,
+> = OrchestratorCreateBase<
+  BTooltipProps,
+  ComponentProps,
+  Omit<BTooltipSlots, 'target'>,
+  BTooltipEmits
+>
 export type TooltipOrchestratorCreateParam<
   ComponentProps extends Record<string, any> = Record<string, any>,
-> = OrchestratorCreate<BTooltipProps, ComponentProps, Omit<BTooltipSlots, 'target'>, BTooltipEmits>
+> = MaybeRef<TooltipOrchestratorCreateParamBase<ComponentProps>>
 export type TooltipOrchestratorArrayValue = ArrayValue<
   BTooltipProps,
   Omit<BTooltipSlots, 'target'>,
@@ -124,9 +133,17 @@ export type TooltipOrchestratorArrayValue = ArrayValue<
 >
 
 // Popovers
+export type PopoverOrchestratorCreateParamBase<
+  ComponentProps extends Record<string, any> = Record<string, any>,
+> = OrchestratorCreateBase<
+  BPopoverProps,
+  ComponentProps,
+  Omit<BPopoverSlots, 'target'>,
+  BPopoverEmits
+>
 export type PopoverOrchestratorCreateParam<
   ComponentProps extends Record<string, any> = Record<string, any>,
-> = OrchestratorCreate<BPopoverProps, ComponentProps, Omit<BPopoverSlots, 'target'>, BPopoverEmits>
+> = MaybeRef<PopoverOrchestratorCreateParamBase<ComponentProps>>
 export type PopoverOrchestratorArrayValue = ArrayValue<
   BPopoverProps,
   Omit<BPopoverSlots, 'target'>,
@@ -134,9 +151,12 @@ export type PopoverOrchestratorArrayValue = ArrayValue<
 >
 
 // Modals
+export type ModalOrchestratorCreateParamBase<
+  ComponentProps extends Record<string, any> = Record<string, any>,
+> = OrchestratorCreateBase<BModalProps, ComponentProps, BModalSlots, BModalEmits>
 export type ModalOrchestratorCreateParam<
   ComponentProps extends Record<string, any> = Record<string, any>,
-> = OrchestratorCreate<BModalProps, ComponentProps, BModalSlots, BModalEmits>
+> = MaybeRef<ModalOrchestratorCreateParamBase<ComponentProps>>
 export type ModalOrchestratorArrayValue = ArrayValue<BModalProps, BModalSlots, BModalEmits>
 
 export type OrchestratorArrayValue =

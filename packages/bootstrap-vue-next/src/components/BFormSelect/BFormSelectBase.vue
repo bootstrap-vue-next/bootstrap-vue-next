@@ -73,7 +73,7 @@ const _props = withDefaults(defineProps<Omit<BFormSelectBaseProps, 'modelValue'>
 })
 const props = useDefaults(_props, 'BFormSelect')
 
-const modelValue = defineModel<any>({
+const modelValue = defineModel<BFormSelectBaseProps['modelValue']>({
   default: '',
 })
 

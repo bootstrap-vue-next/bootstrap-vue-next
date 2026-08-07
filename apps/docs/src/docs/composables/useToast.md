@@ -39,7 +39,7 @@ Optional second argument can be passed to `create` to some options: `keep` and `
 
 ### Reactivity Within create
 
-`create` props property can accept a `MaybeRefOrGetter`, meaning that you can make properties reactive
+`create` props property can accept a `MaybeRef`, meaning that you can make properties reactive
 
 <<< DEMO ./demo/UseToastReactive.vue
 

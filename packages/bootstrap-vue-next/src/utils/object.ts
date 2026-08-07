@@ -14,11 +14,12 @@ export const omit = <
 >(
   objToPluck: Readonly<A>,
   keysToPluck: Readonly<B> | readonly (keyof A)[]
-): Omit<A, B[number]> =>
-  Object.keys(objToPluck)
-    .filter((key) => !keysToPluck.map((el) => el.toString()).includes(key))
-    .reduce((result, key) => ({...result, [key]: objToPluck[key]}), {} as Omit<A, B[number]>)
-
+): Omit<A, B[number]> => {
+  const keysToOmit = new Set(keysToPluck)
+  return Reflect.ownKeys(objToPluck)
+    .filter((key) => !keysToOmit.has(key))
+    .reduce((result, key) => ({...result, [key]: objToPluck[key as keyof A]}), {} as Omit<A, B[number]>)
+}
 /**
  * Picks properties from an object, base on the values in an array, and returns the new object.
  * Equivalent to an object version of TS Pick<>
@@ -160,7 +161,7 @@ export const deepEqual = (a: any, b: any): boolean => {
   }
 
   for (const key of keysA) {
-    if (!keysB.includes(key) || !deepEqual(a[key], b[key])) {
+    if (!Object.hasOwn(b, key) || !deepEqual(a[key], b[key])) {
       return false
     }
   }

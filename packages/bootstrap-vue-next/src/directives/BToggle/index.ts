@@ -43,6 +43,7 @@ const handleUpdate = (
   // Determine targets
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
+  const targetsSet = new Set(targets)
 
   const provides = findProvides(binding, vnode)
   const showHideMap =
@@ -55,7 +56,7 @@ const handleUpdate = (
       if (!showHide) {
         continue
       }
-      if (!targets.includes(targetId)) {
+      if (!targetsSet.has(targetId)) {
         showHide.unregisterTrigger('click', el, false)
       }
     }

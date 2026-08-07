@@ -6,6 +6,7 @@ import {
   getCurrentInstance,
   inject,
   markRaw,
+  type MaybeRef,
   onScopeDispose,
   type Ref,
   ref,
@@ -18,7 +19,7 @@ import type {
   ComponentController,
   ControllerKey,
   ModalOrchestratorArrayValue,
-  ModalOrchestratorCreateParam,
+  ModalOrchestratorCreateParamBase,
 } from '../../types'
 import {buildController, getOrchestratorControllerId} from '../orchestratorShared'
 import {BModal} from '../../components'
@@ -34,9 +35,15 @@ export const useModal = () => {
   /**
    * @returns {ComponentController<typeof BModal, Ref<ModalOrchestratorArrayValue>>}
    */
-  const create = <ComponentProps extends Record<string, unknown> = Record<string, unknown>>(
-    obj: ModalOrchestratorCreateParam<ComponentProps> = {} as ModalOrchestratorCreateParam<ComponentProps>
-  ): ComponentController<typeof BModal, Ref<ModalOrchestratorArrayValue>> => {
+  // Uses a `function` declaration (rather than a generic arrow function assigned to a const) so
+  // that TypeScript preserves per-call generic inference when `create` is returned as part of
+  // `useModal()`'s inferred return object.
+  function create<
+    ComponentProps extends Record<string, unknown> = Record<string, unknown>,
+    T extends ModalOrchestratorCreateParamBase<ComponentProps> = ModalOrchestratorCreateParamBase<ComponentProps>,
+  >(
+    obj: MaybeRef<T> = {} as T
+  ): ComponentController<typeof BModal, Ref<ModalOrchestratorArrayValue>> {
     if (!_isOrchestratorInstalled.value)
       throw new Error('BApp component must be mounted to use the modal controller')
 

@@ -3,20 +3,23 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, onUnmounted, ref} from 'vue'
-import {BButton, type ColorVariant, type OrchestratedToast, useToast} from 'bootstrap-vue-next'
+import {computed, onMounted, onUnmounted, ref, watchEffect} from 'vue'
+import {
+  BButton,
+  type ColorVariant,
+  type ToastOrchestratorCreateParamBase,
+  useToast,
+} from 'bootstrap-vue-next'
 
 const {create} = useToast()
 
-const firstRef = ref<OrchestratedToast>({
-  body: `${Math.random()}`,
-})
+const body = ref(`${Math.random()}`)
 
 let intervalId: ReturnType<typeof setInterval> | undefined
 
 onMounted(() => {
   intervalId = setInterval(() => {
-    firstRef.value.body = `${Math.random()}`
+    body.value = `${Math.random()}`
   }, 1000)
 })
 
@@ -26,14 +29,23 @@ onUnmounted(() => {
   }
 })
 
-const showMe = () => {
-  create(
-    computed(() => ({
-      ...firstRef.value,
-      variant: (Number.parseInt(firstRef.value.body?.charAt(2) ?? '0') % 2 === 0
-        ? 'danger'
-        : 'info') as ColorVariant,
-    }))
-  )
+// `create()` needs a writable ref/plain object (it needs to control its own state),
+// so `reactive()` is not used here. Instead, derive the reactive pieces with `computed()`,
+// then sync them onto a plain ref via `watchEffect()`.
+const derivedVariant = computed(
+  () =>
+    (Number.parseInt(body.value.charAt(2) ?? '0') % 2 === 0 ? 'danger' : 'info') as ColorVariant
+)
+const myToast = ref<ToastOrchestratorCreateParamBase>({
+  body: body.value,
+  variant: derivedVariant.value,
+})
+watchEffect(() => {
+  myToast.value.body = body.value
+  myToast.value.variant = derivedVariant.value
+})
+
+const showMe = async() => {
+  await using _ = await create(myToast).show()
 }
 </script>

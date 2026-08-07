@@ -1,5 +1,9 @@
 <template>
-  <BFormRadioGroupBase v-bind="forwardedProps" v-model="modelValue" :options="normalizedOptions">
+  <BFormRadioGroupBase
+    v-bind="forwardedProps"
+    v-model="modelValue as any"
+    :options="normalizedOptions"
+  >
     <!-- Forward all slots -->
     <template #first>
       <slot name="first" />

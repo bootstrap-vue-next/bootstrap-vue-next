@@ -11,7 +11,7 @@
           <span
             v-for="{
               component,
-              fns: {setRef, resolve: resolvePromise, destroy},
+              fns: {setRef, resolve: resolvePromise},
               props: componentProps,
               id,
               slots,
@@ -19,8 +19,6 @@
             } in value.items"
             :key="id"
           >
-            {{ componentProps }}
-            <!-- eslint-disable vue/no-unused-vars -->
             <component
               :is="component"
               v-bind="componentProps"
@@ -41,7 +39,6 @@
               "
               @hidden="
                 (e: BvTriggerableEvent) => {
-                  console.log('foobar')
                   setEventOk(e)
                   componentProps.onHidden?.(e)
                   if (e.defaultPrevented) {
@@ -158,11 +155,16 @@ const positionedItems = computed<
     {} as Record<ContainerPosition, ItemObject>
   )
 
-  return {
+  const allGroups = {
     ...groupedToastItems,
     modal: {items: items.value.modal},
     popover: {items: items.value.popover},
     tooltip: {items: items.value.tooltip},
   }
+
+  // Skip rendering empty containers (e.g. popover/tooltip/modal groups with no active items)
+  return Object.fromEntries(
+    Object.entries(allGroups).filter(([, value]) => value.items.length > 0)
+  ) as Record<ContainerPosition | keyof Omit<OrchestratorStoreObject, 'toast'>, ItemObject>
 })
 </script>
