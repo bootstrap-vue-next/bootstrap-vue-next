@@ -66,7 +66,7 @@ const _props = withDefaults(
     size: undefined,
     state: undefined,
     switch: undefined,
-    uncheckedValue: false,
+    uncheckedValue: null,
     value: true,
   }
 )
