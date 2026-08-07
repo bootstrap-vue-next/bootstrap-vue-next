@@ -79,7 +79,7 @@ export default {
           type: 'CheckboxValue',
           default: null, // TODO item not in string format
           description:
-            'Value returned when this checkbox is unchecked. Note not applicable when multiple checkboxes bound to the same v-model array',
+            'Value returned when this checkbox is unchecked. Note not applicable when multiple checkboxes bound to the same v-model array. Null is treated as false',
         },
         value: {
           type: 'CheckboxValue',
