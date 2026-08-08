@@ -43,26 +43,41 @@ For more control, you can use the `component` property to render a custom compon
 
 ### Return Value
 
-The `popover` and `tooltip` methods return a split API object:
+The `popover` and `tooltip` methods **register** an entry and return a `ComponentController`. The popover/tooltip does **not** appear automatically — call `.show()` on the controller (or pass `modelValue: true` in the creation options) to display it.
 
-- `promise: Promise<BvTriggerableEvent>` - Resolves when the popover/tooltip is hidden.
-- `controller` - Methods for instance control:
-  - `show: () => Promise<BvTriggerableEvent & AsyncDisposable>`
-  - `hide: (trigger?: string) => controller`
-  - `toggle: () => controller`
-  - `get: () => PopoverOrchestratorParam | undefined`
-  - `set: (props: Partial<PopoverOrchestratorParam>) => controller`
-  - `destroy: () => Promise<void>`
+`ComponentController` exposes:
 
-### Lifecycle
+- `show(): Promise<BvTriggerableEvent & AsyncDisposable>` — shows the popover/tooltip. Optionally awaitable; resolves when hidden.
+- `hide(trigger?: string): void` — hides without removing the registry entry.
+- `toggle(): void` — toggles visibility.
+- `set(props): void` — updates props after creation.
+- `get(): PopoverOrchestratorArrayValue | undefined` — returns the current registry entry.
+- `destroy(): Promise<void>` — hides and removes the entry from the registry.
+- `[Symbol.asyncDispose]` — same as `destroy()`, enables `await using` syntax.
 
-By default, the popover is destroyed when the current scope is exited. You can manually destroy it using the `destroy` method.
+### Lifecycle and Cleanup
 
-<<< FRAGMENT ./demo/UsePopoverLifecycleManual.ts#snippet{ts}
+#### Visibility control
 
-Alternatively, use `await using` in TypeScript 5.2+ to automatically destroy the popover when the scope is exited.
+Use `.show()`, `.hide()`, and `.toggle()` to control visibility. `.hide()` only hides the popover — the entry stays in the registry and can be shown again.
+
+#### Long-lived entries and reuse
+
+A controller stays valid until `.destroy()` is called or the owning scope is disposed. Call `.show()` and `.hide()` as many times as needed on the same controller.
+
+#### Cleanup responsibilities and memory implications
+
+Every registered popover occupies memory until explicitly destroyed. The controller is automatically destroyed when the Vue scope that called `create`/`popover`/`tooltip` is disposed (e.g. the component unmounts). For controllers created outside a component, clean up manually.
+
+#### Recommended cleanup patterns
+
+**`await using` (TypeScript 5.2+)** — automatically destroys the popover when the block exits:
 
 <<< FRAGMENT ./demo/UsePopoverLifecycleAwaitUsing.ts#snippet{ts}
+
+**Manual `.show()`/`.hide()` and explicit `.destroy()`:**
+
+<<< FRAGMENT ./demo/UsePopoverLifecycleManual.ts#snippet{ts}
 
 <script setup lang="ts">
 import UsePluginAlert from '../../components/UsePluginAlert.vue'

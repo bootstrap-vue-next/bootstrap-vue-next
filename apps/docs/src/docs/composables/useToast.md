@@ -27,36 +27,82 @@ Creating and showing a toast is simple:
 
 <<< DEMO ./demo/UseToastBasic.vue
 
-The `create` method returns a `promise` that is resolved then the toast closes. You can give toast a unique id. Since `Toasts` are fluid and can move around a lot, returning the index at a given point in time is not ideal for as its position may be changed in the array. So, for use with the `remove` method, you need to give a unique identifier
+The `create` method **registers** a toast entry and returns a `ComponentController`. The toast does **not** appear automatically — you must call `.show()` on the controller (or pass `modelValue: true`) to make it visible.
+
+You can give a toast a unique `id`. Since toasts are fluid and can move around, a stable id is more useful than an index position.
 
 ### Create Options
 
-The `create` method accepts an object with `BToast`’s props, `position`, `appendToast`, `component` and `slots`.
+The `create` method accepts an object with `BToast`'s props, `position`, `appendToast`, `component`, `slots`, and an `options` property.
 
 The `position` value affects placement; its type is [ContainerPosition](/docs/types#containerposition).
 
-Optional second argument can be passed to `create` to some options: `keep` and `resolveOnHide`. The `keep` option will keep the toast in the registry after it is hidden, allowing you to show it again without creating a new instance. The `resolveOnHide` option will resolve the promise returned by `create` when the toast is hidden, not after the hide has finished.
+The `options` property accepts:
+
+- `resolveOnHide` — when `true`, `.show()` resolves at the moment the toast **begins** hiding rather than after the animation completes.
 
 ### Reactivity Within create
 
-`create` props property can accept a `MaybeRef`, meaning that you can make properties reactive
+`create` accepts a `MaybeRef`, meaning you can make properties reactive:
 
 <<< DEMO ./demo/UseToastReactive.vue
 
 ### Advanced usage
 
-Using props can work for most situations, but it leaves some finer control to be desired. For instance, you can add HTML to any `slot` value. This can either be an imported SFC or an inline render function. For reactivity, you must use a getter function.
+Using props works for most situations, but for finer control you can use the `slots` property with a render function or imported SFC. For reactive content, use a getter function.
 
 <<< DEMO ./demo/UseToastAdvanced.vue
 
-## Programmatically Hiding a Toast
+## Programmatically Controlling a Toast
 
-Hiding a `Toast` programmatically is very simple. `create` returns an object that has functions to control the toast, including `destroy`
+`create` returns a `ComponentController` with methods to control the toast:
+
+- `show(): Promise<BvTriggerableEvent & AsyncDisposable>` — shows the toast. Optionally awaitable (resolves when the toast is hidden).
+- `hide(trigger?: string): void` — hides the toast without removing it from the registry.
+- `toggle(): void` — toggles the toast visibility.
+- `set(props): void` — updates the toast props after creation.
+- `destroy(): Promise<void>` — hides and removes the toast from the registry.
+- `[Symbol.asyncDispose]` — same as `destroy()`, enables `await using` syntax.
 
 <<< DEMO ./demo/UseToastProgrammatic.vue
 
-## Using promises
+## Awaited show() for Decision Flows
 
-Hiding a `Toast` with promise
+Awaiting `.show()` lets you handle the result of user interaction:
 
 <<< DEMO ./demo/UseToastPromise.vue
+
+## Lifecycle and Cleanup
+
+### Visibility control
+
+Use `.show()`, `.hide()`, and `.toggle()` to control visibility without affecting the registry. `.hide()` only hides the toast — the entry stays registered and can be shown again.
+
+### Long-lived entries and reuse
+
+A controller returned by `create` remains valid until `.destroy()` is called or the owning scope is disposed. You can call `.show()` and `.hide()` as many times as needed on the same controller.
+
+### Cleanup responsibilities and memory implications
+
+Every registered toast occupies memory until explicitly destroyed. The controller is automatically destroyed when the Vue scope that called `create` is disposed (e.g. the component unmounts). For toasts created outside a component, clean up manually.
+
+### Recommended cleanup patterns
+
+**`await using` (TypeScript 5.2+)** — automatically destroys the toast when the block exits:
+
+```ts
+await using r = await create({modelValue: true, title: 'Processing...'}).show()
+// toast is automatically destroyed when this block exits
+```
+
+**`try/finally` with `.destroy()`** — for explicit lifecycle control:
+
+```ts
+const toast = create({title: 'Long-running task'})
+toast.show()
+try {
+  await doSomething()
+} finally {
+  await toast.destroy()
+}
+```

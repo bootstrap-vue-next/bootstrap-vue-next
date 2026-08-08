@@ -12,30 +12,44 @@
     >
       Hide the Toast
     </BButton>
+    <BButton
+      variant="secondary"
+      @click="destroyMe"
+    >
+      Destroy the Toast
+    </BButton>
   </BButtonGroup>
 </template>
 
 <script setup lang="ts">
+import {onMounted} from 'vue'
 import {BButton, BButtonGroup, useToast} from 'bootstrap-vue-next'
 
 const {create} = useToast()
 
-let toast: undefined | ReturnType<typeof create>
+// Create a long-lived controller once; reuse it with show()/hide()
+let toast: ReturnType<typeof create> | undefined
 
-const showMe = () => {
-  if (toast !== undefined) return
-  // `create` returns a symbol
+onMounted(() => {
   toast = create({
     title: 'Showing',
     body: 'Toast is now showing',
     variant: 'success',
     position: 'bottom-center',
   })
+})
+
+const showMe = () => {
+  toast?.show()
 }
 
 const hideMe = () => {
-  if (toast === undefined) return
-  toast.destroy()
-  toast = undefined // Reset to allow creating new toast
+  toast?.hide()
+}
+
+// Explicitly destroy to remove the entry from the registry
+const destroyMe = async () => {
+  await toast?.destroy()
+  toast = undefined
 }
 </script>

@@ -43,61 +43,62 @@ You can also use component slots to render what you want. This is done through t
 
 ### Return Value
 
-The `create` method returns a promise that resolves after the modal has been hidden to a `BvTriggerableEvent` object.
-Using the `resolveOnHide` option (in the second argument), the promise resolves at the time the modal begins hiding, rather than after it is fully hidden.
+The `create` method **registers** a modal entry and returns a `ComponentController`. The modal does **not** open automatically — call `.show()` on the controller (or pass `modelValue: true`) to display it.
+
+`ComponentController` exposes:
+
+- `show(): Promise<BvTriggerableEvent & AsyncDisposable>` — shows the modal. Awaiting it resolves to a `BvTriggerableEvent` once the modal is hidden.
+- `hide(trigger?: string): void` — hides the modal without removing the registry entry.
+- `toggle(): void` — toggles visibility.
+- `set(props): void` — updates modal props after creation.
+- `get(): ModalOrchestratorArrayValue | undefined` — returns the current registry entry.
+- `destroy(): Promise<void>` — hides and removes the modal from the registry.
+- `[Symbol.asyncDispose]` — same as `destroy()`, enables `await using` syntax.
+
+The `BvTriggerableEvent` resolved by `.show()` contains:
+
+- `ok: boolean | null` — `true` for the OK button, `false` for cancel, `null` for any other close action (backdrop click, custom trigger, etc.)
+- `trigger: string | null` — the trigger string that closed the modal.
+
+To resolve at the moment hiding **begins** rather than after the animation completes, pass `options: { resolveOnHide: true }` in the create object:
 
 ```js
-const value = await create({title: 'Hello World!'}, {resolveOnHide: true})
+const value = await create({title: 'Hello World!', options: {resolveOnHide: true}}).show()
 ```
 
-This object contains the following properties:
+### Lifecycle and Cleanup
 
-- `ok: boolean`
+#### Visibility control
 
-  Clicking the `ok` button resolve this to `true`, `cancel` to `false` and any other closable action `null` (clicking the backdrop, or some other custom closing action. More accurately, when the `hide` function does not pass in the trigger parameter of `ok` or `cancel`)
+Use `.show()`, `.hide()`, and `.toggle()` to control visibility without affecting the registry. `.hide()` only hides the modal — the entry remains registered and can be shown again.
 
-- `trigger: string | null`
+#### Long-lived entries and reuse
 
-  This is the trigger that closed the modal. This is useful for determining what action closed the modal.
+A controller stays valid until `.destroy()` is called or the owning scope is disposed. Call `.show()` and `.hide()` as many times as needed on the same controller.
 
-The promise also contains functions to control the modal:
+#### Cleanup responsibilities and memory implications
 
-- `show: () => void`
+Every registered modal occupies memory until explicitly destroyed. The controller is automatically destroyed when the Vue scope that called `create` is disposed (e.g. the component unmounts). For controllers created outside a component, clean up manually.
 
-  This function shows the modal.
+#### Recommended cleanup patterns
 
-- `hide: (trigger?: string) => void`
-
-  This function hides the modal. If a trigger is passed, it will be passed to the `trigger` property of the resolved promise
-
-- `toggle: () => void`
-
-  This function toggles the visibility of the modal.
-
-- `set: (props: Partial<ModalOrchestratorParam>) => void`
-
-  This function sets the props of the modal. This is useful for updating the modal after it has been created.
-
-- `destroy: () => Promise<void>`
-
-  This function destroys the modal and cleans up any resources associated with it.
-
-### Lifecycle
-
-By default, the modal is destroyed once it's closed. If you want to keep the modal, use the `keep` option in the second argument of the `create` method.
-The modal is destroyed when the current scope is exited. You can also destroy it manually by calling the `destroy` method.
+**`await using` (TypeScript 5.2+)** — automatically destroys the modal when the block exits:
 
 ```js
-const modal = create({title: 'Hello World!'}, {keep: true})
+await using _ = await create({title: 'Hello World!'}).show()
+// modal is automatically destroyed when this block exits
+```
+
+**`try/finally` with `.destroy()`** — for explicit lifecycle control:
+
+```js
+const modal = create({title: 'Hello World!'})
 modal.show()
-// do something
-modal.destroy()
-```
-
-We also support the typescript feature `await using` to automatically destroy the modal when the scope is exited.
-
-```js
-await using modal = create({title: 'Hello World!'})
+try {
+  // do something while modal is open
+} finally {
+  await modal.destroy()
+}
 ```
 
 ## Globally Hiding Modals
