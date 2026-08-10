@@ -137,7 +137,7 @@ formGroupData?.track(labelTargetId)
 const localValue = computed({
   get: () => (parentData ? parentData.modelValue.value : modelValue.value),
   set: (newVal) => {
-    if (newVal === undefined) return
+    if (newVal === undefined && props.uncheckedValue !== undefined) return
     // Indeterminate is implicitly cleared when the checked state is changed to any value
     //  by the user.  We reflect that here by setting our indetermiate model to false
     //  which will emit the indeterminate event to the parent
