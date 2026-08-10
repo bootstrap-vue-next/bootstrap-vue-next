@@ -19,7 +19,7 @@
       :aria-required="computedRequired || undefined"
       :value="props.value"
       :true-value="props.value"
-      :false-value="props.uncheckedValue === null ? false : props.uncheckedValue"
+      :false-value="props.uncheckedValue"
       :indeterminate="indeterminate || undefined"
       v-bind="processedAttrs.inputAttrs"
     />
@@ -66,7 +66,7 @@ const _props = withDefaults(
     size: undefined,
     state: undefined,
     switch: undefined,
-    uncheckedValue: null,
+    uncheckedValue: undefined,
     value: true,
   }
 )
