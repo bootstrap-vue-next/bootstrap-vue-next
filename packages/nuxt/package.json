@@ -35,10 +35,9 @@
     "lint": "eslint --fix",
     "test:lint": "eslint",
     "test:lint:ci": "pnpm run test:lint",
-    "test:unit": "vitest",
-    "test:unit:ci": "vitest run",
-    "test": "run-s test:lint test:unit",
-    "test:ci": "run-s test:lint:ci test:unit:ci",
+    "test:e2e": "vitest run",
+    "test": "run-s test:lint test:e2e",
+    "test:ci": "run-s test:lint:ci test:e2e",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
