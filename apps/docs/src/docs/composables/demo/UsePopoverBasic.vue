@@ -1,15 +1,18 @@
 <template>
-  <BButton ref="popoverButton">Hover me</BButton>
+  <BButton id="popover-basic-target" @click="showPopover"> Toggle popover </BButton>
 </template>
 
 <script setup lang="ts">
-import {type ComponentPublicInstance, onMounted, ref} from 'vue'
-import {usePopover} from 'bootstrap-vue-next'
+import { BButton } from 'bootstrap-vue-next/components/BButton'
+import { usePopover } from 'bootstrap-vue-next/composables/usePopover'
 
-const {popover} = usePopover()
-const popoverButton = ref<ComponentPublicInstance>()
+const { popover } = usePopover()
 
-onMounted(async () => {
-  await using _ = await popover({title: 'Hello World!', body: 'This is a popover.', target: popoverButton.value}).show()
-})
+const showPopover = async () => {
+  await using _ = await popover({
+    title: 'Hello World!',
+    body: 'This is a popover.',
+    target: 'popover-basic-target',
+  }).show()
+}
 </script>

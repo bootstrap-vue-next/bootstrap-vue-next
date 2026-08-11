@@ -1,13 +1,16 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
-import {resolve} from 'path'
 import dts from 'unplugin-dts/vite'
 import Components from 'unplugin-vue-components/vite'
 
 import {readdirSync} from 'node:fs'
-import {basename, dirname, extname, join, relative} from 'node:path'
-import {copyFile} from 'fs/promises'
+import {copyFile} from 'node:fs/promises'
+import {basename, dirname, extname, join, relative, resolve} from 'node:path'
+import {fileURLToPath} from 'node:url'
 import vueDevTools from 'vite-plugin-vue-devtools'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const readFilesInDirectory = (
   dir: string,
@@ -94,6 +97,7 @@ export default defineConfig({
     sourcemap: true,
     minify: false,
     lib: {
+      formats: ['es'],
       entry: {
         'bootstrap-vue-next': resolve(__dirname, 'src/index.ts'),
         'src/resolvers/index': resolve(__dirname, 'src/resolvers/index.ts'),
@@ -105,27 +109,12 @@ export default defineConfig({
         'src/types/index': resolve(__dirname, 'src/types/index.ts'),
       },
       name: 'bootstrap-vue-next',
-      fileName: (format, entryName) => {
-        if (format === 'es') {
-          return `${entryName}.mjs`
-        } else if (format === 'cjs') {
-          return `${entryName}.umd.js`
-        }
-        return `${entryName}.js`
-      },
+      fileName: (_format, entryName) => `${entryName}.mjs`,
     },
     rollupOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
       external: ['vue'],
       output: {
-        exports: 'named',
         assetFileNames: `bootstrap-vue-next.[ext]`, //without this, it generates build/styles.css
-        // Provide global variables to use in the UMD build
-        // for externalized deps
-        globals: {
-          vue: 'Vue',
-        },
       },
     },
   },

@@ -18,7 +18,7 @@
     "@vueuse/core": "~14.2.1",
     "bootstrap": "^5.3.8",
     "bootstrap-vue-next": "workspace:^",
-    "vue": "^3.5.40",
+    "vue": "3.5.41",
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
@@ -27,18 +27,18 @@
     "@vitejs/plugin-vue": "^6.0.8",
     "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/tsconfig": "^0.9.1",
-    "eslint": "^10.7.0",
+    "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-oxlint": "^1.75.0",
+    "eslint-plugin-oxlint": "^1.78.0",
     "eslint-plugin-vue": "^10.10.0",
     "jiti": "^2.7.0",
-    "npm-run-all2": "^9.0.2",
+    "npm-run-all2": "^9.0.3",
     "oxfmt": "^0.58.0",
-    "oxlint": "^1.75.0",
+    "oxlint": "^1.78.0",
     "typescript": "^6.0.3",
-    "vite": "^8.1.5",
-    "vite-plugin-vue-devtools": "^8.1.5",
-    "vue-tsc": "^3.3.7"
+    "vite": "^8.2.1",
+    "vite-plugin-vue-devtools": "^8.2.1",
+    "vue-tsc": "^3.3.9"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

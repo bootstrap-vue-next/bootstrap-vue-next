@@ -1,10 +1,10 @@
-import {usePopover} from 'bootstrap-vue-next'
+import { usePopover } from 'bootstrap-vue-next/composables/usePopover'
 
 {
-  const {popover} = usePopover()
+  const { popover } = usePopover()
 
   // #region snippet
-  await using pop = popover({title: 'Hello World!'})
+  const pop = popover({ title: 'Hello World!' })
   pop.show()
   // do something
   pop.hide()

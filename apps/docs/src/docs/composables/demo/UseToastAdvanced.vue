@@ -3,18 +3,22 @@
 </template>
 
 <script setup lang="ts">
-import {h, markRaw, onMounted, onUnmounted, ref, watchEffect} from 'vue'
-import {BButton, type ToastOrchestratorCreateParamBase, useToast} from 'bootstrap-vue-next'
+import { h, markRaw, onMounted, onUnmounted, ref } from 'vue'
+import type { OrchestratedToast } from 'bootstrap-vue-next'
+import { BButton } from 'bootstrap-vue-next/components/BButton'
+import { useToast } from 'bootstrap-vue-next/composables/useToast'
 
-const {create} = useToast()
+const { create } = useToast()
 
-const body = ref(`${Math.random()}`)
+const firstRef = ref<OrchestratedToast>({
+  body: 'foo',
+})
 
 let intervalId: ReturnType<typeof setInterval> | undefined
 
 onMounted(() => {
   intervalId = setInterval(() => {
-    body.value = `${Math.random()}`
+    firstRef.value.body = firstRef.value.body === 'foo' ? 'bar' : 'foo'
   }, 1000)
 })
 
@@ -24,25 +28,15 @@ onUnmounted(() => {
   }
 })
 
-const item = ref<ToastOrchestratorCreateParamBase>({
-  body: body.value,
-  slots: {default: markRaw(() => h('div', null, `custom! ${body.value}`))},
-})
-
-watchEffect(() => {
-  item.value = {
-    ...item.value,
-    body: body.value,
-    slots: {default: markRaw(() => h('div', null, `custom! ${body.value}`))},
-  }
-})
-
 const showMe = async () => {
-  await using _ = await create(item).show()
+  await using _ = await create({
+    body: firstRef.value.body,
+    slots: { default: () => markRaw(h('div', null, `custom! ${firstRef.value.body}`)) },
+  }).show()
   // Demonstration pseudocode, you can also import a component and use it
   // const importedComponent = () => {
   //   create({
-  //     component: import('./MyToastComponent.vue'),
+  //     component: markRaw((await import('./MyToastComponent.vue')).default),
   //   })
   // }
 }

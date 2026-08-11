@@ -1,4 +1,4 @@
-import {usePopover} from 'bootstrap-vue-next'
+import { usePopover } from 'bootstrap-vue-next/composables/usePopover'
 
 {
   const { popover } = usePopover()

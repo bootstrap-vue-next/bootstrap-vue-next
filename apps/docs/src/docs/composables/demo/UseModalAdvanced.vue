@@ -3,19 +3,20 @@
 </template>
 
 <script setup lang="ts">
-import {h, onMounted, onUnmounted, ref} from 'vue'
-import {BButton, useModal} from 'bootstrap-vue-next'
+import { h, markRaw, onMounted, onUnmounted, ref } from 'vue'
+import { BButton } from 'bootstrap-vue-next/components/BButton'
+import { useModal } from 'bootstrap-vue-next/composables/useModal'
 
-const {create} = useModal()
+const { create } = useModal()
 
 const firstRef = ref({
-  body: `${Math.random()}`,
+  body: 'foo',
 })
 let intervalId: ReturnType<typeof setInterval> | undefined
 
 onMounted(() => {
   intervalId = setInterval(() => {
-    firstRef.value.body = `${Math.random()}`
+    firstRef.value.body = firstRef.value.body === 'foo' ? 'bar' : 'foo'
   }, 1000)
 })
 
@@ -28,14 +29,15 @@ onUnmounted(() => {
 const showMeAdvancedExample = async () => {
   await using _ = await create({
     slots: {
-      default: (scope) => h('div', null, `custom ${firstRef.value.body} - ${scope.visible}`),
+      default: (scope) =>
+        markRaw(h('div', null, `custom ${firstRef.value.body} - ${scope.visible}`)),
     },
   }).show()
 
   // Demonstration pseudocode, you can import a component and use it
   // const importedComponent = () => {
   //   create({
-  //     component: (await import('./TestModal.vue')).default,
+  //     component: markRaw((await import('./TestModal.vue')).default),
   //   })
   // }
 }

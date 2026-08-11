@@ -3,10 +3,11 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, onUnmounted, ref, watchEffect} from 'vue'
-import {BButton, useModal} from 'bootstrap-vue-next'
+import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
+import { BButton } from 'bootstrap-vue-next/components/BButton'
+import { useModal } from 'bootstrap-vue-next/composables/useModal'
 
-const {create} = useModal()
+const { create } = useModal()
 
 const title = ref('Hello')
 let intervalId: ReturnType<typeof setInterval> | undefined

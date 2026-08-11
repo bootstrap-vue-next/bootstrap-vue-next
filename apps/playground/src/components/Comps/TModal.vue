@@ -56,17 +56,20 @@
     </BRow>
     <BRow>
       <BCol>
-        {{ store.modal }}
+        {{ modalCount }}
       </BCol>
     </BRow>
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import {computed, h, onMounted, ref} from 'vue'
-import type {ColorVariant, OrchestratedModal} from 'bootstrap-vue-next'
+import {computed, h, markRaw, onMounted, onUnmounted, ref, watchEffect} from 'vue'
+import type {ColorVariant, ModalOrchestratorCreateParamBase} from 'bootstrap-vue-next'
 import {BModal} from 'bootstrap-vue-next/components/BModal'
 import {useModal} from 'bootstrap-vue-next/composables/useModal'
+
+const {create, store} = useModal()
+const modalCount = computed(() => store.value.modal.size)
 
 const showModal = ref(false)
 const showModal2 = ref(false)
@@ -75,18 +78,41 @@ const showModal3 = ref(false)
 const noClose = ref(true)
 const isModalVisible = ref(false)
 
-const firstRef = ref<OrchestratedModal>({
-  body: `${Math.random()}`,
+const body = ref<ModalOrchestratorCreateParamBase['body']>('foo')
+const firstRef = ref<ModalOrchestratorCreateParamBase>({
+  // If we want to sync this, we will need a watcher
+  body: body.value,
   title: 'foobar',
 })
-
+let interval: ReturnType<typeof setInterval> | null = null
 onMounted(() => {
-  setInterval(() => {
-    firstRef.value.body = `${Math.random()}`
+  interval = setInterval(() => {
+    body.value = body.value === 'foo' ? 'bar' : 'foo'
   }, 1000)
 })
+onUnmounted(() => {
+  if (interval !== null) {
+    clearInterval(interval)
+  }
+})
+watchEffect(() => {
+  firstRef.value.body = body.value
+})
 
-const {create, store} = useModal()
+const dynamicModalModelValue = ref<ModalOrchestratorCreateParamBase['modelValue']>(false)
+const dynamicModal = computed<ModalOrchestratorCreateParamBase>({
+  get: () => ({
+    // We use a computed to make derivations down below, but we NEED to make sure we have a syncable modelValue. So we use a writable computed
+    modelValue: dynamicModalModelValue.value,
+
+    body: 'my body',
+    title: 'my title',
+    okVariant: (firstRef.value.body === 'foo' ? 'danger' : 'info') as ColorVariant,
+  }),
+  set: (value) => {
+    dynamicModalModelValue.value = value.modelValue ?? dynamicModalModelValue.value
+  },
+})
 
 const showFns = {
   basicNoReactive: async () => {
@@ -94,40 +120,27 @@ const showFns = {
       title: 'foobar',
       okVariant: 'danger',
     }).show()
+    return _
   },
   basicCustomComponent: async () => {
     await using _ = await create({
-      slots: {default: h('div', null, {default: () => 'foobar!'})},
-
+      slots: {default: () => markRaw(h('div', null, {default: () => 'foobar!'}))},
       okVariant: 'info',
     }).show()
+    return _
   },
   simpleRefProps: async () => {
     await using _ = await create(firstRef).show()
+    return _
   },
   dynamicRefProps: async () => {
-    const modelValue = ref(false)
-      await using _ = await create(
-      // You would need to use a writable computed to be able to set modelValue
-      // Any v-modelable values would require a similar way to set the value. Refer to the component reference for which v-models it has
-      // You don't need to bind them all, if you don't care about the two-way communication. But modelValue is required for showing and hiding, naturally
-        computed({
-          get: () => ({
-            ...firstRef.value,
-            modelValue: modelValue.value,
-            okVariant: (Number.parseInt((firstRef.value.body ?? '').charAt(2) ?? '0') % 2 === 0
-              ? 'danger'
-              : 'info') as ColorVariant,
-          }),
-          set(v) {
-            modelValue.value = !!v.modelValue
-          }
-        })).show()
+    await using _ = await create(dynamicModal).show()
+    return _
   },
-  // Demonstration psuedocode, you can import a component and use it
+  // Demonstration pseudocode, you can import a component and use it
   // importedComponent: () => {
   //   show?.({
-  //     component: import('./MyModalComponent.vue'),
+  //     component: markRaw((await import('./MyModalComponent.vue')).default),
   //   })
   // },
 }

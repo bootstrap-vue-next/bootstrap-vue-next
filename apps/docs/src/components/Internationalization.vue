@@ -1,3 +1,9 @@
+<script setup lang="ts">
+defineOptions({
+  name: 'InternationalizationText',
+})
+</script>
+
 <template>
   <p>
     BootstrapVueNext ships with English text defaults. To internationalize this component, review

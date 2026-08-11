@@ -15,9 +15,10 @@ export const omit = <
   objToPluck: Readonly<A>,
   keysToPluck: Readonly<B> | readonly (keyof A)[]
 ): Omit<A, B[number]> => {
-  const keysToOmit = new Set(keysToPluck)
+  const normalizeKey = (key: PropertyKey) => (typeof key === 'number' ? `${key}` : key)
+  const keysToOmit = new Set(keysToPluck.map(normalizeKey))
   return Reflect.ownKeys(objToPluck)
-    .filter((key) => !keysToOmit.has(key))
+    .filter((key) => !keysToOmit.has(normalizeKey(key)))
     .reduce((result, key) => ({...result, [key]: objToPluck[key as keyof A]}), {} as Omit<A, B[number]>)
 }
 /**
