@@ -144,5 +144,8 @@ jobs:
       - name: Run Nuxt postinstall scripts
         run: pnpm --filter @bootstrap-vue-next/nuxt install --frozen-lockfile
 
+      - name: Install Playwright browser for Nuxt tests
+        run: pnpm --filter @bootstrap-vue-next/nuxt exec playwright-core install chromium
+
       - name: Test Unit
         run: pnpm run test:unit:ci --filter=!docs
