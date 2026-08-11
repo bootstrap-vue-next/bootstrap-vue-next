@@ -49,6 +49,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
 
+      - name: Run Nuxt postinstall scripts
+        run: pnpm --filter @bootstrap-vue-next/nuxt install --frozen-lockfile
+
       - name: Build Library
         run: pnpm run build
 
@@ -99,6 +102,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
 
+      - name: Run Nuxt postinstall scripts
+        run: pnpm --filter @bootstrap-vue-next/nuxt install --frozen-lockfile
+
       - name: Test Lint
         run: pnpm run test:lint:ci
 
@@ -134,6 +140,9 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install --ignore-scripts --frozen-lockfile
+
+      - name: Run Nuxt postinstall scripts
+        run: pnpm --filter @bootstrap-vue-next/nuxt install --frozen-lockfile
 
       - name: Test Unit
         run: pnpm run test:unit:ci --filter=!docs
