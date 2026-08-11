@@ -15,7 +15,6 @@ export type CamelCase<S extends string> = S extends `${infer P1}-${infer P2}${in
   ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
   : Lowercase<S>
 export type OrchestratorCreateOptions = {
-  keep?: boolean
   resolveOnHide?: boolean
 }
 

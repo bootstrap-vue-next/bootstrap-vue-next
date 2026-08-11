@@ -89,4 +89,30 @@ describe('useToast', () => {
 
     expect(toastRef?.get()?.value.props.title).toBe('World')
   })
+
+  it('keeps instances in the store after hide and removes them only on destroy', async () => {
+    let toastRef: ReturnType<ReturnType<typeof useToast>['create']> | undefined
+    let toastStore: ReturnType<typeof useToast>['store'] | undefined
+    const toastId = 'lifecycle-toast'
+    const TestComponent = defineComponent({
+      setup() {
+        const {create, store} = useToast()
+        toastStore = store
+        toastRef = create({id: toastId, title: 'Lifecycle Toast'})
+        return () => h('div')
+      },
+    })
+
+    mount(BApp, {slots: {default: () => h(TestComponent)}})
+    await nextTick()
+
+    expect(toastStore?.value.toast.has(toastId)).toBe(true)
+
+    toastRef?.hide()
+    await nextTick()
+    expect(toastStore?.value.toast.has(toastId)).toBe(true)
+
+    await toastRef?.destroy()
+    expect(toastStore?.value.toast.has(toastId)).toBe(false)
+  })
 })

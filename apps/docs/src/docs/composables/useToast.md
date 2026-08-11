@@ -31,11 +31,11 @@ The `create` method returns a controller object. Use `.show()` to display the to
 
 ### Create Options
 
-The `create` method accepts an object with `BToast`’s props, `position`, `appendToast`, `component` and `slots`.
+The `create` method accepts an object with `BToast`’s props, `position`, `appendToast`, `component`, and `slots`.
 
 The `position` value affects placement; its type is [ContainerPosition](/docs/types#containerposition).
 
-Lifecycle options are passed in `options` on the create payload (for example `keep` and `resolveOnHide`). `keep` keeps the toast in the registry after it is hidden so it can be shown again, and `resolveOnHide` resolves the promise when hide starts instead of after the full hide lifecycle.
+Lifecycle options are passed in `options` on the create payload. `resolveOnHide` resolves the promise when hide starts instead of after the full hide lifecycle.
 
 ### Reactivity Within create
 
@@ -54,6 +54,26 @@ Using props can work for most situations, but it leaves some finer control to be
 Hiding a `Toast` programmatically is simple. The controller returned by `create` exposes methods like `show`, `hide`, and `destroy`.
 
 <<< DEMO ./demo/UseToastProgrammatic.vue
+
+## Lifecycle and disposal
+
+Created toast instances persist until you explicitly dispose them. Hiding a toast does not remove it from the orchestrator store.
+
+```js
+const toast = create({title: 'Saved!'})
+try {
+  await toast.show()
+} finally {
+  await toast.destroy()
+}
+```
+
+You can also use the TypeScript `await using` syntax for automatic disposal when the scope exits.
+
+```js
+await using toast = create({title: 'Saved!'})
+await toast.show()
+```
 
 ## Using promises
 

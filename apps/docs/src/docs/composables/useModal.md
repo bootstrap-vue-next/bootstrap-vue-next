@@ -87,20 +87,21 @@ The promise also contains functions to control the modal:
 
 ### Lifecycle
 
-By default, the modal is destroyed once it's closed. If you want to keep the modal, set `options.keep` in the create payload.
-The modal is destroyed when the current scope is exited. You can also destroy it manually by calling the `destroy` method.
+Created modal instances persist until you explicitly dispose them. Hiding a modal does not remove it from the orchestrator store.
 
 ```js
 const modal = create({
   title: 'Hello World!',
-  options: {keep: true},
 })
-modal.show()
-// do something
-modal.destroy()
+try {
+  await modal.show()
+  // do something
+} finally {
+  await modal.destroy()
+}
 ```
 
-We also support the typescript feature `await using` to automatically destroy the modal when the scope is exited.
+You can also use the TypeScript `await using` syntax for automatic disposal when the scope exits.
 
 ```js
 await using modal = create({title: 'Hello World!'})

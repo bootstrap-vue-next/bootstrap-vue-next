@@ -230,4 +230,30 @@ describe('useModal', () => {
 
     expect(modalRef?.get()?.value.props.title).toBe('World')
   })
+
+  it('keeps instances in the store after hide and removes them only on destroy', async () => {
+    let modalRef: ReturnType<ReturnType<typeof useModal>['create']> | undefined
+    let modalStore: ReturnType<typeof useModal>['store'] | undefined
+    const modalId = 'lifecycle-modal'
+    const TestComponent = defineComponent({
+      setup() {
+        const {create, store} = useModal()
+        modalStore = store
+        modalRef = create({id: modalId, title: 'Lifecycle Modal'})
+        return () => h('div')
+      },
+    })
+
+    mount(BApp, {slots: {default: () => h(TestComponent)}})
+    await nextTick()
+
+    expect(modalStore?.value.modal.has(modalId)).toBe(true)
+
+    modalRef?.hide()
+    await nextTick()
+    expect(modalStore?.value.modal.has(modalId)).toBe(true)
+
+    await modalRef?.destroy()
+    expect(modalStore?.value.modal.has(modalId)).toBe(false)
+  })
 })

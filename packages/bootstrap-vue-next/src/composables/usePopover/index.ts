@@ -12,7 +12,6 @@ import {
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 import type {
   ComponentController,
-  OrchestratorCreateOptions,
   PopoverOrchestratorArrayValue,
   PopoverOrchestratorCreateParamBase,
   TooltipOrchestratorArrayValue,
@@ -74,10 +73,7 @@ export const usePopover = () => {
 
         return {
           component,
-          options: {
-            ...options,
-            keep: options?.keep ?? true,
-          } satisfies OrchestratorCreateOptions,
+          options,
           slots,
           id: storeId,
           fns: {

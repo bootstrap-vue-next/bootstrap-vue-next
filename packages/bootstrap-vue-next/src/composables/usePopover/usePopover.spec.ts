@@ -92,4 +92,35 @@ describe('usePopover', () => {
 
     expect(tooltipRef?.get()?.value.props.title).toBe('World')
   })
+
+  it('does not inject deprecated keep option and persists until destroy', async () => {
+    let popoverRef: ReturnType<ReturnType<typeof usePopover>['popover']> | undefined
+    let popoverStore: ReturnType<typeof usePopover>['store'] | undefined
+    const popoverId = 'lifecycle-popover'
+    const TestComponent = defineComponent({
+      setup() {
+        const {popover, store} = usePopover()
+        popoverStore = store
+        popoverRef = popover({
+          id: popoverId,
+          title: 'Lifecycle Popover',
+          options: {resolveOnHide: true},
+        })
+        return () => h('div')
+      },
+    })
+
+    mount(BApp, {slots: {default: () => h(TestComponent)}})
+    await nextTick()
+
+    expect(popoverRef?.get()?.value.options).toEqual({resolveOnHide: true})
+    expect(popoverRef?.get()?.value.options).not.toHaveProperty('keep')
+
+    popoverRef?.hide()
+    await nextTick()
+    expect(popoverStore?.value.popover.has(popoverId)).toBe(true)
+
+    await popoverRef?.destroy()
+    expect(popoverStore?.value.popover.has(popoverId)).toBe(false)
+  })
 })
