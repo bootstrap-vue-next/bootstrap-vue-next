@@ -587,10 +587,7 @@ describe('form-group', () => {
         const wrapper = mount(BFormGroup, {
           props: {label: 'Range'},
           slots: {
-            default: () => [
-              h(BFormInput, {id: 'range-start'}),
-              h(BFormInput, {id: 'range-end'}),
-            ],
+            default: () => [h(BFormInput, {id: 'range-start'}), h(BFormInput, {id: 'range-end'})],
           },
         })
         await nextTick()
@@ -1396,6 +1393,35 @@ describe('form-group', () => {
       // When child BFormInput provides its id, labelTag becomes 'label' instead of 'legend'
       expect(children[0].tagName).toBe('INPUT')
       expect(children[1].tagName).toBe('LABEL')
+    })
+
+    it('renders a label (not legend) from the first render in floating mode', () => {
+      // The descendant input's id only registers after the parent's initial render pass.
+      // The label must still be a <label> element on that first pass, otherwise SSR HTML
+      // (which only contains the first pass) would render an unstyled legend below the box
+      // and hydration would flip it to a label, causing a repaint/layout shift.
+      const wrapper = mount(BFormGroup, {
+        props: {floating: true, label: 'Email'},
+        slots: {
+          default: h(BFormInput, {id: 'email-input'}),
+        },
+      })
+      expect(wrapper.find('.form-floating > label').exists()).toBe(true)
+      expect(wrapper.find('.form-floating > legend').exists()).toBe(false)
+    })
+
+    it('wires the for attribute after child registration without changing the element', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {floating: true, label: 'Email'},
+        slots: {
+          default: h(BFormInput, {id: 'email-input'}),
+        },
+      })
+      await nextTick()
+      const label = wrapper.find('.form-floating > label')
+      expect(label.exists()).toBe(true)
+      expect(label.attributes('for')).toBe('email-input')
+      expect(wrapper.find('.form-floating > legend').exists()).toBe(false)
     })
 
     it('does not apply form-floating when horizontal', () => {

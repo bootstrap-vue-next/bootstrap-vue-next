@@ -40,7 +40,7 @@
       </BCol>
     </BFormRow>
     <template v-else>
-      <div v-if="props.floating && !isHorizontal" ref="_content" class="form-floating">
+      <div v-if="floating" ref="_content" class="form-floating">
         <slot
           :id="computedId"
           :aria-describedby="null"
@@ -216,6 +216,7 @@ const labelColProps = computed(() => getColProps(props, 'label'))
 const isHorizontal = computed(
   () => Object.keys(contentColProps.value).length > 0 || Object.keys(labelColProps.value).length > 0
 )
+const floating = computed(() => props.floating && !isHorizontal.value)
 
 const stateClass = useStateClass(computedState)
 const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, computedState)
@@ -247,14 +248,14 @@ const onLegendClick = (event: Readonly<MouseEvent>) => {
 
 const computedId = useId(() => props.id)
 const labelId = useId(undefined, '_BV_label_')
-const labelTag = computed(() => (!computedLabelFor.value ? 'legend' : 'label'))
+const labelTag = computed(() => (!isFieldset.value ? 'label' : 'legend'))
 const labelClasses = computed(() => [
   isHorizontal.value ? 'col-form-label' : 'form-label',
   {
-    'bv-no-focus-ring': !computedLabelFor.value,
-    'col-form-label': isHorizontal.value || !computedLabelFor.value,
-    'pt-0': !isHorizontal.value && !computedLabelFor.value,
-    'd-block': !isHorizontal.value && computedLabelFor.value,
+    'bv-no-focus-ring': !floating.value && !computedLabelFor.value,
+    'col-form-label': isHorizontal.value || (!floating.value && !computedLabelFor.value),
+    'pt-0': !isHorizontal.value && !floating.value && !computedLabelFor.value,
+    'd-block': !isHorizontal.value && (floating.value || !!computedLabelFor.value),
     [`col-form-label-${props.labelSize}`]: !!props.labelSize,
     'visually-hidden': props.labelVisuallyHidden,
   },
@@ -267,7 +268,7 @@ const invalidFeedbackId = useId(undefined, '_BV_feedback_invalid_')
 const validFeedbackId = useId(undefined, '_BV_feedback_valid_')
 const descriptionId = useId(undefined, '_BV_description_')
 
-const isFieldset = computed(() => !computedLabelFor.value)
+const isFieldset = computed(() => !floating.value && !computedLabelFor.value)
 
 const labelShowing = computed(() => !!slots.label || !!props.label || isHorizontal.value)
 
