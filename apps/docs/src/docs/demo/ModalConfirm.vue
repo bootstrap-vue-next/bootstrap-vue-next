@@ -6,15 +6,15 @@
 </template>
 
 <script setup lang="ts">
-import {useModal} from 'bootstrap-vue-next/composables/useModal'
+import { useModal } from 'bootstrap-vue-next/composables/useModal'
 
-import {ref} from 'vue'
+import { ref } from 'vue'
 
-const {create} = useModal()
+const { create } = useModal()
 const confirmResult = ref<boolean | null | undefined>(null)
 
 const confirmBox = async () => {
-  const value = await create({
+  await using value = await create({
     body: 'Are you sure you want to do this?',
     title: 'Confirm',
     okTitle: 'Yes',

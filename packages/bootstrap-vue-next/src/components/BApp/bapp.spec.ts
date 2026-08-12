@@ -469,8 +469,13 @@ describe('BApp', () => {
         slots: {default: () => h(ChildComponent)},
       })
 
-      const orchestrator = captured.orchestrator as {store: Ref<unknown[]>}
-      expect(orchestrator.store.value).toHaveLength(0)
+      const orchestrator = captured.orchestrator as {
+        store: Ref<{modal: Map<unknown, unknown>; toast: Map<unknown, unknown>; popover: Map<unknown, unknown>; tooltip: Map<unknown, unknown>}>
+      }
+      expect(orchestrator.store.value.modal.size).toBe(0)
+      expect(orchestrator.store.value.toast.size).toBe(0)
+      expect(orchestrator.store.value.popover.size).toBe(0)
+      expect(orchestrator.store.value.tooltip.size).toBe(0)
     })
 
     it('does not provide orchestrator when noOrchestrator is true', () => {

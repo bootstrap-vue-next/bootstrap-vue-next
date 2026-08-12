@@ -229,7 +229,7 @@ describe('dropdown-item', () => {
   })
 
   it('calls dropdownData.hide when clicked', async () => {
-    const hide = vi.fn()
+    const hide = vi.fn<() => void>()
     const wrapper = mount(BDropdownItem, {
       global: {
         provide: {
@@ -242,7 +242,7 @@ describe('dropdown-item', () => {
   })
 
   it('calls collapseData.hide when clicked and navbarData is present with noAutoClose false', async () => {
-    const collapseHide = vi.fn()
+    const collapseHide = vi.fn<() => void>()
     const wrapper = mount(BDropdownItem, {
       global: {
         provide: {
@@ -256,7 +256,7 @@ describe('dropdown-item', () => {
   })
 
   it('does not call collapseData.hide when navbarData.noAutoClose is true', async () => {
-    const collapseHide = vi.fn()
+    const collapseHide = vi.fn<() => void>()
     const wrapper = mount(BDropdownItem, {
       global: {
         provide: {
@@ -270,7 +270,7 @@ describe('dropdown-item', () => {
   })
 
   it('does not call collapseData.hide when navbarData is not present', async () => {
-    const collapseHide = vi.fn()
+    const collapseHide = vi.fn<() => void>()
     const wrapper = mount(BDropdownItem, {
       global: {
         provide: {

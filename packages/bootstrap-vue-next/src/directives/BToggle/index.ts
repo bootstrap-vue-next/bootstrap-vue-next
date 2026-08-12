@@ -3,6 +3,7 @@ import {type Directive, type DirectiveBinding, type VNode} from 'vue'
 import {findProvides} from '../utils'
 import {type RegisterShowHideValue, showHideRegistryKey} from '../../utils/keys'
 import {getActiveShowHide} from '../../utils/registryAccess'
+import {warn} from '../../utils/console'
 
 const getTargets = (
   binding: DirectiveBinding<string | readonly string[] | undefined>,
@@ -42,6 +43,7 @@ const handleUpdate = (
   // Determine targets
   const targets = getTargets(binding, el)
   if (targets.length === 0) return
+  const targetsSet = new Set(targets)
 
   const provides = findProvides(binding, vnode)
   const showHideMap =
@@ -54,7 +56,7 @@ const handleUpdate = (
       if (!showHide) {
         continue
       }
-      if (!targets.includes(targetId)) {
+      if (!targetsSet.has(targetId)) {
         showHide.unregisterTrigger('click', el, false)
       }
     }
@@ -83,8 +85,9 @@ const handleUpdate = (
         }
         // Only warn if element is still mounted after all attempts
         if ((el as HTMLElement).dataset.bvtoggle) {
-          console.warn(
-            `[v-b-toggle] Target with ID ${targetId} not found after ${maxAttempts * delayMs}ms`
+          warn(
+            'v-b-toggle',
+            `Target with ID ${targetId} not found after ${maxAttempts * delayMs}ms`
           )
         }
         break

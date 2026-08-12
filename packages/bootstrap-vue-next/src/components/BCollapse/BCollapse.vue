@@ -115,22 +115,25 @@ const {
   computedNoAnimation,
   contentShowing,
   transitionProps,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
-  // addShowClass: false,
-  transitionProps: {
-    onBeforeLeave,
-    onEnter,
-    onLeave,
-    onAfterEnter,
-    onAfterLeave,
-    enterToClass: '',
-    leaveToClass: '',
-    enterFromClass: '',
-    leaveFromClass: '',
-    enterActiveClass: '',
-    leaveActiveClass: '',
-  },
-})
+} = useShowHide(
+  {modelValue, props, emit: emit as EmitFn, element, id: computedId},
+  {
+    // addShowClass: false,
+    transitionProps: {
+      onBeforeLeave,
+      onEnter,
+      onLeave,
+      onAfterEnter,
+      onAfterLeave,
+      enterToClass: '',
+      leaveToClass: '',
+      enterFromClass: '',
+      leaveFromClass: '',
+      enterActiveClass: '',
+      leaveActiveClass: '',
+    },
+  }
+)
 
 const computedClasses = computed(() => ({
   'show': isActive.value,

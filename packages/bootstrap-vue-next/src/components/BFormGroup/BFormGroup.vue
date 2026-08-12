@@ -22,7 +22,7 @@
       <BCol v-bind="contentColProps" ref="_content">
         <slot
           :id="computedId"
-          :aria-describedby="null"
+          :aria-describedby="computedAriaDescribedby"
           :description-id="descriptionId"
           :label-id="labelId"
         />
@@ -43,7 +43,7 @@
       <div v-if="floating" ref="_content" class="form-floating">
         <slot
           :id="computedId"
-          :aria-describedby="null"
+          :aria-describedby="computedAriaDescribedby"
           :description-id="descriptionId"
           :label-id="labelId"
         />
@@ -80,7 +80,7 @@
         </BFormGroupLabel>
         <slot
           :id="computedId"
-          :aria-describedby="null"
+          :aria-describedby="computedAriaDescribedby"
           :description-id="descriptionId"
           :label-id="labelId"
         />
@@ -269,6 +269,18 @@ const validFeedbackId = useId(undefined, '_BV_feedback_valid_')
 const descriptionId = useId(undefined, '_BV_description_')
 
 const isFieldset = computed(() => !floating.value && !computedLabelFor.value)
+
+const hasDescription = computed(() => !!slots.description || !!props.description)
+const hasInvalidFeedback = computed(() => !!slots['invalid-feedback'] || !!props.invalidFeedback)
+const hasValidFeedback = computed(() => !!slots['valid-feedback'] || !!props.validFeedback)
+
+const computedAriaDescribedby = computed<string | null>(() => {
+  const ids: string[] = []
+  if (hasDescription.value) ids.push(descriptionId.value)
+  if (computedState.value === false && hasInvalidFeedback.value) ids.push(invalidFeedbackId.value)
+  if (computedState.value === true && hasValidFeedback.value) ids.push(validFeedbackId.value)
+  return ids.length > 0 ? ids.join(' ') : null
+})
 
 const labelShowing = computed(() => !!slots.label || !!props.label || isHorizontal.value)
 

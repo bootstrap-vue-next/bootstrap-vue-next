@@ -233,8 +233,6 @@ const emit = defineEmits<BModalEmits>()
 const slots = defineSlots<BModalSlots>()
 
 const computedId = useId(() => props.id, 'modal')
-// Note: passive: true will sync an internal ref... This is required for useModalManager to exit,
-// Since the modelValue that's passed from that composable is not reactive, this internal ref _is_ and thus it will trigger closing the modal
 const modelValue = defineModel<Exclude<BModalProps['modelValue'], undefined>>({default: false})
 
 const element = useTemplateRef<HTMLElement | null>('_element')
@@ -302,13 +300,16 @@ const {
   contentShowing,
   backdropReady,
   backdropVisible,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
-  // addShowClass: false,
-  transitionProps: {
-    onAfterEnter,
-    onAfterLeave,
-  },
-})
+} = useShowHide(
+  {modelValue, props, emit: emit as EmitFn, element, id: computedId},
+  {
+    // addShowClass: false,
+    transitionProps: {
+      onAfterEnter,
+      onAfterLeave,
+    },
+  }
+)
 
 const fallbackClassSelector = 'modal-fallback-focus'
 const {needsFallback} = useActivatedFocusTrap({

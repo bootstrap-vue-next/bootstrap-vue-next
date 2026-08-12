@@ -1,4 +1,5 @@
 ---
+title: Button
 description: "Use Bootstrap's custom `BButton` component for actions in forms, dialogs, and more. Includes support for a handful of contextual variations, sizes, states, and more."
 ---
 
@@ -140,3 +141,7 @@ disabled, the `aria-disabled="true"` attribute will be set on the `<a>` element.
 
 When the `href` is set to any other value (~~or the `to` prop is used~~), `role="button"` will not be
 added, nor will the keyboard event listeners be enabled.
+
+## Internationalization
+
+<Internationalization />

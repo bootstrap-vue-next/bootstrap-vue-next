@@ -91,8 +91,8 @@ const modalRef = useTemplateRef<ComponentExposed<typeof BModal>>('modalRef')
 
 // Composable approach
 const modal = useModal()
-const openComposableModal = () => {
-  modal
+const openComposableModal = async () => {
+  await using _ = await modal
     .create({
       body: 'This modal was created dynamically using the useModal composable.',
       title: 'Composable Approach',

@@ -1,4 +1,5 @@
 ---
+title: Images
 description: >
   Information on including images in your components. The src prop and blank-src prop work only with absolute
   or fully-qualified URLs. If using project assets as image sources, you'll need to configure your build tool

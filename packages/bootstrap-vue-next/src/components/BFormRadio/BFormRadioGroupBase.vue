@@ -55,7 +55,7 @@ const _props = withDefaults(defineProps<Omit<BFormRadioGroupBaseProps, 'modelVal
 const props = useDefaults(_props, 'BFormRadioGroup')
 defineSlots<BFormRadioGroupSlots>()
 
-const modelValue = defineModel<unknown>({
+const modelValue = defineModel<BFormRadioGroupBaseProps['modelValue']>({
   default: null,
 })
 

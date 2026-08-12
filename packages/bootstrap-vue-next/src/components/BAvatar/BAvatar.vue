@@ -126,13 +126,13 @@ const {computedLink, computedLinkProps} = useBLinkHelper(props)
 
 const parentData = inject(avatarGroupInjectionKey, null)
 
-const SIZES = Object.freeze([
+const SIZES: ReadonlySet<string | null> = new Set(Object.freeze([
   null,
   ...Object.keys({
     lg: null,
     sm: null,
   } satisfies Record<Size, null>),
-] as (string | null)[])
+] as (string | null)[]))
 const FONT_SIZE_SCALE = 0.4
 const BADGE_FONT_SIZE_SCALE = FONT_SIZE_SCALE * 0.7
 
@@ -151,7 +151,7 @@ const computedSquare = computed(() => parentData?.square.value || props.square)
 
 const computedSize = useNumberishToStyle(() => parentData?.size.value ?? props.size)
 const computedSizeIsLiteralSize = computed(
-  () => !!computedSize.value && SIZES.includes(computedSize.value)
+  () => !!computedSize.value && SIZES.has(computedSize.value)
 )
 
 const computedVariant = computed(() => parentData?.variant.value ?? props.variant)

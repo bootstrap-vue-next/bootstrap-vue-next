@@ -1,0 +1,18 @@
+<template>
+  <div>
+    <BImg
+      id="direct-img"
+      src="https://example.com/logo.png"
+      width="100"
+      height="100"
+      alt="direct"
+    />
+    <BCardImg
+      id="card-img"
+      src="https://example.com/logo.png"
+      width="100"
+      height="100"
+      alt="card"
+    />
+  </div>
+</template>
