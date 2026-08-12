@@ -61,6 +61,16 @@ describe('LLMS snippet resolution', () => {
     expect(materialized?.content).not.toContain('<<< FRAGMENT ../../demo/AlertBefore.vue#template{vue-html}')
   })
 
+  it('converts vue components to plain text in materialized markdown', () => {
+    const materialized = getMaterializedSourceMarkdown('docs/migration-data/directives/v-b-hover.md', srcRoot)
+
+    expect(materialized?.content).toContain('This directive will not be implemented.')
+    expect(materialized?.content).toContain('`useElementHover()`')
+    expect(materialized?.content).not.toContain('<DeprecatedFeature')
+    expect(materialized?.content).not.toContain('<BLink')
+    expect(materialized?.content).not.toContain('<script setup')
+  })
+
   it('rebuilds llms-full content from llms.txt links', () => {
     const rebuilt = rebuildLLMSFullContent(
       `- [Guide](/bootstrap-vue-next/docs/migration-data.md)\n- [Components](/bootstrap-vue-next/components.md)`,

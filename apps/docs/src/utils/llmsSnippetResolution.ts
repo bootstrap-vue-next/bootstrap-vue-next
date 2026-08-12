@@ -2,6 +2,8 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 const snippetDirectiveRE = /^<<<\s+(?:FRAGMENT|DEMO)\s+(.*?)$/gm
+const markdownFenceRE = /^\s*```/
+const componentTagRE = /<\/?[A-Z][\w.-]*(?:\s[^<>]*)?\/?>/g
 
 const rawPathRegexp =
   /^(.+?(?:(?:\.([a-z0-9]+))?))(?:(#[\w-]+))?(?: ?(?:{(\d+(?:[,-]\d+)*)? ?(\S+)? ?(\S+)?}))? ?(?:\[(.+)\])?$/i
@@ -250,6 +252,42 @@ export const resolveLLMSnippetDirectives = (content: string, sourceMarkdownPath:
     return resolvedDirective ?? directive
   })
 
+const toPlainTextMarkdown = (content: string): string => {
+  const lines = content.split('\n')
+  const transformedLines: string[] = []
+  let inFence = false
+  let inScriptSetup = false
+
+  for (const line of lines) {
+    if (markdownFenceRE.test(line)) {
+      inFence = !inFence
+      transformedLines.push(line)
+      continue
+    }
+
+    if (inFence) {
+      transformedLines.push(line)
+      continue
+    }
+
+    if (inScriptSetup) {
+      if (/^\s*<\/script>\s*$/.test(line)) {
+        inScriptSetup = false
+      }
+      continue
+    }
+
+    if (/^\s*<script\s+setup(?:\s+lang="[^"]+")?\s*>\s*$/.test(line)) {
+      inScriptSetup = true
+      continue
+    }
+
+    transformedLines.push(line.replaceAll(componentTagRE, ''))
+  }
+
+  return transformedLines.join('\n')
+}
+
 export const toLLMOutputPath = (sourceMarkdownPath: string, srcDir: string): string => {
   const relativePath = path.relative(srcDir, sourceMarkdownPath)
 
@@ -293,7 +331,7 @@ export const getMaterializedSourceMarkdown = (
     const sourceContent = fs.readFileSync(sourceMarkdownPath, 'utf8')
 
     return {
-      content: resolveLLMSnippetDirectives(sourceContent, sourceMarkdownPath),
+      content: toPlainTextMarkdown(resolveLLMSnippetDirectives(sourceContent, sourceMarkdownPath)),
       sourceMarkdownPath,
     }
   } catch {
