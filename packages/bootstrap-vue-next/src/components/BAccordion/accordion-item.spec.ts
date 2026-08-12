@@ -429,10 +429,10 @@ describe('accordion-item', () => {
             initialAnimation: ref(false),
             lazy: ref(true),
             unmountLazy: ref(false),
-            setOpenItem: vi.fn(),
-            setCloseItem: vi.fn(),
-            registerAccordionItem: vi.fn(),
-            unregisterAccordionItem: vi.fn(),
+            setOpenItem: vi.fn<() => void>(),
+            setCloseItem: vi.fn<() => void>(),
+            registerAccordionItem: vi.fn<() => void>(),
+            unregisterAccordionItem: vi.fn<() => void>(),
           },
         },
       },
@@ -451,10 +451,10 @@ describe('accordion-item', () => {
             initialAnimation: ref(false),
             lazy: ref(false),
             unmountLazy: ref(true),
-            setOpenItem: vi.fn(),
-            setCloseItem: vi.fn(),
-            registerAccordionItem: vi.fn(),
-            unregisterAccordionItem: vi.fn(),
+            setOpenItem: vi.fn<() => void>(),
+            setCloseItem: vi.fn<() => void>(),
+            registerAccordionItem: vi.fn<() => void>(),
+            unregisterAccordionItem: vi.fn<() => void>(),
           },
         },
       },
@@ -464,7 +464,7 @@ describe('accordion-item', () => {
   })
 
   it('calls registerAccordionItem on mount with parent injection', () => {
-    const registerAccordionItem = vi.fn()
+    const registerAccordionItem = vi.fn<() => void>()
     mount(BAccordionItem, {
       props: {id: 'test-item'},
       global: {
@@ -475,10 +475,10 @@ describe('accordion-item', () => {
             initialAnimation: ref(false),
             lazy: ref(false),
             unmountLazy: ref(false),
-            setOpenItem: vi.fn(),
-            setCloseItem: vi.fn(),
+            setOpenItem: vi.fn<() => void>(),
+            setCloseItem: vi.fn<() => void>(),
             registerAccordionItem,
-            unregisterAccordionItem: vi.fn(),
+            unregisterAccordionItem: vi.fn<() => void>(),
           },
         },
       },
@@ -487,7 +487,7 @@ describe('accordion-item', () => {
   })
 
   it('calls unregisterAccordionItem on unmount with parent injection', () => {
-    const unregisterAccordionItem = vi.fn()
+    const unregisterAccordionItem = vi.fn<() => void>()
     const wrapper = mount(BAccordionItem, {
       props: {id: 'test-item'},
       global: {
@@ -498,9 +498,9 @@ describe('accordion-item', () => {
             initialAnimation: ref(false),
             lazy: ref(false),
             unmountLazy: ref(false),
-            setOpenItem: vi.fn(),
-            setCloseItem: vi.fn(),
-            registerAccordionItem: vi.fn(),
+            setOpenItem: vi.fn<() => void>(),
+            setCloseItem: vi.fn<() => void>(),
+            registerAccordionItem: vi.fn<() => void>(),
             unregisterAccordionItem,
           },
         },
@@ -522,10 +522,10 @@ describe('accordion-item', () => {
             initialAnimation: ref(false),
             lazy: ref(false),
             unmountLazy: ref(false),
-            setOpenItem: vi.fn(),
-            setCloseItem: vi.fn(),
-            registerAccordionItem: vi.fn(),
-            unregisterAccordionItem: vi.fn(),
+            setOpenItem: vi.fn<() => void>(),
+            setCloseItem: vi.fn<() => void>(),
+            registerAccordionItem: vi.fn<() => void>(),
+            unregisterAccordionItem: vi.fn<() => void>(),
           },
         },
       },
@@ -548,10 +548,10 @@ describe('accordion-item', () => {
             initialAnimation: ref(false),
             lazy: ref(false),
             unmountLazy: ref(false),
-            setOpenItem: vi.fn(),
-            setCloseItem: vi.fn(),
-            registerAccordionItem: vi.fn(),
-            unregisterAccordionItem: vi.fn(),
+            setOpenItem: vi.fn<() => void>(),
+            setCloseItem: vi.fn<() => void>(),
+            registerAccordionItem: vi.fn<() => void>(),
+            unregisterAccordionItem: vi.fn<() => void>(),
           },
         },
       },
@@ -574,10 +574,10 @@ describe('accordion-item', () => {
             initialAnimation: ref(false),
             lazy: ref(false),
             unmountLazy: ref(false),
-            setOpenItem: vi.fn(),
-            setCloseItem: vi.fn(),
-            registerAccordionItem: vi.fn(),
-            unregisterAccordionItem: vi.fn(),
+            setOpenItem: vi.fn<() => void>(),
+            setCloseItem: vi.fn<() => void>(),
+            registerAccordionItem: vi.fn<() => void>(),
+            unregisterAccordionItem: vi.fn<() => void>(),
           },
         },
       },
@@ -592,7 +592,7 @@ describe('accordion-item', () => {
   })
 
   it('calls setOpenItem when modelValue becomes true', async () => {
-    const setOpenItem = vi.fn()
+    const setOpenItem = vi.fn<() => void>()
     const wrapper = mount(BAccordionItem, {
       props: {id: 'test-item', modelValue: false},
       global: {
@@ -604,9 +604,9 @@ describe('accordion-item', () => {
             lazy: ref(false),
             unmountLazy: ref(false),
             setOpenItem,
-            setCloseItem: vi.fn(),
-            registerAccordionItem: vi.fn(),
-            unregisterAccordionItem: vi.fn(),
+            setCloseItem: vi.fn<() => void>(),
+            registerAccordionItem: vi.fn<() => void>(),
+            unregisterAccordionItem: vi.fn<() => void>(),
           },
         },
       },

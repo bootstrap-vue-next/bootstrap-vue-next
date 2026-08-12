@@ -1,4 +1,5 @@
 ---
+title: BToggle
 description: 'A light-weight directive for toggling visibility state for collapses, offcanvas, and modals by ID. It automatically sets the aria-controls attribute and registers the trigger with the target component, which then manages aria-expanded and visual state'
 ---
 

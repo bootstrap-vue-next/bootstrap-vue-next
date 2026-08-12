@@ -104,5 +104,7 @@ export function useDebounceFn<T extends FunctionArgs>(
   ms: MaybeRefOrGetter<number> = 200,
   options: DebounceFilterOptions = {}
 ): UseDebounceFnReturn<T> & {cancel: () => void} {
-  return createFilterWrapper(debounceFilter(ms, options), fn)
+  return createFilterWrapper(debounceFilter(ms, options), fn) as UseDebounceFnReturn<T> & {
+    cancel: () => void
+  }
 }

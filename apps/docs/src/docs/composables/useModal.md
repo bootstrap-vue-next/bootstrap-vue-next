@@ -1,4 +1,5 @@
 ---
+title: useModal
 description: 'The `useModal` composable provides a powerful API to create, manage, and control modals programmatically from anywhere in your application. It allows you to create modals on-demand, manage existing modals, and handle modal interactions through promises.'
 ---
 
@@ -8,9 +9,11 @@ To use `useModal`, you need one of the following setup approaches:
 
 ### BApp Component (Recommended)
 
-The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
+<UseBAppSetup>
 
-<<< FRAGMENT ./demo/UseModalSetup.vue
+<<< FRAGMENT ./demo/OrchestratorSetup.vue
+
+</UseBAppSetup>
 
 ### Plugin Setup (Legacy)
 
@@ -40,11 +43,14 @@ You can also use component slots to render what you want. This is done through t
 
 ### Return Value
 
-The `create` method returns a promise that resolves after the modal has been hidden to a `BvTriggerableEvent` object.
-Using the `resolveOnHide` option (in the second argument), the promise resolves at the time the modal begins hiding, rather than after it is fully hidden.
+The `create` method returns a controller object. Call `.show()` to display the modal; `.show()` returns a promise that resolves to a `BvTriggerableEvent` when the modal closes.
+Using `options.resolveOnHide`, the promise resolves when hide begins rather than after the full hide lifecycle.
 
 ```js
-const value = await create({title: 'Hello World!'}, {resolveOnHide: true})
+const value = await create({
+  title: 'Hello World!',
+  options: {resolveOnHide: true},
+}).show()
 ```
 
 This object contains the following properties:
@@ -81,20 +87,25 @@ The promise also contains functions to control the modal:
 
 ### Lifecycle
 
-By default, the modal is destroyed once it's closed. If you want to keep the modal, use the `keep` option in the second argument of the `create` method.
-The modal is destroyed when the current scope is exited. You can also destroy it manually by calling the `destroy` method.
+Created modal instances persist until you explicitly dispose them. Hiding a modal does not remove it from the orchestrator store.
 
 ```js
-const modal = create({title: 'Hello World!'}, {keep: true})
-modal.show()
-// do something
-modal.destroy()
+const modal = create({
+  title: 'Hello World!',
+})
+try {
+  await modal.show()
+  // do something
+} finally {
+  await modal.destroy()
+}
 ```
 
-We also support the typescript feature `await using` to automatically destroy the modal when the scope is exited.
+You can also use the TypeScript `await using` syntax for automatic disposal when the scope exits.
 
 ```js
 await using modal = create({title: 'Hello World!'})
+await modal.show()
 ```
 
 ## Globally Hiding Modals

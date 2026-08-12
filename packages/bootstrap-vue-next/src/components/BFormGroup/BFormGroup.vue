@@ -22,7 +22,7 @@
       <BCol v-bind="contentColProps" ref="_content">
         <slot
           :id="computedId"
-          :aria-describedby="null"
+          :aria-describedby="computedAriaDescribedby"
           :description-id="descriptionId"
           :label-id="labelId"
         />
@@ -40,10 +40,10 @@
       </BCol>
     </BFormRow>
     <template v-else>
-      <div v-if="props.floating && !isHorizontal" ref="_content" class="form-floating">
+      <div v-if="isFloating" ref="_content" class="form-floating">
         <slot
           :id="computedId"
-          :aria-describedby="null"
+          :aria-describedby="computedAriaDescribedby"
           :description-id="descriptionId"
           :label-id="labelId"
         />
@@ -80,7 +80,7 @@
         </BFormGroupLabel>
         <slot
           :id="computedId"
-          :aria-describedby="null"
+          :aria-describedby="computedAriaDescribedby"
           :description-id="descriptionId"
           :label-id="labelId"
         />
@@ -216,6 +216,7 @@ const labelColProps = computed(() => getColProps(props, 'label'))
 const isHorizontal = computed(
   () => Object.keys(contentColProps.value).length > 0 || Object.keys(labelColProps.value).length > 0
 )
+const isFloating = computed(() => props.floating && !isHorizontal.value)
 
 const stateClass = useStateClass(computedState)
 const computedAriaInvalid = useAriaInvalid(() => props.ariaInvalid, computedState)
@@ -274,14 +275,16 @@ const computedLabelFor = computed(() =>
   props.labelFor ??
   (meaningfulDefaultSlotChildren.value.length === 1 ? singleLabelTargetId.value : null)
 )
-const labelTag = computed(() => (!computedLabelFor.value ? 'legend' : 'label'))
+
+const isFieldset = computed(() => !isFloating.value && !computedLabelFor.value)
+const labelTag = computed(() => (!isFieldset.value ? 'label' : 'legend'))
 const labelClasses = computed(() => [
   isHorizontal.value ? 'col-form-label' : 'form-label',
   {
-    'bv-no-focus-ring': !computedLabelFor.value,
-    'col-form-label': isHorizontal.value || !computedLabelFor.value,
-    'pt-0': !isHorizontal.value && !computedLabelFor.value,
-    'd-block': !isHorizontal.value && computedLabelFor.value,
+    'bv-no-focus-ring': !isFloating.value && !computedLabelFor.value,
+    'col-form-label': isHorizontal.value || (!isFloating.value && !computedLabelFor.value),
+    'pt-0': !isHorizontal.value && !isFloating.value && !computedLabelFor.value,
+    'd-block': !isHorizontal.value && (isFloating.value || !!computedLabelFor.value),
     [`col-form-label-${props.labelSize}`]: !!props.labelSize,
     'visually-hidden': props.labelVisuallyHidden,
   },
@@ -289,7 +292,17 @@ const labelClasses = computed(() => [
   props.labelClass,
 ])
 
-const isFieldset = computed(() => !computedLabelFor.value)
+const hasDescription = computed(() => !!slots.description || !!props.description)
+const hasInvalidFeedback = computed(() => !!slots['invalid-feedback'] || !!props.invalidFeedback)
+const hasValidFeedback = computed(() => !!slots['valid-feedback'] || !!props.validFeedback)
+
+const computedAriaDescribedby = computed<string | null>(() => {
+  const ids: string[] = []
+  if (hasDescription.value) ids.push(descriptionId.value)
+  if (computedState.value === false && hasInvalidFeedback.value) ids.push(invalidFeedbackId.value)
+  if (computedState.value === true && hasValidFeedback.value) ids.push(validFeedbackId.value)
+  return ids.length > 0 ? ids.join(' ') : null
+})
 
 const labelShowing = computed(() => !!slots.label || !!props.label || isHorizontal.value)
 

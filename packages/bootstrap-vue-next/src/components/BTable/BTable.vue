@@ -118,12 +118,7 @@ import BTableLite from './BTableLite.vue'
 import BTd from './BTd.vue'
 import BTr from './BTr.vue'
 import type {BTableEmits, BTableLiteEmits, BTableProps, BTableSlots, CamelCase} from '../../types'
-import {
-  type TableField,
-  type TableFieldRaw,
-  type TableRowType,
-  type TableStrictClassValue,
-} from '../../types'
+import {type TableField, type TableFieldRaw, type TableRowType, type TableStrictClassValue} from '../../types'
 import {useDefaults} from '../../composables/useDefaults'
 import {pick} from '../../utils/object'
 import {bTableLiteProps, bTableSimpleProps, getTableFieldHeadLabel} from '../../utils/tableUtils'
@@ -441,8 +436,6 @@ const computedLiteProps = computed(() => ({
   ...pick(props, [...bTableLiteProps, ...bTableSimpleProps]),
   tableAttrs: {
     ariaBusy: busyModel.value,
-    'aria-multiselectable':
-      props.selectable && props.selectMode !== 'single' ? true : undefined,
   },
   items: computedDisplayItems.value,
   fields: computedFields.value as TableFieldRaw<Item>[],
@@ -479,7 +472,7 @@ const getSortLabel = (field: TableField<Item>): string => {
   // Currently sorted descending
   const mustSortValue = props.mustSort
   if (
-    mustSortValue === true ||
+    mustSortValue ||
     (Array.isArray(mustSortValue) && mustSortValue.includes(field.key as string))
   ) {
     return props.labelSortAsc

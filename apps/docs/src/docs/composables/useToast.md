@@ -1,4 +1,5 @@
 ---
+title: useToast
 description: 'The `useToast` composable allows you to create and manage toasts programmatically from anywhere in your application. It provides a simple API to show toast messages without needing to declare toast components in your templates.'
 ---
 
@@ -8,9 +9,11 @@ To use `useToast`, you need one of the following setup approaches:
 
 ### BApp Component (Recommended)
 
-The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
+<UseBAppSetup>
 
-<<< FRAGMENT ./demo/UseToastSetup.vue#template{vue-html}
+<<< FRAGMENT ./demo/OrchestratorSetup.vue
+
+</UseBAppSetup>
 
 ### Plugin Setup (Legacy)
 
@@ -24,19 +27,19 @@ Creating and showing a toast is simple:
 
 <<< DEMO ./demo/UseToastBasic.vue
 
-The `create` method returns a `promise` that is resolved then the toast closes. You can give toast a unique id. Since `Toasts` are fluid and can move around a lot, returning the index at a given point in time is not ideal for as its position may be changed in the array. So, for use with the `remove` method, you need to give a unique identifier
+The `create` method returns a controller object. Use `.show()` to display the toast and await the returned promise if you need to react to the close event.
 
 ### Create Options
 
-The `create` method accepts an object with `BToast`’s props, `position`, `appendToast`, `component` and `slots`.
+The `create` method accepts an object with `BToast`’s props, `position`, `appendToast`, `component`, and `slots`.
 
 The `position` value affects placement; its type is [ContainerPosition](/docs/types#containerposition).
 
-Optional second argument can be passed to `create` to some options: `keep` and `resolveOnHide`. The `keep` option will keep the toast in the registry after it is hidden, allowing you to show it again without creating a new instance. The `resolveOnHide` option will resolve the promise returned by `create` when the toast is hidden, not after the hide has finished.
+Lifecycle options are passed in `options` on the create payload. `resolveOnHide` resolves the promise when hide starts instead of after the full hide lifecycle.
 
 ### Reactivity Within create
 
-`create` props property can accept a `MaybeRefOrGetter`, meaning that you can make properties reactive
+`create` props property can accept a `MaybeRef`, meaning that you can make properties reactive
 
 <<< DEMO ./demo/UseToastReactive.vue
 
@@ -48,9 +51,29 @@ Using props can work for most situations, but it leaves some finer control to be
 
 ## Programmatically Hiding a Toast
 
-Hiding a `Toast` programmatically is very simple. `create` returns an object that has functions to control the toast, including `destroy`
+Hiding a `Toast` programmatically is simple. The controller returned by `create` exposes methods like `show`, `hide`, and `destroy`.
 
 <<< DEMO ./demo/UseToastProgrammatic.vue
+
+## Lifecycle and disposal
+
+Created toast instances persist until you explicitly dispose them. Hiding a toast does not remove it from the orchestrator store.
+
+```js
+const toast = create({title: 'Saved!'})
+try {
+  await toast.show()
+} finally {
+  await toast.destroy()
+}
+```
+
+You can also use the TypeScript `await using` syntax for automatic disposal when the scope exits.
+
+```js
+await using toast = create({title: 'Saved!'})
+await toast.show()
+```
 
 ## Using promises
 

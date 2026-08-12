@@ -203,20 +203,23 @@ const {
   isLeaving,
   trapActive,
   setLocalNoAnimation,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
-  transitionProps: {
-    onAfterEnter,
-    enterToClass: 'showing',
-    leaveToClass: 'hiding',
-    enterActiveClass: '',
-    leaveActiveClass: '',
-    enterFromClass: '',
-    leaveFromClass: '',
-  },
-})
+} = useShowHide(
+  {modelValue, props, emit: emit as EmitFn, element, id: computedId},
+  {
+    transitionProps: {
+      onAfterEnter,
+      enterToClass: 'showing',
+      leaveToClass: 'hiding',
+      enterActiveClass: '',
+      leaveActiveClass: '',
+      enterFromClass: '',
+      leaveFromClass: '',
+    },
+  }
+)
 
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
-const smallerOrEqualToBreakpoint = breakpoints.smallerOrEqual(() => props.responsive ?? 'xs')
+const smallerThanBreakpoint = breakpoints.smaller(() => props.responsive ?? 'xs')
 // Initialize with SSR-safe default value to prevent hydration mismatches
 // The actual breakpoint evaluation is deferred to onMounted (client-side only)
 const isOpenByBreakpoint = ref(false)
@@ -224,7 +227,7 @@ const isOpenByBreakpoint = ref(false)
 onMounted(() => {
   if (props.responsive !== undefined) {
     // Update the breakpoint state after mounting (client-side only)
-    isOpenByBreakpoint.value = !smallerOrEqualToBreakpoint.value
+    isOpenByBreakpoint.value = !smallerThanBreakpoint.value
     emit('breakpoint', buildTriggerableEvent('breakpoint'), isOpenByBreakpoint.value)
   }
 })
@@ -299,7 +302,7 @@ const sharedSlots = computed<BOffcanvasSlotsData>(() => ({
   active: trapActive.value,
 }))
 
-watch(smallerOrEqualToBreakpoint, (newValue) => {
+watch(smallerThanBreakpoint, (newValue) => {
   if (props.responsive === undefined) return
   if (newValue === true) {
     const opened = false
@@ -327,7 +330,7 @@ watch(
       isOpenByBreakpoint.value = false
       return
     }
-    const opened = !smallerOrEqualToBreakpoint.value
+    const opened = !smallerThanBreakpoint.value
     if (opened === isOpenByBreakpoint.value) return
     setLocalNoAnimation(true)
     requestAnimationFrame(() => {

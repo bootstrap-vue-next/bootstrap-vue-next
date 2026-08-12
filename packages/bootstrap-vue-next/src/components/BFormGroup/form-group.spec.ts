@@ -590,10 +590,7 @@ describe('form-group', () => {
         const wrapper = mount(BFormGroup, {
           props: {label: 'Range'},
           slots: {
-            default: () => [
-              h(BFormInput, {id: 'range-start'}),
-              h(BFormInput, {id: 'range-end'}),
-            ],
+            default: () => [h(BFormInput, {id: 'range-start'}), h(BFormInput, {id: 'range-end'})],
           },
         })
         await nextTick()
@@ -1422,6 +1419,35 @@ describe('form-group', () => {
       expect(children[1].tagName).toBe('LABEL')
     })
 
+    it('renders a label (not legend) from the first render in floating mode', () => {
+      // The descendant input's id only registers after the parent's initial render pass.
+      // The label must still be a <label> element on that first pass, otherwise SSR HTML
+      // (which only contains the first pass) would render an unstyled legend below the box
+      // and hydration would flip it to a label, causing a repaint/layout shift.
+      const wrapper = mount(BFormGroup, {
+        props: {floating: true, label: 'Email'},
+        slots: {
+          default: h(BFormInput, {id: 'email-input'}),
+        },
+      })
+      expect(wrapper.find('.form-floating > label').exists()).toBe(true)
+      expect(wrapper.find('.form-floating > legend').exists()).toBe(false)
+    })
+
+    it('wires the for attribute after child registration without changing the element', async () => {
+      const wrapper = mount(BFormGroup, {
+        props: {floating: true, label: 'Email'},
+        slots: {
+          default: h(BFormInput, {id: 'email-input'}),
+        },
+      })
+      await nextTick()
+      const label = wrapper.find('.form-floating > label')
+      expect(label.exists()).toBe(true)
+      expect(label.attributes('for')).toBe('email-input')
+      expect(wrapper.find('.form-floating > legend').exists()).toBe(false)
+    })
+
     it('does not apply form-floating when horizontal', () => {
       const wrapper = mount(BFormGroup, {
         props: {floating: true, label: 'Email', labelCols: 3},
@@ -1491,6 +1517,39 @@ describe('form-group', () => {
       })
       expect(slotProps).toBeDefined()
       expect(slotProps!.ariaDescribedby).toBeNull()
+    })
+
+    it('passes descriptionId as ariaDescribedby when description exists', () => {
+      let slotProps: Record<string, unknown> | undefined
+      mount(BFormGroup, {
+        props: {description: 'Help text'},
+        slots: {
+          default: (props: Record<string, unknown>) => {
+            slotProps = props
+            return h('div')
+          },
+        },
+      })
+
+      expect(slotProps).toBeDefined()
+      expect(slotProps!.ariaDescribedby).toBe(slotProps!.descriptionId)
+    })
+
+    it('includes invalid feedback id in ariaDescribedby when state is invalid', () => {
+      let slotProps: Record<string, unknown> | undefined
+      const wrapper = mount(BFormGroup, {
+        props: {description: 'Help text', invalidFeedback: 'Invalid', state: false},
+        slots: {
+          default: (props: Record<string, unknown>) => {
+            slotProps = props
+            return h('div')
+          },
+        },
+      })
+
+      const describedBy = slotProps!.ariaDescribedby as string
+      expect(describedBy).toContain(slotProps!.descriptionId as string)
+      expect(describedBy).toContain(wrapper.find('.invalid-feedback').attributes('id'))
     })
   })
 

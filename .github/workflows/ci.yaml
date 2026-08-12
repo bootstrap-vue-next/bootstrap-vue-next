@@ -12,9 +12,12 @@ on:
       - dev
       - main
 
+permissions:
+  contents: read
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
 
     steps:
       - name: Clone Repository
@@ -49,8 +52,17 @@ jobs:
       - name: Build Library
         run: pnpm run build
 
-      - name: Build Docs
-        run: pnpm --filter docs run build
+      - name: Upload build artifacts for downstream jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          include-hidden-files: true
+          path: |
+            packages/bootstrap-vue-next/dist
+            packages/nuxt/dist
+            packages/nuxt/.nuxt
+            packages/nuxt/playground/.nuxt
+          retention-days: 1
 
       - name: Validate Docs Page Structure
         run: pnpm --filter docs run test:unit:ci
@@ -64,7 +76,7 @@ jobs:
       - run: pnpx pkg-pr-new publish './packages/bootstrap-vue-next' './packages/nuxt' --template './templates/vite'
 
   test-lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
 
     steps:
       - name: Clone Repository
@@ -100,7 +112,7 @@ jobs:
         run: pnpm run test:lint:ci
 
   test-unit:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
 
     steps:
       - name: Clone Repository
@@ -133,4 +145,50 @@ jobs:
         run: pnpm install --ignore-scripts --frozen-lockfile
 
       - name: Test Unit
-        run: pnpm run test:unit:ci --filter=!docs
+        run: pnpm run test:unit:ci
+
+  test-nuxt-e2e:
+    needs: build
+    runs-on: ubuntu-slim
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x.x
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v4
+        id: pnpm-install
+
+      - name: Get PNPM Store Directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup PNPM Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install Dependencies
+        run: pnpm install --ignore-scripts --frozen-lockfile
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: packages
+
+      - name: Install Playwright browser for Nuxt tests
+        run: pnpm dlx playwright@1.62.1 install --with-deps chromium
+
+      - name: Run Nuxt Playwright tests
+        run: pnpm --filter @bootstrap-vue-next/nuxt run test:e2e

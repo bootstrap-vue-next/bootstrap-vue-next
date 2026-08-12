@@ -1,4 +1,5 @@
 ---
+title: Table
 description: 'For displaying tabular data, `BTable` supports pagination, filtering, sorting, custom rendering, various style options, events, and asynchronous data. For simple display of tabular data without all the fancy features, BootstrapVueNext provides two lightweight alternative components [`BTableLite`](#light-weight-tables) and [`BTableSimple`](#simple-tables).'
 ---
 
@@ -105,7 +106,7 @@ The following field properties (defined as [TableField](/docs/types#tableitem)) 
 
 | Property               | Type                                                                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ---------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `key`                  | `string`                                                                                     | **Required.** Unique identifier for the column. Used for generating slot names (e.g., `head(<key>)`, `cell(<key>)`) and tracking column state. This value must be a simple string and does **not** support nested paths like `name.firstName`. For nested or computed data access, use the `accessor` property. See the [migration guide](/docs/migration-guide#field-definitions) for details on migrating from nested keys.                                                                                |
+| `key`                  | `string`                                                                                     | **Required.** Unique identifier for the column. Used for generating slot names (e.g., `head(<key>)`, `cell(<key>)`) and tracking column state. This value must be a simple string and does **not** support nested paths like `name.firstName`. For nested or computed data access, use the `accessor` property. See the [migration knowledge base](/docs/migration-data/components/btable) for details on migrating from nested keys.                                                                                |
 | `accessor`             | `string \| ((item: T) => unknown)`                                                           | **Optional.** Specifies how to read the value from each row item. Can be a string representing a root-level property name (e.g., `'email'`), or a function that receives the row item and returns the value (recommended for nested or computed values). If omitted, defaults to using the `key` property. **Note:** String accessors only work for root-level properties; use a function for nested paths (e.g., `(item) => item.name.first`).                                                              |
 | `label`                | `string`                                                                                     | Appears in the columns table header (and footer if `foot-clone` is set). Defaults to the field's key (in humanized format) if not provided. It's possible to use empty labels by assigning an empty string `""` but be sure you also set `headerTitle` to provide non-sighted users a hint about the column contents.                                                                                                                                                                                        |
 | `headerTitle`          | `string`                                                                                     | Text to place on the fields header `<th>` attribute `title`. Defaults to no `title` attribute.                                                                                                                                                                                                                                                                                                                                                                                                               |
@@ -534,7 +535,7 @@ following properties:
 ::: info NOTE
 If you previously used the `emptyHtml` or `emtpyFilteredHtml` scoped slots or the `empty-html` or
 `empty-filtered-html` props, please convert to using the `empty-text` or `empty-filtered-text` slots
-instead. See our [migration guide](/docs/migration-guide#v-html) for details.
+instead. See our [migration knowledge base](/docs/migration-data/patterns/v-html-props) for details.
 :::
 
 ## Advanced Features
@@ -876,7 +877,7 @@ Set the `filter` prop to `null` or an empty string to clear the current filter.
 
 ### Built in filtering options
 
-There are several options for controlling what data the filter is applied against.
+Several options control which data the filter is applied against.
 
 - The `filterable` prop (which replaces BootstrapVue's `filter-included-fields`) accepts an array of field keys to include in filtering. When set, only the specified fields will be searchable. If not set or empty, all fields are included.
 - Note: `filter-ignored-fields` from BootstrapVue is not implemented. Use `filterable` to specify which fields to search instead.
@@ -1167,3 +1168,7 @@ your app handles the various inconsistencies with events.
 ## Complete Example
 
 <<< DEMO ./demo/TableComplete.vue
+
+## Internationalization
+
+<Internationalization />

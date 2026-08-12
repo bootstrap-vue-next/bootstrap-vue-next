@@ -16,7 +16,7 @@
       :aria-live="focused ? 'polite' : 'off'"
       aria-atomic="true"
       aria-relevant="additions"
-      >{{ tags.join(', ') }}</output
+      >{{ modelValue.join(', ') }}</output
     >
     <div
       :id="`${computedId}removed_tags__`"
@@ -70,13 +70,13 @@
       :tag-pills="props.tagPills"
       :tag-remove-label="props.tagRemoveLabel"
       :tag-variant="props.tagVariant"
-      :tags
+      :tags="[...modelValue]"
     >
       <ul
         :id="`${computedId}tag_list__`"
         class="b-form-tags-list list-unstyled mb-0 d-flex flex-wrap align-items-center"
       >
-        <template v-for="(tag, index) in tags" :key="index">
+        <template v-for="(tag, index) in modelValue" :key="index">
           <slot
             name="tag"
             :tag="tag"
@@ -150,14 +150,14 @@
         <small v-if="isDuplicate" class="form-text text-body-secondary"
           >{{ props.duplicateTagText }}: {{ inputValue }}</small
         >
-        <small v-if="tags.length === props.limit" class="form-text text-body-secondary">
+        <small v-if="isLimitReached" class="form-text text-body-secondary">
           {{ props.limitTagsText }}</small
         >
       </div>
     </slot>
     <template v-if="props.name">
       <input
-        v-for="(tag, index) in tags"
+        v-for="(tag, index) in modelValue"
         :key="index"
         type="hidden"
         :name="props.name"
@@ -168,7 +168,7 @@
 </template>
 
 <script setup lang="ts">
-import {onKeyStroke, syncRef, useFocus, useToNumber} from '@vueuse/core'
+import {onKeyStroke, useFocus, useToNumber} from '@vueuse/core'
 import {computed, ref, useTemplateRef} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {escapeRegExpChars} from '../../utils/stringUtils'
@@ -232,20 +232,12 @@ const {focused} = useFocus(input, {
 })
 
 const _inputId = computed(() => props.inputId || `${computedId.value}input__`)
-const tags = ref<string[]>([...modelValue.value])
 const inputValue = ref<string>('')
 const shouldRemoveOnDelete = ref<boolean>(modelValue.value.length > 0)
 const lastRemovedTag = ref<string>('')
 const validTags = ref<string[]>([])
 const invalidTags = ref<string[]>([])
 const duplicateTags = ref<string[]>([])
-
-syncRef(modelValue, tags, {
-  direction: 'ltr',
-  transform: {
-    ltr: (v) => [...v],
-  },
-})
 
 const computedClasses = computed(() => [
   stateClass.value,
@@ -256,11 +248,11 @@ const computedClasses = computed(() => [
   },
 ])
 
-const isDuplicate = computed(() => tags.value.includes(inputValue.value))
+const isDuplicate = computed(() => modelValue.value.includes(inputValue.value))
 const isInvalid = computed(() =>
   inputValue.value === '' ? false : !props.tagValidator(inputValue.value)
 )
-const isLimitReached = computed(() => tags.value.length === limitNumber.value)
+const isLimitReached = computed(() => modelValue.value.length === limitNumber.value)
 const disableAddButton = computed(() => !isInvalid.value && !isDuplicate.value)
 
 const onFocusin = (e: Readonly<FocusEvent>): void => {
@@ -353,9 +345,9 @@ const onKeydown = (e: Readonly<KeyboardEvent>): void => {
     props.removeOnDelete &&
     inputValue.value === '' &&
     shouldRemoveOnDelete.value &&
-    tags.value.length > 0
+    modelValue.value.length > 0
   ) {
-    removeTag(tags.value[tags.value.length - 1])
+    removeTag(modelValue.value[modelValue.value.length - 1])
   } else {
     shouldRemoveOnDelete.value = true
   }
@@ -365,7 +357,7 @@ onKeyStroke(onKeydown, {target: input, passive: true})
 
 const separator = computed(() => {
   if (!props.separator) {
-    return
+    return undefined
   }
 
   return typeof props.separator === 'string' ? props.separator : props.separator.join('')
@@ -373,7 +365,7 @@ const separator = computed(() => {
 
 const separatorRegExp = computed(() => {
   if (!separator.value) {
-    return
+    return undefined
   }
 
   return new RegExp(`[${escapeRegExpChars(separator.value)}]+`)
@@ -410,10 +402,14 @@ const addTag = (tag?: string): void => {
 }
 
 const removeTag = (tag?: string): void => {
-  const tagIndex = tags.value.indexOf(tag?.toString() ?? '')
+  const tagStr = tag?.toString() ?? ''
+  const tagIndex = modelValue.value.indexOf(tagStr)
   if (tagIndex === -1) return
-  lastRemovedTag.value = tags.value.splice(tagIndex, 1).toString()
-  modelValue.value = tags.value
+  lastRemovedTag.value = tagStr
+  modelValue.value = [
+    ...modelValue.value.slice(0, tagIndex),
+    ...modelValue.value.slice(tagIndex + 1),
+  ]
 }
 
 defineExpose({

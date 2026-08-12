@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.45.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.9...bootstrapvuenext-v0.45.10) (2026-08-05)
+
+
+### Bug Fixes
+
+* BNavbarNav not respecting `tag` prop ([#3242](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3242)) ([51c19e4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/51c19e458d71c0afa564edef4d62f8c3f77c27ec))
+
+## [0.45.9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.8...bootstrapvuenext-v0.45.9) (2026-07-28)
+
+
+### Bug Fixes
+
+* remove invalid aria-multiselectable attribute from BTable table element ([#3235](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3235)) ([82218a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/82218a36e8545e0b30521283b6a08d9c5a7a9dab))
+
+## [0.45.8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.7...bootstrapvuenext-v0.45.8) (2026-07-09)
+
+
+### Bug Fixes
+
+* BOffcanvas responsive properties off-by-one issue ([d7414cf](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d7414cf6a7c71208fdfd979a7bc0b8ec372fc380))
+
 ## [0.45.7](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.6...bootstrapvuenext-v0.45.7) (2026-06-22)
 
 

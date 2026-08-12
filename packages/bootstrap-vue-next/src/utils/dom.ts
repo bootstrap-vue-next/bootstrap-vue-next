@@ -1,4 +1,5 @@
 import type {Slot} from 'vue'
+import {error} from './console'
 
 export const getSafeDocument = () => (typeof document !== 'undefined' ? document : null)
 export const getSafeWindow = () => (typeof window !== 'undefined' ? window : null)
@@ -23,7 +24,7 @@ export const attemptFocus = (
   try {
     el.focus(options)
   } catch (e) {
-    console.error(e)
+    error('dom', e)
   }
   return isActiveElement(el)
 }

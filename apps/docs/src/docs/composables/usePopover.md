@@ -1,4 +1,5 @@
 ---
+title: usePopover
 description: 'The `usePopover` composable allows you to create and control popovers and tooltips dynamically from anywhere in your application. It provides methods to create, show, hide, and manage both popovers and tooltips programmatically.'
 ---
 
@@ -8,9 +9,11 @@ To use `usePopover`, you need one of the following setup approaches:
 
 ### BApp Component (Recommended)
 
-The easiest way is to wrap your application with the `BApp` component, which automatically sets up the orchestrator and registry:
+<UseBAppSetup>
 
-<<< FRAGMENT ./demo/UsePopoverSetup.vue
+<<< FRAGMENT ./demo/OrchestratorSetup.vue
+
+</UseBAppSetup>
 
 ### Plugin Setup (Legacy)
 
@@ -40,14 +43,14 @@ For more control, you can use the `component` property to render a custom compon
 
 ### Return Value
 
-The `popover` and `tooltip` methods return an awaitable controller `PromiseWithComponent`. You can call its methods immediately to control the instance, and you can also `await` it to resolve when the popover/tooltip is hidden. The controller exposes:
+The `popover` and `tooltip` methods return a controller object with instance methods:
 
-- `show: () => PromiseWithComponent` - Shows the popover.
-- `hide: (trigger?: string) => PromiseWithComponent` - Hides the popover, optionally passing a trigger.
-- `toggle: () => PromiseWithComponent` - Toggles the visibility of the popover.
-- `get: () => PopoverOrchestratorParam | undefined` - Returns the current properties of the popover, or undefined if none.
-- `set: (props: Partial<PopoverOrchestratorParam>) => PromiseWithComponent` - Updates the popover's properties.
-- `destroy: () => void` - Destroys the popover and cleans up resources.
+- `show: () => Promise<BvTriggerableEvent & AsyncDisposable>`
+- `hide: (trigger?: string) => void`
+- `toggle: () => void`
+- `get: () => PopoverOrchestratorParam | undefined`
+- `set: (props: Partial<PopoverOrchestratorParam>) => void`
+- `destroy: () => Promise<void>`
 
 ### Lifecycle
 

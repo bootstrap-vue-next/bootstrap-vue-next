@@ -1,4 +1,5 @@
 ---
+title: Dropdown
 description: 'Dropdowns are toggleable, contextual overlays for displaying lists of links and actions in a dropdown menu format.'
 ---
 
@@ -189,7 +190,7 @@ _Nested sub-menus are **not** supported._
 :::
 
 ::: tip
-There are small differences in how the sub-components behave, please read our [migration guide](/docs/migration-guide#dropdown-sub-components)
+There are small differences in how the sub-components behave, please read our [migration knowledge base](/docs/migration-data/components/bdropdown#dropdown-sub-components)
 if you are converting from `bootstrap-vue`.
 :::
 
@@ -297,3 +298,7 @@ The dropdown menu is rendered with semantic `<ul>` and `<li>` elements for acces
 
 - [`BNavItemDropdown`](/docs/components/nav#dropdown) for dropdown support inside `BNav` and `BNavbar`
 - [Router Link Support](/docs/reference/router-links) reference for information about router-link specific props available on `BDropdownItem`
+
+## Internationalization
+
+<Internationalization />

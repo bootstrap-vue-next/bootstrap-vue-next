@@ -56,17 +56,20 @@
     </BRow>
     <BRow>
       <BCol>
-        {{ store.filter((el) => el.type === 'modal') }}
+        {{ modalCount }}
       </BCol>
     </BRow>
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import {computed, h, onMounted, ref, toValue} from 'vue'
-import type {ColorVariant, OrchestratedModal} from 'bootstrap-vue-next'
+import {computed, h, markRaw, onMounted, onUnmounted, ref, watchEffect} from 'vue'
+import type {ColorVariant, ModalOrchestratorCreateParamBase} from 'bootstrap-vue-next'
 import {BModal} from 'bootstrap-vue-next/components/BModal'
 import {useModal} from 'bootstrap-vue-next/composables/useModal'
+
+const {create, store} = useModal()
+const modalCount = computed(() => store.value.modal.size)
 
 const showModal = ref(false)
 const showModal2 = ref(false)
@@ -75,50 +78,69 @@ const showModal3 = ref(false)
 const noClose = ref(true)
 const isModalVisible = ref(false)
 
-const firstRef = ref<OrchestratedModal>({
-  body: `${Math.random()}`,
+const body = ref<ModalOrchestratorCreateParamBase['body']>('foo')
+const firstRef = ref<ModalOrchestratorCreateParamBase>({
+  // If we want to sync this, we will need a watcher
+  body: body.value,
   title: 'foobar',
 })
-
+let interval: ReturnType<typeof setInterval> | null = null
 onMounted(() => {
-  setInterval(() => {
-    firstRef.value.body = `${Math.random()}`
+  interval = setInterval(() => {
+    body.value = body.value === 'foo' ? 'bar' : 'foo'
   }, 1000)
 })
+onUnmounted(() => {
+  if (interval !== null) {
+    clearInterval(interval)
+  }
+})
+watchEffect(() => {
+  firstRef.value.body = body.value
+})
 
-const {create, store} = useModal()
+const dynamicModalModelValue = ref<ModalOrchestratorCreateParamBase['modelValue']>(false)
+const dynamicModal = computed<ModalOrchestratorCreateParamBase>({
+  get: () => ({
+    // We use a computed to make derivations down below, but we NEED to make sure we have a syncable modelValue. So we use a writable computed
+    modelValue: dynamicModalModelValue.value,
+
+    body: 'my body',
+    title: 'my title',
+    okVariant: (firstRef.value.body === 'foo' ? 'danger' : 'info') as ColorVariant,
+  }),
+  set: (value) => {
+    dynamicModalModelValue.value = value.modelValue ?? dynamicModalModelValue.value
+  },
+})
 
 const showFns = {
-  basicNoReactive: () => {
-    create({
+  basicNoReactive: async () => {
+    await using _ = await create({
       title: 'foobar',
       okVariant: 'danger',
-    })
+    }).show()
+    return _
   },
-  basicCustomComponent: () => {
-    create({
-      slots: {default: h('div', null, {default: () => 'foobar!'})},
-
+  basicCustomComponent: async () => {
+    await using _ = await create({
+      slots: {default: () => markRaw(h('div', null, {default: () => 'foobar!'}))},
       okVariant: 'info',
-    })
+    }).show()
+    return _
   },
-  simpleRefProps: () => {
-    create(firstRef)
+  simpleRefProps: async () => {
+    await using _ = await create(firstRef).show()
+    return _
   },
-  dynamicRefProps: () => {
-    create(
-      computed(() => ({
-        ...firstRef.value,
-        okVariant: (Number.parseInt((toValue(firstRef.value.body) ?? '').charAt(2) ?? '0') % 2 === 0
-          ? 'danger'
-          : 'info') as ColorVariant,
-      }))
-    )
+  dynamicRefProps: async () => {
+    await using _ = await create(dynamicModal).show()
+    return _
   },
-  // Demonstration psuedocode, you can import a component and use it
+  // Demonstration pseudocode, you can import a component and use it
   // importedComponent: () => {
   //   show?.({
-  //     component: import('./MyModalComponent.vue'),
+  //     component: markRaw((await import('./MyModalComponent.vue')).default),
   //   })
   // },
 }

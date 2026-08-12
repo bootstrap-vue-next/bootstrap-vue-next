@@ -187,7 +187,7 @@ const {
   isVisible,
   transitionProps,
   contentShowing,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId)
+} = useShowHide({modelValue, props, emit: emit as EmitFn, element, id: computedId})
 
 // TODO solid is never used
 const countdownLength = computed(() =>

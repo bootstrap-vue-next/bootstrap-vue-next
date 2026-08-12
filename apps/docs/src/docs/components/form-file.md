@@ -1,4 +1,5 @@
 ---
+title: Form File
 description: 'File input control that supports single and multiple file modes, drag and drop, file type restrictions, and directory selection with contextual state feedback.'
 ---
 
@@ -137,3 +138,7 @@ With inputs that are of type `file`, the value is strictly `uni-directional`. Me
 ## Exposed functions
 
 `BFormFile` exposes functions through template refs. See the [Component Reference Exposed section](#comp-reference-bformfile-exposed) for details.
+
+## Internationalization
+
+<Internationalization />

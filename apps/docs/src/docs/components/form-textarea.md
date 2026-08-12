@@ -1,4 +1,5 @@
 ---
+title: Form Textarea
 description: 'Create multi-line text inputs with support for auto height sizing, minimum and maximum number of rows, and contextual states.'
 ---
 
@@ -153,7 +154,7 @@ it tell when the textarea becomes visible.
 
 All native events are supported, without the need for the `.native` modifier.
 
-See the [migration guide](/docs/migration-guide#bform-components) for changes handling of the `change` and `input` events from bootstrap-vue.
+See the [migration knowledge base](/docs/migration-data/components/bform#bform-components) for changes handling of the `change` and `input` events from bootstrap-vue.
 
 ## Exposed input properties and methods
 

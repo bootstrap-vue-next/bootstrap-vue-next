@@ -1,4 +1,5 @@
 ---
+title: Form Spinbutton
 description: 'The Form SpinButton allows the user to adjusting a numeric range with finite control'
 ---
 
@@ -119,3 +120,7 @@ The following keyboard controls are available when the spin button is focused:
 - <kbd>PageDown</kbd> Decreases the value by the step amount times the `repeat-step-multiplier` amount
 
 Note that the `repeat-delay`, `repeat-threshold` and `repeat-interval` only apply to the <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> keys
+
+## Internationalization
+
+<Internationalization />

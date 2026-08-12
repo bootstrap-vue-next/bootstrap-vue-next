@@ -96,7 +96,7 @@
             underline-opacity="0"
           >
             <List aria-hidden />
-            Browse docs
+            {{ isMigrationPage ? 'Browse migrations' : 'Browse docs' }}
           </BButton>
         </div>
         <div class="px-3 ms-auto">
@@ -120,11 +120,11 @@
             id="sidebar-menu"
             v-model="sidebar"
             responsive="lg"
-            title="Browse docs"
+            :title="isMigrationPage ? 'Browse migrations' : 'Browse docs'"
             header-class="d-flex offcanvas-hidden-width"
             class="h-100 border-0"
           >
-            <TableOfContentsNav />
+            <component :is="sidebarNavigationComponent" />
           </BOffcanvas>
         </ClientOnly>
       </aside>
@@ -163,7 +163,18 @@
                 </BOffcanvas>
               </ClientOnly>
             </aside>
-            <Content ref="_content" style="height: 100%" class="doc-content" />
+            <div class="doc-content-wrapper">
+              <BButton
+                v-if="isMigrationEntry"
+                :to="withBase('/docs/migration-data/')"
+                variant="link"
+                class="migration-back-link ps-0 mb-2"
+              >
+                <ChevronLeft aria-hidden class="me-1" />
+                Back to migration overview
+              </BButton>
+              <Content ref="_content" style="height: 100%" class="doc-content" />
+            </div>
           </div>
         </BRow>
       </main>
@@ -172,33 +183,28 @@
 </template>
 
 <script setup lang="ts">
-import { useColorMode } from 'bootstrap-vue-next/composables/useColorMode'
-import { useScrollspy } from 'bootstrap-vue-next/composables/useScrollspy'
-import { vBColorMode } from 'bootstrap-vue-next/directives/BColorMode'
-import { vBToggle } from 'bootstrap-vue-next/directives/BToggle'
-import {
-  type ComponentPublicInstance,
-  computed,
-  inject,
-  onMounted,
-  ref,
-  useTemplateRef,
-  watch,
-} from 'vue'
+import {useColorMode} from 'bootstrap-vue-next/composables/useColorMode'
+import {useScrollspy} from 'bootstrap-vue-next/composables/useScrollspy'
+import {vBColorMode} from 'bootstrap-vue-next/directives/BColorMode'
+import {vBToggle} from 'bootstrap-vue-next/directives/BToggle'
+import {type ComponentPublicInstance, computed, inject, onMounted, ref, useTemplateRef, watch} from 'vue'
 import GithubIcon from '~icons/bi/github'
 import OpencollectiveIcon from '~icons/logos/opencollective'
 import DiscordIcon from '~icons/bi/discord'
 import MoonStarsFill from '~icons/bi/moon-stars-fill'
 import SunFill from '~icons/bi/sun-fill'
 import ChevronRight from '~icons/bi/chevron-right'
+import ChevronLeft from '~icons/bi/chevron-left'
 import CircleHalf from '~icons/bi/circle-half'
 import List from '~icons/bi/list'
-import { useData, useRoute, withBase } from 'vitepress'
-import { VPNavBarSearch } from 'vitepress/theme'
-import { appInfoKey } from './keys'
-import { useMediaQuery } from '@vueuse/core'
+import {useData, useRoute, withBase} from 'vitepress'
+import {VPNavBarSearch} from 'vitepress/theme'
+import {appInfoKey} from './keys'
+import {useMediaQuery} from '@vueuse/core'
 import PageContents from '../../src/components/PageContents.vue'
-import { type ContentsItem, type HeaderItem } from '../../src/types'
+import MigrationNav from '../../src/components/MigrationNav.vue'
+import {type ContentsItem, type HeaderItem} from '../../src/types'
+import TableOfContentsNav from '../../src/components/TableOfContentsNav.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const { page } = useData()
@@ -251,6 +257,10 @@ const headerLinks = [
     label: 'Getting Started',
   },
   {
+    route: withBase('/docs/nuxt'),
+    label: 'Nuxt',
+  },
+  {
     route: withBase('/docs/icons'),
     label: 'Icons',
   },
@@ -263,7 +273,7 @@ const headerLinks = [
     label: 'Reference',
   },
   {
-    route: withBase('/docs/migration-guide'),
+    route: withBase('/docs/migration-data/'),
     label: 'Migrate',
   },
 ]
@@ -286,7 +296,7 @@ const headerExternalLinks = [
   },
 ]
 
-const colorMode = useColorMode({
+const {store: colorMode} = useColorMode({
   persist: true,
 })
 
@@ -356,6 +366,16 @@ const contents = computed(() => {
 
   return root.length > 0 ? root[0] : undefined
 })
+
+const isMigrationPage = computed(() => page.value.relativePath.startsWith('docs/migration-data/'))
+const isMigrationEntry = computed(
+  () =>
+    page.value.relativePath.startsWith('docs/migration-data/') &&
+    page.value.relativePath !== 'docs/migration-data/index.md',
+)
+const sidebarNavigationComponent = computed(() =>
+  isMigrationPage.value ? MigrationNav : TableOfContentsNav,
+)
 
 watch(
   () => route.path,
@@ -756,6 +776,15 @@ watch(
         .otp-sidebar {
           margin-left: 1.25rem;
           grid-area: toc;
+        }
+
+        .doc-content-wrapper {
+          grid-area: content;
+          min-width: 1px;
+        }
+
+        .migration-back-link {
+          font-size: 0.9rem;
         }
       }
     }
