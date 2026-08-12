@@ -13,7 +13,7 @@ If you are migrating from BootstrapVue, please refer to our [migration knowledge
 
 ## Contribute and Support 🙌
 
-This project is in the **late stages of alpha version**. While most features are functioning as expected, you may still encounter some issues. Your contributions at this stage can be particularly impactful in shaping the final product. If you're interested in contributing, here's how you can help:
+This project is stable and production ready. Your contributions are always welcome. If you're interested in contributing, here's how you can help:
 
 - submit an [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues)
 - or better, a [pull request](https://github.com/bootstrap-vue-next/bootstrap-vue-next/pulls)
