@@ -21,6 +21,7 @@ jobs:
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
       bootstrap_vue_next_release_created: ${{ steps.release.outputs['packages/bootstrap-vue-next--release_created'] }}
+      mcp_release_created: ${{ steps.release.outputs['packages/mcp--release_created'] }}
 
     steps:
       - name: Use Release Please
@@ -66,7 +67,7 @@ jobs:
         if: ${{ steps.release.outputs.releases_created == 'true' }}
 
       - name: Build Library
-        run: pnpm run build --filter bootstrap-vue-next --filter @bootstrap-vue-next/nuxt
+        run: pnpm run build --filter bootstrap-vue-next --filter @bootstrap-vue-next/nuxt --filter @bootstrap-vue-next/mcp
         if: ${{ steps.release.outputs.releases_created == 'true' }}
 
       - name: Publish Main
@@ -76,6 +77,10 @@ jobs:
       - name: Publish Nuxt
         run: pnpm publish --tag latest --filter @bootstrap-vue-next/nuxt --access=public
         if: ${{ steps.release.outputs.releases_created == 'true' && steps.release.outputs['packages/nuxt--release_created'] == 'true' }}
+
+      - name: Publish MCP
+        run: pnpm publish --tag latest --filter @bootstrap-vue-next/mcp --access=public
+        if: ${{ steps.release.outputs.releases_created == 'true' && steps.release.outputs['packages/mcp--release_created'] == 'true' }}
 
   deploy-docs:
     needs: release-please
