@@ -13,7 +13,7 @@ If you are migrating from BootstrapVue, please refer to our [migration knowledge
 
 ## Contribute and Support 🙌
 
-This project is stable and production ready. Your contributions are always welcome. If you're interested in contributing, here's how you can help:
+Your contributions are always welcome. If you're interested in contributing, here's how you can help:
 
 - submit an [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues)
 - or better, a [pull request](https://github.com/bootstrap-vue-next/bootstrap-vue-next/pulls)
