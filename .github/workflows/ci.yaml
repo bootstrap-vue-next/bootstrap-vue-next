@@ -64,9 +64,6 @@ jobs:
             packages/nuxt/playground/.nuxt
           retention-days: 1
 
-      - name: Build Docs
-        run: pnpm --filter docs run build
-
       - name: Validate Docs Page Structure
         run: pnpm --filter docs run test:unit:ci
 
