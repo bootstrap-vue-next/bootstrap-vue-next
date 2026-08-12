@@ -3,12 +3,12 @@ import type { Directive } from 'vue'
 import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const usedDirectives = useRuntimeConfig().public.bootstrapVueNext.directives
+  const usedDirectives = new Set(useRuntimeConfig().public.bootstrapVueNext.directives)
   const directiveValues = Object.entries(Directives)
 
   const result = directiveValues.reduce(
     (acc, [key, value]) => {
-      if (usedDirectives.includes(key)) {
+      if (usedDirectives.has(key)) {
         acc[key] = value
       }
       return acc

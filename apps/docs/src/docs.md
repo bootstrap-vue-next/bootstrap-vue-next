@@ -9,7 +9,7 @@ BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.
 
 ## Migrating from BootstrapVue
 
-If you are migrating from BootstrapVue, please refer to our [migration guide](/docs/migration-guide)
+If you are migrating from BootstrapVue, please refer to our [migration knowledge base](/docs/migration-data/)
 
 ## Contribute and Support 🙌
 
@@ -200,11 +200,9 @@ Components({
 
 ### Installation - Nuxt.js 3
 
-::: info In Addition to Setup
-The Nuxt module handles **component auto-registration** and **tree-shaking** automatically, so you do **not** need the [Automatic Registering of Components](#automatic-registering-of-components) step. However, you still need to set up the library using [BApp](#bapp-component-recommended) or the [Plugin approach](#plugin-approach-legacy) in your Nuxt application for the library's internal services to work.
-:::
+See the dedicated [Nuxt documentation](/docs/nuxt) for full setup, configuration options, and built-in integrations.
 
-In your Nuxt3 application, install the necessary packages for `bootstrap-vue-next`.
+For Nuxt projects, install the Nuxt module package:
 
 ::: code-group
 
@@ -225,64 +223,6 @@ npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt
 ```
 
 :::
-
-Open your `nuxt.config.js/ts` file and configure your application to use `bootstrap-vue-next`. The components will be imported automatically as needed.
-
-<HighlightCard>
-
-```ts
-// nuxt.config.js/ts
-export default defineNuxtConfig({
-  modules: ['@bootstrap-vue-next/nuxt'],
-  css: ['bootstrap/dist/css/bootstrap.min.css'],
-})
-```
-
-</HighlightCard>
-
-Enjoy it in your app without manual imports, and automatic tree-shaking.
-
-<HighlightCard>
-
-```vue
-<template>
-  <div>
-    <BButton variant="primary" @click="show = !show">Click me</BButton>
-    <BModal v-model="show">Test</BModal>
-  </div>
-</template>
-
-<script setup lang="ts">
-const show = ref(false)
-</script>
-```
-
-</HighlightCard>
-
-You can customize the options with the bootstrapVueNext key in your nuxt.config.
-
-<HighlightCard>
-
-```ts
-// nuxt.config.js/ts
-export default defineNuxtConfig({
-  modules: ['@bootstrap-vue-next/nuxt'],
-  bootstrapVueNext: {
-    composables: true, // Will include all composables
-    // composables: {useBreadcrumb: true, useColorMode: true, all: false}, // Will include only useBreadcrumb & useColorMode
-    // composables: {useBreadcrumb: false, useColorMode: false, all: true} // Will include everything except useBreadcrumb & useColorMode
-    directives: {all: true}, // Will include all directives
-    css: true, // Will include the module's CSS. If set to false, you can add the CSS manually in the 'css' property below
-  },
-  css: [
-    // 'bootstrap/dist/css/bootstrap.min.css' // Not necessary if `css: true`
-  ],
-})
-```
-
-</HighlightCard>
-
-This is mainly for the purpose of naming conflicts with other imports. It should not affect tree-shaking
 
 ### Installation - TypeScript
 
@@ -363,6 +303,10 @@ additional CSS ourselves. So, using a method such as
 Bootstrap documentation is likely the best way to achieve the tiniest possible application size.
 Though it is not automatic, it should prove the safest bet for minifying your application.
 
+BootstrapVueNext also marks JavaScript modules as side-effect-free at the package level while explicitly
+preserving style assets (`*.css`, `*.scss`) through package metadata. This allows bundlers to aggressively
+remove unused JavaScript while keeping required stylesheet imports intact.
+
 ### Tree-shaking with BApp
 
 When using the **BApp component approach**, you automatically get optimal tree-shaking as only the
@@ -400,4 +344,4 @@ some features may be missing or changed. If anyone has spotted a missing compati
 submit a GitHub issue or contribute to the
 [parity report](https://github.com/bootstrap-vue-next/bootstrap-vue-next/blob/main/CONTRIBUTING.md#help-verify-bootstrapvue-and-bootstrap-v5-parity).
 
-If you are migrating from BootstrapVue, please refer to our [migration guide](/docs/migration-guide)
+If you are migrating from BootstrapVue, please refer to our [migration knowledge base](/docs/migration-data/)

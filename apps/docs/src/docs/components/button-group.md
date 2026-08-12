@@ -1,4 +1,5 @@
 ---
+title: Button Group
 migrationGuide: false
 description: 'Group a series of buttons together on a single line or stack them in a vertical column with `BButtonGroup`.'
 ---
@@ -16,7 +17,7 @@ In addition, groups should be given an explicit label, as most assistive technol
 
 ## Sizing
 
-Set the `size` prop to `lg` or `sm` to render larger or smaller buttons. There is no need to specify the size on the individual buttons.
+Set the `size` prop to `lg` or `sm` to render larger or smaller buttons. You do not need to specify the size on the individual buttons.
 
 <<< DEMO ./demo/ButtonGroupSizing.vue#template{vue-html}
 
@@ -38,3 +39,7 @@ that split dropdown menus are not supported when prop `vertical` is set.
 
 Also check out the [`BButtonToolbar`](/docs/components/button-toolbar) component for generating
 toolbars containing button groups and input groups.
+
+## Internationalization
+
+<Internationalization />

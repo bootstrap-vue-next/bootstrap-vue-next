@@ -1,5 +1,9 @@
 <template>
-  <BFormSelectBase v-bind="forwardedProps" v-model="modelValue" :options="normalizedOptions as any">
+  <BFormSelectBase
+    v-bind="forwardedProps"
+    v-model="modelValue as any"
+    :options="normalizedOptions as any"
+  >
     <!-- Forward all slots -->
     <template #first>
       <slot name="first" />

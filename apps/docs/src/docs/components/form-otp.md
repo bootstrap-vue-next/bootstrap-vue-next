@@ -1,4 +1,5 @@
 ---
+title: Form OTP
 description: 'A sequence of one-character inputs for entering OTP codes, PINs, and verification codes. Built on top of Reka UI PinInput with Bootstrap styling.'
 ---
 

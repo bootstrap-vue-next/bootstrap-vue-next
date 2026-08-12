@@ -6,15 +6,15 @@
 </template>
 
 <script setup lang="ts">
-import {useModal} from 'bootstrap-vue-next/composables/useModal'
-import {ref} from 'vue'
+import { useModal } from 'bootstrap-vue-next/composables/useModal'
+import { ref } from 'vue'
 
-const {create} = useModal()
+const { create } = useModal()
 
 const okResult = ref<boolean | null | undefined>(null)
 
 const okBox = async () => {
-  const value = await create({
+  await using value = await create({
     body: 'This is an informational message',
     title: 'Message',
     okOnly: true,

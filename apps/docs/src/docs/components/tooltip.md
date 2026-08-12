@@ -1,4 +1,5 @@
 ---
+title: Tooltip
 description: >
   Easily add tooltips to an interactive element or component via the `<BTooltip>` component
   or [`v-b-tooltip`](/docs/directives/BTooltip) directive. Tooltips can also be created and programmatically controlled via the composable

@@ -15,7 +15,7 @@ import {DEPRECATION_REASON_TEXT, DeprecationReason} from '../types/deprecation'
  * Component for displaying deprecation warnings throughout the documentation.
  *
  * Displays a compact warning alert that explains why a feature is deprecated
- * and links to the full deprecation rationale in the migration guide.
+ * and links to the full deprecation rationale in the migration knowledge base.
  *
  * @example Basic usage
  * ```vue
@@ -47,7 +47,7 @@ import {DEPRECATION_REASON_TEXT, DeprecationReason} from '../types/deprecation'
 interface DeprecatedFeatureProps {
   /**
    * The reason this feature is deprecated.
-   * Each reason corresponds to an item in the deprecation guide.
+   * Each reason corresponds to an item in the migration knowledge base.
    */
   reason: DeprecationReason
   /**
@@ -92,10 +92,10 @@ const deprecatedLabel = computed(() => {
 })
 
 /**
- * URL to the deprecation section in the migration guide
+ * URL to the deprecation section in the migration knowledge base
  * Uses withBase to ensure the correct path including the base URL
  */
-const learnMoreUrl = withBase('/docs/migration-guide#deprecation')
+const learnMoreUrl = withBase('/docs/migration-data/patterns/overview#deprecation')
 </script>
 
 <style scoped>

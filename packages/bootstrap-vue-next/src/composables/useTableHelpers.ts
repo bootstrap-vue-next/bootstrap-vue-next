@@ -369,13 +369,16 @@ export const useTableSelectedItems = <Item>({
   })
 
   watch(selectedItems, (newValue, oldValue) => {
+    const previousSelection = new Set(oldValue)
+    const nextSelection = new Set(newValue)
+
     Array.from(oldValue)
-      .filter((item) => !newValue.includes(item))
+      .filter((item) => !nextSelection.has(item))
       .forEach((item) => {
         events.onRowUnselected(item)
       })
     Array.from(newValue)
-      .filter((item) => !oldValue.includes(item))
+      .filter((item) => !previousSelection.has(item))
       .forEach((item) => {
         events.onRowSelected(item)
       })

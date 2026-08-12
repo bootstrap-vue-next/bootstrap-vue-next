@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     },
   },
   css: ['bootstrap/dist/css/bootstrap.min.css'],
-  compatibilityDate: '2024-08-30',
+  compatibilityDate: 'latest',
   bootstrapVueNext: {
     directives: { all: true },
     plugin: {

@@ -203,17 +203,20 @@ const {
   isLeaving,
   trapActive,
   setLocalNoAnimation,
-} = useShowHide(modelValue, props, emit as EmitFn, element, computedId, {
-  transitionProps: {
-    onAfterEnter,
-    enterToClass: 'showing',
-    leaveToClass: 'hiding',
-    enterActiveClass: '',
-    leaveActiveClass: '',
-    enterFromClass: '',
-    leaveFromClass: '',
-  },
-})
+} = useShowHide(
+  {modelValue, props, emit: emit as EmitFn, element, id: computedId},
+  {
+    transitionProps: {
+      onAfterEnter,
+      enterToClass: 'showing',
+      leaveToClass: 'hiding',
+      enterActiveClass: '',
+      leaveActiveClass: '',
+      enterFromClass: '',
+      leaveFromClass: '',
+    },
+  }
+)
 
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
 const smallerThanBreakpoint = breakpoints.smaller(() => props.responsive ?? 'xs')

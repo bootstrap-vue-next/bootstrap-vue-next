@@ -1,4 +1,5 @@
 ---
+title: Collapse
 description: >
   Easily toggle visibility of almost any content on your pages in a vertically collapsing container.
   Includes support for making accordions. Visibility can be easily toggled with our

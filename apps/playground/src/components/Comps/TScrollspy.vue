@@ -25,23 +25,23 @@
             ref="content"
             style="position: relative; height: 300px; overflow-y: scroll; scroll-behavior: smooth"
           >
-            <p>{{ text }}</p>
+            <p>{{ lorem }}</p>
             <h4 id="fat">@fat</h4>
-            <p v-for="i in 6" :key="i">{{ text }}</p>
+            <p v-for="i in 6" :key="i">{{ lorem }}</p>
             <h4 id="mdo">@mdo</h4>
-            <p v-for="i in 6" :key="i">{{ text }}</p>
+            <p v-for="i in 6" :key="i">{{ lorem }}</p>
             <h4 id="one">one</h4>
-            <p v-for="i in 2" :key="i">{{ text }}</p>
+            <p v-for="i in 2" :key="i">{{ lorem }}</p>
             <h4 id="two">two</h4>
-            <p>{{ text }}</p>
+            <p>{{ lorem }}</p>
             <h4 id="three">three</h4>
-            <p v-for="i in 2" :key="i">{{ text }}</p>
+            <p v-for="i in 2" :key="i">{{ lorem }}</p>
             <h4 id="pi0">@pi0</h4>
-            <p v-for="i in 3" :key="i">{{ text }}</p>
+            <p v-for="i in 3" :key="i">{{ lorem }}</p>
           </b-card-body>
         </b-card>
         <div class="split" />
-        <p>curren: {{ nestedCurrent }}</p>
+        <p>current: {{ nestedCurrent }}</p>
         <b-card id="nested">
           <b-row>
             <b-col cols="4">
@@ -76,27 +76,27 @@
                 style="position: relative; height: 300px; overflow-y: auto"
               >
                 <h4 id="item-1" style="">Item 1</h4>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
                 <h5 id="item-1-1" style="">Item 1-1</h5>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
                 <h5 id="item-1-2" style="">Item 1-2</h5>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
                 <h5 id="item-1-3" style="">Item 1-3</h5>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
                 <h5 id="item-1-3-1" style="">Item 1-3-1</h5>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
                 <h5 id="item-1-3-2" style="">Item 1-3-2</h5>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
                 <h5 id="item-1-4" style="">Item 1-4</h5>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
                 <h4 id="item-2" style="">Item 2</h4>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
                 <h4 id="item-3" style="">Item 3</h4>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
                 <h5 id="item-3-1" style="">Item 3-1</h5>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
                 <h5 id="item-3-2" style="">Item 3-2</h5>
-                <p>{{ text }}</p>
+                <p>{{ lorem }}</p>
               </div>
             </b-col>
           </b-row>
@@ -107,7 +107,7 @@
             <b-col cols="4">
               <b-list-group>
                 <b-list-group-item
-                  v-for="(e, idx) in list"
+                  v-for="(e, idx) in currentListItems"
                   :key="idx"
                   :href="'#' + e.id"
                   :class="currentList === e.id && 'active'"
@@ -126,7 +126,7 @@
               >
                 <template v-for="i in items" :key="i.id">
                   <h4 :id="i.id">Item {{ i.text }}</h4>
-                  <p>{{ text }}</p>
+                  <p>{{ lorem }}</p>
                 </template>
               </div>
             </b-col>
@@ -148,7 +148,7 @@
               <div id="directive-list" style="position: relative; overflow-y: auto; height: 400px">
                 <template v-for="i in items" :key="i.id">
                   <h4 :id="i.id">Item {{ i.text }}</h4>
-                  <p>{{ text }}</p>
+                  <p>{{ lorem }}</p>
                 </template>
               </div>
             </b-col>
@@ -163,7 +163,7 @@
 
           <b-list-group>
             <b-list-group-item
-              v-for="(e, idx) in tocList"
+              v-for="(e, idx) in tocListItems"
               :key="idx"
               :href="'#' + e.id"
               :class="e.id === tocCurrent && 'active'"
@@ -188,22 +188,26 @@
 </template>
 
 <script setup lang="ts">
-import {type ComponentPublicInstance, ref} from 'vue'
+import {ref, useTemplateRef} from 'vue'
 import {useScrollspy} from 'bootstrap-vue-next/composables/useScrollspy'
 // import {useScrollspy} from './BootstrapVue'
-const content = ref<HTMLElement | ComponentPublicInstance<HTMLElement> | null>(null)
-const target = ref<HTMLElement | ComponentPublicInstance<HTMLElement> | null>(null)
-const contentNested = ref<HTMLElement | ComponentPublicInstance<HTMLElement> | null>(null)
-const targetNested = ref<HTMLElement | ComponentPublicInstance<HTMLElement> | null>(null)
-const contentList = ref<HTMLElement | ComponentPublicInstance<HTMLElement> | null>(null)
+const content = useTemplateRef('content')
+const target = useTemplateRef('target')
+const contentNested = useTemplateRef('contentNested')
+const targetNested = useTemplateRef('targetNested')
+const contentList = useTemplateRef('contentList')
 
 const tocContent = ref('root-element')
 const {current, scrollIntoView} = useScrollspy(content, target)
-const {current: currentList, list} = useScrollspy(contentList, null, {manual: true})
+const {current: currentList, list: currentListItems} = useScrollspy(contentList, null, {
+  manual: true,
+})
 const {current: nestedCurrent} = useScrollspy(contentNested, targetNested)
-const {current: tocCurrent, list: tocList} = useScrollspy(tocContent, null, {manual: true})
+const {current: tocCurrent, list: tocListItems} = useScrollspy(tocContent, null, {
+  manual: true,
+})
 
-const text = ref(`
+const lorem = `
           Quis magna Lorem anim amet ipsum do mollit sit cillum voluptate ex nulla
           tempor. Laborum consequat non elit enim exercitation cillum aliqua
           consequat id aliqua. Esse ex consectetur mollit voluptate est in duis
@@ -212,7 +216,7 @@ const text = ref(`
           nisi sit est tempor laborum mollit labore officia laborum excepteur
           commodo non commodo dolor excepteur commodo. Ipsum fugiat ex est consectetur
           ipsum commodo tempor sunt in proident.
-        `)
+        `
 
 const items = ref([
   {

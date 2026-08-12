@@ -11,8 +11,8 @@ import {createBootstrap} from '../plugins'
 describe('toggle directive', () => {
   enableAutoUnmount(afterEach)
   it('works with multiple targets, and updates when targets change', async () => {
-    const spy1 = vi.fn()
-    const spy2 = vi.fn()
+    const spy1 = vi.fn<() => void>()
+    const spy2 = vi.fn<() => void>()
     const App = {
       directives: {
         bToggle: VBToggle,

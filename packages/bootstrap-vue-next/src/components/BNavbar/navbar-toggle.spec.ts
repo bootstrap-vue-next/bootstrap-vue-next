@@ -12,11 +12,11 @@ const createMockShowHideInstance = (shown = false): RegisterShowHideMapValue => 
   id: 'test-id',
   component: {uid: 1} as ComponentInternalInstance,
   value: readonly(ref(shown)),
-  hide: vi.fn(async () => true),
-  show: vi.fn(async () => true),
-  toggle: vi.fn(async () => true),
-  registerTrigger: vi.fn(),
-  unregisterTrigger: vi.fn(),
+  hide: vi.fn<() => Promise<boolean>>(async () => true),
+  show: vi.fn<() => Promise<boolean>>(async () => true),
+  toggle: vi.fn<() => Promise<boolean>>(async () => true),
+  registerTrigger: vi.fn<() => void>(),
+  unregisterTrigger: vi.fn<() => void>(),
 })
 
 const createRegistryHolder = (
@@ -155,7 +155,7 @@ describe('navbar-toggle', () => {
       global: {
         provide: {
           [showHideRegistryKey as unknown as symbol]: {
-            register: vi.fn(),
+            register: vi.fn<() => void>(),
             values,
           },
         },
@@ -176,7 +176,7 @@ describe('navbar-toggle', () => {
       global: {
         provide: {
           [showHideRegistryKey as unknown as symbol]: {
-            register: vi.fn(),
+            register: vi.fn<() => void>(),
             values,
           },
         },
@@ -197,7 +197,7 @@ describe('navbar-toggle', () => {
       global: {
         provide: {
           [showHideRegistryKey as unknown as symbol]: {
-            register: vi.fn(),
+            register: vi.fn<() => void>(),
             values,
           },
         },
@@ -218,7 +218,7 @@ describe('navbar-toggle', () => {
       global: {
         provide: {
           [showHideRegistryKey as unknown as symbol]: {
-            register: vi.fn(),
+            register: vi.fn<() => void>(),
             values,
           },
         },
@@ -237,7 +237,7 @@ describe('navbar-toggle', () => {
       global: {
         provide: {
           [showHideRegistryKey as unknown as symbol]: {
-            register: vi.fn(),
+            register: vi.fn<() => void>(),
             values,
           },
         },
@@ -262,7 +262,7 @@ describe('navbar-toggle', () => {
       global: {
         provide: {
           [showHideRegistryKey as unknown as symbol]: {
-            register: vi.fn(),
+            register: vi.fn<() => void>(),
             values,
           },
         },
@@ -289,7 +289,7 @@ describe('navbar-toggle', () => {
       global: {
         provide: {
           [showHideRegistryKey as unknown as symbol]: {
-            register: vi.fn(),
+            register: vi.fn<() => void>(),
             values,
           },
         },
@@ -316,7 +316,7 @@ describe('navbar-toggle', () => {
       global: {
         provide: {
           [showHideRegistryKey as unknown as symbol]: {
-            register: vi.fn(),
+            register: vi.fn<() => void>(),
             values,
           },
         },
