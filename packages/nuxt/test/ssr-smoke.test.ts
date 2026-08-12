@@ -31,4 +31,9 @@ describe('ssr-smoke', async () => {
     const html = await $fetch('/dropdown')
     expect(html).toContain('dropdown-page')
   })
+
+  it('BModal inside BFormGroup renders without SSR error', async () => {
+    const html = await $fetch('/modal-in-form-group')
+    expect(html).toContain('modal-in-form-group-page')
+  })
 })
