@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.46.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.0...bootstrapvuenext-v0.46.1) (2026-08-14)
+
+
+### Bug Fixes
+
+* **BFormValidFeedback:** read global defaults from its own key ([#3265](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3265)) ([83099a9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/83099a92ef7f0c4611f370502c209979b4edaeac))
+
 ## [0.46.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.10...bootstrapvuenext-v0.46.0) (2026-08-12)
 
 
