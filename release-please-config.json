@@ -1,22 +1,19 @@
 {
+  "separate-pull-requests": true,
+  "include-component-in-tag": true,
+
   "packages": {
     "packages/bootstrap-vue-next": {
       "component": "bootstrapvuenext",
-      "release-type": "node",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true
+      "release-type": "node"
     },
     "packages/nuxt": {
       "component": "nuxt",
-      "release-type": "node",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true
+      "release-type": "node"
     },
     "packages/mcp": {
       "component": "mcp",
-      "release-type": "node",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true
+      "release-type": "node"
     }
   },
   "plugins": [
