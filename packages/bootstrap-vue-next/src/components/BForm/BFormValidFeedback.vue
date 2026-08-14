@@ -28,7 +28,7 @@ const _props = withDefaults(defineProps<BFormValidFeedbackProps>(), {
   text: undefined,
   tooltip: false,
 })
-const props = useDefaults(_props, 'BFormInvalidFeedback')
+const props = useDefaults(_props, 'BFormValidFeedback')
 defineSlots<BFormValidFeedbackSlots>()
 
 const computedShow = computed(() => props.forceShow === true || props.state === true)

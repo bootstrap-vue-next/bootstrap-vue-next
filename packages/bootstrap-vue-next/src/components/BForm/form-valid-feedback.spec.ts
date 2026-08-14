@@ -1,6 +1,7 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import BFormValidFeedback from './BFormValidFeedback.vue'
+import {createBootstrap} from '../../plugins'
 
 describe('form-valid-feedback', () => {
   enableAutoUnmount(afterEach)
@@ -116,5 +117,21 @@ describe('form-valid-feedback', () => {
       props: {text: 'props'},
     })
     expect(wrapper.text()).toBe('slots')
+  })
+
+  it('reads global defaults from its own key', () => {
+    const wrapper = mount(BFormValidFeedback, {
+      global: {
+        plugins: [
+          createBootstrap({
+            components: {
+              BFormValidFeedback: {tag: 'span'},
+              BFormInvalidFeedback: {tag: 'p'},
+            },
+          }),
+        ],
+      },
+    })
+    expect(wrapper.element.tagName).toBe('SPAN')
   })
 })
