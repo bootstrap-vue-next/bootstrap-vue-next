@@ -21,6 +21,7 @@ Always reference these instructions first and fallback to search or bash command
 
 - Bootstrap Vue Next core package: `pnpm --filter bootstrap-vue-next run build` -- 27 seconds
 - Nuxt package: `pnpm --filter @bootstrap-vue-next/nuxt run build` -- 25 seconds
+- MCP package: `pnpm --filter @bootstrap-vue-next/mcp run build` -- ~5 seconds
 - Playground app: `pnpm --filter playground run build` -- 8 seconds
 - **NEVER** try to build docs app directly - it fails due to network connectivity (OpenCollective API)
 
@@ -92,7 +93,8 @@ add new props to the core packages' components, you must build the documentation
 ```plaintext
 packages/
 ├── bootstrap-vue-next/     # Main Vue 3 component library
-└── nuxt/                   # Nuxt 3 module
+├── nuxt/                   # Nuxt 3 module
+└── mcp/                    # MCP (Model Context Protocol) server, published to npm
 
 apps/
 ├── docs/                   # VitePress documentation site
@@ -109,6 +111,9 @@ templates/
 - `packages/bootstrap-vue-next/src/composables/` - Vue composables
 - `packages/bootstrap-vue-next/src/directives/` - Vue directives
 - `packages/bootstrap-vue-next/src/styles/` - SCSS styles
+- `packages/nuxt/` - Nuxt 3 integration module
+- `packages/nuxt/test/` - Nuxt e2e tests (SSR and Nuxt-specific)
+- `packages/mcp/src/` - MCP server source code
 - `apps/playground/src/` - User scenario testing
 
 ### Important Files
@@ -230,6 +235,16 @@ templates/
 - 1567+ tests across components
 - Coverage reports available via `pnpm --filter bootstrap-vue-next run test:coverage`
 - Tests use Happy DOM environment for performance
+
+### Nuxt / SSR E2E Tests
+
+The `packages/nuxt/` package contains end-to-end tests that run against a real Nuxt application. These tests are essential for catching Nuxt-specific and SSR-specific bugs that unit tests cannot detect.
+
+- E2e tests live in `packages/nuxt/test/` (e.g., `ssr-smoke.test.ts`, `basic.test.ts`)
+- Run with: `pnpm --filter @bootstrap-vue-next/nuxt run test:e2e`
+- **ALWAYS write e2e tests in `packages/nuxt/test/` when fixing Nuxt-specific or SSR-specific bugs**
+- Fixture Nuxt apps used by the tests are located in `packages/nuxt/test/fixtures/`
+- The tests use Vitest with `@nuxt/test-utils` for browser/SSR testing
 
 ## Documentation Examples
 

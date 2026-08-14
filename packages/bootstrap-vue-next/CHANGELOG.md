@@ -1,5 +1,53 @@
 # Changelog
 
+## [0.46.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.0...bootstrapvuenext-v0.46.1) (2026-08-14)
+
+
+### Bug Fixes
+
+* **BFormValidFeedback:** read global defaults from its own key ([#3265](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3265)) ([83099a9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/83099a92ef7f0c4611f370502c209979b4edaeac))
+
+## [0.46.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.10...bootstrapvuenext-v0.46.0) (2026-08-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **orchestrator_composables:** disallow object of nested refs, instead prefer single mayberef object
+* **orchestrator_composables:** nested ref resolution causing props passed in to be called when used by toValue, we no longer use toValue and instead simplify into a ref fixes https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2937
+* **orchestrator_composables:** internally keep track via a object&map instead of massive array
+* **BFormRating:** aria text of ambiguous 'x' clarified to be 'clear rating'
+* ESM only package. Remove cjs variant (previously mislabeled as umd)
+
+### Features
+
+* **BFormRating:** add props for i18n aria text ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+* **BFormRating:** aria text of ambiguous 'x' clarified to be 'clear rating' ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+* bootstrap mcp monorepo package with eslint support ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+* ESM only package. Remove cjs variant (previously mislabeled as umd) ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+* **mcp:** add docs-backed migration resources and planning tools ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+* **nuxt-integrations:** automatically detect and use nuxtimg internally for images (option disabled) ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+* **nuxt-integrations:** automatically detect nuxtjs/color-mode and add bootstrap defaults (option disabled) ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+
+
+### Bug Fixes
+
+* **BFormGroup:** rename computed `floating` to `isFloating` to avoid prop shadow ([#3252](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3252)) ([3b85ead](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/3b85eadcc408652bab76b209428c96ee0b9b8bf9))
+* **BFormGroup:** slot default scope ariaDescribedBy set to actual value ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+* **BFormTags:** use isLimitReached computed instead of props.limit in template ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+* change BFormCheckbox uncheckedValue default from false to null ([d208f60](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/d208f60422a0c01e2bb3bbfdf3aaeb0243ba8fb2))
+* **orchestrator_composables:** nested ref resolution causing props passed in to be called when used by toValue, we no longer use toValue and instead simplify into a ref fixes https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/2937 ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+
+
+### Performance Improvements
+
+* **floating-ui:** update floating-ui/vue v2, allows getter function insteaed of needing an excess ref ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+
+
+### Code Refactoring
+
+* **orchestrator_composables:** disallow object of nested refs, instead prefer single mayberef object ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+* **orchestrator_composables:** internally keep track via a object&map instead of massive array ([9f65405](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/9f654050fb82f2ab367d196d513f42b5a15f496a))
+
 ## [0.45.10](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.45.9...bootstrapvuenext-v0.45.10) (2026-08-05)
 
 
