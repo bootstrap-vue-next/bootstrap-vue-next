@@ -261,6 +261,10 @@ const headerLinks = [
     label: 'Nuxt',
   },
   {
+    route: withBase('/docs/mcp'),
+    label: 'MCP',
+  },
+  {
     route: withBase('/docs/icons'),
     label: 'Icons',
   },
