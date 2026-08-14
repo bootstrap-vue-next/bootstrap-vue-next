@@ -2,7 +2,7 @@
   <input
     :id="computedId"
     ref="_input"
-    :value="modelValue"
+    :value="computedValue"
     :class="computedClasses"
     :name="props.name || undefined"
     :form="props.form || undefined"
@@ -76,6 +76,7 @@ const inInputGroup = inject(inputGroupKey, false)
 const {
   computedId,
   computedAriaInvalid,
+  computedValue,
   onInput,
   onChange,
   onBlur,

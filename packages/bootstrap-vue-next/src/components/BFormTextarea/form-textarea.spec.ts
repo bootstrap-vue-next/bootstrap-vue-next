@@ -537,6 +537,41 @@ describe('form-textarea', () => {
       expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['debounced'])
       vi.useRealTimers()
     })
+
+    // maxRows makes the auto-resize composable write an inline height on every
+    // input, which re-renders the textarea while the debounced model update is
+    // still pending. The re-render used to re-patch `value` from the stale model
+    // and swallow what had just been typed.
+    it('keeps typed text visible with debounce and maxRows together', async () => {
+      vi.useFakeTimers()
+      const wrapper = mount(BFormTextarea, {
+        props: {modelValue: '', debounce: 200, maxRows: 5},
+        attachTo: document.body,
+      })
+      wrapper.element.value = 'a'
+      await wrapper.trigger('input')
+      await nextTick()
+      await nextTick()
+      expect(wrapper.element.value).toBe('a')
+      vi.advanceTimersByTime(200)
+      await nextTick()
+      expect(wrapper.emitted('update:modelValue')![0]).toEqual(['a'])
+      vi.useRealTimers()
+    })
+
+    it('lets a new modelValue from the parent override a pending edit', async () => {
+      vi.useFakeTimers()
+      const wrapper = mount(BFormTextarea, {
+        props: {modelValue: '', debounce: 200, maxRows: 5},
+        attachTo: document.body,
+      })
+      wrapper.element.value = 'typed'
+      await wrapper.trigger('input')
+      await wrapper.setProps({modelValue: 'from parent'})
+      await nextTick()
+      expect(wrapper.element.value).toBe('from parent')
+      vi.useRealTimers()
+    })
   })
 
   describe('extra attributes pass-through', () => {
