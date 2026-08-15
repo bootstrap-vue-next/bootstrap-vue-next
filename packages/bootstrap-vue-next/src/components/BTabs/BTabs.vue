@@ -138,7 +138,7 @@ const tabElementsArray = ref<VNode[]>([])
 
 const isChildActive = ref(false)
 const initialIds = ref<string[]>([])
-const hasExplicitIds = ref(false)
+const selectedTabHasExplicitId = ref(false)
 
 const updateTabElementsArray = () => {
   const tabElements = flattenFragments(slots.default?.({}) ?? [])
@@ -151,8 +151,16 @@ const updateTabElementsArray = () => {
     initialIds.value = tabElementsArray.value.map((tab) =>
       unref(useId(() => tab.props?.id, 'tabpane'))
     )
-    // Check if any tab has an explicit ID
-    hasExplicitIds.value = tabElementsArray.value.some((tab) => tab.props?.id !== undefined)
+    // Whether the *initially selected* tab carries an explicit ID.
+    //
+    // Only that tab matters. The delayed-selection path below exists because
+    // a generated ID is not final until the child registers; an explicit ID
+    // is final immediately. Asking `.some()` across every tab got this wrong
+    // for a mixed list — a single ID-bearing sibling made an ID-less target
+    // look safe, so the ID was read pre-mount, failed to match after
+    // registration, and the selection fell back to the first tab (#2773).
+    selectedTabHasExplicitId.value =
+      activeIndex.value > -1 && tabElementsArray.value[activeIndex.value]?.props?.id !== undefined
   }
   isChildActive.value = tabElementsArray.value.some(
     (tab) => tab.props?.active !== undefined && tab.props?.active !== false
@@ -235,12 +243,12 @@ let delayedTabSelection = false
 
 // Check if we need to delay tab selection:
 // - We have v-model:index (activeIndex) but no v-model (activeId)
-// - AND tabs don't have explicit IDs (will use generated IDs)
+// - AND the selected tab has no explicit ID (so it will use a generated one)
 // - AND we have tabs to select from
 const needsDelayedSelection =
   activeIndex.value > -1 &&
   !activeId.value &&
-  !hasExplicitIds.value &&
+  !selectedTabHasExplicitId.value &&
   tabElementsArray.value.length > 0
 
 if (needsDelayedSelection) {

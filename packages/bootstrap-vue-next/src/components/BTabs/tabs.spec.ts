@@ -707,6 +707,79 @@ describe('tabs', () => {
     expect(wrapper.vm.activeIndex).toBe(0)
   })
 
+  it('selects correct tab with v-model:index when only some tabs have explicit IDs', async () => {
+    // Regression for #2773. A single ID-bearing sibling used to make the whole
+    // list look as though it had explicit IDs, which skipped the
+    // delayed-selection path the ID-less target tab needed. Its generated ID
+    // was then read before the child registered, failed to match afterwards,
+    // and the selection fell back to the first tab.
+    const TestComponent = {
+      template: `
+        <BTabs v-model:index="activeIndex">
+          <BTab title="Tab 1">Content 1</BTab>
+          <BTab id="explicit-tab" title="Tab 2">Content 2</BTab>
+          <BTab title="Tab 3">Content 3</BTab>
+        </BTabs>
+      `,
+      data() {
+        return {
+          activeIndex: 2,
+        }
+      },
+      components: {
+        BTabs,
+        BTab,
+      },
+    }
+
+    const wrapper = mount(TestComponent)
+
+    await nextTick()
+    await nextTick()
+
+    const buttons = wrapper.findAll('button')
+    expect(buttons.length).toBe(3)
+
+    expect(buttons[0].classes()).not.toContain('active')
+    expect(buttons[1].classes()).not.toContain('active')
+    expect(buttons[2].classes()).toContain('active')
+
+    expect(wrapper.vm.activeIndex).toBe(2)
+  })
+
+  it('selects an explicitly-ID-ed tab by index alongside ID-less siblings', async () => {
+    // The other half of the mixed case: the target does carry an explicit ID,
+    // so no delay is needed. Paired with the test above so that a fix which
+    // simply always delays cannot satisfy both.
+    const TestComponent = {
+      template: `
+        <BTabs v-model:index="activeIndex">
+          <BTab title="Tab 1">Content 1</BTab>
+          <BTab id="explicit-tab" title="Tab 2">Content 2</BTab>
+          <BTab title="Tab 3">Content 3</BTab>
+        </BTabs>
+      `,
+      data() {
+        return {
+          activeIndex: 1,
+        }
+      },
+      components: {
+        BTabs,
+        BTab,
+      },
+    }
+
+    const wrapper = mount(TestComponent)
+
+    await nextTick()
+    await nextTick()
+
+    const buttons = wrapper.findAll('button')
+    expect(buttons[1].classes()).toContain('active')
+    expect(wrapper.vm.activeIndex).toBe(1)
+  })
+
   // --- Nav underline class ---
 
   it('next div child ul has class nav-underline when prop underline', async () => {
