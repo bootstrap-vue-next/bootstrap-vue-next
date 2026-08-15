@@ -40,6 +40,7 @@
       role="spinbutton"
       aria-live="off"
       :aria-label="props.ariaLabel || undefined"
+      :aria-controls="props.ariaControls || undefined"
       :aria-invalid="
         props.state === false || (!modelValue !== null && props.required) ? true : undefined
       "

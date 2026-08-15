@@ -472,6 +472,11 @@ describe('form-spinbutton', () => {
       expect(wrapper.attributes('title')).toBe('Volume')
     })
 
+    it('sets aria-controls on the output from the ariaControls prop', () => {
+      const wrapper = mount(BFormSpinbutton, {props: {ariaControls: 'my-target'}})
+      expect(wrapper.find('output').attributes('aria-controls')).toBe('my-target')
+    })
+
     it('buttons have aria-controls matching output id with ariaControls fallback', () => {
       const wrapper = mount(BFormSpinbutton, {props: {id: 'spin1'}})
       const buttons = wrapper.findAll('button')
