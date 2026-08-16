@@ -42,7 +42,7 @@
       :aria-label="props.ariaLabel || undefined"
       :aria-controls="props.ariaControls || undefined"
       :aria-invalid="
-        props.state === false || (!modelValue !== null && props.required) ? true : undefined
+        props.state === false || (modelValue === null && props.required) ? true : undefined
       "
       :aria-required="props.required ? true : undefined"
       :aria-valuemin="computedMin"
