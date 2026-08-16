@@ -248,6 +248,21 @@ describe('form-spinbutton', () => {
       expect(wrapper.find('output').attributes('aria-invalid')).toBeUndefined()
     })
 
+    it('sets aria-invalid when required and modelValue is null', () => {
+      const wrapper = mount(BFormSpinbutton, {props: {required: true, modelValue: null}})
+      expect(wrapper.find('output').attributes('aria-invalid')).toBe('true')
+    })
+
+    it('does not set aria-invalid when required and modelValue is set', () => {
+      const wrapper = mount(BFormSpinbutton, {props: {required: true, modelValue: 5}})
+      expect(wrapper.find('output').attributes('aria-invalid')).toBeUndefined()
+    })
+
+    it('does not set aria-invalid when required and modelValue is zero', () => {
+      const wrapper = mount(BFormSpinbutton, {props: {required: true, modelValue: 0}})
+      expect(wrapper.find('output').attributes('aria-invalid')).toBeUndefined()
+    })
+
     it('has class flex-grow-1', () => {
       const wrapper = mount(BFormSpinbutton)
       expect(wrapper.find('output').classes()).toContain('flex-grow-1')
