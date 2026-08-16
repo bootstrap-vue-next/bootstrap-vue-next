@@ -147,8 +147,27 @@ jobs:
       - name: Test Unit
         run: pnpm run test:unit:ci
 
+  install-playwright:
+    runs-on: ubuntu-slim
+
+    steps:
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "VERSION=1.62.1" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ steps.playwright-version.outputs.VERSION }}-chromium-${{ runner.os }}
+
+      - name: Install Playwright browser
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm dlx playwright@${{ steps.playwright-version.outputs.VERSION }} install --with-deps chromium
+
   test-nuxt-e2e:
-    needs: build
+    needs: [build, install-playwright]
     runs-on: ubuntu-slim
 
     steps:
@@ -187,7 +206,13 @@ jobs:
           name: build-artifacts
           path: packages
 
-      - name: Install Playwright browser for Nuxt tests
+      - name: Restore Playwright browsers cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-1.62.1-chromium-${{ runner.os }}
+
+      - name: Install Playwright browser for Nuxt tests (if cache miss)
         run: pnpm dlx playwright@1.62.1 install --with-deps chromium
 
       - name: Run Nuxt Playwright tests
