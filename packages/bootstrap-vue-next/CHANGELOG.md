@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.46.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.1...bootstrapvuenext-v0.46.2) (2026-08-17)
+
+
+### Bug Fixes
+
+* **BFormSpinbutton:** apply the ariaControls prop to the output ([#3272](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3272)) ([7a42c42](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/7a42c42e73c7629cca4ad67cc037def049802f5a))
+* **BFormSpinbutton:** only set aria-invalid when a required spinbutton has no value ([#3276](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3276)) ([67a1eb2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/67a1eb225ebc1dbadae9fbb363f3e5f205002ab4))
+* **BTabs:** honour initial index when only some tabs have explicit ids ([#3273](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3273)) ([72241ac](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/72241ac728a00b961060118d03c2df7b9e340402))
+
 ## [0.46.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.0...bootstrapvuenext-v0.46.1) (2026-08-14)
 
 
