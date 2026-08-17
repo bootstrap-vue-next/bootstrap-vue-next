@@ -53,7 +53,7 @@ BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.
 
 ## Contribute & support 🙌
 
-This project is still in **alpha version** so there is a lot of work to do. If you want to contribute you can:
+If you want to contribute you can:
 
 - submit an [issue](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues)
 - or better, a [pull request](https://github.com/bootstrap-vue-next/bootstrap-vue-next/pulls)
