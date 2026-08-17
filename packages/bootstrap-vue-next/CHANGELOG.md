@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.46.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.2...bootstrapvuenext-v0.46.3) (2026-08-17)
+
+
+### Bug Fixes
+
+* **BFormTextarea:** keep typed text visible with debounce and max-rows ([#3269](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3269)) ([b4e0ade](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/b4e0adeccb51582a0456a036884819a9620ea4d0))
+
 ## [0.46.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.1...bootstrapvuenext-v0.46.2) (2026-08-17)
 
 
