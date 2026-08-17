@@ -70,8 +70,11 @@ export const useFormInput = (
   }
 
   // A model change from anywhere else (most often the parent assigning a new
-  // value) takes precedence over an in-flight edit.
+  // value) takes precedence over an in-flight edit. Dropping the pending value
+  // is not enough on its own: the debounced write is still scheduled, and left
+  // alone it would fire later and push the superseded edit back onto the model.
   watch(modelValue, () => {
+    internalUpdateModelValue.cancel()
     pendingValue.value = null
   })
 

@@ -570,6 +570,12 @@ describe('form-textarea', () => {
       await wrapper.setProps({modelValue: 'from parent'})
       await nextTick()
       expect(wrapper.element.value).toBe('from parent')
+      // The superseded edit must not fire once its debounce elapses, which
+      // would push the stale value back onto the parent.
+      vi.advanceTimersByTime(200)
+      await nextTick()
+      expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+      expect(wrapper.element.value).toBe('from parent')
       vi.useRealTimers()
     })
   })
