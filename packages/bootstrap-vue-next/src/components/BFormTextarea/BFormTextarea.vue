@@ -5,7 +5,7 @@
     :class="computedClasses"
     :name="props.name || undefined"
     :form="props.form || undefined"
-    :value="modelValue ?? undefined"
+    :value="computedValue"
     :disabled="isDisabled"
     :placeholder="props.placeholder"
     :required="props.required || undefined"
@@ -78,6 +78,7 @@ const input = useTemplateRef('_input')
 const {
   computedId,
   computedAriaInvalid,
+  computedValue,
   onInput,
   stateClass,
   onChange,
