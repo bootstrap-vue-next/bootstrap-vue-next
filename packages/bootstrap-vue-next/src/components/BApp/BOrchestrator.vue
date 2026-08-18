@@ -65,6 +65,7 @@
 import {computed, inject, watch} from 'vue'
 import {warn} from '../../utils/console'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
+import {positionClasses} from '../../utils/positionClasses'
 import type {BvTriggerableEvent} from '../../utils'
 import type {BOrchestratorProps, ContainerPosition} from '../../types'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
@@ -138,7 +139,7 @@ const positionedItems = computed<
   const toastDefaultPosition: ContainerPosition = 'bottom-start'
   const toastDefaults = (cls: ContainerPosition) =>
     ({
-      class: `${cls} toast-container position-fixed p-3`,
+      class: `${positionClasses[cls]} toast-container position-fixed p-3`,
       style: 'width: calc(var(--bs-toast-max-width, 350px) + var(--bs-toast-padding-x, 1rem) * 2)',
       transitionGroupName: 'b-list',
     }) satisfies Partial<ItemObject>
