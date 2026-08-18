@@ -139,12 +139,13 @@
 
 <script setup lang="ts">
 import {useDropZone, useFileDialog} from '@vueuse/core'
-import {computed, nextTick, onMounted, ref, type Ref, useAttrs, useTemplateRef, watch} from 'vue'
+import {computed, nextTick, onMounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
 import {isEmptySlot} from '../../utils/dom'
 import type {BFormFileProps, BFormFileSlots} from '../../types'
+import {useAriaLiveMessage} from './useAriaLiveMessage'
 
 defineOptions({
   inheritAttrs: false,
@@ -298,31 +299,10 @@ const showExternalDisplay = computed(
   () => !props.plain && props.showFileNames && (hasFiles.value || props.placeholder)
 )
 
-// ARIA live region message for accessibility
-// Use a ref instead of computed so we can apply a clear-then-set pattern.
-// Clearing first and then setting the value in nextTick forces screen readers
-// to detect a real DOM change and reliably announce the message every time,
-// even when the same file is selected again.
-const ariaLiveMessage = ref('')
-
-const buildAriaLiveMessage = (files: readonly File[]): string => {
-  if (files.length === 0) return ''
-  if (props.ariaLiveFormatter) {
-    return props.ariaLiveFormatter(files)
-  }
-  if (files.length === 1) {
-    return `File selected: ${files[0]?.name}`
-  }
-  return `${files.length} files selected`
-}
-
-watch(selectedFiles, (files) => {
-  // Clear first so screen readers always detect a DOM change
-  ariaLiveMessage.value = ''
-  nextTick(() => {
-    ariaLiveMessage.value = buildAriaLiveMessage(files)
-  })
-})
+const ariaLiveMessage = useAriaLiveMessage(
+  selectedFiles,
+  computed(() => props.ariaLiveFormatter)
+)
 
 const effectiveBrowseText = computed(() => props.browseText ?? 'Browse')
 const effectiveDropPlaceholder = computed(() => props.dropPlaceholder ?? 'Drop files here...')
