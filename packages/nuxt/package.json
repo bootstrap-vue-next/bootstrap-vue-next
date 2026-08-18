@@ -1,7 +1,7 @@
 {
   "name": "@bootstrap-vue-next/nuxt",
   "description": "Nuxt Module for BootstrapVueNext",
-  "version": "0.46.1",
+  "version": "1.0.0",
   "license": "MIT",
   "author": {
     "name": "Issayah",

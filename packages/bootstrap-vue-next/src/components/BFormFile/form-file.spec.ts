@@ -1244,6 +1244,8 @@ describe('form-file', () => {
       const wrapper = mount(BFormFile)
       const file = new File(['content'], 'report.pdf')
       await wrapper.setProps({modelValue: file})
+      await nextTick()
+      await nextTick()
 
       const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
       expect($liveRegion.text()).toContain('File selected: report.pdf')
@@ -1253,6 +1255,8 @@ describe('form-file', () => {
       const wrapper = mount(BFormFile, {props: {multiple: true}})
       const files = [new File(['1'], 'a.txt'), new File(['2'], 'b.txt'), new File(['3'], 'c.txt')]
       await wrapper.setProps({modelValue: files})
+      await nextTick()
+      await nextTick()
 
       const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
       expect($liveRegion.text()).toContain('3 files selected')
@@ -1810,6 +1814,8 @@ describe('form-file', () => {
 
       // Verify ARIA live region is updated (side-effect of handleFiles)
       const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
+      await nextTick()
+      await nextTick()
       expect($liveRegion.text()).toContain('File selected: report.pdf')
     })
   })
@@ -1967,6 +1973,7 @@ describe('form-file', () => {
 
       await wrapper.setProps({modelValue: file})
       await nextTick()
+      await nextTick()
 
       const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')
 
@@ -1982,6 +1989,7 @@ describe('form-file', () => {
       const wrapper = mount(BFormFile)
 
       await wrapper.setProps({modelValue: file})
+      await nextTick()
       await nextTick()
 
       const $liveRegion = wrapper.find('.visually-hidden[aria-live="polite"]')

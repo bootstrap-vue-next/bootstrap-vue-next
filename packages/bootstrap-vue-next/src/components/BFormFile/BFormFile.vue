@@ -145,6 +145,7 @@ import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
 import {isEmptySlot} from '../../utils/dom'
 import type {BFormFileProps, BFormFileSlots} from '../../types'
+import {useAriaLiveMessage} from './useAriaLiveMessage'
 
 defineOptions({
   inheritAttrs: false,
@@ -298,18 +299,10 @@ const showExternalDisplay = computed(
   () => !props.plain && props.showFileNames && (hasFiles.value || props.placeholder)
 )
 
-// ARIA live region message for accessibility
-const ariaLiveMessage = computed(() => {
-  if (!hasFiles.value) return ''
-  if (props.ariaLiveFormatter) {
-    return props.ariaLiveFormatter(selectedFiles.value)
-  }
-  const count = selectedFiles.value.length
-  if (count === 1) {
-    return `File selected: ${selectedFiles.value[0]?.name}`
-  }
-  return `${count} files selected`
-})
+const ariaLiveMessage = useAriaLiveMessage(
+  selectedFiles,
+  computed(() => props.ariaLiveFormatter)
+)
 
 const effectiveBrowseText = computed(() => props.browseText ?? 'Browse')
 const effectiveDropPlaceholder = computed(() => props.dropPlaceholder ?? 'Drop files here...')

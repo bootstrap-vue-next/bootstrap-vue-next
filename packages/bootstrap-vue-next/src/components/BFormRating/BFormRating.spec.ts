@@ -80,6 +80,16 @@ describe('form-rating', () => {
       expect(wrapper.classes()).toContain('b-form-rating')
     })
 
+    it('has align-items-center class', () => {
+      const wrapper = mount(BFormRating)
+      expect(wrapper.classes()).toContain('align-items-center')
+    })
+
+    it('has d-flex class by default', () => {
+      const wrapper = mount(BFormRating)
+      expect(wrapper.classes()).toContain('d-flex')
+    })
+
     it('does not have is-readonly class by default', () => {
       const wrapper = mount(BFormRating)
       expect(wrapper.classes()).not.toContain('is-readonly')
@@ -142,115 +152,135 @@ describe('form-rating', () => {
       expect(wrapper.classes()).not.toContain('d-inline-flex')
     })
 
+    it('does not have b-form-rating-inline class by default', () => {
+      const wrapper = mount(BFormRating)
+      expect(wrapper.classes()).not.toContain('b-form-rating-inline')
+    })
+
     it('has d-inline-flex class when inline prop is true', () => {
       const wrapper = mount(BFormRating, {props: {inline: true}})
       expect(wrapper.classes()).toContain('d-inline-flex')
+      expect(wrapper.classes()).toContain('b-form-rating-inline')
+      expect(wrapper.classes()).not.toContain('d-flex')
     })
 
     it('updates d-inline-flex class reactively', async () => {
       const wrapper = mount(BFormRating)
+      expect(wrapper.classes()).toContain('d-flex')
       expect(wrapper.classes()).not.toContain('d-inline-flex')
       await wrapper.setProps({inline: true})
+      expect(wrapper.classes()).not.toContain('d-flex')
       expect(wrapper.classes()).toContain('d-inline-flex')
       await wrapper.setProps({inline: false})
+      expect(wrapper.classes()).toContain('d-flex')
       expect(wrapper.classes()).not.toContain('d-inline-flex')
     })
   })
 
-  describe('stars', () => {
-    it('renders 5 stars by default', () => {
+  describe('length', () => {
+    it('renders default length of 5', () => {
       const wrapper = mount(BFormRating)
-      expect(wrapper.findAll('.star').length).toBe(5)
+      expect(wrapper.findAll('.rating-item').length).toBe(5)
     })
 
-    it('renders custom number of stars', () => {
-      const wrapper = mount(BFormRating, {props: {stars: 7}})
-      expect(wrapper.findAll('.star').length).toBe(7)
+    it('renders custom length', () => {
+      const wrapper = mount(BFormRating, {props: {length: 7}})
+      expect(wrapper.findAll('.rating-item').length).toBe(7)
     })
 
-    it('renders minimum 3 stars when stars prop is less than 3', () => {
-      const wrapper = mount(BFormRating, {props: {stars: 2}})
-      expect(wrapper.findAll('.star').length).toBe(3)
+    it('allows length values less than 3', () => {
+      const wrapper = mount(BFormRating, {props: {length: 2}})
+      expect(wrapper.findAll('.rating-item').length).toBe(2)
     })
 
-    it('renders exactly 3 stars when stars prop is 3', () => {
-      const wrapper = mount(BFormRating, {props: {stars: 3}})
-      expect(wrapper.findAll('.star').length).toBe(3)
+    it('falls back to default length when length is non-positive', () => {
+      const wrapper = mount(BFormRating, {props: {length: 0}})
+      expect(wrapper.findAll('.rating-item').length).toBe(5)
     })
 
-    it('updates star count reactively', async () => {
-      const wrapper = mount(BFormRating, {props: {stars: 5}})
-      expect(wrapper.findAll('.star').length).toBe(5)
-      await wrapper.setProps({stars: 8})
-      expect(wrapper.findAll('.star').length).toBe(8)
+    it('parses string length values as integers', () => {
+      const wrapper = mount(BFormRating, {props: {length: '8'}})
+      expect(wrapper.findAll('.rating-item').length).toBe(8)
+    })
+
+    it('updates rendered item count reactively', async () => {
+      const wrapper = mount(BFormRating, {props: {length: 5}})
+      expect(wrapper.findAll('.rating-item').length).toBe(5)
+      await wrapper.setProps({length: 8})
+      expect(wrapper.findAll('.rating-item').length).toBe(8)
+    })
+
+    it('renders each item as a flex-growing child', () => {
+      const wrapper = mount(BFormRating)
+      expect(wrapper.find('.rating-item').classes()).toContain('flex-grow-1')
     })
   })
 
   describe('size prop', () => {
     it('uses "1rem" as default size for SVG icons', () => {
       const wrapper = mount(BFormRating)
-      const svg = wrapper.find('.b-form-rating-star svg')
+      const svg = wrapper.find('.b-form-rating-item svg')
       expect(svg.attributes('width')).toBe('1rem')
       expect(svg.attributes('height')).toBe('1rem')
     })
 
     it('maps size="sm" to ".875rem" for SVG icons', () => {
       const wrapper = mount(BFormRating, {props: {size: 'sm'}})
-      const svg = wrapper.find('.b-form-rating-star svg')
-      expect(svg.attributes('width')).toBe('.875rem')
-      expect(svg.attributes('height')).toBe('.875rem')
+      const svg = wrapper.find('.b-form-rating-item svg')
+      expect(svg.attributes('width')).toBe('0.875rem')
+      expect(svg.attributes('height')).toBe('0.875rem')
     })
 
     it('maps size="lg" to "1.25rem" for SVG icons', () => {
       const wrapper = mount(BFormRating, {props: {size: 'lg'}})
-      const svg = wrapper.find('.b-form-rating-star svg')
+      const svg = wrapper.find('.b-form-rating-item svg')
       expect(svg.attributes('width')).toBe('1.25rem')
       expect(svg.attributes('height')).toBe('1.25rem')
     })
 
-    it('uses arbitrary size string directly for SVG icons', () => {
-      const wrapper = mount(BFormRating, {props: {size: '2.5rem'}})
-      const svg = wrapper.find('.b-form-rating-star svg')
-      expect(svg.attributes('width')).toBe('2.5rem')
-      expect(svg.attributes('height')).toBe('2.5rem')
+    it('falls back to default size when size is omitted', () => {
+      const wrapper = mount(BFormRating, {props: {size: undefined}})
+      const svg = wrapper.find('.b-form-rating-item svg')
+      expect(svg.attributes('width')).toBe('1rem')
+      expect(svg.attributes('height')).toBe('1rem')
     })
 
     it('updates SVG size reactively', async () => {
       const wrapper = mount(BFormRating, {props: {size: 'sm'}})
-      expect(wrapper.find('.b-form-rating-star svg').attributes('width')).toBe('.875rem')
+      expect(wrapper.find('.b-form-rating-item svg').attributes('width')).toBe('0.875rem')
       await wrapper.setProps({size: 'lg'})
-      expect(wrapper.find('.b-form-rating-star svg').attributes('width')).toBe('1.25rem')
+      expect(wrapper.find('.b-form-rating-item svg').attributes('width')).toBe('1.25rem')
     })
 
     it('sets font-size of value text span to computed size', () => {
-      const wrapper = mount(BFormRating, {props: {size: '2rem', showValue: true, modelValue: 3}})
+      const wrapper = mount(BFormRating, {props: {size: 'lg', showValue: true, modelValue: 3}})
       const valueSpan = wrapper.find('.rating-value-text')
-      expect(valueSpan.attributes('style')).toContain('font-size: 2rem')
+      expect(valueSpan.attributes('style')).toContain('font-size: 1.25rem')
     })
   })
 
-  describe('star icons', () => {
-    it('renders full star path for filled stars', () => {
-      const wrapper = mount(BFormRating, {props: {modelValue: 3, stars: 3}})
-      const paths = wrapper.findAll('.star:first-child .b-form-rating-star svg path')
+  describe('default icons', () => {
+    it('renders full icon path for filled items', () => {
+      const wrapper = mount(BFormRating, {props: {modelValue: 3, length: 3}})
+      const paths = wrapper.findAll('.rating-item:first-child .b-form-rating-item svg path')
       expect(paths[0].attributes('d')).toContain('M3.612 15.443')
     })
 
-    it('renders half star path for half-filled stars', () => {
-      const wrapper = mount(BFormRating, {props: {modelValue: 1.5, stars: 3, precision: 1}})
-      const paths = wrapper.findAll('.star')[1].findAll('.b-form-rating-star svg path')
+    it('renders half icon path for partially filled items', () => {
+      const wrapper = mount(BFormRating, {props: {modelValue: 1.5, length: 3, precision: 1}})
+      const paths = wrapper.findAll('.rating-item')[1].findAll('.b-form-rating-item svg path')
       expect(paths[0].attributes('d')).toContain('M5.354 5.119')
     })
 
-    it('renders empty star path for unfilled stars', () => {
-      const wrapper = mount(BFormRating, {props: {modelValue: 0, stars: 3}})
-      const paths = wrapper.findAll('.star:first-child .b-form-rating-star svg path')
+    it('renders empty icon path for unfilled items', () => {
+      const wrapper = mount(BFormRating, {props: {modelValue: 0, length: 3}})
+      const paths = wrapper.findAll('.rating-item:first-child .b-form-rating-item svg path')
       expect(paths[0].attributes('d')).toContain('M2.866 14.85')
     })
 
-    it('renders full, half, and empty star paths correctly', () => {
-      const wrapper = mount(BFormRating, {props: {modelValue: 1.5, stars: 3, precision: 1}})
-      const svgPaths = wrapper.findAll('.b-form-rating-star svg path')
+    it('renders full, half, and empty icon paths correctly', () => {
+      const wrapper = mount(BFormRating, {props: {modelValue: 1.5, length: 3, precision: 1}})
+      const svgPaths = wrapper.findAll('.b-form-rating-item svg path')
       expect(svgPaths[0].attributes('d')).toContain('M3.612 15.443')
       expect(svgPaths[1].attributes('d')).toContain('M5.354 5.119')
       expect(svgPaths[2].attributes('d')).toContain('M2.866 14.85')
@@ -260,45 +290,45 @@ describe('form-rating', () => {
   describe('color and variant', () => {
     it('applies color as inline style when color prop is set', () => {
       const wrapper = mount(BFormRating, {props: {color: 'pink'}})
-      const svg = wrapper.find('.b-form-rating-star svg')
+      const svg = wrapper.find('.b-form-rating-item svg')
       expect(svg.attributes('style')).toContain('color: pink')
     })
 
     it('updates color reactively', async () => {
       const wrapper = mount(BFormRating, {props: {color: 'pink'}})
-      expect(wrapper.find('.b-form-rating-star svg').attributes('style')).toContain('color: pink')
+      expect(wrapper.find('.b-form-rating-item svg').attributes('style')).toContain('color: pink')
       await wrapper.setProps({color: 'blue'})
-      expect(wrapper.find('.b-form-rating-star svg').attributes('style')).toContain('color: blue')
+      expect(wrapper.find('.b-form-rating-item svg').attributes('style')).toContain('color: blue')
     })
 
     it('applies text-{variant} class when variant prop is set', () => {
       const wrapper = mount(BFormRating, {props: {variant: 'danger'}})
-      expect(wrapper.find('.b-form-rating-star svg').classes()).toContain('text-danger')
+      expect(wrapper.find('.b-form-rating-item svg').classes()).toContain('text-danger')
     })
 
     it('updates variant class reactively', async () => {
       const wrapper = mount(BFormRating, {props: {variant: 'danger'}})
-      expect(wrapper.find('.b-form-rating-star svg').classes()).toContain('text-danger')
+      expect(wrapper.find('.b-form-rating-item svg').classes()).toContain('text-danger')
       await wrapper.setProps({variant: 'success'})
-      expect(wrapper.find('.b-form-rating-star svg').classes()).toContain('text-success')
-      expect(wrapper.find('.b-form-rating-star svg').classes()).not.toContain('text-danger')
+      expect(wrapper.find('.b-form-rating-item svg').classes()).toContain('text-success')
+      expect(wrapper.find('.b-form-rating-item svg').classes()).not.toContain('text-danger')
     })
 
     it('applies is-disabled class to SVG icons when disabled', () => {
       const wrapper = mount(BFormRating, {props: {disabled: true}})
-      expect(wrapper.find('.b-form-rating-star svg').classes()).toContain('is-disabled')
+      expect(wrapper.find('.b-form-rating-item svg').classes()).toContain('is-disabled')
     })
 
     it('does not apply color style when disabled', () => {
       const wrapper = mount(BFormRating, {props: {disabled: true, color: 'pink'}})
-      const svg = wrapper.find('.b-form-rating-star svg')
+      const svg = wrapper.find('.b-form-rating-item svg')
       expect(svg.classes()).toContain('is-disabled')
       expect(svg.attributes('style') ?? '').not.toContain('color: pink')
     })
 
     it('does not apply variant class when disabled', () => {
       const wrapper = mount(BFormRating, {props: {disabled: true, variant: 'danger'}})
-      const svg = wrapper.find('.b-form-rating-star svg')
+      const svg = wrapper.find('.b-form-rating-item svg')
       expect(svg.classes()).toContain('is-disabled')
       expect(svg.classes()).not.toContain('text-danger')
     })
@@ -331,7 +361,7 @@ describe('form-rating', () => {
     })
 
     it('displays "value/max" when showValueMax is true', () => {
-      const wrapper = mount(BFormRating, {props: {modelValue: 3, stars: 8, showValueMax: true}})
+      const wrapper = mount(BFormRating, {props: {modelValue: 3, length: 8, showValueMax: true}})
       expect(wrapper.find('.rating-value-text').text()).toBe('3/8')
     })
 
@@ -370,7 +400,7 @@ describe('form-rating', () => {
 
     it('formats showValueMax using locale', () => {
       const wrapper = mount(BFormRating, {
-        props: {modelValue: 3, stars: 5, showValueMax: true, locale: 'ar-EG'},
+        props: {modelValue: 3, length: 5, showValueMax: true, locale: 'ar-EG'},
       })
       const formattedValue = new Intl.NumberFormat('ar-EG').format(3)
       const formattedMax = new Intl.NumberFormat('ar-EG').format(5)
@@ -379,29 +409,29 @@ describe('form-rating', () => {
   })
 
   describe('click interaction', () => {
-    it('emits update:modelValue with star index when a star is clicked', async () => {
+    it('emits update:modelValue with item index when an item is clicked', async () => {
       const wrapper = mount(BFormRating)
-      await wrapper.findAll('.star')[0].trigger('click')
+      await wrapper.findAll('.rating-item')[0].trigger('click')
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')![0]).toEqual([1])
     })
 
-    it('emits the correct star index for each star', async () => {
-      const wrapper = mount(BFormRating, {props: {stars: 5}})
-      const stars = wrapper.findAll('.star')
-      await stars[2].trigger('click')
+    it('emits the correct item index for each item', async () => {
+      const wrapper = mount(BFormRating, {props: {length: 5}})
+      const items = wrapper.findAll('.rating-item')
+      await items[2].trigger('click')
       expect(wrapper.emitted('update:modelValue')![0]).toEqual([3])
     })
 
     it('does not emit update:modelValue when readonly', async () => {
       const wrapper = mount(BFormRating, {props: {readonly: true}})
-      await wrapper.findAll('.star')[0].trigger('click')
+      await wrapper.findAll('.rating-item')[0].trigger('click')
       expect(wrapper.emitted('update:modelValue')).toBeUndefined()
     })
 
     it('does not emit update:modelValue when disabled', async () => {
       const wrapper = mount(BFormRating, {props: {disabled: true}})
-      await wrapper.findAll('.star')[0].trigger('click')
+      await wrapper.findAll('.rating-item')[0].trigger('click')
       expect(wrapper.emitted('update:modelValue')).toBeUndefined()
     })
   })
@@ -409,34 +439,34 @@ describe('form-rating', () => {
   describe('clear button', () => {
     it('does not render clear button by default', () => {
       const wrapper = mount(BFormRating)
-      expect(wrapper.find('.clear-button-spacing').exists()).toBe(false)
+      expect(wrapper.find('.rating-clear-button').exists()).toBe(false)
     })
 
     it('renders clear button when showClear is true', () => {
       const wrapper = mount(BFormRating, {props: {showClear: true}})
-      expect(wrapper.find('.clear-button-spacing').exists()).toBe(true)
+      expect(wrapper.find('.rating-clear-button').exists()).toBe(true)
     })
 
     it('does not render clear button when showClear is true but readonly is true', () => {
       const wrapper = mount(BFormRating, {props: {showClear: true, readonly: true}})
-      expect(wrapper.find('.clear-button-spacing').exists()).toBe(false)
+      expect(wrapper.find('.rating-clear-button').exists()).toBe(false)
     })
 
     it('does not render clear button when showClear is true but disabled is true', () => {
       const wrapper = mount(BFormRating, {props: {showClear: true, disabled: true}})
-      expect(wrapper.find('.clear-button-spacing').exists()).toBe(false)
+      expect(wrapper.find('.rating-clear-button').exists()).toBe(false)
     })
 
     it('emits update:modelValue with 0 when clear button is clicked', async () => {
       const wrapper = mount(BFormRating, {props: {modelValue: 3, showClear: true}})
-      await wrapper.find('.clear-button-spacing').trigger('click')
+      await wrapper.find('.rating-clear-button').trigger('click')
       expect(wrapper.emitted('update:modelValue')).toBeDefined()
       expect(wrapper.emitted('update:modelValue')![0]).toEqual([0])
     })
 
     it('renders default SVG clear icon when no icon-clear slot is provided', () => {
       const wrapper = mount(BFormRating, {props: {showClear: true}})
-      expect(wrapper.find('.clear-button-spacing .clear-icon').exists()).toBe(true)
+      expect(wrapper.find('.rating-clear-button .clear-icon').exists()).toBe(true)
     })
 
     it('renders icon-clear slot content instead of default icon', () => {
@@ -475,7 +505,7 @@ describe('form-rating', () => {
     })
 
     it('does not emit when already at max value on ArrowRight', async () => {
-      const wrapper = mount(BFormRating, {props: {modelValue: 5, stars: 5}})
+      const wrapper = mount(BFormRating, {props: {modelValue: 5, length: 5}})
       await wrapper.trigger('keydown', {key: 'ArrowRight'})
       expect(wrapper.emitted('update:modelValue')).toBeUndefined()
     })
@@ -487,7 +517,7 @@ describe('form-rating', () => {
     })
 
     it('does not emit when already at max value on ArrowUp', async () => {
-      const wrapper = mount(BFormRating, {props: {modelValue: 5, stars: 5}})
+      const wrapper = mount(BFormRating, {props: {modelValue: 5, length: 5}})
       await wrapper.trigger('keydown', {key: 'ArrowUp'})
       expect(wrapper.emitted('update:modelValue')).toBeUndefined()
     })
@@ -548,9 +578,9 @@ describe('form-rating', () => {
       expect(wrapper.find('input[type="hidden"]').exists()).toBe(false)
     })
 
-    it('updates hidden input value when star is clicked', async () => {
+    it('updates hidden input value when an item is clicked', async () => {
       const wrapper = mount(BFormRating, {props: {name: 'rating', modelValue: 3}})
-      await wrapper.findAll('.star')[0].trigger('click')
+      await wrapper.findAll('.rating-item')[0].trigger('click')
       expect(wrapper.find('input[type="hidden"]').attributes('value')).toBe('1')
     })
 
@@ -558,7 +588,7 @@ describe('form-rating', () => {
       const wrapper = mount(BFormRating, {
         props: {name: 'rating', modelValue: 3, showClear: true},
       })
-      await wrapper.find('.clear-button-spacing').trigger('click')
+      await wrapper.find('.rating-clear-button').trigger('click')
       expect(wrapper.find('input[type="hidden"]').attributes('value')).toBe('0')
     })
   })
@@ -569,8 +599,8 @@ describe('form-rating', () => {
       expect(wrapper.attributes('aria-valuemin')).toBe('0')
     })
 
-    it('has aria-valuemax equal to stars count', () => {
-      const wrapper = mount(BFormRating, {props: {stars: 5}})
+    it('has aria-valuemax equal to length count', () => {
+      const wrapper = mount(BFormRating, {props: {length: 5}})
       expect(wrapper.attributes('aria-valuemax')).toBe('5')
     })
 
@@ -585,7 +615,7 @@ describe('form-rating', () => {
     })
 
     it('has aria-valuetext showing "value of max"', () => {
-      const wrapper = mount(BFormRating, {props: {modelValue: 3, stars: 5}})
+      const wrapper = mount(BFormRating, {props: {modelValue: 3, length: 5}})
       expect(wrapper.attributes('aria-valuetext')).toBe('3 of 5')
     })
 
@@ -618,25 +648,25 @@ describe('form-rating', () => {
   })
 
   describe('default slot', () => {
-    it('renders default slot content instead of built-in stars', () => {
+    it('renders default slot content instead of built-in icons', () => {
       const wrapper = mount(BFormRating, {
-        props: {stars: 3},
+        props: {length: 3},
         slots: {
-          default: ({starIndex}: {starIndex: number}) =>
-            h('span', {'class': 'custom-star', 'data-star': starIndex}, `Star ${starIndex}`),
+          default: ({itemIndex}: {itemIndex: number}) =>
+            h('span', {'class': 'custom-item', 'data-item': itemIndex}, `Item ${itemIndex}`),
         },
       })
-      expect(wrapper.find('.b-form-rating-star').exists()).toBe(false)
-      const customStars = wrapper.findAll('.custom-star')
-      expect(customStars.length).toBe(3)
+      expect(wrapper.find('.b-form-rating-item').exists()).toBe(false)
+      const customItems = wrapper.findAll('.custom-item')
+      expect(customItems.length).toBe(3)
     })
 
-    it('passes starIndex to default slot', () => {
+    it('passes itemIndex to default slot', () => {
       const wrapper = mount(BFormRating, {
-        props: {stars: 3},
+        props: {length: 3},
         slots: {
-          default: ({starIndex}: {starIndex: number}) =>
-            h('span', {'data-index': starIndex}, String(starIndex)),
+          default: ({itemIndex}: {itemIndex: number}) =>
+            h('span', {'data-index': itemIndex}, String(itemIndex)),
         },
       })
       const spans = wrapper.findAll('[data-index]')
@@ -645,9 +675,9 @@ describe('form-rating', () => {
       expect(spans[2].attributes('data-index')).toBe('3')
     })
 
-    it('passes isFilled=true to default slot for filled stars', () => {
+    it('passes isFilled=true to default slot for filled length', () => {
       const wrapper = mount(BFormRating, {
-        props: {modelValue: 3, stars: 3},
+        props: {modelValue: 3, length: 3},
         slots: {
           default: ({isFilled}: {isFilled: boolean}) =>
             h('span', {'data-filled': String(isFilled)}),
@@ -659,9 +689,9 @@ describe('form-rating', () => {
       expect(spans[2].attributes('data-filled')).toBe('true')
     })
 
-    it('passes isFilled=false and isHalf=false to default slot for empty stars', () => {
+    it('passes isFilled=false and isHalf=false to default slot for empty length', () => {
       const wrapper = mount(BFormRating, {
-        props: {modelValue: 0, stars: 3},
+        props: {modelValue: 0, length: 3},
         slots: {
           default: ({isFilled, isHalf}: {isFilled: boolean; isHalf: boolean}) =>
             h('span', {'data-filled': String(isFilled), 'data-half': String(isHalf)}),
@@ -672,9 +702,9 @@ describe('form-rating', () => {
       expect(spans[0].attributes('data-half')).toBe('false')
     })
 
-    it('passes isHalf=true to default slot for half-filled stars', () => {
+    it('passes isHalf=true to default slot for half-filled length', () => {
       const wrapper = mount(BFormRating, {
-        props: {modelValue: 1.5, stars: 3, precision: 1},
+        props: {modelValue: 1.5, length: 3, precision: 1},
         slots: {
           default: ({isHalf}: {isHalf: boolean}) => h('span', {'data-half': String(isHalf)}),
         },

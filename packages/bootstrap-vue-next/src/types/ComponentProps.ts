@@ -407,10 +407,7 @@ export interface BFormCheckboxGroupBaseProps {
 // If Options is a complex object without a 'value' field, use computed mapping to standard format
 export interface BFormCheckboxGroupProps<
   Options extends readonly (object | string | number | boolean)[] = readonly (
-    | object
-    | string
-    | number
-    | boolean
+    object | string | number | boolean
   )[],
 > {
   // Options array - generic parameter captures the specific array type
@@ -453,12 +450,8 @@ export interface BFormDatalistBaseProps {
 // BFormDatalist wrapper props (generic, type-safe options)
 export interface BFormDatalistProps<
   Item = Record<string, unknown> | string | number | boolean,
-  ValueKey extends Item extends Record<string, unknown> ? keyof Item : string = Item extends Record<
-    string,
-    unknown
-  >
-    ? keyof Item
-    : never,
+  ValueKey extends (Item extends Record<string, unknown> ? keyof Item : string) =
+    Item extends Record<string, unknown> ? keyof Item : never,
 > {
   disabled?: boolean
   disabledField?: keyof Item & string
@@ -572,10 +565,7 @@ export interface BFormRadioGroupBaseProps {
  */
 export interface BFormRadioGroupProps<
   Options extends readonly (object | string | number | boolean)[] = readonly (
-    | object
-    | string
-    | number
-    | boolean
+    object | string | number | boolean
   )[],
 > {
   ariaInvalid?: AriaInvalid
@@ -618,18 +608,10 @@ export interface BFormRatingProps {
   showClear?: boolean
   showValue?: boolean
   showValueMax?: boolean
-  size?: 'sm' | 'lg' | string
-  stars?: number
+  size?: Size
+  length?: Numberish
   variant?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark'
-    | string
+    'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | string
 }
 
 // BFormSelect base props (non-generic, uses raw options)
@@ -669,10 +651,7 @@ export interface BFormSelectBaseProps {
 // If Options is a complex object without a 'value' field, use computed mapping to standard format
 export interface BFormSelectProps<
   Options extends readonly (object | string | number | boolean)[] = readonly (
-    | object
-    | string
-    | number
-    | boolean
+    object | string | number | boolean
   )[],
 > {
   ariaInvalid?: AriaInvalid
@@ -885,12 +864,7 @@ export interface BOffcanvasProps extends TeleporterProps, ShowHideProps {
   bodyClass?: ClassValue
   bodyScrolling?: boolean
   focus?:
-    | 'close'
-    | boolean
-    | string
-    | Readonly<ComponentPublicInstance>
-    | Readonly<HTMLElement>
-    | null
+    'close' | boolean | string | Readonly<ComponentPublicInstance> | Readonly<HTMLElement> | null
   footerClass?: string
   headerAttrs?: Readonly<AttrsValue>
   headerClass?: string
@@ -1379,7 +1353,8 @@ export interface BTableLiteProps<Item> extends BTableSimpleProps {
   align?: VerticalAlign
   caption?: string
   detailsTdClass?: ClassValue
-  fieldColumnClass?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fieldColumnClass?:
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | ((field: TableField<Item>) => readonly Record<string, any>[])
     | string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1404,8 +1379,7 @@ export interface BTableLiteProps<Item> extends BTableSimpleProps {
   // tbodyTransitionHandlers
   // tbodyTransitionProps
   tbodyTrClass?:
-    | ((item: Item | null, type: TableRowType) => TableStrictClassValue)
-    | TableStrictClassValue
+    ((item: Item | null, type: TableRowType) => TableStrictClassValue) | TableStrictClassValue
   tfootClass?: ClassValue
   tfootTrClass?: ClassValue
   theadClass?: ClassValue

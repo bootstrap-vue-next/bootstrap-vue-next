@@ -1,7 +1,7 @@
-import type {BFormRatingProps, BFormRatingSlots} from 'bootstrap-vue-next'
-import type {ComponentReference, ExposedRecord, PropRecord, SlotRecord} from '../../types'
-import {buildCommonProps} from '../../utils/commonProps'
-import {pick} from '../../utils/objectUtils'
+import type { BFormRatingProps, BFormRatingSlots } from 'bootstrap-vue-next'
+import type { ComponentReference, ExposedRecord, PropRecord, SlotRecord } from '../../types'
+import { buildCommonProps } from '../../utils/commonProps'
+import { pick } from '../../utils/objectUtils'
 
 export default {
   load: (): ComponentReference => ({
@@ -10,7 +10,7 @@ export default {
         ...pick(buildCommonProps(), ['id', 'variant']),
         clearLabel: {
           type: 'string',
-          default: "Clear rating",
+          default: 'Clear rating',
           description:
             'The `aria-label` for the clear button icon. Override this for non-English applications',
         },
@@ -47,7 +47,7 @@ export default {
           type: '(current: number, max: number) => string',
           default: '(current, max) => `${current} of ${max}`',
           description:
-            'A function that returns the `aria-valuetext` for the rating slider. Receives the current rating value and the maximum number of stars. Override for non-English applications',
+            'A function that returns the `aria-valuetext` for the rating slider. Receives the current rating value and the maximum rendered item count. Override for non-English applications',
         },
         modelValue: {
           type: 'number',
@@ -91,7 +91,7 @@ export default {
           type: 'boolean',
           default: 'false',
           description:
-            'When set to `true` and prop `show-value` is `true`, includes the maximum star rating possible in the formatted value',
+            'When set to `true` and prop `show-value` is `true`, includes the maximum possible rating value in the formatted output',
         },
         size: {
           type: "'sm' | 'lg' | string",
@@ -99,10 +99,11 @@ export default {
           description:
             "Icon size: accepts CSS units (e.g. '1.5rem', '24px') or the presets 'sm' (.875rem) and 'lg' (1.25rem); defaults to 1rem.",
         },
-        stars: {
-          type: 'number',
+        length: {
+          type: 'Numberish',
           default: 5,
-          description: 'The number of stars to show. Minimum value is `3`, default is `5`',
+          description:
+            'The number of rating items to render. Must be a positive integer. Defaults to `5` if omitted or invalid',
         },
       } satisfies PropRecord<keyof BFormRatingProps>,
       emits: {
@@ -118,20 +119,20 @@ export default {
         },
       },
       slots: {
-        'default': {
-          description: 'Custom renderer for each star.',
+        default: {
+          description: 'Custom renderer for each rating item.',
           scope: {
-            starIndex: {
+            itemIndex: {
               type: 'number',
-              description: 'The index of the star being rendered (0-based index)',
+              description: 'The 1-based index of the item being rendered',
             },
             isFilled: {
               type: 'boolean',
-              description: 'When `true`, the star is filled (selected)',
+              description: 'When `true`, the item is fully filled (selected)',
             },
             isHalf: {
               type: 'boolean',
-              description: 'When `true`, the star is half-filled (partially selected)',
+              description: 'When `true`, the item is partially filled (partially selected)',
             },
           },
         },
