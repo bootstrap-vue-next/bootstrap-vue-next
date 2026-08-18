@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.0.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.4...bootstrapvuenext-v1.0.0) (2026-08-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **BFormRating:** slot default object key starIndex renamed to itemIndex
+* **BFormRating:** rename classes with star in their name to be more generic
+* **BFormRating:** simplify sizing to be default bootstrap sizing options sm lg or undefined
+* **BFormRating:** change prop stars to be named length ([#3292](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3292))
+
+### Features
+
+* **BFormOtp:** use form-otp prefix for auto generated ids ([72b4554](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/72b455422a7394f008f11e4e1bbf776b230a9e85))
+* **BFormRating:** change prop stars to be named length ([#3292](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3292)) ([72b4554](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/72b455422a7394f008f11e4e1bbf776b230a9e85))
+* **BFormRating:** rename classes with star in their name to be more generic ([72b4554](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/72b455422a7394f008f11e4e1bbf776b230a9e85))
+* **BFormRating:** simplify sizing to be default bootstrap sizing options sm lg or undefined ([72b4554](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/72b455422a7394f008f11e4e1bbf776b230a9e85))
+* **BFormRating:** slot default object key starIndex renamed to itemIndex ([72b4554](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/72b455422a7394f008f11e4e1bbf776b230a9e85))
+
+
+### Bug Fixes
+
+* **BFormFile:** reliably announce aria-live message on every file selection ([#3288](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3288)) ([82f47b5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/82f47b57930a2d54750bc97ac22c5aaeca2f742e))
+* **BFormRating:** fix overflow issue with output form control class fixes [#3280](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3280) ([72b4554](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/72b455422a7394f008f11e4e1bbf776b230a9e85))
+* **BFormRating:** offset on icons ([72b4554](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/72b455422a7394f008f11e4e1bbf776b230a9e85))
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([#3296](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3296)) ([576dc18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/576dc18977c8466161bdae51e431890bc0bc01f2))
+
 ## [0.46.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.3...bootstrapvuenext-v0.46.4) (2026-08-18)
 
 
