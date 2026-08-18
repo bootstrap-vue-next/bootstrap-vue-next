@@ -139,7 +139,7 @@
 
 <script setup lang="ts">
 import {useDropZone, useFileDialog} from '@vueuse/core'
-import {computed, nextTick, onMounted, ref, useAttrs, useTemplateRef, watch} from 'vue'
+import {computed, nextTick, onMounted, ref, type Ref, useAttrs, useTemplateRef, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useStateClass} from '../../composables/useStateClass'
