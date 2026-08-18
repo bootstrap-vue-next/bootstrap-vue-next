@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import {DEPRECATION_REASON_TEXT, DeprecationReason} from '../types/deprecation'
 
 const snippetDirectiveRE = /^<<<\s+(?:FRAGMENT|DEMO)\s+(.*?)$/gm
 
@@ -280,19 +281,83 @@ export const rebuildLLMSFullContent = (
 }
 
 /**
+ * Parse a simple attribute value from a component tag string.
+ * Handles both quoted strings ("foo" or 'foo') and expressions ("DeprecationReason.X").
+ */
+const parseAttrValue = (tagContent: string, attrName: string): string | undefined => {
+  const re = new RegExp(`${attrName}=(?:"([^"]*)"|'([^']*)'|\\{([^}]*)\\})`)
+  const match = re.exec(tagContent)
+  if (!match) return undefined
+  return match[1] ?? match[2] ?? match[3]
+}
+
+/**
+ * Resolve a DeprecationReason enum reference to its string key.
+ * Accepts both enum member names ("DeprecationReason.INSUFFICIENT_DEMAND")
+ * and raw string values ("insufficient-demand").
+ */
+const resolveDeprecationReason = (raw: string): DeprecationReason | undefined => {
+  const trimmed = raw.trim()
+  // Expression like "DeprecationReason.INSUFFICIENT_DEMAND"
+  const dotMatch = /DeprecationReason\.(\w+)/.exec(trimmed)
+  if (dotMatch?.[1]) {
+    const key = dotMatch[1] as keyof typeof DeprecationReason
+    if (key in DeprecationReason) return DeprecationReason[key]
+  }
+  // Raw string value like "insufficient-demand"
+  const values = Object.values(DeprecationReason) as string[]
+  if (values.includes(trimmed)) return trimmed as DeprecationReason
+  return undefined
+}
+
+/**
+ * Convert a `what` prop value (may contain backtick inline code) to plain text.
+ * e.g. "`v-b-hover` directive" → "`v-b-hover` directive" (keep as-is for markdown)
+ */
+const processWhat = (what: string): string => what.trim()
+
+/**
+ * Synthesize the plain-text output of a `<DeprecatedFeature>` component given the
+ * raw component tag text and the content of its default slot.
+ *
+ * Mirrors the logic in DeprecatedFeature.vue:
+ *   "{what} is deprecated: {reasonText}. – {slotContent}"
+ */
+const renderDeprecatedFeature = (tagContent: string, slotContent: string): string => {
+  const rawReason = parseAttrValue(tagContent, ':reason') ?? parseAttrValue(tagContent, 'reason')
+  const what = parseAttrValue(tagContent, ':what') ?? parseAttrValue(tagContent, 'what')
+  const plural = /\bplural\b/.test(tagContent)
+
+  const reason = rawReason !== undefined ? resolveDeprecationReason(rawReason) : undefined
+  const reasonText = reason !== undefined ? DEPRECATION_REASON_TEXT[reason] : 'deprecated'
+
+  const verb = plural ? 'are' : 'is'
+  const label = what !== undefined ? `${processWhat(what)} ${verb} deprecated:` : 'Deprecated:'
+
+  const parts = [`${label} ${reasonText}.`]
+  const trimmedSlot = slotContent.trim()
+  if (trimmedSlot !== '') {
+    parts.push(` – ${trimmedSlot}`)
+  }
+  return parts.join('')
+}
+
+/**
  * Strips Vue component markup from markdown content intended for LLM consumption.
  *
- * Removes `<script setup>` blocks entirely, and unwraps PascalCase component
- * tags (e.g. `<DeprecatedFeature>`, `<BLink>`) so that only their inner text
- * is preserved. Self-closing component tags are removed completely.
- * Content inside fenced code blocks (``` or ~~~) is left untouched.
+ * - Removes `<script setup>` blocks entirely.
+ * - Transforms `<DeprecatedFeature>` components into synthesized plain text,
+ *   preserving the deprecation label, reason, and slot content.
+ * - Unwraps other PascalCase component tags (e.g. `<BLink>`) so inner text is preserved.
+ * - Removes self-closing PascalCase component tags entirely.
+ * - Leaves content inside fenced code blocks (``` / ~~~) untouched.
+ * - Collapses extra blank lines left by removals.
  *
  * Note: this function processes trusted markdown source files from the repository.
  * It is not an HTML sanitizer and should not be used for untrusted user input.
  */
 export const stripVueComponents = (content: string): string => {
   // Remove <script ...>...</script> blocks by walking line-by-line.
-  // This avoids regex-based tag stripping being misidentified as an incomplete HTML sanitizer.
   const lines = content.split('\n')
   const filteredLines: string[] = []
   let insideScript = false
@@ -314,7 +379,6 @@ export const stripVueComponents = (content: string): string => {
   const withoutScript = filteredLines.join('\n')
 
   // Split into segments: even indices are outside code fences, odd indices are inside.
-  // This regex captures fenced code blocks (``` or ~~~) so we can skip them.
   const segments = withoutScript.split(/(^```[\s\S]*?^```|^~~~[\s\S]*?^~~~)/m)
 
   const processed = segments.map((segment, index) => {
@@ -322,6 +386,14 @@ export const stripVueComponents = (content: string): string => {
     if (index % 2 === 1) return segment
 
     let result = segment
+
+    // Transform <DeprecatedFeature ...>...</DeprecatedFeature> blocks into synthesized text.
+    // This must run before the generic tag stripping below.
+    result = result.replace(
+      /<DeprecatedFeature([\s\S]*?)>([\s\S]*?)<\/DeprecatedFeature>/g,
+      (_, tagContent: string, slotContent: string) =>
+        renderDeprecatedFeature(tagContent, slotContent)
+    )
 
     // Remove self-closing PascalCase component tags: <ComponentName ... />
     result = result.replace(/<[A-Z][A-Za-z0-9]*(?:\s[^>]*)?\s*\/>/g, '')
@@ -336,9 +408,9 @@ export const stripVueComponents = (content: string): string => {
   })
 
   // Collapse runs of blank lines introduced by the removals (keep at most one blank line)
-  const result = processed.join('').replace(/\n{3,}/g, '\n\n')
+  const resultStr = processed.join('').replace(/\n{3,}/g, '\n\n')
 
-  return result.trim() + '\n'
+  return resultStr.trim() + '\n'
 }
 
 export const getMaterializedSourceMarkdown = (

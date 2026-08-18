@@ -86,12 +86,22 @@ describe('LLMS snippet resolution', () => {
       expect(stripVueComponents(input)).toContain('Some text.')
     })
 
-    it('unwraps PascalCase component tags while preserving inner text', () => {
-      const input = '<DeprecatedFeature :reason="DeprecationReason.X" what="`v-b-hover` directive">\n  This directive will not be implemented.\n</DeprecatedFeature>'
+    it('synthesizes DeprecatedFeature into readable text with reason and slot content', () => {
+      const input = '<DeprecatedFeature :reason="DeprecationReason.INSUFFICIENT_DEMAND" what="`v-b-hover` directive">\n  This directive will not be implemented.\n</DeprecatedFeature>'
       const result = stripVueComponents(input)
       expect(result).not.toContain('<DeprecatedFeature')
       expect(result).not.toContain('</DeprecatedFeature>')
+      expect(result).toContain('`v-b-hover` directive is deprecated:')
+      expect(result).toContain('insufficient demand for initial release')
       expect(result).toContain('This directive will not be implemented.')
+    })
+
+    it('synthesizes DeprecatedFeature without what prop', () => {
+      const input = '<DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED">\n  Extra info.\n</DeprecatedFeature>'
+      const result = stripVueComponents(input)
+      expect(result).toContain('Deprecated:')
+      expect(result).toContain('deprecated by Bootstrap')
+      expect(result).toContain('Extra info.')
     })
 
     it('removes self-closing PascalCase component tags', () => {
@@ -111,12 +121,15 @@ describe('LLMS snippet resolution', () => {
       expect(result).toContain('composable.')
     })
 
-    it('strips Vue components from materialized migration pages', () => {
+    it('synthesizes and strips Vue components from real v-b-hover migration page', () => {
       const materialized = getMaterializedSourceMarkdown('docs/migration-data/directives/v-b-hover.md', srcRoot)
       expect(materialized?.content).not.toContain('<DeprecatedFeature')
       expect(materialized?.content).not.toContain('<BLink')
       expect(materialized?.content).not.toContain('<script')
+      expect(materialized?.content).toContain('`v-b-hover` directive is deprecated:')
+      expect(materialized?.content).toContain('insufficient demand for initial release')
       expect(materialized?.content).toContain('This directive will not be implemented.')
+      expect(materialized?.content).toContain('`useElementHover()`')
     })
   })
 })
