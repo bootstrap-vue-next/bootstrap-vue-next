@@ -301,7 +301,7 @@ const showExternalDisplay = computed(
 
 const ariaLiveMessage = useAriaLiveMessage(
   selectedFiles,
-  computed(() => props.ariaLiveFormatter)
+  () => props.ariaLiveFormatter
 )
 
 const effectiveBrowseText = computed(() => props.browseText ?? 'Browse')
