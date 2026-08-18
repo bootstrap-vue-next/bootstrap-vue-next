@@ -10,11 +10,6 @@ $clear-icon-size: 1em !default;
   background-color: var(--bs-body-bg);
   gap: 0.25rem;
 
-  // Allow it to flex properly in input groups
-  flex: 1 1 auto;
-  width: 1%;
-  min-width: 0;
-
   &.no-border {
     border: none;
   }
