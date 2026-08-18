@@ -279,6 +279,32 @@ export const rebuildLLMSFullContent = (
   return pages.join('\n---\n\n')
 }
 
+/**
+ * Strips Vue component markup from markdown content intended for LLM consumption.
+ *
+ * Removes `<script setup>` blocks entirely, and unwraps PascalCase component
+ * tags (e.g. `<DeprecatedFeature>`, `<BLink>`) so that only their inner text
+ * is preserved. Self-closing component tags are removed completely.
+ */
+export const stripVueComponents = (content: string): string => {
+  // Remove <script setup ...>...</script> blocks (including multiline)
+  let result = content.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+
+  // Remove self-closing PascalCase component tags: <ComponentName ... />
+  result = result.replace(/<[A-Z][A-Za-z0-9]*(?:\s[^>]*)?\s*\/>/g, '')
+
+  // Remove opening PascalCase component tags (with optional attributes): <ComponentName ...>
+  result = result.replace(/<[A-Z][A-Za-z0-9]*(?:\s[^>]*)?>/g, '')
+
+  // Remove closing PascalCase component tags: </ComponentName>
+  result = result.replace(/<\/[A-Z][A-Za-z0-9]*>/g, '')
+
+  // Collapse runs of blank lines introduced by the removals (keep at most one blank line)
+  result = result.replace(/\n{3,}/g, '\n\n')
+
+  return result.trim() + '\n'
+}
+
 export const getMaterializedSourceMarkdown = (
   outputPath: string,
   srcDir: string
@@ -291,9 +317,10 @@ export const getMaterializedSourceMarkdown = (
 
   try {
     const sourceContent = fs.readFileSync(sourceMarkdownPath, 'utf8')
+    const resolved = resolveLLMSnippetDirectives(sourceContent, sourceMarkdownPath)
 
     return {
-      content: resolveLLMSnippetDirectives(sourceContent, sourceMarkdownPath),
+      content: stripVueComponents(resolved),
       sourceMarkdownPath,
     }
   } catch {

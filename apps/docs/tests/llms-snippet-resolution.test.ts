@@ -6,6 +6,7 @@ import {
   normalizeLLMOutputPath,
   rebuildLLMSFullContent,
   resolveLLMSnippetDirectives,
+  stripVueComponents,
   toLLMOutputPath,
   toSourceMarkdownPath,
 } from '../src/utils/llmsSnippetResolution'
@@ -75,5 +76,47 @@ describe('LLMS snippet resolution', () => {
     expect(rebuilt).toBe(
       '---\nurl: /bootstrap-vue-next/docs/migration-data.md\n---\n\n# Migration Knowledge Base\n---\n\n---\nurl: /bootstrap-vue-next/components.md\n---\n\n# Components'
     )
+  })
+
+  describe('stripVueComponents', () => {
+    it('removes script setup blocks', () => {
+      const input = '# Title\n\nSome text.\n\n<script setup lang="ts">\nimport {Foo} from \'bar\'\n</script>\n'
+      expect(stripVueComponents(input)).not.toContain('<script')
+      expect(stripVueComponents(input)).toContain('# Title')
+      expect(stripVueComponents(input)).toContain('Some text.')
+    })
+
+    it('unwraps PascalCase component tags while preserving inner text', () => {
+      const input = '<DeprecatedFeature :reason="DeprecationReason.X" what="`v-b-hover` directive">\n  This directive will not be implemented.\n</DeprecatedFeature>'
+      const result = stripVueComponents(input)
+      expect(result).not.toContain('<DeprecatedFeature')
+      expect(result).not.toContain('</DeprecatedFeature>')
+      expect(result).toContain('This directive will not be implemented.')
+    })
+
+    it('removes self-closing PascalCase component tags', () => {
+      const input = 'Some text.\n<SelfClosing prop="value" />\nMore text.'
+      const result = stripVueComponents(input)
+      expect(result).not.toContain('<SelfClosing')
+      expect(result).toContain('Some text.')
+      expect(result).toContain('More text.')
+    })
+
+    it('unwraps BLink tags preserving inner text', () => {
+      const input = 'Consider using <BLink href="https://example.com">`useElementHover()`</BLink> composable.'
+      const result = stripVueComponents(input)
+      expect(result).not.toContain('<BLink')
+      expect(result).not.toContain('</BLink>')
+      expect(result).toContain('`useElementHover()`')
+      expect(result).toContain('composable.')
+    })
+
+    it('strips Vue components from materialized migration pages', () => {
+      const materialized = getMaterializedSourceMarkdown('docs/migration-data/directives/v-b-hover.md', srcRoot)
+      expect(materialized?.content).not.toContain('<DeprecatedFeature')
+      expect(materialized?.content).not.toContain('<BLink')
+      expect(materialized?.content).not.toContain('<script')
+      expect(materialized?.content).toContain('This directive will not be implemented.')
+    })
   })
 })
