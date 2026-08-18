@@ -15,17 +15,13 @@
  * @param context - A short label used to prefix console warnings (e.g. the data loader name)
  * @returns The parsed JSON response, or the fallback value on failure
  */
-const FETCH_TIMEOUT_MS = 10_000
-
 export async function fetchJsonWithFallback<T>(
   url: string,
   fallback: T,
   context: string,
 ): Promise<T> {
-  const controller = new AbortController()
-  const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
   try {
-    const response = await fetch(url, {signal: controller.signal})
+    const response = await fetch(url)
     if (!response.ok) {
       console.error(`[${context}] Failed to fetch ${url}: ${response.status} ${response.statusText}`)
       return fallback
@@ -34,7 +30,5 @@ export async function fetchJsonWithFallback<T>(
   } catch (error) {
     console.error(`[${context}] Failed to fetch ${url}:`, error)
     return fallback
-  } finally {
-    clearTimeout(timeoutId)
   }
 }
