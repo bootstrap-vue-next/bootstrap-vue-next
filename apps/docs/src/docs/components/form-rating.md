@@ -1,21 +1,21 @@
 ---
 title: Form Rating
-description: 'Custom star rating component for entering or displaying rating values. Fully WAI-ARIA accessible with keyboard control, supporting both interactive and readonly modes with customizable styling and icons.'
+description: 'Custom rating component for entering or displaying values. Fully WAI-ARIA accessible with keyboard control, supporting both interactive and readonly modes with customizable styling and icons.'
 ---
 
 ## Overview
 
-Rating values range from 1 to the number of stars allowed (default stars is `5`, minimum stars is `3`). Since `BFormRating` uses the Bootstrap class `form-control`, it can easily be placed inside [input groups](/docs/components/input-group.html).
+Rating values range from 1 to the configured item count (`length`, default `5`). Since `BFormRating` uses the Bootstrap class `form-control`, it can easily be placed inside [input groups](/docs/components/input-group.html).
 
 `BFormRating` supports two main modes: interactive and readonly.
 
-Interactive mode allows the user to choose a rating from 1 to the number of stars (default 5) in whole number increments.
+Interactive mode allows the user to choose a rating from 1 to the configured item count (default 5) in whole number increments.
 
 **Interactive rating (input mode):**
 
 <<< DEMO ./demo/RatingInteractive.vue
 
-Readonly mode is used for displaying an aggregated rating, and supports `half` stars.
+Readonly mode is used for displaying an aggregated rating, and supports `half` icon states.
 
 **Readonly (non-interactive) rating:**
 
@@ -40,10 +40,10 @@ value (`#...`) or RGB/RGBA (`rgb(...)`/`rgba(...)`) color value:
 - The prop `color` takes precedence over the `variant` prop
 - Variants translate to the `text-{variant}` utility class on the icon
 
-### Number of stars
+### Number of items
 
-By default, `<BFormRating>` defaults to `5` stars. You can change the number of stars via the
-`stars` prop. The minimum allowed stars is `3`.
+By default, `<BFormRating>` renders `5` items. You can change the number of rendered items via the
+`length` prop. The value must be a positive integer.
 
 <<< DEMO ./demo/RatingStars.vue
 
@@ -120,11 +120,11 @@ This slot is **not scoped** — you can insert any content you like.
 
 ### Icons
 
-By default, `BFormRating` uses built-in star SVG icons:
+By default, `BFormRating` uses built-in star-shaped SVG icons:
 
-- Empty star: outlined star
-- Half star: half-filled star
-- Full star: filled star
+- Empty icon: outlined star shape
+- Half icon: half-filled star shape
+- Full icon: filled star shape
 - Clear button: x icon
 
 #### Default icons styling
@@ -133,7 +133,7 @@ When using the default icons, you can style them with the `variant`, `color`, an
 
 #### Custom icons
 
-To use completely custom icons, use the default scoped slot which provides access to `starIndex`, `isFilled`, and `isHalf` properties:
+To use completely custom icons, use the default scoped slot which provides access to `itemIndex`, `isFilled`, and `isHalf` properties:
 
 <<< DEMO ./demo/RatingCustomIcon.vue
 
@@ -141,8 +141,8 @@ To use completely custom icons, use the default scoped slot which provides acces
 
 - The `variant`, `color`, and `size` props **do not apply** to custom icons provided via scoped slots
 - You must handle all styling (colors, sizes, hover effects) yourself in your custom CSS
-- You're responsible for implementing click handlers if needed: `@click="rating = starIndex"`
-- Custom icons completely replace the default star rendering
+- You're responsible for implementing click handlers if needed: `@click="rating = itemIndex"`
+- Custom icons completely replace the default icon rendering
 
 #### Icon props (Advanced)
 

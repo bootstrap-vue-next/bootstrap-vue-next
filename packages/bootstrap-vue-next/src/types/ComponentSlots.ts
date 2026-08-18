@@ -326,7 +326,7 @@ export type BFormRadioGroupSlots = {
 
 export type BFormRatingSlots = {
   'icon-clear'?: (props: Record<string, never>) => any
-  'default'?: (props: {starIndex: number; isFilled: boolean; isHalf: boolean}) => any
+  'default'?: (props: {itemIndex: number; isFilled: boolean; isHalf: boolean}) => any
 }
 
 export type BFormSelectSlots<T> = {
