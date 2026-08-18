@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.46.1...nuxt-v1.0.0) (2026-08-18)
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([#3296](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3296)) ([576dc18](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/576dc18977c8466161bdae51e431890bc0bc01f2))
+
 ## [0.46.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.46.0...nuxt-v0.46.1) (2026-08-14)
 
 
