@@ -285,22 +285,58 @@ export const rebuildLLMSFullContent = (
  * Removes `<script setup>` blocks entirely, and unwraps PascalCase component
  * tags (e.g. `<DeprecatedFeature>`, `<BLink>`) so that only their inner text
  * is preserved. Self-closing component tags are removed completely.
+ * Content inside fenced code blocks (``` or ~~~) is left untouched.
+ *
+ * Note: this function processes trusted markdown source files from the repository.
+ * It is not an HTML sanitizer and should not be used for untrusted user input.
  */
 export const stripVueComponents = (content: string): string => {
-  // Remove <script setup ...>...</script> blocks (including multiline)
-  let result = content.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+  // Remove <script ...>...</script> blocks by walking line-by-line.
+  // This avoids regex-based tag stripping being misidentified as an incomplete HTML sanitizer.
+  const lines = content.split('\n')
+  const filteredLines: string[] = []
+  let insideScript = false
 
-  // Remove self-closing PascalCase component tags: <ComponentName ... />
-  result = result.replace(/<[A-Z][A-Za-z0-9]*(?:\s[^>]*)?\s*\/>/g, '')
+  for (const line of lines) {
+    if (!insideScript && /<script\b/i.test(line)) {
+      insideScript = true
+    }
 
-  // Remove opening PascalCase component tags (with optional attributes): <ComponentName ...>
-  result = result.replace(/<[A-Z][A-Za-z0-9]*(?:\s[^>]*)?>/g, '')
+    if (!insideScript) {
+      filteredLines.push(line)
+    }
 
-  // Remove closing PascalCase component tags: </ComponentName>
-  result = result.replace(/<\/[A-Z][A-Za-z0-9]*>/g, '')
+    if (insideScript && /<\/script\s*>/i.test(line)) {
+      insideScript = false
+    }
+  }
+
+  const withoutScript = filteredLines.join('\n')
+
+  // Split into segments: even indices are outside code fences, odd indices are inside.
+  // This regex captures fenced code blocks (``` or ~~~) so we can skip them.
+  const segments = withoutScript.split(/(^```[\s\S]*?^```|^~~~[\s\S]*?^~~~)/m)
+
+  const processed = segments.map((segment, index) => {
+    // Odd-indexed segments are fenced code blocks — leave them untouched
+    if (index % 2 === 1) return segment
+
+    let result = segment
+
+    // Remove self-closing PascalCase component tags: <ComponentName ... />
+    result = result.replace(/<[A-Z][A-Za-z0-9]*(?:\s[^>]*)?\s*\/>/g, '')
+
+    // Remove opening PascalCase component tags (with optional attributes): <ComponentName ...>
+    result = result.replace(/<[A-Z][A-Za-z0-9]*(?:\s[^>]*)?>/g, '')
+
+    // Remove closing PascalCase component tags: </ComponentName>
+    result = result.replace(/<\/[A-Z][A-Za-z0-9]*>/g, '')
+
+    return result
+  })
 
   // Collapse runs of blank lines introduced by the removals (keep at most one blank line)
-  result = result.replace(/\n{3,}/g, '\n\n')
+  const result = processed.join('').replace(/\n{3,}/g, '\n\n')
 
   return result.trim() + '\n'
 }
