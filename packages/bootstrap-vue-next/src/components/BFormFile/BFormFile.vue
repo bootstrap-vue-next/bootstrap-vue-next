@@ -299,16 +299,29 @@ const showExternalDisplay = computed(
 )
 
 // ARIA live region message for accessibility
-const ariaLiveMessage = computed(() => {
-  if (!hasFiles.value) return ''
+// Use a ref instead of computed so we can apply a clear-then-set pattern.
+// Clearing first and then setting the value in nextTick forces screen readers
+// to detect a real DOM change and reliably announce the message every time,
+// even when the same file is selected again.
+const ariaLiveMessage = ref('')
+
+const buildAriaLiveMessage = (files: readonly File[]): string => {
+  if (files.length === 0) return ''
   if (props.ariaLiveFormatter) {
-    return props.ariaLiveFormatter(selectedFiles.value)
+    return props.ariaLiveFormatter(files)
   }
-  const count = selectedFiles.value.length
-  if (count === 1) {
-    return `File selected: ${selectedFiles.value[0]?.name}`
+  if (files.length === 1) {
+    return `File selected: ${files[0]?.name}`
   }
-  return `${count} files selected`
+  return `${files.length} files selected`
+}
+
+watch(selectedFiles, (files) => {
+  // Clear first so screen readers always detect a DOM change
+  ariaLiveMessage.value = ''
+  nextTick(() => {
+    ariaLiveMessage.value = buildAriaLiveMessage(files)
+  })
 })
 
 const effectiveBrowseText = computed(() => props.browseText ?? 'Browse')
