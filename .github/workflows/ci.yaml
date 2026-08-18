@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository
@@ -76,7 +76,7 @@ jobs:
       - run: pnpx pkg-pr-new publish './packages/bootstrap-vue-next' './packages/nuxt' --template './templates/vite'
 
   test-lint:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository
@@ -112,7 +112,7 @@ jobs:
         run: pnpm run test:lint:ci
 
   test-unit:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository
@@ -149,7 +149,7 @@ jobs:
 
   test-nuxt-e2e:
     needs: build
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository

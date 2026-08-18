@@ -16,7 +16,7 @@ jobs:
 
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
 
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
 
     environment:
       name: github-pages
