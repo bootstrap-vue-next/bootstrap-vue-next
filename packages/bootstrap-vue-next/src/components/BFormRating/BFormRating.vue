@@ -6,9 +6,9 @@
     :form="props.form ? props.form : undefined"
     role="slider"
     :aria-valuemin="0"
-    :aria-valuemax="clampedStars"
+    :aria-valuemax="computedLength"
     :aria-valuenow="displayValue"
-    :aria-valuetext="props.labelValueCurrent(displayValue, clampedStars)"
+    :aria-valuetext="props.labelValueCurrent(displayValue, computedLength)"
     :aria-disabled="props.disabled ? true : undefined"
     :aria-readonly="props.readonly ? true : undefined"
     :tabindex="props.disabled ? undefined : '0'"
@@ -24,7 +24,7 @@
     />
     <span
       v-if="props.showClear && !props.readonly && !props.disabled"
-      class="clear-button-spacing"
+      class="rating-clear-button"
       @click="clearRating"
     >
       <slot name="icon-clear">
@@ -36,21 +36,19 @@
           class="clear-icon"
         >
           <g>
-            <path
-              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
-            />
+            <path :d="iconPaths.clear" />
           </g>
         </svg>
       </slot>
     </span>
     <span
-      v-for="(starIndex, index) in clampedStars"
-      :key="starIndex"
-      class="star"
-      @click="selectRating(starIndex)"
+      v-for="(itemIndex, index) in computedLength"
+      :key="itemIndex"
+      class="rating-item flex-grow-1"
+      @click="selectRating(itemIndex)"
     >
-      <slot :star-index="starIndex" :is-filled="isIconFull(index)" :is-half="isIconHalf(index)">
-        <span class="b-form-rating-star">
+      <slot :item-index="itemIndex" :is-filled="isIconFull(index)" :is-half="isIconHalf(index)">
+        <span class="b-form-rating-item">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             :width="computedSize"
@@ -58,21 +56,9 @@
             fill="currentColor"
             :class="[iconColors[index]?.class]"
             :style="iconColors[index]?.style"
-            class="star-spacing"
             viewBox="0 0 16 16"
           >
-            <path
-              v-if="isIconFull(index)"
-              d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
-            />
-            <path
-              v-else-if="isIconHalf(index)"
-              d="M5.354 5.119 7.538.792A.52.52 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.54.54 0 0 1 16 6.32a.55.55 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.5.5 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.6.6 0 0 1 .085-.302.51.51 0 0 1 .37-.245zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.56.56 0 0 1 .162-.505l2.907-2.77-4.052-.576a.53.53 0 0 1-.393-.288L8.001 2.223 8 2.226z"
-            />
-            <path
-              v-else
-              d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.522 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"
-            />
+            <path :d="getIcon(index)" />
           </svg>
         </span>
       </slot>
@@ -90,11 +76,13 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
+import {useToNumber} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useRtl} from '../../composables/useRtl'
 import type {BFormRatingProps, BFormRatingSlots} from '../../types'
 
+const lengthDefault = 5
 const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(), {
   clearLabel: 'Clear rating',
   color: '',
@@ -112,7 +100,7 @@ const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(),
   showValue: false,
   showValueMax: false,
   size: '1rem',
-  stars: 5,
+  length: lengthDefault,
   variant: undefined,
 })
 const props = useDefaults(_props, 'BFormRating')
@@ -144,22 +132,37 @@ const computedRtl = computed(() => {
   return isRtl?.value ?? false
 })
 
-const computedClasses = computed(() => ({
-  'form-control': true,
-  'is-readonly': props.readonly,
-  'is-disabled': props.disabled,
-  'no-border': props.noBorder,
-  'b-form-rating': true,
-  'd-inline-flex': props.inline,
-}))
+const computedClasses = computed(() => [
+  'form-control',
+  'b-form-rating',
+  'align-items-center',
+  {
+    'is-readonly': props.readonly,
+    'is-disabled': props.disabled,
+    'no-border': props.noBorder,
+    'd-flex': !props.inline,
+    'd-inline-flex': props.inline,
+    'b-form-rating-inline': props.inline,
+  },
+])
 
-function isIconFull(index: number): boolean {
-  return displayValue.value - index >= 1
-}
-
-function isIconHalf(index: number): boolean {
+const isIconFull = (index: number): boolean => displayValue.value - index >= 1
+const isIconHalf = (index: number): boolean => {
   const diff = displayValue.value - index
   return diff >= 0.5 && diff < 1
+}
+const iconPaths = {
+  full: 'M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z',
+  half: 'M5.354 5.119 7.538.792A.52.52 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.54.54 0 0 1 16 6.32a.55.55 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.5.5 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.6.6 0 0 1 .085-.302.51.51 0 0 1 .37-.245zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.56.56 0 0 1 .162-.505l2.907-2.77-4.052-.576a.53.53 0 0 1-.393-.288L8.001 2.223 8 2.226z',
+  empty:
+    'M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.522 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z',
+  clear:
+    'M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708',
+} as const
+const getIcon = (index: number): string => {
+  if (isIconFull(index)) return iconPaths.full
+  if (isIconHalf(index)) return iconPaths.half
+  return iconPaths.empty
 }
 
 const hoverValue = ref<number | null>(null)
@@ -168,8 +171,8 @@ const displayValue = computed(() =>
   hoverValue.value !== null ? hoverValue.value : modelValue.value
 )
 
-// Set the minimum amount of star can be rendered to 3
-const clampedStars = computed(() => Math.max(3, props.stars))
+const lengthNumber = useToNumber(() => props.length, {nanToZero: true, method: 'parseInt'})
+const computedLength = computed(() => (lengthNumber.value > 0 ? lengthNumber.value : lengthDefault))
 
 const computedSize = computed(() => {
   if (props.size === 'sm') return '.875rem'
@@ -177,22 +180,22 @@ const computedSize = computed(() => {
   return props.size
 })
 
-const computedFormatter = computed(
-  () =>
-    new Intl.NumberFormat(computedLocale.value, {
-      style: 'decimal',
-      useGrouping: false,
-      minimumFractionDigits: props.precision > 0 ? props.precision : 0,
-      maximumFractionDigits: props.precision > 0 ? props.precision : 0,
-      notation: 'standard',
-    })
-)
+const computedFormatter = computed(() => {
+  const preciseValue = props.precision > 0 ? props.precision : 0
+  return new Intl.NumberFormat(computedLocale.value, {
+    style: 'decimal',
+    useGrouping: false,
+    minimumFractionDigits: preciseValue,
+    maximumFractionDigits: preciseValue,
+    notation: 'standard',
+  })
+})
 
 const displayValueText = computed(() => {
   const val = props.precision > 0 ? roundedValue.value : displayValue.value
   const formattedValue = computedFormatter.value.format(val)
   if (props.showValueMax) {
-    const formattedMax = computedFormatter.value.format(clampedStars.value)
+    const formattedMax = computedFormatter.value.format(computedLength.value)
     return `${formattedValue}/${formattedMax}`
   }
   if (props.showValue) {
@@ -208,7 +211,7 @@ const roundedValue = computed(() => {
 })
 
 const iconColors = computed(() =>
-  Array.from({length: clampedStars.value}, () => {
+  Array.from({length: computedLength.value}, () => {
     if (props.disabled) {
       return {class: 'is-disabled', style: {}}
     }
@@ -223,7 +226,7 @@ const iconColors = computed(() =>
 )
 
 //add keyboard support
-function onKeydown(e: KeyboardEvent) {
+const onKeydown = (e: KeyboardEvent) => {
   if (props.readonly || props.disabled) return
 
   let newValue = modelValue.value
@@ -232,13 +235,17 @@ function onKeydown(e: KeyboardEvent) {
 
   switch (e.key) {
     case 'ArrowRight':
-      newValue = isRtlMode ? Math.max(newValue - 1, 0) : Math.min(newValue + 1, clampedStars.value)
+      newValue = isRtlMode
+        ? Math.max(newValue - 1, 0)
+        : Math.min(newValue + 1, computedLength.value)
       break
     case 'ArrowUp':
-      newValue = Math.min(newValue + 1, clampedStars.value)
+      newValue = Math.min(newValue + 1, computedLength.value)
       break
     case 'ArrowLeft':
-      newValue = isRtlMode ? Math.min(newValue + 1, clampedStars.value) : Math.max(newValue - 1, 0)
+      newValue = isRtlMode
+        ? Math.min(newValue + 1, computedLength.value)
+        : Math.max(newValue - 1, 0)
       break
     case 'ArrowDown':
       newValue = Math.max(newValue - 1, 0)
@@ -251,13 +258,13 @@ function onKeydown(e: KeyboardEvent) {
   modelValue.value = newValue
 }
 
-function selectRating(starIndex: number) {
+const selectRating = (itemIndex: number) => {
   if (props.readonly || props.disabled) return
-  modelValue.value = hoverValue.value !== null ? hoverValue.value : starIndex
+  modelValue.value = hoverValue.value !== null ? hoverValue.value : itemIndex
 }
 
 // clear
-function clearRating() {
+const clearRating = () => {
   hoverValue.value = null
   modelValue.value = 0
 }

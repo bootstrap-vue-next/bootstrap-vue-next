@@ -20,8 +20,8 @@
     <BFormRating v-model="valPrecise" :precision="2" :show-value="true" />
     <p>valPrecise: {{ valPrecise }}</p>
 
-    <h2>6. stars (8 total)</h2>
-    <BFormRating v-model="valStars" :stars="8" :show-value="true" />
+    <h2>6. length (8 total)</h2>
+    <BFormRating v-model="valStars" :length="8" :show-value="true" />
     <p>valStars: {{ valStars }}</p>
 
     <h2>7. Bootstrap variants</h2>

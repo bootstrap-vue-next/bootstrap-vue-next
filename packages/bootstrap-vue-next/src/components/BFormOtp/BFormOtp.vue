@@ -73,7 +73,7 @@ const emit = defineEmits<{
 
 const modelValue = defineModel<BFormOtpProps['modelValue']>({default: () => []})
 
-const computedId = useId(() => props.id)
+const computedId = useId(() => props.id, 'form-otp')
 const lengthNumber = useToNumber(() => props.length, {nanToZero: true, method: 'parseInt'})
 const computedLength = computed(() => (lengthNumber.value > 0 ? lengthNumber.value : lengthDefault))
 
