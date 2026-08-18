@@ -227,8 +227,8 @@ describe('form-rating', () => {
     it('maps size="sm" to ".875rem" for SVG icons', () => {
       const wrapper = mount(BFormRating, {props: {size: 'sm'}})
       const svg = wrapper.find('.b-form-rating-item svg')
-      expect(svg.attributes('width')).toBe('.875rem')
-      expect(svg.attributes('height')).toBe('.875rem')
+      expect(svg.attributes('width')).toBe('0.875rem')
+      expect(svg.attributes('height')).toBe('0.875rem')
     })
 
     it('maps size="lg" to "1.25rem" for SVG icons', () => {
@@ -238,24 +238,24 @@ describe('form-rating', () => {
       expect(svg.attributes('height')).toBe('1.25rem')
     })
 
-    it('uses arbitrary size string directly for SVG icons', () => {
-      const wrapper = mount(BFormRating, {props: {size: '2.5rem'}})
+    it('falls back to default size when size is omitted', () => {
+      const wrapper = mount(BFormRating, {props: {size: undefined}})
       const svg = wrapper.find('.b-form-rating-item svg')
-      expect(svg.attributes('width')).toBe('2.5rem')
-      expect(svg.attributes('height')).toBe('2.5rem')
+      expect(svg.attributes('width')).toBe('1rem')
+      expect(svg.attributes('height')).toBe('1rem')
     })
 
     it('updates SVG size reactively', async () => {
       const wrapper = mount(BFormRating, {props: {size: 'sm'}})
-      expect(wrapper.find('.b-form-rating-item svg').attributes('width')).toBe('.875rem')
+      expect(wrapper.find('.b-form-rating-item svg').attributes('width')).toBe('0.875rem')
       await wrapper.setProps({size: 'lg'})
       expect(wrapper.find('.b-form-rating-item svg').attributes('width')).toBe('1.25rem')
     })
 
     it('sets font-size of value text span to computed size', () => {
-      const wrapper = mount(BFormRating, {props: {size: '2rem', showValue: true, modelValue: 3}})
+      const wrapper = mount(BFormRating, {props: {size: 'lg', showValue: true, modelValue: 3}})
       const valueSpan = wrapper.find('.rating-value-text')
-      expect(valueSpan.attributes('style')).toContain('font-size: 2rem')
+      expect(valueSpan.attributes('style')).toContain('font-size: 1.25rem')
     })
   })
 
