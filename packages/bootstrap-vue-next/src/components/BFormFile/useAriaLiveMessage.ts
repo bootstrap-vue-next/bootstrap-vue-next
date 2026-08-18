@@ -1,4 +1,4 @@
-import {nextTick, ref, watch, type Ref} from 'vue'
+import {nextTick, readonly, ref, watch, type Ref} from 'vue'
 
 /**
  * Manages an ARIA live region message with a clear-then-set pattern.
@@ -11,7 +11,7 @@ import {nextTick, ref, watch, type Ref} from 'vue'
 export const useAriaLiveMessage = (
   selectedFiles: Ref<readonly File[]>,
   formatter: Ref<((files: readonly File[]) => string) | undefined>
-): Ref<string> => {
+) => {
   const ariaLiveMessage = ref('')
 
   const buildMessage = (files: readonly File[]): string => {
@@ -31,5 +31,5 @@ export const useAriaLiveMessage = (
     ariaLiveMessage.value = buildMessage(files)
   })
 
-  return ariaLiveMessage
+  return readonly(ariaLiveMessage)
 }
