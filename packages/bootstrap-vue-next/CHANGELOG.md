@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.46.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.3...bootstrapvuenext-v0.46.4) (2026-08-18)
+
+
+### Bug Fixes
+
+* **BOrchestrator:** map toast position through positionClasses ([#3284](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3284)) ([efe8422](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/efe842214f67bef6d1a41b14fc03285c8e4b13a1))
+
 ## [0.46.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.2...bootstrapvuenext-v0.46.3) (2026-08-17)
 
 
