@@ -608,7 +608,7 @@ export interface BFormRatingProps {
   showClear?: boolean
   showValue?: boolean
   showValueMax?: boolean
-  size?: 'sm' | 'lg' | string
+  size?: Size
   length?: Numberish
   variant?:
     'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | string

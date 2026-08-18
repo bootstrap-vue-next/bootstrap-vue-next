@@ -80,7 +80,7 @@ import {useToNumber} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
 import {useRtl} from '../../composables/useRtl'
-import type {BFormRatingProps, BFormRatingSlots} from '../../types'
+import type {BFormRatingProps, BFormRatingSlots, Size} from '../../types'
 
 const lengthDefault = 5
 const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(), {
@@ -99,7 +99,7 @@ const _props = withDefaults(defineProps<Omit<BFormRatingProps, 'modelValue'>>(),
   showClear: false,
   showValue: false,
   showValueMax: false,
-  size: '1rem',
+  size: undefined,
   length: lengthDefault,
   variant: undefined,
 })
@@ -175,9 +175,12 @@ const lengthNumber = useToNumber(() => props.length, {nanToZero: true, method: '
 const computedLength = computed(() => (lengthNumber.value > 0 ? lengthNumber.value : lengthDefault))
 
 const computedSize = computed(() => {
-  if (props.size === 'sm') return '.875rem'
-  if (props.size === 'lg') return '1.25rem'
-  return props.size
+  const resolved = {
+    sm: 0.875,
+    default: 1,
+    lg: 1.25,
+  } satisfies Record<Size | 'default', number>
+  return `${resolved[props.size ?? 'default']}rem`
 })
 
 const computedFormatter = computed(() => {
