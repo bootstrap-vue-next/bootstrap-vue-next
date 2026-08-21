@@ -90,6 +90,24 @@ describe('useToast', () => {
     expect(toastRef?.get()?.value.props.title).toBe('World')
   })
 
+  it('preserves numeric modelValue when show is called immediately after create', async () => {
+    let toastRef: ReturnType<ReturnType<typeof useToast>['create']> | undefined
+    const TestComponent = defineComponent({
+      setup() {
+        const {create} = useToast()
+        toastRef = create({title: 'Countdown Toast', modelValue: 10000})
+        void toastRef.show()
+        return () => h('div')
+      },
+    })
+
+    mount(BApp, {slots: {default: () => h(TestComponent)}})
+    await nextTick()
+
+    expect(toastRef?.get()?.value.props.modelValue).toBe(10000)
+    toastRef?.hide('test')
+  })
+
   it('keeps instances in the store after hide and removes them only on destroy', async () => {
     let toastRef: ReturnType<ReturnType<typeof useToast>['create']> | undefined
     let toastStore: ReturnType<typeof useToast>['store'] | undefined
