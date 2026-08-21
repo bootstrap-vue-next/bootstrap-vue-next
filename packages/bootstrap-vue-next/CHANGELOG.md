@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.0.0...bootstrapvuenext-v1.0.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* **toast:** skip setting modelValue when value is already truthy in show() composable method ([#3302](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3302)) ([35332ed](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/35332ed722727aeb34d0ddc04f2936735ed19d6d))
+
 ## [1.0.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v0.46.4...bootstrapvuenext-v1.0.0) (2026-08-18)
 
 
