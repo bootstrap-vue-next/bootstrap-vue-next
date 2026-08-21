@@ -1,26 +1,26 @@
 <template>
-  <b-container>
+  <BContainer>
     <div class="row">
       <div id="root-element" class="col-8">
         <div class="my-3">
           <p>current: {{ current }}</p>
         </div>
-        <b-card id="basic" no-body>
-          <b-card-header>
-            <b-nav ref="target" pills card-header>
-              <b-nav-item href="#fat" @click="scrollIntoView">@fat</b-nav-item>
-              <b-nav-item href="#mdo" @click="scrollIntoView">@mdo</b-nav-item>
-              <b-nav-item-dropdown text="Dropdown 1,2,3" right-alignment>
-                <b-dropdown-item href="#one" @click="scrollIntoView">one</b-dropdown-item>
-                <b-dropdown-item href="#two" @click="scrollIntoView">two</b-dropdown-item>
-                <b-dropdown-divider />
-                <b-dropdown-item href="#three" @click="scrollIntoView">three</b-dropdown-item>
-              </b-nav-item-dropdown>
-              <b-nav-item href="#pi0" @click="scrollIntoView">@pi0</b-nav-item>
-            </b-nav>
-          </b-card-header>
+        <BCard id="basic" no-body>
+          <BCardHeader>
+            <BNav ref="target" pills card-header>
+              <BNavItem href="#fat" @click="scrollIntoView">@fat</BNavItem>
+              <BNavItem href="#mdo" @click="scrollIntoView">@mdo</BNavItem>
+              <BNavItemDropdown text="Dropdown 1,2,3" right-alignment>
+                <BDropdownItem href="#one" @click="scrollIntoView">one</BDropdownItem>
+                <BDropdownItem href="#two" @click="scrollIntoView">two</BDropdownItem>
+                <BDropdownDivider />
+                <BDropdownItem href="#three" @click="scrollIntoView">three</BDropdownItem>
+              </BNavItemDropdown>
+              <BNavItem href="#pi0" @click="scrollIntoView">@pi0</BNavItem>
+            </BNav>
+          </BCardHeader>
 
-          <b-card-body
+          <BCardBody
             id="nav-scroller"
             ref="content"
             style="position: relative; height: 300px; overflow-y: scroll; scroll-behavior: smooth"
@@ -38,38 +38,38 @@
             <p v-for="i in 2" :key="i">{{ lorem }}</p>
             <h4 id="pi0">@pi0</h4>
             <p v-for="i in 3" :key="i">{{ lorem }}</p>
-          </b-card-body>
-        </b-card>
+          </BCardBody>
+        </BCard>
         <div class="split" />
         <p>current: {{ nestedCurrent }}</p>
-        <b-card id="nested">
-          <b-row>
-            <b-col cols="4">
-              <b-navbar ref="targetNested" tag="b-navbar" class="flex-column">
-                <b-navbar-brand href="#">Navbar</b-navbar-brand>
-                <b-nav pills vertical>
-                  <b-nav-item href="#item-1">Item 1</b-nav-item>
-                  <b-nav pills vertical>
-                    <b-nav-item class="ms-3 my-1" href="#item-1-1">Item 1-1</b-nav-item>
-                    <b-nav-item class="ms-3 my-1" href="#item-1-2">Item 1-2</b-nav-item>
-                    <b-nav-item class="ms-3 my-1" href="#item-1-3">Item 1-3</b-nav-item>
-                    <b-nav pills vertical>
-                      <b-nav-item class="ms-5 my-1" href="#item-1-3-1">Item 1-3-1</b-nav-item>
-                      <b-nav-item class="ms-5 my-1" href="#item-1-3-2">Item 1-3-2</b-nav-item>
-                    </b-nav>
-                    <b-nav-item class="ms-3 my-1" href="#item-1-4">Item 1-4</b-nav-item>
-                  </b-nav>
-                  <b-nav-item href="#item-2">Item 2</b-nav-item>
-                  <b-nav-item href="#item-3">Item 3</b-nav-item>
-                  <b-nav pills vertical>
-                    <b-nav-item class="ms-3 my-1" href="#item-3-1">Item 3-1</b-nav-item>
-                    <b-nav-item class="ms-3 my-1" href="#item-3-2">Item 3-2</b-nav-item>
-                  </b-nav>
-                </b-nav>
-              </b-navbar>
-            </b-col>
+        <BCard id="nested">
+          <BRow>
+            <BCol cols="4">
+              <BNavbar ref="targetNested" class="flex-column">
+                <BNavbarBrand href="#">Navbar</BNavbarBrand>
+                <BNav pills vertical>
+                  <BNavItem href="#item-1">Item 1</BNavItem>
+                  <BNav pills vertical>
+                    <BNavItem class="ms-3 my-1" href="#item-1-1">Item 1-1</BNavItem>
+                    <BNavItem class="ms-3 my-1" href="#item-1-2">Item 1-2</BNavItem>
+                    <BNavItem class="ms-3 my-1" href="#item-1-3">Item 1-3</BNavItem>
+                    <BNav pills vertical>
+                      <BNavItem class="ms-5 my-1" href="#item-1-3-1">Item 1-3-1</BNavItem>
+                      <BNavItem class="ms-5 my-1" href="#item-1-3-2">Item 1-3-2</BNavItem>
+                    </BNav>
+                    <BNavItem class="ms-3 my-1" href="#item-1-4">Item 1-4</BNavItem>
+                  </BNav>
+                  <BNavItem href="#item-2">Item 2</BNavItem>
+                  <BNavItem href="#item-3">Item 3</BNavItem>
+                  <BNav pills vertical>
+                    <BNavItem class="ms-3 my-1" href="#item-3-1">Item 3-1</BNavItem>
+                    <BNavItem class="ms-3 my-1" href="#item-3-2">Item 3-2</BNavItem>
+                  </BNav>
+                </BNav>
+              </BNavbar>
+            </BCol>
 
-            <b-col cols="8">
+            <BCol cols="8">
               <div
                 id="scrollspy-nested"
                 ref="contentNested"
@@ -98,27 +98,27 @@
                 <h5 id="item-3-2" style="">Item 3-2</h5>
                 <p>{{ lorem }}</p>
               </div>
-            </b-col>
-          </b-row>
-        </b-card>
+            </BCol>
+          </BRow>
+        </BCard>
         <div class="split" />
-        <b-card id="list">
-          <b-row>
-            <b-col cols="4">
-              <b-list-group>
-                <b-list-group-item
+        <BCard id="list">
+          <BRow>
+            <BCol cols="4">
+              <BListGroup>
+                <BListGroupItem
                   v-for="(e, idx) in currentListItems"
                   :key="idx"
                   :href="'#' + e.id"
                   :class="currentList === e.id && 'active'"
                 >
                   {{ e.text }}
-                </b-list-group-item>
-              </b-list-group>
-            </b-col>
+                </BListGroupItem>
+              </BListGroup>
+            </BCol>
 
-            <b-col cols="8">
-              <b-button @click="addItem">add</b-button>
+            <BCol cols="8">
+              <BButton @click="addItem">add</BButton>
               <div
                 id="listgroup-ex"
                 ref="contentList"
@@ -129,31 +129,31 @@
                   <p>{{ lorem }}</p>
                 </template>
               </div>
-            </b-col>
-          </b-row>
-        </b-card>
+            </BCol>
+          </BRow>
+        </BCard>
         <div class="split" />
-        <b-card id="directive">
-          <b-row>
-            <b-col cols="4">
-              <b-list-group v-b-scrollspy:directive-list>
-                <b-list-group-item v-for="(e, idx) in items" :key="idx" :href="'#' + e.id">
+        <BCard id="directive">
+          <BRow>
+            <BCol cols="4">
+              <BListGroup v-b-scrollspy:directive-list>
+                <BListGroupItem v-for="(e, idx) in items" :key="idx" :href="'#' + e.id">
                   {{ e.text }}
-                </b-list-group-item>
-              </b-list-group>
-            </b-col>
+                </BListGroupItem>
+              </BListGroup>
+            </BCol>
 
-            <b-col cols="8">
-              <b-button @click="addItem">add</b-button>
+            <BCol cols="8">
+              <BButton @click="addItem">add</BButton>
               <div id="directive-list" style="position: relative; overflow-y: auto; height: 400px">
                 <template v-for="i in items" :key="i.id">
                   <h4 :id="i.id">Item {{ i.text }}</h4>
                   <p>{{ lorem }}</p>
                 </template>
               </div>
-            </b-col>
-          </b-row>
-        </b-card>
+            </BCol>
+          </BRow>
+        </BCard>
         <div class="split" />
       </div>
 
@@ -161,17 +161,17 @@
         <div class="position-sticky top-0">
           <h2>Toc</h2>
 
-          <b-list-group>
-            <b-list-group-item
+          <BListGroup>
+            <BListGroupItem
               v-for="(e, idx) in tocListItems"
               :key="idx"
               :href="'#' + e.id"
               :class="e.id === tocCurrent && 'active'"
             >
               {{ e.id }}
-            </b-list-group-item>
-          </b-list-group>
-          <b-form-radio-group
+            </BListGroupItem>
+          </BListGroup>
+          <BFormRadioGroup
             v-model="tocContent"
             :options="[
               {text: 'toc', value: 'root-element'},
@@ -184,7 +184,7 @@
         </div>
       </div>
     </div>
-  </b-container>
+  </BContainer>
 </template>
 
 <script setup lang="ts">

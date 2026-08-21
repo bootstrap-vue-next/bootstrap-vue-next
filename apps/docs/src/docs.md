@@ -67,7 +67,7 @@ See the [BApp component documentation](/docs/components/app) for complete config
 <template>
   <BApp>
     <!-- Your application content -->
-    <router-view />
+    <RouterView />
   </BApp>
 </template>
 

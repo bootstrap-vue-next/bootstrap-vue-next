@@ -3,7 +3,7 @@
     <BRow>
       <BCol>
         <div class="overflow-auto">
-          <b-pagination
+          <BPagination
             v-model="currentPage"
             :total-rows="rows"
             :per-page="perPage"
@@ -12,7 +12,7 @@
 
           <p class="mt-3">Current Page: {{ currentPage }}</p>
 
-          <b-table
+          <BTable
             id="my-table"
             :items="items"
             :per-page="perPage"

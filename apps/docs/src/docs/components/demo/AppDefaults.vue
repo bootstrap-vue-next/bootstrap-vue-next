@@ -1,7 +1,7 @@
 <template>
   <BApp :defaults="appDefaults">
     <!-- Your application content -->
-    <router-view />
+    <RouterView />
   </BApp>
 </template>
 

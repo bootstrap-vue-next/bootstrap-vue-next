@@ -78,10 +78,10 @@
               v-bind="tab.attrs"
             />
             <ChildComp :title="tabs[0]?.title" :content="tabs[0]?.content" />
-            <b-tab :title="test" @click="log"> test </b-tab>
-            <b-tab v-model:active="activeBool" title="ac" button-id="ac-button"> ac </b-tab>
-            <b-tab title="test1" lazy-once title-link-class="bg-danger" class="bg-danger">
-              <template #title> doo</template> doo <LoggerComp>goo</LoggerComp></b-tab
+            <BTab :title="test" @click="log"> test </BTab>
+            <BTab v-model:active="activeBool" title="ac" button-id="ac-button"> ac </BTab>
+            <BTab title="test1" lazy-once title-link-class="bg-danger" class="bg-danger">
+              <template #title> doo</template> doo <LoggerComp>goo</LoggerComp></BTab
             >
           </ParentComp>
         </div>

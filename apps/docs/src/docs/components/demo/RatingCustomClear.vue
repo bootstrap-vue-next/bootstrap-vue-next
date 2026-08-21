@@ -5,7 +5,7 @@
       show-clear
     >
       <template #icon-clear>
-        <b-button variant="dark"> Clear </b-button>
+        <BButton variant="dark"> Clear </BButton>
       </template>
     </BFormRating>
     <p>Current rating: {{ rating }}</p>

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <b-table :items="items">
+    <BTable :items="items">
       <template #cell(html)="data">
         <!-- eslint-disable vue/no-v-html -->
         <span v-html="data.value" />
       </template>
-    </b-table>
+    </BTable>
   </div>
 </template>
 

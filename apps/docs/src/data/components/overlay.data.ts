@@ -53,7 +53,7 @@ export default {
           type: 'boolean',
           default: false,
           description:
-            'Disabled generating the wrapper element, and ignored the default slot. Requires that `<b-overlay>` be placed in an element with position relative set',
+            'Disabled generating the wrapper element, and ignored the default slot. Requires that `<BOverlay>` be placed in an element with position relative set',
         },
         opacity: {
           type: 'Numberish',
