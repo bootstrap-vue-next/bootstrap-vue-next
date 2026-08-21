@@ -6,19 +6,19 @@
 </template>
 
 <script setup lang="ts">
-import {BApp} from 'bootstrap-vue-next'
+import {BApp, type BAppProps} from 'bootstrap-vue-next'
 
-const appDefaults = {
+const appDefaults: BAppProps['defaults'] = {
   BButton: {
-    variant: 'info' as const,
-    size: 'lg' as const,
+    variant: 'info',
+    size: 'lg',
   },
   BModal: {
     centered: true,
     noCloseOnBackdrop: true,
   },
   BToast: {
-    variant: 'success' as const,
+    variant: 'success',
     solid: true,
   },
 }
