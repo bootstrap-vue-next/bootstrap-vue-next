@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form-input
+    <BFormInput
       v-model="value"
       type="text"
       debounce="500"

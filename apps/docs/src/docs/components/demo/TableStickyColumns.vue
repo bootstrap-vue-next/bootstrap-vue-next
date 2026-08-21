@@ -1,18 +1,18 @@
 <template>
   <div>
     <div class="mb-2">
-      <b-form-checkbox
+      <BFormCheckbox
         v-model="stickyHeader"
         inline
-        >Sticky header</b-form-checkbox
+        >Sticky header</BFormCheckbox
       >
-      <b-form-checkbox
+      <BFormCheckbox
         v-model="noCollapse"
         inline
-        >No border collapse</b-form-checkbox
+        >No border collapse</BFormCheckbox
       >
     </div>
-    <b-table
+    <BTable
       :sticky-header="stickyHeader"
       :no-border-collapse="noCollapse"
       responsive
@@ -26,7 +26,7 @@
       <template #head()="scope">
         <div class="text-nowrap">Heading {{ scope.label }}</div>
       </template>
-    </b-table>
+    </BTable>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <!-- App.vue -->
 <template>
   <BApp :defaults="{BButton: {variant: 'primary'}}">
-    <router-view />
+    <RouterView />
   </BApp>
 </template>
 

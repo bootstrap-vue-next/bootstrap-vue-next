@@ -1,5 +1,5 @@
 <template>
   <BApp>
-    <router-view />
+    <RouterView />
   </BApp>
 </template>

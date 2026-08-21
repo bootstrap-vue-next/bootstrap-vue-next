@@ -1,7 +1,7 @@
 <template>
   <BApp>
     <!-- Your application content -->
-    <router-view />
+    <RouterView />
   </BApp>
 </template>
 

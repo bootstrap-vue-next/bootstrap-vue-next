@@ -1,7 +1,7 @@
 <template>
   <BApp :rtl="rtlConfig">
     <!-- Your application content -->
-    <router-view />
+    <RouterView />
   </BApp>
 </template>
 

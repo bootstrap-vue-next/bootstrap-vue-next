@@ -67,7 +67,7 @@ See the [BApp component documentation](/docs/components/app) for complete config
 <template>
   <BApp>
     <!-- Your application content -->
-    <router-view />
+    <RouterView />
   </BApp>
 </template>
 
@@ -230,7 +230,7 @@ npm i bootstrap bootstrap-vue-next @bootstrap-vue-next/nuxt
 This step is **optional** and is used **in addition to** the setup above. These peer dependencies add proper type definitions to the package. Without them, the affected types default to `any`. If you are not using the components or features that rely on these packages, you are unlikely to encounter any issues.
 :::
 
-This package uses optional peer dependencies to generate type definitions for enhanced functionality. These dependencies are not installed by default to avoid unnecessary bloat in projects that don't require these features. However, if you want full type support, you need to manually install the required packages.
+This package uses optional peer dependencies to generate type definitions for enhanced functionality. These dependencies are not installed by default to avoid unnecessary bloat in projects that don't require these features. However, if you want full type support, you need to manually install the required packages. They will not increase the size of the final dist, they are only used for their types.
 
 ::: code-group
 
