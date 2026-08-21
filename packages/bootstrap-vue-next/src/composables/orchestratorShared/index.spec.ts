@@ -1,5 +1,5 @@
-import {describe, expect, it} from 'vitest'
-import {ref, type Ref} from 'vue'
+import {describe, expect, it, vi} from 'vitest'
+import {type ComponentPublicInstance, ref, type Ref} from 'vue'
 import {buildController} from '.'
 import type {ControllerKey, ModalOrchestratorArrayValue} from '../../types/ComponentOrchestratorTypes'
 import {BvTriggerableEvent} from '../../utils'
@@ -113,6 +113,40 @@ describe('buildController', () => {
     expect(result).toBeInstanceOf(BvTriggerableEvent)
     expect(result.trigger).toBe('ok')
     expect(result.ok).toBe(true)
+  })
+
+  it('show does not overwrite numeric truthy modelValue when already showing', async () => {
+    const store = newStore()
+    const _self = Symbol('test-modal')
+
+    const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+    pushItem(store, _self, {modelValue: 5000})
+
+    const showPromise = controller.show()
+    resolve(new BvTriggerableEvent('hidden'))
+    await showPromise
+
+    expect(store.value.get(_self)?.value.props.modelValue).toBe(5000)
+  })
+
+  it('show does not call component show when modelValue is already truthy', async () => {
+    const store = newStore()
+    const _self = Symbol('test-modal')
+    const showMock = vi.fn<() => void>()
+
+    const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+    pushItem(store, _self, {modelValue: true})
+    controller.ref = {show: showMock} as unknown as ComponentPublicInstance<unknown> & {
+      show?: () => void
+      hide?: (trigger?: string, noEmit?: boolean) => void
+      toggle?: () => void
+    }
+
+    const showPromise = controller.show()
+    resolve(new BvTriggerableEvent('hidden'))
+    await showPromise
+
+    expect(showMock).not.toHaveBeenCalled()
   })
 
   it('show result has Symbol.asyncDispose that calls destroy', async () => {
