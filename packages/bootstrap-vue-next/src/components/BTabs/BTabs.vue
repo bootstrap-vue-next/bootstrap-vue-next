@@ -1,6 +1,6 @@
 <template>
   <component :is="props.tag" :id="props.id" class="tabs" :class="computedClasses">
-    <BTabsTabContent v-if="props.end" v-bind="tabContentProps">
+    <BTabsTabContent v-if="props.end" ref="_tabContent" v-bind="tabContentProps">
       <slot />
       <template #empty>
         <slot name="empty" />
@@ -60,7 +60,7 @@
         <slot name="tabs-end" />
       </ul>
     </div>
-    <BTabsTabContent v-if="!props.end" v-bind="tabContentProps">
+    <BTabsTabContent v-if="!props.end" ref="_tabContent" v-bind="tabContentProps">
       <slot />
       <template #empty>
         <slot name="empty" />
@@ -74,15 +74,16 @@ import {
   computed,
   nextTick,
   onMounted,
-  onUpdated,
   provide,
   type Ref,
   ref,
   toRef,
   unref,
+  useTemplateRef,
   type VNode,
   watch,
 } from 'vue'
+import {useMutationObserver} from '@vueuse/core'
 import {BvEvent} from '../../utils/classes'
 import {useAlignment} from '../../composables/useAlignment'
 import {useId} from '../../composables/useId'
