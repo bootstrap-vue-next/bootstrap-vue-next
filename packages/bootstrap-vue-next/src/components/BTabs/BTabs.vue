@@ -74,6 +74,7 @@ import {
   computed,
   nextTick,
   onMounted,
+  onUpdated,
   provide,
   type Ref,
   ref,
@@ -167,16 +168,6 @@ const updateTabElementsArray = () => {
   )
 }
 updateTabElementsArray()
-
-watch(
-  () => slots.default?.({}),
-  () => {
-    updateTabElementsArray()
-    nextTick(() => {
-      sortTabs()
-    })
-  }
-)
 
 const tabs = computed(() => {
   if (tabsInternal.value.length === 0) {
@@ -512,6 +503,15 @@ const sortTabs = () => {
     activeIndex.value = tabs.value.findIndex((t) => t.id === activeId.value)
   }
 }
+
+// Re-sort registered tabs whenever BTabs re-renders (e.g. slot content is reordered
+// or tabs are added/removed), based on the tabs' actual DOM order. This intentionally
+// avoids reactively re-invoking `slots.default()` (e.g. via `watch`), which tracks
+// whatever reactive state the slot content reads and can retrigger itself, causing
+// infinite recursive updates (#2989).
+onUpdated(() => {
+  sortTabs()
+})
 
 const unregisterTab = (id: string) => {
   tabsInternal.value = tabsInternal.value.filter((t) => t.value.internalId !== id)

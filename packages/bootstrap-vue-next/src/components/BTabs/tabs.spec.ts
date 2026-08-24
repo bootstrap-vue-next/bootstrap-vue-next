@@ -1,6 +1,6 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {h, nextTick} from 'vue'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import BTabs from './BTabs.vue'
 import BTab from './BTab.vue'
 import BFormInput from '../BFormInput/BFormInput.vue'
@@ -611,6 +611,64 @@ describe('tabs', () => {
     expect($buttons[1].text()).toBe('t1')
     expect($buttons[1].classes()).toContain('active')
     expect(wrapper.vm.index).toBe(1)
+  })
+
+  it('does not cause infinite recursive updates for v-for tabs with click handlers and style bindings (#2989)', async () => {
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    try {
+      const TestComponent = {
+        template: `
+          <BTabs>
+            <BTab
+              v-for="(tab, key) in tabsData"
+              :key="tab.identifier"
+              :title="tab.label"
+              :style="{backgroundColor: highlighted === key ? 'yellow' : 'transparent'}"
+              @click="setHighlighted(key)"
+            >
+              {{ tab.label }} content
+            </BTab>
+          </BTabs>
+        `,
+        data() {
+          return {
+            highlighted: -1,
+            tabsData: [
+              {label: 'Tab1', identifier: 'tab-1'},
+              {label: 'Tab2', identifier: 'tab-2'},
+            ],
+          }
+        },
+        methods: {
+          setHighlighted(key: number) {
+            this.highlighted = key
+          },
+        },
+        components: {BTabs, BTab},
+      }
+
+      const wrapper = mount(TestComponent)
+      await nextTick()
+
+      const buttons = wrapper.findAll('button')
+      expect(buttons.length).toBe(2)
+
+      // Clicking a tab mutates `highlighted`, which the v-for'd tabs read back
+      // reactively in their `:style` binding. Previously, BTabs reactively
+      // re-invoked the default slot function inside a `watch` source to detect
+      // slot content changes, which tracked this feedback and could recurse
+      // indefinitely (thrown as an unhandled rejection from Vue's scheduler).
+      await buttons[1].trigger('click')
+      await nextTick()
+      await nextTick()
+      await nextTick()
+
+      expect(wrapper.vm.highlighted).toBe(1)
+      expect(wrapper.findAll('button')[1].classes()).toContain('active')
+      expect(errorSpy).not.toHaveBeenCalled()
+    } finally {
+      errorSpy.mockRestore()
+    }
   })
 
   it('active tab follow v-models', async () => {
