@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.0.1...bootstrapvuenext-v1.0.2) (2026-08-28)
+
+
+### Bug Fixes
+
+* **BFormSelect:** preserve empty string modelValue by reordering SelectValue union type ([#3313](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3313)) ([ba84876](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/ba848761a200139125355e0b9986a8afb4a27268))
+
 ## [1.0.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.0.0...bootstrapvuenext-v1.0.1) (2026-08-21)
 
 
