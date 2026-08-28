@@ -188,6 +188,28 @@ describe('BFormSelect', () => {
     })
   })
 
+  it('preserves empty string modelValue without Boolean casting (regression #3312)', () => {
+    const wrapper = mount(BFormSelect, {
+      props: {
+        modelValue: '',
+        options: [
+          {value: '', text: '-- Please select --', disabled: true},
+          {value: 'yes', text: 'Yes'},
+          {value: 'no', text: 'No'},
+        ],
+      },
+    })
+
+    const options = wrapper.findAll('option')
+    const emptyOption = options.find((o) => o.attributes('value') === '')
+    expect(emptyOption).toBeDefined()
+    expect(emptyOption?.attributes('selected')).toBeDefined()
+
+    // Non-empty options must NOT be selected
+    const yesOption = options.find((o) => o.attributes('value') === 'yes')
+    expect(yesOption?.attributes('selected')).toBeUndefined()
+  })
+
   // --- Events ---
 
   it('updates modelValue when option is selected', async () => {
