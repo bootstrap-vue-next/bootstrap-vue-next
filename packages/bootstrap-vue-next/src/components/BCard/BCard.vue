@@ -95,6 +95,7 @@ const _props = withDefaults(defineProps<BCardProps>(), {
   headerTextVariant: undefined,
   headerVariant: null,
   imgAlt: undefined,
+  imgAttrs: undefined,
   imgPlacement: 'top',
   imgHeight: undefined,
   imgSrc: undefined,
@@ -134,5 +135,6 @@ const imgAttr = computed(() => ({
   height: props.imgHeight,
   width: props.imgWidth,
   placement: props.imgPlacement,
+  ...props.imgAttrs,
 }))
 </script>
