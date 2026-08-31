@@ -85,6 +85,11 @@ export default {
           default: undefined,
           description: 'Alt text for the optional image',
         },
+        imgAttrs: {
+          type: 'Readonly<AttrsValue>',
+          default: undefined,
+          description: 'Attributes to be applied to the optional image (rendered via BCardImg)',
+        },
         imgHeight: {
           type: 'Numberish',
           default: undefined,

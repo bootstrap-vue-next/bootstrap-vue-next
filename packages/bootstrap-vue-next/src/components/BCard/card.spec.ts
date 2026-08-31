@@ -520,6 +520,22 @@ describe('card', () => {
     expect($img.props('placement')).toBe('top')
   })
 
+  it('child BCardImg has its prop lazy as imgAttrs', () => {
+    const wrapper = mount(BCard, {
+      props: {imgSrc: '/abc', imgAttrs: {lazy: true}},
+    })
+    const $img = wrapper.find('img')
+    expect($img.attributes('loading')).toBe('lazy')
+  })
+
+  it('child BCardImg has its attributes as imgAttrs', () => {
+    const wrapper = mount(BCard, {
+      props: {imgSrc: '/abc', imgAttrs: {'data-testid': 'foobar'}},
+    })
+    const $img = wrapper.find('img')
+    expect($img.attributes('data-testid')).toBe('foobar')
+  })
+
   it('child BCardHeader has internal prop variant as prop headerVariant', () => {
     const wrapper = mount(BCard, {
       props: {header: 'foobar', headerVariant: 'danger'},

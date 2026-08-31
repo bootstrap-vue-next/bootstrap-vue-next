@@ -1204,6 +1204,7 @@ export interface BCardProps extends ColorExtendables {
   headerTextVariant?: TextColorVariant | null
   headerVariant?: ColorVariant | null
   imgAlt?: string
+  imgAttrs?: Readonly<AttrsValue>
   imgPlacement?: Placement | 'overlay'
   imgHeight?: Numberish
   imgSrc?: string
