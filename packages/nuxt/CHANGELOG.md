@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v1.0.0...nuxt-v1.0.1) (2026-08-31)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * bootstrap-vue-next bumped to 1.1.0
+  * peerDependencies
+    * bootstrap-vue-next bumped to 1.1.0
+
 ## [1.0.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/nuxt-v0.46.1...nuxt-v1.0.0) (2026-08-18)
 
 
