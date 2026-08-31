@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.0.2...bootstrapvuenext-v1.1.0) (2026-08-31)
+
+
+### Features
+
+* **BCard:** add `imgAttrs` prop to pass arbitrary attributes to card image ([#3322](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3322)) ([a0a91e4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/a0a91e484635cbaef7d7b8557316e85229a8c5fb))
+
 ## [1.0.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.0.1...bootstrapvuenext-v1.0.2) (2026-08-28)
 
 
