@@ -230,8 +230,9 @@ describe('buildController', () => {
     const hiddenEvent = new BvTriggerableEvent('hidden')
 
     const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+    const hideMock = vi.fn<(trigger?: string, noEmit?: boolean) => void>(() => resolve(hiddenEvent))
     pushItem(store, _self, {modelValue: true})
-    controller.ref = {hide: vi.fn(() => resolve(hiddenEvent))} as ComponentPublicInstance<unknown> & {
+    controller.ref = {hide: hideMock} as ComponentPublicInstance<unknown> & {
       show?: () => void
       hide?: (trigger?: string, noEmit?: boolean) => void
       toggle?: () => void
@@ -239,7 +240,7 @@ describe('buildController', () => {
 
     const destroyPromise = controller.destroy()
 
-    expect(controller.ref.hide).toHaveBeenCalledWith('destroy', true)
+    expect(hideMock).toHaveBeenCalledWith('destroy', true)
     await destroyPromise
 
     expect(store.value.size).toBe(0)
