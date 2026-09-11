@@ -55,6 +55,33 @@ Hiding a `Toast` programmatically is simple. The controller returned by `create`
 
 <<< DEMO ./demo/UseToastProgrammatic.vue
 
+## Globally Hiding Toasts
+
+Toasts can also be hidden from anywhere in the app, without holding on to the controller that
+`create` returned. Give the toast an `id`, then hide it by that `id`:
+
+<<< DEMO ./demo/UseToastGlobalHide.vue
+
+- `hide: (trigger?: string, id?: ControllerKey) => void`
+
+  Hides the toast with the given `id`. The `trigger` is passed to the `trigger` property of the
+  `hide` event and of the resolved `show` promise. When no `id` is given, every toast is hidden,
+  just like `hideAll`
+
+- `hideAll: (trigger?: string) => void`
+
+  Hides every toast that was created through the composable
+
+`hide(trigger, id)` also hides a `BToast` that was declared in a template with a matching `id`.
+`hideAll` and `hide` without an `id` only cover the toasts that were created through the composable.
+
+A toast that the orchestrator has not rendered yet is hidden through its store entry, so it never
+becomes visible. Such a toast reports `modelValue` as its `trigger`, since there is no component to
+run the hide cycle through. The same applies to a toast rendered through a custom `component`.
+
+Hiding a toast does not remove it from the orchestrator store, see
+[Lifecycle and disposal](#lifecycle-and-disposal).
+
 ## Lifecycle and disposal
 
 Created toast instances persist until you explicitly dispose them. Hiding a toast does not remove it from the orchestrator store.
