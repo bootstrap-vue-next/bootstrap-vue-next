@@ -224,17 +224,22 @@ describe('buildController', () => {
     expect(store.value.size).toBe(0)
   })
 
-  it('destroy waits for hide to resolve before removing the item when modelValue is true', async () => {
+  it('destroy hides visible items before awaiting resolution and then removes them', async () => {
     const store = newStore()
     const _self = Symbol('test-modal')
+    const hiddenEvent = new BvTriggerableEvent('hidden')
 
     const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
     pushItem(store, _self, {modelValue: true})
+    controller.ref = {hide: vi.fn(() => resolve(hiddenEvent))} as ComponentPublicInstance<unknown> & {
+      show?: () => void
+      hide?: (trigger?: string, noEmit?: boolean) => void
+      toggle?: () => void
+    }
 
     const destroyPromise = controller.destroy()
 
-    // destroy awaits the base promise before it will hide + remove the item
-    resolve(new BvTriggerableEvent('hidden'))
+    expect(controller.ref.hide).toHaveBeenCalledWith('destroy', true)
     await destroyPromise
 
     expect(store.value.size).toBe(0)
