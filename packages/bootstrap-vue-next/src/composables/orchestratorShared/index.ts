@@ -98,9 +98,9 @@ export const buildController = <
       if (!item) return
       try {
         if (item.value.props.modelValue) {
+          controller.hide('destroy')
           await basePromise
           await nextTick()
-          controller.hide('destroy')
         }
       } finally {
         store.value.delete(id)
