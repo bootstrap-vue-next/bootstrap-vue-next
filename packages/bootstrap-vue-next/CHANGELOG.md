@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.1.0...bootstrapvuenext-v1.2.0) (2026-09-11)
+
+
+### Features
+
+* **useToast:** add `hide` and `hideAll`, matching `useModal` ([#3330](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3330)) ([fd534e9](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/fd534e9e368758468a0f923bd9d466621b002145))
+
+
+### Bug Fixes
+
+* resolve visible orchestrator destroy deadlock ([#3329](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3329)) ([6ae3a8f](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/6ae3a8f00efbeba04d74a704aa307d47d18956ac))
+
 ## [1.1.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.0.2...bootstrapvuenext-v1.1.0) (2026-08-31)
 
 
