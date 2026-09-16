@@ -1,5 +1,6 @@
 <template>
   <BFormSelectBase
+    ref="_base"
     v-bind="forwardedProps"
     v-model="modelValue as any"
     :options="normalizedOptions as any"
@@ -22,14 +23,11 @@
   lang="ts"
   generic="
     Options extends readonly (object | string | number | boolean)[] = readonly (
-      | object
-      | string
-      | number
-      | boolean
+      object | string | number | boolean
     )[]
   "
 >
-import {computed} from 'vue'
+import {computed, defineExpose, useTemplateRef} from 'vue'
 import BFormSelectBase from './BFormSelectBase.vue'
 import type {
   BFormSelectProps,
@@ -165,4 +163,11 @@ const forwardedProps = computed(() => ({
   size: props.size,
   state: props.state,
 }))
+
+const base = useTemplateRef('_base')
+defineExpose({
+  blur: computed(() => base?.value?.blur),
+  element: computed(() => base?.value?.element),
+  focus: computed(() => base?.value?.focus),
+})
 </script>
