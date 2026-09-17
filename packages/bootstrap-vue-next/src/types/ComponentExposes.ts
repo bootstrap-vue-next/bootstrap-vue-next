@@ -1,4 +1,4 @@
-import {type ComputedRef, type ShallowRef, type Ref} from 'vue'
+import {type ComputedRef, type ShallowRef} from 'vue'
 
 export interface blurFocusExposes {
   blur: () => void
