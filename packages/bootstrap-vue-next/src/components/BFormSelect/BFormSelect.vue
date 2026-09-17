@@ -27,7 +27,7 @@
     )[]
   "
 >
-import {computed, defineExpose, useTemplateRef} from 'vue'
+import {computed, useTemplateRef} from 'vue'
 import BFormSelectBase from './BFormSelectBase.vue'
 import type {
   BFormSelectProps,
