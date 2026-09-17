@@ -118,12 +118,12 @@ const classesObject = computed(() => ({
 const attrs = getGroupAttr(classesObject)
 const classes = getGroupClasses(classesObject)
 
-defineExpose<BFormCheckboxGroupExposes>({
+defineExpose({
   blur: () => {
     focused.value = false
   },
   focus: () => {
     focused.value = true
   },
-})
+} satisfies BFormCheckboxGroupExposes)
 </script>

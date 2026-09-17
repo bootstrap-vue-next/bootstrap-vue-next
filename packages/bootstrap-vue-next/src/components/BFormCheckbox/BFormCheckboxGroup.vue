@@ -126,10 +126,12 @@ const forwardedProps = computed(() => ({
 }))
 
 const base = useTemplateRef('_base')
-const baseBlur = () => base?.value?.blur()
-const baseFocus = () => base?.value?.focus()
-defineExpose<BFormCheckboxGroupExposes>({
-  blur: baseBlur,
-  focus: baseFocus,
-})
+defineExpose({
+  blur: () => {
+    base?.value?.blur()
+  },
+  focus: () => {
+    base?.value?.focus()
+  },
+} satisfies BFormCheckboxGroupExposes)
 </script>

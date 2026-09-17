@@ -128,7 +128,7 @@ provide(formSelectKey, {
   modelValue: readonly(localValue),
 })
 
-defineExpose<BFormSelectExposes>({
+defineExpose({
   blur: () => {
     focused.value = false
   },
@@ -136,5 +136,5 @@ defineExpose<BFormSelectExposes>({
   focus: () => {
     focused.value = true
   },
-})
+} satisfies BFormSelectExposes)
 </script>

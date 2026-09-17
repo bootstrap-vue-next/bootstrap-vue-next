@@ -118,12 +118,12 @@ const classesObject = computed(() => ({
 const computedAttrs = getGroupAttr(classesObject)
 const computedClasses = getGroupClasses(classesObject)
 
-defineExpose<BFormRadioGroupExposes>({
+defineExpose({
   blur: () => {
     focused.value = false
   },
   focus: () => {
     focused.value = true
   },
-})
+} satisfies BFormRadioGroupExposes)
 </script>

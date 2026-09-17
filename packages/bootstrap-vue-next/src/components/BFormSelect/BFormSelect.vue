@@ -166,12 +166,13 @@ const forwardedProps = computed(() => ({
 }))
 
 const base = useTemplateRef('_base')
-const baseBlur = () => base?.value?.blur()
-const baseFocus = () => base?.value?.focus()
-const baseElement = computed(() => base?.value?.element ?? null)
-defineExpose<BFormSelectExposes>({
-  blur: baseBlur,
-  element: baseElement,
-  focus: baseFocus,
-})
+defineExpose({
+  blur: () => {
+    base?.value?.blur()
+  },
+  element: computed(() => base?.value?.element ?? null),
+  focus: () => {
+    base?.value?.focus()
+  },
+} satisfies BFormSelectExposes)
 </script>
