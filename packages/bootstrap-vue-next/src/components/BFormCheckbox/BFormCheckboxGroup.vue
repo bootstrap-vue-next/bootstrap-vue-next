@@ -1,5 +1,6 @@
 <template>
   <BFormCheckboxGroupBase
+    ref="_base"
     v-bind="forwardedProps"
     v-model="modelValue as unknown as CheckboxValue[]"
     :options="normalizedOptions"
@@ -22,10 +23,7 @@
   lang="ts"
   generic="
     Options extends readonly (object | string | number | boolean)[] = readonly (
-      | object
-      | string
-      | number
-      | boolean
+      object | string | number | boolean
     )[]
   "
 >
@@ -35,7 +33,7 @@ import type {
   CheckboxValue,
   OptionsValues,
 } from '../../types'
-import {computed} from 'vue'
+import {computed, useTemplateRef} from 'vue'
 import BFormCheckboxGroupBase from './BFormCheckboxGroupBase.vue'
 
 /**
@@ -97,8 +95,7 @@ const normalizedOptions = computed(() =>
             disabled:
               props.disabled ||
               (((el as Record<string, unknown>)[props.disabledField as string] as
-                | boolean
-                | undefined) ??
+                boolean | undefined) ??
                 false),
             text:
               ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ??
@@ -126,4 +123,10 @@ const forwardedProps = computed(() => ({
   reverse: props.reverse,
   switches: props.switches,
 }))
+
+const base = useTemplateRef('_base')
+defineExpose({
+  blur: computed(() => base?.value?.blur),
+  focus: computed(() => base?.value?.focus),
+})
 </script>
