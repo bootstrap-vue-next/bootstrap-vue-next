@@ -28,6 +28,7 @@
   "
 >
 import type {
+  BFormCheckboxGroupExposes,
   BFormCheckboxGroupProps,
   BFormCheckboxGroupSlots,
   CheckboxValue,
@@ -125,8 +126,10 @@ const forwardedProps = computed(() => ({
 }))
 
 const base = useTemplateRef('_base')
-defineExpose({
-  blur: computed(() => base?.value?.blur),
-  focus: computed(() => base?.value?.focus),
+const baseBlur = () => base?.value?.blur()
+const baseFocus = () => base?.value?.focus()
+defineExpose<BFormCheckboxGroupExposes>({
+  blur: baseBlur,
+  focus: baseFocus,
 })
 </script>

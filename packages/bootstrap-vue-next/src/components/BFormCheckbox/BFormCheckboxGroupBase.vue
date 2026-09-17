@@ -20,7 +20,11 @@
 
 <script setup lang="ts">
 import {computed, provide, toRef, useTemplateRef} from 'vue'
-import type {BFormCheckboxGroupBaseProps, CheckboxValue} from '../../types'
+import type {
+  BFormCheckboxGroupExposes,
+  BFormCheckboxGroupBaseProps,
+  CheckboxValue,
+} from '../../types'
 import BFormCheckbox from './BFormCheckbox.vue'
 import {checkboxGroupKey} from '../../utils/keys'
 import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
@@ -114,7 +118,7 @@ const classesObject = computed(() => ({
 const attrs = getGroupAttr(classesObject)
 const classes = getGroupClasses(classesObject)
 
-defineExpose({
+defineExpose<BFormCheckboxGroupExposes>({
   blur: () => {
     focused.value = false
   },

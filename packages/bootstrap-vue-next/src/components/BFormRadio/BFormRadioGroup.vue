@@ -27,7 +27,12 @@
     )[]
   "
 >
-import type {BFormRadioGroupProps, OptionsValues, RadioOption} from '../../types'
+import type {
+  BFormRadioGroupExposes,
+  BFormRadioGroupProps,
+  OptionsValues,
+  RadioOption,
+} from '../../types'
 import {computed, useTemplateRef} from 'vue'
 import BFormRadioGroupBase from './BFormRadioGroupBase.vue'
 
@@ -117,8 +122,10 @@ const forwardedProps = computed(() => ({
 }))
 
 const base = useTemplateRef('_base')
-defineExpose({
-  blur: computed(() => base?.value?.blur),
-  focus: computed(() => base?.value?.focus),
+const baseBlur = () => base?.value?.blur()
+const baseFocus = () => base?.value?.focus()
+defineExpose<BFormRadioGroupExposes>({
+  blur: baseBlur,
+  focus: baseFocus,
 })
 </script>

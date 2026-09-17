@@ -30,6 +30,7 @@
 import {computed, useTemplateRef} from 'vue'
 import BFormSelectBase from './BFormSelectBase.vue'
 import type {
+  BFormSelectExposes,
   BFormSelectProps,
   BFormSelectSlots,
   ComplexSelectOptionRaw,
@@ -165,9 +166,12 @@ const forwardedProps = computed(() => ({
 }))
 
 const base = useTemplateRef('_base')
-defineExpose({
-  blur: computed(() => base?.value?.blur),
-  element: computed(() => base?.value?.element),
-  focus: computed(() => base?.value?.focus),
+const baseBlur = () => base?.value?.blur()
+const baseFocus = () => base?.value?.focus()
+const baseElement = computed(() => base?.value?.element ?? null)
+defineExpose<BFormSelectExposes>({
+  blur: baseBlur,
+  element: baseElement,
+  focus: baseFocus,
 })
 </script>
