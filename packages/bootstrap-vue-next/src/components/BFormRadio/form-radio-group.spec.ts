@@ -463,6 +463,28 @@ describe('form-radio-group', () => {
     })
   })
 
+  describe('exposed method forwarding', () => {
+    it('exposes focus method from base', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options: ['a', 'b', 'c'],
+        },
+        attachTo: document.body,
+      })
+      expect(typeof wrapper.vm.focus).toBe('function')
+    })
+
+    it('exposes blur method from base', () => {
+      const wrapper = mount(BFormRadioGroup, {
+        props: {
+          options: ['a', 'b', 'c'],
+        },
+        attachTo: document.body,
+      })
+      expect(typeof wrapper.vm.blur).toBe('function')
+    })
+  })
+
   describe('prop forwarding to BFormRadioGroupBase', () => {
     it('forwards buttons prop', () => {
       const wrapper = mount(BFormRadioGroup, {
