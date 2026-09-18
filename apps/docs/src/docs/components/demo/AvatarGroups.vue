@@ -7,7 +7,7 @@
       variant="primary"
     />
     <BAvatar
-      src="https://placekitten.com/300/300"
+      src="https://picsum.photos/300/300"
       variant="info"
     />
     <BAvatar
@@ -16,7 +16,7 @@
     />
     <BAvatar variant="warning" />
     <BAvatar
-      src="https://placekitten.com/320/320"
+      src="https://picsum.photos/320/320"
       variant="dark"
     />
     <BAvatar variant="success" />
