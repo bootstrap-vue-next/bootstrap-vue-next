@@ -12,7 +12,7 @@
     />
     <BAvatar
       variant="info"
-      src="https://placekitten.com/300/300"
+      src="https://picsum.photos/300/300"
     />
     <BAvatar variant="success" />
   </div>
@@ -35,7 +35,7 @@
     <BListGroupItem class="d-flex align-items-center">
       <BAvatar
         variant="info"
-        src="https://placekitten.com/300/300"
+        src="https://picsum.photos/300/300"
         class="mx-3"
       />
       <span class="me-auto">Super Kitty</span>
