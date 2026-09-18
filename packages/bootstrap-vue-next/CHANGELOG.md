@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.2.0...bootstrapvuenext-v1.2.1) (2026-09-18)
+
+
+### Bug Fixes
+
+* **BFormSelect:** forward exposed items from BFormSelectBase ([#3340](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3340)) ([85516e8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85516e8544af951d4e84fc46a073031682785612))
+* forward exposed items from BFormCheckboxGroupBase, BFormRadioGroupBase ([85516e8](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/85516e8544af951d4e84fc46a073031682785612))
+
 ## [1.2.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.1.0...bootstrapvuenext-v1.2.0) (2026-09-11)
 
 
