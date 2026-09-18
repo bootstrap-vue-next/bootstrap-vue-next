@@ -698,4 +698,21 @@ describe('BFormSelect', () => {
     const allOptions = wrapper.findAll('option')
     expect(allOptions).toHaveLength(3)
   })
+
+  // --- Exposed methods ---
+
+  it('forwards exposed element ref', () => {
+    const wrapper = mount(BFormSelect)
+    expect(wrapper.vm.element).toBeDefined()
+  })
+
+  it('forwards exposed focus method', () => {
+    const wrapper = mount(BFormSelect)
+    expect(typeof wrapper.vm.focus).toBe('function')
+  })
+
+  it('forwards exposed blur method', () => {
+    const wrapper = mount(BFormSelect)
+    expect(typeof wrapper.vm.blur).toBe('function')
+  })
 })

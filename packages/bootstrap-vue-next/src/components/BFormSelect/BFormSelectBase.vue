@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import type {BFormSelectBaseProps} from '../../types'
+import type {BFormSelectExposes, BFormSelectBaseProps} from '../../types'
 import {computed, inject, provide, readonly, useTemplateRef} from 'vue'
 import BFormSelectOption from './BFormSelectOption.vue'
 import BFormSelectOptionGroup from './BFormSelectOptionGroup.vue'
@@ -136,5 +136,5 @@ defineExpose({
   focus: () => {
     focused.value = true
   },
-})
+} satisfies BFormSelectExposes)
 </script>

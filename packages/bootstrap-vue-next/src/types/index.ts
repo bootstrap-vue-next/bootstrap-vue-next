@@ -76,6 +76,7 @@ export type {RadiusElement, RadiusElementExtendables} from './RadiusElement'
 export type {SpinnerType} from './SpinnerType'
 export type {TabType} from './Tab'
 export type {TransitionMode} from './TransitionMode'
+export type * from './ComponentExposes'
 export type * from './ComponentProps'
 export type * from './ComponentSlots'
 export type {

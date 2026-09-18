@@ -26,7 +26,11 @@ import {getGroupAttr, getGroupClasses} from '../../composables/useFormCheck'
 import {useFocus} from '@vueuse/core'
 import {useDefaults} from '../../composables/useDefaults'
 import {useId} from '../../composables/useId'
-import type {BFormRadioGroupBaseProps, BFormRadioGroupSlots} from '../../types'
+import type {
+  BFormRadioGroupExposes,
+  BFormRadioGroupBaseProps,
+  BFormRadioGroupSlots,
+} from '../../types'
 
 /**
  * Internal base component for BFormRadioGroup.
@@ -121,5 +125,5 @@ defineExpose({
   focus: () => {
     focused.value = true
   },
-})
+} satisfies BFormRadioGroupExposes)
 </script>

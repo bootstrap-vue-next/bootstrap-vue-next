@@ -1,5 +1,6 @@
 <template>
   <BFormRadioGroupBase
+    ref="_base"
     v-bind="forwardedProps"
     v-model="modelValue as any"
     :options="normalizedOptions"
@@ -22,15 +23,17 @@
   lang="ts"
   generic="
     Options extends readonly (object | string | number | boolean)[] = readonly (
-      | object
-      | string
-      | number
-      | boolean
+      object | string | number | boolean
     )[]
   "
 >
-import type {BFormRadioGroupProps, OptionsValues, RadioOption} from '../../types'
-import {computed} from 'vue'
+import type {
+  BFormRadioGroupExposes,
+  BFormRadioGroupProps,
+  OptionsValues,
+  RadioOption,
+} from '../../types'
+import {computed, useTemplateRef} from 'vue'
 import BFormRadioGroupBase from './BFormRadioGroupBase.vue'
 
 /**
@@ -90,8 +93,7 @@ const normalizedOptions = computed(
             disabled:
               props.disabled ||
               (((el as Record<string, unknown>)[props.disabledField as string] as
-                | boolean
-                | undefined) ??
+                boolean | undefined) ??
                 false),
             text:
               ((el as Record<string, unknown>)[props.textField as string] as string | undefined) ??
@@ -118,4 +120,14 @@ const forwardedProps = computed(() => ({
   plain: props.plain,
   reverse: props.reverse,
 }))
+
+const base = useTemplateRef('_base')
+defineExpose({
+  blur: () => {
+    base?.value?.blur()
+  },
+  focus: () => {
+    base?.value?.focus()
+  },
+} satisfies BFormRadioGroupExposes)
 </script>
