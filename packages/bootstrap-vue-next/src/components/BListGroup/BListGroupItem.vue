@@ -63,12 +63,13 @@ const tagComputed = computed(() =>
   parentData?.numbered.value ? 'li' : props.button ? 'button' : !isLink.value ? props.tag : BLink
 )
 
+const actionableTags = new Set(['a', 'button', 'router-link', 'RouterLink', 'b-link', 'BLink'])
 const isAction = computed(
   () =>
     props.action ||
     isLink.value ||
     props.button ||
-    ['a', 'router-link', 'button', 'b-link'].includes(props.tag)
+    actionableTags.has(props.tag)
 )
 
 const computedClasses = computed(() => ({
