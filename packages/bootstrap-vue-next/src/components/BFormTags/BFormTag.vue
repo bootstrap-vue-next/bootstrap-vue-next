@@ -44,7 +44,7 @@ const props = useDefaults(_props, 'BFormTag')
 const emit = defineEmits<BFormTagEmits>()
 const slots = defineSlots<BFormTagSlots>()
 
-const computedId = useId(() => props.id)
+const computedId = useId(() => props.id, 'form-tag')
 
 const tagText = computed(
   () => ((slots.default?.({})[0].children ?? '').toString() || props.title) ?? ''
