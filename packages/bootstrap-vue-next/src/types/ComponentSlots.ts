@@ -557,12 +557,7 @@ type EmptySlotScope<Item> = {
   fields: TableField<Item>[]
   items: readonly Item[]
 }
-type SortSlotScope<Item> = {
-  label: string | undefined
-  column: LiteralUnion<keyof Item>
-  field: TableField<Item>
-  isFoot: false
-}
+
 export interface BTableSlots<Item> extends Omit<
   BTableLiteSlots<Item>,
   'thead-top' | 'row-expansion' | `head(${string})` | `foot(${string})` | `cell(${string})`
@@ -618,12 +613,6 @@ export interface BTableSlots<Item> extends Omit<
   }) => any
 
   // end btable slots
-
-  [key: `sortAsc(${string})`]: (props: SortSlotScope<Item>) => any
-
-  [key: `sortDesc(${string})`]: (props: SortSlotScope<Item>) => any
-
-  [key: `sortDefault(${string})`]: (props: SortSlotScope<Item>) => any
 
   'table-busy'?: (props: Record<string, never>) => any
 
