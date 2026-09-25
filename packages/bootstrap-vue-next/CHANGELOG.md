@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.2.1...bootstrapvuenext-v1.2.2) (2026-09-25)
+
+
+### Bug Fixes
+
+* **BTable:** remove stale sortAsc/sortDesc/sortDefault slot types ([#3349](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3349)) ([8aa3af4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/8aa3af4b7c5f75efb46073080bcfc05491232784))
+
 ## [1.2.1](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.2.0...bootstrapvuenext-v1.2.1) (2026-09-18)
 
 
