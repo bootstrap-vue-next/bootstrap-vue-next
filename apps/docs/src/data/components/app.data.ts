@@ -12,7 +12,7 @@ export default {
         },
         mergeDefaults: {
           type: 'boolean | ((oldDefaults: Partial<BvnComponentProps>, newDefaults: Partial<BvnComponentProps>) => Partial<BvnComponentProps>)',
-          default: true,
+          default: false,
           description:
             'If `true`, performs a shallow merge with existing defaults (if `false`, replaces them). If a function, it receives (oldDefaults, newDefaults) and must return the merged defaults.',
         },
