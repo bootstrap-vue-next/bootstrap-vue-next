@@ -67,6 +67,40 @@ describe('form-input', () => {
       })
     }
 
+    for (const type of ['file', 'checkbox', 'radio', 'hidden', 'foo']) {
+      it(`falls back to type="text" and warns for unsupported type="${type}"`, () => {
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const wrapper = mount(BFormInput, {props: {type: type as any}})
+        expect(wrapper.attributes('type')).toBe('text')
+        expect(wrapper.classes()).toContain('form-control')
+        expect(warnSpy).toHaveBeenCalledWith(
+          '[BootstrapVueNext:BFormInput]',
+          `Unsupported type "${type}", rendering a "text" input instead`
+        )
+        warnSpy.mockRestore()
+      })
+    }
+
+    it('does not warn for supported types', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      mount(BFormInput, {props: {type: 'datetime'}})
+      mount(BFormInput)
+      expect(warnSpy).not.toHaveBeenCalled()
+      warnSpy.mockRestore()
+    })
+
+    it('warns when type changes to an unsupported value', async () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const wrapper = mount(BFormInput, {props: {type: 'email'}})
+      expect(warnSpy).not.toHaveBeenCalled()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await wrapper.setProps({type: 'file' as any})
+      expect(wrapper.attributes('type')).toBe('text')
+      expect(warnSpy).toHaveBeenCalledOnce()
+      warnSpy.mockRestore()
+    })
+
     it('updates type reactively', async () => {
       const wrapper = mount(BFormInput, {props: {type: 'text'}})
       expect(wrapper.attributes('type')).toBe('text')

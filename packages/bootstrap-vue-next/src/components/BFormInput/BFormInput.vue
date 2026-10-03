@@ -6,7 +6,7 @@
     :class="computedClasses"
     :name="props.name || undefined"
     :form="props.form || undefined"
-    :type="props.type"
+    :type="computedType"
     :disabled="isDisabled"
     :placeholder="props.placeholder"
     :required="props.required || undefined"
@@ -15,7 +15,7 @@
     :min="props.min"
     :max="props.max"
     :step="props.step"
-    :list="props.type !== 'password' ? props.list : undefined"
+    :list="computedType !== 'password' ? props.list : undefined"
     :aria-required="props.required || undefined"
     :aria-invalid="computedAriaInvalid"
     @input="onInput"
@@ -25,12 +25,34 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, useTemplateRef} from 'vue'
+import {computed, inject, useTemplateRef, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
-import type {BFormInputProps} from '../../types'
+import type {BFormInputProps, InputType} from '../../types'
 import {useFormInput} from '../../composables/useFormInput'
 import {inputGroupKey} from '../../utils/keys'
+import {warn} from '../../utils/console'
+
+// The value handling in useFormInput is built around text-like values, so only
+// these types are rendered. Typing it as a Record keeps it in sync with InputType.
+const supportedTypes: Readonly<Record<InputType, true>> = {
+  'text': true,
+  'number': true,
+  'email': true,
+  'password': true,
+  'search': true,
+  'url': true,
+  'tel': true,
+  'date': true,
+  'time': true,
+  'range': true,
+  'color': true,
+  'datetime': true,
+  'datetime-local': true,
+  'month': true,
+  'week': true,
+}
+const isSupportedType = (type: string): type is InputType => Object.hasOwn(supportedTypes, type)
 
 const _props = withDefaults(defineProps<Omit<BFormInputProps, 'modelValue'>>(), {
   max: undefined,
@@ -86,9 +108,26 @@ const {
   isDisabled,
 } = useFormInput(props, input, modelValue, modelModifiers)
 
+// JS consumers (or `as any`) can still pass types such as `file` or `checkbox`,
+// which the text-based handlers don't support, so fall back to `text`
+const computedType = computed<InputType>(() => {
+  const {type} = props
+  return type !== undefined && isSupportedType(type) ? type : 'text'
+})
+
+watch(
+  () => props.type,
+  (type) => {
+    if (type !== undefined && !isSupportedType(type)) {
+      warn('BFormInput', `Unsupported type "${type}", rendering a "text" input instead`)
+    }
+  },
+  {immediate: true}
+)
+
 const computedClasses = computed(() => {
-  const isRange = props.type === 'range'
-  const isColor = props.type === 'color'
+  const isRange = computedType.value === 'range'
+  const isColor = computedType.value === 'color'
   return [
     stateClass.value,
     {
