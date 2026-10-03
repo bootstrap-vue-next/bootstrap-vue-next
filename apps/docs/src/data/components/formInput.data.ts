@@ -51,7 +51,8 @@ export default {
         type: {
           type: 'InputType',
           default: 'text',
-          description: 'The type of input to render; refer to documentation for supported types',
+          description:
+            "The type of input to render; refer to documentation for supported types. Unsupported types render as 'text' and log a console warning in development",
         },
       } satisfies PropRecord<keyof BFormInputProps>,
       emits: {

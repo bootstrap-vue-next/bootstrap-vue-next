@@ -60,8 +60,39 @@ In the example below, we double the number of steps by using step="0.5".
 ::: info NOTE
 Range inputs (as do all input types) return their value as a string. You may need to
 convert the value to a native number by using `Number(value)`, `parseInt(value, 10)`,
-`parseFloat(value)`, or use the `number` prop.
+`parseFloat(value)`, or use the `v-model.number` modifier.
 :::
+
+## Behavior with non-text input types
+
+All input types share the same value handling, but the browser only accepts values in the format of
+the chosen type and silently changes anything else. For example, `abc` in a `number` input becomes an
+empty string and an invalid color becomes `#000000`.
+
+| Feature                    | Text-like types | `number`  | `range`   | `color`   | Date and time types |
+| -------------------------- | --------------- | --------- | --------- | --------- | ------------------- |
+| `formatter`                | Yes             | See below | See below | See below | See below           |
+| `v-model.number`           | Yes             | Yes       | Yes       | No effect | Discouraged         |
+| `v-model.trim`             | Yes             | No effect | No effect | No effect | No effect           |
+| `v-model.lazy`, `debounce` | Yes             | Yes       | Yes       | Yes       | Yes                 |
+| `placeholder`              | Yes             | Yes       | Ignored   | Ignored   | Ignored             |
+| `min`, `max`, `step`       | Ignored         | Yes       | Yes       | Ignored   | Yes                 |
+
+Text-like types are `text`, `password`, `email`, `url`, `tel` and `search` (`datetime` is also
+rendered as a text input by modern browsers). Date and time types are `date`, `time`, `month`,
+`week` and `datetime-local`.
+
+- **`formatter`**: the formatter must return a value that is valid for the input type. If the
+  browser changes the returned value, the `v-model` is updated with the value the browser accepted
+  (the value the user sees), and a warning is logged in development.
+- **`v-model.number`**: with date and time types, Vue converts the value with `parseFloat`, so
+  `2025-01-02` becomes `2025` and `08:30` becomes `8`. The input keeps showing the selected value,
+  but the `v-model` no longer describes it, so a warning is logged in development. Leave out
+  `.number` for these types.
+- **Invalid `v-model` values**: if the `v-model` holds a value that is not valid for the type
+  (including `null` for `range` and `color`), the browser displays its own value instead (for
+  example `50` for a `range` or `#000000` for a `color`) and the `v-model` is left unchanged. This
+  matches Vue's native `v-model` on an `<input>`.
 
 ## Control sizing
 
