@@ -72,7 +72,7 @@ empty string and an invalid color becomes `#000000`.
 | Feature                    | Text-like types | `number`  | `range`   | `color`   | Date and time types |
 | -------------------------- | --------------- | --------- | --------- | --------- | ------------------- |
 | `formatter`                | Yes             | See below | See below | See below | See below           |
-| `v-model.number`           | Yes             | Yes       | Yes       | No effect | Not supported       |
+| `v-model.number`           | Yes             | Yes       | Yes       | No effect | Discouraged         |
 | `v-model.trim`             | Yes             | No effect | No effect | No effect | No effect           |
 | `v-model.lazy`, `debounce` | Yes             | Yes       | Yes       | Yes       | Yes                 |
 | `placeholder`              | Yes             | Yes       | Ignored   | Ignored   | Ignored             |

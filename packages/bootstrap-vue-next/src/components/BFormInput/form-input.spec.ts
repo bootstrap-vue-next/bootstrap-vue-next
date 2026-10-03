@@ -881,7 +881,7 @@ describe('form-input', () => {
           expect(wrapper.element.value).toBe(value)
           expect(warnSpy).toHaveBeenCalledWith(
             '[BootstrapVueNext:BFormInput]',
-            `The ".number" modifier is not supported for type "${type}": parseFloat turns values such as "2025-01-02" into 2025`
+            `The ".number" modifier should not be used with type "${type}": parseFloat turns values such as "2025-01-02" into 2025`
           )
         })
       }
