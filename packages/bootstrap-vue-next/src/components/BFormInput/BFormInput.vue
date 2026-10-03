@@ -2,7 +2,7 @@
   <input
     :id="computedId"
     ref="_input"
-    :value="computedValue"
+    :value="getDisplayedValue()"
     :class="computedClasses"
     :name="props.name || undefined"
     :form="props.form || undefined"
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, useTemplateRef, watch} from 'vue'
+import {computed, inject, onMounted, useTemplateRef, watch} from 'vue'
 import {useDefaults} from '../../composables/useDefaults'
 import {normalizeInput} from '../../utils/normalizeInput'
 import type {BFormInputProps, InputType} from '../../types'
@@ -53,6 +53,16 @@ const supportedTypes: Readonly<Record<InputType, true>> = {
   'week': true,
 }
 const isSupportedType = (type: string): type is InputType => Object.hasOwn(supportedTypes, type)
+
+// parseFloat turns these values into a number (e.g. "2025-01-02" into 2025),
+// so `.number` gives a model that no longer describes the value
+const numberUnsupportedTypes: ReadonlySet<InputType> = new Set([
+  'date',
+  'time',
+  'month',
+  'week',
+  'datetime-local',
+])
 
 const _props = withDefaults(defineProps<Omit<BFormInputProps, 'modelValue'>>(), {
   max: undefined,
@@ -124,6 +134,40 @@ watch(
   },
   {immediate: true}
 )
+
+watch(
+  () =>
+    modelModifiers.number === true && numberUnsupportedTypes.has(computedType.value)
+      ? computedType.value
+      : null,
+  (type) => {
+    if (type !== null) {
+      warn(
+        'BFormInput',
+        `The ".number" modifier is not supported for type "${type}": parseFloat turns values such as "2025-01-02" into 2025`
+      )
+    }
+  },
+  {immediate: true}
+)
+
+// Like Vue's native `v-model.number`, keep what the user entered when it
+// already parses to the model. Writing the number back would turn "2.0" into
+// "2", and makes the browser clear date and time inputs ("2025" is invalid).
+// A plain function, not a computed: it reads the DOM, so it must run on every render.
+// The element is kept outside of reactivity, so rendering doesn't track the template
+// ref (that would queue an extra render after mount, overwriting early input)
+let element: HTMLInputElement | null = null
+onMounted(() => {
+  element = input.value
+})
+const getDisplayedValue = () => {
+  const value = computedValue.value
+  if (modelModifiers.number !== true || typeof value !== 'number' || element === null) {
+    return value
+  }
+  return Number.parseFloat(element.value) === value ? element.value : value
+}
 
 const computedClasses = computed(() => {
   const isRange = computedType.value === 'range'
