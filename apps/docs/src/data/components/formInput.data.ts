@@ -1,7 +1,7 @@
-import type { ComponentReference, ExposedRecord, PropRecord } from '../../types'
-import { pick } from '../../utils/objectUtils'
-import { buildCommonProps } from '../../utils/commonProps'
-import type { BFormInputProps } from 'bootstrap-vue-next'
+import type {ComponentReference, ExposedRecord, PropRecord} from '../../types'
+import {pick} from '../../utils/objectUtils'
+import {buildCommonProps} from '../../utils/commonProps'
+import type {BFormInputProps} from 'bootstrap-vue-next'
 
 export default {
   load: (): ComponentReference => ({
