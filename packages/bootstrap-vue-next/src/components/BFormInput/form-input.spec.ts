@@ -67,6 +67,40 @@ describe('form-input', () => {
       })
     }
 
+    for (const type of ['file', 'checkbox', 'radio', 'hidden', 'foo']) {
+      it(`falls back to type="text" and warns for unsupported type="${type}"`, () => {
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const wrapper = mount(BFormInput, {props: {type: type as any}})
+        expect(wrapper.attributes('type')).toBe('text')
+        expect(wrapper.classes()).toContain('form-control')
+        expect(warnSpy).toHaveBeenCalledWith(
+          '[BootstrapVueNext:BFormInput]',
+          `Unsupported type "${type}", rendering a "text" input instead`
+        )
+        warnSpy.mockRestore()
+      })
+    }
+
+    it('does not warn for supported types', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      mount(BFormInput, {props: {type: 'datetime'}})
+      mount(BFormInput)
+      expect(warnSpy).not.toHaveBeenCalled()
+      warnSpy.mockRestore()
+    })
+
+    it('warns when type changes to an unsupported value', async () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const wrapper = mount(BFormInput, {props: {type: 'email'}})
+      expect(warnSpy).not.toHaveBeenCalled()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await wrapper.setProps({type: 'file' as any})
+      expect(wrapper.attributes('type')).toBe('text')
+      expect(warnSpy).toHaveBeenCalledOnce()
+      warnSpy.mockRestore()
+    })
+
     it('updates type reactively', async () => {
       const wrapper = mount(BFormInput, {props: {type: 'text'}})
       expect(wrapper.attributes('type')).toBe('text')
@@ -497,6 +531,132 @@ describe('form-input', () => {
       await wrapper.trigger('blur')
       expect(wrapper.element.value).toBe('1')
     })
+
+    describe('values the browser rejects', () => {
+      const warnKey = '[BootstrapVueNext:useFormInput]'
+      const cases = [
+        // [type, initial model, typed value, formatter output, browser value]
+        ['number', '1', '5', 'abc', ''],
+        ['range', '30', '70', 'abc', '50'],
+        ['color', '#ff0000', '#00ff00', '#00ff00x', '#000000'],
+        ['date', '2024-05-06', '2025-01-02', '2025-01-02x', ''],
+      ] as const
+
+      afterEach(() => {
+        vi.restoreAllMocks()
+        vi.useRealTimers()
+      })
+
+      for (const [type, initial, typed, formatted, expected] of cases) {
+        it(`uses the browser value on input for type="${type}"`, async () => {
+          const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+          const wrapper = mount(BFormInput, {
+            props: {type, modelValue: initial, formatter: () => formatted},
+          })
+          wrapper.element.value = typed
+          await wrapper.trigger('input')
+          expect(wrapper.emitted('update:modelValue')!.at(-1)).toEqual([expected])
+          expect(wrapper.element.value).toBe(expected)
+          expect(warnSpy).toHaveBeenCalledWith(
+            warnKey,
+            `The formatter returned "${formatted}", which the browser changed to "${expected}" for this input type`
+          )
+        })
+      }
+
+      it('uses the browser value on change', async () => {
+        vi.spyOn(console, 'warn').mockImplementation(() => {})
+        const wrapper = mount(BFormInput, {
+          props: {type: 'number', modelValue: '1', formatter: () => 'abc'},
+        })
+        wrapper.element.value = '5'
+        await wrapper.trigger('change')
+        expect(wrapper.emitted('update:modelValue')!.at(-1)).toEqual([''])
+        expect(wrapper.element.value).toBe('')
+      })
+
+      it('uses the browser value on blur with lazyFormatter', async () => {
+        vi.spyOn(console, 'warn').mockImplementation(() => {})
+        const wrapper = mount(BFormInput, {
+          props: {type: 'number', modelValue: '1', formatter: () => 'abc', lazyFormatter: true},
+        })
+        wrapper.element.value = '5'
+        await wrapper.trigger('blur')
+        expect(wrapper.emitted('update:modelValue')!.at(-1)).toEqual([''])
+        expect(wrapper.element.value).toBe('')
+      })
+
+      it('uses the lowercase browser value for an uppercase color', async () => {
+        vi.spyOn(console, 'warn').mockImplementation(() => {})
+        const wrapper = mount(BFormInput, {
+          props: {type: 'color', modelValue: '#ff0000', formatter: (v: string) => v.toUpperCase()},
+        })
+        wrapper.element.value = '#00ff00'
+        await wrapper.trigger('input')
+        expect(wrapper.emitted('update:modelValue')!.at(-1)).toEqual(['#00ff00'])
+      })
+
+      it('keeps the browser value with the .number modifier', async () => {
+        vi.spyOn(console, 'warn').mockImplementation(() => {})
+        const wrapper = mount(BFormInput, {
+          props: {
+            type: 'number',
+            modelValue: 1,
+            modelModifiers: {number: true},
+            formatter: () => 'abc',
+          },
+        })
+        wrapper.element.value = '5'
+        await wrapper.trigger('input')
+        expect(wrapper.emitted('update:modelValue')!.at(-1)).toEqual([''])
+      })
+
+      it('uses the browser value for a debounced update', async () => {
+        vi.useFakeTimers()
+        vi.spyOn(console, 'warn').mockImplementation(() => {})
+        const wrapper = mount(BFormInput, {
+          props: {type: 'number', modelValue: '1', debounce: 200, formatter: () => 'abc'},
+        })
+        wrapper.element.value = '5'
+        await wrapper.trigger('input')
+        expect(wrapper.element.value).toBe('')
+        vi.advanceTimersByTime(200)
+        await nextTick()
+        expect(wrapper.emitted('update:modelValue')!.at(-1)).toEqual([''])
+        expect(wrapper.element.value).toBe('')
+        vi.useRealTimers()
+      })
+
+      it('warns only once per instance', async () => {
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+        const first = mount(BFormInput, {
+          props: {type: 'number', modelValue: '1', formatter: () => 'abc'},
+        })
+        first.element.value = '5'
+        await first.trigger('input')
+        first.element.value = '6'
+        await first.trigger('input')
+        expect(warnSpy).toHaveBeenCalledOnce()
+
+        const second = mount(BFormInput, {
+          props: {type: 'number', modelValue: '1', formatter: () => 'abc'},
+        })
+        second.element.value = '5'
+        await second.trigger('input')
+        expect(warnSpy).toHaveBeenCalledTimes(2)
+      })
+
+      it('does not warn when a text formatter changes the value', async () => {
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+        const wrapper = mount(BFormInput, {
+          props: {modelValue: '', formatter: (v: string) => v.toUpperCase()},
+        })
+        wrapper.element.value = 'hello'
+        await wrapper.trigger('input')
+        expect(wrapper.emitted('update:modelValue')!.at(-1)).toEqual(['HELLO'])
+        expect(warnSpy).not.toHaveBeenCalled()
+      })
+    })
   })
 
   describe('formGroupKey injection', () => {
@@ -687,6 +847,106 @@ describe('form-input', () => {
         wrapper.element.value = '3.14'
         await wrapper.trigger('input')
         expect(wrapper.emitted('update:modelValue')![0]).toEqual([3.14])
+      })
+    })
+
+    describe('.number modifier with date and time types', () => {
+      const cases = [
+        ['date', '2025-01-02'],
+        ['time', '08:30'],
+        ['month', '2025-01'],
+        ['week', '2025-W10'],
+        ['datetime-local', '2025-01-02T08:30'],
+      ] as const
+
+      afterEach(() => {
+        vi.restoreAllMocks()
+      })
+
+      for (const [type, value] of cases) {
+        it(`keeps the entered value displayed and warns for type="${type}"`, async () => {
+          const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+          const wrapper = mount(BFormInput, {
+            props: {
+              type,
+              'modelValue': '',
+              'modelModifiers': {number: true},
+              'onUpdate:modelValue': (v: unknown) => wrapper.setProps({modelValue: v as string}),
+            },
+          })
+          wrapper.element.value = value
+          await wrapper.trigger('input')
+          // Like Vue's native v-model.number, the model gets the parseFloat result
+          expect(wrapper.emitted('update:modelValue')![0]).toEqual([Number.parseFloat(value)])
+          expect(wrapper.element.value).toBe(value)
+          expect(warnSpy).toHaveBeenCalledWith(
+            '[BootstrapVueNext:BFormInput]',
+            `The ".number" modifier should not be used with type "${type}": parseFloat turns values such as "2025-01-02" into 2025`
+          )
+        })
+      }
+
+      it('still displays a model value set by the parent', async () => {
+        vi.spyOn(console, 'warn').mockImplementation(() => {})
+        const wrapper = mount(BFormInput, {
+          props: {type: 'date', modelValue: '2025-01-02', modelModifiers: {number: true}},
+        })
+        await wrapper.setProps({modelValue: '2026-03-04'})
+        expect(wrapper.element.value).toBe('2026-03-04')
+      })
+
+      for (const type of ['number', 'range'] as const) {
+        it(`still converts to a number without warning for type="${type}"`, async () => {
+          const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+          const wrapper = mount(BFormInput, {
+            props: {type, modelValue: '', modelModifiers: {number: true}},
+          })
+          wrapper.element.value = '42'
+          await wrapper.trigger('input')
+          expect(wrapper.emitted('update:modelValue')![0]).toEqual([42])
+          expect(warnSpy).not.toHaveBeenCalled()
+          warnSpy.mockRestore()
+        })
+      }
+
+      it('warns when type changes to date', async () => {
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+        const wrapper = mount(BFormInput, {
+          props: {type: 'text', modelValue: '', modelModifiers: {number: true}},
+        })
+        expect(warnSpy).not.toHaveBeenCalled()
+        await wrapper.setProps({type: 'date'})
+        expect(warnSpy).toHaveBeenCalledOnce()
+      })
+
+      it('keeps "1.0" displayed on a text input', async () => {
+        const wrapper = mount(BFormInput, {
+          props: {
+            'modelValue': 1,
+            'modelModifiers': {number: true},
+            'onUpdate:modelValue': (v: unknown) => wrapper.setProps({modelValue: v as number}),
+          },
+        })
+        wrapper.element.value = '2.0'
+        await wrapper.trigger('input')
+        expect(wrapper.emitted('update:modelValue')![0]).toEqual([2])
+        expect(wrapper.element.value).toBe('2.0')
+      })
+
+      it('keeps the entered text across an unrelated re-render', async () => {
+        const wrapper = mount(BFormInput, {
+          props: {
+            'modelValue': 1,
+            'modelModifiers': {number: true},
+            'onUpdate:modelValue': (v: unknown) => wrapper.setProps({modelValue: v as number}),
+          },
+        })
+        wrapper.element.value = '2.0'
+        await wrapper.trigger('input')
+        wrapper.element.value = '2.00'
+        await wrapper.trigger('input')
+        await wrapper.setProps({state: false})
+        expect(wrapper.element.value).toBe('2.00')
       })
     })
 
