@@ -183,7 +183,7 @@ export const unbind = (el: ElementWithPopper) => {
   render(null, div)
 
   // SSR guard: skip DOM cleanup on server
-  if (getSafeDocument() !== null) {
+  if (getSafeDocument() === null) {
     delete el.$__element
     return
   }

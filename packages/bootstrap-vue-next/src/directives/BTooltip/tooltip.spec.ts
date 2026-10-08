@@ -190,4 +190,59 @@ describe('v-b-tooltip directive', () => {
 
     wrapper.unmount()
   })
+
+  it('removes its container span when the element is removed', async () => {
+    const wrapper = mount(
+      {
+        directives: {bTooltip: vBTooltip},
+        data: () => ({shown: true}),
+        template:
+          '<div><button v-if="shown" v-b-tooltip="\'Tooltip content\'">Button</button></div>',
+      },
+      {
+        attachTo: document.body,
+      }
+    )
+
+    await flushPromises()
+    await nextTick()
+    expect(wrapper.element.querySelectorAll(':scope > span').length).toBe(1)
+
+    for (let i = 0; i < 5; i++) {
+      await wrapper.setData({shown: !wrapper.vm.shown})
+      await flushPromises()
+      await nextTick()
+    }
+
+    // hidden after an odd number of toggles: no span may be left behind
+    expect(wrapper.find('button').exists()).toBe(false)
+    expect(wrapper.element.querySelectorAll(':scope > span').length).toBe(0)
+
+    wrapper.unmount()
+  })
+
+  it('removes its container span when the directive value is cleared', async () => {
+    const wrapper = mount(
+      {
+        directives: {bTooltip: vBTooltip},
+        data: () => ({text: 'Tooltip content' as string | undefined}),
+        template: '<div><button v-b-tooltip="text">Button</button></div>',
+      },
+      {
+        attachTo: document.body,
+      }
+    )
+
+    await flushPromises()
+    await nextTick()
+    expect(wrapper.element.querySelectorAll(':scope > span').length).toBe(1)
+
+    await wrapper.setData({text: undefined})
+    await flushPromises()
+    await nextTick()
+
+    expect(wrapper.element.querySelectorAll(':scope > span').length).toBe(0)
+
+    wrapper.unmount()
+  })
 })
