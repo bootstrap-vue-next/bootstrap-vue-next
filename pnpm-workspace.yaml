@@ -1,9 +1,10 @@
 packages:
   - packages/*
   - apps/*
-
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - unrs-resolver
-  - vue-demi
+shamefullyHoist: true
+strictPeerDependencies: false
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  unrs-resolver: true
+  vue-demi: true
