@@ -5,6 +5,11 @@ import viteConfig from './vite.config'
 export default mergeConfig(
   viteConfig,
   defineConfig({
+    resolve: {
+      alias: {
+        'bootstrap/js/dist/datepicker.js': 'bootstrap-v6/js/dist/datepicker.js',
+      },
+    },
     test: {
       environment: 'happy-dom',
       exclude: [...configDefaults.exclude, 'e2e/**'],

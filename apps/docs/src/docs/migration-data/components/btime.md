@@ -1,7 +1,7 @@
 ---
 id: btime
 title: BTime Migration
-description: '`BTime` is currently experimental and does not yet have stable migration guidance.'
+description: '`BTime` was removed in v100 because Bootstrap 6 has no equivalent; see the v100 migration guide.'
 category: components
 components:
   - BTime
@@ -24,7 +24,7 @@ confidence: medium
 
 ## Summary
 
-`BTime` is currently experimental and does not yet have stable migration guidance.
+`BTime` was removed in v100 because Bootstrap 6 has no equivalent; see the v100 migration guide.
 
 ## Affected APIs
 

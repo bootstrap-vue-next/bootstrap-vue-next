@@ -43,10 +43,7 @@ export const componentsWithExternalPath = {
   BCol: '/components/BContainer',
   BCollapse: '/components/BCollapse',
   BContainer: '/components/BContainer',
-  BDateField: '/components/BDateField',
-  BDatePicker: '/components/BDatePicker',
-  BDateRangeField: '/components/BDateField',
-  BDateRangePicker: '/components/BDatePicker',
+  BDatepicker: '/components/BDatepicker',
   BDropdown: '/components/BDropdown',
   BDropdownDivider: '/components/BDropdown',
   BDropdownForm: '/components/BDropdown',
@@ -122,8 +119,6 @@ export const componentsWithExternalPath = {
   BThead: '/components/BTable',
   BTfoot: '/components/BTable',
   BTr: '/components/BTable',
-  BTimeField: '/components/BTimeField',
-  BTimeRangeField: '/components/BDateField',
 } as const satisfies Record<ComponentType, string>
 export const componentNames = Object.freeze(
   Object.keys(componentsWithExternalPath) as ComponentType[]
@@ -303,13 +298,8 @@ type UnmappedComponentProps<BFormSelectOption = any, BTableLite = any, BTable = 
   BNavItemDropdown: ComponentProps.BDropdownProps
   BRow: ComponentProps.BRowProps
   BInput: ComponentProps.BFormInputProps
-  BTimeField: ComponentProps.BTimeFieldProps
   BFormOtp: ComponentProps.BFormOtpProps
-  BDateField: ComponentProps.BDateFieldProps
-  BDatePicker: ComponentProps.BDatePickerProps
-  BDateRangeField: ComponentProps.BDateRangeFieldProps
-  BDateRangePicker: ComponentProps.BDateRangePickerProps
-  BTimeRangeField: ComponentProps.BTimeRangeFieldProps
+  BDatepicker: ComponentProps.BDatepickerProps
   showHide: ComponentProps.ShowHideProps
 }
 

@@ -1,7 +1,7 @@
 ---
 id: bformdatepicker
 title: BFormDatePicker Migration
-description: '`BFormDatePicker` is currently experimental and does not yet have stable migration guidance.'
+description: '`BFormDatePicker` is replaced by `BDatepicker` (Bootstrap 6 Datepicker); see the v100 migration guide.'
 category: components
 components:
   - BFormDatePicker
@@ -26,7 +26,7 @@ confidence: medium
 
 ## Summary
 
-`BFormDatePicker` is currently experimental and does not yet have stable migration guidance.
+`BFormDatePicker` is replaced by `BDatepicker` (Bootstrap 6 Datepicker); see the v100 migration guide.
 
 ## Affected APIs
 

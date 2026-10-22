@@ -112,7 +112,7 @@ export default defineConfig({
       fileName: (_format, entryName) => `${entryName}.mjs`,
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', /^bootstrap\/js\//],
       output: {
         assetFileNames: `bootstrap-vue-next.[ext]`, //without this, it generates build/styles.css
       },

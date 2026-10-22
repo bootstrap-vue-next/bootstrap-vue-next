@@ -86,11 +86,7 @@ import type {PopoverPlacement} from './PopoverPlacement'
 import type {InputType} from './InputType'
 import type {BvnComponentProps} from './BootstrapVueOptions'
 import type {OrchestratorArrayValue} from './ComponentOrchestratorTypes'
-import type {AcceptableValue, DateRange, DateValue, TimeValue} from 'reka-ui'
-
-type Matcher = (date: DateValue) => boolean
-type TimeRange = {start: TimeValue | undefined; end: TimeValue | undefined}
-type WeekDayFormat = 'narrow' | 'short' | 'long'
+import type {AcceptableValue} from 'reka-ui'
 
 export interface BAppProps {
   defaults?: Partial<
@@ -1727,215 +1723,36 @@ export interface BFormGroupProps
   validated?: boolean
 }
 
-export interface BTimeFieldProps {
-  defaultPlaceholder?: TimeValue
-  defaultValue?: TimeValue
-  dir?: 'ltr' | 'rtl'
-  disabled?: boolean
-  granularity?: 'hour' | 'minute' | 'second'
-  hideTimeZone?: boolean
-  hourCycle?: 12 | 24
-  id?: string
-  locale?: string
-  maxValue?: TimeValue
-  minValue?: TimeValue
-  modelValue?: TimeValue | null
-  name?: string
-  placeholder?: TimeValue
-  readonly?: boolean
-  required?: boolean
-  size?: Size
-  state?: ValidationState
-  step?: {
-    year?: number
-    month?: number
-    day?: number
-    hour?: number
-    minute?: number
-    second?: number
-    millisecond?: number
-  }
-  stepSnapping?: boolean
-}
+export type DatepickerSelectionMode = 'single' | 'multiple' | 'multiple-ranged'
 
-export interface BDateFieldProps {
-  defaultPlaceholder?: DateValue
-  defaultValue?: DateValue
-  dir?: 'ltr' | 'rtl'
-  disabled?: boolean
-  granularity?: 'day' | 'hour' | 'minute' | 'second'
-  hideTimeZone?: boolean
-  hourCycle?: 12 | 24
-  id?: string
-  isDateUnavailable?: Matcher
-  locale?: string
-  maxValue?: DateValue
-  minValue?: DateValue
-  modelValue?: DateValue | null
-  name?: string
-  placeholder?: DateValue
-  readonly?: boolean
-  required?: boolean
-  size?: Size
-  state?: ValidationState
-  step?: {
-    year?: number
-    month?: number
-    day?: number
-    hour?: number
-    minute?: number
-    second?: number
-    millisecond?: number
-  }
-}
+/** `string` (YYYY-MM-DD) for `single`, `string[]` for `multiple` and `multiple-ranged` */
+export type DatepickerValue<Mode extends DatepickerSelectionMode = 'single'> = Mode extends 'single'
+  ? string | null
+  : string[]
 
-export interface BDateRangeFieldProps {
-  defaultPlaceholder?: DateValue
-  defaultValue?: DateRange
-  dir?: 'ltr' | 'rtl'
+export interface BDatepickerProps<Mode extends DatepickerSelectionMode = 'single'> {
+  dateFormat?: Intl.DateTimeFormatOptions | ((date: Date, locale: string | undefined) => string)
+  dateMax?: string | number | Date
+  dateMin?: string | number | Date
+  datepickerTheme?: 'light' | 'dark' | 'auto'
   disabled?: boolean
-  granularity?: 'day' | 'hour' | 'minute' | 'second'
-  hideTimeZone?: boolean
-  hourCycle?: 12 | 24
+  displayElement?: string | HTMLElement | boolean
+  displayMonthsCount?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  firstWeekday?: 0 | 1 | 2 | 3 | 4 | 5 | 6
   id?: string
-  isDateUnavailable?: Matcher
+  inline?: boolean
   locale?: string
-  maxValue?: DateValue
-  minValue?: DateValue
-  modelValue?: DateRange | null
+  modelValue?: DatepickerValue<Mode>
   name?: string
-  placeholder?: DateValue
+  placeholder?: string
+  placement?: 'left' | 'center' | 'right' | 'auto'
+  plaintext?: boolean
+  positionElement?: string | HTMLElement
   readonly?: boolean
   required?: boolean
+  selectionMode?: Mode
   size?: Size
   state?: ValidationState
-  step?: {
-    year?: number
-    month?: number
-    day?: number
-    hour?: number
-    minute?: number
-    second?: number
-    millisecond?: number
-  }
-}
-
-export interface BTimeRangeFieldProps {
-  defaultPlaceholder?: TimeValue
-  defaultValue?: TimeRange
-  dir?: 'ltr' | 'rtl'
-  disabled?: boolean
-  granularity?: 'hour' | 'minute' | 'second'
-  hideTimeZone?: boolean
-  hourCycle?: 12 | 24
-  id?: string
-  isTimeUnavailable?: Matcher
-  locale?: string
-  maxValue?: TimeValue
-  minValue?: TimeValue
-  modelValue?: TimeRange | null
-  name?: string
-  placeholder?: TimeValue
-  readonly?: boolean
-  required?: boolean
-  size?: Size
-  state?: ValidationState
-  step?: {
-    year?: number
-    month?: number
-    day?: number
-    hour?: number
-    minute?: number
-    second?: number
-    millisecond?: number
-  }
-  stepSnapping?: boolean
-}
-
-export interface BDatePickerProps {
-  closeOnSelect?: boolean
-  defaultOpen?: boolean
-  defaultPlaceholder?: DateValue
-  defaultValue?: DateValue
-  dir?: 'ltr' | 'rtl'
-  disabled?: boolean
-  fixedWeeks?: boolean
-  granularity?: 'day' | 'hour' | 'minute' | 'second'
-  hideTimeZone?: boolean
-  hourCycle?: 12 | 24
-  id?: string
-  isDateDisabled?: Matcher
-  isDateUnavailable?: Matcher
-  locale?: string
-  maxValue?: DateValue
-  minValue?: DateValue
-  modal?: boolean
-  modelValue?: DateValue | null
-  name?: string
-  numberOfMonths?: number
-  open?: boolean
-  pagedNavigation?: boolean
-  placeholder?: DateValue
-  preventDeselect?: boolean
-  readonly?: boolean
-  required?: boolean
-  size?: Size
-  state?: ValidationState
-  step?: {
-    year?: number
-    month?: number
-    day?: number
-    hour?: number
-    minute?: number
-    second?: number
-    millisecond?: number
-  }
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
-  weekdayFormat?: WeekDayFormat
-}
-
-export interface BDateRangePickerProps {
-  allowNonContiguousRanges?: boolean
-  closeOnSelect?: boolean
-  defaultOpen?: boolean
-  defaultPlaceholder?: DateValue
-  defaultValue?: DateRange
-  dir?: 'ltr' | 'rtl'
-  disabled?: boolean
-  fixedDate?: 'start' | 'end'
-  fixedWeeks?: boolean
-  granularity?: 'day' | 'hour' | 'minute' | 'second'
-  hideTimeZone?: boolean
-  hourCycle?: 12 | 24
-  id?: string
-  isDateDisabled?: Matcher
-  isDateHighlightable?: Matcher
-  isDateUnavailable?: Matcher
-  locale?: string
-  maxValue?: DateValue
-  maximumDays?: number
-  minValue?: DateValue
-  modal?: boolean
-  modelValue?: DateRange | null
-  name?: string
-  numberOfMonths?: number
-  open?: boolean
-  pagedNavigation?: boolean
-  placeholder?: DateValue
-  preventDeselect?: boolean
-  readonly?: boolean
-  required?: boolean
-  size?: Size
-  state?: ValidationState
-  step?: {
-    year?: number
-    month?: number
-    day?: number
-    hour?: number
-    minute?: number
-    second?: number
-    millisecond?: number
-  }
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
-  weekdayFormat?: WeekDayFormat
+  trigger?: 'input' | 'button'
+  vcpOptions?: Record<string, unknown>
 }

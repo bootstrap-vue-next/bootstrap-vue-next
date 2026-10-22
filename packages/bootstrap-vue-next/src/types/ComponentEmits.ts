@@ -1,6 +1,11 @@
 import {BvCarouselEvent, BvEvent, BvTriggerableEvent} from '../utils'
-import type {BTableProviderContext, BTableSortBy, TableHeadClickedEventObject, TableRowEvent} from './TableTypes'
-import type {AcceptableValue, DateValue, TimeValue} from 'reka-ui'
+import type {
+  BTableProviderContext,
+  BTableSortBy,
+  TableHeadClickedEventObject,
+  TableRowEvent,
+} from './TableTypes'
+import type {AcceptableValue} from 'reka-ui'
 
 export interface showHideEmits {
   'hide': [value: BvTriggerableEvent]
@@ -167,27 +172,10 @@ export type BTabsEmits = {
 
 export type BTooltipEmits = BPopoverEmits
 
-export type BTimeFieldEmits = {
-  'update:placeholder': [value: TimeValue]
-}
-
-export type BDateFieldEmits = {
-  'update:placeholder': [value: DateValue]
-}
-
-export type BDateRangeFieldEmits = {
-  'update:placeholder': [value: DateValue]
-}
-
-export type BTimeRangeFieldEmits = {
-  'update:placeholder': [value: TimeValue]
-}
-
-export type BDatePickerEmits = {
-  'update:placeholder': [value: DateValue]
-}
-
-export type BDateRangePickerEmits = {
-  'update:placeholder': [value: DateValue]
-  'update:startValue': [value: DateValue | undefined]
+export type BDatepickerEmits = {
+  show: [event: Event]
+  shown: [event: Event]
+  hide: [event: Event]
+  hidden: [event: Event]
+  change: [value: {dates: string[]; event: Event}]
 }

@@ -55,7 +55,7 @@ The table below lists each BootstrapVue alias and its BootstrapVueNext replaceme
 | `b-dd-header`                                              | `BDropdownHeader`     |
 | `b-datalist`                                               | `BFormDatalist`       |
 | `b-checkbox`, `b-check`                                    | `BFormCheckbox`       |
-| `b-datepicker`                                             | `BFormDatepicker`     |
+| `b-datepicker`                                             | `BDatepicker`         |
 | `b-file`                                                   | `BFormFile`           |
 | `b-input`                                                  | `BFormInput`          |
 | `b-radio-group`                                            | `BFormRadioGroup`     |

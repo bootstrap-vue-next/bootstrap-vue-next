@@ -11,6 +11,8 @@ BootstrapVueNext is an attempt to have the [BootstrapVue](https://bootstrap-vue.
 
 If you are migrating from BootstrapVue, please refer to our [migration knowledge base](/docs/migration-data/)
 
+If you are upgrading BootstrapVueNext v1 to v100 (Bootstrap 6), see the [v100 migration guide](/docs/migration-v100)
+
 ## Contribute and Support 🙌
 
 Your contributions are always welcome. If you're interested in contributing, here's how you can help:

@@ -3,6 +3,8 @@
   "name": "my-module-playground",
   "devDependencies": {
     "bootstrap": "^5.3.8",
-    "bootstrap-vue-next": "workspace:^"
+    "bootstrap-v6": "npm:bootstrap@6.0.0-alpha.1",
+    "bootstrap-vue-next": "workspace:^",
+    "vanilla-calendar-pro": "^3.4.0"
   }
 }

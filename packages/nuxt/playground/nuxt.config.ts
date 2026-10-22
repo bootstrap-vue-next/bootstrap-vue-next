@@ -8,6 +8,13 @@ export default defineNuxtConfig({
   },
   css: ['bootstrap/dist/css/bootstrap.min.css'],
   compatibilityDate: 'latest',
+  vite: {
+    resolve: {
+      alias: {
+        'bootstrap/js/dist/datepicker.js': 'bootstrap-v6/js/dist/datepicker.js',
+      },
+    },
+  },
   bootstrapVueNext: {
     directives: { all: true },
     plugin: {

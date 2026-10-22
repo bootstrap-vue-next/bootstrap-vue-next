@@ -1,7 +1,7 @@
 ---
 id: bcalendar
 title: BCalendar Migration
-description: '`BCalendar` is currently experimental and does not yet have stable migration guidance.'
+description: '`BCalendar` was removed in v100 because Bootstrap 6 has no equivalent; see the v100 migration guide.'
 category: components
 components:
   - BCalendar
@@ -24,7 +24,7 @@ confidence: medium
 
 ## Summary
 
-`BCalendar` is currently experimental and does not yet have stable migration guidance.
+`BCalendar` was removed in v100 because Bootstrap 6 has no equivalent; see the v100 migration guide.
 
 ## Affected APIs
 
