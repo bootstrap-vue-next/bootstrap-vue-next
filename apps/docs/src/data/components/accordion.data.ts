@@ -5,152 +5,139 @@ import type {
   BAccordionProps,
   BAccordionSlots,
 } from 'bootstrap-vue-next'
-import type {ComponentReference, EmitRecord, PropRecord, SlotRecord} from '../../types'
-import {buildCommonProps} from '../../utils/commonProps'
-import {pick} from '../../utils/objectUtils'
-import {showHideEmits, showHideProps} from '../../utils/showHideData'
+import type { ComponentReference, EmitRecord, PropRecord, SlotRecord } from '../../types'
 
 export default {
   load: (): ComponentReference => ({
     BAccordion: {
       props: {
-        ...pick(showHideProps, ['initialAnimation', 'lazy', 'unmountLazy']), // Restored spread
-        ...pick(
-          buildCommonProps({
-            id: {
-              description:
-                'The Id to be injected to accordion items and used in BCollapse for state management',
-            },
-          }),
-          ['id']
-        ),
         flush: {
           type: 'boolean',
           default: false,
-          description:
-            'Removes the default background color, certain borders, and rounded corners to render accordions edge-to-edge with their parent container',
+          description: 'Removes selected borders and rounded corners.',
         },
-        free: {
+        gap: {
           type: 'boolean',
           default: false,
-          description: 'Accordion items will stay open when another item is opened',
+          description: 'Applies the Bootstrap .accordion-gap class.',
         },
-        index: {
-          type: 'number | number[]',
-          default: undefined,
-          description: 'Index of the accordion item that is open',
+        id: {
+          type: 'string',
+          default: 'generated',
+          description: 'HTML id for the accordion wrapper.',
+        },
+        independent: {
+          type: 'boolean',
+          default: false,
+          description:
+            'Omits the native details name so multiple items can remain open; modelValue is an array of open item ids.',
         },
         modelValue: {
-          type: 'string | string[]',
+          type: 'string | string[] | undefined',
           default: undefined,
-          description: 'Id of the accordion item that is open',
+          description:
+            'Open item id in exclusive mode, or open item ids in independent mode. Undefined means no items are open.',
+        },
+        name: {
+          type: 'string',
+          default: 'generated',
+          description:
+            'Native details group name. Generated per accordion when omitted; ignored in independent mode.',
+        },
+        size: {
+          type: "'sm'",
+          default: undefined,
+          description: 'Applies .accordion-sm when set to "sm".',
+        },
+        theme: {
+          type: 'string',
+          default: undefined,
+          description: 'Adds the contextual .theme-{theme} class to the accordion.',
         },
       } satisfies PropRecord<keyof BAccordionProps>,
       emits: {
         'update:model-value': {
-          description: 'Update the currently opened accordion item',
+          description: 'Emitted when the open item id or ids change.',
           args: {
             value: {
-              description: 'Id of the accordion item that is open',
-              type: 'string | string[]',
-            },
-          },
-        },
-        'update:index': {
-          description: 'Update the index of the accordion item that is open',
-          args: {
-            value: {
-              description: 'Index of the accordion item that is open',
-              type: 'number | number[]',
+              description: 'The open item id, ids, or undefined when all items are closed.',
+              type: 'string | string[] | undefined',
             },
           },
         },
       },
       slots: {
         default: {
-          description: 'Content to place in the Accordion',
+          description: 'Accordion items.',
         },
       } satisfies SlotRecord<keyof BAccordionSlots>,
     },
     BAccordionItem: {
       props: {
-        ...pick(showHideProps, ['modelValue', 'lazy', 'show', 'unmountLazy', 'visible']), // Restored spread
-        ...pick(
-          buildCommonProps({
-            id: {
-              description:
-                'The Id to be injected to accordion items and used in BCollapse for state management',
-            },
-          }),
-          ['bodyAttrs', 'bodyClass', 'id', 'tag', 'wrapperAttrs']
-        ),
-        buttonAttrs: {
+        bodyAttrs: {
           type: 'Readonly<AttrsValue>',
           default: undefined,
-          description: 'Attributes to be applied to the button in header',
+          description: 'Attributes forwarded to .accordion-body.',
         },
-        buttonClass: {
+        bodyClass: {
           type: 'ClassValue',
           default: undefined,
-          description: 'Class to be applied to the button in header',
+          description: 'Classes applied to .accordion-body.',
         },
-        collapseClass: {
-          type: 'ClassValue',
-          default: undefined,
-          description: 'Class to be applied to the collapse',
-        },
-        headerAttrs: {
-          type: 'Readonly<AttrsValue>',
-          default: undefined,
-          description: 'Attributes to be applied to the header element',
-        },
-        headerClass: {
-          type: 'ClassValue',
-          default: undefined,
-          description: 'Class to be applied to the header element',
-        },
-        headerTag: {
+        id: {
           type: 'string',
-          default: 'h2',
-          description: 'Tag to be used for the header element',
+          default: 'generated',
+          description: 'HTML id for the details element and identifier used by the root model.',
         },
-        horizontal: {
-          type: 'boolean',
-          default: undefined,
-          description:
-            'Transition the `width` instead of `height` and set a `width` on the immediate child element',
+        name: {
+          type: 'string',
+          default: 'inherited',
+          description: 'Native details group name override; otherwise inherited from BAccordion.',
         },
-        isNav: {
+        open: {
           type: 'boolean',
+          default: false,
+          description: 'Controls the native details open state; supports v-model:open.',
+        },
+        summaryAttrs: {
+          type: 'Readonly<AttrsValue>',
           default: undefined,
-          description:
-            'When set, signifies that the accordion is part of a navbar, enabling certain features for navbar support',
+          description: 'Attributes forwarded to the summary header.',
+        },
+        summaryClass: {
+          type: 'ClassValue',
+          default: undefined,
+          description: 'Classes applied to the summary header.',
         },
         title: {
           type: 'string',
           default: undefined,
-          description:
-            'Text to place in the header of the AccordionItem (title slot takes precedence)',
+          description: 'Text displayed in the summary when the title slot is not used.',
         },
       } satisfies PropRecord<keyof BAccordionItemProps>,
       emits: {
-        ...showHideEmits,
-        'update:model-value': {
-          description: 'Emitted when the visibility of the AccordionItem is changed',
+        'update:open': {
+          description: 'Emitted when the native details open state changes.',
           args: {
-            value: {
-              type: 'boolean',
-              description: 'Current visibility state of the AccordionItem',
-            },
+            value: { type: 'boolean', description: 'Whether the item is open.' },
           },
         },
-      } satisfies EmitRecord<keyof BAccordionItemEmits | 'update:model-value'>,
+        toggle: {
+          description: 'Native details toggle event.',
+          args: {
+            event: { type: 'Event', description: 'The native toggle event.' },
+          },
+        },
+      } satisfies EmitRecord<keyof BAccordionItemEmits>,
       slots: {
         default: {
-          description: 'Content to place in the AccordionItem',
+          description: 'Accordion body content.',
         },
         title: {
-          description: 'Content to place in the header of the AccordionItem',
+          description: 'Custom summary header content.',
+        },
+        icon: {
+          description: 'Custom icon content; defaults to the Bootstrap accordion SVG icon.',
         },
       } satisfies SlotRecord<keyof BAccordionItemSlots>,
     },

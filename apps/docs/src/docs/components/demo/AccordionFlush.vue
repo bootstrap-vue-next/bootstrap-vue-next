@@ -2,8 +2,8 @@
   <!-- #region template -->
   <BAccordion flush>
     <BAccordionItem title="Accordion Item #1">
-      Placeholder content for this accordion, which is intended to demonstrate the
-      <code>flush</code> property. This is the first item's accordion body.
+      Placeholder content demonstrating the <code>flush</code> property. This is the first item's
+      accordion body.
     </BAccordionItem>
     <BAccordionItem title="Accordion Item #2">
       Placeholder content for this accordion, which is intended to demonstrate the

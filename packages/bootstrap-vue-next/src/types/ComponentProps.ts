@@ -244,35 +244,24 @@ export interface BFormOtpProps {
 
 export interface BAccordionProps {
   flush?: boolean
-  free?: boolean
+  gap?: boolean
   id?: string
-  index?: number | readonly number[]
-  initialAnimation?: boolean
-  lazy?: boolean
+  independent?: boolean
   modelValue?: string | readonly string[]
-  unmountLazy?: boolean
+  name?: string
+  size?: 'sm'
+  theme?: string
 }
 
 export interface BAccordionItemProps {
   bodyAttrs?: Readonly<AttrsValue>
   bodyClass?: ClassValue
-  buttonAttrs?: Readonly<AttrsValue>
-  buttonClass?: ClassValue
-  collapseClass?: ClassValue
-  headerAttrs?: Readonly<AttrsValue>
-  headerClass?: ClassValue
-  headerTag?: string
-  horizontal?: boolean
   id?: string
-  isNav?: boolean
-  modelValue?: boolean
-  lazy?: boolean
-  unmountLazy?: boolean
-  tag?: string
+  name?: string
+  open?: boolean
+  summaryAttrs?: Readonly<AttrsValue>
+  summaryClass?: ClassValue
   title?: string
-  show?: boolean
-  visible?: boolean
-  wrapperAttrs?: Readonly<AttrsValue>
 }
 
 export interface BDropdownDividerProps {
