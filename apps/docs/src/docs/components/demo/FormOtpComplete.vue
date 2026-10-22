@@ -5,12 +5,12 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import { ref } from 'vue'
 
-const value = ref<string[]>([])
-const completed = ref<string[] | null>(null)
+const value = ref('')
+const completed = ref<string | null>(null)
 
-function onComplete(val: string[]) {
+function onComplete(val: string) {
   completed.value = val
 }
 </script>

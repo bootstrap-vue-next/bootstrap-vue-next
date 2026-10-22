@@ -1,5 +1,10 @@
 import {BvCarouselEvent, BvEvent, BvTriggerableEvent} from '../utils'
-import type {BTableProviderContext, BTableSortBy, TableHeadClickedEventObject, TableRowEvent} from './TableTypes'
+import type {
+  BTableProviderContext,
+  BTableSortBy,
+  TableHeadClickedEventObject,
+  TableRowEvent,
+} from './TableTypes'
 import type {AcceptableValue, DateValue, TimeValue} from 'reka-ui'
 
 export interface showHideEmits {
@@ -108,6 +113,10 @@ export type BDropdownItemEmits = {
 
 export type BDropdownItemButtonEmits = {
   click: [value: MouseEvent]
+}
+
+export type BFormOtpEmits = {
+  complete: [value: string]
 }
 
 export type BFormSpinbuttonEmits = {

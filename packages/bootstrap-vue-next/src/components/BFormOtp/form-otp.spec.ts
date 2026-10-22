@@ -3,466 +3,294 @@ import {enableAutoUnmount, mount} from '@vue/test-utils'
 import {nextTick} from 'vue'
 import BFormOtp from './BFormOtp.vue'
 
-describe('otp-input', () => {
+describe('form-otp', () => {
   enableAutoUnmount(afterEach)
 
-  // Helper to get only visible OTP input fields (excludes the hidden reka-ui input)
-  function getVisibleInputs(wrapper: ReturnType<typeof mount>) {
-    return wrapper.findAll('.b-form-otp-field')
-  }
-
-  // Helper to get the hidden reka-ui input used for form submission
-  function getHiddenInput(wrapper: ReturnType<typeof mount>) {
-    return wrapper.find('input[aria-hidden="true"]')
-  }
+  const slots = (w: ReturnType<typeof mount>) => w.findAll('.otp-slot')
+  const field = (w: ReturnType<typeof mount>) => w.find('input.otp-input')
 
   describe('rendering', () => {
-    it('renders a root div element', () => {
-      const wrapper = mount(BFormOtp)
-      expect(wrapper.element.tagName).toBe('DIV')
+    it('renders .otp wrapper with a single text input and aria-hidden slots', () => {
+      const w = mount(BFormOtp)
+      expect(w.element.tagName).toBe('DIV')
+      expect(w.classes()).toContain('otp')
+      expect(w.findAll('input')).toHaveLength(1)
+      expect(field(w).attributes('type')).toBe('text')
+      expect(w.find('.otp-slots').attributes('aria-hidden')).toBe('true')
     })
 
-    it('places the id on the hidden input element', () => {
-      const wrapper = mount(BFormOtp, {props: {id: 'my-otp'}})
-      const hiddenInput = getHiddenInput(wrapper)
-      expect(hiddenInput.attributes('id')).toBe('my-otp')
+    it('puts id on the input and auto-generates one', async () => {
+      const w = mount(BFormOtp, {props: {id: 'my-otp'}})
+      expect(field(w).attributes('id')).toBe('my-otp')
+      await w.setProps({id: 'two'})
+      expect(field(w).attributes('id')).toBe('two')
+      expect(field(mount(BFormOtp)).attributes('id')).toBeDefined()
     })
 
-    it('auto-generates an id on the hidden input element', () => {
-      const wrapper = mount(BFormOtp)
-      const hiddenInput = getHiddenInput(wrapper)
-      expect(hiddenInput.attributes('id')).toBeDefined()
+    it('renders 6 slots by default and respects length', () => {
+      expect(slots(mount(BFormOtp))).toHaveLength(6)
+      expect(slots(mount(BFormOtp, {props: {length: 4}}))).toHaveLength(4)
+      expect(slots(mount(BFormOtp, {props: {length: '8'}}))).toHaveLength(8)
     })
 
-    it('updates id when prop id changes', async () => {
-      const wrapper = mount(BFormOtp, {props: {id: 'first'}})
-      expect(getHiddenInput(wrapper).attributes('id')).toBe('first')
-      await wrapper.setProps({id: 'second'})
-      expect(getHiddenInput(wrapper).attributes('id')).toBe('second')
+    it.each([0, -3, 'abc'])('falls back to 6 slots for invalid length %s', (length) => {
+      const w = mount(BFormOtp, {props: {length}})
+      expect(slots(w)).toHaveLength(6)
+      expect(field(w).attributes('maxlength')).toBe('6')
     })
 
-    it('renders 6 visible input fields by default', () => {
-      const wrapper = mount(BFormOtp)
-      expect(getVisibleInputs(wrapper)).toHaveLength(6)
+    it('sets autocomplete one-time-code', () => {
+      expect(field(mount(BFormOtp)).attributes('autocomplete')).toBe('one-time-code')
     })
 
-    it('renders the correct number of visible input fields based on length prop', () => {
-      const wrapper = mount(BFormOtp, {props: {length: 4}})
-      expect(getVisibleInputs(wrapper)).toHaveLength(4)
+    it('forwards name, form, required, disabled, readonly', () => {
+      const w = mount(BFormOtp, {
+        props: {name: 'otp', form: 'f', required: true, disabled: true, readonly: true},
+      })
+      const el = field(w)
+      expect(el.attributes('name')).toBe('otp')
+      expect(el.attributes('form')).toBe('f')
+      expect(el.attributes('required')).toBeDefined()
+      expect(el.attributes('disabled')).toBeDefined()
+      expect(el.attributes('readonly')).toBeDefined()
     })
 
-    it('defaults to 6 visible input fields when length is 0', () => {
-      const wrapper = mount(BFormOtp, {props: {length: 0}})
-      expect(getVisibleInputs(wrapper)).toHaveLength(6)
-    })
-
-    it('defaults to 6 visible input fields when length is negative', () => {
-      const wrapper = mount(BFormOtp, {props: {length: -3}})
-      expect(getVisibleInputs(wrapper)).toHaveLength(6)
-    })
-
-    it('accepts length as a string', () => {
-      const wrapper = mount(BFormOtp, {props: {length: '4' as unknown as number}})
-      expect(getVisibleInputs(wrapper)).toHaveLength(4)
-    })
-
-    it('updates input count when length changes', async () => {
-      const wrapper = mount(BFormOtp, {props: {length: 4}})
-      expect(getVisibleInputs(wrapper)).toHaveLength(4)
-      await wrapper.setProps({length: 8})
-      expect(getVisibleInputs(wrapper)).toHaveLength(8)
-    })
-
-    it('all visible input fields have class b-form-otp-field', () => {
-      const wrapper = mount(BFormOtp)
-      const inputs = getVisibleInputs(wrapper)
-      expect(inputs.length).toBeGreaterThan(0)
-      for (const input of inputs) {
-        expect(input.classes()).toContain('b-form-otp-field')
-      }
-    })
-
-    it('renders a hidden input for form submission', () => {
-      const wrapper = mount(BFormOtp)
-      const hiddenInput = getHiddenInput(wrapper)
-      expect(hiddenInput.exists()).toBe(true)
-      expect(hiddenInput.attributes('tabindex')).toBe('-1')
+    it('puts ariaLabel on the single input', () => {
+      expect(field(mount(BFormOtp, {props: {ariaLabel: 'Code'}})).attributes('aria-label')).toBe(
+        'Code'
+      )
     })
   })
 
-  describe('CSS classes', () => {
-    it('has b-form-otp class', () => {
-      const wrapper = mount(BFormOtp)
-      expect(wrapper.classes()).toContain('b-form-otp')
+  describe('type', () => {
+    it.each([
+      ['numeric', 'numeric', '[0-9]*'],
+      ['alphanumeric', 'text', '[A-Za-z0-9]*'],
+      ['alpha', 'text', '[A-Za-z]*'],
+    ] as const)('type %s sets inputmode and pattern', (type, inputmode, pattern) => {
+      const el = field(mount(BFormOtp, {props: {type}}))
+      expect(el.attributes('inputmode')).toBe(inputmode)
+      expect(el.attributes('pattern')).toBe(pattern)
     })
 
-    it('has d-flex class', () => {
-      const wrapper = mount(BFormOtp)
-      expect(wrapper.classes()).toContain('d-flex')
+    it('defaults to numeric', () => {
+      expect(field(mount(BFormOtp)).attributes('inputmode')).toBe('numeric')
     })
 
-    it('has gap-2 class', () => {
-      const wrapper = mount(BFormOtp)
-      expect(wrapper.classes()).toContain('gap-2')
+    it('strips disallowed characters from typed input', async () => {
+      const w = mount(BFormOtp)
+      await field(w).setValue('1a2b3')
+      expect(w.emitted('update:modelValue')?.at(-1)).toEqual(['123'])
     })
 
-    it('has align-items-center class', () => {
-      const wrapper = mount(BFormOtp)
-      expect(wrapper.classes()).toContain('align-items-center')
+    it('alpha keeps only letters', async () => {
+      const w = mount(BFormOtp, {props: {type: 'alpha'}})
+      await field(w).setValue('a1b2')
+      expect(w.emitted('update:modelValue')?.at(-1)).toEqual(['ab'])
     })
 
-    it('does not have size class by default', () => {
-      const wrapper = mount(BFormOtp)
-      expect(wrapper.classes().some((c) => c.startsWith('b-form-otp-'))).toBe(false)
-    })
-
-    it('has b-form-otp-sm class when size is sm', () => {
-      const wrapper = mount(BFormOtp, {props: {size: 'sm'}})
-      expect(wrapper.classes()).toContain('b-form-otp-sm')
-    })
-
-    it('has b-form-otp-lg class when size is lg', () => {
-      const wrapper = mount(BFormOtp, {props: {size: 'lg'}})
-      expect(wrapper.classes()).toContain('b-form-otp-lg')
-    })
-
-    it('updates size class reactively', async () => {
-      const wrapper = mount(BFormOtp, {props: {size: 'sm'}})
-      expect(wrapper.classes()).toContain('b-form-otp-sm')
-      await wrapper.setProps({size: 'lg'})
-      expect(wrapper.classes()).toContain('b-form-otp-lg')
-      expect(wrapper.classes()).not.toContain('b-form-otp-sm')
-    })
-
-    it('removes size class when size is unset', async () => {
-      const wrapper = mount(BFormOtp, {props: {size: 'sm'}})
-      expect(wrapper.classes()).toContain('b-form-otp-sm')
-      await wrapper.setProps({size: undefined})
-      expect(wrapper.classes().some((c) => c.startsWith('b-form-otp-'))).toBe(false)
+    it('alphanumeric keeps letters and digits', async () => {
+      const w = mount(BFormOtp, {props: {type: 'alphanumeric'}})
+      await field(w).setValue('a1-b2')
+      expect(w.emitted('update:modelValue')?.at(-1)).toEqual(['a1b2'])
     })
   })
 
-  describe('disabled prop', () => {
-    it('input fields are not disabled by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('disabled')).toBeUndefined()
-      }
+  describe('model', () => {
+    it('renders characters into slots from a string model', () => {
+      const w = mount(BFormOtp, {props: {modelValue: '123'}})
+      expect(slots(w).map((s) => s.text())).toEqual(['1', '2', '3', '', '', ''])
+      expect(slots(w).filter((s) => s.classes('otp-slot-filled'))).toHaveLength(3)
+      expect((field(w).element as HTMLInputElement).value).toBe('123')
     })
 
-    it('all input fields are disabled when disabled prop is true', () => {
-      const wrapper = mount(BFormOtp, {props: {disabled: true}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('disabled')).toBeDefined()
-      }
+    it('updates when the model changes', async () => {
+      const w = mount(BFormOtp, {props: {modelValue: '12'}})
+      await w.setProps({modelValue: '1234'})
+      expect(slots(w)[3].text()).toBe('4')
     })
 
-    it('updates disabled state reactively', async () => {
-      const wrapper = mount(BFormOtp, {props: {disabled: false}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('disabled')).toBeUndefined()
-      }
-      await wrapper.setProps({disabled: true})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('disabled')).toBeDefined()
-      }
-    })
-  })
-
-  describe('aria-label prop', () => {
-    it('uses default "Pin" in aria-label when ariaLabel is not set', () => {
-      const wrapper = mount(BFormOtp)
-      const inputs = getVisibleInputs(wrapper)
-      expect(inputs[0].attributes('aria-label')).toBe('Pin 1 of 6')
-      expect(inputs[5].attributes('aria-label')).toBe('Pin 6 of 6')
+    it('truncates a model longer than length', () => {
+      const w = mount(BFormOtp, {props: {modelValue: '123456789', length: 4}})
+      expect((field(w).element as HTMLInputElement).value).toBe('1234')
     })
 
-    it('uses custom ariaLabel in aria-label attribute', () => {
-      const wrapper = mount(BFormOtp, {props: {ariaLabel: 'OTP'}})
-      const inputs = getVisibleInputs(wrapper)
-      expect(inputs[0].attributes('aria-label')).toBe('OTP 1 of 6')
-      expect(inputs[5].attributes('aria-label')).toBe('OTP 6 of 6')
+    it('treats null as empty', () => {
+      const w = mount(BFormOtp, {props: {modelValue: null}})
+      expect(slots(w).every((s) => !s.classes('otp-slot-filled'))).toBe(true)
     })
 
-    it('reflects custom length in aria-label', () => {
-      const wrapper = mount(BFormOtp, {props: {length: 4, ariaLabel: 'Code'}})
-      const inputs = getVisibleInputs(wrapper)
-      expect(inputs[0].attributes('aria-label')).toBe('Code 1 of 4')
-      expect(inputs[3].attributes('aria-label')).toBe('Code 4 of 4')
-    })
-
-    it('updates aria-label reactively when ariaLabel changes', async () => {
-      const wrapper = mount(BFormOtp, {props: {ariaLabel: 'Pin'}})
-      expect(getVisibleInputs(wrapper)[0].attributes('aria-label')).toBe('Pin 1 of 6')
-      await wrapper.setProps({ariaLabel: 'OTP'})
-      expect(getVisibleInputs(wrapper)[0].attributes('aria-label')).toBe('OTP 1 of 6')
+    it('emits update:modelValue as a string', async () => {
+      const w = mount(BFormOtp)
+      await field(w).setValue('12')
+      expect(w.emitted('update:modelValue')?.at(-1)).toEqual(['12'])
     })
   })
 
-  describe('aria-invalid prop', () => {
-    it('does not set aria-invalid by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('aria-invalid')).toBeUndefined()
-      }
+  describe('complete', () => {
+    it('emits complete with the string when length is reached', async () => {
+      const w = mount(BFormOtp, {props: {length: 4}})
+      await field(w).setValue('12')
+      expect(w.emitted('complete')).toBeUndefined()
+      await field(w).setValue('1234')
+      expect(w.emitted('complete')).toEqual([['1234']])
     })
 
-    it('sets aria-invalid on all visible inputs when ariaInvalid is true', () => {
-      const wrapper = mount(BFormOtp, {props: {ariaInvalid: true}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('aria-invalid')).toBe('true')
-      }
-    })
-
-    it('sets aria-invalid to "grammar" on all visible inputs', () => {
-      const wrapper = mount(BFormOtp, {props: {ariaInvalid: 'grammar'}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('aria-invalid')).toBe('grammar')
-      }
+    it('does not emit complete for a value cut by filtering', async () => {
+      const w = mount(BFormOtp, {props: {length: 4}})
+      await field(w).setValue('12ab')
+      expect(w.emitted('complete')).toBeUndefined()
     })
   })
 
-  describe('state prop', () => {
-    it('does not have is-valid or is-invalid class by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.classes()).not.toContain('is-valid')
-        expect(input.classes()).not.toContain('is-invalid')
-      }
+  describe('mask', () => {
+    it('shows bullets in slots but keeps the real value', () => {
+      const w = mount(BFormOtp, {props: {modelValue: '12', mask: true}})
+      expect(
+        slots(w)
+          .slice(0, 2)
+          .map((s) => s.text())
+      ).toEqual(['•', '•'])
+      expect((field(w).element as HTMLInputElement).value).toBe('12')
     })
 
-    it('has is-valid class on all visible inputs when state is true', () => {
-      const wrapper = mount(BFormOtp, {props: {state: true}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.classes()).toContain('is-valid')
-      }
-    })
-
-    it('has is-invalid class on all visible inputs when state is false', () => {
-      const wrapper = mount(BFormOtp, {props: {state: false}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.classes()).toContain('is-invalid')
-      }
-    })
-
-    it('updates state class reactively', async () => {
-      const wrapper = mount(BFormOtp, {props: {state: true}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.classes()).toContain('is-valid')
-      }
-      await wrapper.setProps({state: false})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.classes()).toContain('is-invalid')
-        expect(input.classes()).not.toContain('is-valid')
-      }
+    it('shows characters when mask is off', () => {
+      expect(slots(mount(BFormOtp, {props: {modelValue: '1'}}))[0].text()).toBe('1')
     })
   })
 
-  describe('size prop on inputs', () => {
-    it('input fields do not have form-control-sm or form-control-lg by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.classes()).not.toContain('form-control-sm')
-        expect(input.classes()).not.toContain('form-control-lg')
-      }
+  describe('groups and separators', () => {
+    it('inserts separators between groups', () => {
+      const w = mount(BFormOtp, {props: {groups: [3, 3]}})
+      const seps = w.findAll('.otp-separator')
+      expect(seps).toHaveLength(1)
+      expect(seps[0].text()).toBe('·')
+      expect(slots(w)).toHaveLength(6)
     })
 
-    it('all visible input fields have form-control-sm when size is sm', () => {
-      const wrapper = mount(BFormOtp, {props: {size: 'sm'}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.classes()).toContain('form-control-sm')
-      }
+    it('supports custom separator and repeats the last group size', () => {
+      const w = mount(BFormOtp, {props: {length: 6, groups: [2], separator: '-'}})
+      const seps = w.findAll('.otp-separator')
+      expect(seps).toHaveLength(2)
+      expect(seps[0].text()).toBe('-')
     })
 
-    it('all visible input fields have form-control-lg when size is lg', () => {
-      const wrapper = mount(BFormOtp, {props: {size: 'lg'}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.classes()).toContain('form-control-lg')
-      }
-    })
-  })
-
-  describe('plaintext prop', () => {
-    it('input fields have form-control class by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.classes()).toContain('form-control')
-        expect(input.classes()).not.toContain('form-control-plaintext')
-      }
+    it('renders no separators without groups', () => {
+      expect(mount(BFormOtp).findAll('.otp-separator')).toHaveLength(0)
     })
 
-    it('all visible input fields have form-control-plaintext class when plaintext is true', () => {
-      const wrapper = mount(BFormOtp, {props: {plaintext: true}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.classes()).toContain('form-control-plaintext')
-      }
-    })
-
-    it('visible input fields are readonly when plaintext is true', () => {
-      const wrapper = mount(BFormOtp, {props: {plaintext: true}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('readonly')).toBeDefined()
-      }
+    it('does not include separators in the value', async () => {
+      const w = mount(BFormOtp, {props: {groups: [2, 2], length: 4, separator: '-'}})
+      await field(w).setValue('1234')
+      expect(w.emitted('update:modelValue')?.at(-1)).toEqual(['1234'])
     })
   })
 
-  describe('readonly prop', () => {
-    it('input fields are not readonly by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('readonly')).toBeUndefined()
-      }
+  describe('size, state, connected', () => {
+    it.each(['sm', 'lg'] as const)('adds otp-%s', (size) => {
+      expect(mount(BFormOtp, {props: {size}}).classes()).toContain(`otp-${size}`)
     })
 
-    it('all visible input fields are readonly when readonly prop is true', () => {
-      const wrapper = mount(BFormOtp, {props: {readonly: true}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('readonly')).toBeDefined()
-      }
-    })
-  })
-
-  describe('form prop', () => {
-    it('visible input fields do not have form attribute by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('form')).toBeUndefined()
-      }
+    it('adds otp-connected', () => {
+      expect(mount(BFormOtp, {props: {connected: true}}).classes()).toContain('otp-connected')
     })
 
-    it('all visible input fields have form attribute when form prop is set', () => {
-      const wrapper = mount(BFormOtp, {props: {form: 'my-form'}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('form')).toBe('my-form')
-      }
+    it('state true sets is-valid', () => {
+      const w = mount(BFormOtp, {props: {state: true}})
+      expect(w.classes()).toContain('is-valid')
+      expect(field(w).attributes('aria-invalid')).toBeUndefined()
+    })
+
+    it('state false sets is-invalid and aria-invalid', () => {
+      const w = mount(BFormOtp, {props: {state: false}})
+      expect(w.classes()).toContain('is-invalid')
+      expect(field(w).attributes('aria-invalid')).toBe('true')
+    })
+
+    it('explicit ariaInvalid is respected', () => {
+      const w = mount(BFormOtp, {props: {ariaInvalid: 'grammar'}})
+      expect(field(w).attributes('aria-invalid')).toBe('grammar')
     })
   })
 
-  describe('modelValue', () => {
-    it('accepts an initial modelValue', () => {
-      const wrapper = mount(BFormOtp, {props: {modelValue: ['1', '2', '3', '4', '5', '6']}})
-      const inputs = getVisibleInputs(wrapper)
-      expect(inputs[0].attributes('value')).toBe('1')
-      expect(inputs[1].attributes('value')).toBe('2')
-      expect(inputs[5].attributes('value')).toBe('6')
-    })
-
-    it('accepts a partial modelValue', () => {
-      const wrapper = mount(BFormOtp, {props: {modelValue: ['a', 'b']}})
-      const inputs = getVisibleInputs(wrapper)
-      expect(inputs[0].attributes('value')).toBe('a')
-      expect(inputs[1].attributes('value')).toBe('b')
-      expect(inputs[2].attributes('value')).toBeUndefined()
-    })
-
-    it('emits update:modelValue when input value changes', async () => {
-      const wrapper = mount(BFormOtp)
-      const input = getVisibleInputs(wrapper)[0]
-      await input.setValue('1')
+  describe('focus and interaction', () => {
+    it('marks the active empty slot while focused', async () => {
+      const w = mount(BFormOtp, {attachTo: document.body, props: {modelValue: '12'}})
+      await field(w).trigger('focus')
       await nextTick()
-      expect(wrapper.emitted('update:modelValue')).toBeDefined()
+      expect(slots(w)[2].classes()).toContain('otp-slot-active')
+      w.unmount()
     })
 
-    it('sets the value on the hidden input element', () => {
-      const wrapper = mount(BFormOtp, {props: {modelValue: ['a', 'b', 'c']}})
-      const hiddenInput = getHiddenInput(wrapper)
-      expect((hiddenInput.element as HTMLInputElement).value).toBe('abc')
-    })
-  })
-
-  describe('placeholder prop', () => {
-    it('visible input fields have empty placeholder by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('placeholder')).toBe('')
-      }
+    it('has no active slot when blurred', async () => {
+      const w = mount(BFormOtp, {attachTo: document.body})
+      await field(w).trigger('focus')
+      await field(w).trigger('blur')
+      expect(w.find('.otp-slot-active').exists()).toBe(false)
+      w.unmount()
     })
 
-    it('all visible input fields have the placeholder from the prop', () => {
-      const wrapper = mount(BFormOtp, {props: {placeholder: '·'}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('placeholder')).toBe('·')
-      }
-    })
-  })
-
-  describe('dir prop', () => {
-    it('has dir="ltr" by default', () => {
-      const wrapper = mount(BFormOtp)
-      expect(wrapper.attributes('dir')).toBe('ltr')
+    it('exposes focus, blur, clear and element', async () => {
+      const w = mount(BFormOtp, {attachTo: document.body, props: {modelValue: '12'}})
+      const vm = w.vm as unknown as {focus: () => void; clear: () => void; element: unknown}
+      vm.focus()
+      expect(document.activeElement).toBe(field(w).element)
+      vm.clear()
+      expect(w.emitted('update:modelValue')?.at(-1)).toEqual([''])
+      expect(vm.element).toBeDefined()
+      w.unmount()
     })
 
-    it('has dir="ltr" when dir prop is ltr', () => {
-      const wrapper = mount(BFormOtp, {props: {dir: 'ltr'}})
-      expect(wrapper.attributes('dir')).toBe('ltr')
+    it('does not focus when disabled', () => {
+      const w = mount(BFormOtp, {attachTo: document.body, props: {disabled: true}})
+      ;(w.vm as unknown as {focus: () => void}).focus()
+      expect(document.activeElement).not.toBe(field(w).element)
+      w.unmount()
     })
 
-    it('has dir="rtl" when dir prop is rtl', () => {
-      const wrapper = mount(BFormOtp, {props: {dir: 'rtl'}})
-      expect(wrapper.attributes('dir')).toBe('rtl')
+    it('autofocuses on mount', async () => {
+      const w = mount(BFormOtp, {attachTo: document.body, props: {autofocus: true}})
+      await nextTick()
+      expect(document.activeElement).toBe(field(w).element)
+      w.unmount()
     })
   })
 
-  describe('type prop', () => {
-    it('uses inputmode="text" by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('inputmode')).toBe('text')
-      }
+  describe('paste', () => {
+    const paste = (w: ReturnType<typeof mount>, text: string) =>
+      field(w).trigger('paste', {clipboardData: {getData: () => text}})
+
+    it('sanitizes pasted text before applying the length limit', async () => {
+      const w = mount(BFormOtp, {attachTo: document.body, props: {length: 6}})
+      await paste(w, '12-34 56')
+      expect(w.emitted('update:modelValue')?.at(-1)).toEqual(['123456'])
+      expect(w.emitted('complete')).toEqual([['123456']])
+      w.unmount()
     })
 
-    it('uses inputmode="numeric" and pattern when type is number', () => {
-      const wrapper = mount(BFormOtp, {props: {type: 'number'}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('inputmode')).toBe('numeric')
-        expect(input.attributes('pattern')).toBe('[0-9]*')
-      }
-    })
-  })
-
-  describe('mask prop', () => {
-    it('renders type="text" on visible inputs by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('type')).toBe('text')
-      }
+    it('ignores paste with no valid characters', async () => {
+      const w = mount(BFormOtp, {attachTo: document.body})
+      await paste(w, 'abc')
+      expect(w.emitted('update:modelValue')).toBeUndefined()
+      w.unmount()
     })
 
-    it('renders type="password" on visible inputs when mask is true', () => {
-      const wrapper = mount(BFormOtp, {props: {mask: true}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('type')).toBe('password')
-      }
+    it('does not paste when readonly', async () => {
+      const w = mount(BFormOtp, {attachTo: document.body, props: {readonly: true}})
+      await paste(w, '123')
+      expect(w.emitted('update:modelValue')).toBeUndefined()
+      w.unmount()
     })
   })
 
-  describe('otp prop', () => {
-    it('uses autocomplete="false" by default', () => {
-      const wrapper = mount(BFormOtp)
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('autocomplete')).toBe('false')
-      }
-    })
-
-    it('uses autocomplete="one-time-code" when otp is true', () => {
-      const wrapper = mount(BFormOtp, {props: {otp: true}})
-      for (const input of getVisibleInputs(wrapper)) {
-        expect(input.attributes('autocomplete')).toBe('one-time-code')
-      }
-    })
-  })
-
-  describe('name prop', () => {
-    it('hidden input has empty name by default', () => {
-      const wrapper = mount(BFormOtp)
-      const hiddenInput = getHiddenInput(wrapper)
-      expect(hiddenInput.attributes('name')).toBe('')
-    })
-
-    it('hidden input has the name from the prop', () => {
-      const wrapper = mount(BFormOtp, {props: {name: 'otp-code'}})
-      const hiddenInput = getHiddenInput(wrapper)
-      expect(hiddenInput.attributes('name')).toBe('otp-code')
+  describe('form submission', () => {
+    it('submits the code under name', () => {
+      const form = document.createElement('form')
+      document.body.appendChild(form)
+      const w = mount(BFormOtp, {attachTo: form, props: {name: 'code', modelValue: '123456'}})
+      expect(new FormData(form).get('code')).toBe('123456')
+      w.unmount()
+      form.remove()
     })
   })
 })

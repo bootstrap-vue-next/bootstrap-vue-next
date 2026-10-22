@@ -8,6 +8,10 @@ description: >
 
 This is the canonical BootstrapVue to BootstrapVueNext migration knowledge base. Use these structured entries for current migration guidance, quick navigation, and stable identifiers.
 
+## v1 to v100 (Bootstrap 6)
+
+BootstrapVueNext is being migrated to Bootstrap 6 one component at a time. Entries below marked with v1 → v100 tables (currently [BFormOtp](/docs/migration-data/components/bformotp)) describe breaking changes between the current v1 API and the Bootstrap 6 based v100 API. Other component entries still describe the BootstrapVue migration until they are reviewed.
+
 ## Patterns
 
 - [BootstrapVue to BootstrapVueNext Migration Overview](/docs/migration-data/patterns/overview) — `migration-overview`
@@ -44,6 +48,7 @@ This is the canonical BootstrapVue to BootstrapVueNext migration knowledge base.
 - [BFormFile Migration](/docs/migration-data/components/bformfile) — `bformfile`
 - [BFormGroup Migration](/docs/migration-data/components/bformgroup) — `bformgroup`
 - [BFormInput Migration](/docs/migration-data/components/bforminput) — `bforminput`
+- [BFormOtp Migration](/docs/migration-data/components/bformotp) — `bformotp`
 - [BFormRadio Migration](/docs/migration-data/components/bformradio) — `bformradio`
 - [BFormRating Migration](/docs/migration-data/components/bformrating) — `bformrating`
 - [BFormSelect Migration](/docs/migration-data/components/bformselect) — `bformselect`

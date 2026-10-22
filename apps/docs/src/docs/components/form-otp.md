@@ -1,82 +1,83 @@
 ---
 title: Form OTP
-description: 'A sequence of one-character inputs for entering OTP codes, PINs, and verification codes. Built on top of Reka UI PinInput with Bootstrap styling.'
+description: 'A single-input OTP field with decorative slots for entering OTP codes, PINs, and verification codes, following the Bootstrap 6 OTP input.'
 ---
 
 ## Overview
 
-`BFormOtp` renders a configurable number of single-character input fields, commonly used for entering OTP (One-Time Password) codes, PINs, and verification codes. It wraps `BFormInput` fields with Reka UI's PinInput primitives, providing full keyboard navigation, clipboard paste support, and mobile OTP autodetection.
+`BFormOtp` implements the [Bootstrap 6 OTP input](https://getbootstrap.com/docs/6.0/forms/otp-input/). It renders a **single real `<input>`** with decorative slots on top, so the browser's native selection, autofill (`autocomplete="one-time-code"`), paste, and form submission all work on one field.
 
 <<< DEMO ./demo/FormOtpOverview.vue
 
 ### `v-model` Support
 
-The `v-model` binds to an array of strings, where each element represents the value of one input field. You can use it to set initial values or read the current state of the inputs.
+The `v-model` binds to a single `string` containing the whole code. Separators are visual only and are never part of the value.
 
 ## Input length
 
-By default, `BFormOtp` renders 6 input fields. Use the `length` prop to customize the number of fields.
+By default, `BFormOtp` renders 6 slots. Use the `length` prop to customize the number of slots. Invalid values fall back to 6.
 
 <<< DEMO ./demo/FormOtpLength.vue#template{vue-html}
 
 ## Input types
 
-### Text mode
+Use `type` to control the accepted characters, the mobile keyboard (`inputmode`), and the validation `pattern`. Disallowed characters are stripped from typed and pasted input.
 
-By default, `BFormOtp` accepts any alphanumeric character. This is the default `type="text"` mode.
+- `numeric` (default): digits only
+- `alphanumeric`: letters and digits
+- `alpha`: letters only
 
-### Numeric mode
+<<< DEMO ./demo/FormOtpType.vue#template{vue-html}
 
-Set the `type` prop to `number` to restrict input to numeric characters only. This is useful for numeric PINs and verification codes.
+## Groups and separators
 
-<<< DEMO ./demo/FormOtpNumeric.vue#template{vue-html}
+Use `groups` to split slots into groups, and `separator` to change the text rendered between them (default `·`). The last group size repeats until `length` is filled. Use `connected` to merge the slot borders.
 
-## OTP mode
-
-Set the `otp` prop to `true` to enable OTP autodetection on mobile devices. This allows mobile devices to automatically detect the OTP from messages or clipboard, and enables the autocomplete field.
-
-<<< DEMO ./demo/FormOtpOtp.vue#template{vue-html}
+<<< DEMO ./demo/FormOtpGroups.vue#template{vue-html}
 
 ## Masked input
 
-Use the `mask` prop to treat the inputs as password fields, hiding entered characters. This is useful for sensitive codes such as PINs.
+Use the `mask` prop to render `•` in filled slots. This is visual only; the input value is unchanged.
 
 <<< DEMO ./demo/FormOtpMask.vue
 
 ## Sizing
 
-Control the size of the input fields using the `size` prop. Supports `sm`, `md` (default), and `lg`.
+Use the `size` prop with `sm` or `lg`. The default size has no modifier.
 
 <<< DEMO ./demo/FormOtpSize.vue#template{vue-html}
 
 ## Validation states
 
-Use the `state` prop to apply contextual validation styles to the component. Set to `true` for valid, `false` for invalid, or `null` for no validation state.
+Use the `state` prop to apply `is-valid` or `is-invalid`. Set to `null` or omit for no validation state.
 
 <<< DEMO ./demo/FormOtpState.vue#template{vue-html}
 
 ## Disabled and readonly states
 
-Set the `disabled` prop to prevent user interaction, or the `readonly` prop to make the inputs read-only while keeping them focusable.
+Set the `disabled` prop to prevent user interaction, or the `readonly` prop to prevent changes while keeping the input focusable.
 
 <<< DEMO ./demo/FormOtpDisabled.vue#template{vue-html}
 
 ## Complete event
 
-The `complete` event is emitted when all input fields have been filled. This is useful for triggering validation or submission once the user has entered the full code.
+The `complete` event is emitted with the code string when the value reaches `length`.
 
 <<< DEMO ./demo/FormOtpComplete.vue
 
 ## Accessibility
 
-Each input field is automatically labeled with an `aria-label` in the format `"Pin {n} of {total}"` (e.g., "Pin 1 of 6"). You can customize the prefix using the `aria-label` prop (e.g., setting it to `"Code"` produces "Code 1 of 6").
+The slots are `aria-hidden`; assistive technology interacts with the single input. Provide an accessible name with the `aria-label` prop or a `<label for>` that targets the component `id`.
 
 ### Keyboard Interactions
 
-- <kbd>ArrowLeft</kbd> Focus on previous input
-- <kbd>ArrowRight</kbd> Focus on next input
-- <kbd>Home</kbd> Focus on the first input
-- <kbd>End</kbd> Focus on the last input
-- <kbd>Backspace</kbd> Deletes the value of the current input. If the input is empty, moves to the previous input and deletes that value as well
-- <kbd>Delete</kbd> Deletes the value of the current input
-- <kbd>Ctrl</kbd> + <kbd>V</kbd> Pastes the contents of the clipboard into the pin input. If the number of characters in the clipboard equals or exceeds the number of inputs, the contents are pasted from the first input. Otherwise, the contents are pasted from the current input onwards
+The input uses native text-input behavior, with overwrite-in-place typing:
+
+- Typing a character replaces the character in the active slot and advances
+- <kbd>Backspace</kbd> removes the previous character (or the selection)
+- <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> / <kbd>Home</kbd> / <kbd>End</kbd> move the caret
+- <kbd>Ctrl</kbd> + <kbd>V</kbd> pastes; the clipboard is sanitized first, then limited to `length`
+
+## Exposed methods
+
+`focus()`, `blur()`, `clear()` (clears the value and focuses), and `element` (the underlying input).

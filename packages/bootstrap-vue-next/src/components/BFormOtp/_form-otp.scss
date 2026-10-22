@@ -1,29 +1,141 @@
-.b-form-otp {
-  display: inline-flex;
-}
+// Bootstrap 6 OTP input styles, provided locally until Bootstrap 6 SCSS is the build base
+.otp {
+  --otp-size: 2.75rem;
+  --otp-gap: 0.5rem;
+  --otp-border-width: var(--bs-border-width, 1px);
+  --otp-border-color: var(--bs-border-color, #dee2e6);
+  --otp-border-radius: var(--bs-border-radius, 0.375rem);
+  --otp-bg: var(--bs-body-bg, #fff);
+  --otp-color: var(--bs-body-color, #212529);
+  --otp-focus-color: var(--bs-primary, #0d6efd);
+  --otp-font-size: 1.25rem;
 
-.b-form-otp-field {
-  text-align: center;
-  width: 2.5rem;
-  padding-left: 0;
-  padding-right: 0;
+  position: relative;
+  display: inline-block;
 
-  // Remove spinner buttons for number type
-  &[type="number"] {
-    -moz-appearance: textfield;
+  &.otp-sm {
+    --otp-size: 2.25rem;
+    --otp-font-size: 1rem;
+  }
 
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+  &.otp-lg {
+    --otp-size: 3.25rem;
+    --otp-font-size: 1.5rem;
+  }
+
+  &.is-valid {
+    --otp-border-color: var(--bs-success, #198754);
+    --otp-focus-color: var(--bs-success, #198754);
+  }
+
+  &.is-invalid {
+    --otp-border-color: var(--bs-danger, #dc3545);
+    --otp-focus-color: var(--bs-danger, #dc3545);
   }
 }
 
-.b-form-otp-sm .b-form-otp-field {
-  width: 2rem;
+.otp-rendered .otp-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  color: transparent;
+  caret-color: transparent;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+
+  &::selection {
+    color: transparent;
+    background: transparent;
+  }
 }
 
-.b-form-otp-lg .b-form-otp-field {
-  width: 3rem;
+.otp-slots {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--otp-gap);
+  pointer-events: none;
+}
+
+.otp-slot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--otp-size);
+  height: var(--otp-size);
+  font-size: var(--otp-font-size);
+  color: var(--otp-color);
+  background-color: var(--otp-bg);
+  border: var(--otp-border-width) solid var(--otp-border-color);
+  border-radius: var(--otp-border-radius);
+  user-select: none;
+}
+
+.otp-separator {
+  color: var(--bs-secondary-color, #6c757d);
+  user-select: none;
+}
+
+.otp-connected {
+  .otp-slots {
+    gap: 0;
+  }
+
+  .otp-slot {
+    border-radius: 0;
+
+    &:not(:first-child) {
+      margin-inline-start: calc(-1 * var(--otp-border-width));
+    }
+
+    &:first-child {
+      border-start-start-radius: var(--otp-border-radius);
+      border-end-start-radius: var(--otp-border-radius);
+    }
+
+    &:last-child {
+      border-start-end-radius: var(--otp-border-radius);
+      border-end-end-radius: var(--otp-border-radius);
+    }
+  }
+
+  .otp-slot-active {
+    z-index: 1;
+  }
+}
+
+.otp:has(.otp-input:focus-visible) .otp-slot-active {
+  border-color: var(--otp-focus-color);
+  box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--otp-focus-color) 25%, transparent);
+}
+
+.otp-slot-active:not(.otp-slot-filled)::after {
+  content: "";
+  width: 1px;
+  height: 1.25em;
+  background-color: currentcolor;
+  animation: otp-caret-blink 1s step-end infinite;
+}
+
+.otp-input:disabled ~ .otp-slots {
+  opacity: 0.65;
+}
+
+@keyframes otp-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .otp-slot-active:not(.otp-slot-filled)::after {
+    animation: none;
+  }
 }

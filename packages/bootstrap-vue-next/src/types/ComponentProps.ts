@@ -219,27 +219,27 @@ export interface BAutocompleteProps {
   valueField?: string
 }
 
+export type OtpType = 'numeric' | 'alphanumeric' | 'alpha'
+
 export interface BFormOtpProps {
   ariaInvalid?: AriaInvalid
   ariaLabel?: string
   autofocus?: boolean
-  dir?: 'ltr' | 'rtl'
+  connected?: boolean
   disabled?: boolean
   form?: string
+  groups?: readonly number[]
   id?: string
   length?: Numberish
   mask?: boolean
-  modelValue?: string[] | null
+  modelValue?: string | null
   name?: string
-  otp?: boolean
-  placeholder?: string
-  plaintext?: boolean
   readonly?: boolean
   required?: boolean
   separator?: string
   size?: Size
   state?: ValidationState
-  type?: 'text' | 'number'
+  type?: OtpType
 }
 
 export interface BAccordionProps {

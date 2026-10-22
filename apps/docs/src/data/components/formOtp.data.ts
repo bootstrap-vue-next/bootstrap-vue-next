@@ -16,62 +16,58 @@ export default {
           'form',
           'id',
           'name',
-          'placeholder',
-          'plaintext',
           'readonly',
           'required',
           'size',
           'state',
         ]),
-        dir: {
-          type: "'ltr' | 'rtl'",
+        connected: {
+          type: 'boolean',
+          default: false,
+          description: 'Merges the slot borders into a single connected control (`.otp-connected`)',
+        },
+        groups: {
+          type: 'readonly number[]',
           default: undefined,
           description:
-            'The reading direction of the component. If omitted, inherits globally from the application or assumes LTR (left-to-right) reading mode',
+            'Group sizes used to split the slots, with a separator rendered between groups. The last size repeats until `length` is filled',
         },
         length: {
           type: 'Numberish',
           default: 6,
           description:
-            'The number of input fields to render. Must be a positive integer. Defaults to 6 if not specified or invalid',
+            'The number of slots to render. Must be a positive integer. Defaults to 6 if not specified or invalid',
         },
         mask: {
           type: 'boolean',
           default: false,
           description:
-            'When set to `true`, the inputs will be treated as password fields, masking entered characters',
+            'Renders `•` in filled slots instead of the character. Visual only; the value is unchanged',
         },
         modelValue: {
-          type: 'string[] | null',
-          default: '() => []',
-          description: 'The current value of the OTP input as an array of per-field strings',
-        },
-        otp: {
-          type: 'boolean',
-          default: false,
-          description:
-            'When set to `true`, mobile devices will autodetect the OTP from messages or clipboard, and enable the autocomplete field',
+          type: 'string | null',
+          default: "''",
+          description: 'The current code as a single string',
         },
         separator: {
           type: 'string',
-          default: undefined,
-          description:
-            'Optional character or string to render between each input field as a visual separator',
+          default: '·',
+          description: 'Text rendered between groups defined by `groups`',
         },
         type: {
-          type: "'text' | 'number'",
-          default: 'text',
+          type: "'numeric' | 'alphanumeric' | 'alpha'",
+          default: 'numeric',
           description:
-            'The input type for each field. Set to `number` to restrict input to numeric characters only',
+            'Restricts accepted characters and sets the `inputmode` and `pattern` of the input',
         },
       } satisfies PropRecord<keyof BFormOtpProps>,
       emits: {
         complete: {
-          description: 'Emitted when all OTP input fields have been filled',
+          description: 'Emitted when the code reaches `length`',
           args: {
             value: {
-              type: 'string[]',
-              description: 'The completed array of per-field input values',
+              type: 'string',
+              description: 'The completed code',
             },
           },
         },
@@ -79,8 +75,8 @@ export default {
           description: 'Emitted when the OTP value changes',
           args: {
             value: {
-              type: 'string[]',
-              description: 'The current array of per-field input values',
+              type: 'string | null',
+              description: 'The current code',
             },
           },
         },
