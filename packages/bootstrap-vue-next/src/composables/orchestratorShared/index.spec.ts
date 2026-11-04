@@ -245,4 +245,54 @@ describe('buildController', () => {
 
     expect(store.value.size).toBe(0)
   })
+
+  describe('dismissal before the item mounts', () => {
+    const pending = Symbol('pending')
+    // A promise that never settles resolves to `pending` here instead of timing out the test
+    const settleOrPending = <T>(promise: Promise<T>) =>
+      Promise.race([promise, new Promise<typeof pending>((r) => setTimeout(() => r(pending), 20))])
+
+    it('show resolves when an unmounted item is hidden through the store', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+
+      const showPromise = controller.show()
+      controller.hide('clear')
+
+      const result = await settleOrPending(showPromise)
+      expect(result).toBeInstanceOf(BvTriggerableEvent)
+    })
+
+    it('destroy removes an unmounted item that is showing', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+
+      expect(await settleOrPending(controller.destroy())).not.toBe(pending)
+      expect(store.value.size).toBe(0)
+    })
+
+    it('show keeps waiting for the component event once the item is mounted', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+      controller.ref = {} as ComponentPublicInstance<unknown>
+
+      const showPromise = controller.show()
+      controller.set({modelValue: false})
+
+      expect(await settleOrPending(showPromise)).toBe(pending)
+
+      const event = new BvTriggerableEvent('hidden', {trigger: 'clear'})
+      resolve(event)
+      expect((await showPromise).trigger).toBe('clear')
+    })
+  })
 })

@@ -1,6 +1,15 @@
-import {type ComponentPublicInstance, inject, nextTick, provide, readonly, type Ref, ref} from 'vue'
+import {
+  type ComponentPublicInstance,
+  inject,
+  nextTick,
+  provide,
+  readonly,
+  type Ref,
+  ref,
+  watch,
+} from 'vue'
 import type {ComponentController, ControllerKey, PromiseWithController} from '../../types'
-import type {BvTriggerableEvent} from '../../utils'
+import {BvTriggerableEvent} from '../../utils'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 
 /* oxlint-disable-next-line no-explicit-any */
@@ -27,13 +36,39 @@ export const buildController = <
   }
   const findItem = () => store.value.get(id)
 
+  /**
+   * Resolves with the component's own event. An item that is dismissed before it has mounted never
+   * emits one, so in that case it resolves as soon as nothing is mounted and the item is hidden.
+   * Mounted items always go through the component, even when the store entry is what changed
+   */
+  const awaitDismissal = async () => {
+    let stopWatch = () => {}
+    const dismissedWithoutInstance = new Promise<BvTriggerableEvent>((resolve) => {
+      stopWatch = watch(
+        () => findItem()?.value.props.modelValue,
+        (modelValue) => {
+          if (!modelValue && controller.ref === null)
+            resolve(new BvTriggerableEvent('hidden', {ok: null}))
+        },
+        // destroy() hides before it awaits, so the dismissal may already have happened
+        // sync: decide when the dismissal happens, before the orchestrator can mount the item
+        {immediate: true, flush: 'sync'}
+      )
+    })
+    try {
+      return await Promise.race([basePromise, dismissedWithoutInstance])
+    } finally {
+      stopWatch()
+    }
+  }
+
   const controller = {
     id,
     ref: null as RefWithMethods | null,
     async show() {
       const currentModelValue = controller.get()?.value.props.modelValue
       if (currentModelValue) {
-        const event = await basePromise
+        const event = await awaitDismissal()
         return Object.assign(Object.create(event), {
           [Symbol.asyncDispose]: controller.destroy,
         })
@@ -48,7 +83,7 @@ export const buildController = <
       } else {
         controller.set({modelValue: true})
       }
-      const event = await basePromise
+      const event = await awaitDismissal()
       return Object.assign(Object.create(event), {
         [Symbol.asyncDispose]: controller.destroy,
       })
@@ -99,7 +134,7 @@ export const buildController = <
       try {
         if (item.value.props.modelValue) {
           controller.hide('destroy')
-          await basePromise
+          await awaitDismissal()
           await nextTick()
         }
       } finally {
