@@ -69,6 +69,7 @@ export const buildController = <
   const controller = {
     id,
     // A getter so that reading controller.ref inside a watch source is tracked
+    // v100 TODO: expose it as `ref: readonly(instance)`. Exposing a Ref is a breaking change, so it waits for a major
     get ref(): RefWithMethods | null {
       return instance.value
     },
