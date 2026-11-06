@@ -16,6 +16,7 @@ import {useFocus, useToNumber} from '@vueuse/core'
 import type {CommonInputProps} from '../types/FormCommonInputProps'
 import {formGroupKey} from '../utils/keys'
 import {useDebounceFn} from '../utils/debounce'
+import {warn} from '../utils/console'
 import {useStateClass} from './useStateClass'
 
 export const useFormInput = (
@@ -106,10 +107,25 @@ export const useFormInput = (
     })
   })
 
-  const syncDisplayedValue = (nextValue: string) => {
-    if (input.value && input.value.value !== nextValue) {
-      input.value.value = nextValue
+  // Browsers sanitize values that are invalid for the input type (for example
+  // "abc" in a number input becomes ""), so read the value back after writing
+  // it and use that for the model, keeping it equal to what the user sees
+  let hasWarnedSanitized = false
+  const syncDisplayedValue = (nextValue: string): string => {
+    const el = input.value
+    if (!el) return nextValue
+    if (el.value !== nextValue) {
+      el.value = nextValue
     }
+    const actualValue = el.value
+    if (actualValue !== nextValue && !hasWarnedSanitized) {
+      hasWarnedSanitized = true
+      warn(
+        'useFormInput',
+        `The formatter returned "${nextValue}", which the browser changed to "${actualValue}" for this input type`
+      )
+    }
+    return actualValue
   }
 
   const onInput = (evt: Readonly<Event>) => {
@@ -120,16 +136,13 @@ export const useFormInput = (
       return
     }
 
-    const nextModel = formattedValue
-
-    updateModelValue(nextModel)
     // If the formatter changed the value, directly update the input's visual value
     // to keep the displayed text in sync with the model. Without this, if the
     // formatted value equals the previous model value, Vue's reactivity won't
     // re-render the input and the raw (unformatted) text remains visible.
-    if (formattedValue !== value) {
-      syncDisplayedValue(formattedValue)
-    }
+    const nextModel = formattedValue !== value ? syncDisplayedValue(formattedValue) : formattedValue
+
+    updateModelValue(nextModel)
   }
 
   const onChange = (evt: Readonly<Event>) => {
@@ -140,9 +153,9 @@ export const useFormInput = (
       return
     }
 
-    const nextModel = formattedValue
+    const nextModel = formattedValue !== value ? syncDisplayedValue(formattedValue) : formattedValue
     if (modelValue.value !== nextModel) {
-      updateModelValue(formattedValue, true)
+      updateModelValue(nextModel, true)
     }
   }
 
@@ -157,8 +170,12 @@ export const useFormInput = (
 
     const {value} = evt.target as HTMLInputElement
     const formattedValue = _formatValue(value, evt, true)
+    const trimmedValue = modelModifiers.trim ? formattedValue.trim() : formattedValue
 
-    const nextModel = modelModifiers.trim ? formattedValue.trim() : formattedValue
+    // If the formatter or trim changed the displayed text, directly sync the DOM.
+    // This handles the case where lazyFormatter defers formatting to blur and the
+    // formatted value equals the current model (so Vue's reactivity won't re-render).
+    const nextModel = trimmedValue !== value ? syncDisplayedValue(trimmedValue) : trimmedValue
 
     // Cancel before modelValue.value comparison and update. The cancelled
     // update will never land, so the in-flight value must be dropped too --
@@ -167,13 +184,6 @@ export const useFormInput = (
     pendingValue.value = null
     if (modelValue.value !== nextModel) {
       updateModelValue(nextModel, true, true)
-    }
-
-    // If the formatter or trim changed the displayed text, directly sync the DOM.
-    // This handles the case where lazyFormatter defers formatting to blur and the
-    // formatted value equals the current model (so Vue's reactivity won't re-render).
-    if (nextModel !== value) {
-      syncDisplayedValue(nextModel)
     }
   }
 
