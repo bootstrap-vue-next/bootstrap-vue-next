@@ -1,7 +1,10 @@
 import {describe, expect, it, vi} from 'vitest'
 import {type ComponentPublicInstance, ref, type Ref} from 'vue'
 import {buildController} from '.'
-import type {ControllerKey, ModalOrchestratorArrayValue} from '../../types/ComponentOrchestratorTypes'
+import type {
+  ControllerKey,
+  ModalOrchestratorArrayValue,
+} from '../../types/ComponentOrchestratorTypes'
 import {BvTriggerableEvent} from '../../utils'
 
 type ModalStore = Ref<Map<ControllerKey, Ref<ModalOrchestratorArrayValue>>>
@@ -244,5 +247,92 @@ describe('buildController', () => {
     await destroyPromise
 
     expect(store.value.size).toBe(0)
+  })
+
+  describe('dismissal before the item mounts', () => {
+    const pending = Symbol('pending')
+    // A promise that never settles resolves to `pending` here instead of timing out the test
+    const settleOrPending = <T>(promise: Promise<T>) =>
+      Promise.race([promise, new Promise<typeof pending>((r) => setTimeout(() => r(pending), 20))])
+
+    it('show resolves when an unmounted item is hidden through the store', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+
+      const showPromise = controller.show()
+      controller.hide('clear')
+
+      const result = await settleOrPending(showPromise)
+      expect(result).toBeInstanceOf(BvTriggerableEvent)
+    })
+
+    it('destroy removes an unmounted item that is showing', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+
+      expect(await settleOrPending(controller.destroy())).not.toBe(pending)
+      expect(store.value.size).toBe(0)
+    })
+
+    it('show keeps waiting for the component event once the item is mounted', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+      controller.ref = {} as ComponentPublicInstance<unknown>
+
+      const showPromise = controller.show()
+      controller.set({modelValue: false})
+
+      expect(await settleOrPending(showPromise)).toBe(pending)
+
+      const event = new BvTriggerableEvent('hidden', {trigger: 'clear'})
+      resolve(event)
+      expect((await showPromise).trigger).toBe('clear')
+    })
+
+    it('show resolves when the component unmounts before its hide finishes', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+      controller.ref = {} as ComponentPublicInstance<unknown>
+
+      const showPromise = controller.show()
+      // Hidden while mounted: the component owns the event, so nothing resolves yet
+      controller.set({modelValue: false})
+      expect(await settleOrPending(showPromise)).toBe(pending)
+
+      // The orchestrator unmounts it mid-transition, so hidden is never emitted
+      controller.ref = null
+
+      const result = await settleOrPending(showPromise)
+      expect(result).toBeInstanceOf(BvTriggerableEvent)
+    })
+
+    it('show keeps waiting when the component unmounts while still shown', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+      controller.ref = {} as ComponentPublicInstance<unknown>
+
+      const showPromise = controller.show()
+      controller.ref = null
+      expect(await settleOrPending(showPromise)).toBe(pending)
+
+      // Hiding it afterwards still settles, since nothing is mounted to emit
+      controller.hide()
+      expect(await settleOrPending(showPromise)).toBeInstanceOf(BvTriggerableEvent)
+    })
   })
 })

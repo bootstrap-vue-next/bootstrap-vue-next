@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {computed, defineComponent, h, nextTick, ref, watchEffect} from 'vue'
+import {computed, defineComponent, h, nextTick, onMounted, ref, watchEffect} from 'vue'
 import {mount} from '@vue/test-utils'
 import BApp from '../../components/BApp/BApp.vue'
 import BCollapse from '../../components/BCollapse/BCollapse.vue'
@@ -376,6 +376,33 @@ describe('useToast', () => {
       await nextTick()
 
       expect(toastRef?.get()?.value.props.modelValue).toBe(false)
+    })
+  })
+
+  describe('dismissal before the orchestrator renders the toast', () => {
+    it('settles show()', async () => {
+      let dismissed: Promise<unknown> | undefined
+      const TestComponent = defineComponent({
+        setup() {
+          const {create, hide} = useToast()
+          // BApp is the parent, so this runs before the orchestrator gets to render the toast
+          onMounted(() => {
+            dismissed = create({id: 'dismissed-early', modelValue: true}).show()
+            hide('route-change', 'dismissed-early')
+          })
+          return () => h('div')
+        },
+      })
+
+      mount(BApp, {slots: {default: () => h(TestComponent)}})
+      await nextTick()
+
+      let settled = false
+      void dismissed?.then(() => {
+        settled = true
+      })
+      await new Promise((resolve) => setTimeout(resolve, 20))
+      expect(settled).toBe(true)
     })
   })
 })

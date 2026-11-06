@@ -1,6 +1,16 @@
-import {type ComponentPublicInstance, inject, nextTick, provide, readonly, type Ref, ref} from 'vue'
+import {
+  type ComponentPublicInstance,
+  inject,
+  nextTick,
+  provide,
+  readonly,
+  type Ref,
+  ref,
+  shallowRef,
+  watch,
+} from 'vue'
 import type {ComponentController, ControllerKey, PromiseWithController} from '../../types'
-import type {BvTriggerableEvent} from '../../utils'
+import {BvTriggerableEvent} from '../../utils'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 
 /* oxlint-disable-next-line no-explicit-any */
@@ -27,13 +37,49 @@ export const buildController = <
   }
   const findItem = () => store.value.get(id)
 
+  // Backs controller.ref. It has to be reactive so awaitDismissal notices the component unmounting,
+  // shallow because component instances must not be made deeply reactive
+  const instance = shallowRef<RefWithMethods | null>(null)
+
+  /**
+   * Resolves with the component's own event. A hidden item with no mounted component never emits
+   * one: it was dismissed before it mounted, or it unmounted before its hide finished. In that case
+   * it resolves on its own. Mounted items always go through the component
+   */
+  const awaitDismissal = async () => {
+    let stopWatch = () => {}
+    const dismissedWithoutInstance = new Promise<BvTriggerableEvent>((resolve) => {
+      stopWatch = watch(
+        [() => findItem()?.value.props.modelValue, instance],
+        ([modelValue, mounted]) => {
+          if (!modelValue && mounted === null) resolve(new BvTriggerableEvent('hidden', {ok: null}))
+        },
+        // immediate: destroy() hides before it awaits, so the dismissal may already have happened.
+        // sync: decide before the orchestrator can mount the item
+        {immediate: true, flush: 'sync'}
+      )
+    })
+    try {
+      return await Promise.race([basePromise, dismissedWithoutInstance])
+    } finally {
+      stopWatch()
+    }
+  }
+
   const controller = {
     id,
-    ref: null as RefWithMethods | null,
+    // A getter so the public API keeps returning the instance itself rather than the ref
+    // v100 TODO: expose it as `ref: readonly(instance)`. Exposing a Ref is a breaking change, so it waits for a major
+    get ref(): RefWithMethods | null {
+      return instance.value
+    },
+    set ref(value: RefWithMethods | null) {
+      instance.value = value
+    },
     async show() {
       const currentModelValue = controller.get()?.value.props.modelValue
       if (currentModelValue) {
-        const event = await basePromise
+        const event = await awaitDismissal()
         return Object.assign(Object.create(event), {
           [Symbol.asyncDispose]: controller.destroy,
         })
@@ -48,7 +94,7 @@ export const buildController = <
       } else {
         controller.set({modelValue: true})
       }
-      const event = await basePromise
+      const event = await awaitDismissal()
       return Object.assign(Object.create(event), {
         [Symbol.asyncDispose]: controller.destroy,
       })
@@ -99,7 +145,7 @@ export const buildController = <
       try {
         if (item.value.props.modelValue) {
           controller.hide('destroy')
-          await basePromise
+          await awaitDismissal()
           await nextTick()
         }
       } finally {
