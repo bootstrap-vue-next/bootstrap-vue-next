@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.2.2...bootstrapvuenext-v1.2.3) (2026-11-06)
+
+
+### Bug Fixes
+
+* **orchestrator:** settle show() and destroy() for items dismissed before they mount Fixes [#3338](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3338) ([5c467a3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/5c467a39a289975b97448210704d930100de0500))
+
 ## [1.2.2](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.2.1...bootstrapvuenext-v1.2.2) (2026-09-25)
 
 
