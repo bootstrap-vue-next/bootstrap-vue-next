@@ -50,7 +50,7 @@ export const buildController = <
     let stopWatch = () => {}
     const dismissedWithoutInstance = new Promise<BvTriggerableEvent>((resolve) => {
       stopWatch = watch(
-        [() => findItem()?.value.props.modelValue, () => controller.ref],
+        [() => findItem()?.value.props.modelValue, instance],
         ([modelValue, mounted]) => {
           if (!modelValue && mounted === null) resolve(new BvTriggerableEvent('hidden', {ok: null}))
         },
@@ -68,7 +68,7 @@ export const buildController = <
 
   const controller = {
     id,
-    // A getter so that reading controller.ref inside a watch source is tracked
+    // A getter so the public API keeps returning the instance itself rather than the ref
     // v100 TODO: expose it as `ref: readonly(instance)`. Exposing a Ref is a breaking change, so it waits for a major
     get ref(): RefWithMethods | null {
       return instance.value
