@@ -6,6 +6,7 @@ import {
   readonly,
   type Ref,
   ref,
+  shallowRef,
   watch,
 } from 'vue'
 import type {ComponentController, ControllerKey, PromiseWithController} from '../../types'
@@ -36,22 +37,25 @@ export const buildController = <
   }
   const findItem = () => store.value.get(id)
 
+  // Backs controller.ref. It has to be reactive so awaitDismissal notices the component unmounting,
+  // shallow because component instances must not be made deeply reactive
+  const instance = shallowRef<RefWithMethods | null>(null)
+
   /**
-   * Resolves with the component's own event. An item that is dismissed before it has mounted never
-   * emits one, so in that case it resolves as soon as nothing is mounted and the item is hidden.
-   * Mounted items always go through the component, even when the store entry is what changed
+   * Resolves with the component's own event. A hidden item with no mounted component never emits
+   * one: it was dismissed before it mounted, or it unmounted before its hide finished. In that case
+   * it resolves on its own. Mounted items always go through the component
    */
   const awaitDismissal = async () => {
     let stopWatch = () => {}
     const dismissedWithoutInstance = new Promise<BvTriggerableEvent>((resolve) => {
       stopWatch = watch(
-        () => findItem()?.value.props.modelValue,
-        (modelValue) => {
-          if (!modelValue && controller.ref === null)
-            resolve(new BvTriggerableEvent('hidden', {ok: null}))
+        [() => findItem()?.value.props.modelValue, () => controller.ref],
+        ([modelValue, mounted]) => {
+          if (!modelValue && mounted === null) resolve(new BvTriggerableEvent('hidden', {ok: null}))
         },
-        // destroy() hides before it awaits, so the dismissal may already have happened
-        // sync: decide when the dismissal happens, before the orchestrator can mount the item
+        // immediate: destroy() hides before it awaits, so the dismissal may already have happened.
+        // sync: decide before the orchestrator can mount the item
         {immediate: true, flush: 'sync'}
       )
     })
@@ -64,7 +68,13 @@ export const buildController = <
 
   const controller = {
     id,
-    ref: null as RefWithMethods | null,
+    // A getter so that reading controller.ref inside a watch source is tracked
+    get ref(): RefWithMethods | null {
+      return instance.value
+    },
+    set ref(value: RefWithMethods | null) {
+      instance.value = value
+    },
     async show() {
       const currentModelValue = controller.get()?.value.props.modelValue
       if (currentModelValue) {

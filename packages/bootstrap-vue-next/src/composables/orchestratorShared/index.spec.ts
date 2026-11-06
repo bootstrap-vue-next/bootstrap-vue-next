@@ -1,7 +1,10 @@
 import {describe, expect, it, vi} from 'vitest'
 import {type ComponentPublicInstance, ref, type Ref} from 'vue'
 import {buildController} from '.'
-import type {ControllerKey, ModalOrchestratorArrayValue} from '../../types/ComponentOrchestratorTypes'
+import type {
+  ControllerKey,
+  ModalOrchestratorArrayValue,
+} from '../../types/ComponentOrchestratorTypes'
 import {BvTriggerableEvent} from '../../utils'
 
 type ModalStore = Ref<Map<ControllerKey, Ref<ModalOrchestratorArrayValue>>>
@@ -293,6 +296,43 @@ describe('buildController', () => {
       const event = new BvTriggerableEvent('hidden', {trigger: 'clear'})
       resolve(event)
       expect((await showPromise).trigger).toBe('clear')
+    })
+
+    it('show resolves when the component unmounts before its hide finishes', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+      controller.ref = {} as ComponentPublicInstance<unknown>
+
+      const showPromise = controller.show()
+      // Hidden while mounted: the component owns the event, so nothing resolves yet
+      controller.set({modelValue: false})
+      expect(await settleOrPending(showPromise)).toBe(pending)
+
+      // The orchestrator unmounts it mid-transition, so hidden is never emitted
+      controller.ref = null
+
+      const result = await settleOrPending(showPromise)
+      expect(result).toBeInstanceOf(BvTriggerableEvent)
+    })
+
+    it('show keeps waiting when the component unmounts while still shown', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+      controller.ref = {} as ComponentPublicInstance<unknown>
+
+      const showPromise = controller.show()
+      controller.ref = null
+      expect(await settleOrPending(showPromise)).toBe(pending)
+
+      // Hiding it afterwards still settles, since nothing is mounted to emit
+      controller.hide()
+      expect(await settleOrPending(showPromise)).toBeInstanceOf(BvTriggerableEvent)
     })
   })
 })
