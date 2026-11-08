@@ -178,6 +178,7 @@ export const useShowHide = (
   let _Resolve: ((value: boolean | string) => void) | undefined
   let _Promise: Promise<boolean | string> | undefined
   let _resolveOnHide: boolean | undefined
+  let hideInProgress = false
   const show = (resolveOnHide: boolean = false): Promise<boolean | string> => {
     if (showRef.value && !hideTimeout && !_Promise) return Promise.resolve(true)
     _resolveOnHide = resolveOnHide
@@ -204,6 +205,7 @@ export const useShowHide = (
       _Resolve?.('show-prevented')
       return _Promise
     }
+    hideInProgress = false
     if (hideTimeout) {
       clearTimeout(hideTimeout)
       hideTimeout = undefined
@@ -245,13 +247,13 @@ export const useShowHide = (
 
   let leaveTrigger: string | undefined
   const hide = (trigger?: string, noTriggerEmit?: boolean): Promise<string> => {
+    if (hideInProgress) return (_Promise as Promise<string> | undefined) ?? Promise.resolve('')
     if (!showRef.value && !showTimeout && !renderRef.value) return Promise.resolve('')
     if (!_Promise)
       _Promise = new Promise<string>((resolve) => {
         ;(_Resolve as (value: string | PromiseLike<string>) => void) = resolve
       })
     if (typeof trigger !== 'string') trigger = undefined
-    leaveTrigger = trigger
     const event = buildTriggerableEvent('hide', {cancelable: true, trigger})
     const event2 = buildTriggerableEvent(trigger || 'ignore', {cancelable: true, trigger})
     if (
@@ -260,8 +262,12 @@ export const useShowHide = (
     ) {
       emit('hide-prevented', buildTriggerableEvent('hide-prevented', {trigger}))
       _Resolve?.('hide-prevented')
-      return _Promise as Promise<string>
+      const promise = _Promise as Promise<string>
+      _Promise = undefined
+      _Resolve = undefined
+      return promise
     }
+    hideInProgress = true
     if (showTimeout) {
       clearTimeout(showTimeout)
       showTimeout = undefined
@@ -272,6 +278,7 @@ export const useShowHide = (
     emit('hide', event)
 
     if (event.defaultPrevented || event2.defaultPrevented) {
+      hideInProgress = false
       emit('hide-prevented', buildTriggerableEvent('hide-prevented', {trigger}))
       if (!modelValue.value) {
         nextTick(() => {
@@ -280,8 +287,12 @@ export const useShowHide = (
         })
       }
       _Resolve?.('hide-prevented')
-      return _Promise as Promise<string>
+      const promise = _Promise as Promise<string>
+      _Promise = undefined
+      _Resolve = undefined
+      return promise
     }
+    leaveTrigger = trigger
     trapActive.value = false
     if (showTimeout) {
       clearTimeout(showTimeout)
