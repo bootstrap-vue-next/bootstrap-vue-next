@@ -1,5 +1,5 @@
 import {enableAutoUnmount, mount} from '@vue/test-utils'
-import {afterEach, describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import BDropdown from './BDropdown.vue'
 import BButton from '../BButton/BButton.vue'
 import BButtonGroup from '../BButton/BButtonGroup.vue'
@@ -742,6 +742,30 @@ describe('dropdown', () => {
       const $span = $bbutton.get('span')
       expect($span.text()).toBe('Toggle dropdown')
     })
+  })
+
+  it('closes the open menu when disabled and keeps it closed when re-enabled', async () => {
+    const wrapper = mount(BDropdown, {props: {modelValue: true}})
+    expect(wrapper.get('ul').isVisible()).toBe(true)
+
+    await wrapper.setProps({disabled: true})
+    expect(wrapper.get('button').attributes('aria-expanded')).toBe('false')
+    await vi.waitFor(() => {
+      expect(wrapper.emitted('update:modelValue')).toEqual([[false]])
+    })
+
+    await wrapper.setProps({disabled: false})
+    expect(wrapper.get('button').attributes('aria-expanded')).toBe('false')
+  })
+
+  it('ignores show and toggle while disabled', async () => {
+    const wrapper = mount(BDropdown, {props: {disabled: true}})
+
+    expect(await wrapper.vm.show()).toBe(false)
+    expect(await wrapper.vm.toggle()).toBe(false)
+    expect(wrapper.emitted('show')).toBeUndefined()
+    expect(wrapper.emitted('toggle')).toBeUndefined()
+    expect(wrapper.get('button').attributes('aria-expanded')).toBe('false')
   })
 
   describe('menu (ul) additional attributes', () => {
