@@ -99,6 +99,7 @@ All events receive a `BvTriggerableEvent` object with the following properties:
 | `componentId`      | Property | The modal's ID                                                                                                                                                                                     |
 | `cancelable`       | Property | Whether the event can be cancelled                                                                                                                                                                 |
 | `defaultPrevented` | Property | Whether `preventDefault()` has been called                                                                                                                                                         |
+| `signal`           | Property | An `AbortSignal`, aborted once the modal commits to its next show or hide, or unmounts. See [Async work in event handlers](#async-work-in-event-handlers)                                          |
 
 You can set the value of `trigger` by passing an argument to the component's `hide()` method for
 advanced control (i.e. detecting what button or action triggered the modal to hide).
@@ -108,6 +109,30 @@ advanced control (i.e. detecting what button or action triggered the modal to hi
 Action events (`ok`, `cancel`, `close`) are only emitted when the corresponding built-in buttons are clicked. If you provide custom buttons via slots, these events will not be emitted automatically - use the `hide` event instead.
 
 :::
+
+### Async work in event handlers
+
+`preventDefault()` has to be called synchronously, so to validate or save before closing, prevent the
+event, do the work, then call `hide()` yourself. Pass `event.signal` to that work: it is aborted if
+the modal is closed another way (for example <kbd>Esc</kbd> or the **Cancel** button) or unmounts
+before the work finishes. A request that is refused (such as a backdrop click with
+`no-close-on-backdrop`) does not abort it.
+
+```ts
+const onOk = async (event: BvTriggerableEvent) => {
+  event.preventDefault()
+  try {
+    await fetch('/api/save', {method: 'POST', body, signal: event.signal})
+    modal.value?.hide('saved')
+  } catch (error) {
+    if (event.signal?.aborted) return // closed while saving: nothing left to do
+    throw error
+  }
+}
+```
+
+If a listener does not prevent the event, the modal commits to hiding right after it, so
+`event.signal` is already aborted.
 
 ## Modal content
 

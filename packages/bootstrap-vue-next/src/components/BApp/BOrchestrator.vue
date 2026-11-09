@@ -25,6 +25,7 @@
               :ref="setRef"
               initial-animation
               :teleport-disabled="true"
+              @update:model-value="(value: boolean | number) => syncModelValue(id, value)"
               @hide="
                 (e: BvTriggerableEvent) => {
                   setEventOk(e)
@@ -67,9 +68,27 @@ import {warn} from '../../utils/console'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BvTriggerableEvent} from '../../utils'
-import type {BOrchestratorProps, ContainerPosition} from '../../types'
+import type {BOrchestratorProps, ContainerPosition, ControllerKey} from '../../types'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import type {ValueInMapRecord} from '../../composables/orchestratorShared'
+
+/**
+ * Keeps the store's modelValue in step with the component, which changes it itself when it is
+ * shown or hidden through its own methods, its triggers, or a timeout. Controllers decide whether
+ * a component is open from the store
+ */
+const syncModelValue = (id: ControllerKey, value: boolean | number): void => {
+  const store = orchestratorRegistry?.store.value
+  if (!store) return
+  for (const items of [store.modal, store.toast, store.popover, store.tooltip]) {
+    const item = items.get(id)
+    if (!item) continue
+    if (item.value.props.modelValue !== value) {
+      item.value = {...item.value, props: {...item.value.props, modelValue: value}} as never
+    }
+    return
+  }
+}
 
 const setEventOk = (event: BvTriggerableEvent): void => {
   event.ok = event.trigger === 'ok' ? true : event.trigger === 'cancel' ? false : null

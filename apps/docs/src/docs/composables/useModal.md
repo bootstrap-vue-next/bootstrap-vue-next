@@ -65,9 +65,9 @@ This object contains the following properties:
 
 The promise also contains functions to control the modal:
 
-- `show: () => void`
+- `show: (options?: {signal?: AbortSignal}) => Promise<BvTriggerableEvent>`
 
-  This function shows the modal.
+  This function shows the modal. See [Cancelling with a signal](#cancelling-with-a-signal) for `signal`.
 
 - `hide: (trigger?: string) => void`
 
@@ -107,6 +107,23 @@ You can also use the TypeScript `await using` syntax for automatic disposal when
 await using modal = create({title: 'Hello World!'})
 await modal.show()
 ```
+
+### Cancelling with a signal
+
+Pass an `AbortSignal` to `.show()` to close the modal when something else ends first, such as the
+component that opened it unmounting. When the signal aborts, the modal hides with the trigger
+`'abort'` and the promise resolves. If the signal is already aborted, the modal is not shown.
+
+```ts
+const scope = new AbortController()
+onBeforeUnmount(() => scope.abort())
+
+const result = await create({title: 'Discard changes?'}).show({signal: scope.signal})
+if (result.trigger === 'ok') discard()
+```
+
+Built-in signals work too: `AbortSignal.timeout(30_000)` closes an unanswered dialog, and
+`AbortSignal.any([a, b])` closes it on whichever comes first.
 
 ## Globally Hiding Modals
 

@@ -173,6 +173,229 @@ describe('buildController', () => {
     expect(store.value.size).toBe(0)
   })
 
+  describe('show({signal})', () => {
+    type RefWithMethods = ComponentPublicInstance<unknown> & {
+      show?: () => void
+      hide?: (trigger?: string, noEmit?: boolean) => void
+      toggle?: () => void
+    }
+
+    it('does not show and resolves with trigger abort when the signal is already aborted', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: false})
+
+      const result = await controller.show({signal: AbortSignal.abort()})
+
+      expect(store.value.get(_self)?.value.props.modelValue).toBe(false)
+      expect(result).toBeInstanceOf(BvTriggerableEvent)
+      expect(result.trigger).toBe('abort')
+      expect(result.ok).toBeNull()
+      expect(typeof result[Symbol.asyncDispose]).toBe('function')
+    })
+
+    it('hides the component with trigger abort when the signal aborts', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const hideMock = vi.fn<(trigger?: string, noEmit?: boolean) => void>()
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: false})
+      controller.ref = {show: vi.fn<() => void>(), hide: hideMock} as unknown as RefWithMethods
+
+      const scope = new AbortController()
+      const showPromise = controller.show({signal: scope.signal})
+      scope.abort()
+
+      expect(hideMock).toHaveBeenCalledExactlyOnceWith('abort', true)
+      resolve(new BvTriggerableEvent('hidden', {trigger: 'abort'}))
+      expect((await showPromise).trigger).toBe('abort')
+    })
+
+    it('hides an already visible component when the signal is already aborted', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+
+      const showPromise = controller.show({signal: AbortSignal.abort()})
+
+      expect(store.value.get(_self)?.value.props.modelValue).toBe(false)
+      resolve(new BvTriggerableEvent('hidden', {trigger: 'abort'}))
+      expect((await showPromise).trigger).toBe('abort')
+    })
+
+    it('hides a component shown through its own show() when the signal is already aborted', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const hideMock = vi.fn<(trigger?: string, noEmit?: boolean) => void>()
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      // mounted and visible, but the stored modelValue was never updated
+      pushItem(store, _self, {modelValue: false})
+      controller.ref = {visible: true, hide: hideMock} as unknown as RefWithMethods
+
+      const showPromise = controller.show({signal: AbortSignal.abort()})
+
+      expect(hideMock).toHaveBeenCalledExactlyOnceWith('abort', true)
+      resolve(new BvTriggerableEvent('hidden', {trigger: 'abort'}))
+      expect((await showPromise).trigger).toBe('abort')
+    })
+
+    it('hides when a show listener aborts the signal during the show request', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const scope = new AbortController()
+      const calls: string[] = []
+      const hideMock = vi.fn<(trigger?: string, noEmit?: boolean) => void>(() => {
+        calls.push('hide')
+      })
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: false})
+      controller.ref = {
+        show: () => {
+          calls.push('show')
+          scope.abort() // as an onShow listener would
+        },
+        hide: hideMock,
+      } as unknown as RefWithMethods
+
+      const showPromise = controller.show({signal: scope.signal})
+
+      // the first hide runs before the show is committed, so it is repeated afterwards
+      expect(calls).toEqual(['show', 'hide', 'hide'])
+      expect(hideMock).toHaveBeenLastCalledWith('abort', true)
+      resolve(new BvTriggerableEvent('hidden', {trigger: 'abort'}))
+      expect((await showPromise).trigger).toBe('abort')
+    })
+
+    it('settles when the signal aborts before the component mounts', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: false})
+
+      const scope = new AbortController()
+      const showPromise = controller.show({signal: scope.signal})
+      expect(store.value.get(_self)?.value.props.modelValue).toBe(true)
+      scope.abort()
+
+      expect(store.value.get(_self)?.value.props.modelValue).toBe(false)
+      const result = await showPromise
+      expect(result.trigger).toBe('abort')
+      expect(result.ok).toBeNull()
+    })
+
+    it('hides a component without a visible flag that this controller showed', async () => {
+      const store = newStore()
+      const _self = Symbol('test-toast')
+      const hideMock = vi.fn<(trigger?: string, noEmit?: boolean) => void>()
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: false})
+      controller.ref = {show: vi.fn<() => void>(), hide: hideMock} as unknown as RefWithMethods
+
+      const first = controller.show()
+      const second = controller.show({signal: AbortSignal.abort()})
+
+      expect(hideMock).toHaveBeenCalledExactlyOnceWith('abort', true)
+      resolve(new BvTriggerableEvent('hidden', {trigger: 'abort'}))
+      expect((await first).trigger).toBe('abort')
+      expect((await second).trigger).toBe('abort')
+    })
+
+    it('stops listening once the promise settles', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const hideMock = vi.fn<(trigger?: string, noEmit?: boolean) => void>()
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: false})
+      controller.ref = {show: vi.fn<() => void>(), hide: hideMock} as unknown as RefWithMethods
+
+      const scope = new AbortController()
+      const showPromise = controller.show({signal: scope.signal})
+      resolve(new BvTriggerableEvent('hidden', {trigger: 'ok'}))
+      await showPromise
+      scope.abort()
+
+      expect(hideMock).not.toHaveBeenCalled()
+    })
+  })
+
+  it('destroy waits for a component shown through its ref before removing it', async () => {
+    const store = newStore()
+    const _self = Symbol('test-modal')
+    const hideMock = vi.fn<(trigger?: string, noEmit?: boolean) => void>()
+    const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+    // mounted: show() goes through the ref, so the stored modelValue stays false
+    pushItem(store, _self, {modelValue: false})
+    controller.ref = {
+      show: vi.fn<() => void>(),
+      hide: hideMock,
+    } as unknown as ComponentPublicInstance<unknown> & {
+      show?: () => void
+      hide?: (trigger?: string, noEmit?: boolean) => void
+    }
+
+    const showPromise = controller.show()
+    const destroyPromise = controller.destroy()
+
+    expect(hideMock).toHaveBeenCalledExactlyOnceWith('destroy', true)
+    expect(store.value.size).toBe(1)
+    resolve(new BvTriggerableEvent('hidden', {trigger: 'destroy'}))
+    await destroyPromise
+    expect(store.value.size).toBe(0)
+    expect((await showPromise).trigger).toBe('destroy')
+  })
+
+  it('destroy settles a pending show when nothing can emit for it', async () => {
+    const store = newStore()
+    const _self = Symbol('test-modal')
+    const {controller} = buildController<unknown, ModalStore>(_self, store)
+    pushItem(store, _self, {modelValue: false})
+
+    const showPromise = controller.show() // never mounts
+    await controller.destroy()
+
+    expect(store.value.size).toBe(0)
+    expect((await showPromise).trigger).toBe('destroy')
+  })
+
+  it('show waits for a new dismissal each time the component is shown again', async () => {
+    const store = newStore()
+    const _self = Symbol('test-modal')
+    const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+    pushItem(store, _self, {modelValue: false})
+
+    const first = controller.show()
+    resolve(new BvTriggerableEvent('hidden', {trigger: 'ok'}))
+    expect((await first).trigger).toBe('ok')
+    controller.set({modelValue: false} as never) // as the orchestrator does when the component hides
+
+    let secondSettled = false
+    const second = controller.show().then((e) => {
+      secondSettled = true
+      return e
+    })
+    await Promise.resolve()
+    expect(secondSettled).toBe(false)
+    resolve(new BvTriggerableEvent('hidden', {trigger: 'cancel'}))
+    expect((await second).trigger).toBe('cancel')
+  })
+
+  it('hide settles a show whose component has not mounted', async () => {
+    const store = newStore()
+    const _self = Symbol('test-modal')
+    const {controller} = buildController<unknown, ModalStore>(_self, store)
+    pushItem(store, _self, {modelValue: false})
+
+    const showPromise = controller.show()
+    controller.hide('cancel')
+
+    expect(store.value.get(_self)?.value.props.modelValue).toBe(false)
+    const result = await showPromise
+    expect(result.trigger).toBe('cancel')
+    expect(result.ok).toBeNull()
+  })
+
   it('hide sets modelValue to false in the store', () => {
     const store = newStore()
     const _self = Symbol('test-modal')

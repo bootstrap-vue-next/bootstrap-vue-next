@@ -6,6 +6,17 @@ import BPopover from '../BPopover/BPopover.vue'
 describe('tooltip', () => {
   enableAutoUnmount(afterEach)
 
+  it('forwards the trigger through its exposed hide', () => {
+    const wrapper = mount(BTooltip, {props: {modelValue: true}})
+    ;(wrapper.vm as unknown as {hide: (trigger?: string, noTriggerEmit?: boolean) => void}).hide(
+      'abort',
+      true
+    )
+    const hide = wrapper.emitted('hide')?.[0]?.[0] as {trigger: string | null} | undefined
+    expect(hide?.trigger).toBe('abort')
+    expect(wrapper.emitted('abort')).toBeUndefined()
+  })
+
   it('renders BPopover child component', () => {
     const wrapper = mount(BTooltip, {props: {modelValue: true}})
     expect(wrapper.findComponent(BPopover).exists()).toBe(true)

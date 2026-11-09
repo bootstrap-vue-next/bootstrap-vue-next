@@ -1,4 +1,4 @@
-import {describe, expect, it} from 'vitest'
+import {describe, expect, it, vi} from 'vitest'
 import {computed, defineComponent, h, nextTick, ref, watchEffect} from 'vue'
 import {mount} from '@vue/test-utils'
 import BApp from '../../components/BApp/BApp.vue'
@@ -255,5 +255,54 @@ describe('useModal', () => {
 
     await modalRef?.destroy()
     expect(modalStore?.value.modal.has(modalId)).toBe(false)
+  })
+
+  it('keeps the stored modelValue in step when the modal hides itself, so show() opens it again', async () => {
+    let modal: ReturnType<ReturnType<typeof useModal>['create']> | undefined
+    const TestComponent = defineComponent({
+      setup() {
+        modal = useModal().create({id: 'sync-modal', title: 'Sync'})
+        return () => h('div')
+      },
+    })
+    mount(BApp, {attachTo: document.body, slots: {default: () => h(TestComponent)}})
+    await nextTick()
+    const stored = () => modal?.get()?.value.props.modelValue
+
+    modal?.show()
+    await vi.waitFor(() => expect(stored()).toBe(true))
+
+    // hidden through the component itself, not the controller
+    const component = modal?.ref as unknown as {hide: (trigger?: string) => void} | null
+    expect(component).not.toBeNull()
+    component?.hide('close')
+    await vi.waitFor(() => expect(stored()).toBe(false))
+
+    modal?.show()
+    await vi.waitFor(() => expect(stored()).toBe(true))
+  })
+
+  it('destroy closes an open modal and settles its show()', async () => {
+    let modal: ReturnType<ReturnType<typeof useModal>['create']> | undefined
+    const TestComponent = defineComponent({
+      setup() {
+        modal = useModal().create({id: 'destroy-open-modal', title: 'Destroy'})
+        return () => h('div')
+      },
+    })
+    mount(BApp, {
+      attachTo: document.body,
+      // real transitions, so the modal emits hidden
+      global: {stubs: {'transition': false, 'transition-group': false}},
+      slots: {default: () => h(TestComponent)},
+    })
+    await nextTick()
+
+    const shown = modal?.show()
+    await vi.waitFor(() => expect(modal?.get()?.value.props.modelValue).toBe(true))
+    await modal?.destroy()
+
+    expect(modal?.get()).toBeUndefined()
+    expect((await shown)?.trigger).toBe('destroy')
   })
 })

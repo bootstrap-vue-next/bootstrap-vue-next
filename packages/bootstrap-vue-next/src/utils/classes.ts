@@ -68,6 +68,15 @@ export class BvEvent {
 export class BvTriggerableEvent extends BvEvent {
   readonly trigger: string | null = null
   ok: boolean | null | undefined = undefined
+  /**
+   * On show and hide request events (`show`, `hide`, `ok`, `cancel`, `close`, and the `-prevented`
+   * events): aborted once the component commits to its next show or hide, or unmounts. Pass it to
+   * async work started from a listener that prevents the event (for example validating in `ok`), so
+   * that work stops if the component is closed or reopened another way in the meantime.
+   * If the listener does not prevent the event, the component commits right after it, and the signal
+   * is already aborted. `null` on other events
+   */
+  readonly signal: AbortSignal | null = null
 
   constructor(
     eventType: string,
@@ -85,6 +94,7 @@ export class BvTriggerableEvent extends BvEvent {
       ...super.Defaults,
       trigger: null,
       ok: undefined,
+      signal: null,
     }
   }
 }

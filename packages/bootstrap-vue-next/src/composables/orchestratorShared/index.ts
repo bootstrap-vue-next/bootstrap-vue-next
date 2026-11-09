@@ -9,7 +9,12 @@ import {
   shallowRef,
   watch,
 } from 'vue'
-import type {ComponentController, ControllerKey, PromiseWithController} from '../../types'
+import type {
+  ComponentController,
+  ControllerKey,
+  OrchestratorShowOptions,
+  PromiseWithController,
+} from '../../types'
 import {BvTriggerableEvent} from '../../utils'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 
@@ -24,35 +29,69 @@ export const buildController = <
   id: ControllerKey,
   store: TStore
 ): PromiseWithController<TComponent, ValueInMapRecord<TStore['value']>> => {
-  let resolveFunc: (value: BvTriggerableEvent) => void = () => {}
+  /**
+   * True from a show() request until the component reports its dismissal. The store only learns
+   * that the component is open once its show is revealed, and a show can still be waiting for its
+   * frame or delay
+   */
+  let showRequested = false
 
-  const basePromise = new Promise<BvTriggerableEvent>((resolve) => {
-    resolveFunc = resolve
-  })
+  type Dismissal = {promise: Promise<BvTriggerableEvent>; resolve: (e: BvTriggerableEvent) => void}
+  /**
+   * The dismissal the current show/hide cycle is waiting for. Each cycle gets its own, so a
+   * controller can be shown again after it was dismissed
+   */
+  let dismissal: Dismissal | undefined
+  const currentDismissal = (): Dismissal => {
+    if (!dismissal) {
+      let resolve: (e: BvTriggerableEvent) => void = () => {}
+      const promise = new Promise<BvTriggerableEvent>((r) => {
+        resolve = r
+      })
+      dismissal = {promise, resolve}
+    }
+    return dismissal
+  }
 
   type RefWithMethods = ComponentPublicInstance<TComponent> & {
     show?: () => void
     hide?: (trigger?: string, noEmit?: boolean) => void
     toggle?: () => void
+    visible?: boolean
   }
   const findItem = () => store.value.get(id)
 
   // Backs controller.ref. It has to be reactive so awaitDismissal notices the component unmounting,
   // shallow because component instances must not be made deeply reactive
   const instance = shallowRef<RefWithMethods | null>(null)
+  /**
+   * Called with the component's hide or hidden event. Settles the current cycle
+   */
+  const settle = (event: BvTriggerableEvent) => {
+    showRequested = false
+    const current = dismissal
+    dismissal = undefined
+    current?.resolve(event)
+  }
+  // The trigger of a hide() made while no component is mounted, for the event awaitDismissal makes up
+  let unmountedHideTrigger: string | undefined
 
   /**
    * Resolves with the component's own event. A hidden item with no mounted component never emits
    * one: it was dismissed before it mounted, or it unmounted before its hide finished. In that case
-   * it resolves on its own. Mounted items always go through the component
+   * it resolves on its own. Mounted items always go through the component.
+   * Take the cycle before asking the component to show or hide: it may report synchronously
    */
-  const awaitDismissal = async () => {
+  const awaitDismissal = async (cycle: Dismissal = currentDismissal()) => {
     let stopWatch = () => {}
     const dismissedWithoutInstance = new Promise<BvTriggerableEvent>((resolve) => {
       stopWatch = watch(
         [() => findItem()?.value.props.modelValue, instance],
         ([modelValue, mounted]) => {
-          if (!modelValue && mounted === null) resolve(new BvTriggerableEvent('hidden', {ok: null}))
+          if (!modelValue && mounted === null)
+            resolve(
+              new BvTriggerableEvent('hidden', {trigger: unmountedHideTrigger ?? null, ok: null})
+            )
         },
         // immediate: destroy() hides before it awaits, so the dismissal may already have happened.
         // sync: decide before the orchestrator can mount the item
@@ -60,7 +99,10 @@ export const buildController = <
       )
     })
     try {
-      return await Promise.race([basePromise, dismissedWithoutInstance])
+      const event = await Promise.race([cycle.promise, dismissedWithoutInstance])
+      // Settled without the component: end the cycle for everyone else waiting on it too
+      if (dismissal === cycle) settle(event)
+      return event
     } finally {
       stopWatch()
     }
@@ -76,28 +118,48 @@ export const buildController = <
     set ref(value: RefWithMethods | null) {
       instance.value = value
     },
-    async show() {
-      const currentModelValue = controller.get()?.value.props.modelValue
-      if (currentModelValue) {
-        const event = await awaitDismissal()
-        return Object.assign(Object.create(event), {
+    async show({signal}: OrchestratorShowOptions = {}) {
+      const withDispose = (event: BvTriggerableEvent) =>
+        Object.assign(Object.create(event), {
           [Symbol.asyncDispose]: controller.destroy,
         })
+      const currentModelValue = controller.get()?.value.props.modelValue
+      // The store learns the component is open only once its show is revealed, so also count a show
+      // this controller requested and the component's own visible flag
+      const isShown =
+        !!currentModelValue ||
+        showRequested ||
+        (controller.ref as RefWithMethods | null)?.visible === true
+      if (signal?.aborted && !isShown) {
+        return withDispose(new BvTriggerableEvent('hidden', {trigger: 'abort', ok: null}))
       }
-      const refWithMethods = controller.ref
-      if (
-        refWithMethods !== null &&
-        'show' in refWithMethods &&
-        typeof refWithMethods.show === 'function'
-      ) {
-        refWithMethods.show()
-      } else {
-        controller.set({modelValue: true})
+      const cycle = currentDismissal()
+      const abort = () => controller.hide('abort')
+      signal?.addEventListener('abort', abort, {once: true})
+      try {
+        if (signal?.aborted) {
+          abort()
+        } else if (!currentModelValue) {
+          unmountedHideTrigger = undefined
+          showRequested = true
+          const refWithMethods = controller.ref
+          if (
+            refWithMethods !== null &&
+            'show' in refWithMethods &&
+            typeof refWithMethods.show === 'function'
+          ) {
+            refWithMethods.show()
+          } else {
+            controller.set({modelValue: true})
+          }
+          // A show listener may have aborted while the show was being requested, before there was
+          // anything to hide. Hide now that the show is committed
+          if (signal?.aborted) abort()
+        }
+        return withDispose(await awaitDismissal(cycle))
+      } finally {
+        signal?.removeEventListener('abort', abort)
       }
-      const event = await awaitDismissal()
-      return Object.assign(Object.create(event), {
-        [Symbol.asyncDispose]: controller.destroy,
-      })
     },
     hide(trigger?: string) {
       const refWithMethods = controller.ref
@@ -108,6 +170,7 @@ export const buildController = <
       ) {
         refWithMethods.hide(trigger, true)
       } else {
+        if (refWithMethods === null) unmountedHideTrigger = trigger
         controller.set({modelValue: false})
       }
     },
@@ -143,9 +206,10 @@ export const buildController = <
       const item = findItem()
       if (!item) return
       try {
-        if (item.value.props.modelValue) {
+        if (item.value.props.modelValue || showRequested) {
+          const cycle = currentDismissal()
           controller.hide('destroy')
-          await awaitDismissal()
+          await awaitDismissal(cycle)
           await nextTick()
         }
       } finally {
@@ -159,7 +223,7 @@ export const buildController = <
 
   return {
     controller,
-    resolve: resolveFunc,
+    resolve: settle,
   }
 }
 
