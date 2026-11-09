@@ -13,7 +13,7 @@
       :disabled="props.splitDisabled || props.disabled"
       :type="props.splitButtonType"
       :aria-label="props.ariaLabel"
-      :aria-expanded="props.split ? undefined : showRef"
+      :aria-expanded="props.split ? undefined : showRef && !props.disabled"
       :aria-haspopup="props.split ? undefined : 'menu'"
       :href="props.split ? props.splitHref : undefined"
       :icon="props.icon"
@@ -32,7 +32,7 @@
       :disabled="props.disabled"
       :class="[props.toggleClass, {show: showRef}]"
       class="dropdown-toggle-split dropdown-toggle"
-      :aria-expanded="showRef"
+      :aria-expanded="showRef && !props.disabled"
       aria-haspopup="menu"
       v-bind="props.toggleAttrs"
       @click="onButtonClick"
@@ -58,9 +58,8 @@
           ref="_floating"
           :style="[floatingStyles, sizeStyles, {display: showRef || isActive ? 'block' : 'none'}]"
           class="dropdown-menu overflow-auto b-floating-size"
-          :class="[props.menuClass, computedMenuClasses]"
+          :class="[props.menuClass, computedMenuClasses, {'d-none': props.disabled}]"
           :aria-labelledby="computedId"
-          :inert="props.disabled || undefined"
           :role="props.role"
           @click="onClickInside"
         >
@@ -69,10 +68,10 @@
             :id="computedId"
             :hide="hide"
             :show="show"
-            :visible="showRef"
+            :visible="showRef && !props.disabled"
             :click="onClickInside"
             :toggle="onButtonClick"
-            :active="showRef"
+            :active="showRef && !props.disabled"
           />
         </ul>
       </Transition>
@@ -198,8 +197,8 @@ const {
   showRef,
   renderRef,
   hide,
-  show,
-  toggle,
+  show: showMenu,
+  toggle: toggleMenu,
   computedNoAnimation,
   transitionProps,
   contentShowing,
@@ -230,6 +229,20 @@ const {
   }
 )
 
+const show = (resolveOnHide = false) =>
+  props.disabled ? Promise.resolve(false) : showMenu(resolveOnHide)
+
+const toggle = (resolveOnHide = false) =>
+  props.disabled ? Promise.resolve(false) : toggleMenu(resolveOnHide)
+
+watch(
+  [() => props.disabled, showRef],
+  ([disabled, shown]) => {
+    if (disabled && shown) hide()
+  },
+  {immediate: true}
+)
+
 const computedMenuClasses = computed(() => [
   {
     show: isVisible.value,
@@ -255,13 +268,16 @@ onKeyStroke(
 )
 
 const keynav = (e: Readonly<Event>, v: number) => {
+  if (props.disabled) return
   if (floatingElement.value?.contains((e.target as HTMLElement)?.closest('form'))) return
   if (/input|select|option|textarea|form/i.test((e.target as HTMLElement)?.tagName)) return
   e.preventDefault()
   if (!showRef.value) {
     show()
     const loop = setInterval(() => {
-      if (isVisible.value) {
+      if (props.disabled) {
+        clearInterval(loop)
+      } else if (isVisible.value) {
         clearInterval(loop)
         nextTick(() => keynav(e, v))
       }
