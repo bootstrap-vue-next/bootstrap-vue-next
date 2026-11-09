@@ -25,7 +25,8 @@
               :ref="setRef"
               initial-animation
               :teleport-disabled="true"
-              @update:model-value="(value: boolean | number) => syncModelValue(id, value)"
+              @update:model-value="(value: boolean | number) => syncModelValue(key, id, value)"
+              @show-prevented="resolvePromise"
               @hide="
                 (e: BvTriggerableEvent) => {
                   setEventOk(e)
@@ -45,9 +46,9 @@
                   if (e.defaultPrevented) {
                     return
                   }
-                  if (!options?.resolveOnHide) {
-                    resolvePromise(e)
-                  }
+                  // With resolveOnHide the show() already settled on hide. This settles a later
+                  // wait, such as destroy() called right after that show() resolved
+                  resolvePromise(e)
                 }
               "
             >
@@ -77,16 +78,16 @@ import type {ValueInMapRecord} from '../../composables/orchestratorShared'
  * shown or hidden through its own methods, its triggers, or a timeout. Controllers decide whether
  * a component is open from the store
  */
-const syncModelValue = (id: ControllerKey, value: boolean | number): void => {
+const syncModelValue = (group: string, id: ControllerKey, value: boolean | number): void => {
   const store = orchestratorRegistry?.store.value
   if (!store) return
-  for (const items of [store.modal, store.toast, store.popover, store.tooltip]) {
-    const item = items.get(id)
-    if (!item) continue
-    if (item.value.props.modelValue !== value) {
-      item.value = {...item.value, props: {...item.value.props, modelValue: value}} as never
-    }
-    return
+  // Ids are only unique per store, so use the emitting item's own one. Toast groups are keyed by
+  // position
+  const items =
+    group === 'modal' || group === 'popover' || group === 'tooltip' ? store[group] : store.toast
+  const item = items.get(id)
+  if (item && item.value.props.modelValue !== value) {
+    item.value = {...item.value, props: {...item.value.props, modelValue: value}} as never
   }
 }
 

@@ -118,18 +118,7 @@ the modal is closed another way (for example <kbd>Esc</kbd> or the **Cancel** bu
 before the work finishes. A request that is refused (such as a backdrop click with
 `no-close-on-backdrop`) does not abort it.
 
-```ts
-const onOk = async (event: BvTriggerableEvent) => {
-  event.preventDefault()
-  try {
-    await fetch('/api/save', {method: 'POST', body, signal: event.signal})
-    modal.value?.hide('saved')
-  } catch (error) {
-    if (event.signal?.aborted) return // closed while saving: nothing left to do
-    throw error
-  }
-}
-```
+<<< FRAGMENT ./demo/ModalAsyncOk.ts#snippet{ts}
 
 If a listener does not prevent the event, the modal commits to hiding right after it, so
 `event.signal` is already aborted.

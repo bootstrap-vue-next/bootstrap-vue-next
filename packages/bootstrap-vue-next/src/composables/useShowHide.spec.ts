@@ -320,4 +320,26 @@ describe('useShowHide', () => {
     expect(reopenedSettled).toBe(false)
     mounted.wrapper.unmount()
   })
+
+  it('keeps a show started from hidden when the outer hide resumes', async () => {
+    vi.useFakeTimers()
+    let reopened = false
+    const emit = vi.fn<(name: string, event: BvTriggerableEvent) => void>((name) => {
+      if (name === 'ok') mounted.state.hide() // finishes at once: the show is still pending
+      if (name === 'hidden' && !reopened) {
+        reopened = true
+        mounted.state.show()
+      }
+    })
+    const mounted = mountShowHide(emit)
+
+    mounted.state.show()
+    await mounted.state.hide('ok')
+    await vi.runAllTimersAsync()
+
+    expect(count(emit, 'hidden')).toBe(1)
+    expect(count(emit, 'hide')).toBe(1)
+    expect(mounted.state.showRef.value).toBe(true)
+    mounted.wrapper.unmount()
+  })
 })

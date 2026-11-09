@@ -323,7 +323,8 @@ export const useShowHide = (
     }
     // A listener hid the component itself (for example `@ok="modal.hide()"`). That hide is the one
     // that counts
-    const hiddenByListener = () => transition !== transitionBefore && transition?.type === 'hide'
+    // Any newer committed transition wins, including a show started from a listener of that hide
+    const hiddenByListener = () => transition !== transitionBefore
     if (trigger && !noTriggerEmit) {
       emit(trigger, event2)
       if (hiddenByListener()) return hidePromise

@@ -30,11 +30,15 @@ export const buildController = <
   store: TStore
 ): PromiseWithController<TComponent, ValueInMapRecord<TStore['value']>> => {
   /**
-   * True from a show() request until the component reports its dismissal. The store only learns
-   * that the component is open once its show is revealed, and a show can still be waiting for its
-   * frame or delay
+   * True from a show() request on a mounted component until the store records it as open (the
+   * component reveals it) or the cycle settles. A show can still be waiting for its frame or delay
    */
   let showRequested = false
+  /**
+   * The cycle waiting for the mount-time show of an item that was not mounted when show() was
+   * called. Only that show's show-prevented event may settle it
+   */
+  let mountShowCycle: Dismissal | undefined
 
   type Dismissal = {promise: Promise<BvTriggerableEvent>; resolve: (e: BvTriggerableEvent) => void}
   /**
@@ -54,24 +58,38 @@ export const buildController = <
   }
 
   type RefWithMethods = ComponentPublicInstance<TComponent> & {
-    show?: () => void
+    show?: () => unknown
     hide?: (trigger?: string, noEmit?: boolean) => void
     toggle?: () => void
     visible?: boolean
   }
   const findItem = () => store.value.get(id)
+  watch(
+    () => findItem()?.value.props.modelValue,
+    (value) => {
+      if (value) showRequested = false
+    },
+    {flush: 'sync'}
+  )
 
   // Backs controller.ref. It has to be reactive so awaitDismissal notices the component unmounting,
   // shallow because component instances must not be made deeply reactive
   const instance = shallowRef<RefWithMethods | null>(null)
   /**
-   * Called with the component's hide or hidden event. Settles the current cycle
+   * Called with the component's hide, hidden or show-prevented event. Settles the current cycle
    */
-  const settle = (event: BvTriggerableEvent) => {
+  const finishCycle = (event: BvTriggerableEvent) => {
     showRequested = false
+    mountShowCycle = undefined
     const current = dismissal
     dismissal = undefined
     current?.resolve(event)
+  }
+  const settle = (event: BvTriggerableEvent) => {
+    // A component reports show-prevented for any show. It only ends the cycle waiting for the
+    // mount-time show; a mounted component's prevented show() is read from that call's own result
+    if (event.eventType === 'show-prevented' && (!dismissal || mountShowCycle !== dismissal)) return
+    finishCycle(event)
   }
   // The trigger of a hide() made while no component is mounted, for the event awaitDismissal makes up
   let unmountedHideTrigger: string | undefined
@@ -88,10 +106,15 @@ export const buildController = <
       stopWatch = watch(
         [() => findItem()?.value.props.modelValue, instance],
         ([modelValue, mounted]) => {
-          if (!modelValue && mounted === null)
-            resolve(
-              new BvTriggerableEvent('hidden', {trigger: unmountedHideTrigger ?? null, ok: null})
-            )
+          if (!modelValue && mounted === null) {
+            const event = new BvTriggerableEvent('hidden', {
+              trigger: unmountedHideTrigger ?? null,
+              ok: null,
+            })
+            // Settle now, so a show() right after this can't join the finished cycle
+            if (dismissal === cycle) finishCycle(event)
+            resolve(event)
+          }
         },
         // immediate: destroy() hides before it awaits, so the dismissal may already have happened.
         // sync: decide before the orchestrator can mount the item
@@ -99,10 +122,7 @@ export const buildController = <
       )
     })
     try {
-      const event = await Promise.race([cycle.promise, dismissedWithoutInstance])
-      // Settled without the component: end the cycle for everyone else waiting on it too
-      if (dismissal === cycle) settle(event)
-      return event
+      return await Promise.race([cycle.promise, dismissedWithoutInstance])
     } finally {
       stopWatch()
     }
@@ -117,6 +137,13 @@ export const buildController = <
     },
     set ref(value: RefWithMethods | null) {
       instance.value = value
+      // The mount-time show runs in the component's mounted hook, right after its ref is set
+      if (value !== null && mountShowCycle) {
+        const cycle = mountShowCycle
+        void Promise.resolve().then(() => {
+          if (mountShowCycle === cycle) mountShowCycle = undefined
+        })
+      }
     },
     async show({signal}: OrchestratorShowOptions = {}) {
       const withDispose = (event: BvTriggerableEvent) =>
@@ -134,22 +161,35 @@ export const buildController = <
         return withDispose(new BvTriggerableEvent('hidden', {trigger: 'abort', ok: null}))
       }
       const cycle = currentDismissal()
-      const abort = () => controller.hide('abort')
+      const abort = () => {
+        controller.hide('abort')
+        // A show listener can abort before its show is committed, when there is nothing to hide
+        // yet: the mount-time show of an item that was not mounted, or a show still being
+        // requested. Hide again once it had the chance to commit; a repeated hide is ignored
+        void Promise.resolve().then(() => {
+          if (dismissal === cycle) controller.hide('abort')
+        })
+      }
       signal?.addEventListener('abort', abort, {once: true})
       try {
         if (signal?.aborted) {
           abort()
-        } else if (!currentModelValue) {
+        } else if (!currentModelValue && !showRequested) {
           unmountedHideTrigger = undefined
-          showRequested = true
           const refWithMethods = controller.ref
           if (
             refWithMethods !== null &&
             'show' in refWithMethods &&
             typeof refWithMethods.show === 'function'
           ) {
-            refWithMethods.show()
+            showRequested = true
+            void Promise.resolve(refWithMethods.show()).then((result) => {
+              if (result === 'show-prevented' && dismissal === cycle) {
+                finishCycle(new BvTriggerableEvent('show-prevented', {ok: null}))
+              }
+            })
           } else {
+            if (refWithMethods === null) mountShowCycle = cycle
             controller.set({modelValue: true})
           }
           // A show listener may have aborted while the show was being requested, before there was

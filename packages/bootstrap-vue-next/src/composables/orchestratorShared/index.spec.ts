@@ -396,6 +396,67 @@ describe('buildController', () => {
     expect(result.ok).toBeNull()
   })
 
+  it('settles show() and lets destroy() finish when the component prevents the show', async () => {
+    const store = newStore()
+    const _self = Symbol('test-modal')
+    const showMock = vi.fn<() => Promise<string>>(() => Promise.resolve('show-prevented'))
+    const {controller} = buildController<unknown, ModalStore>(_self, store)
+    pushItem(store, _self, {modelValue: false})
+    controller.ref = {
+      show: showMock,
+      hide: vi.fn<() => void>(),
+    } as unknown as ComponentPublicInstance<unknown>
+
+    const result = await controller.show()
+    expect(result.eventType).toBe('show-prevented')
+
+    await controller.destroy()
+    expect(store.value.size).toBe(0)
+  })
+
+  it('does not settle an accepted pending show on another show-prevented event', async () => {
+    const store = newStore()
+    const _self = Symbol('test-modal')
+    const showMock = vi.fn<() => Promise<boolean>>(() => new Promise<boolean>(() => {}))
+    const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+    pushItem(store, _self, {modelValue: false})
+    controller.ref = {
+      show: showMock,
+      hide: vi.fn<() => void>(),
+    } as unknown as ComponentPublicInstance<unknown>
+
+    let settled = false
+    controller.show().then(() => {
+      settled = true
+    })
+    controller.show() // joins the pending show instead of requesting it again
+    expect(showMock).toHaveBeenCalledOnce()
+
+    resolve(new BvTriggerableEvent('show-prevented')) // from some other show of the component
+    await Promise.resolve()
+    await Promise.resolve()
+    expect(settled).toBe(false)
+  })
+
+  it('gives a show() after an unmounted dismissal its own cycle', async () => {
+    const store = newStore()
+    const _self = Symbol('test-modal')
+    const {controller} = buildController<unknown, ModalStore>(_self, store)
+    pushItem(store, _self, {modelValue: false})
+
+    const first = controller.show()
+    controller.hide('cancel')
+    let secondSettled = false
+    controller.show().then(() => {
+      secondSettled = true
+    })
+
+    expect((await first).trigger).toBe('cancel')
+    await new Promise((r) => setTimeout(r, 0))
+    expect(secondSettled).toBe(false)
+    expect(store.value.get(_self)?.value.props.modelValue).toBe(true)
+  })
+
   it('hide sets modelValue to false in the store', () => {
     const store = newStore()
     const _self = Symbol('test-modal')

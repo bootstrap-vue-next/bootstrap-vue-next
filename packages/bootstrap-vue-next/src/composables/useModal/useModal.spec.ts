@@ -3,6 +3,7 @@ import {computed, defineComponent, h, nextTick, ref, watchEffect} from 'vue'
 import {mount} from '@vue/test-utils'
 import BApp from '../../components/BApp/BApp.vue'
 import {useModal} from './index'
+import {useToast} from '../useToast'
 
 describe('useModal', () => {
   it('create method accepts custom component props without TypeScript errors', async () => {
@@ -304,5 +305,78 @@ describe('useModal', () => {
 
     expect(modal?.get()).toBeUndefined()
     expect((await shown)?.trigger).toBe('destroy')
+  })
+
+  const mountApp = (setup: () => void, realTransitions = false) => {
+    const TestComponent = defineComponent({
+      setup() {
+        setup()
+        return () => h('div')
+      },
+    })
+    return mount(BApp, {
+      attachTo: document.body,
+      global: realTransitions ? {stubs: {'transition': false, 'transition-group': false}} : {},
+      slots: {default: () => h(TestComponent)},
+    })
+  }
+
+  it('settles show() and destroy() when onShow prevents a modal that was not mounted yet', async () => {
+    let modal: ReturnType<ReturnType<typeof useModal>['create']> | undefined
+    let shown: Promise<unknown> | undefined
+    mountApp(() => {
+      modal = useModal().create({
+        id: 'prevented-before-mount',
+        onShow: (e: {preventDefault: () => void}) => e.preventDefault(),
+      })
+      shown = modal.show() // before the orchestrator mounts it
+    })
+
+    expect(((await shown) as {eventType: string}).eventType).toBe('show-prevented')
+    await modal?.destroy()
+    expect(modal?.get()).toBeUndefined()
+  })
+
+  it('destroy() finishes right after a resolveOnHide show() resolved', async () => {
+    let modal: ReturnType<ReturnType<typeof useModal>['create']> | undefined
+    mountApp(() => {
+      modal = useModal().create({id: 'resolve-on-hide-destroy', options: {resolveOnHide: true}})
+    }, true)
+    await nextTick()
+
+    const shown = modal?.show()
+    await vi.waitFor(() => expect(modal?.get()?.value.props.modelValue).toBe(true))
+    modal?.hide('ok')
+    expect((await shown)?.trigger).toBe('ok')
+
+    await modal?.destroy()
+    expect(modal?.get()).toBeUndefined()
+  })
+
+  it('syncs the stored modelValue of the emitting item when a modal and a toast share an id', async () => {
+    let modal: ReturnType<ReturnType<typeof useModal>['create']> | undefined
+    let toast: ReturnType<ReturnType<typeof useToast>['create']> | undefined
+    mountApp(() => {
+      modal = useModal().create({id: 'shared-id'})
+      toast = useToast().create({id: 'shared-id', modelValue: false})
+    })
+    await nextTick()
+
+    toast?.show()
+    await vi.waitFor(() => expect(toast?.get()?.value.props.modelValue).toBe(true))
+    expect(modal?.get()?.value.props.modelValue).toBeFalsy()
+  })
+
+  it('hides a modal whose mount-time onShow aborts the show signal', async () => {
+    let modal: ReturnType<ReturnType<typeof useModal>['create']> | undefined
+    let shown: Promise<{trigger: string | null}> | undefined
+    const scope = new AbortController()
+    mountApp(() => {
+      modal = useModal().create({id: 'abort-in-mount-show', onShow: () => scope.abort()})
+      shown = modal.show({signal: scope.signal}) // before the orchestrator mounts it
+    })
+
+    expect((await shown)?.trigger).toBe('abort')
+    await vi.waitFor(() => expect(modal?.get()?.value.props.modelValue).toBeFalsy())
   })
 })
