@@ -744,6 +744,20 @@ describe('dropdown', () => {
     })
   })
 
+  it('makes an open menu non-interactive while the dropdown is disabled', async () => {
+    const wrapper = mount(BDropdown, {props: {modelValue: true}})
+    const menu = wrapper.get('ul')
+    expect(menu.attributes('inert')).toBeUndefined()
+
+    await wrapper.setProps({disabled: true})
+    expect(menu.attributes('inert')).toBeDefined()
+    expect(menu.isVisible()).toBe(true)
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+
+    await wrapper.setProps({disabled: false})
+    expect(menu.attributes('inert')).toBeUndefined()
+  })
+
   describe('menu (ul) additional attributes', () => {
     it('has id with -menu suffix', () => {
       const wrapper = mount(BDropdown, {

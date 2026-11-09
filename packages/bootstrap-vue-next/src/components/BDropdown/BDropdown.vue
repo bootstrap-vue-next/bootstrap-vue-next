@@ -60,6 +60,7 @@
           class="dropdown-menu overflow-auto b-floating-size"
           :class="[props.menuClass, computedMenuClasses]"
           :aria-labelledby="computedId"
+          :inert="props.disabled || undefined"
           :role="props.role"
           @click="onClickInside"
         >
