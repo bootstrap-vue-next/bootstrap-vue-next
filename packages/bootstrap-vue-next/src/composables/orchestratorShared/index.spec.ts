@@ -457,6 +457,153 @@ describe('buildController', () => {
     expect(store.value.get(_self)?.value.props.modelValue).toBe(true)
   })
 
+  describe('showing again', () => {
+    type Methods = ComponentPublicInstance<unknown> & {show: () => unknown; hide: () => void}
+    const mountedRef = (show: () => unknown = () => Promise.resolve(true)) => {
+      const methods = {show: vi.fn<() => unknown>(show), hide: vi.fn<() => void>()}
+      return {methods, ref: methods as unknown as Methods}
+    }
+    const settledFlag = (promise: Promise<unknown>) => {
+      const state = {settled: false}
+      void promise.then(() => {
+        state.settled = true
+      })
+      return state
+    }
+
+    it('cancels the pending hide of a component that settled on hide', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+      const {methods, ref: componentRef} = mountedRef()
+      controller.ref = componentRef
+
+      const first = controller.show()
+      // resolveOnHide: the orchestrator settles on hide, while the store still records it as open
+      resolve(new BvTriggerableEvent('hide', {trigger: 'ok'}))
+      expect((await first).trigger).toBe('ok')
+      expect(methods.show).not.toHaveBeenCalled()
+
+      const second = settledFlag(controller.show())
+      expect(methods.show).toHaveBeenCalledOnce()
+      await new Promise((r) => setTimeout(r, 0))
+      expect(second.settled).toBe(false)
+    })
+
+    it('cancels a hide this controller just requested', () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+      const {methods, ref: componentRef} = mountedRef()
+      controller.ref = componentRef
+
+      controller.hide('cancel')
+      void controller.show()
+      expect(methods.show).toHaveBeenCalledOnce()
+    })
+
+    it('settles when the show that would cancel the hide is prevented', async () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+      controller.ref = mountedRef(() => Promise.resolve('show-prevented')).ref
+
+      controller.hide('cancel')
+      expect((await controller.show()).eventType).toBe('show-prevented')
+    })
+
+    it('does not ask an open component to show once its hide is over', () => {
+      const store = newStore()
+      const _self = Symbol('test-modal')
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: true})
+      const {methods, ref: componentRef} = mountedRef()
+      controller.ref = componentRef
+
+      controller.hide('cancel')
+      controller.set({modelValue: false} as never) // the component hides
+      resolve(new BvTriggerableEvent('hidden', {trigger: 'cancel'}))
+      controller.set({modelValue: true} as never) // and is shown again by other means
+      void controller.show()
+      expect(methods.show).not.toHaveBeenCalled()
+    })
+
+    it('restores a countdown the component ran down to 0', () => {
+      const store = newStore()
+      const _self = Symbol('test-toast')
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: 5000} as never)
+      const {methods, ref: componentRef} = mountedRef()
+      controller.ref = componentRef
+
+      controller.set({modelValue: 0} as never) // as the orchestrator does when the countdown ends
+      void controller.show()
+
+      expect(store.value.get(_self)?.value.props.modelValue).toBe(5000)
+      // The component's show() would set its modelValue to true, which has no countdown
+      expect(methods.show).not.toHaveBeenCalled()
+    })
+
+    it('restores the countdown on toggle', () => {
+      const store = newStore()
+      const _self = Symbol('test-toast')
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: 5000} as never)
+
+      controller.set({modelValue: 0} as never)
+      controller.toggle()
+      expect(store.value.get(_self)?.value.props.modelValue).toBe(5000)
+    })
+
+    it('forgets the countdown once the item is shown without one', () => {
+      const store = newStore()
+      const _self = Symbol('test-toast')
+      const {controller} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: 5000} as never)
+
+      controller.set({modelValue: true} as never)
+      controller.set({modelValue: false} as never)
+      void controller.show()
+      expect(store.value.get(_self)?.value.props.modelValue).toBe(true)
+    })
+
+    it('settles when a mounted component prevents the show of a restored countdown', async () => {
+      const store = newStore()
+      const _self = Symbol('test-toast')
+      const {controller, resolve} = buildController<unknown, ModalStore>(_self, store)
+      pushItem(store, _self, {modelValue: 5000} as never)
+      controller.ref = mountedRef().ref
+      controller.set({modelValue: 0} as never)
+
+      const shown = controller.show()
+      resolve(new BvTriggerableEvent('show-prevented')) // from the component's modelValue watcher
+      expect((await shown).eventType).toBe('show-prevented')
+    })
+  })
+
+  it('destroy stops watching the store', async () => {
+    const inner = newStore()
+    let reads = 0
+    const store = {
+      get value() {
+        reads++
+        return inner.value
+      },
+    } as ModalStore
+    const _self = Symbol('test-modal')
+    // Not inside a component's setup, as when a toast is created from an event handler
+    const {controller} = buildController<unknown, ModalStore>(_self, store)
+    pushItem(inner, _self, {modelValue: false})
+
+    await controller.destroy()
+    reads = 0
+    pushItem(inner, _self, {modelValue: true})
+    expect(reads).toBe(0)
+  })
+
   it('hide sets modelValue to false in the store', () => {
     const store = newStore()
     const _self = Symbol('test-modal')

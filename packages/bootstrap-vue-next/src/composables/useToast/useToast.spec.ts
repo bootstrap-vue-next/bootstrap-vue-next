@@ -379,6 +379,26 @@ describe('useToast', () => {
     })
   })
 
+  it('counts down again when a toast that timed out is shown again', async () => {
+    let toastRef: ReturnType<ReturnType<typeof useToast>['create']> | undefined
+    const TestComponent = defineComponent({
+      setup() {
+        const {create} = useToast()
+        toastRef = create({title: 'Countdown Toast', modelValue: 100, noAnimation: true})
+        return () => h('div')
+      },
+    })
+
+    mount(BApp, {slots: {default: () => h(TestComponent)}})
+    await new Promise((resolve) => setTimeout(resolve, 400))
+    expect(toastRef?.get()?.value.props.modelValue).toBe(0)
+
+    void toastRef?.show()
+    expect(toastRef?.get()?.value.props.modelValue).toBe(100)
+    await new Promise((resolve) => setTimeout(resolve, 400))
+    expect(toastRef?.get()?.value.props.modelValue).toBe(0)
+  })
+
   describe('dismissal before the orchestrator renders the toast', () => {
     it('settles show()', async () => {
       let dismissed: Promise<unknown> | undefined

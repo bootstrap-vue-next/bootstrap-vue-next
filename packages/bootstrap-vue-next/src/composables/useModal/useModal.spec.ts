@@ -379,4 +379,48 @@ describe('useModal', () => {
     expect((await shown)?.trigger).toBe('abort')
     await vi.waitFor(() => expect(modal?.get()?.value.props.modelValue).toBeFalsy())
   })
+
+  it('shows again when show() is called right after a resolveOnHide show resolved', async () => {
+    let modalRef: ReturnType<ReturnType<typeof useModal>['create']> | undefined
+    const hidden: unknown[] = []
+    const TestComponent = defineComponent({
+      setup() {
+        const {create} = useModal()
+        modalRef = create({
+          title: 'Again',
+          noAnimation: true,
+          options: {resolveOnHide: true},
+          onHidden: (e: unknown) => {
+            hidden.push(e)
+          },
+        })
+        return () => h('div')
+      },
+    })
+
+    mount(BApp, {slots: {default: () => h(TestComponent)}})
+    await nextTick()
+
+    const first = modalRef?.show()
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(modalRef?.get()?.value.props.modelValue).toBe(true)
+
+    modalRef?.hide('ok')
+    expect((await first)?.trigger).toBe('ok')
+
+    let secondSettled = false
+    void modalRef?.show().then(() => {
+      secondSettled = true
+    })
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    expect(modalRef?.get()?.value.props.modelValue).toBe(true)
+    expect(hidden).toHaveLength(0)
+    expect(secondSettled).toBe(false)
+
+    modalRef?.hide('cancel')
+    await new Promise((resolve) => setTimeout(resolve, 100))
+    expect(secondSettled).toBe(true)
+    expect(modalRef?.get()?.value.props.modelValue).toBe(false)
+  })
 })

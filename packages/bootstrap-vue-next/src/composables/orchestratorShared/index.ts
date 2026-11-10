@@ -1,5 +1,6 @@
 import {
   type ComponentPublicInstance,
+  effectScope,
   inject,
   nextTick,
   provide,
@@ -35,10 +36,22 @@ export const buildController = <
    */
   let showRequested = false
   /**
-   * The cycle waiting for the mount-time show of an item that was not mounted when show() was
-   * called. Only that show's show-prevented event may settle it
+   * The cycle waiting for a show requested through the store's modelValue: the mount-time show of
+   * an item that was not mounted when show() was called, or the show a mounted component starts
+   * when its modelValue changes. Only that show's show-prevented event may settle it
    */
-  let mountShowCycle: Dismissal | undefined
+  let storeShowCycle: Dismissal | undefined
+  /**
+   * True from a hide request until the store's modelValue changes or the component reports hidden.
+   * The store keeps recording the component as open until its hide delay has passed, so a show()
+   * in that window has to reach the component to cancel the hide
+   */
+  let hideRequested = false
+  /**
+   * The last numeric modelValue the item had: a toast's countdown. The component counts it down to
+   * 0, so showing the item again has to put it back. Forgotten once the item is shown with `true`
+   */
+  let countdown: number | undefined
 
   type Dismissal = {promise: Promise<BvTriggerableEvent>; resolve: (e: BvTriggerableEvent) => void}
   /**
@@ -64,13 +77,24 @@ export const buildController = <
     visible?: boolean
   }
   const findItem = () => store.value.get(id)
-  watch(
-    () => findItem()?.value.props.modelValue,
-    (value) => {
-      if (value) showRequested = false
-    },
-    {flush: 'sync'}
-  )
+  // Detached, so the watcher lives exactly as long as the controller whether or not it was created
+  // inside a component's setup. destroy() stops it
+  const scope = effectScope(true)
+  scope.run(() => {
+    watch(
+      () => findItem()?.value.props.modelValue,
+      (value) => {
+        hideRequested = false
+        if (value) showRequested = false
+        if (typeof value === 'number' && value > 0) {
+          countdown = value
+        } else if (value === true) {
+          countdown = undefined
+        }
+      },
+      {flush: 'sync'}
+    )
+  })
 
   // Backs controller.ref. It has to be reactive so awaitDismissal notices the component unmounting,
   // shallow because component instances must not be made deeply reactive
@@ -80,16 +104,33 @@ export const buildController = <
    */
   const finishCycle = (event: BvTriggerableEvent) => {
     showRequested = false
-    mountShowCycle = undefined
+    storeShowCycle = undefined
     const current = dismissal
     dismissal = undefined
     current?.resolve(event)
   }
   const settle = (event: BvTriggerableEvent) => {
-    // A component reports show-prevented for any show. It only ends the cycle waiting for the
-    // mount-time show; a mounted component's prevented show() is read from that call's own result
-    if (event.eventType === 'show-prevented' && (!dismissal || mountShowCycle !== dismissal)) return
+    // A component reports show-prevented for any show. It only ends the cycle waiting for a show
+    // requested through the store; a prevented show() call is read from that call's own result
+    if (event.eventType === 'show-prevented' && (!dismissal || storeShowCycle !== dismissal)) return
     finishCycle(event)
+    // A hide event only gets here with resolveOnHide. The component is still open at this point
+    hideRequested = event.eventType === 'hide'
+  }
+  /**
+   * Shows the item by writing its modelValue. Used when there is no component show() to call, and
+   * to restart a countdown, which the component only does for a numeric modelValue
+   */
+  const showThroughStore = (cycle: Dismissal, modelValue: true | number) => {
+    storeShowCycle = cycle
+    controller.set({modelValue} as never)
+    // A mounted component reacts to its new modelValue in the next flush. One that has yet to
+    // mount shows in its mounted hook, see the ref setter
+    if (instance.value !== null) {
+      void nextTick(() => {
+        if (storeShowCycle === cycle) storeShowCycle = undefined
+      })
+    }
   }
   // The trigger of a hide() made while no component is mounted, for the event awaitDismissal makes up
   let unmountedHideTrigger: string | undefined
@@ -138,10 +179,10 @@ export const buildController = <
     set ref(value: RefWithMethods | null) {
       instance.value = value
       // The mount-time show runs in the component's mounted hook, right after its ref is set
-      if (value !== null && mountShowCycle) {
-        const cycle = mountShowCycle
+      if (value !== null && storeShowCycle) {
+        const cycle = storeShowCycle
         void Promise.resolve().then(() => {
-          if (mountShowCycle === cycle) mountShowCycle = undefined
+          if (storeShowCycle === cycle) storeShowCycle = undefined
         })
       }
     },
@@ -174,23 +215,29 @@ export const buildController = <
       try {
         if (signal?.aborted) {
           abort()
-        } else if (!currentModelValue && !showRequested) {
-          unmountedHideTrigger = undefined
+        } else if (!showRequested && (!currentModelValue || hideRequested)) {
+          // With hideRequested the store still records the component as open, but it may be
+          // waiting out a hide. Its show() cancels that hide, and does nothing if there is none
+          const cancelsHide = !!currentModelValue
+          if (!cancelsHide) unmountedHideTrigger = undefined
           const refWithMethods = controller.ref
-          if (
+          if (!cancelsHide && countdown !== undefined) {
+            showThroughStore(cycle, countdown)
+          } else if (
             refWithMethods !== null &&
             'show' in refWithMethods &&
             typeof refWithMethods.show === 'function'
           ) {
-            showRequested = true
+            // The store clears showRequested when it records the open, which it already has here
+            if (!cancelsHide) showRequested = true
+            hideRequested = false
             void Promise.resolve(refWithMethods.show()).then((result) => {
               if (result === 'show-prevented' && dismissal === cycle) {
                 finishCycle(new BvTriggerableEvent('show-prevented', {ok: null}))
               }
             })
-          } else {
-            if (refWithMethods === null) mountShowCycle = cycle
-            controller.set({modelValue: true})
+          } else if (!cancelsHide) {
+            showThroughStore(cycle, true)
           }
           // A show listener may have aborted while the show was being requested, before there was
           // anything to hide. Hide now that the show is committed
@@ -208,6 +255,8 @@ export const buildController = <
         'hide' in refWithMethods &&
         typeof refWithMethods.hide === 'function'
       ) {
+        // Before the call: a hide that finishes at once is recorded by the store, which clears it
+        hideRequested = true
         refWithMethods.hide(trigger, true)
       } else {
         if (refWithMethods === null) unmountedHideTrigger = trigger
@@ -217,7 +266,9 @@ export const buildController = <
     toggle() {
       const currentItem = controller.get()
       const refWithMethods = controller.ref
-      if (
+      if (!currentItem?.value.props.modelValue && countdown !== undefined) {
+        controller.set({modelValue: countdown} as never)
+      } else if (
         refWithMethods !== null &&
         'toggle' in refWithMethods &&
         typeof refWithMethods.toggle === 'function'
@@ -244,16 +295,16 @@ export const buildController = <
     },
     async destroy() {
       const item = findItem()
-      if (!item) return
       try {
-        if (item.value.props.modelValue || showRequested) {
+        if (item && (item.value.props.modelValue || showRequested)) {
           const cycle = currentDismissal()
           controller.hide('destroy')
           await awaitDismissal(cycle)
           await nextTick()
         }
       } finally {
-        store.value.delete(id)
+        if (item) store.value.delete(id)
+        scope.stop()
       }
     },
     [Symbol.asyncDispose]() {
