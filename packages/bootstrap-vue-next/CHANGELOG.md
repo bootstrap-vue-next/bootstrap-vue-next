@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.4](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.2.3...bootstrapvuenext-v1.2.4) (2026-11-10)
+
+
+### Bug Fixes
+
+* **useShowHide:** ignore repeated hides, cancel superseded show/hide … ([#3374](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3374)) ([28b0abb](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/28b0abb5a67c72495a1b502bdd74755e1e02956b))
+
 ## [1.2.3](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.2.2...bootstrapvuenext-v1.2.3) (2026-11-06)
 
 
