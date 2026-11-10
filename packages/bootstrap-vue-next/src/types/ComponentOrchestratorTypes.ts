@@ -17,6 +17,13 @@ export type CamelCase<S extends string> = S extends `${infer P1}-${infer P2}${in
 export type OrchestratorCreateOptions = {
   resolveOnHide?: boolean
 }
+export type OrchestratorShowOptions = {
+  /**
+   * Hides the component with the trigger `'abort'` when aborted. If it is already aborted, the
+   * component is not shown and the promise resolves right away
+   */
+  signal?: AbortSignal
+}
 
 // Promises
 // TODO check which ones of these are async
@@ -26,7 +33,7 @@ export interface ComponentController<
 > extends AsyncDisposable {
   id: ControllerKey
   ref: ComponentPublicInstance<Component> | null
-  show: () => Promise<BvTriggerableEvent & AsyncDisposable>
+  show: (options?: OrchestratorShowOptions) => Promise<BvTriggerableEvent & AsyncDisposable>
   hide: (trigger?: string) => void
   toggle: () => void
   set: (val: Partial<Props['value']['props']>) => void

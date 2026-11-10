@@ -25,6 +25,8 @@
               :ref="setRef"
               initial-animation
               :teleport-disabled="true"
+              @update:model-value="(value: boolean | number) => syncModelValue(key, id, value)"
+              @show-prevented="resolvePromise"
               @hide="
                 (e: BvTriggerableEvent) => {
                   setEventOk(e)
@@ -44,9 +46,9 @@
                   if (e.defaultPrevented) {
                     return
                   }
-                  if (!options?.resolveOnHide) {
-                    resolvePromise(e)
-                  }
+                  // With resolveOnHide the show() already settled on hide. This settles a later
+                  // wait, such as destroy() called right after that show() resolved
+                  resolvePromise(e)
                 }
               "
             >
@@ -67,9 +69,27 @@ import {warn} from '../../utils/console'
 import {orchestratorRegistryKey, type OrchestratorStoreObject} from '../../utils/keys'
 import {positionClasses} from '../../utils/positionClasses'
 import type {BvTriggerableEvent} from '../../utils'
-import type {BOrchestratorProps, ContainerPosition} from '../../types'
+import type {BOrchestratorProps, ContainerPosition, ControllerKey} from '../../types'
 import ConditionalTeleport from '../ConditionalTeleport.vue'
 import type {ValueInMapRecord} from '../../composables/orchestratorShared'
+
+/**
+ * Keeps the store's modelValue in step with the component, which changes it itself when it is
+ * shown or hidden through its own methods, its triggers, or a timeout. Controllers decide whether
+ * a component is open from the store
+ */
+const syncModelValue = (group: string, id: ControllerKey, value: boolean | number): void => {
+  const store = orchestratorRegistry?.store.value
+  if (!store) return
+  // Ids are only unique per store, so use the emitting item's own one. Toast groups are keyed by
+  // position
+  const items =
+    group === 'modal' || group === 'popover' || group === 'tooltip' ? store[group] : store.toast
+  const item = items.get(id)
+  if (item && item.value.props.modelValue !== value) {
+    item.value = {...item.value, props: {...item.value.props, modelValue: value}} as never
+  }
+}
 
 const setEventOk = (event: BvTriggerableEvent): void => {
   event.ok = event.trigger === 'ok' ? true : event.trigger === 'cancel' ? false : null

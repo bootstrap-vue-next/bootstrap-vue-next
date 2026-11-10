@@ -86,14 +86,8 @@ const computedProps = computed<BPopoverProps>(() => {
 const popover = useTemplateRef('_popover')
 
 defineExpose({
-  hide: () => {
-    popover.value?.hide()
-  },
-  show: () => {
-    popover.value?.show()
-  },
-  toggle: () => {
-    popover.value?.toggle()
-  },
+  hide: (trigger?: string, noTriggerEmit?: boolean) => popover.value?.hide(trigger, noTriggerEmit),
+  show: () => popover.value?.show(),
+  toggle: () => popover.value?.toggle(),
 })
 </script>

@@ -455,6 +455,24 @@ describe('modal', () => {
   })
 
   describe('button and event functionality', () => {
+    it('ignores repeated OK and backdrop clicks while closing', async () => {
+      const wrapper = mount(BModal, {
+        attachTo: document.body,
+        global: {stubs: {teleport: true}, plugins: [createBootstrap()]},
+        props: {modelValue: true, noCloseOnBackdrop: true},
+      })
+      await nextTick()
+
+      const ok = wrapper.get('.modal-footer .btn-primary')
+      await ok.trigger('click')
+      await ok.trigger('click')
+      await wrapper.get('.modal').trigger('mousedown')
+
+      expect(wrapper.emitted('ok')).toHaveLength(1)
+      expect(wrapper.emitted('hide')).toHaveLength(1)
+      expect(wrapper.emitted('hide-prevented')).toBeUndefined()
+    })
+
     it('header close button triggers modal close and is preventable', async () => {
       let cancelHide = true
       const wrapper = mount(BModal, {
