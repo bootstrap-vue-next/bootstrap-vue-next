@@ -112,7 +112,9 @@ export default defineConfig({
       fileName: (_format, entryName) => `${entryName}.mjs`,
     },
     rollupOptions: {
-      external: ['vue'],
+      // Keep runtime dependencies out of the bundle so consumers' bundlers can dedupe them.
+      // Everything matched here must be listed in "dependencies" (or be a required peer like vue).
+      external: ['vue', /^@vueuse\//, /^@floating-ui\//, 'focus-trap', 'reka-ui'],
       output: {
         assetFileNames: `bootstrap-vue-next.[ext]`, //without this, it generates build/styles.css
       },
