@@ -1,10 +1,12 @@
-import {describe, expect, it} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import {computed, defineComponent, h, nextTick, onMounted, ref, watchEffect} from 'vue'
 import {mount} from '@vue/test-utils'
 import BApp from '../../components/BApp/BApp.vue'
+import BOrchestrator from '../../components/BApp/BOrchestrator.vue'
 import BCollapse from '../../components/BCollapse/BCollapse.vue'
 import BToast from '../../components/BToast/BToast.vue'
 import type {BvTriggerableEvent} from '../../utils'
+import {orchestratorPlugin} from '../../plugins/orchestrator'
 import {useToast} from './index'
 
 // BOrchestrator binds the create payload's `onHide` on the component and re-invokes it from its
@@ -423,6 +425,126 @@ describe('useToast', () => {
       })
       await new Promise((resolve) => setTimeout(resolve, 20))
       expect(settled).toBe(true)
+    })
+  })
+
+  describe('create before any orchestrator mounts', () => {
+    // Restore even when a test fails partway, so its console spy can't leak into the next test
+    afterEach(() => {
+      vi.restoreAllMocks()
+    })
+
+    // The plugin provides the registry without rendering an orchestrator, so the host decides when
+    // one mounts. That is the window a router guard running before the app's first render hits
+    const mountWithoutOrchestrator = (setup: () => void) => {
+      const showOrchestrator = ref(false)
+      const Host = defineComponent({
+        setup() {
+          setup()
+          return () => h('div', [showOrchestrator.value ? h(BOrchestrator) : null])
+        },
+      })
+      const wrapper = mount(Host, {
+        global: {plugins: [orchestratorPlugin]},
+        attachTo: document.body,
+      })
+      return {wrapper, showOrchestrator}
+    }
+    const isPreMountWarning = (args: unknown[]) =>
+      String(args[1]).includes('before any BOrchestrator')
+    // The warning fires once per module instance, so tests that count it need their own copy of
+    // useToast. The plugin and BApp are imported alongside it so they share its injection keys
+    const importFresh = async () => {
+      vi.resetModules()
+      const [{useToast}, {orchestratorPlugin}, {default: BApp}] = await Promise.all([
+        import('./index'),
+        import('../../plugins/orchestrator'),
+        import('../../components/BApp/BApp.vue'),
+      ])
+      return {useToast, orchestratorPlugin, BApp}
+    }
+
+    it('does not throw, and renders the toast once an orchestrator mounts', async () => {
+      vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const {wrapper, showOrchestrator} = mountWithoutOrchestrator(() => {
+        const {create} = useToast()
+        expect(() => create({id: 'early', body: 'early body', modelValue: true})).not.toThrow()
+      })
+      await nextTick()
+      expect(document.body.textContent).not.toContain('early body')
+
+      showOrchestrator.value = true
+      await nextTick()
+      await nextTick()
+
+      expect(document.body.textContent).toContain('early body')
+      wrapper.unmount()
+    })
+
+    it('warns only once, even across apps', async () => {
+      const fresh = await importFresh()
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      // Each mount is its own app with its own registry, as each request is on an SSR server
+      const mountApp = () =>
+        mount(
+          defineComponent({
+            setup() {
+              const {create} = fresh.useToast()
+              create({body: 'first'})
+              create({body: 'second'})
+              return () => h('div')
+            },
+          }),
+          {global: {plugins: [fresh.orchestratorPlugin]}}
+        )
+      const first = mountApp()
+      const second = mountApp()
+
+      const preMountWarnings = warnSpy.mock.calls.filter(isPreMountWarning)
+      expect(preMountWarnings).toHaveLength(1)
+      expect(preMountWarnings[0]?.[0]).toBe('[BootstrapVueNext:useToast]')
+      first.unmount()
+      second.unmount()
+    })
+
+    it('does not warn once an orchestrator has mounted', async () => {
+      const fresh = await importFresh()
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const TestComponent = defineComponent({
+        setup() {
+          fresh.useToast().create({body: 'after mount'})
+          return () => h('div')
+        },
+      })
+      mount(fresh.BApp, {slots: {default: () => h(TestComponent)}})
+
+      expect(warnSpy.mock.calls.some(isPreMountWarning)).toBe(false)
+    })
+
+    it('settles show() and destroy() for a toast hidden before an orchestrator mounts', async () => {
+      vi.spyOn(console, 'warn').mockImplementation(() => {})
+      let toast: ReturnType<typeof useToast> | undefined
+      let dismissed: Promise<unknown> | undefined
+      const {wrapper, showOrchestrator} = mountWithoutOrchestrator(() => {
+        toast = useToast()
+        dismissed = toast.create({id: 'never-shown', body: 'never shown', modelValue: true}).show()
+      })
+
+      toast?.hide('route-change', 'never-shown')
+
+      let disposed = false
+      void dismissed?.then(async (event) => {
+        await (event as {[Symbol.asyncDispose]: () => Promise<void>})[Symbol.asyncDispose]()
+        disposed = true
+      })
+      await new Promise((resolve) => setTimeout(resolve, 20))
+      expect(disposed).toBe(true)
+      expect(toast?.store.value.toast.size).toBe(0)
+
+      showOrchestrator.value = true
+      await nextTick()
+      expect(document.body.textContent).not.toContain('never shown')
+      wrapper.unmount()
     })
   })
 })

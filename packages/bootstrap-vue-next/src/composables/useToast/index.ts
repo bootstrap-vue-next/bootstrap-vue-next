@@ -23,8 +23,11 @@ import type {
 } from '../../types'
 import {buildController, getOrchestratorControllerId} from '../orchestratorShared'
 import {BToast} from '../../components'
+import {warn} from '../../utils/console'
 
 const posDefault: ContainerPosition = 'top-end'
+
+let hasWarnedPreMount = false
 
 export const useToast = () => {
   const orchestratorRegistry = inject(orchestratorRegistryKey, null)
@@ -48,8 +51,16 @@ export const useToast = () => {
   >(
     obj: MaybeRef<T> = {} as T
   ): ComponentController<typeof BToast, Ref<ToastOrchestratorArrayValue>> {
-    if (!_isOrchestratorInstalled.value)
-      throw new Error('The BApp component must be mounted to use the toast composable')
+    // The store is reactive, so a toast created before any BOrchestrator mounts renders once one
+    // does. That is legitimate (a router guard can run before the first render), so only warn, and
+    // only once: an SSR server builds a new registry per request, so anything finer would repeat
+    if (!_isOrchestratorInstalled.value && !hasWarnedPreMount) {
+      hasWarnedPreMount = true
+      warn(
+        'useToast',
+        'A toast was created before any BOrchestrator mounted. It will render once one does. Make sure BApp, or a BOrchestrator, is mounted.'
+      )
+    }
 
     const toastComp = markRaw(BToast)
     const resolvedProps = ref(obj)
