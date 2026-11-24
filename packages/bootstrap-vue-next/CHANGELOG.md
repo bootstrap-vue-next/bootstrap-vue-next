@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.2.5...bootstrapvuenext-v1.3.0) (2026-11-24)
+
+
+### Features
+
+* **useToast:** allow create() before the orchestrator mounts ([#3385](https://github.com/bootstrap-vue-next/bootstrap-vue-next/issues/3385)) ([568f51b](https://github.com/bootstrap-vue-next/bootstrap-vue-next/commit/568f51bd0bda32ff16c63085e0a862317ceec26b))
+
 ## [1.2.5](https://github.com/bootstrap-vue-next/bootstrap-vue-next/compare/bootstrapvuenext-v1.2.4...bootstrapvuenext-v1.2.5) (2026-11-20)
 
 
