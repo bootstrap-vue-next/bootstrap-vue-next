@@ -1,10 +1,12 @@
-import {describe, expect, it} from 'vitest'
+import {describe, expect, it, vi} from 'vitest'
 import {computed, defineComponent, h, nextTick, onMounted, ref, watchEffect} from 'vue'
 import {mount} from '@vue/test-utils'
 import BApp from '../../components/BApp/BApp.vue'
+import BOrchestrator from '../../components/BApp/BOrchestrator.vue'
 import BCollapse from '../../components/BCollapse/BCollapse.vue'
 import BToast from '../../components/BToast/BToast.vue'
 import type {BvTriggerableEvent} from '../../utils'
+import {orchestratorPlugin} from '../../plugins/orchestrator'
 import {useToast} from './index'
 
 // BOrchestrator binds the create payload's `onHide` on the component and re-invokes it from its
@@ -423,6 +425,105 @@ describe('useToast', () => {
       })
       await new Promise((resolve) => setTimeout(resolve, 20))
       expect(settled).toBe(true)
+    })
+  })
+
+  describe('create before any orchestrator mounts', () => {
+    // The plugin provides the registry without rendering an orchestrator, so the host decides when
+    // one mounts. That is the window a router guard running before the app's first render hits
+    const mountWithoutOrchestrator = (setup: () => void) => {
+      const showOrchestrator = ref(false)
+      const Host = defineComponent({
+        setup() {
+          setup()
+          return () => h('div', [showOrchestrator.value ? h(BOrchestrator) : null])
+        },
+      })
+      const wrapper = mount(Host, {
+        global: {plugins: [orchestratorPlugin]},
+        attachTo: document.body,
+      })
+      return {wrapper, showOrchestrator}
+    }
+    const isPreMountWarning = (args: unknown[]) =>
+      String(args[1]).includes('before any BOrchestrator')
+
+    it('does not throw, and renders the toast once an orchestrator mounts', async () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const {wrapper, showOrchestrator} = mountWithoutOrchestrator(() => {
+        const {create} = useToast()
+        expect(() => create({id: 'early', body: 'early body', modelValue: true})).not.toThrow()
+      })
+      await nextTick()
+      expect(document.body.textContent).not.toContain('early body')
+
+      showOrchestrator.value = true
+      await nextTick()
+      await nextTick()
+
+      expect(document.body.textContent).toContain('early body')
+      wrapper.unmount()
+      warnSpy.mockRestore()
+    })
+
+    it('warns once per registry', async () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const {wrapper, showOrchestrator} = mountWithoutOrchestrator(() => {
+        const {create} = useToast()
+        create({body: 'first'})
+        create({body: 'second'})
+      })
+
+      const preMountWarnings = () => warnSpy.mock.calls.filter(isPreMountWarning)
+      expect(preMountWarnings()).toHaveLength(1)
+      expect(preMountWarnings()[0]?.[0]).toBe('[BootstrapVueNext:useToast]')
+
+      showOrchestrator.value = true
+      await nextTick()
+      expect(preMountWarnings()).toHaveLength(1)
+      wrapper.unmount()
+      warnSpy.mockRestore()
+    })
+
+    it('does not warn once an orchestrator has mounted', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const TestComponent = defineComponent({
+        setup() {
+          useToast().create({body: 'after mount'})
+          return () => h('div')
+        },
+      })
+      mount(BApp, {slots: {default: () => h(TestComponent)}})
+
+      expect(warnSpy.mock.calls.some(isPreMountWarning)).toBe(false)
+      warnSpy.mockRestore()
+    })
+
+    it('settles show() and destroy() for a toast hidden before an orchestrator mounts', async () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      let toast: ReturnType<typeof useToast> | undefined
+      let dismissed: Promise<unknown> | undefined
+      const {wrapper, showOrchestrator} = mountWithoutOrchestrator(() => {
+        toast = useToast()
+        dismissed = toast.create({id: 'never-shown', body: 'never shown', modelValue: true}).show()
+      })
+
+      toast?.hide('route-change', 'never-shown')
+
+      let disposed = false
+      void dismissed?.then(async (event) => {
+        await (event as {[Symbol.asyncDispose]: () => Promise<void>})[Symbol.asyncDispose]()
+        disposed = true
+      })
+      await new Promise((resolve) => setTimeout(resolve, 20))
+      expect(disposed).toBe(true)
+      expect(toast?.store.value.toast.size).toBe(0)
+
+      showOrchestrator.value = true
+      await nextTick()
+      expect(document.body.textContent).not.toContain('never shown')
+      wrapper.unmount()
+      warnSpy.mockRestore()
     })
   })
 })
