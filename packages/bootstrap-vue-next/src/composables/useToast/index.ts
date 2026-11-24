@@ -27,7 +27,7 @@ import {warn} from '../../utils/console'
 
 const posDefault: ContainerPosition = 'top-end'
 
-const warnedPreMountRegistries = new WeakSet<object>()
+let hasWarnedPreMount = false
 
 export const useToast = () => {
   const orchestratorRegistry = inject(orchestratorRegistryKey, null)
@@ -52,10 +52,10 @@ export const useToast = () => {
     obj: MaybeRef<T> = {} as T
   ): ComponentController<typeof BToast, Ref<ToastOrchestratorArrayValue>> {
     // The store is reactive, so a toast created before any BOrchestrator mounts renders once one
-    // does. That is legitimate (a router guard can run before the first render), so only warn,
-    // once per registry (keyed by its store), in case the app never mounts an orchestrator at all
-    if (!_isOrchestratorInstalled.value && !warnedPreMountRegistries.has(store)) {
-      warnedPreMountRegistries.add(store)
+    // does. That is legitimate (a router guard can run before the first render), so only warn, and
+    // only once: an SSR server builds a new registry per request, so anything finer would repeat
+    if (!_isOrchestratorInstalled.value && !hasWarnedPreMount) {
+      hasWarnedPreMount = true
       warn(
         'useToast',
         'A toast was created before any BOrchestrator mounted. It will render once one does. Make sure BApp, or a BOrchestrator, is mounted.'

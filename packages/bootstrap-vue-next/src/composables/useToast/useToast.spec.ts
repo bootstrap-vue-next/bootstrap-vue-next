@@ -1,4 +1,4 @@
-import {describe, expect, it, vi} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import {computed, defineComponent, h, nextTick, onMounted, ref, watchEffect} from 'vue'
 import {mount} from '@vue/test-utils'
 import BApp from '../../components/BApp/BApp.vue'
@@ -429,6 +429,11 @@ describe('useToast', () => {
   })
 
   describe('create before any orchestrator mounts', () => {
+    // Restore even when a test fails partway, so its console spy can't leak into the next test
+    afterEach(() => {
+      vi.restoreAllMocks()
+    })
+
     // The plugin provides the registry without rendering an orchestrator, so the host decides when
     // one mounts. That is the window a router guard running before the app's first render hits
     const mountWithoutOrchestrator = (setup: () => void) => {
@@ -447,9 +452,20 @@ describe('useToast', () => {
     }
     const isPreMountWarning = (args: unknown[]) =>
       String(args[1]).includes('before any BOrchestrator')
+    // The warning fires once per module instance, so tests that count it need their own copy of
+    // useToast. The plugin and BApp are imported alongside it so they share its injection keys
+    const importFresh = async () => {
+      vi.resetModules()
+      const [{useToast}, {orchestratorPlugin}, {default: BApp}] = await Promise.all([
+        import('./index'),
+        import('../../plugins/orchestrator'),
+        import('../../components/BApp/BApp.vue'),
+      ])
+      return {useToast, orchestratorPlugin, BApp}
+    }
 
     it('does not throw, and renders the toast once an orchestrator mounts', async () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      vi.spyOn(console, 'warn').mockImplementation(() => {})
       const {wrapper, showOrchestrator} = mountWithoutOrchestrator(() => {
         const {create} = useToast()
         expect(() => create({id: 'early', body: 'early body', modelValue: true})).not.toThrow()
@@ -463,44 +479,50 @@ describe('useToast', () => {
 
       expect(document.body.textContent).toContain('early body')
       wrapper.unmount()
-      warnSpy.mockRestore()
     })
 
-    it('warns once per registry', async () => {
+    it('warns only once, even across apps', async () => {
+      const fresh = await importFresh()
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-      const {wrapper, showOrchestrator} = mountWithoutOrchestrator(() => {
-        const {create} = useToast()
-        create({body: 'first'})
-        create({body: 'second'})
-      })
+      // Each mount is its own app with its own registry, as each request is on an SSR server
+      const mountApp = () =>
+        mount(
+          defineComponent({
+            setup() {
+              const {create} = fresh.useToast()
+              create({body: 'first'})
+              create({body: 'second'})
+              return () => h('div')
+            },
+          }),
+          {global: {plugins: [fresh.orchestratorPlugin]}}
+        )
+      const first = mountApp()
+      const second = mountApp()
 
-      const preMountWarnings = () => warnSpy.mock.calls.filter(isPreMountWarning)
-      expect(preMountWarnings()).toHaveLength(1)
-      expect(preMountWarnings()[0]?.[0]).toBe('[BootstrapVueNext:useToast]')
-
-      showOrchestrator.value = true
-      await nextTick()
-      expect(preMountWarnings()).toHaveLength(1)
-      wrapper.unmount()
-      warnSpy.mockRestore()
+      const preMountWarnings = warnSpy.mock.calls.filter(isPreMountWarning)
+      expect(preMountWarnings).toHaveLength(1)
+      expect(preMountWarnings[0]?.[0]).toBe('[BootstrapVueNext:useToast]')
+      first.unmount()
+      second.unmount()
     })
 
-    it('does not warn once an orchestrator has mounted', () => {
+    it('does not warn once an orchestrator has mounted', async () => {
+      const fresh = await importFresh()
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
       const TestComponent = defineComponent({
         setup() {
-          useToast().create({body: 'after mount'})
+          fresh.useToast().create({body: 'after mount'})
           return () => h('div')
         },
       })
-      mount(BApp, {slots: {default: () => h(TestComponent)}})
+      mount(fresh.BApp, {slots: {default: () => h(TestComponent)}})
 
       expect(warnSpy.mock.calls.some(isPreMountWarning)).toBe(false)
-      warnSpy.mockRestore()
     })
 
     it('settles show() and destroy() for a toast hidden before an orchestrator mounts', async () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      vi.spyOn(console, 'warn').mockImplementation(() => {})
       let toast: ReturnType<typeof useToast> | undefined
       let dismissed: Promise<unknown> | undefined
       const {wrapper, showOrchestrator} = mountWithoutOrchestrator(() => {
@@ -523,7 +545,6 @@ describe('useToast', () => {
       await nextTick()
       expect(document.body.textContent).not.toContain('never shown')
       wrapper.unmount()
-      warnSpy.mockRestore()
     })
   })
 })
