@@ -3,9 +3,9 @@ import fs from 'node:fs'
 import path from 'node:path'
 import {
   getMaterializedSourceMarkdown,
+  materializeLLMMarkdown,
   normalizeLLMOutputPath,
   rebuildLLMSFullContent,
-  resolveLLMSnippetDirectives,
   toLLMOutputPath,
 } from '../../src/utils/llmsSnippetResolution'
 
@@ -21,7 +21,7 @@ const findFiles = (directory: string, filename?: string): string[] => {
     return []
   }
 
-  return fs.readdirSync(directory, {withFileTypes: true}).flatMap((entry) => {
+  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const fullPath = path.join(directory, entry.name)
 
     if (entry.isDirectory()) {
@@ -94,12 +94,7 @@ export const materializeLLMSSnippets = (): Plugin => {
         }
 
         const existingContent = fs.readFileSync(outputPath, 'utf8')
-
-        if (!existingContent.includes('<<< ')) {
-          continue
-        }
-
-        const resolvedContent = resolveLLMSnippetDirectives(existingContent, sourceMarkdownPath)
+        const resolvedContent = materializeLLMMarkdown(existingContent, sourceMarkdownPath)
 
         if (resolvedContent !== existingContent) {
           fs.writeFileSync(outputPath, resolvedContent)
@@ -119,7 +114,7 @@ export const materializeLLMSSnippets = (): Plugin => {
             const pagePath = path.join(outDir, outputPath)
             return fs.existsSync(pagePath) ? fs.readFileSync(pagePath, 'utf8') : undefined
           },
-          vitePressConfig.base
+          vitePressConfig.base,
         )
 
         if (rebuiltContent !== undefined) {
