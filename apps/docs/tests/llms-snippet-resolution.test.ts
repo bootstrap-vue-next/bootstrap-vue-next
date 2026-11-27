@@ -6,6 +6,7 @@ import {
   normalizeLLMOutputPath,
   rebuildLLMSFullContent,
   resolveLLMSnippetDirectives,
+  resolveLLMVueComponents,
   toLLMOutputPath,
   toSourceMarkdownPath,
 } from '../src/utils/llmsSnippetResolution'
@@ -21,7 +22,7 @@ describe('LLMS snippet resolution', () => {
     const content = '<<< FRAGMENT ../../demo/AlertBefore.vue#template{vue-html}'
 
     expect(resolveLLMSnippetDirectives(content, sourceMarkdownPath)).toBe(
-      '```vue-html\n<BAlert show dismissible>I am an alert!</BAlert>\n```'
+      '```vue-html\n<BAlert show dismissible>I am an alert!</BAlert>\n```',
     )
   })
 
@@ -30,35 +31,49 @@ describe('LLMS snippet resolution', () => {
     const content = '<<< DEMO ../../demo/AlertAfter.vue#template{vue-html}'
 
     expect(resolveLLMSnippetDirectives(content, sourceMarkdownPath)).toBe(
-      '```vue-html\n<BAlert model-value dismissible>I am an alert!</BAlert>\n```'
+      '```vue-html\n<BAlert model-value dismissible>I am an alert!</BAlert>\n```',
     )
   })
 
   it('maps nested index pages to LLM markdown output paths', () => {
-    expect(toLLMOutputPath(path.join(docsRoot, 'components/index.md'), docsRoot)).toBe('components.md')
-    expect(toLLMOutputPath(path.join(docsRoot, 'migration-data/index.md'), docsRoot)).toBe('migration-data.md')
+    expect(toLLMOutputPath(path.join(docsRoot, 'components/index.md'), docsRoot)).toBe(
+      'components.md',
+    )
+    expect(toLLMOutputPath(path.join(docsRoot, 'migration-data/index.md'), docsRoot)).toBe(
+      'migration-data.md',
+    )
   })
 
   it('normalizes base-prefixed request paths for LLM markdown routes', () => {
-    expect(normalizeLLMOutputPath('/bootstrap-vue-next/docs/migration-data/components/balert.md', '/bootstrap-vue-next/')).toBe(
-      'docs/migration-data/components/balert.md'
-    )
+    expect(
+      normalizeLLMOutputPath(
+        '/bootstrap-vue-next/docs/migration-data/components/balert.md',
+        '/bootstrap-vue-next/',
+      ),
+    ).toBe('docs/migration-data/components/balert.md')
   })
 
   it('maps generated LLM paths back to source markdown files', () => {
     expect(toSourceMarkdownPath('docs/migration-data/components/balert.md', srcRoot)).toBe(
-      path.join(srcRoot, 'docs/migration-data/components/balert.md')
+      path.join(srcRoot, 'docs/migration-data/components/balert.md'),
     )
     expect(toSourceMarkdownPath('docs/migration-data.md', srcRoot)).toBe(
-      path.join(srcRoot, 'docs/migration-data/index.md')
+      path.join(srcRoot, 'docs/migration-data/index.md'),
     )
   })
 
   it('materializes source markdown for dev LLM route fallbacks', () => {
-    const materialized = getMaterializedSourceMarkdown('docs/migration-data/components/balert.md', srcRoot)
+    const materialized = getMaterializedSourceMarkdown(
+      'docs/migration-data/components/balert.md',
+      srcRoot,
+    )
 
-    expect(materialized?.content).toContain('```vue-html\n<BAlert show dismissible>I am an alert!</BAlert>\n```')
-    expect(materialized?.content).not.toContain('<<< FRAGMENT ../../demo/AlertBefore.vue#template{vue-html}')
+    expect(materialized?.content).toContain(
+      '```vue-html\n<BAlert show dismissible>I am an alert!</BAlert>\n```',
+    )
+    expect(materialized?.content).not.toContain(
+      '<<< FRAGMENT ../../demo/AlertBefore.vue#template{vue-html}',
+    )
   })
 
   it('rebuilds llms-full content from llms.txt links', () => {
@@ -67,13 +82,271 @@ describe('LLMS snippet resolution', () => {
       (outputPath) =>
         ({
           'components.md': '---\nurl: /bootstrap-vue-next/components.md\n---\n\n# Components',
-          'docs/migration-data.md': '---\nurl: /bootstrap-vue-next/docs/migration-data.md\n---\n\n# Migration Knowledge Base',
+          'docs/migration-data.md':
+            '---\nurl: /bootstrap-vue-next/docs/migration-data.md\n---\n\n# Migration Knowledge Base',
         })[outputPath],
-      '/bootstrap-vue-next/'
+      '/bootstrap-vue-next/',
     )
 
     expect(rebuilt).toBe(
-      '---\nurl: /bootstrap-vue-next/docs/migration-data.md\n---\n\n# Migration Knowledge Base\n---\n\n---\nurl: /bootstrap-vue-next/components.md\n---\n\n# Components'
+      '---\nurl: /bootstrap-vue-next/docs/migration-data.md\n---\n\n# Migration Knowledge Base\n---\n\n---\nurl: /bootstrap-vue-next/components.md\n---\n\n# Components',
     )
+  })
+
+  it('extracts text from DeprecatedFeature and BLink components while removing script blocks', () => {
+    const input = [
+      '## Breaking Change',
+      '',
+      '<DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="Icon support on `BAvatar`">',
+      '  Use <BLink href="/docs/icons">unplugin-icons</BLink> instead.',
+      '</DeprecatedFeature>',
+      '',
+      '<script setup lang="ts">',
+      "import {DeprecationReason} from '../../../types/deprecation'",
+      '</script>',
+    ].join('\n')
+
+    expect(resolveLLMVueComponents(input)).toBe(
+      [
+        '## Breaking Change',
+        '',
+        '**Icon support on `BAvatar` is deprecated:** a modern alternative exists. [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation) – Use [unplugin-icons](/docs/icons) instead.',
+      ].join('\n'),
+    )
+  })
+
+  it('handles self-closing DeprecatedFeature with plural prop and preserves code fences and inline code', () => {
+    const input = [
+      '---',
+      'match:',
+      '  - <BEmbed>',
+      '---',
+      '',
+      'Use `<BAlert>` in templates:',
+      '',
+      '<DeprecatedFeature reason="bootstrap-deprecated" what="Legacy props" :plural="true" />',
+      '',
+      '<BAlert show>Plain alert text</BAlert>',
+      '<ComponentReference :data="data" />',
+      '',
+      '```vue-html',
+      '<BAlert show>Keep code block verbatim</BAlert>',
+      '```',
+    ].join('\n')
+
+    const output = resolveLLMVueComponents(input)
+
+    expect(output).toContain('  - <BEmbed>')
+    expect(output).toContain('Use `<BAlert>` in templates:')
+    expect(output).toContain('**Legacy props are deprecated:** deprecated by Bootstrap.')
+    expect(output).toContain('Plain alert text')
+    expect(output).not.toContain('<ComponentReference')
+    expect(output).toContain('```vue-html\n<BAlert show>Keep code block verbatim</BAlert>\n```')
+  })
+
+  it('materializes real migration pages with DeprecatedFeature into readable markdown', () => {
+    const bembed = getMaterializedSourceMarkdown(
+      'docs/migration-data/components/bembed.md',
+      srcRoot,
+    )
+    const bavatar = getMaterializedSourceMarkdown(
+      'docs/migration-data/components/bavatar.md',
+      srcRoot,
+    )
+
+    expect(bembed?.content).toContain(
+      '**`BEmbed` component is deprecated:** insufficient demand for initial release. [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation) – This component will not be implemented for v1 due to insufficient demand.',
+    )
+    expect(bembed?.content).not.toContain('<DeprecatedFeature')
+    expect(bembed?.content).not.toContain('<script setup')
+
+    expect(bavatar?.content).toContain(
+      '**Icon support on `BAvatar` is deprecated:** a modern alternative exists.',
+    )
+    expect(bavatar?.content).toContain('[unplugin-icons](/docs/icons)')
+    expect(bavatar?.content).not.toContain('<BLink')
+    expect(bavatar?.content).toContain('```vue-html')
+  })
+
+  it('keeps a self-closing DeprecatedFeature separate from a paired one after it', () => {
+    const output = resolveLLMVueComponents(
+      [
+        '<DeprecatedFeature what="Old A" />',
+        '',
+        '<DeprecatedFeature what="Old B">Use B.</DeprecatedFeature>',
+      ].join('\n'),
+    )
+
+    expect(output).toBe(
+      [
+        '**Old A is deprecated:** [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation)',
+        '',
+        '**Old B is deprecated:** [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation) – Use B.',
+      ].join('\n'),
+    )
+  })
+
+  it('leaves components and script tags inside inline code untouched', () => {
+    const output = resolveLLMVueComponents(
+      [
+        'Use `<DeprecatedFeature what="Old" />` to mark it.',
+        'Write `<script setup>x</script>` at the top.',
+        '<DeprecatedFeature what="Old">Write `<BLink href="/a">A</BLink>` instead.</DeprecatedFeature>',
+        'Replace with `$1` or `$&`.',
+      ].join('\n'),
+    )
+
+    expect(output).toBe(
+      [
+        'Use `<DeprecatedFeature what="Old" />` to mark it.',
+        'Write `<script setup>x</script>` at the top.',
+        '**Old is deprecated:** [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation) – Write `<BLink href="/a">A</BLink>` instead.',
+        'Replace with `$1` or `$&`.',
+      ].join('\n'),
+    )
+  })
+
+  it('keeps blank lines inside fenced code', () => {
+    const output = resolveLLMVueComponents(
+      ['Text', '', '', '', 'More', '', '```txt', 'A', '', '', '', 'B', '```'].join('\n'),
+    )
+
+    expect(output).toBe(['Text', '', 'More', '', '```txt', 'A', '', '', '', 'B', '```'].join('\n'))
+  })
+
+  it('removes the slot template tags of unwrapped components', () => {
+    const output = resolveLLMVueComponents(
+      [
+        '<HighlightCard>',
+        '  <template #html>',
+        '',
+        '```vue',
+        '<template>',
+        '  <BButton />',
+        '</template>',
+        '```',
+        '',
+        '  </template>',
+        '</HighlightCard>',
+      ].join('\n'),
+    )
+
+    expect(output).toBe(['```vue', '<template>', '  <BButton />', '</template>', '```'].join('\n'))
+  })
+
+  it('links to the deprecation rationale like DeprecatedFeature.vue', () => {
+    expect(
+      resolveLLMVueComponents(
+        '<DeprecatedFeature what="Old" :reason="DeprecationReason.BOOTSTRAP_NATIVE" />',
+      ),
+    ).toBe(
+      '**Old is deprecated:** achievable using Bootstrap classes natively. [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation)',
+    )
+  })
+
+  it('reads withBase hrefs and prefixes root-relative links with the site base', () => {
+    const output = resolveLLMVueComponents(
+      [
+        `See <BLink :href="withBase('/docs/icons')">Icons</BLink> and [Button](/docs/components/button).`,
+        'Keep [external](https://example.com), [anchor](#x), [based](/bootstrap-vue-next/docs/a) and `[code](/docs/b)`.',
+      ].join('\n'),
+      '/bootstrap-vue-next/',
+    )
+
+    expect(output).toBe(
+      [
+        'See [Icons](/bootstrap-vue-next/docs/icons) and [Button](/bootstrap-vue-next/docs/components/button).',
+        'Keep [external](https://example.com), [anchor](#x), [based](/bootstrap-vue-next/docs/a) and `[code](/docs/b)`.',
+      ].join('\n'),
+    )
+  })
+
+  describe('review findings on #3390', () => {
+    it('does not pair a self-closing BLink with a later closing tag', () => {
+      expect(
+        resolveLLMVueComponents(['<BLink href="/a" />', '<BLink href="/b">B</BLink>'].join('\n')),
+      ).toBe(['', '[B](/b)'].join('\n').replace(/^\n/, ''))
+    })
+
+    it('finds tag ends outside quoted attributes', () => {
+      expect(resolveLLMVueComponents('<BButton @click="count > 0 && save()">Save</BButton>')).toBe(
+        'Save',
+      )
+    })
+
+    it('protects double-backtick code spans that contain a backtick', () => {
+      expect(resolveLLMVueComponents('Use `` ` <BAlert> `` here.')).toBe(
+        'Use `` ` <BAlert> `` here.',
+      )
+    })
+
+    it('adds the base to root-relative links with a title', () => {
+      expect(resolveLLMVueComponents('[Icons](/docs/icons "Icons")', '/bootstrap-vue-next/')).toBe(
+        '[Icons](/bootstrap-vue-next/docs/icons "Icons")',
+      )
+    })
+
+    it('keeps lists and paragraphs inside a DeprecatedFeature body', () => {
+      const output = resolveLLMVueComponents(
+        [
+          '<DeprecatedFeature what="Old">',
+          '',
+          '- `a` → use b',
+          '- `c` → use d',
+          '',
+          '**Also:**',
+          '',
+          'Wrapped prose that',
+          'continues here.',
+          '',
+          '</DeprecatedFeature>',
+        ].join('\n'),
+      )
+
+      expect(output).toBe(
+        [
+          '**Old is deprecated:** [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation)',
+          '',
+          '- `a` → use b',
+          '- `c` → use d',
+          '',
+          '**Also:**',
+          '',
+          'Wrapped prose that continues here.',
+        ].join('\n'),
+      )
+    })
+
+    it('converts a DeprecatedFeature that contains a fenced example', () => {
+      const output = resolveLLMVueComponents(
+        [
+          '<DeprecatedFeature what="Old">',
+          'Use this instead:',
+          '',
+          '```vue',
+          '<BButton />',
+          '',
+          '```',
+          '</DeprecatedFeature>',
+        ].join('\n'),
+      )
+
+      expect(output).toBe(
+        [
+          '**Old is deprecated:** [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation) – Use this instead:',
+          '',
+          '```vue',
+          '<BButton />',
+          '',
+          '```',
+        ].join('\n'),
+      )
+    })
+
+    it('keeps the trailing whitespace of an unclosed fence', () => {
+      expect(resolveLLMVueComponents(['Text', '', '```txt', 'A  ', '', ''].join('\n'))).toBe(
+        ['Text', '', '```txt', 'A  ', '', ''].join('\n'),
+      )
+    })
   })
 })

@@ -33,7 +33,7 @@ export default defineConfig({
   vite: {
     plugins: [
       suppressLlmsWarnings(),
-      llmstxt(),
+      llmstxt({ stripHTML: false }),
       materializeLLMSSnippets(),
       Icons(),
       Components({

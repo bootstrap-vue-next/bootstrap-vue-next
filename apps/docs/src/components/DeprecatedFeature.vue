@@ -1,15 +1,20 @@
 <template>
   <BAlert variant="warning" show class="deprecation-warning">
     <strong v-html="deprecatedLabel" /> {{ reasonText }}.
-    <BLink :href="learnMoreUrl">Learn more about deprecation reasons</BLink
+    <BLink :href="learnMoreUrl">{{ DEPRECATION_LEARN_MORE_TEXT }}</BLink
     ><template v-if="$slots.default"> – <slot /></template>
   </BAlert>
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
-import {withBase} from 'vitepress'
-import {DEPRECATION_REASON_TEXT, DeprecationReason} from '../types/deprecation'
+import { computed } from 'vue'
+import { withBase } from 'vitepress'
+import {
+  DEPRECATION_LEARN_MORE_PATH,
+  DEPRECATION_LEARN_MORE_TEXT,
+  DEPRECATION_REASON_TEXT,
+  DeprecationReason,
+} from '../types/deprecation'
 
 /**
  * Component for displaying deprecation warnings throughout the documentation.
@@ -95,7 +100,7 @@ const deprecatedLabel = computed(() => {
  * URL to the deprecation section in the migration knowledge base
  * Uses withBase to ensure the correct path including the base URL
  */
-const learnMoreUrl = withBase('/docs/migration-data/patterns/overview#deprecation')
+const learnMoreUrl = withBase(DEPRECATION_LEARN_MORE_PATH)
 </script>
 
 <style scoped>

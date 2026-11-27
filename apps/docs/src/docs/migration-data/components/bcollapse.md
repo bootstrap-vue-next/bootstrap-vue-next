@@ -48,7 +48,7 @@ Migration notes for BCollapse from BootstrapVue to BootstrapVueNext.
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`accordion` prop on `BCollapse`">
   In `BootstrapVue`/`Bootstrap4`, accordions are implemented via `BCollapse`.
   In `BootstrapVueNext`/`Bootstrap5` accordions are first class citizens, so please use the
-  <BLink href="/docs/components/accordion">`BAccordion`</BLink> component instead.
+  <BLink :href="withBase('/docs/components/accordion')">`BAccordion`</BLink> component instead.
 </DeprecatedFeature>
 
 The prop `toggle` has replaced the prop `appear` with slightly different semantics. In order to create a
@@ -75,5 +75,6 @@ Yes. This entry is mostly mechanical, but review the result when surrounding beh
 - [show-hide](/docs/migration-data/patterns/show-hide)
 
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import {DeprecationReason} from '../../../types/deprecation'
 </script>

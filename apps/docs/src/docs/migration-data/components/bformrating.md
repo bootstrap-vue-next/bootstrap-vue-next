@@ -52,7 +52,7 @@ See the [Vue 3 migration guide](https://v3-migration.vuejs.org/breaking-changes/
     <li><code>icon-clear</code>: For specifying clear button icon</li>
   </ul>
   BootstrapVueNext does not include a built-in icon library. See
-  <BLink href="/docs/icons">Icons</BLink> for guidance on using unplugin-icons as the recommended
+  <BLink :href="withBase('/docs/icons')">Icons</BLink> for guidance on using unplugin-icons as the recommended
   modern solution with automatic tree-shaking.
 </DeprecatedFeature>
 
@@ -76,5 +76,6 @@ No. This entry includes behavioral or structural changes and should be reviewed 
 - None
 
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import {DeprecationReason} from '../../../types/deprecation'
 </script>

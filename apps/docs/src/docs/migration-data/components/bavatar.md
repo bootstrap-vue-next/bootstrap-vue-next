@@ -43,8 +43,8 @@ Migration notes for BAvatar from BootstrapVue to BootstrapVueNext.
 ## Breaking Change
 
 <DeprecatedFeature :reason="DeprecationReason.MODERN_ALTERNATIVE" what="Icon support on `BAvatar`">
-  Icons can be implemented using the default slot with either <BLink href="/docs/icons">unplugin-icons</BLink>
-  or by embedding an `.svg`. See the <BLink href="/docs/icons">Icons</BLink> guide for the recommended approach.
+  Icons can be implemented using the default slot with either <BLink :href="withBase('/docs/icons')">unplugin-icons</BLink>
+  or by embedding an `.svg`. See the <BLink :href="withBase('/docs/icons')">Icons</BLink> guide for the recommended approach.
 </DeprecatedFeature>
 
 <<< DEMO ../../demo/AvatarIcon.vue#template{vue-html}
@@ -80,5 +80,6 @@ Yes. This entry is mostly mechanical, but review the result when surrounding beh
 - [rounded-radius-element](/docs/migration-data/props/rounded-radius-element)
 
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import {DeprecationReason} from '../../../types/deprecation'
 </script>
