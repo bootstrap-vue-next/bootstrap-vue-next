@@ -407,6 +407,19 @@ describe('form-textarea', () => {
       await wrapper.trigger('input')
       expect(formatter).toHaveBeenCalledWith('test', expect.any(Event))
     })
+
+    it('does not warn when the formatter changes the value', async () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const wrapper = mount(BFormTextarea, {
+        props: {modelValue: '', formatter: (v: string) => v.toUpperCase()},
+      })
+      wrapper.element.value = 'hello'
+      await wrapper.trigger('input')
+      expect(wrapper.emitted('update:modelValue')![0]).toEqual(['HELLO'])
+      expect(wrapper.element.value).toBe('HELLO')
+      expect(warnSpy).not.toHaveBeenCalled()
+      warnSpy.mockRestore()
+    })
   })
 
   describe('formGroupKey injection', () => {
