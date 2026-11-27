@@ -260,4 +260,93 @@ describe('LLMS snippet resolution', () => {
       ].join('\n'),
     )
   })
+
+  describe('review findings on #3390', () => {
+    it('does not pair a self-closing BLink with a later closing tag', () => {
+      expect(
+        resolveLLMVueComponents(['<BLink href="/a" />', '<BLink href="/b">B</BLink>'].join('\n')),
+      ).toBe(['', '[B](/b)'].join('\n').replace(/^\n/, ''))
+    })
+
+    it('finds tag ends outside quoted attributes', () => {
+      expect(resolveLLMVueComponents('<BButton @click="count > 0 && save()">Save</BButton>')).toBe(
+        'Save',
+      )
+    })
+
+    it('protects double-backtick code spans that contain a backtick', () => {
+      expect(resolveLLMVueComponents('Use `` ` <BAlert> `` here.')).toBe(
+        'Use `` ` <BAlert> `` here.',
+      )
+    })
+
+    it('adds the base to root-relative links with a title', () => {
+      expect(resolveLLMVueComponents('[Icons](/docs/icons "Icons")', '/bootstrap-vue-next/')).toBe(
+        '[Icons](/bootstrap-vue-next/docs/icons "Icons")',
+      )
+    })
+
+    it('keeps lists and paragraphs inside a DeprecatedFeature body', () => {
+      const output = resolveLLMVueComponents(
+        [
+          '<DeprecatedFeature what="Old">',
+          '',
+          '- `a` → use b',
+          '- `c` → use d',
+          '',
+          '**Also:**',
+          '',
+          'Wrapped prose that',
+          'continues here.',
+          '',
+          '</DeprecatedFeature>',
+        ].join('\n'),
+      )
+
+      expect(output).toBe(
+        [
+          '**Old is deprecated:** [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation)',
+          '',
+          '- `a` → use b',
+          '- `c` → use d',
+          '',
+          '**Also:**',
+          '',
+          'Wrapped prose that continues here.',
+        ].join('\n'),
+      )
+    })
+
+    it('converts a DeprecatedFeature that contains a fenced example', () => {
+      const output = resolveLLMVueComponents(
+        [
+          '<DeprecatedFeature what="Old">',
+          'Use this instead:',
+          '',
+          '```vue',
+          '<BButton />',
+          '',
+          '```',
+          '</DeprecatedFeature>',
+        ].join('\n'),
+      )
+
+      expect(output).toBe(
+        [
+          '**Old is deprecated:** [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation) – Use this instead:',
+          '',
+          '```vue',
+          '<BButton />',
+          '',
+          '```',
+        ].join('\n'),
+      )
+    })
+
+    it('keeps the trailing whitespace of an unclosed fence', () => {
+      expect(resolveLLMVueComponents(['Text', '', '```txt', 'A  ', '', ''].join('\n'))).toBe(
+        ['Text', '', '```txt', 'A  ', '', ''].join('\n'),
+      )
+    })
+  })
 })
