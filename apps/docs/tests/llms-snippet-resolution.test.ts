@@ -167,4 +167,66 @@ describe('LLMS snippet resolution', () => {
     expect(bavatar?.content).not.toContain('<BLink')
     expect(bavatar?.content).toContain('```vue-html')
   })
+
+  it('keeps a self-closing DeprecatedFeature separate from a paired one after it', () => {
+    const output = resolveLLMVueComponents(
+      [
+        '<DeprecatedFeature what="Old A" />',
+        '',
+        '<DeprecatedFeature what="Old B">Use B.</DeprecatedFeature>',
+      ].join('\n'),
+    )
+
+    expect(output).toBe(
+      ['**Old A is deprecated:**', '', '**Old B is deprecated:** – Use B.'].join('\n'),
+    )
+  })
+
+  it('leaves components and script tags inside inline code untouched', () => {
+    const output = resolveLLMVueComponents(
+      [
+        'Use `<DeprecatedFeature what="Old" />` to mark it.',
+        'Write `<script setup>x</script>` at the top.',
+        '<DeprecatedFeature what="Old">Write `<BLink href="/a">A</BLink>` instead.</DeprecatedFeature>',
+        'Replace with `$1` or `$&`.',
+      ].join('\n'),
+    )
+
+    expect(output).toBe(
+      [
+        'Use `<DeprecatedFeature what="Old" />` to mark it.',
+        'Write `<script setup>x</script>` at the top.',
+        '**Old is deprecated:** – Write `<BLink href="/a">A</BLink>` instead.',
+        'Replace with `$1` or `$&`.',
+      ].join('\n'),
+    )
+  })
+
+  it('keeps blank lines inside fenced code', () => {
+    const output = resolveLLMVueComponents(
+      ['Text', '', '', '', 'More', '', '```txt', 'A', '', '', '', 'B', '```'].join('\n'),
+    )
+
+    expect(output).toBe(['Text', '', 'More', '', '```txt', 'A', '', '', '', 'B', '```'].join('\n'))
+  })
+
+  it('removes the slot template tags of unwrapped components', () => {
+    const output = resolveLLMVueComponents(
+      [
+        '<HighlightCard>',
+        '  <template #html>',
+        '',
+        '```vue',
+        '<template>',
+        '  <BButton />',
+        '</template>',
+        '```',
+        '',
+        '  </template>',
+        '</HighlightCard>',
+      ].join('\n'),
+    )
+
+    expect(output).toBe(['```vue', '<template>', '  <BButton />', '</template>', '```'].join('\n'))
+  })
 })

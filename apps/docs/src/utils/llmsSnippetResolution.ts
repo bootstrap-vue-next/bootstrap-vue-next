@@ -298,13 +298,33 @@ const DEPRECATION_ENUM_MAP: Record<string, DeprecationReason> = {
 const FRONTMATTER_RE = /^(---\r?\n[\s\S]*?\r?\n---\r?\n?)/
 const ATTR_RE = /(:?[\w-]+)(?:=(?:"([^"]*)"|'([^']*)'))?/g
 const SCRIPT_OR_STYLE_BLOCK_RE = /<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi
-const DEPRECATED_FEATURE_PAIRED_RE = /<DeprecatedFeature\b([^>]*)>([\s\S]*?)<\/DeprecatedFeature>/g
+// The opening tag must not be self-closing (`/>`), or it would pair with the next declaration's
+// closing tag. A `/` elsewhere in the attributes (`href="/a"`) is fine
+const DEPRECATED_FEATURE_PAIRED_RE =
+  /<DeprecatedFeature\b((?:[^>/]|\/(?!>))*)>([\s\S]*?)<\/DeprecatedFeature>/g
 const DEPRECATED_FEATURE_SELF_CLOSING_RE = /<DeprecatedFeature\b([^>]*)\/>/g
 const BLINK_RE = /<BLink\b([^>]*)>([\s\S]*?)<\/BLink>/g
 const SELF_CLOSING_VUE_COMPONENT_RE = /<[A-Z][A-Za-z0-9]*\b[^>]*\/>/g
 const OPENING_VUE_COMPONENT_RE = /<[A-Z][A-Za-z0-9]*\b[^>]*>/g
 const CLOSING_VUE_COMPONENT_RE = /<\/[A-Z][A-Za-z0-9]*\s*>/g
 const INLINE_CODE_SPAN_RE = /`[^`\n]+`/g
+// Vue slot wrappers (`<template #html>`) left behind when a component is unwrapped
+const TEMPLATE_TAG_RE = /<\/?template\b[^>]*>/g
+
+/** Swaps each match for a placeholder, so later replacements can't touch it */
+const protect = (content: string, pattern: RegExp, kind: string) => {
+  const saved: string[] = []
+  const protectedContent = content.replace(pattern, (match) => {
+    saved.push(match)
+    return `\u0000${kind}_${saved.length - 1}\u0000`
+  })
+  const restore = (result: string): string =>
+    saved.reduce(
+      (restored, match, index) => restored.replaceAll(`\u0000${kind}_${index}\u0000`, () => match),
+      result,
+    )
+  return { protectedContent, restore }
+}
 
 const parseAttributes = (rawAttrs: string): Record<string, string | true> => {
   const attrs: Record<string, string | true> = {}
@@ -386,7 +406,11 @@ const renderDeprecatedFeatureToMarkdown = (rawAttrs: string, innerContent: strin
 }
 
 const transformProseSegment = (segment: string): string => {
-  let result = segment
+  // Inline code spans (e.g. `<BAlert>`, `<script setup>`) are examples: protect them before any
+  // transformation, including inside DeprecatedFeature bodies
+  const { protectedContent, restore } = protect(segment, INLINE_CODE_SPAN_RE, 'CODE_SPAN')
+
+  const result = protectedContent
     .replace(SCRIPT_OR_STYLE_BLOCK_RE, '')
     .replace(DEPRECATED_FEATURE_PAIRED_RE, (_m, attrs: string, body: string) =>
       renderDeprecatedFeatureToMarkdown(attrs, body),
@@ -394,26 +418,13 @@ const transformProseSegment = (segment: string): string => {
     .replace(DEPRECATED_FEATURE_SELF_CLOSING_RE, (_m, attrs: string) =>
       renderDeprecatedFeatureToMarkdown(attrs, ''),
     )
-
-  // Protect inline code spans (e.g. `<BAlert>`) before stripping remaining Vue tags.
-  const codeSpans: string[] = []
-  result = result.replace(INLINE_CODE_SPAN_RE, (span) => {
-    const token = `\u0000CODE_SPAN_${codeSpans.length}\u0000`
-    codeSpans.push(span)
-    return token
-  })
-
-  result = result
     .replace(BLINK_RE, (_m, attrs: string, body: string) => renderBLinkToMarkdown(attrs, body))
     .replace(SELF_CLOSING_VUE_COMPONENT_RE, '')
     .replace(OPENING_VUE_COMPONENT_RE, '')
     .replace(CLOSING_VUE_COMPONENT_RE, '')
+    .replace(TEMPLATE_TAG_RE, '')
 
-  for (let index = 0; index < codeSpans.length; index += 1) {
-    result = result.replaceAll(`\u0000CODE_SPAN_${index}\u0000`, codeSpans[index] ?? '')
-  }
-
-  return result
+  return restore(result)
 }
 
 /**
@@ -427,7 +438,11 @@ export const resolveLLMVueComponents = (content: string): string => {
 
   const lines = body.split('\n')
   const outputChunks: string[] = []
+  // Fenced blocks are kept verbatim: each becomes one placeholder line while the prose around it
+  // is transformed and its blank lines tidied, then it is put back unchanged
+  const fences: string[] = []
   let proseLines: string[] = []
+  let fenceLines: string[] = []
   let activeFence: { char: string; length: number } | undefined
 
   const flushProse = (): void => {
@@ -437,21 +452,27 @@ export const resolveLLMVueComponents = (content: string): string => {
     outputChunks.push(transformProseSegment(proseLines.join('\n')))
     proseLines = []
   }
+  const flushFence = (): void => {
+    outputChunks.push(`\u0000FENCE_${fences.length}\u0000`)
+    fences.push(fenceLines.join('\n'))
+    fenceLines = []
+  }
 
   for (const line of lines) {
     const fenceMatch = /^\s*(`{3,}|~{3,})/.exec(line)
     if (activeFence === undefined && fenceMatch?.[1] !== undefined) {
       flushProse()
       activeFence = { char: fenceMatch[1][0] ?? '`', length: fenceMatch[1].length }
-      outputChunks.push(line)
+      fenceLines.push(line)
       continue
     }
 
     if (activeFence !== undefined) {
-      outputChunks.push(line)
+      fenceLines.push(line)
       const closeRe = new RegExp(`^\\s*${activeFence.char}{${activeFence.length},}\\s*$`)
       if (closeRe.test(line)) {
         activeFence = undefined
+        flushFence()
       }
       continue
     }
@@ -460,13 +481,25 @@ export const resolveLLMVueComponents = (content: string): string => {
   }
 
   flushProse()
+  // An unclosed fence runs to the end of the file
+  if (fenceLines.length > 0) {
+    flushFence()
+  }
 
   const normalizedBody = outputChunks
     .join('\n')
+    // Lines left with only indentation (an unwrapped component or slot tag) count as blank
+    .replace(/^[ \t]+$/gm, '')
     .replace(/\n{3,}/g, '\n\n')
-    .replace(/\s+$/, '\n')
+    // Keep one blank line after frontmatter, none at the start of a file without it
+    .replace(/^\n+/, frontmatter !== '' ? '\n' : '')
 
-  return `${frontmatter}${normalizedBody.trimEnd()}`
+  const restoredBody = fences.reduce(
+    (restored, fence, index) => restored.replace(`\u0000FENCE_${index}\u0000`, () => fence),
+    normalizedBody,
+  )
+
+  return `${frontmatter}${restoredBody.trimEnd()}`
 }
 
 export const materializeLLMMarkdown = (content: string, sourceMarkdownPath: string): string =>
