@@ -1,6 +1,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { DEPRECATION_REASON_TEXT, DeprecationReason } from '../types/deprecation'
+import {
+  DEPRECATION_LEARN_MORE_PATH,
+  DEPRECATION_LEARN_MORE_TEXT,
+  DEPRECATION_REASON_TEXT,
+  DeprecationReason,
+} from '../types/deprecation'
 
 const snippetDirectiveRE = /^<<<\s+(?:FRAGMENT|DEMO)\s+(.*?)$/gm
 
@@ -310,6 +315,22 @@ const CLOSING_VUE_COMPONENT_RE = /<\/[A-Z][A-Za-z0-9]*\s*>/g
 const INLINE_CODE_SPAN_RE = /`[^`\n]+`/g
 // Vue slot wrappers (`<template #html>`) left behind when a component is unwrapped
 const TEMPLATE_TAG_RE = /<\/?template\b[^>]*>/g
+// `:href="withBase('/docs/icons')"`: the path inside VitePress's `withBase`
+const WITH_BASE_CALL_RE = /^\s*withBase\(\s*(['"])(.*?)\1\s*\)\s*$/
+// Markdown link targets that start at the site root (`](/docs/icons)`), not protocol-relative
+const ROOT_RELATIVE_LINK_RE = /\]\((\/(?!\/)[^)\s]*)\)/g
+
+/**
+ * Prefixes a root-relative path with the site base (`/docs/icons` → `/bootstrap-vue-next/docs/icons`),
+ * so links in the generated Markdown point where the rendered pages do
+ */
+const withSiteBase = (target: string, base: string): string => {
+  const trimmedBase = base.replace(/\/$/, '')
+  if (trimmedBase === '' || target === trimmedBase || target.startsWith(`${trimmedBase}/`)) {
+    return target
+  }
+  return `${trimmedBase}${target}`
+}
 
 /** Swaps each match for a placeholder, so later replacements can't touch it */
 const protect = (content: string, pattern: RegExp, kind: string) => {
@@ -369,12 +390,16 @@ const isPluralAttribute = (attrs: Record<string, string | true>): boolean => {
 const renderBLinkToMarkdown = (rawAttrs: string, innerContent: string): string => {
   const attrs = parseAttributes(rawAttrs)
   const label = innerContent.trim().replace(/\s+/g, ' ')
+  const boundHref =
+    typeof attrs[':href'] === 'string' ? WITH_BASE_CALL_RE.exec(attrs[':href']) : null
   const target =
     typeof attrs.href === 'string'
       ? attrs.href
-      : typeof attrs.to === 'string'
-        ? attrs.to
-        : undefined
+      : boundHref?.[2] !== undefined
+        ? boundHref[2]
+        : typeof attrs.to === 'string'
+          ? attrs.to
+          : undefined
 
   if (label === '') {
     return ''
@@ -390,7 +415,9 @@ const renderDeprecatedFeatureToMarkdown = (rawAttrs: string, innerContent: strin
   const reasonText = resolveDeprecationReasonText(attrs)
 
   const label = what !== '' ? `**${what} ${plural ? 'are' : 'is'} deprecated:**` : '**Deprecated:**'
-  const prefix = reasonText !== undefined ? `${label} ${reasonText}.` : label
+  const reason = reasonText !== undefined ? ` ${reasonText}.` : ''
+  // The same link DeprecatedFeature.vue renders after the reason
+  const prefix = `${label}${reason} [${DEPRECATION_LEARN_MORE_TEXT}](${DEPRECATION_LEARN_MORE_PATH})`
 
   const resolvedInner = innerContent
     .replace(BLINK_RE, (_m, linkAttrs: string, linkBody: string) =>
@@ -405,7 +432,7 @@ const renderDeprecatedFeatureToMarkdown = (rawAttrs: string, innerContent: strin
   return resolvedInner !== '' ? `${prefix} – ${resolvedInner}` : prefix
 }
 
-const transformProseSegment = (segment: string): string => {
+const transformProseSegment = (segment: string, base: string): string => {
   // Inline code spans (e.g. `<BAlert>`, `<script setup>`) are examples: protect them before any
   // transformation, including inside DeprecatedFeature bodies
   const { protectedContent, restore } = protect(segment, INLINE_CODE_SPAN_RE, 'CODE_SPAN')
@@ -423,6 +450,7 @@ const transformProseSegment = (segment: string): string => {
     .replace(OPENING_VUE_COMPONENT_RE, '')
     .replace(CLOSING_VUE_COMPONENT_RE, '')
     .replace(TEMPLATE_TAG_RE, '')
+    .replace(ROOT_RELATIVE_LINK_RE, (_m, target: string) => `](${withSiteBase(target, base)})`)
 
   return restore(result)
 }
@@ -431,7 +459,7 @@ const transformProseSegment = (segment: string): string => {
  * Converts Vue component markup outside frontmatter and fenced code blocks
  * into plain Markdown text while removing `<script>`/`<style>` blocks.
  */
-export const resolveLLMVueComponents = (content: string): string => {
+export const resolveLLMVueComponents = (content: string, base = '/'): string => {
   const frontmatterMatch = FRONTMATTER_RE.exec(content)
   const frontmatter = frontmatterMatch?.[1] ?? ''
   const body = frontmatter !== '' ? content.slice(frontmatter.length) : content
@@ -449,7 +477,7 @@ export const resolveLLMVueComponents = (content: string): string => {
     if (proseLines.length === 0) {
       return
     }
-    outputChunks.push(transformProseSegment(proseLines.join('\n')))
+    outputChunks.push(transformProseSegment(proseLines.join('\n'), base))
     proseLines = []
   }
   const flushFence = (): void => {
@@ -502,12 +530,16 @@ export const resolveLLMVueComponents = (content: string): string => {
   return `${frontmatter}${restoredBody.trimEnd()}`
 }
 
-export const materializeLLMMarkdown = (content: string, sourceMarkdownPath: string): string =>
-  resolveLLMVueComponents(resolveLLMSnippetDirectives(content, sourceMarkdownPath))
+export const materializeLLMMarkdown = (
+  content: string,
+  sourceMarkdownPath: string,
+  base = '/',
+): string => resolveLLMVueComponents(resolveLLMSnippetDirectives(content, sourceMarkdownPath), base)
 
 export const getMaterializedSourceMarkdown = (
   outputPath: string,
   srcDir: string,
+  base = '/',
 ): { content: string; sourceMarkdownPath: string } | undefined => {
   const sourceMarkdownPath = toSourceMarkdownPath(outputPath, srcDir)
 
@@ -519,7 +551,7 @@ export const getMaterializedSourceMarkdown = (
     const sourceContent = fs.readFileSync(sourceMarkdownPath, 'utf8')
 
     return {
-      content: materializeLLMMarkdown(sourceContent, sourceMarkdownPath),
+      content: materializeLLMMarkdown(sourceContent, sourceMarkdownPath, base),
       sourceMarkdownPath,
     }
   } catch {

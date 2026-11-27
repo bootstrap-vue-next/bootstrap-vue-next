@@ -71,7 +71,7 @@ Migration notes for BModal from BootstrapVue to BootstrapVueNext.
 
 <DeprecatedFeature :reason="DeprecationReason.VUE3_BOOTSTRAP5_CHANGES" what="`footer-tag` and `header-tag` props on `BModal`" :plural="true">
   Use the `footer` and `title` slots instead. See the
-  <BLink href="/docs/components/modal#custom-rendering-with-slots">modal documentation</BLink> for details.
+  <BLink :href="withBase('/docs/components/modal#custom-rendering-with-slots')">modal documentation</BLink> for details.
 </DeprecatedFeature>
 
 ### Removed Global Modal Management
@@ -275,5 +275,6 @@ No. This entry includes behavioral or structural changes and should be reviewed 
 - [show-hide](/docs/migration-data/patterns/show-hide)
 
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import {DeprecationReason} from '../../../types/deprecation'
 </script>

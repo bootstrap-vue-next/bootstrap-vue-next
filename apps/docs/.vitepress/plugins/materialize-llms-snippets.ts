@@ -61,7 +61,11 @@ export const materializeLLMSSnippets = (): Plugin => {
           return
         }
 
-        const materializedMarkdown = getMaterializedSourceMarkdown(outputPath, srcDir)
+        const materializedMarkdown = getMaterializedSourceMarkdown(
+          outputPath,
+          srcDir,
+          vitePressConfig.base,
+        )
 
         if (materializedMarkdown === undefined) {
           next()
@@ -94,7 +98,11 @@ export const materializeLLMSSnippets = (): Plugin => {
         }
 
         const existingContent = fs.readFileSync(outputPath, 'utf8')
-        const resolvedContent = materializeLLMMarkdown(existingContent, sourceMarkdownPath)
+        const resolvedContent = materializeLLMMarkdown(
+          existingContent,
+          sourceMarkdownPath,
+          vitePressConfig.base,
+        )
 
         if (resolvedContent !== existingContent) {
           fs.writeFileSync(outputPath, resolvedContent)

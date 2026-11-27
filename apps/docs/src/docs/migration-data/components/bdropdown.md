@@ -77,7 +77,7 @@ See [floating-ui's docs](https://floating-ui.com/docs/computeposition#placement)
 Additionally, BootstrapVueNext supports new placement options that were not available in BootstrapVue, such as `bottom` for center alignment, `top-end`, `left-end`, `right-end`, and others.
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`block` prop on `BDropdown`">
-  See our <BLink href="/docs/components/dropdown#block-level-dropdowns">`BDropdown` documentation</BLink>
+  See our <BLink :href="withBase('/docs/components/dropdown#block-level-dropdowns')">`BDropdown` documentation</BLink>
   and <BLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</BLink> for
   details on creating block-level dropdowns.
 </DeprecatedFeature>
@@ -161,5 +161,6 @@ No. This entry includes behavioral or structural changes and should be reviewed 
 - [v-html-props](/docs/migration-data/patterns/v-html-props)
 
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import {DeprecationReason} from '../../../types/deprecation'
 </script>

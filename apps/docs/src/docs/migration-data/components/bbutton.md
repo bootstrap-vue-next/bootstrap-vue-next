@@ -34,7 +34,7 @@ Migration notes for BButton from BootstrapVue to BootstrapVueNext.
 ## Breaking Change
 
 <DeprecatedFeature :reason="DeprecationReason.BOOTSTRAP_DEPRECATED" what="`block` prop on `BButton`">
-  See our <BLink href="/docs/components/button#block-level-buttons">`BButton` documentation</BLink>
+  See our <BLink :href="withBase('/docs/components/button#block-level-buttons')">`BButton` documentation</BLink>
   and <BLink href="https://getbootstrap.com/docs/5.3/components/buttons/#block-buttons">Bootstrap's documentation</BLink> for
   details on creating block-level buttons with utility classes such as `d-grid` or width utilities.
 </DeprecatedFeature>
@@ -52,5 +52,6 @@ Yes. This entry is mostly mechanical and can usually be rewritten automatically 
 - None
 
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import {DeprecationReason} from '../../../types/deprecation'
 </script>

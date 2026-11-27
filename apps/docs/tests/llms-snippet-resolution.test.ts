@@ -110,7 +110,7 @@ describe('LLMS snippet resolution', () => {
       [
         '## Breaking Change',
         '',
-        '**Icon support on `BAvatar` is deprecated:** a modern alternative exists. – Use [unplugin-icons](/docs/icons) instead.',
+        '**Icon support on `BAvatar` is deprecated:** a modern alternative exists. [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation) – Use [unplugin-icons](/docs/icons) instead.',
       ].join('\n'),
     )
   })
@@ -155,7 +155,7 @@ describe('LLMS snippet resolution', () => {
     )
 
     expect(bembed?.content).toContain(
-      '**`BEmbed` component is deprecated:** insufficient demand for initial release. – This component will not be implemented for v1 due to insufficient demand.',
+      '**`BEmbed` component is deprecated:** insufficient demand for initial release. [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation) – This component will not be implemented for v1 due to insufficient demand.',
     )
     expect(bembed?.content).not.toContain('<DeprecatedFeature')
     expect(bembed?.content).not.toContain('<script setup')
@@ -178,7 +178,11 @@ describe('LLMS snippet resolution', () => {
     )
 
     expect(output).toBe(
-      ['**Old A is deprecated:**', '', '**Old B is deprecated:** – Use B.'].join('\n'),
+      [
+        '**Old A is deprecated:** [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation)',
+        '',
+        '**Old B is deprecated:** [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation) – Use B.',
+      ].join('\n'),
     )
   })
 
@@ -196,7 +200,7 @@ describe('LLMS snippet resolution', () => {
       [
         'Use `<DeprecatedFeature what="Old" />` to mark it.',
         'Write `<script setup>x</script>` at the top.',
-        '**Old is deprecated:** – Write `<BLink href="/a">A</BLink>` instead.',
+        '**Old is deprecated:** [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation) – Write `<BLink href="/a">A</BLink>` instead.',
         'Replace with `$1` or `$&`.',
       ].join('\n'),
     )
@@ -228,5 +232,32 @@ describe('LLMS snippet resolution', () => {
     )
 
     expect(output).toBe(['```vue', '<template>', '  <BButton />', '</template>', '```'].join('\n'))
+  })
+
+  it('links to the deprecation rationale like DeprecatedFeature.vue', () => {
+    expect(
+      resolveLLMVueComponents(
+        '<DeprecatedFeature what="Old" :reason="DeprecationReason.BOOTSTRAP_NATIVE" />',
+      ),
+    ).toBe(
+      '**Old is deprecated:** achievable using Bootstrap classes natively. [Learn more about deprecation reasons](/docs/migration-data/patterns/overview#deprecation)',
+    )
+  })
+
+  it('reads withBase hrefs and prefixes root-relative links with the site base', () => {
+    const output = resolveLLMVueComponents(
+      [
+        `See <BLink :href="withBase('/docs/icons')">Icons</BLink> and [Button](/docs/components/button).`,
+        'Keep [external](https://example.com), [anchor](#x), [based](/bootstrap-vue-next/docs/a) and `[code](/docs/b)`.',
+      ].join('\n'),
+      '/bootstrap-vue-next/',
+    )
+
+    expect(output).toBe(
+      [
+        'See [Icons](/bootstrap-vue-next/docs/icons) and [Button](/bootstrap-vue-next/docs/components/button).',
+        'Keep [external](https://example.com), [anchor](#x), [based](/bootstrap-vue-next/docs/a) and `[code](/docs/b)`.',
+      ].join('\n'),
+    )
   })
 })

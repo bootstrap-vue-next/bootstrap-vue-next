@@ -36,6 +36,15 @@ export enum DeprecationReason {
 /**
  * Human-readable descriptions for each deprecation reason
  */
+/**
+ * Path (without the site base) of the deprecation rationale that `DeprecatedFeature` links to.
+ * Shared with the View as Markdown conversion so both link to the same place
+ */
+export const DEPRECATION_LEARN_MORE_PATH = '/docs/migration-data/patterns/overview#deprecation'
+
+/** Text of the link to the deprecation rationale */
+export const DEPRECATION_LEARN_MORE_TEXT = 'Learn more about deprecation reasons'
+
 export const DEPRECATION_REASON_TEXT: Record<DeprecationReason, string> = {
   [DeprecationReason.BOOTSTRAP_DEPRECATED]: 'deprecated by Bootstrap',
   [DeprecationReason.VUE3_BOOTSTRAP5_CHANGES]:
